@@ -1,4 +1,4 @@
-;;; tsp-cedet.el ---
+;;; 40cedet.el ---
 
 ;; Copyright (C) 2008  S.P.Tseng
 
