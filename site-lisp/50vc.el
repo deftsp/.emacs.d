@@ -63,15 +63,6 @@
 ;;; gitsum: do interactive partial commits with Emacs in the style of darcs record.
 (autoload 'gitsum "gitsum" "Entry point into gitsum-diff-mode." t)
 
-;; (setq load-path (cons (expand-file-name "/usr/share/doc/git-core/contrib/emacs") load-path))
-;; (require 'git)
-;; (autoload 'git-blame-mode "git-blame"
-;;   "Minor mode for incremental blame for Git." t)
-
-;; (setq git--repository-bookmarks
-;;       '("git://github.com/xcezx/scratch.git"
-;;         "git://github.com/xcezx/dotfiles.git"))
-
 ;; git.el will look into your git configuration for committer name and email address. If that fails, it uses the Emacs
 ;; defaults. If you rely on environment variables for your configuration, beware. (And consider git-committer-name and
 ;; git-committer-email)
@@ -80,7 +71,10 @@
 ;; http://tsgates.cafe24.com/git/git-emacs.html
 ;; (add-to-list 'load-path "~/.emacs.d/packages/git-emacs")
 (require 'git-emacs)
-(setq git--state-mark-modeline nil)
+(if window-system
+    (setq git-state-modeline-decoration 'git-state-decoration-small-dot))
+(setq git--state-mark-modeline t)
+(setq git--state-mark-tooltip t)
 ;;; darcs
 (require 'vc-darcs)
 
