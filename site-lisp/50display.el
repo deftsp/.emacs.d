@@ -136,6 +136,12 @@
                           (decode-char 'ucs #x203d))
                     (font-spec :family "FreeMono" :size 12))
 
+  ;; '：'
+  (set-fontset-font "fontset-default"
+                    (cons (decode-char 'ucs #xff1a)
+                          (decode-char 'ucs #xff1a))
+                    (font-spec :family "微软雅黑" :size 12))
+
   (set-fontset-font (frame-parameter nil 'font)
                     'han (font-spec :family "微软雅黑" :weight 'medium :size 12 :width 'normal)))
 
