@@ -7,5 +7,9 @@
 ;; reuse the selected frame
 (if window-system
  (setq ediff-window-setup-function 'ediff-setup-windows-plain)) ; 'ediff-setup-windows-multiframe
-(setq ediff-split-window-function 'split-window-horizontally) ; 'split-window-vertically
+;; Note that you can also split the window depending on the frame width:
+(setq ediff-split-window-function (lambda (&optional arg)
+                                    (if (> (frame-width) 150)
+                                        (split-window-horizontally arg)
+                                        (split-window-vertically arg))))
 ;;; 50ediff.el ends here
