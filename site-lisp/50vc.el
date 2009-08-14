@@ -69,12 +69,11 @@
 
 ;;; git-emacs
 ;; http://tsgates.cafe24.com/git/git-emacs.html
-;; (add-to-list 'load-path "~/.emacs.d/packages/git-emacs")
 (require 'git-emacs)
 (if window-system
     (setq git-state-modeline-decoration 'git-state-decoration-small-dot))
 (setq git--state-mark-modeline t)
-(setq git--state-mark-tooltip t)
+
 ;;; darcs
 (require 'vc-darcs)
 
