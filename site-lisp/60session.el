@@ -89,16 +89,18 @@
      locate-history-list)))
 
 ;; See also desktop-locals-to-save
-;; (setq desktop-buffers-not-to-save
-;;       (concat "\\(" "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
-;;               "\\|\\.emacs.*\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
-;;               "\\|\\.gpg\\|.html\\)$"))
-
+;; Regexp identifying *buffers* that are to be excluded from saving.
 (setq desktop-buffers-not-to-save
-      (concat "\\(" "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
+      (concat "\\("
+              "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
               "\\|\\.emacs.*\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
-              "\\|\\.gpg\\)$"))
+              "\\)$"))
 
+(setq desktop-files-not-to-save
+      (concat "\\("
+              "^/[^/:]*:\\|(ftp)$"
+              "\\|\\.gpg$"
+              "\\)"))
 
 (eval-after-load "desktop"
   '(mapc #'(lambda (major-mode)
