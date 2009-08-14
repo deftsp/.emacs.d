@@ -56,9 +56,12 @@
 (when (featurep 'vc-git)
   (add-to-list 'vc-handled-backends 'git))
 
-;;; magit
-(add-to-list 'load-path "~/.emacs.d/packages/magit")
+;;; magit ---------------------------------------------------------
 (autoload 'magit-status "magit" nil t)
+;; ----------------------------------------------------------------
+
+;;; gitsum: do interactive partial commits with Emacs in the style of darcs record.
+(autoload 'gitsum "gitsum" "Entry point into gitsum-diff-mode." t)
 
 ;; (setq load-path (cons (expand-file-name "/usr/share/doc/git-core/contrib/emacs") load-path))
 ;; (require 'git)
