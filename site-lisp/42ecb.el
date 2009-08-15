@@ -19,6 +19,7 @@
      ecb-auto-expand-tag-tree-collapse-other 'only-if-on-tag
      ecb-tip-of-the-day nil
      ;; ecb-layout-name 'left8          ; defautl 'left8
+     ecb-tree-incremental-search 'substring ; 'prefix
      ecb-use-speedbar-for-directories nil)
     (set-face-background 'ecb-default-highlight-face "#666666")))
 ;; (setq ecb-other-window-jump-behavior 'edit-and-compile)
