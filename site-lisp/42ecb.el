@@ -23,6 +23,9 @@
     (set-face-background 'ecb-default-highlight-face "#666666")))
 ;; (setq ecb-other-window-jump-behavior 'edit-and-compile)
 
+(eval-after-load "ecb"
+  '(add-to-list 'ecb-source-path '("~/proj/homepage/" "homepage")))
+
 ;; With activated ECB `calendar' does not shrink it´s window to the small size but splits the window equally. But if you
 ;; add this to your `.emacs' it works:
 (eval-after-load "ecb"
