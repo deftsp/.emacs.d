@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2009-08-10 23:41:43 S.P.Tseng>
+;; Time-stamp: <2009-08-16 17:33:42 S.P.Tseng>
 
 ;;;; EMMS
 
@@ -43,7 +43,7 @@
 ;; connect
 (emms-player-mpd-connect)
 ;; dump cache
-;; (emms-cache-set-from-mpd-all)
+(emms-cache-set-from-mpd-all)
 ;; (emms-cache-save)
 
 (require 'emms-mode-line-icon)
