@@ -19,7 +19,7 @@
 (eval-after-load "anything"
   '(progn
     (require 'anything-config)
-    (require 'anything-emms)
+    ;; (require 'anything-emms)
     ;; (require 'anything-match-plugin)
     (setq anything-sources (list
                             anything-c-source-call-source
