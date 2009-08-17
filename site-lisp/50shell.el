@@ -9,7 +9,6 @@
 (setq comint-buffer-maximum-size 10240)
 
 (add-hook 'shell-mode-hook '(lambda () (toggle-truncate-lines 1)))
-(setq comint-prompt-read-only t)
 
 ;; will truncate shell buffer to comint-buffer-maximum-size.
 (add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
