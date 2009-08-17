@@ -1,4 +1,4 @@
-;;Time-stamp: <2009-08-13 11:35:37 S.P.Tseng>
+;;Time-stamp: <2009-08-17 13:04:30 S.P.Tseng>
 
 ;;--------------------------------------------------------------------------------
 ;;; Personal data
@@ -30,7 +30,7 @@
       yank-excluded-properties t        ; do not paste any properties
       mouse-yank-at-point t
       ;; directory-sep-char ?\\
-      confirm-kill-emacs 'y-or-n-p
+      confirm-kill-emacs nil ; 'y-or-n-p
       comint-completion-autolist t
       comint-input-ignoredups t
       comint-prompt-read-only t
