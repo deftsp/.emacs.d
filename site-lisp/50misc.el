@@ -1,4 +1,4 @@
-;;Time-stamp: <2009-08-17 13:04:30 S.P.Tseng>
+;;Time-stamp: <2009-08-17 13:10:10 S.P.Tseng>
 
 ;;--------------------------------------------------------------------------------
 ;;; Personal data
@@ -31,6 +31,7 @@
       mouse-yank-at-point t
       ;; directory-sep-char ?\\
       confirm-kill-emacs nil ; 'y-or-n-p
+      use-dialog-box nil                  ; mouse commands don't use dialog boxes to ask questions.
       comint-completion-autolist t
       comint-input-ignoredups t
       comint-prompt-read-only t
