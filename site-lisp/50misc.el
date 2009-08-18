@@ -1,4 +1,3 @@
-;;Time-stamp: <2009-08-17 13:10:10 S.P.Tseng>
 
 ;;--------------------------------------------------------------------------------
 ;;; Personal data
@@ -1222,8 +1221,7 @@ This command is to be used interactively."
 ;; (global-set-key (kbd "C-x k") 'as/context-kill)
 
 ;;; Gnus
-;; 设置gnus启动的文件。默认是~/.gnus.el
-;; (setq gnus-init-file "~/.emacs.d/.gnus.el")
+(setq gnus-init-file "~/.emacs.d/.gnus.el")
 ;; (load "~/.emacs.d/.gnus.el") ;; I use C-x m to send mail, load gnus config file
 ;; (setq gnus-startup-file "~/.emacs.d/.newsrc")
 ;; gnus默认采用rfc2231对附件文件名进行编码，有些MUA无法识别这种编码。
