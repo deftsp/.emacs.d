@@ -115,12 +115,9 @@
 ;; automatic group re-scan without manual effort.
 ;; assumes: mail groups, level <= 2; nntp groups, level >= 3.
 ;; look up arg interpretation for gnus-demon-add-handler.
-;; overall meaning: check mail every 5 regardless, and
-;; check nntp every 20 iff idle for 20.
-;;
+
 ;; level-specified group scanner.
-(defun gnus-demon-scan-mail-or-news-and-update (level)
-  "Scan for new mail, updating the *Group* buffer."
+(defun gnus-demon-scan-news-by-level (level)
   (let ((win (current-window-configuration)))
     (unwind-protect
          (save-window-excursion
@@ -130,38 +127,14 @@
                  (set-buffer gnus-group-buffer)
                  (gnus-group-get-new-news level)))))
       (set-window-configuration win))))
-;;
-;; level 2: only mail groups are scanned.
-(defun gnus-demon-scan-mail-and-update ()
-"Scan for new mail, updating the *Group* buffer."
-  (gnus-demon-scan-mail-or-news-and-update 2))
 
-;; (gnus-demon-add-handler 'gnus-demon-scan-mail-and-update 5 nil)
-;;
-;; level 3: mail and local news groups are scanned.
-(defun gnus-demon-scan-news-and-update ()
-"Scan for new mail, updating the *Group* buffer."
-  (gnus-demon-scan-mail-or-news-and-update 3))
-;; (gnus-demon-add-handler 'gnus-demon-scan-news-and-update 20 20)
+(defun gnus-demon-scan-news-of-level-2 ()
+  "Scan for new mail, updating the *Group* buffer."
+  (gnus-demon-scan-news-by-level 2))
 
+;; check new mail every 3 minutes
 (eval-after-load "gnus"
-  '(progn
-    ;; If you add handlers to `gnus-demon-handlers' directly, you should run `gnus-demon-init' to make the changes take
-    ;; hold. To cancel all daemons, you can use the `gnus-demon-cancel' function.
-    ;; (gnus-demon-init)
-    ;; (unless gnus-demon-handler-state
-    ;;   ;; You can have Gnus check for new mail every 6 minutes:
-    ;;   (gnus-demon-add-handler 'gnus-demon-scan-mail-and-update 6 nil))
-    ;; read info of Gnus Daemons
-    (gnus-demon-add-handler 'gnus-demon-scan-mail-and-update 6 nil)))
-
-;; (defun tsp-gnus-group-get-new-news ()
-;;   (interactive)
-;;   (if gnus-plugged
-;;       (gnus-group-get-new-news 2)
-;;       (gnus-read-active-file)
-;;       (gnus-get-unread-articles)
-;;       (gnus-group-list-groups)))
+  '(gnus-demon-add-handler 'gnus-demon-scan-news-of-level-2 3 0))
 
 ;;; gnus registry
 ;; (setq gnus-registry-max-entries 2500
