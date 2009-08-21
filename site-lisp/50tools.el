@@ -57,7 +57,7 @@
 (key-chord-define-global "''" "`'\C-b")
 (key-chord-define-global "RR" 'anything-resume)
 (key-chord-define-global "JJ" 'anything)
-(key-chord-define-global "HH" 'any-man)
+(key-chord-define-global "HH" 'woman)
 (key-chord-define-global "OO" 'any-occur)
 ;; space-chord
 (require 'space-chord)
