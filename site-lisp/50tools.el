@@ -1,6 +1,4 @@
 ;;; some useful packages
-;;Time-stamp: <2009-08-09 01:05:23 S.P.Tseng>
-
 
 ;;; FIXME: `delete-directory' only delete non-empty directory. But `trash-or-rm' is not.
 ;; `emms-browser-delete-files' will be wrong behavior.
@@ -461,12 +459,14 @@ Nth occurence of CHAR."
           'executable-make-buffer-file-executable-if-script-p)
 
 ;;--------------------------------------------------------------------------------
+;; shell-toggle.el
+;; shell-toggle-patched.el eshell port.
 (autoload 'shell-toggle "shell-toggle"
   "Toggles between the *shell* buffer and whatever buffer you are editing." t)
 (autoload 'shell-toggle-cd "shell-toggle"
   "Pops up a shell-buffer and insert a \"cd <file-dir>\" command." t)
-;; (global-set-key (kbd "C-c s") 'shell-toggle)    ;see also shell-toggle-cd
-(global-set-key (kbd "C-c S") 'shell-toggle-cd) ;see also shell-toggle-cd
+(global-set-key (kbd "C-c g S") 'shell-toggle)    ;see also shell-toggle
+(global-set-key (kbd "C-c g s") 'shell-toggle-cd) ;see also shell-toggle-cd
 
 ;;-----------------------------------------------------------------------------------------------
 (global-set-key (kbd "C-x !") 'tsp-swap-windows)
