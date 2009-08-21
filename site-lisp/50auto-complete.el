@@ -10,7 +10,7 @@
 (require 'auto-complete)
 (autoload 'auto-complete-mode "auto-complete"
   "This extension provides a way to select a completion with popup menu." t)
-(global-auto-complete-mode t)
+(global-auto-complete-mode -1)
 (setq ac-override-local-map nil)        ;don't override local map
 (setq ac-dwim t)
 
