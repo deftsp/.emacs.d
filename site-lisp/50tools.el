@@ -224,6 +224,26 @@ Nth occurence of CHAR."
 ;; http://williamxu.net9.org/ref/buffer-action.el
 (autoload 'buffer-action-compile "buffer-action")
 (autoload 'buffer-action-run "buffer-action")
+(setq buffer-action-table '((c-mode "gcc -Wall -Wextra -O2 %f -lm -ggdb -o %n" "%n" "./%n")
+                            (c++-mode "g++ -O2 %f -lm -o %n" "%n" "./%n")
+                            ("\\.pl$" "perl -cw %f" nil "perl -s %f")
+                            ("\\.php$" nil nil "php %f")
+                            ("\\.tex$" "latex %f" "%n.dvi" "xdvi %n.dvi &")
+                            (texinfo-mode makeinfo-buffer "%n.info"
+                             (lambda nil
+                               (Info-revert-find-node
+                                (buffer-action-replace "%n.info")
+                                (makeinfo-current-node))))
+                            (emacs-lisp-mode
+                             (lambda nil
+                               (byte-compile-file
+                                (buffer-action-replace "%f")))
+                             "%n.elc" eval-buffer)
+                            ("\\.info$" nil nil
+                             (lambda nil
+                               (info
+                                (buffer-file-name))))))
+
 
 ;;可以为重名的 buffer 在前面加上其父目录的名字来让 buffer 的名字区分开来，而不是单纯的加一个没有太多意义的序号
 (require 'uniquify)
