@@ -53,8 +53,8 @@
           (?β "\\<beta\\>"           (tuareg-mode haskell-mode))
           (?γ "\\<gamma\\>"          (tuareg-mode haskell-mode))
           (?δ "\\<delta\\>"          (tuareg-mode haskell-mode))
-          ;; (?λ "\\<lambda\\>"         (,@lispen))
-          ((decode-coding-string "\xEB" 'greek-iso-8bit) "\\<lambda\\>" (,@lispen scheme-mode))
+          (?λ "\\<lambda\\>"         (,@lispen))
+          ;; ((decode-coding-string "\xEB" 'greek-iso-8bit) "\\<lambda\\>" (,@lispen scheme-mode))
           (?λ "\\<fn\\>"             (,@mlen))
           (?– "--"                   (texen))
           (?‖ "^ +\\(|\\)"           (tuareg-mode))
@@ -103,7 +103,7 @@
           (?∅ "\\[\\]"               (haskell-mode))
           (?∈ "\\<List.mem\\>"       (tuareg-mode))
           (?∈ "\\<for\\s +[^\\s ]+\\s +\\(in\\)\\>" (sh-mode))
-          (?∈ "\\<member\\>"         (,@lispen scheme-mode))
+          ;; (?∈ "\\<member\\>"         (,@lispen scheme-mode))
           (?∏ "\\<product\\>"        nil)
           (?∑ "\\<sum\\>"            nil)
           (?∓ "minus-plus"           nil)
@@ -111,26 +111,26 @@
           (?√ " +\\(sqrt\\)("        (,@c-like))
           (?∞ "\\<infinity\\>"       nil)
           (?∧ "&&"                   (,@c-like tuareg-mode))
-          (?∧ "(\\(and\\>\\)"        (,@lispen scheme-mode)) ; "\\<and\\>"
+          ;; (?∧ "(\\(and\\>\\)"        (,@lispen scheme-mode)) ; "\\<and\\>"
           (?∧ "\\<andalso\\>"        (,@mlen))
-          (?∨ "(\\(or\\>\\)"         (,@lispen scheme-mode)) ; "\\<or\\>"
+          ;; (?∨ "(\\(or\\>\\)"         (,@lispen scheme-mode)) ; "\\<or\\>"
           (?∨ "\\<orelse\\>"         (,@mlen))
           (?∨ "||"                   (,@c-like tuareg-mode))
           (?≈ "~="                   (perl-mode))
-          (?≠ "/="                   (,@lispen haskell-mode))
+          ;; (?≠ "/="                   (,@lispen haskell-mode))
           (?≠ "<>"                   (tuareg-mode ,@mlen))
           (?≠ "\\!="                 (,@c-like tuareg-mode))
           (?≡ "=="                   (,@c-like tuareg-mode haskell-mode joy-mode))
-          (?≡ "\\<eql\\>"            (,@lispen))
-          (?≣ "\\<equal\\>"          (,@lispen))
+          ;; (?≡ "\\<eql\\>"            (,@lispen))
+          ;; (?≣ "\\<equal\\>"          (,@lispen))
           (?⁻ "~"                    (,@mlen)) ; unary negation
           (?≤ "<="                   t)
           (?≥ ">="                   t)
           (?≪ "<<"                   (,@c-like shell-mode))
           (?≫ ">>"                   (,@c-like shell-mode))
-          (?∖ "\\<set-difference\\>" (,@lispen))
-          (?⋂ "(\\(intersection\\>\\)"   (,@lispen)) ; "\\<intersection\\>"
-          (?⋃ "(\\(union\\>\\)"      (,@lispen))     ; "\\<union\\>"
+          ;; (?∖ "\\<set-difference\\>" (,@lispen))
+          ;; (?⋂ "(\\(intersection\\>\\)"   (,@lispen)) ; "\\<intersection\\>"
+          ;; (?⋃ "(\\(union\\>\\)"      (,@lispen))     ; "\\<union\\>"
           (?ƒ "(\\(defun\\>\\)"      (,@lispen))     ; "\\<defun\\>"
           (?Ψ "(\\(defvar\\>\\)"     (,@lispen))     ; "\\<defvar\\>"
 
