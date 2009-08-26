@@ -576,6 +576,8 @@
 ;;       (setq-default line-spacing 5)
 ;;       (setq-default line-spacing 1)))
 
+(autoload 'markdown-mode "markdown-mode.el"
+  "Major mode for editing Markdown files" t)
 
 ;;; before modify it, use C-h v auto-mode-alist to check it.
 (autoload 'fvwm-mode "fvwm-mode" "Major mode for editing FVWM configuration files." t)
@@ -609,6 +611,7 @@
           ("\\.procmailrc$"    . conf-mode)
           ("fonts.conf"        . xml-mode)
           ("\\.org$"           . org-mode)
+          ("\\.markdown$"      . markdown-mode)
           ("\\.lrc$"           . emms-lyrics-mode)))
 
 
