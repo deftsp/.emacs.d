@@ -56,7 +56,7 @@
 ;; ido 的匹配可以是精确匹配，也可以是使用正则表达式。控制的选项是 ido-enable-regexp 变量。也可以用 C-t 临时切换匹配方式。
 
 (mapcar (lambda (str) (add-to-list 'ido-ignore-buffers str))
-        '("^\\ " "^\\*Completions*"  "^\\*Apropos*"  "^\\*Ibuffer*"
+        '("^\\ " "^\\*Completions*" "^\\*Article\\*" "^\\*Apropos*"  "^\\*Ibuffer*"
           "^\\*Backtrace*"  "^\\*Help"  "^\\*Bookmark" "^\\*Messages"
           "^\\.newsrc-dribble"  "^\\*Woman-Log"  "^\\*Compilation"
           "^\\*Compile-Log" "^\\*Calendar" "^\\*cscope"  "^\\*grep"
