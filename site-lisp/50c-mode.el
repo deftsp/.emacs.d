@@ -1,8 +1,8 @@
 ;;; 50c-mode.el ---
 ;; Author: S.P.Tseng <deftsp@gmail.com>
-;; Time-stamp: <2009-07-26 16:04:29 S.P.Tseng>
+;; Time-stamp: <2009-08-29 12:40:40 S.P.Tseng>
 
-(require 'smart-operator)
+(require 'smarter-operator)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -34,7 +34,7 @@
   ;; (setq outline-regexp "[ \t]*\\([^* \t\n\^M\^L]\\|\\*+[a-zA-Z_0-9=(]\\)")
   ;; (hide-sublevels 2)
   ;; (hide-body)
-  (smart-operator-mode))
+  (smarter-operator-mode))
 
 (defun tsp-next-c-function ()
   "Go to start of next C function."
@@ -87,7 +87,7 @@
   (c-subword-mode 1)
   (setq c-basic-offset 4)
   (imenu-add-menubar-index)
-  (smart-operator-mode))
+  (smarter-operator-mode))
 (add-hook 'c-mode-hook 'tsp-c-mode-hook)
 (add-hook 'c++-mode-hook 'tsp-cpp-mode-hook)
 ;;============================================================
