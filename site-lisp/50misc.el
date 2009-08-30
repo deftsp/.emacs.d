@@ -177,8 +177,7 @@
 ;; check that the file specified by `display-time-mail-file' is nonempty or that the
 ;; directory `display-time-mail-directory' contains nonempty files.
 
-;; I do not need mail notification any more
-(setq display-time-mail-directory nil) ; "~/Mail/inbox/new/"
+(setq display-time-mail-directory "~/Mail/inbox/new/")
 (setq display-time-string-forms
       '((substring year -2) "/" month "/" day "("dayname")"
         (propertize (concat " " 24-hours ":" minutes)
