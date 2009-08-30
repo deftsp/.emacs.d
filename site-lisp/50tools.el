@@ -35,8 +35,10 @@
 ;; (require 'pp-c-l)
 ;; (pretty-control-l-mode 1)
 
-(load "~/.emacs.d/packages/nxhtml/autostart.el")
-(setq nxhtml-skip-welcome t)
+;; http://nschum.de/src/emacs/company-mode/
+
+;; (load "~/.emacs.d/packages/nxhtml/autostart.el")
+;; (setq nxhtml-skip-welcome t)
 
 ;; (require 'misc-fns)
 
@@ -74,9 +76,6 @@
 
 ;;; uptime
 (require 'uptimes nil t)
-
-;; http://nschum.de/src/emacs/company-mode/
-(autoload 'company-mode "company" nil t)
 
 
 ;; (require 'visible-mark)

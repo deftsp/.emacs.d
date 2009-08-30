@@ -1,6 +1,3 @@
-;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2009-08-09 01:09:45 S.P.Tseng>
-
 ;;; Completion
 
 ;;; dabbrev-expand
@@ -8,13 +5,19 @@
 (global-set-key (kbd "M-/") 'dabbrev-expand)
 ;; (define-key minibuffer-local-map (kbd "C-<tab>") 'dabbrev-expand)
 
-;; Continuing Expansion
-;; Once you have successfully used dabbrev-expand to expand a word, hitting <space> then immediately using
-;; dabbrev-expand again will continue to expand from the point that the expansion was found.
+;;; Continuing Expansion
 
-;; (require 'dabbrev-expand-multiple)
-;; (setq dabbrev-expand-multiple-select-keys '("a" "s" "d" "f" "q" "w" "e" "r"))
-;; (global-set-key (kbd "M-/") 'dabbrev-expand-multiple)
+;; Once you have successfully used dabbrev-expand to expand a word, hitting <space> then immediately
+;; using dabbrev-expand again will continue to expand from the point that the expansion was found.
+;; For example. If previously in the buffer, you had made the function call:
+
+;; thisLongVariableName.someFunction(someArgument)
+
+;; Then at some point later in the buffer you type: “this” then use dabbrev-expand to expand
+;; “this” to “thisLongVariableName”, if you then type <space> and then use dabbrev-expand again,
+;; it will expand “thisLongVariableName” to “thisLongVariableName.someFunction”. Continuing
+;; this, if you type <space> again then dabbrev-expand again, it will add “(someArgument” and the
+;; following word to the expansion.
 
 
 ;;; pabbrev --- I use PredictiveMode instead of.
@@ -28,6 +31,14 @@
              (backward-word 1)
              (point))))
     p))
+
+(defun tags-complete-tag (string predicate what)
+  (save-excursion
+    ;; If we need to ask for the tag table, allow that.
+    (if (eq what t)
+        (all-completions string (tags-completion-table) predicate)
+        (try-completion string (tags-completion-table) predicate))))
+
 
 (defun try-expand-tag (old)
   (unless old
@@ -235,8 +246,7 @@
   (local-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
   (local-set-key (kbd "(") 'skeleton-pair-insert-maybe)
   (local-set-key (kbd "[") 'skeleton-pair-insert-maybe)
-  (local-set-key (kbd "{") 'skeleton-pair-insert-maybe)
-  )
+  (local-set-key (kbd "{") 'skeleton-pair-insert-maybe))
 
 (add-hook 'c-mode-hook 'tsp-auto-pair)
 (add-hook 'c++-mode-hook 'tsp-auto-pair)

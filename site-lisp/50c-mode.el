@@ -1,6 +1,6 @@
 ;;; 50c-mode.el ---
 ;; Author: S.P.Tseng <deftsp@gmail.com>
-;; Time-stamp: <2009-08-29 12:40:40 S.P.Tseng>
+;; Time-stamp: <2009-08-30 11:58:23 S.P.Tseng>
 
 (require 'smarter-operator)
 
@@ -50,7 +50,7 @@
   (local-set-key "\C-m" 'c-context-line-break) ; 多行注释回车在下一行行首自动添加 *
   ;;对嵌套的#ifdef上色 ,不同层次的#ifdef有不同的颜色
   (require 'ifdef)
-  (local-set-key (kbd "M-/") 'semantic-complete-analyze-inline)
+  ;; (local-set-key (kbd "M-/") 'semantic-complete-analyze-inline)
   (local-set-key "." 'semantic-complete-self-insert)
   ;; (local-set-key ">" 'semantic-complete-self-insert)
   (define-key c-mode-base-map (kbd "<M-S-iso-lefttab>") 'mark-ifdef)
