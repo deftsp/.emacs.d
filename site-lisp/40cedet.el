@@ -60,6 +60,7 @@
 ;; (require 'semantic-complete nil t)        ; provides semantic-complete-jump, semantic-complete-jump-local
 (global-set-key (kbd "C-x , j") 'semantic-ia-fast-jump)
 (global-set-key (kbd "C-x , d") 'my-find-definition)
+(global-set-key (kbd "C-x , g") 'my-jump-to-function)
 ;; 直接解析当前光标下的符号（函数或者变量），跳转到相关的定义。这个功能和senator-jump很相像，只是后者还需要回车确认一下。
 (defun my-find-definition (arg)
   "Jump to the definition of the symbol, type or function at point.
@@ -248,6 +249,81 @@
 ;; (add-hook 'c-mode-common-hook 'my-c-mode-cedet-hook)
 
 ;; reference: http://xtalk.msk.su/~ott/en/writings/emacs-devenv/EmacsCedet.html
+
+(defun my-semanticdb-minor-mode-p ()
+  "Query if the current buffer has Semanticdb mode enabled."
+  (condition-case blah
+      (and (semanticdb-minor-mode-p)
+           (eq imenu-create-index-function
+               'semantic-create-imenu-index))
+    (error nil)))
+
+(defun my-icompleting-read (prompt choices)
+  (flet ((ido-make-buffer-list (default)
+           (setq ido-temp-list choices)))
+    (ido-read-buffer prompt)))
+
+(defun my-jump-to-function ()
+  "Jump to a function found by either Semantic or Imenu within the
+    current buffer."
+  (interactive)
+  (cond
+    ((my-semanticdb-minor-mode-p) (my-semantic-jump-to-function))
+    ((boundp 'imenu-create-index-function) (my-imenu-jump-to-function))))
+
+(defun my-imenu-jump-to-function ()
+  "Jump to a function found by Semantic within the current buffer
+    with ido-style completion."
+  (interactive)
+  (save-excursion
+    (setq imenu--index-alist (funcall imenu-create-index-function)))
+  (let ((thing (assoc
+                (my-icompleting-read "Go to: "
+                                     (mapcar #'car imenu--index-alist))
+                imenu--index-alist)))
+    (when thing
+      (funcall imenu-default-goto-function (car thing) (cdr thing))
+      (recenter))))
+
+(defun my-semantic-jump-to-function ()
+  "Jump to a function found by Semantic within the current buffer
+    with ido-style completion."
+  (interactive)
+  (let ((tags
+         (remove-if
+          (lambda (x)
+            (or (getf (semantic-tag-attributes x) :prototype-flag)
+                (not (member (cadr x) '(function variable type)))))
+          (semanticdb-file-stream (buffer-file-name (current-buffer)))))
+        (names (make-hash-table :test 'equal)))
+    (dolist (tag tags)
+      (let ((sn (semantic-tag-name tag)))
+        (when (gethash sn names)
+          (setq sn
+                (loop for i = 1 then (1+ i)
+                   for name = (format "%s<%d>" sn i)
+                   while (gethash name names)
+                   finally return name)))
+        (puthash sn tag names)))
+    (goto-char (semantic-tag-start
+                (gethash
+                 (my-icompleting-read "Go to: " (hash-table-keys names))
+                 names)))
+    (recenter)))
+
+;; Great, exactly what I was looking for :) Unfortunately this results in “Symbol’s function definition is void: hash-table-keys” on Aquamacs 0.99d - any thoughts? JanR?
+
+;; Oops! This is one of mine:
+
+(defun hash-table-keys (hash)
+  (let ((ret nil))
+    (maphash (lambda (k v) (push k ret)) hash)
+    ret))
+
+
+
+
+
 
 ;; Local Variables:
 ;; outline-regexp: ";;; *"
