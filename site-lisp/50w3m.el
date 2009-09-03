@@ -527,11 +527,16 @@
 
 
 ;;; SwitchToBuffer
-(global-set-key (kbd "C-c w") 'tsp-w3m-switch-to-buffer)
-(defvar *w3m-current-buffer* nil)
-(add-hook 'w3m-select-buffer-hook '(lambda ()
-                                    (setq *w3m-current-buffer* (current-buffer))))
-(defun tsp-w3m-switch-to-buffer (arg)
+(global-set-key (kbd "C-c w") 'my-w3m-switch-to-buffer)
+
+(defvar *w3m-last-buffer* nil
+  "Hold the buffer of last displayed.")
+
+(defadvice w3m-close-window (before set-w3m-last-buffer activate)
+  "Set the buffer of last displayed."
+  (setf *w3m-last-buffer* (current-buffer)))
+
+(defun my-w3m-switch-to-buffer (arg)
   "Select the ARG'th w3m buffer."
   (interactive "p")
   (let* ((arg (if (= arg 0) 10 (1- arg)))
@@ -549,9 +554,9 @@
             (run-hooks 'w3m-select-buffer-hook)
             (w3m-select-buffer-update))
            ((not (eq major-mode 'w3m-mode))
-            (if (member *w3m-current-buffer* w3m-list-buffers)
+            (if (member *w3m-last-buffer* w3m-list-buffers)
                 (progn
-                  (switch-to-buffer *w3m-current-buffer*)
+                  (switch-to-buffer *w3m-last-buffer*)
                   (run-hooks 'w3m-select-buffer-hook)
                   (w3m-select-buffer-update))
                 (switch-to-buffer (first w3m-list-buffers)))))))
@@ -560,10 +565,10 @@
           (lambda ()
             (dolist (bufnum '(0 1 2 3 4 5 6 7 8 9))
               (let* ((bufstr (number-to-string bufnum))
-                     (funcname (concat "tsp-w3m-switch-to-buffer-" bufstr)))
+                     (funcname (concat "my-w3m-switch-to-buffer-" bufstr)))
                 (eval `(defun ,(intern funcname) ()
                          (interactive)
-                         (tsp-w3m-switch-to-buffer ,bufnum)))
+                         (my-w3m-switch-to-buffer ,bufnum)))
                 (define-key w3m-mode-map bufstr
                   (intern funcname))))))
 
