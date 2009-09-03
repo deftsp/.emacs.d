@@ -1,5 +1,4 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2009-08-16 17:33:42 S.P.Tseng>
 
 ;;;; EMMS
 
@@ -9,8 +8,7 @@
 (require 'emms-player-mpg321-remote)
 
 (require 'emms-lyrics-download)
-(ad-activate 'emms-lyrics-find-lyric)
-
+(emms-lyrics-download-toggle)
 
 ;; (emms-lastfm-enable)
 

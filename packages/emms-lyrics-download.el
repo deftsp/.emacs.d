@@ -24,6 +24,9 @@
 ;; 26.05.2009 S.P.Tseng <deftsp@gmail.com>
 ;; Try download lyrics on winampcn.com only once.
 
+(defvar emms-lyrics-download nil
+  "If `non-nil' auto downlaod lyrics, otherwise not.")
+
 
 (defvar emms-tracks-have-no-lyrics nil
   "Hold the tracks that have no lyrics on winampcn.com")
@@ -127,6 +130,28 @@ multiple. (idx starts from 1)"
     (when (member name emms-tracks-have-no-lyrics)
       (setq emms-tracks-have-no-lyrics (remove name emms-tracks-have-no-lyrics)))
     (emms-lyrics-download-winampcn lrc idx)))
+
+
+(defun emms-lyrics-download-on ()
+  (interactive)
+  (setq emms-lyrics-download t)
+  (ad-activate 'emms-lyrics-find-lyric))
+
+(defun emms-lyrics-download-off nil
+  (interactive)
+  (setq emms-lyrics-download nil)
+  (ad-deactivate 'emms-lyrics-find-lyric))
+
+(defun emms-lyrics-download-toggle ()
+  "toggle auto download lyrics from winampcn."
+  (interactive)
+  (if emms-lyrics-download
+      (progn
+        (emms-lyrics-download-off)
+        (message "emms lyrics auto download off."))
+      (emms-lyrics-download-on)
+      (message "emms lyrics auto download on.")))
+
 
 (provide 'emms-lyrics-download)
 
