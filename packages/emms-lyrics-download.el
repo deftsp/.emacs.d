@@ -92,6 +92,7 @@
                             (setq urllist (nconc urllist (list url))))))
                       urllist)))
            (lrcurl (nth (- idx 1) llist)))
+      (delete-file lfile)
       (if (and (not (eq nil lrcurl)))
           (progn
             (let* ((lfile2 (url-file-local-copy lrcurl))
@@ -100,6 +101,7 @@
                 (insert-file-contents lfile2)
                 (setq st (re-search-forward "</head>" nil t))
                 (write-region st (point-max) file nil nil nil nil))
+              (delete-file lfile2)
               (message (format "Lyrics: %s - %s downloaded." artist title))))
           (message (format "Lyrics: %s - %s not found." artist title))
           (pushnew (emms-track-get (emms-playlist-current-selected-track) 'name) emms-tracks-have-no-lyrics)))))
