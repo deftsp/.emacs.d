@@ -102,7 +102,7 @@
                 (setq st (re-search-forward "</head>" nil t))
                 (write-region st (point-max) file nil nil nil nil))
               (delete-file lfile2)
-              (message (format "Lyrics: %s - %s downloaded." artist title))))
+              (message (format "Lyrics: %s - %s downloaded (%d of %d)." artist title idx (length llist)))))
           (message (format "Lyrics: %s - %s not found." artist title))
           (pushnew (emms-track-get (emms-playlist-current-selected-track) 'name) emms-tracks-have-no-lyrics)))))
 
