@@ -1,9 +1,11 @@
 ;;; w3m
 
 (add-to-list 'load-path "~/.emacs.d/packages/emacs-w3m")
-(if (= emacs-major-version 23)
-    (require 'w3m-ems)
-    (require 'w3m))
+
+(require 'w3m-ems)
+(require 'w3m)
+(require 'w3m-session)
+
 ;; Rendering Frames
 
 ;; If you want to render frames within Emacs, you have to use w3mmee rather than w3m -- w3mmee is w3m with multibyte
@@ -536,6 +538,12 @@
   "Set the buffer of last displayed."
   (setf *w3m-last-buffer* (current-buffer)))
 
+
+(defun w3m-open/restore-session ()
+  (if (w3m-load-list w3m-session-file)
+      (w3m-session-select)
+      (call-interactively 'w3m)))
+
 (defun my-w3m-switch-to-buffer (arg)
   "Select the ARG'th w3m buffer."
   (interactive "p")
@@ -547,8 +555,8 @@
                                    (symbol-value 'ecb-winman-winring-name)))
                 (progn
                   (winring-next-configuration)
-                  (w3m-session-select))
-                (w3m-session-select)))
+                  (w3m-open/restore-session))
+                (w3m-open/restore-session)))
            ((and (eq major-mode 'w3m-mode) buf)
             (switch-to-buffer buf)
             (run-hooks 'w3m-select-buffer-hook)
@@ -898,6 +906,15 @@ entries in the `no-check' list."
 (setq wget-basic-options '("-v"))
 (setq wget-download-directory "~/dl")
 
+(defadvice slime-hyperspec-lookup (around open/restore-w3m-session-first activate compile)
+  "When open a new page with slime-hyperspec-lookup open/restore a w3m session first."
+  (if (w3m-list-buffers)
+      ad-do-it
+      (if (w3m-load-list w3m-session-file)
+          (progn
+            (message "open/restore a w3m session and run `slime-hyperspec-lookup' again.")
+            (w3m-session-select))
+          ad-do-it)))
 
 
 
