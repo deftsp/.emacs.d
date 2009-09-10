@@ -265,7 +265,7 @@ When ONLY-AFTER, insert space at back only."
          (insert "--")
          (indent-according-to-mode))
         (t
-         (smarter-operator-insert "-"))))
+         (insert "-"))))
 
 (defun smarter-operator-? ()
   "See `smarter-operator-insert'."
