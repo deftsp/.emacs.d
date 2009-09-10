@@ -65,7 +65,7 @@
     (define-key keymap "+" 'smarter-operator-+)
     (define-key keymap "-" 'smarter-operator--)
     (define-key keymap "*" 'smarter-operator-*)
-    (define-key keymap "/" 'smarter-operator-self-insert-command)
+    (define-key keymap "/" 'smarter-operator-/)
     (define-key keymap "&" 'smarter-operator-&)
     (define-key keymap "|" 'smarter-operator-self-insert-command)
     ;; (define-key keymap "!" 'smarter-operator-self-insert-command)
@@ -129,6 +129,14 @@ When ONLY-AFTER, insert space at back only."
 
 
 ;;; Fine Tunings
+
+(defun smarter-operator-/ ()
+  "See `smarter-operator-insert'."
+  (interactive)
+  (if (thing-at-point-looking-at "\".*\"")
+      (insert "/")
+      (smarter-operator-self-insert-command)))
+
 
 (defun smarter-operator-< ()
   "See `smarter-operator-insert'."
