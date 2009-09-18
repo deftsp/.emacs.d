@@ -751,21 +751,10 @@ that was stored with tsp-point-to-register."
 ;; C-c s f             寻找文件
 ;; C-c s i             看看指定的文件被哪些文件include
 
-
-(defun cscope-bury-buffer ()
-  "Clean up cscope, if necessary, and bury the buffer."
-  (interactive)
-  (let ()
-    (if overlay-arrow-position
-	(set-marker overlay-arrow-position nil))
-    (setq overlay-arrow-position nil
-	  overlay-arrow-string nil)
-    (bury-buffer (get-buffer cscope-output-buffer-name))))
-
-;; (defadvice cscope-bury-buffer (after bury-buffer activate)
-;;   "bury the current buffer and remove it from the selected window
-;; if it is displayed there."
-;;   (bury-buffer))
+(defadvice cscope-bury-buffer (after bury-buffer activate)
+  "bury the current buffer and remove it from the selected window
+if it is displayed there."
+  (delete-window (get-buffer-window (get-buffer cscope-output-buffer-name))))
 
 
 ;;cscope ends there---------------------------------------------------------------
