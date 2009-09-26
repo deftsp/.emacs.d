@@ -61,7 +61,7 @@
           "^\\.newsrc-dribble"  "^\\*Woman-Log"  "^\\*Compilation"
           "^\\*Compile-Log" "^\\*Calendar" "^\\*cscope"  "^\\*grep"
           "*BBDB*" "*Tree*"  "*Group*" "*EMMS Playlist*"  "^\\*Summary\\ n"
-          "Map_Sym.txt" "^\\*w3m*" "^\\#" "^\\irc.*:" "localhost:6668"))
+          "Map_Sym.txt" "^\\*w3m*" "^\\#" "^\\irc.*:" "localhost:6668" "^\\*TeX\\ Help\\*"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;uses ido on the recently opened files
