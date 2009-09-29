@@ -906,16 +906,21 @@ entries in the `no-check' list."
 (setq wget-basic-options '("-v"))
 (setq wget-download-directory "~/dl")
 
+;; FIXME: find way to let ad-do-it run after w3m session been selected.
 (defadvice slime-hyperspec-lookup (around open/restore-w3m-session-first activate compile)
   "When open a new page with slime-hyperspec-lookup open/restore a w3m session first."
   (if (w3m-list-buffers)
       ad-do-it
       (if (w3m-load-list w3m-session-file)
-          (progn
-            (message "open/restore a w3m session and run `slime-hyperspec-lookup' again.")
-            (w3m-session-select))
+          (if (equal winring-name (and (featurep 'ecb)
+                                       (symbol-value 'ecb-winman-winring-name)))
+              (progn
+                (winring-next-configuration)
+                (message "open/restore a w3m session and run `slime-hyperspec-lookup' again.")
+                (w3m-session-select))
+              (message "open/restore a w3m session and run `slime-hyperspec-lookup' again.")
+              (w3m-session-select))
           ad-do-it)))
-
 
 
 ;; tips
