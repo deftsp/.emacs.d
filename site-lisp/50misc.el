@@ -337,12 +337,12 @@
   (file-name-shadow-mode t))
 
 ;;; Paren
-;; (global-set-key (kbd "%") 'goto-match-paren)
-(define-key lisp-mode-map (kbd "%") 'goto-match-paren)
-(define-key emacs-lisp-mode-map (kbd "%") 'goto-match-paren)
-(define-key lisp-interaction-mode-map (kbd "%") 'goto-match-paren)
+;; (global-set-key (kbd "C-c %") 'goto-match-paren)
+(define-key lisp-mode-map (kbd "C-c %") 'goto-match-paren)
+(define-key emacs-lisp-mode-map (kbd "C-c %") 'goto-match-paren)
+(define-key lisp-interaction-mode-map (kbd "C-c %") 'goto-match-paren)
 (eval-after-load "scheme"
-  '(define-key scheme-mode-map (kbd "%") 'goto-match-paren))
+  '(define-key scheme-mode-map (kbd "C-c %") 'goto-match-paren))
 ;; (global-set-key "\C-c%" 'self-insert-command) ;C-q %
 ;; (defun match-paren (arg)
 ;;   "Go to the matching paren if on a paren; otherwise insert %."
@@ -400,7 +400,7 @@
            (kill-region (1+ opoint) (1- (point))))
          (backward-char))))
 
-(global-set-key (kbd "C-c %") 'delete-pair)
+;; (global-set-key (kbd "C-c %") 'delete-pair)
 (global-set-key (kbd "C-c M-%") 'tsp-kill-match-paren)
 
 
