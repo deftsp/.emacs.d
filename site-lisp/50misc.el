@@ -578,8 +578,11 @@
 (autoload 'markdown-mode "markdown-mode.el"
   "Major mode for editing Markdown files" t)
 
-;;; before modify it, use C-h v auto-mode-alist to check it.
+;;; fvwm
+(setq fvwm-fvwmcommand-path "/usr/bin/FvwmCommand")
+;; before modify it, use C-h v auto-mode-alist to check it.
 (autoload 'fvwm-mode "fvwm-mode" "Major mode for editing FVWM configuration files." t)
+
 ;; (add-hook 'fvwm-mode-hook '(lambda () (fvwm-enable-indentation)))
 ;; (autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
 ;; (autoload 'xrdb-mode "xrdb-mode" "Mode for editing X resource files" t)
