@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2009-08-02 09:12:37 S.P.Tseng>
+;; Time-stamp: <2009-10-21 22:35:24 S.P.Tseng>
 
 ;;; imenu
 (require 'imenu)
@@ -60,6 +60,10 @@
                            font-lock-constant-face)))
 
 (font-lock-add-keywords 'emacs-lisp-mode
+                        '(("\\<\\(FIXME\\|TODO\\|XXX+\\|BUG\\):"
+                           1 font-lock-warning-face prepend)))
+
+(font-lock-add-keywords 'lisp-mode
                         '(("\\<\\(FIXME\\|TODO\\|XXX+\\|BUG\\):"
                            1 font-lock-warning-face prepend)))
 
