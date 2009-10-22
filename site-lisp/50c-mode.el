@@ -1,6 +1,6 @@
 ;;; 50c-mode.el ---
 ;; Author: S.P.Tseng <deftsp@gmail.com>
-;; Time-stamp: <2009-08-30 11:58:23 S.P.Tseng>
+;; Time-stamp: <2009-10-22 13:18:13 S.P.Tseng>
 
 (require 'smarter-operator)
 
@@ -36,15 +36,15 @@
   ;; (hide-body)
   (smarter-operator-mode))
 
-(defun tsp-next-c-function ()
-  "Go to start of next C function."
-  (interactive)
-  (c-beginning-of-defun -1))
+;; (defun tsp-next-c-function ()
+;;   "Go to start of next C function."
+;;   (interactive)
+;;   (c-beginning-of-defun -1))
 
-(defun tsp-prev-c-function ()
-  "Go to start of next C function."
-  (interactive)
-  (c-beginning-of-defun 2))
+;; (defun tsp-prev-c-function ()
+;;   "Go to start of next C function."
+;;   (interactive)
+;;   (c-beginning-of-defun 2))
 
 (defun my-c-mode-setup ()
   (local-set-key "\C-m" 'c-context-line-break) ; 多行注释回车在下一行行首自动添加 *
@@ -69,9 +69,7 @@
   (define-key c-mode-base-map (kbd "H-M-n") 'senator-previous-token)
   (define-key c-mode-base-map (kbd "H-M-p") 'senator-next-token)
   (define-key c-mode-base-map (kbd "H-M-j") 'tsp-move-function-down)
-  (define-key c-mode-base-map (kbd "H-M-k") 'tsp-move-function-up)
-  (define-key c-mode-base-map (kbd "C-M-E") 'tsp-next-c-function)
-  (define-key c-mode-base-map (kbd "C-M-A") 'tsp-prev-c-function))
+  (define-key c-mode-base-map (kbd "H-M-k") 'tsp-move-function-up))
 
 (add-hook 'c-mode-common-hook 'my-c-mode-setup)
 
