@@ -87,7 +87,7 @@
 ;;; anything-complete
 (require 'anything-complete)
 ;; Automatically collect symbols by 150 secs
-(anything-lisp-complete-symbol-set-timer 150)
+;; (anything-lisp-complete-symbol-set-timer 150)
 ;; replace completion commands with `anything'
 ;; (anything-read-string-mode 1)
 ;; Bind C-o to complete shell history
