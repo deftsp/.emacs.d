@@ -59,9 +59,8 @@
       (let ((anything-enable-digit-shortcuts nil))
         (anything-show-kill-ring)))
 
-    (global-set-key (kbd "M-Y") 'my-anything-show-kill-ring)
-
-    (global-set-key (kbd "M-%") 'anything-query-replace-regexp)))
+    ;; (global-set-key (kbd "M-%") 'anything-query-replace-regexp)
+    (global-set-key (kbd "M-Y") 'my-anything-show-kill-ring)))
 
 ;; if anything-c-source-bbdb is not exist, use bbdb directly.
 (defun any-bbdb ()
