@@ -93,4 +93,9 @@
 ;; Bind C-o to complete shell history
 ;; (anything-complete-shell-history-setup-key "\C-o")
 
-(require 'anything-el-swank-fuzzy)
+(autoload 'anything-el-swank-fuzzy-indent-and-complete-symbol "anything-el-swank-fuzzy"
+  "Indent the current line and perform `anything-el-swank-fuzzy-complete-symbol'." t)
+
+(define-key emacs-lisp-mode-map (kbd "TAB")
+  'anything-el-swank-fuzzy-indent-and-complete-symbol)
+
