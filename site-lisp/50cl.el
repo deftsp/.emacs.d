@@ -1,11 +1,16 @@
-;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2009-08-01 18:21:10 S.P.Tseng>
+;;; -*- mode: Emacs-Lisp -*-
 
-;; (add-to-list 'load-path "~/.emacs.d/slime/") ; your SLIME directory
-;; (add-to-list 'load-path "~/.emacs.d/slime/contrib")
+;; http://common-lisp.net/project/clbuild/
+;; $ clbuild slime-configuration
+(add-to-list 'load-path "~/src/clbuild/source/slime/")
+(add-to-list 'load-path "~/src/clbuild/source/slime/contrib")
+
+(setq slime-backend "~/src/clbuild/.swank-loader.lisp")
+
 (require 'slime)
 ;; (require 'slime-autoloads)
-(slime-setup '(slime-fancy slime-asdf slime-tramp slime-fuzzy slime-editing-commands slime-repl))
+(slime-setup '(slime-fancy slime-asdf slime-tramp))
+(slime-require :swank-listener-hooks)
 ;; the rest of SLIME should be loaded automatically when one of the commands `M-x slime' or `M-x slime-connect' is
 ;; executed the first time.
 ;; (slime-setup '(slime-autodoc))
@@ -37,7 +42,7 @@
     (setq common-lisp-hyperspec-root "file:///usr/share/doc/hyperspec/HyperSpec/")
     (setq common-lisp-hyperspec-root "http://www.lispworks.com/reference/HyperSpec/"))
 
-(setq inferior-lisp-program "/usr/bin/sbcl --noinform"
+(setq inferior-lisp-program "~/src/clbuild/clbuild lisp" ; "/usr/bin/sbcl --noinform"
       lisp-indent-function 'common-lisp-indent-function ;lisp-indent-function
       slime-complete-symbol-function 'slime-fuzzy-complete-symbol
       slime-net-coding-system 'utf-8-unix
