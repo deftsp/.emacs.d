@@ -1,10 +1,10 @@
 ;;; cal-china-x.el --- Chinese calendar extras
 
-;; Copyright (C) 2006, 2007, 2008 William Xu
+;; Copyright (C) 2006, 2007, 2008, 2009 William Xu
 
 ;; Author: William Xu <william.xwl@gmail.com>
-;; Version: 1.0a
-;; Url: http://williamxu.net9.org/ref/cal-china-x.el
+;; Version: 1.1
+;; Url: http://xwl.appspot.com/ref/cal-china-x.el
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -24,15 +24,17 @@
 ;;; Commentary:
 
 ;; This extension mainly adds the following extra features:
-;;
 ;;   - Chinese localizations
 ;;   - Display holiday, lunar, horoscope, zodiac, solar term info on mode line
 ;;   - Define holidays using `holiday-lunar', `holiday-solar-term'
 ;;   - Highlight holidays based on different priorities
 ;;   - Add `cal-china-x-chinese-holidays', `cal-china-x-japanese-holidays'.
 ;;
-;; To use, add the following in your .emacs:
+;; To use, add something like the following to your .emacs:
 ;;     (require 'cal-china-x)
+;;     (setq mark-holidays-in-calendar t)
+;;     (setq cal-china-x-priority1-holidays cal-china-x-chinese-holidays)
+;;     (setq calendar-holidays cal-china-x-priority1-holidays)
 
 ;;; History
 
@@ -531,7 +533,23 @@ line."
              "Calendar"
 
              '(cal-china-x-get-holiday date)
-             '(calendar-date-string date t)
+             '(concat (calendar-date-string date t)
+                      ;; FIXME: There should be a better way of finding week value
+                      ;; for a date.
+                      (format-time-string
+                       " 第%V周"
+                       (date-to-time    ; "%Y-%m-%dT%T%z"
+                        (concat (apply 'format 
+                                       "%02d-%02d-%02d" 
+                                       (mapcar (lambda (func) 
+                                                 (funcall func date))
+                                               '(extract-calendar-year
+                                                 extract-calendar-month
+                                                 extract-calendar-day)))
+                                ;; (format-time-string "T%T%z")
+                                "T00:00:00+0000"
+                                ))))
+
              '(cal-china-x-chinese-date-string date)
 
              (concat
@@ -626,7 +644,23 @@ characters on the line."
           " " calendar-buffer)
 
          '(cal-china-x-get-holiday date)
-         '(calendar-date-string date t)
+         '(concat (calendar-date-string date t)
+                  ;; FIXME: There should be a better way of finding week value
+                  ;; for a date.
+                  (format-time-string
+                   " 第%V周"
+                   (date-to-time        ; "%Y-%m-%dT%T%z"
+                    (concat (apply 'format 
+                                   "%02d-%02d-%02d" 
+                                   (mapcar (lambda (func) 
+                                             (funcall func date))
+                                           '(extract-calendar-year
+                                             extract-calendar-month
+                                             extract-calendar-day)))
+                            ;; (format-time-string "T%T%z")
+                            "T00:00:00+0000"
+                            ))))
+
          '(cal-china-x-chinese-date-string date)
 
          (concat
