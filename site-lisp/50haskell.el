@@ -2,12 +2,20 @@
 
 ;; Copyright (C) 2007  S.P.Tseng
 
-;; Time-stamp: <2009-07-15 13:53:05 S.P.Tseng>
 ;; Keywords:
 
 (load "~/.emacs.d/packages/haskell-mode/haskell-site-file")
 (setq haskell-font-lock-symbols t)
 ;; (require 'haskell-mode nil t)
+
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+;; Note that the three indentation modules are mutually exclusive - add at
+;; most one. In preference for the more advanced.
+
 
 ;; (setq auto-mode-alist
 ;;       (append auto-mode-alist
