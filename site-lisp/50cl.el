@@ -5,9 +5,17 @@
 (add-to-list 'load-path "~/src/clbuild/source/slime/")
 (add-to-list 'load-path "~/src/clbuild/source/slime/contrib")
 
+;; swank-clojure
+(add-to-list 'load-path "~/lisp/clj/swank-clojure/src/emacs")
+(add-to-list 'load-path "~/lisp/clj/clojure-mode")
+
+
+
 (setq slime-backend "~/src/clbuild/.swank-loader.lisp")
 
 (require 'slime)
+(require 'clojure-mode)
+
 ;; (require 'slime-autoloads)
 (slime-setup '(slime-fancy slime-asdf slime-tramp))
 (slime-require :swank-listener-hooks)
@@ -16,6 +24,15 @@
 ;; (slime-setup '(slime-autodoc))
 ;; (when (slime-connected-p)
 ;;   (slime-eval-async '(swank:swank-require :swank-arglists)))
+
+(setq swank-clojure-jar-path "~/.clojure/clojure.jar"
+      swank-clojure-extra-classpaths (list
+                                      "~/lisp/clj/swank-clojure/src/main/clojure"
+                                      "~/.clojure/clojure-contrib.jar"))
+(require 'swank-clojure-autoload)
+
+
+
 
 (defun my-lisp-mode-hook ()
   (slime-mode t)
@@ -57,20 +74,28 @@
       slime-highlight-compiler-notes t
       slime-fuzzy-completion-in-place nil)
 
-;; (setq slime-lisp-implementations
-;;       '((sbcl ("sbcl" "--core" "sbcl.core-with-swank")
-;;          :init (lambda (port-file _)
-;;                  (format
-;;                   "(swank:start-server %S :coding-system \"utf-8-unix\")\n"
-;;                   port-file))
-;;          :coding-system utf-8-unix)
-;;         (cmucl ("lisp"))
-;;         (ecl ("ecl"))
-;;         (allegro ("/usr/local/stow/AllegroCL/alisp"))
-;;         (clisp ("clisp") :coding-system utf-8-unix)
-;;         (lispworks (""))
-;;         (openmcl ("dx86cl64"))))
+;; You start up your lisps using M-- M-x Slime. It will ask you which Lisp to start up, and you use
+;; the name you defined in slime-lisp-implementations.
 
+;; You can switch the "active" REPL using the command C-c C-x c. For more info, see the Slime
+;; Documentation on controlling multiple connections
+;; (http://common-lisp.net/project/slime/doc/html/Multiple-connections.html#Multiple-connections).
+
+(mapcar (lambda (lst) (add-to-list 'slime-lisp-implementations lst))
+        '((sbcl ("~/src/clbuild/clbuild" "lisp"))
+          (sbcl.core ("sbcl" "--core" "sbcl.core-with-swank")
+           :init (lambda (port-file _)
+                   (format
+                    "(swank:start-server %S :coding-system \"utf-8-unix\")\n"
+                    port-file))
+           :coding-system utf-8-unix)
+          (cmucl ("lisp"))
+          (clozure ("/usr/bin/ccl"))
+          (ecl ("ecl"))
+          (allegro ("/usr/local/stow/AllegroCL/alisp"))
+          (clisp ("clisp") :coding-system utf-8-unix)
+          (lispworks (""))
+          (openmcl ("dx86cl64"))))
 
 (defmacro defslime-start (name lisp)
   `(defun ,name ()
@@ -266,20 +291,51 @@ currently under the cursor."
 ;;       '(emacs-lisp lisp inferior-lisp))
 
 
+(defun check-region-parens ()
+  "Check if parentheses in the region are balanced. Signals a
+scan-error if not."
+  (interactive)
+  (save-restriction
+    (save-excursion
+      (let ((deactivate-mark nil))
+        (condition-case c
+            (progn
+              (narrow-to-region (region-beginning) (region-end))
+              (goto-char (point-min))
+              (while (/= 0 (- (point)
+                              (forward-list))))
+              t)
+          (scan-error (signal 'scan-error '("Region parentheses not balanced"))))))))
+
+(defun paredit-backward-maybe-delete-region ()
+  (interactive)
+  (if mark-active
+      (progn
+        (check-region-parens)
+        (cua-delete-region))
+      (paredit-backward-delete)))
+
+(defun paredit-forward-maybe-delete-region ()
+  (interactive)
+  (if mark-active
+      (progn
+        (check-region-parens)
+        (cua-delete-region))
+      (paredit-forward-delete)))
+
+
 
 ;; Apparently this is better idea, because otherwise SLIME will not be a happy bunny.
 (eval-after-load 'paredit
   '(progn
-    (define-key paredit-mode-map
-     (kbd "RET") nil)
-    (define-key paredit-mode-map
-     (kbd ")") 'paredit-close-parenthesis)
-    (define-key paredit-mode-map
-     (kbd "M-)") 'paredit-close-parenthesis-and-newline)
-    (define-key lisp-mode-shared-map
-     (kbd "RET") 'paredit-newline)
-    (define-key emacs-lisp-mode-map
-     (kbd "RET") 'paredit-newline)))
+    ;; (define-key paredit-mode-map (kbd ";")   'self-insert-command)
+    (define-key paredit-mode-map (kbd "<delete>") 'paredit-forward-maybe-delete-region)
+    (define-key paredit-mode-map (kbd "DEL") 'paredit-backward-maybe-delete-region)
+    ;; (define-key paredit-mode-map (kbd "RET") nil)
+    (define-key paredit-mode-map (kbd ")") 'paredit-close-parenthesis)
+    (define-key paredit-mode-map (kbd "M-)") 'paredit-close-parenthesis-and-newline)
+    ;; (define-key emacs-lisp-mode-map (kbd "RET") 'paredit-newline)
+    (define-key lisp-mode-shared-map (kbd "RET") 'paredit-newline)))
 
 (eval-after-load 'slime
   '(progn
@@ -468,3 +524,100 @@ currently under the cursor."
     ;; (insert ";;;; " file "\n")
     (insert "\n(defpackage #:" package "\n  (:use #:cl))\n\n")
     (insert "(in-package #:" package ")\n\n")))
+
+;; --------------------------------------------------------------------------
+
+;; (defun slime-java-describe (symbol-name)
+;;   "Get details on Java class/instance at point."
+;;   (interactive (list (slime-read-symbol-name "Java Class/instance: ")))
+;;   (when (not symbol-name)
+;;     (error "No symbol given"))
+;;   (save-excursion
+;;     (set-buffer (slime-output-buffer))
+;;     (unless (eq (current-buffer) (window-buffer))
+;;       (pop-to-buffer (current-buffer) t))
+;;     (goto-char (point-max))
+;;     (insert (concat "(clojure.contrib.repl-utils/show " symbol-name ")"))
+;;     (when symbol-name
+;;       (slime-repl-return)
+;;       (other-window 1))))
+
+;; (defun slime-javadoc (symbol-name)
+;;   "Get JavaDoc documentation on Java class at point."
+;;   (interactive (list (slime-read-symbol-name "JavaDoc info for: ")))
+;;   (when (not symbol-name)
+;;     (error "No symbol given"))
+;;   (set-buffer (slime-output-buffer))
+;;   (unless (eq (current-buffer) (window-buffer))
+;;     (pop-to-buffer (current-buffer) t))
+;;   (goto-char (point-max))
+;;   (insert (concat "(clojure.contrib.javadoc/javadoc " symbol-name ")"))
+;;   (when symbol-name
+;;     (slime-repl-return)
+;;     (other-window 1)))
+
+;; (setq slime-browse-local-javadoc-root (concat (expand-file-name "~") "/lisp/docs/" "java"))
+
+;; (defun slime-browse-local-javadoc (ci-name)
+;;   "Browse local JavaDoc documentation on Java class/Interface at point."
+;;   (interactive (list (slime-read-symbol-name "Class/Interface name: ")))
+;;   (when (not ci-name)
+;;     (error "No name given"))
+;;   (let ((name (replace-regexp-in-string "\\$" "." ci-name))
+;;         (path (concat (expand-file-name slime-browse-local-javadoc-root) "/docs/api/")))
+;;     (with-temp-buffer
+;;       (insert-file-contents (concat path "allclasses-noframe.html"))
+;;       (let ((l (delq nil
+;;                      (mapcar #'(lambda (rgx)
+;;                                  (let* ((r (concat "\\.?\\(" rgx "[^./]+\\)[^.]*\\.?$"))
+;;                                         (n (if (string-match r name)
+;;                                                (match-string 1 name)
+;;                                                name)))
+;;                                    (if (re-search-forward (concat "<A HREF=\"\\(.+\\)\" +.*>" n "<.*/A>") nil t)
+;;                                        (match-string 1)
+;;                                        nil)))
+;;                              '("[^.]+\\." "")))))
+;;         (if l
+;;             (browse-url (concat "file://" path (car l)))
+;;             (error (concat "Not found: " ci-name)))))))
+
+;; (setq slime-browse-local-javadoc-root "/Users/Shared/SDKs/J2SE/5.0")
+
+;; (defun slime-browse-local-javadoc (ci-name)
+;;   "Browse local JavaDoc documentation on Java class/Interface at point."
+;;   (interactive (list (slime-read-symbol-name "Class/Interface name: ")))
+;;   (when (not ci-name)
+;;     (error "No name given"))
+;;   (let ((name (replace-regexp-in-string "\\$" "." ci-name))
+;;         (path (concat (expand-file-name slime-browse-local-javadoc-root) "/docs/api/")))
+;;     (with-temp-buffer
+;;       (insert-file-contents (concat path "allclasses-noframe.html"))
+;;       (let ((l (delq nil
+;;                      (mapcar #'(lambda (rgx)
+;;                                  (let* ((r (concat "\\.?\\(" rgx "[^./]+\\)[^.]*\\.?$"))
+;;                                         (n (if (string-match r name)
+;;                                                (match-string 1 name)
+;;                                                name)))
+;;                                    (if (re-search-forward (concat "<A HREF=\"\\(.+\\)\" +.*>" n "<.*/A>") nil t)
+;;                                        (match-string 1)
+;;                                        nil)))
+;;                              '("[^.]+\\." "")))))
+;;         (if l
+;;             (browse-url (concat "file://" path (car l)))
+;;             (error (concat "Not found: " ci-name)))))))
+
+;; (add-hook 'slime-connected-hook #'(lambda ()
+;;                                     (define-key slime-mode-map		(kbd "C-c b")	'slime-browse-local-javadoc)
+;;                                     (define-key slime-repl-mode-map	(kbd "C-c b")	'slime-browse-local-javadoc)))
+
+
+
+
+;; (add-hook 'slime-connected-hook (lambda ()
+;;                                   (interactive)
+;;                                   (slime-redirect-inferior-output)
+;;                                   (define-key slime-mode-map (kbd "C-c d") 'slime-java-describe)
+;;                                   (define-key slime-repl-mode-map (kbd "C-c d") 'slime-java-describe)
+;;                                   (define-key slime-mode-map (kbd "C-c D") 'slime-javadoc)
+;;                                   (define-key slime-repl-mode-map (kbd "C-c D") 'slime-javadoc)))
+
