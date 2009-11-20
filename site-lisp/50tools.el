@@ -220,28 +220,35 @@ Nth occurence of CHAR."
 ;; (set-face-background 'highline-face "#222222")
 
 ;;; buffer action
-;; http://williamxu.net9.org/ref/buffer-action.el
+;; http://xwl.appspot.com/ref/buffer-action.el
 (autoload 'buffer-action-compile "buffer-action")
 (autoload 'buffer-action-run "buffer-action")
-(setq buffer-action-table '((c-mode "gcc -Wall -Wextra -O2 %f -lm -ggdb -o %n" "%n" "./%n")
-                            (c++-mode "g++ -O2 %f -lm -o %n" "%n" "./%n")
+(setq buffer-action-table '((c-mode    "gcc -Wall -ggdb -Wextra %f -lm -o %n" "%n" "./%n")
+                            (c++-mode  "g++ %f -lm -o %n" "%n" "./%n")
+                            (java-mode "javac %n" "%n.class" "java %n")
+                            (makefile-mode "make" nil nil)
                             ("\\.pl$" "perl -cw %f" nil "perl -s %f")
                             ("\\.php$" nil nil "php %f")
                             ("\\.tex$" "latex %f" "%n.dvi" "xdvi %n.dvi &")
-                            (texinfo-mode makeinfo-buffer "%n.info"
-                             (lambda nil
+                            (texinfo-mode (lambda ()
+                                            (save-excursion
+                                              ;; (texinfo-make-menu)
+                                              (texinfo-all-menus-update)
+                                              (texinfo-every-node-update)
+                                              (save-buffer))
+                                            (makeinfo-buffer))
+                             "%n.info"
+                             (lambda ()
                                (Info-revert-find-node
-                                (buffer-action-replace "%n.info")
+                                (replace-regexp-in-string
+                                 "\\.texinfo*$" ".info" (buffer-action-replace "%F"))
                                 (makeinfo-current-node))))
-                            (emacs-lisp-mode
-                             (lambda nil
-                               (byte-compile-file
-                                (buffer-action-replace "%f")))
-                             "%n.elc" eval-buffer)
-                            ("\\.info$" nil nil
-                             (lambda nil
-                               (info
-                                (buffer-file-name))))))
+                            (emacs-lisp-mode (lambda ()
+                                               (byte-compile-file (buffer-action-replace "%f")))
+                             "%n.elc"
+                             eval-buffer)
+                            ("\\.info$" nil nil (lambda () (info (buffer-file-name))))
+                            ("\\.dot$" "dot -Tjpg %f -o %n.jpg" "%n.png" "qiv %f &")))
 
 
 ;;可以为重名的 buffer 在前面加上其父目录的名字来让 buffer 的名字区分开来，而不是单纯的加一个没有太多意义的序号
