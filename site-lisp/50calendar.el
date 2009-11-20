@@ -27,18 +27,17 @@
 (add-hook 'diary-mark-entries-hook 'diary-mark-included-diary-files)
 
 ;; (add-hook 'today-visible-calendar-hook 'calendar-mark-today)
-;; To enable appointment notification, you must enable the time display feature of Emacs, M-x display-time (see section
-;; The Mode Line). You must also add the function appt-make-list to the
-(add-hook 'diary-hook 'appt-make-list)
 
-;; turn on appointments
-(appt-activate 1)
+;;; Appointments
 (setq appt-display-diary t
+      appt-display-duration 30
       appt-display-format 'window  ; use a separate window to remind appointments
       appt-display-duration 30
       appt-message-warning-time 36
       appt-audible t ; beep to indicate appointment
       appt-display-mode-line t)
+(appt-activate 1)
+
 
 (setq diary-date-forms '((year "/" month "/" day "[^/0-9]"))
       calendar-date-display-form '(year "/" month "/" day)

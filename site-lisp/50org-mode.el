@@ -229,22 +229,7 @@
 ;;     (message "Use C-c C-c to remember the data.")))
 ;;remember ends there---------------------------------------------------------------------------
 
-
-;; open appt message function
-;; (appt-activate t)
-(setq appt-display-format 'window)
-;; (add-hook 'diary-hook 'appt-make-list)
-
-
-
-;;; org to appt
-(setq appt-display-duration 30
-      appt-audible t
-      appt-display-mode-line t
-      appt-msg-countdown-list '(10 0))
-;;(org-agenda)
 ;;(org-agenda-to-appt)
-
 
 (setq org-fontify-emphasized-text t
       org-fontify-done-headline nil)
