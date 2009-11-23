@@ -3,6 +3,7 @@
 ;;;; EMMS
 
 (require 'emms-setup)
+(setq emms-mode-line-icon-color "DarkBlue") 
 (setq emms-directory "~/.emacs.d/.emms")
 (emms-devel)
 (require 'emms-player-mpg321-remote)
@@ -29,7 +30,6 @@
       emms-playing-time-display-format "%s"
       emms-mode-line-icon-before-format "["
       emms-mode-line-format " %s]"
-      emms-mode-line-icon-color "DarkBlue"
       emms-volume-amixer-control "PCM" ; "Master"
       emms-history-start-playing nil)
 
