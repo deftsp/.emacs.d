@@ -2,7 +2,7 @@
 
 ;;; dabbrev-expand
 (setq dabbrev-case-fold-search 'case-fold-search)
-(global-set-key (kbd "M-/") 'dabbrev-expand)
+;; (global-set-key (kbd "M-/") 'dabbrev-expand)
 ;; (define-key minibuffer-local-map (kbd "C-<tab>") 'dabbrev-expand)
 
 ;;; Continuing Expansion
@@ -13,10 +13,10 @@
 
 ;; thisLongVariableName.someFunction(someArgument)
 
-;; Then at some point later in the buffer you type: “this” then use dabbrev-expand to expand
-;; “this” to “thisLongVariableName”, if you then type <space> and then use dabbrev-expand again,
-;; it will expand “thisLongVariableName” to “thisLongVariableName.someFunction”. Continuing
-;; this, if you type <space> again then dabbrev-expand again, it will add “(someArgument” and the
+;; Then at some point later in the buffer you type: "this" then use dabbrev-expand to expand
+;; "this" to "thisLongVariableName", if you then type <space> and then use dabbrev-expand again,
+;; it will expand "thisLongVariableName" to "thisLongVariableName.someFunction". Continuing
+;; this, if you type <space> again then dabbrev-expand again, it will add "(someArgument" and the
 ;; following word to the expansion.
 
 
@@ -25,12 +25,14 @@
 ;; (setq pabbrev-idle-timer-verbose nil)
 ;; (global-pabbrev-mode -1)
 
-;;; hippie-expand (like M-/, but more powerful)
+;;; hippie-expand (like dabbrev-expand, but more powerful) -----------------------------------------------------
 (defun he-tag-beg ()
   (let ((p (save-excursion
              (backward-word 1)
              (point))))
     p))
+
+(autoload 'tags-completion-table "etags" "Build `tags-completion-table' on demand." t)
 
 (defun tags-complete-tag (string predicate what)
   (save-excursion
@@ -56,48 +58,48 @@
       (setq he-expand-list (cdr he-expand-list))
       t))
 
-(global-set-key (kbd "<C-tab>") 'hippie-expand)
-;; (global-set-key (kbd "M-/") 'hippie-expand)
+;; (global-set-key (kbd "<C-tab>") 'hippie-expand)
+(global-set-key (kbd "M-/") 'hippie-expand)
 
-;;hippie-expand-try-functions-list是一个优先列表.
-;;其中 "expand-dabbrev" 是指搜索匹配你当前输入的头部的词语进行补全。
+;; The list of expansion functions tried in order by `hippie-expand'.
 (autoload 'senator-try-expand-semantic "senator")
 (setq hippie-expand-try-functions-list
-      '(try-expand-all-abbrevs             ; 匹配所有缩写词
-        try-expand-dabbrev                 ; 搜索当前 buffer
-        try-expand-dabbrev-visible         ; 搜索当前可见窗口
-        try-expand-dabbrev-all-buffers     ; 搜索所有 buffer
-        try-expand-dabbrev-from-kill       ; 从 kill-ring 中搜索
-        try-complete-lisp-symbol-partially ; 部分补全 elisp symbol
-        try-complete-lisp-symbol           ; 补全 lisp symbol
-        try-complete-file-name-partially   ; 文件名部分匹配
-        try-complete-file-name             ; 文件名匹配
+      '(try-expand-all-abbrevs             ; Try to expand word before point according to all abbrev tables.
+        try-expand-dabbrev                 ; Try to expand word "dynamically", searching the current buffer.
+        try-expand-dabbrev-visible         ; Try to expand word "dynamically", searching visible window parts.
+        try-expand-dabbrev-all-buffers     ; Tries to expand word "dynamically", searching all other buffers.
+        try-expand-dabbrev-from-kill       ; Try to expand word "dynamically", searching the kill ring.
+        try-complete-lisp-symbol-partially ; Try to complete as an Emacs Lisp symbol, as many characters as unique.
+        try-complete-lisp-symbol           ; Try to complete word as an Emacs Lisp symbol.
+        try-complete-file-name-partially   ; Try to complete text as a file name, as many characters as unique.
+        try-complete-file-name             ; Try to complete text as a file name.
         ;; senator-try-expand-semantic
-        try-expand-line                    ; 补全当前行
-        try-expand-line-all-buffers
-        try-expand-list                    ; 补全一个列表
-        try-expand-list-all-buffers
-        try-expand-tag
-        ispell-complete-word
+        try-expand-line                    ; Try to complete the current line to an entire line in the buffer.
+        try-expand-line-all-buffers        ; Try to complete the current line, searching all other buffers.
+        try-expand-list                    ; Try to complete the current beginning of a list.
+        try-expand-list-all-buffers        ; Try to complete the current list, searching all other buffers.
+        ;; try-expand-tag
+        ;; ispell-complete-word               ; Try to complete the word before or under point
+        ;; Try to complete text with something from the kill ring.
         try-expand-whole-kill))
-
+;; ---------------------------------------------------------------------------------------------------------x
 (setq-default abbrev-mode t)
 ;;(read-abbrev-file "~/.abbrev_defs")
 (setq abbrev-file-name "~/.emacs.d/.abbrev_defs")
-;; 禁用自动保存缩写词
+;; do not auto save abbrevs
 (setq save-abbrevs nil)
 (if (file-exists-p  abbrev-file-name)
     (quietly-read-abbrev-file abbrev-file-name))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;输入inc 然后会提示输入文件名称.
+;; input inc, prompt inut file name.
 (mapc
  (lambda (mode)
-   (define-abbrev-table mode '(("inc" "" tsp-skel-include 1))))
+   (define-abbrev-table mode '(("inc" "" deftsp-skel-include 1))))
  '(c-mode-abbrev-table c++-mode-abbrev-table))
 
-;; 输入 inc , 可以自动提示输入文件名称,可以自动补全.
-(define-skeleton tsp-skel-include
+;; input inc and space, auto prompt input filename which can be auto-comlete.
+(define-skeleton deftsp-skel-include
     "generate include<>" ""
     > "#include <"
     (completing-read
@@ -123,61 +125,30 @@
     ">\n")
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;当你发呆的时间超过 4 秒以上，头文件的文件名称自动加一个下划线，在上面按回车，可以打开这个文件
-
-(defvar tsp-c/c++-hightligh-included-files-key-map nil)
-(if tsp-c/c++-hightligh-included-files-key-map
-    nil
-    (setq tsp-c/c++-hightligh-included-files-key-map (make-sparse-keymap))
-    (define-key tsp-c/c++-hightligh-included-files-key-map (kbd "<RET>") 'find-file-at-point))
-
-(defun tsp-c/c++-hightligh-included-files ()
-  (interactive)
-  (when (or (eq major-mode 'c-mode)
-            (eq major-mode 'c++-mode))
-    (save-excursion
-      (goto-char (point-min))
-      ;; remove all overlay first
-      (mapc (lambda (ov) (if (overlay-get ov 'tsp-c/c++-hightligh-included-files)
-                             (delete-overlay ov)))
-            (overlays-in (point-min) (point-max)))
-      (while (re-search-forward "^#include[ \t]+[\"<]\\(.*\\)[\">]" nil t nil)
-        (let* ((begin  (match-beginning 1))
-               (end (match-end 1))
-               (ov (make-overlay begin end)))
-          (overlay-put ov 'tsp-c/c++-hightligh-included-files t)
-          (overlay-put ov 'keymap tsp-c/c++-hightligh-included-files-key-map)
-          (overlay-put ov 'face 'underline))))))
-;; 这不是一个好办法，也可以把它加载到 c-mode-hook or c++-mode-hook 中。
-;;(setq tsp-c/c++-hightligh-included-files-timer (run-with-idle-timer 4 t 'tsp-c/c++-hightligh-included-files))
-(add-hook 'c-mode-hook 'tsp-c/c++-hightligh-included-files)
-(add-hook 'c++-mode-hook 'tsp-c/c++-hightligh-included-files)
-
 ;;-------------------------------------------------------------------------------------
-;;注意在触发abbrev时，不要用回车否则光标不会停在指定位置
-(define-skeleton tsp-skeleton-c-mode-main-func
+;; trigger abbrev use space, instead of RET, otherwise the cursor will stay the wrong place
+(define-skeleton deftsp-skeleton-c-mode-main-func
     "generate int main(int argc, char * argv[]) automatic" nil
     "int\nmain(int argc, char *argv[]) \n{\n"
     > _  "\n" > "return 0;"
     "\n}")
 (define-abbrev-table 'c-mode-abbrev-table
-    '(("main" "" tsp-skeleton-c-mode-main-func 1)))
+    '(("main" "" deftsp-skeleton-c-mode-main-func 1)))
 (define-abbrev-table 'c++-mode-abbrev-table
-    '(("main" "" tsp-skeleton-c-mode-main-func 1)))
+    '(("main" "" deftsp-skeleton-c-mode-main-func 1)))
 ;;-------------------------------------------------------------------------------------
-(define-skeleton tsp-skel-c-for-func
+(define-skeleton deftsp-skel-c-for-func
     "generate for () { } automatic" nil
     "for (" _ ") { " > \n
     \n
     "}"> \n)
 (define-abbrev-table 'c-mode-abbrev-table
-    '(("fors" "" tsp-skel-c-for-func 1)))
+    '(("fors" "" deftsp-skel-c-for-func 1)))
 (define-abbrev-table 'c++-mode-abbrev-table
-    '(("fors" "" tsp-skel-c-for-func 1)))
+    '(("fors" "" deftsp-skel-c-for-func 1)))
 ;;-------------------------------------------------------------------------------------
 
-(define-skeleton tsp-skel-c-ife
+(define-skeleton deftsp-skel-c-ife
     "Insert a C if ... else .. block" nil
     > "if (" _ ") {" \n
     \n
@@ -186,11 +157,11 @@
     \n
     "}" > \n)
 (define-abbrev-table 'c-mode-abbrev-table
-    '(("ife" "" tsp-skel-c-ife 1)))
+    '(("ife" "" deftsp-skel-c-ife 1)))
 (define-abbrev-table 'c++-mode-abbrev-table
-    '(("ife" "" tsp-skel-c-ife 1)))
+    '(("ife" "" deftsp-skel-c-ife 1)))
 
-(define-skeleton tsp-skel-elisp-separator
+(define-skeleton deftsp-skel-elisp-separator
     "Inserts a separator for elisp file."
   nil
   ";; ------------------------------------------------------------------------------------\n"
@@ -226,20 +197,7 @@
                             (?` _ ?')))
 
 
-;; (add-hook 'emacs-lisp-mode-hook
-;;           (lambda ()
-;;             (make-local-variable 'skeleton-pair)
-;;             (make-local-variable 'skeleton-pair-on-word)
-;;             (make-local-variable 'skeleton-pair-filter-function)
-;;             (make-local-variable 'skeleton-pair-alist)
-;;             (setq skeleton-pair-on-word t
-;;                   skeleton-pair t)
-;;             (local-set-key (kbd "(") 'skeleton-pair-insert-maybe)
-;;             (local-set-key (kbd "[") 'skeleton-pair-insert-maybe)
-;;             (local-set-key (kbd "{") 'skeleton-pair-insert-maybe)))
-
-
-(defun tsp-auto-pair ()
+(defun deftsp-auto-pair ()
   (interactive)
   (make-local-variable 'skeleton-pair-alist)
   (local-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
@@ -248,8 +206,8 @@
   (local-set-key (kbd "[") 'skeleton-pair-insert-maybe)
   (local-set-key (kbd "{") 'skeleton-pair-insert-maybe))
 
-(add-hook 'c-mode-hook 'tsp-auto-pair)
-(add-hook 'c++-mode-hook 'tsp-auto-pair)
+(add-hook 'c-mode-hook 'deftsp-auto-pair)
+(add-hook 'c++-mode-hook 'deftsp-auto-pair)
 
 ;; (global-set-key (kbd "<") 'skeleton-pair-insert-maybe)
 ;; (global-set-key (kbd "`") 'skeleton-pair-insert-maybe)
