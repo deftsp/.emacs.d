@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2009-10-21 22:35:24 S.P.Tseng>
+;; Time-stamp: <2009-12-06 15:50:30 S.P.Tseng>
 
 ;;; imenu
 (require 'imenu)
@@ -76,22 +76,24 @@
 ;;            (font-lock-add-keywords nil '(("FIXME[:!]?" 0
 ;;                           'show-paren-mismatch-face
 ;;                           prepend))))))))
-(setq compilation-finish-functions 'compile-autoclose)
-(defun compile-autoclose (buf str)
-  (let ((exit-abnormalp (string-match "exited abnormally" str)))
-    (cond ((and (not exit-abnormalp) (equal (buffer-name) "*compilation*"))
-           ;; the compilation window go away in 0.5 seconds
-           (run-at-time 0.5 nil
-                        'delete-windows-on buf
-                        (message "pppp")
-                        ;; It will switch back to whatever buffer was in your other window
-                        ;; (get-buffer-window buffer t)
-                        )
-           (message "NO COMPILATION ERRORS!"))
-          ((and exit-abnormalp (equal (buffer-name) "*grep*"))
-           (run-at-time 0.5 nil 'delete-windows-on buf)
-           (message "NO SUCH STRING IN CURRENT DIRECTORY"))
-          (t (message "Oh, I catch it!")))))
+
+;;; auto close *compilation* buffer, if no compile error
+;; (setq compilation-finish-functions 'compile-autoclose)
+;; (defun compile-autoclose (buf str)
+;;   (let ((exit-abnormalp (string-match "exited abnormally" str)))
+;;     (cond ((and (not exit-abnormalp) (equal (buffer-name) "*compilation*"))
+;;            ;; the compilation window go away in 0.5 seconds
+;;            (run-at-time 0.5 nil
+;;                         'delete-windows-on buf
+;;                         (message "pppp")
+;;                         ;; It will switch back to whatever buffer was in your other window
+;;                         ;; (get-buffer-window buffer t)
+;;                         )
+;;            (message "NO COMPILATION ERRORS!"))
+;;           ((and exit-abnormalp (equal (buffer-name) "*grep*"))
+;;            (run-at-time 0.5 nil 'delete-windows-on buf)
+;;            (message "NO SUCH STRING IN CURRENT DIRECTORY"))
+;;           (t (message "Oh, I catch it!")))))
 ;;--------------------------------------------------------------------------------
 ;; _+ comment current line
 (defun tsp-comment-or-uncomment-region (&optional line)
