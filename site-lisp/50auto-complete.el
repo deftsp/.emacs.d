@@ -11,7 +11,7 @@
 (require 'auto-complete-config)
 (autoload 'auto-complete-mode "auto-complete"
   "This extension provides a way to select a completion with popup menu." t)
-(global-auto-complete-mode t)
+;; (global-auto-complete-mode t)
 
 (set-face-background 'ac-selection-face "steelblue")
 (set-face-foreground 'ac-selection-face "white")
