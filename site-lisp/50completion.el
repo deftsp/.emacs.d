@@ -102,26 +102,28 @@
 (define-skeleton deftsp-skel-include
     "generate include<>" ""
     > "#include <"
-    (completing-read
-     "Include File:"
-     (mapcar #'(lambda (f) (list f ))
-             (apply 'append
-                    (mapcar #'(lambda (dir)
-                                (if (or (string= dir "/usr/include") (string= dir "/usr/local/include"))
-                                    (directory-files dir nil "^[^.]")
-                                    (flet ((last-dir (path)
-                                             (string-match ".*/\\(.*\\)" path)
-                                             (match-string 1 path)))
-                                      (mapcar #'(lambda (file-name)
-                                                  (concat (last-dir dir)
-                                                          "/" file-name))
-                                              (directory-files dir)))))
-                            (list "/usr/include"
-                                  "/usr/local/include"
-                                  "/usr/include/sys"
-                                  "/usr/include/netinet"
-                                  "/usr/include/arpa"
-                                  "/usr/include/bits")))))
+    (let ((prompt "Include File: ")
+          (files (mapcar #'(lambda (f) (list f ))
+                         (apply 'append
+                                (mapcar #'(lambda (dir)
+                                            (if (or (string= dir "/usr/include") (string= dir "/usr/local/include"))
+                                                (directory-files dir nil "^[^.]")
+                                                (flet ((last-dir (path)
+                                                         (string-match ".*/\\(.*\\)" path)
+                                                         (match-string 1 path)))
+                                                  (mapcar #'(lambda (file-name)
+                                                              (concat (last-dir dir)
+                                                                      "/" file-name))
+                                                          (directory-files dir)))))
+                                        (list "/usr/include"
+                                              "/usr/local/include"
+                                              "/usr/include/sys"
+                                              "/usr/include/netinet"
+                                              "/usr/include/arpa"
+                                              "/usr/include/bits"))))))
+      (if (fboundp 'ido-completing-read)
+          (ido-completing-read prompt files nil t)
+          (completing-read prompt files nil t)))
     ">\n")
 
 
