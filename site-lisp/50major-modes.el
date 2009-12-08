@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2009-12-06 15:50:30 S.P.Tseng>
+;; Time-stamp: <2009-12-08 12:58:54 S.P.Tseng>
 
 ;;; imenu
 (require 'imenu)
@@ -124,7 +124,14 @@
 ;; mini-buffer 中显示 point 处 eLisp 函数的定义格式。
 (autoload 'turn-on-eldoc-mode "eldoc" nil t)
 (eval-after-load "eldoc"
-  '(require 'eldoc-extension))
+  '(progn
+    (require 'eldoc-extension)
+    ;; make ElDoc aware of ParEdit's most used commands. Whenever the listed commands are used,
+    ;; ElDoc will automatically refresh the minibuffer.
+    (eldoc-add-command
+     'paredit-backward-delete
+     'paredit-close-round)))
+
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
