@@ -136,10 +136,16 @@
                           (decode-char 'ucs #x203d))
                     (font-spec :family "FreeMono" :size 12))
 
-  ;; '：'
   (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #xff1a)
-                          (decode-char 'ucs #xff1a))
+                    (cons (decode-char 'ucs #x3000)
+                          (decode-char 'ucs #x303f))
+                    (font-spec :family "微软雅黑" :size 12))
+
+
+  ;; Halfwidth and Fullwidth Form
+  (set-fontset-font "fontset-default"
+                    (cons (decode-char 'ucs #xff00)
+                          (decode-char 'ucs #xffef))
                     (font-spec :family "微软雅黑" :size 12))
 
   (set-fontset-font (frame-parameter nil 'font)
