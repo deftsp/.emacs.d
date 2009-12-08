@@ -525,6 +525,12 @@ scan-error if not."
     (insert "\n(defpackage #:" package "\n  (:use #:cl))\n\n")
     (insert "(in-package #:" package ")\n\n")))
 
+;;; redshank
+(require 'redshank-loader nil t)
+(eval-after-load "redshank-loader"
+  `(redshank-setup '(lisp-mode-hook
+                     slime-repl-mode-hook) t))
+
 ;; --------------------------------------------------------------------------
 
 ;; (defun slime-java-describe (symbol-name)
