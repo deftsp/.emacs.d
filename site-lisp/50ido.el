@@ -158,7 +158,8 @@ directory, select directory. Lastly the file is opened."
 
 (defun ido-my-keys ()
  "Add my keybindings for ido."
- (define-key ido-completion-map (kbd "C-k") 'ido-erase-minibuffer-or-dwim))
+ (define-key ido-completion-map (kbd "C-k") 'ido-erase-minibuffer-or-dwim)
+ (define-key ido-completion-map (kbd "ESC ESC k") 'ido-delete-file-at-head))
 
 
 (add-hook 'ido-make-file-list-hook 'ido-sort-mtime)
