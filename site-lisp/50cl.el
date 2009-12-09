@@ -352,7 +352,7 @@ scan-error if not."
     (define-key slime-mode-map (kbd "C-<") 'paredit-backward-barf-sexp)
     (define-key slime-mode-map (kbd "C->") 'paredit-forward-barf-sexp)
 
-    (global-set-key (kbd "C-c S") 'slime-selector)
+    (global-set-key (kbd "C-c s") 'slime-selector)
     ;; (define-key slime-mode-map (kbd "C-c S") 'slime-selector)
     ;; (define-key slime-repl-mode-map (kbd "C-c S") 'slime-selector)
     ;; (define-key sldb-mode-map (kbd "C-c S") 'slime-selector)
@@ -379,7 +379,7 @@ scan-error if not."
 ;; (define-key slime-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)
 ;; (define-key slime-repl-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)
 (global-set-key (kbd "C-c h") 'slime-hyperspec-lookup)
-(global-set-key (kbd "C-c C-z") 'slime-switch-to-output-buffer)
+;; (global-set-key (kbd "C-c C-z") 'slime-switch-to-output-buffer)
 
 
 ;; (defun insert-balanced-comments (arg)
