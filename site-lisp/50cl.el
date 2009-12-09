@@ -361,7 +361,9 @@ scan-error if not."
     (define-key slime-mode-map (kbd "C-c ;") 'slime-insert-balanced-comments)
     (define-key slime-mode-map (kbd "C-c M-;") 'slime-remove-balanced-comments)))
 
-
+(def-slime-selector-method ?z
+    "the output buffer, if possible."
+  (slime-switch-to-output-buffer))
 
 (defun lisp-indent-or-complete (&optional arg)
   (interactive "p")
