@@ -529,9 +529,9 @@ scan-error if not."
 
 ;;; redshank
 (require 'redshank-loader nil t)
-(eval-after-load "redshank-loader"
-  `(redshank-setup '(lisp-mode-hook
-                     slime-repl-mode-hook) t))
+;; (eval-after-load "redshank-loader"
+;;   `(redshank-setup '(lisp-mode-hook
+;;                      slime-repl-mode-hook) t))
 
 ;; --------------------------------------------------------------------------
 
