@@ -99,3 +99,5 @@
 (define-key emacs-lisp-mode-map (kbd "TAB")
   'anything-el-swank-fuzzy-indent-and-complete-symbol)
 
+(define-key lisp-interaction-mode-map (kbd "TAB")
+  'anything-el-swank-fuzzy-indent-and-complete-symbol)
