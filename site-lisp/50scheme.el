@@ -15,10 +15,10 @@
 
 
 ;;; You want quack. Really.
-(require 'quack)
-(setq quack-fontify-style 'emacs          ;or emacs
-      quack-default-program "mzscheme"
-      quack-newline-behavior 'indent-newline-indent)
+;; (require 'quack)
+;; (setq quack-fontify-style 'emacs          ;or emacs
+;;       quack-default-program "mzscheme"
+;;       quack-newline-behavior 'indent-newline-indent)
 
 ;; Examples for quick documentation access. Quack does similar stuff.
 ;; (defun s48-doc ()
