@@ -1062,34 +1062,9 @@ This command is to be used interactively."
 ;; (global-set-key (kbd "<S-f10>") 'stark-frame)
 ;;-----------------------------------------------------------------------------------------------------------
 
-;; horizontal-to-vertical
-(defun tsp-window-horizontal-to-vertical ()
-  "Switches from a horizontal split to a vertical split."
-  (interactive)
-  (let ((one-buf (window-buffer (selected-window)))
-        (buf-point (point)))
-    (other-window 1)
-    (delete-other-windows)
-    (split-window-horizontally)
-    (switch-to-buffer one-buf)
-    (goto-char buf-point)))
-
-;; vertical-to-horizontal
-
-;; complement of above created by rgb 11/2004
-(defun tsp-window-vertical-to-horizontal ()
-  "Switches from a vertical split to a horizontal split."
-  (interactive)
-  (let ((one-buf (window-buffer (selected-window)))
-        (buf-point (point)))
-    (other-window 1)
-    (delete-other-windows)
-    (split-window-vertically)
-    (switch-to-buffer one-buf)
-    (goto-char buf-point)))
 
 ;;;###autoload
-(defun tsp-insert-char-next-line (arg)
+(defun deftsp-insert-char-next-line (arg)
   "insert char below the cursor"
   (interactive "p")
   (let ((col (current-column))
@@ -1112,13 +1087,13 @@ This command is to be used interactively."
                          " line.")))))
 
 ;;;###autoload
-(defun tsp-insert-char-prior-line (arg)
+(defun deftsp-insert-char-prior-line (arg)
   "insert char above the cursor"
   (interactive "p")
   (tsp-insert-char-next-line (- arg)))
 
-(global-set-key (kbd "M-[") 'tsp-insert-char-prior-line)
-(global-set-key (kbd "M-]") 'tsp-insert-char-next-line)
+(global-set-key (kbd "M-[") 'deftsp-insert-char-prior-line)
+(global-set-key (kbd "M-]") 'deftsp-insert-char-next-line)
 
 ;;----------------------------------------------------------------------------------------------------
 ;; (add-hook 'find-file-hooks

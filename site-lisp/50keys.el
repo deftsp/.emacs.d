@@ -62,34 +62,6 @@
 
 (global-set-key (kbd "<Scroll_Lock>") (lambda () (interactive) nil))
 
-
-;;-----------------------------------------------------------------------------------------------------------------
-;;Virtual frames
-;;-----------------------------------------------------------------------------------------------------------------
-;; Let's say you have your perfect setup for editing CL - a source window, a repl and a shell and you need to fix a bug
-;; in a totally unrelated module written in C. Instead of tearing apart your buffer layout, use a virtual frame manager
-;; and let Emacs provide you with a fresh workspace. You can have multiple customized layouts for programming, mail,
-;; irc, HTML, etc, running at the same time.
-
-;; (global-set-key (kbd "s-,")  'winring-prev-configuration)
-;; (global-set-key (kbd "s-.")  'winring-next-configuration)
-
-;; (require 'winring)
-;; (setq winring-show-names t)
-;; (setq winring-prompt-on-create 'nil)
-;; (winring-initialize)
-;; (winring-new-configuration)
-;; (winring-prev-configuration)
-
-(winner-mode t)
-
-(require 'windmove)
-(global-set-keys "H-r" 'winner-redo
-                 "H-u" 'winner-undo
-                 "M-P" 'windmove-up
-                 "M-N" 'windmove-down
-                 "M-B" 'windmove-left
-                 "M-F" 'windmove-right)
 ;;--------------------------------------------------------------------------------------------------------------------
 
 ;;使得回车开始下一行的时候，立即缩进，而不是等我写完这一行之后再缩进
@@ -406,14 +378,6 @@ it marks the next ARG lines after the ones already marked."
 
 ;;-------------------------------------------------------------------------------------------------------
 
-(global-set-key "\C-x2" '(lambda ()
-                          (interactive)
-                          (split-window-vertically -22)))
-(global-set-key "\C-x3" '(lambda ()
-                          (interactive)
-                          (split-window-horizontally -80)))
-
-;;----------------------------------------------------------------------------------------------------
 (defun tsp-return-current-point ()
   (interactive)
   (message "Current point is: %d" (point)))
@@ -521,15 +485,6 @@ Goes backward if ARG is negative; error if CHAR not found."
 ;;         w32-rwindow-modifier 'hyper))
 
 
-
-(global-set-key (kbd "H-M-,") '(lambda() (interactive) (scroll-other-window -1)))
-(global-set-key (kbd "H-M-.") '(lambda() (interactive) (scroll-other-window 1)))
-
-
-(global-set-key (kbd "H-[") 'shrink-window)
-(global-set-key (kbd "H-]") 'enlarge-window)
-(global-set-key (kbd "H-M-[") 'shrink-window-horizontally)
-(global-set-key (kbd "H-M-]") 'enlarge-window-horizontally)
 
 
 ;; M-^: delete-indentation

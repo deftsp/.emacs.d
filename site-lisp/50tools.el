@@ -495,24 +495,6 @@ Nth occurence of CHAR."
 (global-set-key (kbd "C-c g s") 'shell-toggle-cd) ;see also shell-toggle-cd
 
 ;;-----------------------------------------------------------------------------------------------
-(global-set-key (kbd "C-x !") 'tsp-swap-windows)
-;; someday might want to rotate windows if more than 2 of them
-(defun tsp-swap-windows ()
-  "If you have 2 windows, it swaps them."
-  (interactive)
-  (cond ((not (= (count-windows) 2))
-         (message "You need exactly 2 windows to do this."))
-        (t
-         (let* ((w1 (first (window-list)))
-                (w2 (second (window-list)))
-                (b1 (window-buffer w1))
-                (b2 (window-buffer w2))
-                (s1 (window-start w1))
-                (s2 (window-start w2)))
-           (set-window-buffer w1 b2)
-           (set-window-buffer w2 b1)
-           (set-window-start w1 s2)
-           (set-window-start w2 s1)))))
 
 ;; (defun tsp-transpose-buffers ()
 ;;   "Transpose this buffer and the buffer in other window"
@@ -609,9 +591,9 @@ Nth occurence of CHAR."
 ;; (add-hook 'activate-mark-hook 'tsp-show-mark)
 ;; ----------------------------------------------------------------------------------------------------
 ;; mark word be bound to M-@
-(global-set-key (kbd "C-c SPC") 'tsp-mark-current-word)
-(global-set-key (kbd "C-c k w") 'tsp-kill-current-word)
-(defun tsp-mark-current-word ()
+(global-set-key (kbd "C-c SPC") 'deftsp-mark-current-word)
+(global-set-key (kbd "C-c k w") 'deftsp-kill-current-word)
+(defun deftsp-mark-current-word ()
   "Put point at beginning of current word, set mark at end."
   (interactive)
   (let* ((opoint (point))
@@ -636,7 +618,7 @@ Nth occurence of CHAR."
 ;;   (mark-word nil t))
 
 
-(defun tsp-kill-current-word ()
+(defun deftsp-kill-current-word ()
   "kill current word."
   (interactive)
   (let* ((opoint (point))
@@ -720,7 +702,7 @@ Nth occurence of CHAR."
 ;;                                               ("\\.idl\\'" flymake-simple-make-init)))
 ;;       flymake-log-level 1)
 
-(defun tsp-strip-all-blank-lines ()
+(defun deftsp-strip-all-blank-lines ()
   "Strip all blank lines in current buffer."
   (interactive)
   (save-excursion
@@ -728,7 +710,7 @@ Nth occurence of CHAR."
       (replace-match "" t t))))
 
 ;; resolve file names
-(defun tsp-resolve-file-name (file type)
+(defun deftsp-resolve-file-name (file type)
   "Resolve file name in various ways.
 
 file is the abosolute filename.
@@ -746,7 +728,7 @@ type stands for different kinds of resolve.
     (t (file-name-extension file))))
 
 ;; insert line number before each line.
-(defun tsp-numerate-lines ()
+(defun deftsp-numerate-lines ()
   "Insert line numbers into buffer"
   (interactive)
   (save-excursion
@@ -833,7 +815,7 @@ is all)"
             (setq p (point)))))))
 
 ;; count Chinese, English words
-(defun tsp-count-ce-word (beg end)
+(defun deftsp-count-ce-word (beg end)
   "Count Chinese and English words in marked region."
   (interactive "r")
   (let ((cn-word 0)
@@ -848,7 +830,7 @@ is all)"
                      total-word cn-word en-word total-byte))))
 
 ;; tsp-word-count-analysis (how many times a word has appeared).
-(defun tsp-word-count-analysis (start end)
+(defun deftsp-word-count-analysis (start end)
   "Count how many times each word is used in the region.
     Punctuation is ignored."
   (interactive "r")
@@ -866,18 +848,18 @@ is all)"
     words))
 
 
-(defun tsp-hide-buffer ()
+(defun deftsp-hide-buffer ()
   "Hide current buffer, and enlarge the other one if exists."
   (interactive)
   (delete-windows-on (buffer-name)))
 
-(defun tsp-list-ref (list ref)
+(defun deftsp-list-ref (list ref)
   "Return the ref-th element of list."
   (if (= ref 0)
       (car list)
       (tsp-list-ref (cdr list) (1- ref))))
 
-(defun tsp-info (file)
+(defun deftsp-info (file)
   (interactive
    (list (read-file-name "info: ")))
   (info file))
@@ -897,7 +879,7 @@ is all)"
   (while (search-forward "\n" nil t)
     (replace-match "\r\n")))
 
-(defun tsp-delete-line (&optional arg)
+(defun deftsp-delete-line (&optional arg)
   "Delete the rest of the current line; if no nonblanks there, delete thru newline.
 With prefix argument, delete that many lines from point.
 Negative arguments delete lines backward.
@@ -915,72 +897,7 @@ that, the deleted contents won't be inserted to the `kill-ring'."
           (delete-region (point) (save-excursion (end-of-line)
                                                  (point))))))
 
-;; (defun tsp-fortune-laozi ()
-;;   "Return a random chapter from laozi."
-;;   (interactive)
-;;   (with-temp-buffer
-;;     (insert-file-contents "~/etc/fortune/laozi")
-;;     (let (beg title)
-;;       (goto-char (point-min))
-;;       (search-forward "老子第" nil t (random 81)) ; 81 chapters in total
-;;       (setq title (buffer-substring-no-properties
-;;                    (move-beginning-of-line 1)
-;;                    (progn (move-end-of-line 1)
-;;                           (point))))
-;;       (setq beg (move-beginning-of-line 2))
-;;       (search-forward "老子第" nil t 1)
-;;       (format "%s
-;;             ---- %s"
-;;               (buffer-substring-no-properties
-;;                beg (progn (move-end-of-line 0)
-;;                           (point)))
-;;               title))))
-
-;; (setq tsp-fortune-favorites-length nil)
-
-;; (defun tsp-fortune-favorites (&optional file)
-;;   "Return a random chapter from ~/notes/favorites."
-;;   (interactive)
-;;   (unless file
-;;     (setq file "~/notes/favorites_en"))
-;;   (with-temp-buffer
-;;     (let ((flag "^\\.$"))
-;;       (insert-file-contents file)
-;;       (unless tsp-fortune-favorites-length
-;;         (setq tsp-fortune-favorites-length (count-matches flag)))
-;;       (goto-char (point-min))
-;;       (re-search-forward flag nil t (random tsp-fortune-favorites-length))
-;;       (buffer-substring-no-properties
-;;        (move-beginning-of-line 2)
-;;        (if (re-search-forward flag nil t 1)
-;;            (progn (move-end-of-line 0)
-;;                   (point))
-;;          (point-max))))))
-
-;; (defun tsp-download-book (pre beg end post fmt subdir)
-;;   "Download link formed of `PRE + index + POST', where `index' belongs to [BEG, END).
-;; `index' is formated by FMT using `format'. BEG and END are integers. The
-;; downloaded contents will be saved under \"~/Downloads/SUBDIR\".
-;; e.g.,
-
-;;   (tsp-get-book \"http://book.sina.com.cn/longbook/1071818529_qingcheng\"
-;;                 13
-;;                 24
-;;                 \".shtml\"
-;;                 \"%02d\"
-;;                 \"qczl\")"
-;;   (let ((dst (concat "~/Downloads/" subdir)))
-;;     (message "Start downloading at background...")
-;;     (condition-case nil
-;;         (make-directory dst)
-;;       (error nil))
-;;     (dotimes (i (- end beg))
-;;       (tsp-shell-command-asynchronously
-;;        (format "wget -c %s -P %s"
-;;                (concat pre (format fmt (+ i beg)) post)
-;;                dst)))))
-
-;; (defun tsp-soft-kill-ring-save (beg end)
+;; (defun deftsp-soft-kill-ring-save (beg end)
 ;;   "Same as `kill-ring-save' except it will convert hard newlines to soft newlines.
 ;; This could be useful for copying texts from Emacs and pasting it to blog websites."
 ;;   (interactive "r")
@@ -1006,7 +923,7 @@ that, the deleted contents won't be inserted to the `kill-ring'."
 ;;----------------------------------------------------------------------------------------------------
 ;;; Cool utility function to refresh all open buffers
 ;;----------------------------------------------------------------------------------------------------
-(defun tsp-revert-all-buffers()
+(defun deftsp-revert-all-buffers()
   "Refreshs all open buffers from their respective files"
   (interactive)
   (let* ((list (buffer-list))
@@ -1292,28 +1209,6 @@ such character is found, following options are shown:
 ;;(autoload 'gtags-mode "gtags" "" t)
 
 
-;;; tip of the day
-;; (defun totd ()
-;;   (interactive)
-;;   (with-output-to-temp-buffer "*Tip of the day*"
-;;     (let* ((commands (loop for s being the symbols
-;;                            when (commandp s) collect s))
-;;            (command (nth (random (length commands)) commands)))
-;;       (princ
-;;        (concat "Your tip for the day is:\\n"
-;;                "========================\\n\\n"
-;;                (describe-function command)
-;;                "\\n\\nInvoke with:\\n\\n"
-;;                (with-temp-buffer
-;;                  (where-is command t)
-;;                  (buffer-string)))))))
-
-;; (defvar tsp-totd-timer (run-at-time "12:00am" (* 3600 24) 'totd))
-;; (defun tsp-cancel-totd
-;;   (interactive)
-;;   (cancel-timer tsp-totd-timer))
-
-
 ;;; FindingNonAsciiCharacters
 (defun find-first-non-ascii-char ()
   "Find the first non-ascii character from point onwards."
@@ -1337,7 +1232,7 @@ such character is found, following options are shown:
 ;; (require 'generic-apt-install)
 
 ;;; Insert a path into the current buffer
-(defun tsp-insert-path (file)
+(defun deftsp-insert-path (file)
   "insert file"
   (interactive "FPath: ")
   (insert (expand-file-name file)))
