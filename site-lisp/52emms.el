@@ -3,7 +3,7 @@
 ;;;; EMMS
 
 (require 'emms-setup)
-(setq emms-mode-line-icon-color "DarkBlue") 
+(setq emms-mode-line-icon-color "DarkBlue")
 (setq emms-directory "~/.emacs.d/.emms")
 (emms-devel)
 (require 'emms-player-mpg321-remote)
@@ -41,7 +41,7 @@
 ;; connect
 (emms-player-mpd-connect)
 ;; dump cache
-(emms-cache-set-from-mpd-all)
+;; (emms-cache-set-from-mpd-all)
 ;; (emms-cache-save)
 
 (require 'emms-mode-line-icon)
