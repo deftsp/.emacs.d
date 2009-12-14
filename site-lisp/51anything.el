@@ -14,29 +14,40 @@
 
 (require 'anything nil t)
 (setq anything-idle-delay 0.3           ; default 0.5
-      anything-input-idle-delay 0.5)    ; default 0.1
+      anything-input-idle-delay 0.2       ; default 0.1
+      anything-persistent-action-use-special-display nil)
+
 
 (eval-after-load "anything"
   '(progn
     (require 'anything-config)
     ;; (require 'anything-emms)
     ;; (require 'anything-match-plugin)
-    (setq anything-sources (list
-                            anything-c-source-call-source
-                            anything-c-source-buffers
-                            anything-c-source-buffer-not-found
-                            anything-c-source-bbdb
-                            ;; anything-c-source-file-name-history
-                            anything-c-source-recentf
-                            anything-c-source-occur
-                            anything-c-source-info-pages
-                            anything-c-source-man-pages
-                            anything-c-source-w3m-bookmarks
-                            anything-c-source-locate
-                            ;; anything-c-source-file-cache
-                            anything-c-source-emacs-commands))
+    (setq anything-sources '(anything-c-source-call-source
+                             anything-c-source-buffers+
+                             anything-c-source-bbdb
+                             ;; anything-c-source-file-name-history
+                             anything-c-source-recentf
+                             ;; anything-c-source-occur
+                             ;; anything-c-source-info-pages
+                             anything-c-source-man-pages
+                             ;; anything-c-source-w3m-bookmarks
+                             ;; anything-c-source-locate
+                             ;; anything-c-source-file-cache
+                             ;; anything-c-source-emacs-commands
+                             anything-c-source-buffer-not-found))
     (define-key anything-map "\M-p" 'anything-previous-source)
-    (define-key anything-map "\M-n" 'anything-next-source)))
+    (define-key anything-map "\M-n" 'anything-next-source)
+    (define-key anything-map "A" 'anything-deftsp-show-all)
+    (define-key anything-map "T" 'anything-deftsp-show-traverse-only)
+    (define-key anything-map "L" 'anything-deftsp-show-locate-only)
+    (define-key anything-map "O" 'anything-deftsp-show-occur-only)))
+
+(eval-after-load "anything-config"
+  '(progn
+    (set-face-foreground 'anything-dir-priv "maroon4")
+    (set-face-background 'anything-dir-priv "slate gray")))
+
 
 (global-set-key (kbd "M-X") 'anything)
 
@@ -70,15 +81,15 @@
       (bbdb)))
 
 
-(defun any-occur ()
+(defun anything-occur ()
   (interactive)
   (if anything-c-source-occur
       (anything '(anything-c-source-occur))
       (occur)))
 
-(defalias 'occur 'any-occur)
+;; (defalias 'occur 'anything-occur)
 
-(defun any-man ()
+(defun anything-man ()
   (interactive)
   (if anything-c-source-man-pages
       (anything '(anything-c-source-man-pages) nil "man pattern: ")
@@ -101,3 +112,19 @@
 
 (define-key lisp-interaction-mode-map (kbd "TAB")
   'anything-el-swank-fuzzy-indent-and-complete-symbol)
+
+(defun anything-deftsp-show-all ()
+  (interactive)
+  (anything-set-source-filter nil))
+
+(defun anything-deftsp-show-traverse-only ()
+  (interactive)
+  (anything-set-source-filter '("Traverse Occur")))
+
+(defun anything-deftsp-show-locate-only ()
+  (interactive)
+  (anything-set-source-filter '("Locate")))
+
+(defun anything-deftsp-show-occur-only ()
+  (interactive)
+  (anything-set-source-filter '("Occur")))

@@ -12,7 +12,7 @@
 
 ;; register my preferred keybindings
 (global-set-keys
- "<f1>"    'any-man ; woman-word-at-point
+ "<f1>"    'anything-man ; 'woman-word-at-point
  "<C-f1>"  '(lambda () (interactive) (manual-entry (current-word))) ;;; load man pages when on a word and F1 is pressed
  "<S-f1>"  'iman
  ;; "<M-f1>"  'apropos                     ;the ultimate tool for hackers

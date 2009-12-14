@@ -60,7 +60,7 @@
 (key-chord-define-global "RR" 'anything-resume)
 (key-chord-define-global "JJ" 'anything)
 (key-chord-define-global "HH" 'woman)
-(key-chord-define-global "OO" 'any-occur)
+(key-chord-define-global "OO" 'anything-occur)
 ;; space-chord
 (require 'space-chord)
 (setq space-chord-delay 0.08)           ; default 0.08
