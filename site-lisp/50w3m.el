@@ -86,16 +86,16 @@
 
 
 ;;; w3m-toggle-proxy
-(defvar tsp-w3m-proxy nil)
-(defun tsp-w3m-toggle-proxy ()
+(defvar deftsp-w3m-proxy nil)
+(defun deftsp-w3m-toggle-proxy ()
   (interactive)
-  (if tsp-w3m-proxy
+  (if deftsp-w3m-proxy
       (progn
         (setq w3m-command-arguments '("-F"))
-        (setq tsp-w3m-proxy nil)
+        (setq deftsp-w3m-proxy nil)
         (message "w3m proxy: OFF"))
       (setq w3m-command-arguments '("-F" "-o" "http_proxy=http://127.0.0.1:8118/"))
-      (setq tsp-w3m-proxy t)
+      (setq deftsp-w3m-proxy t)
       (message "w3m proxy: ON")))
 
 (setq w3m-no-proxy-domains '("google.com" "google.cn"))
@@ -159,7 +159,7 @@
            (w3m-find-file filename))
       (delete-file filename))))
 
-(defun tsp-w3m-goto-url ()
+(defun deftsp-w3m-goto-url ()
   (interactive)
   (let ((w3m-current-url ""))
     (call-interactively #'w3m-goto-url)))
@@ -365,37 +365,6 @@
 
 ;;----------------------------------------------------------------------------------------------------
 
-;; (defun tsp-delicious-url ()
-;;   "Bookmark this page with del.icio.us."
-;;   (interactive)
-;;   (w3m-goto-url
-;;    (concat "http://del.icio.us/tsp?"
-;;            "url="    (w3m-url-encode-string w3m-current-url)
-;;            "&title=" (w3m-url-encode-string w3m-current-title))))
-
-;; I've added a bit to this function, so that you can launch it when point is at a url in any buffer. It visits the url
-;; in w3m (to get the title information from the page), then goes to your bookmark posting page. Again, change
-;; "tsp to your username.
-
-;; (defun tsp-delicious-url ()
-;;   "Post either the url under point or the url of the current w3m page to delicious."
-;;   (interactive)
-;;   (let ((w3m-async-exec nil))
-;;     (if (thing-at-point-url-at-point)
-;;         (unless (eq (current-buffer) (w3m-alive-p))
-;;           (w3m-goto-url (thing-at-point-url-at-point))))
-;;     (w3m-goto-url
-;;      (concat "http://del.icio.us/tsp?"
-;;              "url="    (w3m-url-encode-string w3m-current-url)
-;;              "&title=" (w3m-url-encode-string w3m-current-title)))))
-
-;;delicious
-
-;; (require 'delicious)
-;; (setq delicious-api-user "kirby1985"
-;;       delicious-api-password "xxxx")
-;; (delicious-api-register-auth)
-
 (defun wicked/w3m-open-current-page-in-firefox ()
   "Open the current URL in Mozilla Firefox."
   (interactive)
@@ -408,7 +377,7 @@
                           (w3m-image))))
 
 
-(defvar tsp-w3m-map)
+(defvar deftsp-w3m-map)
 (let ((map (make-keymap)))
   (suppress-keymap map)
   (define-key map [backspace] 'w3m-scroll-down-or-previous-url)
@@ -429,7 +398,6 @@
 
   (define-key map "a" 'w3m-bookmark-add-current-url)
   (define-key map "\M-a" 'w3m-bookmark-add-this-url)
-  ;; (define-key map "\M-A" 'tsp-delicious-url)
   (define-key map "+" 'w3m-antenna-add-current-url)
   (define-key map "A" 'w3m-antenna)
   (define-key map "C" (make-sparse-keymap))
@@ -444,7 +412,7 @@
   (define-key map "\M-D" 'w3m-dtree)
   (define-key map "e" 'w3m-edit-current-url)
   (define-key map "E" 'w3m-edit-this-url)
-  (define-key map "g" 'tsp-w3m-goto-url)
+  (define-key map "g" 'deftsp-w3m-goto-url)
   (define-key map "G" 'w3m-goto-url-new-session)
   (define-key map "h" 'describe-mode)
   (define-key map "H" 'w3m-gohome)
@@ -452,10 +420,11 @@
                           'w3m-toggle-inline-image
                           'w3m-view-image))
   (define-key map "I" 'w3m-toggle-inline-images)
+  (define-key map "k" 'w3m-delete-buffer)
   (when (w3m-display-graphic-p)
     (define-key map "\M-[" 'w3m-zoom-out-image)
     (define-key map "\M-]" 'w3m-zoom-in-image))
-  (define-key map "l" 'tsp-w3m-go-to-linknum)
+  (define-key map "l" 'deftsp-w3m-go-to-linknum)
   (define-key map "\M-i" 'w3m-save-image)
 
   (define-key map "\M-l" 'w3m-horizontal-recenter)
@@ -484,7 +453,7 @@
                           (call-interactively 'w3m-search))))
   (define-key map "\M-s" 'w3m-session-select)
   (define-key map "\M-S" 'w3m-session-save)
-  (define-key map "t" 'tsp-w3m-toggle-proxy)
+  (define-key map "t" 'deftsp-w3m-toggle-proxy)
   (define-key map "^" 'w3m-view-parent-page)
   (define-key map "v" 'w3m-bookmark-view)
   (define-key map "V" 'w3m-bookmark-view-new-session)
@@ -523,8 +492,8 @@
   (define-key map "\C-c\C-w" 'w3m-delete-buffer)
   (define-key map [(button2)] 'w3m-mouse-view-this-url)
   (define-key map [(shift button2)] 'w3m-mouse-view-this-url-new-session)
-  (setq tsp-w3m-map map))
-(add-hook 'w3m-mode-hook '(lambda () (use-local-map tsp-w3m-map)))
+  (setq deftsp-w3m-map map))
+(add-hook 'w3m-mode-hook '(lambda () (use-local-map deftsp-w3m-map)))
 
 
 
@@ -633,7 +602,7 @@
 
 
 (require 'w3m-lnum)
-(defun tsp-w3m-go-to-linknum ()
+(defun deftsp-w3m-go-to-linknum ()
   "Turn on link numbers and ask for one to go to."
   (interactive)
   (let ((active w3m-link-numbering-mode))
