@@ -14,15 +14,22 @@
 ;; `semantic-idle-scheduler-mode' - Keeps a buffer's parse tree up to date.
 ;; `semanticdb-minor-mode' - Stores tags when a buffer is not in memory.
 ;; `semanticdb-load-ebrowse-caches' - Loads any ebrowse dbs created earlier.
-;; (semantic-load-enable-minimum-features)
+(semantic-load-enable-minimum-features)
+
+(global-semantic-mru-bookmark-mode 1)
+(global-senator-minor-mode 1)
+
 
 ;; Enable some semantic features that provide basic coding assistance.
 ;; This includes `semantic-load-enable-minimum-features' plus:
 ;; `imenu' - Lists Semantic generated tags in the menubar.
-;; `semantic-idle-summary-mode' - Show a summary for the tag indicated by code under point.  (intellisense)
+
+;; `semantic-idle-summary-mode' - Show a summary for the tag indicated by code under point.
+;; (intellisense). (this mode conflict with slime-autodoc-mode.
+
 ;; `senator-minor-mode' - Semantic Navigator, and global menu for all features Semantic.
 ;; `semantic-mru-bookmark-mode' - Provides a `switch-to-buffer' like keybinding for tag names.
-(semantic-load-enable-code-helpers)
+;; (semantic-load-enable-code-helpers)
 ;; (semantic-load-enable-guady-code-helpers)
 
 ;; * This enables the use of Exuberent ctags if you have it installed.
