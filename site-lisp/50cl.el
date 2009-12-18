@@ -197,9 +197,9 @@
 ;; Fontify *SLIME Description* buffer for SBCL
 (defun slime-description-fontify ()
   "Fontify sections of SLIME Description."
-  (let ((buf "*SLIME Description <sbcl>*"))
+  (let ((buffer "*SLIME Description <sbcl>*"))
     (if (get-buffer "50cl.el")
-        (with-current-buffer buf
+        (with-current-buffer buffer
           (highlight-regexp
            (concat
             ;; "^Function:\\|"
