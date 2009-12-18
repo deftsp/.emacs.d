@@ -21,11 +21,11 @@
 (set-face-background 'ac-completion-face "darkblue")
 (set-face-foreground 'ac-completion-face "white")
 
-(set-face-foreground 'pulldown-default-face "black")
-(set-face-background 'pulldown-default-face "#939393")
-(set-face-underline  'pulldown-default-face "#939393")
-(set-face-foreground 'pulldown-default-selection-face "white")
-(set-face-background 'pulldown-default-selection-face "#0000ff")
+
+(set-face-background 'popup-scroll-bar-foreground-face "#222222")
+(set-face-foreground 'popup-scroll-bar-background-face "lightgray")
+(set-face-foreground 'popup-menu-selection-face "white")
+(set-face-background 'popup-menu-selection-face "#0000ff")
 
 ;; Don't start completion automatically
 ;; Add following code to your .emacs.
