@@ -195,23 +195,31 @@
 
 
 ;; Fontify *SLIME Description* buffer for SBCL
+(defun slime-description-fontify ()
+  "Fontify sections of SLIME Description."
+  (let ((buf "*SLIME Description <sbcl>*"))
+    (if (get-buffer "50cl.el")
+        (with-current-buffer buf
+          (highlight-regexp
+           (concat
+            ;; "^Function:\\|"
+            ;; "^Macro-function:\\|"
+            ;; "^Its associated name.+?) is\\|"
+            ;; "^The .+'s arguments are:\\|"
+            ;; "^Function documentation:$\\|"
+            ;; "^On.+it was compiled from:$"
+            ;; "^Its.+\\(is\\|are\\):\\|"
+            "^\\ \\{2\\}Value:\\|"
+            "^\\ \\{2\\}Lambda-list:\\|"
+            "^\\ \\{2\\}Source\\ file:\\|"
+            "^\\ \\{2\\}Source\\ form:$\\|"
+            "^\\ \\{2\\}Derived\\ type:\\|"
+            "^\\ \\{2\\}Documentation:$")
+           'hi-green-b)))))
 
-;; (defun slime-description-fontify ()
-;;   "Fontify sections of SLIME Description."
-;;   (with-current-buffer "*SLIME Description*"
-;;     (highlight-regexp
-;;      (concat "^Function:\\|"
-;;              "^Macro-function:\\|"
-;;              "^Its associated name.+?) is\\|"
-;;              "^The .+'s arguments are:\\|"
-;;              "^Function documentation:$\\|"
-;;              "^Its.+\\(is\\|are\\):\\|"
-;;              "^On.+it was compiled from:$")
-;;      'hi-green-b)))
-
-;; (defadvice slime-show-description (after slime-description-fontify activate)
-;;   "Fontify sections of SLIME Description."
-;;   (slime-description-fontify))
+(defadvice slime-show-description (after slime-description-fontify activate)
+  "Fontify sections of SLIME Description."
+  (slime-description-fontify))
 
 
 
@@ -360,10 +368,6 @@ scan-error if not."
     ;; Balanced comments
     (define-key slime-mode-map (kbd "C-c ;") 'slime-insert-balanced-comments)
     (define-key slime-mode-map (kbd "C-c M-;") 'slime-remove-balanced-comments)))
-
-(def-slime-selector-method ?z
-    "the output buffer, if possible."
-  (slime-switch-to-output-buffer))
 
 (defun lisp-indent-or-complete (&optional arg)
   (interactive "p")
