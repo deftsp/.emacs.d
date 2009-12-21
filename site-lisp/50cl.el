@@ -209,12 +209,20 @@
             ;; "^Function documentation:$\\|"
             ;; "^On.+it was compiled from:$"
             ;; "^Its.+\\(is\\|are\\):\\|"
-            "^\\ \\{2\\}Value:\\|"
-            "^\\ \\{2\\}Lambda-list:\\|"
-            "^\\ \\{2\\}Source\\ file:\\|"
-            "^\\ \\{2\\}Source\\ form:$\\|"
-            "^\\ \\{2\\}Derived\\ type:\\|"
-            "^\\ \\{2\\}Documentation:$")
+            "^ \\{2\\}Value:\\|"
+            "^ \\{2\\}Lambda-list:\\|"
+            "^ \\{2\\}Source file:\\|"
+            "^ \\{2\\}Source form:$\\|"
+            "^ \\{2\\}Derived type:\\|"
+            "^ \\{2\\}Class precedence-list:\\|"
+            "^ \\{2\\}Direct superclasses:\\|"
+            "^ \\{2\\}Direct subclasses:\\|"
+            "^ \\{2\\}Direct slots:$\\|"
+            "^ \\{6\\}Initargs:\\|"
+            "^ \\{6\\}Readers:\\|"
+            "^ \\{6\\}Writers:\\|"
+            "^ \\{6\\}Documentation:\\|"
+            "^ \\{2\\}Documentation:$")
            'hi-green-b)))))
 
 (defadvice slime-show-description (after slime-description-fontify activate)
