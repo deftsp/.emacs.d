@@ -21,12 +21,15 @@
 ;; before calling `winring-initialize'!
 (require 'winring)
 
-(require 'ecb)
-(add-hook 'ecb-before-activate-hook 'ecb-winman-winring-enable-support)
-(add-hook 'ecb-deactivate-hook 'ecb-winman-winring-enable-support)
-(ecb-winman-winring-enable-support)
-(winring-initialize)
 
+(when (eq system-type 'gnu/linux)
+  '(progn
+     (require 'ecb)
+     (add-hook 'ecb-before-activate-hook 'ecb-winman-winring-enable-support)
+     (add-hook 'ecb-deactivate-hook 'ecb-winman-winring-enable-support)
+     (ecb-winman-winring-enable-support)))
+
+(winring-initialize)
 ;;;;;;;;;;;;;;;
 
 (defun winring+-names ()
