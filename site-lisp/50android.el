@@ -5,5 +5,5 @@
 ;; Author: S.P.Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-(require 'android-mode)
-(setq android-mode-sdk-dir "~/opt/android-sdk-linux")
+;; (require 'android-mode)
+;; (setq android-mode-sdk-dir "~/opt/android-sdk-linux")
