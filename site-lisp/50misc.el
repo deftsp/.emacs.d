@@ -742,7 +742,13 @@ that was stored with tsp-point-to-register."
 ;;使用 cscope 浏览源代码,这个xcscope是个改进版，为每一次查找的结果使用不同 buffer ，
 ;;这样就可以保存以前的结果。
 
-(require 'xcscope) ;; 加载相应的软件
+(when (eq system-type 'gnu/linux)
+  (require 'xcscope)
+  (defadvice cscope-bury-buffer (after bury-buffer activate)
+    "bury the current buffer and remove it from the selected window
+if it is displayed there."
+    (delete-window (get-buffer-window (get-buffer cscope-output-buffer-name)))))
+
 
 ;; C-c s a             设定初始化的目录，一般是你代码的根目录
 ;; C-s s I             对目录中的相关文件建立列表并进行索引
@@ -753,11 +759,6 @@ that was stored with tsp-point-to-register."
 ;; C-c s e             寻找正则表达式
 ;; C-c s f             寻找文件
 ;; C-c s i             看看指定的文件被哪些文件include
-
-(defadvice cscope-bury-buffer (after bury-buffer activate)
-  "bury the current buffer and remove it from the selected window
-if it is displayed there."
-  (delete-window (get-buffer-window (get-buffer cscope-output-buffer-name))))
 
 
 ;;cscope ends there---------------------------------------------------------------
