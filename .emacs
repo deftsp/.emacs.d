@@ -1,4 +1,4 @@
-;;Time-stamp: <2009-08-13 10:36:32 S.P.Tseng>
+;;Time-stamp: <2010-01-05 01:46:55 S.P.Tseng>
 ;; $Id$
 
 ;; First, avoid the evil:
@@ -33,7 +33,10 @@
       (normal-top-level-add-subdirs-to-load-path)))
 ;; If you only want some of the subdirectories added you can use
 ;; (normal-top-level-add-to-load-path '("emms" "erc" "planner" "w3"))
-(mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
+;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
+
+(load "~/.emacs.d/site-lisp/00site-start.el")
+
 
 ;; (let ((default-directory "~/.emacs.d/"))
 ;;   (add-to-list 'load-path default-directory)
