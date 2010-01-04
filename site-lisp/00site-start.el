@@ -70,16 +70,25 @@
 (load "~/.emacs.d/site-lisp/50switching-buffers.el")
 (load "~/.emacs.d/site-lisp/50tab-completion.el")
 (load "~/.emacs.d/site-lisp/50tempo.el")
-(load "~/.emacs.d/site-lisp/50tex.el")
+
+(when (eq system-type 'gnu/linux)
+  (load "~/.emacs.d/site-lisp/50tex.el"))
+
 (load "~/.emacs.d/site-lisp/50tools.el")
 (load "~/.emacs.d/site-lisp/50tramp.el")
 (load "~/.emacs.d/site-lisp/50traverselisp.el")
 (load "~/.emacs.d/site-lisp/50unicode-input.el")
 (load "~/.emacs.d/site-lisp/50vc.el")
-(load "~/.emacs.d/site-lisp/50w3m.el")
+
+(when (eq system-type 'gnu/linux)
+  (load "~/.emacs.d/site-lisp/50w3m.el"))
+
 (load "~/.emacs.d/site-lisp/50window-operate.el")
 (load "~/.emacs.d/site-lisp/50yasnippet.el")
-(load "~/.emacs.d/site-lisp/51anything.el")
+
+(when (eq system-type 'gnu/linux)
+  (load "~/.emacs.d/site-lisp/51anything.el"))
+
 (load "~/.emacs.d/site-lisp/51CommonLispTemplates.el")
 
 (when (eq system-type 'gnu/linux)
