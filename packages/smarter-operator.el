@@ -1,8 +1,8 @@
 ;;; smarter-operator.el --- Insert operators with surrounding spaces smarterly
 
-;; Copyright (C) 2004, 2005, 2007, 2008, 2009 William Xu, S.P.Tseng
+;; Copyright (C) 2004, 2005, 2007, 2008, 2009 William Xu
 
-;; Author: William Xu <william.xwl@gmail.com>, S.P.Tseng <deftsp@gmail.com>
+;; Author: William Xu <william.xwl@gmail.com>
 ;; Version: 1.1
 ;; Description: enhance of William xu's smart-operator.el
 
@@ -65,7 +65,7 @@
     (define-key keymap "+" 'smarter-operator-+)
     (define-key keymap "-" 'smarter-operator--)
     (define-key keymap "*" 'smarter-operator-*)
-    (define-key keymap "/" 'smarter-operator-/)
+    ;; (define-key keymap "/" 'smarter-operator-/)
     (define-key keymap "&" 'smarter-operator-&)
     (define-key keymap "|" 'smarter-operator-self-insert-command)
     ;; (define-key keymap "!" 'smarter-operator-self-insert-command)
@@ -188,7 +188,7 @@ When ONLY-AFTER, insert space at back only."
         ((memq major-mode '(cperl-mode perl-mode))
          (insert " . "))
         (t
-         (insert ".  "))))
+         (insert "."))))
 
 (defun smarter-operator-& ()
   "See `smarter-operator-insert'."
@@ -204,7 +204,7 @@ When ONLY-AFTER, insert space at back only."
   (cond ((memq major-mode '(c-mode c++-mode objc-mode))
          (if (or (looking-back "[0-9a-zA-Z]" (1- (point)))
                  (bolp))
-             (smarter-operator-insert "*")
+             (insert " *")
            (insert "*")))
         (t
          (smarter-operator-insert "*"))))
