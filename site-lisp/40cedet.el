@@ -14,10 +14,11 @@
 ;; `semantic-idle-scheduler-mode' - Keeps a buffer's parse tree up to date.
 ;; `semanticdb-minor-mode' - Stores tags when a buffer is not in memory.
 ;; `semanticdb-load-ebrowse-caches' - Loads any ebrowse dbs created earlier.
-(semantic-load-enable-minimum-features)
+(when (string= emacs-version "23.1.1")
+ (semantic-load-enable-minimum-features)
+ (global-semantic-mru-bookmark-mode 1)
+ (global-senator-minor-mode 1))
 
-(global-semantic-mru-bookmark-mode 1)
-(global-senator-minor-mode 1)
 
 
 ;; Enable some semantic features that provide basic coding assistance.
@@ -45,11 +46,13 @@
       semanticdb-search-system-databases t)
 
 ;; if you want to enable support for gnu global
-(require 'semanticdb-system)
+(when (string= emacs-version "23.1.1")
+ (require 'semanticdb-system))
 ;; (require 'semanticdb-global)
 ;; (semanticdb-enable-gnu-global-databases 'c-mode)
 ;; (semanticdb-enable-gnu-global-databases 'c++-mode)
-(require 'semanticdb-cscope)
+(when (string= emacs-version "23.1.1")
+  (require 'semanticdb-cscope))
 ;; enable ctags for some languages:
 ;;  Unix Shell, Perl, Pascal, Tcl, Fortran, Asm
 ;; (semantic-load-enable-primary-exuberent-ctags-support)
@@ -63,7 +66,8 @@
 ;; (global-semantic-show-unmatched-syntax-mode -1)
 ;; (setq semantic-idle-scheduler-working-in-modeline-flag nil)
 
-(require 'semantic-ia nil t)
+(when (string= emacs-version "23.1.1")
+  (require 'semantic-ia nil t))
 ;; (require 'semantic-complete nil t)        ; provides semantic-complete-jump, semantic-complete-jump-local
 (global-set-key (kbd "C-x , j") 'semantic-ia-fast-jump)
 (global-set-key (kbd "C-x , d") 'my-find-definition)
@@ -218,7 +222,8 @@
 ;; If you use GCC for programming in C & C++, then Semantic can automatically find path, where
 ;; system include files are located. To do this, you need to load semantic-gcc package with
 ;; following command:
-(require 'semantic-gcc)
+(when (string= emacs-version "23.1.1")
+  (require 'semantic-gcc))
 ;; You can also explicitly specify additional paths for look up of include files (and these paths also could vary for specific modes).
 ;; (semantic-add-system-include "~/exp/include/boost_1_37" 'c++-mode)
 ;; (semantic-add-system-include "/usr/include/gtk-2.0/" 'c-mode)
