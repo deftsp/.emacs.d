@@ -1,4 +1,4 @@
-;;Time-stamp: <2010-01-05 01:46:55 S.P.Tseng>
+;;Time-stamp: <2011-04-02 12:46:15 S.P.Tseng>
 ;; $Id$
 
 ;; First, avoid the evil:
@@ -13,6 +13,7 @@
   "Are we running on a WinTel system?")
 (defconst linux-p (or (eq system-type 'gnu/linux) (eq system-type 'linux))
   "Are we running on a GNU/Linux system?")
+(defconst mac-p (eq system-type 'darwin) "Are we running on Macintosh system?")
 (defconst console-p (eq (symbol-value 'window-system) nil)
   "Are we running in a console (non-X) environment?")
 

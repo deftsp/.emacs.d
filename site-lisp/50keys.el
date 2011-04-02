@@ -1,6 +1,11 @@
 
 ;;; --- Keybindings ---
 
+;; treat mac command key as meta
+(when mac-p
+  (setq mac-command-modifier 'meta)
+  (setq mac-option-modifier nil))
+
 (defun global-set-keys (&rest keycommands)
   "Register keys to commands."
   (while keycommands
