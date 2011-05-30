@@ -94,18 +94,21 @@
 
 
 ;;; see m-x list-faces-display too.................................................
+(defconst +f-color+ "#b6d3d6" "foreground color")
+(defconst +b-color+ "#282c30" "background color")
+
 (when (eq window-system 'ns)
-  (set-foreground-color "#b6d3d6") ; "lightblue"
-  (set-background-color "#282c30") ; "#1D2C3F" "#102332" "#003c3c"
+  (set-foreground-color +f-color+) ; "lightblue"
+  (set-background-color +b-color+) ; "#1D2C3F" "#102332" "#003c3c"
   (set-mouse-color "gray80")
   (set-cursor-color "#cd0000")
   (set-face-foreground 'fringe "green")
-  (set-face-background 'fringe "#282c30")
+  (set-face-background 'fringe +b-color+)
   (set-face-foreground 'tooltip "#111111")
   (set-face-background 'tooltip "#bcc8dd")
   ;; mode line
   (set-face-foreground 'mode-line-buffer-id "#90377d")
-  (set-face-foreground 'mode-line "#b6d3d6")
+  (set-face-foreground 'mode-line +f-color+)
   (set-face-background 'mode-line "#222222")
   (set-face-foreground 'mode-line-inactive "Blue4")
   (set-face-background 'mode-line-inactive "#111111")
@@ -149,13 +152,13 @@
   (set-face-foreground 'org-level-6 "Aquamarine")
   (set-face-foreground 'org-level-7 "LightSteelBlue")
   (set-face-foreground 'org-level-8 "LightSalmon")
-  (set-face-foreground 'org-hide "#b6d3d6")
+  (set-face-foreground 'org-hide +b-color+)
 
   (set-face-foreground 'icompletep-keys "LawnGreen")
   (set-face-foreground 'icompletep-determined "DarkMagenta")
   (set-face-foreground 'icompletep-choices "burlywood")
 
-  (set-face-foreground 'highlight-symbol-face "#b6d3d6")
+  (set-face-foreground 'highlight-symbol-face +f-color+)
   (set-face-background 'highlight-symbol-face "dodgerblue2")
 
   ;; (set-face-background 'highlight-current-line-face "#222222")

@@ -135,21 +135,36 @@
   ;;                         (decode-char 'ucs #x263a))
   ;;                   (font-spec :family "fixed" :size 12))
 
-  (when (eq window-system 'x)
-    (set-fontset-font "fontset-default"
-                      (cons (decode-char 'ucs #x3000)
-                            (decode-char 'ucs #x303f))
-                      (font-spec :family "微软雅黑" :size 12))
+
+  (set-fontset-font "fontset-default"
+                    (cons (decode-char 'ucs #x3000)
+                          (decode-char 'ucs #x303f))
+                    (font-spec :family (case window-system
+                                         ('x "微软雅黑")
+                                         ('ns "STHeiti")
+                                         ('w32 "微软雅黑")
+                                         (t (error "Can not set font in this window system.")))
+                               :size 12))
 
 
-    ;; Halfwidth and Fullwidth Form
-    (set-fontset-font "fontset-default"
-                      (cons (decode-char 'ucs #xff00)
-                            (decode-char 'ucs #xffef))
-                      (font-spec :family "微软雅黑" :size 12))
+  ;; Halfwidth and Fullwidth Form
+  (set-fontset-font "fontset-default"
+                    (cons (decode-char 'ucs #xff00)
+                          (decode-char 'ucs #xffef))
+                    (font-spec :family (case window-system
+                                         ('x "微软雅黑")
+                                         ('ns "STHeiti")
+                                         ('w32 "微软雅黑")
+                                         (t (error "Can not set font in this window system.")))
+                               :size 12))
 
-    (set-fontset-font (frame-parameter nil 'font)
-                      'han (font-spec :family "微软雅黑" :weight 'medium :size 12 :width 'normal))))
+  (set-fontset-font (frame-parameter nil 'font)
+                    'han (font-spec :family (case window-system
+                                              ('x "微软雅黑")
+                                              ('ns "STHeiti")
+                                              ('w32 "微软雅黑")
+                                              (t (error "Can not set font in this window system.")))
+                                    :weight 'medium :size 12 :width 'normal)))
 
   ;; ‼ & ‽
   (set-fontset-font "fontset-default"
