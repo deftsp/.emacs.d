@@ -1,6 +1,6 @@
 ;;; 50c-mode.el ---
 ;; Author: S.P.Tseng <deftsp@gmail.com>
-;; Time-stamp: <2009-10-22 13:18:13 S.P.Tseng>
+;; Time-stamp: <2011-04-15 12:49:57 S.P.Tseng>
 
 (require 'smarter-operator)
 
@@ -15,7 +15,7 @@
   (c-set-style "bsd")
   ;; (c-toggle-auto-state) ; 当你输入时自动缩进，自动换行
   (c-toggle-hungry-state)              ; 此模式下，当按Backspace时会删除最多的空格
-  (c-subword-mode 1)                   ; makes some movement and text commands recognize case-change as a word boundary.
+  ;; (c-subword-mode 1)                   ; makes some movement and text commands recognize case-change as a word boundary.
   ;; (setq c-tab-always-indent nil)
   (require 'ctypes)                     ; ctypes 可以识别你的 C 文件里的类型定义 (typedef)。自动对它们进行语法加亮。
   (ctypes-auto-parse-mode 1)
@@ -46,33 +46,45 @@
 ;;   (interactive)
 ;;   (c-beginning-of-defun 2))
 
-(defun my-c-mode-setup ()
-  (local-set-key "\C-m" 'c-context-line-break) ; 多行注释回车在下一行行首自动添加 *
-  ;;对嵌套的#ifdef上色 ,不同层次的#ifdef有不同的颜色
-  (require 'ifdef)
-  ;; (local-set-key (kbd "M-/") 'semantic-complete-analyze-inline)
-  (local-set-key "." 'semantic-complete-self-insert)
-  ;; (local-set-key ">" 'semantic-complete-self-insert)
-  (define-key c-mode-base-map (kbd "<M-S-iso-lefttab>") 'mark-ifdef)
-  (define-key c-mode-base-map (kbd "M-TAB") 'semantic-ia-complete-symbol)
-  (define-key c-mode-base-map (kbd "C-c ?") 'semantic-ia-complete-symbol-menu)
-  (define-key c-mode-base-map (kbd "C-c >") 'semantic-complete-analyze-inline)
-  (define-key c-mode-base-map (kbd "C-c p") 'semantic-analyze-proto-impl-toggle)
-  (define-key c-mode-base-map (kbd "C-c =") 'semantic-decoration-include-visit)
-  (define-key c-mode-base-map (kbd "C-c D") 'semantic-ia-show-doc)
-  (define-key c-mode-base-map (kbd "H-SPC") 'semantic-ia-show-summary)
-  (define-key c-mode-base-map (kbd "C-c C-r") 'semantic-symref)
+;; (defun my-c-mode-setup ()
+;;   (local-set-key "\C-m" 'c-context-line-break) ; 多行注释回车在下一行行首自动添加 *
+;;   ;;对嵌套的#ifdef上色 ,不同层次的#ifdef有不同的颜色
+;;   (require 'ifdef)
+;;   ;; (local-set-key (kbd "M-/") 'semantic-complete-analyze-inline)
+;;   (local-set-key "." 'semantic-complete-self-insert)
+;;   ;; (local-set-key ">" 'semantic-complete-self-insert)
+;;   (define-key c-mode-base-map (kbd "<M-S-iso-lefttab>") 'mark-ifdef)
+;;   (define-key c-mode-base-map (kbd "M-TAB") 'semantic-ia-complete-symbol)
+;;   (define-key c-mode-base-map (kbd "C-c ?") 'semantic-ia-complete-symbol-menu)
+;;   (define-key c-mode-base-map (kbd "C-c >") 'semantic-complete-analyze-inline)
+;;   (define-key c-mode-base-map (kbd "C-c p") 'semantic-analyze-proto-impl-toggle)
+;;   (define-key c-mode-base-map (kbd "C-c =") 'semantic-decoration-include-visit)
+;;   (define-key c-mode-base-map (kbd "C-c D") 'semantic-ia-show-doc)
+;;   (define-key c-mode-base-map (kbd "H-SPC") 'semantic-ia-show-summary)
+;;   (define-key c-mode-base-map (kbd "C-c C-r") 'semantic-symref)
 
 
-  (define-key c-mode-base-map (kbd "H-M-f") 'c-forward-into-nomenclature)
-  (define-key c-mode-base-map (kbd "H-M-b") 'c-backward-into-nomenclature)
-  (define-key c-mode-base-map (kbd "H-M-n") 'senator-previous-token)
-  (define-key c-mode-base-map (kbd "H-M-p") 'senator-next-token)
-  (define-key c-mode-base-map (kbd "H-M-j") 'tsp-move-function-down)
-  (define-key c-mode-base-map (kbd "H-M-k") 'tsp-move-function-up))
+;;   (define-key c-mode-base-map (kbd "H-M-f") 'c-forward-into-nomenclature)
+;;   (define-key c-mode-base-map (kbd "H-M-b") 'c-backward-into-nomenclature)
+;;   (define-key c-mode-base-map (kbd "H-M-n") 'senator-previous-token)
+;;   (define-key c-mode-base-map (kbd "H-M-p") 'senator-next-token)
+;;   (define-key c-mode-base-map (kbd "H-M-j") 'tsp-move-function-down)
+;;   (define-key c-mode-base-map (kbd "H-M-k") 'tsp-move-function-up))
 
-(add-hook 'c-mode-common-hook 'my-c-mode-setup)
+;; (add-hook 'c-mode-common-hook 'my-c-mode-setup)
 
+
+(defun local-objc-mode-hook ()
+  ;;  (c-toggle-auto-state)
+  ;; (c-toggle-hungry-state)
+  ;; (c-set-style "stroustrup")
+  ;; (require 'ctypes)
+  ;; (ctypes-auto-parse-mode 1)
+  ;; makes some movement and text commands recognize case-change as a word boundary.
+  ;; (c-subword-mode 1)
+  (setq c-basic-offset 4)
+  ;; (imenu-add-menubar-index)
+  (smarter-operator-mode))
 
 
 (defun tsp-cpp-mode-hook ()
@@ -82,12 +94,13 @@
   (require 'ctypes)
   (ctypes-auto-parse-mode 1)
   ;; makes some movement and text commands recognize case-change as a word boundary.
-  (c-subword-mode 1)
+  ;; (c-subword-mode 1)
   (setq c-basic-offset 4)
   (imenu-add-menubar-index)
   (smarter-operator-mode))
 (add-hook 'c-mode-hook 'tsp-c-mode-hook)
 (add-hook 'c++-mode-hook 'tsp-cpp-mode-hook)
+(add-hook 'objc-mode-hook 'local-objc-mode-hook)
 ;;============================================================
 
 ;;;

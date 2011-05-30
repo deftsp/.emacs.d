@@ -31,10 +31,10 @@
     '(nil
       "/* "(buffer-name) " ---\n"
       ;; " * $Id$\n"
-      " * Author:" (format "%s <%s>" (user-full-name) user-mail-address) "\n"
+      " * Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       " * Created: "(current-time-string) "\n"
       " * Description: \n"
-      " * (C)opyright 2005 - 2009 S.P.Tseng. All rights reserved.\n"
+      " * (C)opyright 2005 - 2009 "(user-full-name)". All rights reserved.\n"
       " */\n\n"
       (let* ((nopath (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
              (indent (concat "__" (upcase nopath)
@@ -52,10 +52,10 @@
     '(nil
       "/* "(buffer-name) " ---\n"
       ;; " * $Id$\n"
-      " * Author:" (format "%s <%s>" (user-full-name) user-mail-address) "\n"
+      " * Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       " * Created: "(current-time-string) "\n"
       " * Description: \n"
-      " * Copyright (C) 2005 - 2009 S.P.Tseng. All rights reserved.\n"
+      " * (C)opyright 2005 - 2009 "(user-full-name)". All rights reserved.\n"
       " */\n\n"
       ;; (let* ((nopath (file-name-nondirectory buffer-file-name))
       ;;        (noext  (file-name-sans-extension nopath)))
@@ -69,10 +69,10 @@
     '(nil
       ";;;; "(buffer-name) " ---\n"
       ;; ";; $Id$\n"
-      ";; Author:" (format "%s <%s>" (user-full-name) user-mail-address) "\n"
+      ";; Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       ";; Created: "(current-time-string) "\n"
       ";; Description: \n"
-      ";; Copyright (C) 2005 - 2009 S.P.Tseng. All rights reserved.\n"
+      ";; (C)opyright 2005 - 2009 "(user-full-name)". All rights reserved.\n"
       "\n\n"
       (previous-line 4)
       (end-of-line)))
@@ -82,10 +82,10 @@
     '(nil
       ";;;; "(buffer-name) " ---\n"
       ;; ";; $Id$\n"
-      ";; Author:" (format "%s <%s>" (user-full-name) user-mail-address) "\n"
+      ";; Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       ";; Created: "(current-time-string) "\n"
       ";; Description: \n"
-      ";; Copyright (C) 2005 - 2009 S.P.Tseng. All rights reserved.\n"
+      ";; (C)opyright 2005 - 2009 "(user-full-name)". All rights reserved.\n"
       "\n\n"
       (previous-line 4)
       (end-of-line)))

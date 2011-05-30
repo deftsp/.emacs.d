@@ -16,7 +16,6 @@
 ;; decimal output using `o d' and you'll find that 0222 is 146, the "right single quotation mark" mentioned on Jukka's
 ;; page.
 
-
 ;; (standard-display-ascii ?\t "^I")
 (standard-display-ascii ?\15 "")        ; I hate "^M"
 ;; (standard-display-ascii ?\74 "‹") ;; use unicode to display this symbol
@@ -73,6 +72,7 @@
                     (cons (decode-char 'ucs #x03bb)
                           (decode-char 'ucs #x03bb))
                     (font-spec :family "dejavu sans mono" :weight 'normal :size 12 :width 'normal))
+
   ;; (set-fontset-font "fontset-global"
   ;;                   (cons (decode-char 'ucs #x03bb)
   ;;                         (decode-char 'ucs #x03bb))
@@ -101,17 +101,22 @@
                           (decode-char 'ucs #x192))
                     (font-spec :family "dejavu sans mono" :weight 'normal :size 12 :width 'normal))
 
-  ;; IPA Extensions
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #x250)
-                          (decode-char 'ucs #x2af))
-                    (font-spec :family "Gentium" :size 14))
 
-  ;; Phonetic Extensions
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #x1d00)
-                          (decode-char 'ucs #x1d7f))
-                    (font-spec :family "Gentium" :size 14))
+  (when (eq window-system 'x)
+    ;; IPA Extensions
+    (set-fontset-font "fontset-default"
+                      (cons (decode-char 'ucs #x250)
+                            (decode-char 'ucs #x2af))
+                      (font-spec :family "Gentium" :size 14))
+
+
+
+    ;; Phonetic Extensions
+    (set-fontset-font "fontset-default"
+                      (cons (decode-char 'ucs #x1d00)
+                            (decode-char 'ucs #x1d7f))
+                      (font-spec :family "Gentium" :size 14)))
+
 
   ;; Mathematical Operator
   (set-fontset-font "fontset-default"
@@ -125,10 +130,26 @@
                     (font-spec :family "FreeMono" :size 12))
 
   ;; ☹ & ☺
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #x2639)
-                          (decode-char 'ucs #x263a))
-                    (font-spec :family "fixed" :size 12))
+  ;; (set-fontset-font "fontset-default"
+  ;;                   (cons (decode-char 'ucs #x2639)
+  ;;                         (decode-char 'ucs #x263a))
+  ;;                   (font-spec :family "fixed" :size 12))
+
+  (when (eq window-system 'x)
+    (set-fontset-font "fontset-default"
+                      (cons (decode-char 'ucs #x3000)
+                            (decode-char 'ucs #x303f))
+                      (font-spec :family "微软雅黑" :size 12))
+
+
+    ;; Halfwidth and Fullwidth Form
+    (set-fontset-font "fontset-default"
+                      (cons (decode-char 'ucs #xff00)
+                            (decode-char 'ucs #xffef))
+                      (font-spec :family "微软雅黑" :size 12))
+
+    (set-fontset-font (frame-parameter nil 'font)
+                      'han (font-spec :family "微软雅黑" :weight 'medium :size 12 :width 'normal))))
 
   ;; ‼ & ‽
   (set-fontset-font "fontset-default"
@@ -136,20 +157,6 @@
                           (decode-char 'ucs #x203d))
                     (font-spec :family "FreeMono" :size 12))
 
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #x3000)
-                          (decode-char 'ucs #x303f))
-                    (font-spec :family "微软雅黑" :size 12))
-
-
-  ;; Halfwidth and Fullwidth Form
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #xff00)
-                          (decode-char 'ucs #xffef))
-                    (font-spec :family "微软雅黑" :size 12))
-
-  (set-fontset-font (frame-parameter nil 'font)
-                    'han (font-spec :family "微软雅黑" :weight 'medium :size 12 :width 'normal)))
 
 ;; (set-fontset-font (frame-parameter nil 'font)
 ;;        'han '("cwTeXHeiBold" . "unicode-bmp"))

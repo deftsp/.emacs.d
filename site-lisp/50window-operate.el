@@ -15,12 +15,12 @@
                  "M-B" 'windmove-left
                  "M-F" 'windmove-right)
 
-(global-set-key "\C-x2" '(lambda ()
-                          (interactive)
-                          (split-window-vertically -22)))
-(global-set-key "\C-x3" '(lambda ()
-                          (interactive)
-                          (split-window-horizontally -80)))
+;; (global-set-key "\C-x2" '(lambda ()
+;;                           (interactive)
+;;                           (split-window-vertically -22)))
+;; (global-set-key "\C-x3" '(lambda ()
+;;                           (interactive)
+;;                           (split-window-horizontally -80)))
 
 (global-set-key (kbd "H-M-,") '(lambda() (interactive) (scroll-other-window -1)))
 (global-set-key (kbd "H-M-.") '(lambda() (interactive) (scroll-other-window 1)))

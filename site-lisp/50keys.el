@@ -31,9 +31,9 @@
  "<C-f4>"  'delete-window
 
  ;; Compile and debug
- "<f5>"    'buffer-action-compile
- "<C-f5>"  'buffer-action-run
- "<S-f5>"  'compile
+ ;; "<f5>"    'buffer-action-compile
+ ;; "<C-f5>"  'buffer-action-run
+ ;; "<S-f5>"  'compile
  "<f6>"    'first-error
  "<S-f6>"  'last-error
 
@@ -117,8 +117,8 @@
 ;; (global-set-key (kbd "C-c p t") 'planner-create-task-from-buffer)
 ;; (global-set-key (kbd "C-c p d") 'planner-diary-add-entry)
 ;; indent the whole buffer
-(global-set-key (kbd "C-c i w") 'tsp-iwb)
-(defun tsp-iwb ()
+(global-set-key (kbd "C-c i w") 'deftsp-iwb)
+(defun deftsp-iwb ()
   "indent whole buffer"
   (interactive)
   (delete-trailing-whitespace)
@@ -128,10 +128,10 @@
 ;; iconify-or-deiconify-frame (C-x C-z)
 
 (when window-system
-  (global-unset-key "\C-z")
-  ;; 定义按键前缀，这样可以绑定"C-c c c"和"C-z n"这样的按键
-  (define-prefix-command 'ctl-z-map)
-  (global-set-key (kbd "C-z") 'ctl-z-map)
+  ;; (global-unset-key "\C-z")
+  ;; define a prefix command, make it possible to define key sequence like`C-z c c' 'C-z n`
+  ;; (define-prefix-command 'ctl-z-map)
+  ;; (global-set-key (kbd "C-z") 'ctl-z-map)
   (global-set-key (kbd "C-c u") 'revert-buffer))
 
 

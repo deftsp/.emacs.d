@@ -1,26 +1,23 @@
-;;; tsp-hideshow.el ---
+;;; 50hideshow.el ---
 ;;
-;; Filename: tsp-hideshow.el
 ;; Description:
-;; Author: S.P.Tseng <kirby1985@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Created: Fri Oct  5 00:00:12 2007
 ;; Version:
 ;; Last-Updated: Sun Oct 28 12:40:16 2007 (28800 CST)
-;;           By: S.P.Tseng
-;;     Update #: 10
 ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;
 ;;; Code:
 
 ;; code folding
-(setq hs-hide-comments-when-hiding-all t)
+;; (setq hs-hide-comments-when-hiding-all t)
 ;; *What kind of hidden blocks to open when doing `isearch'.
 ;; code    -- open only code blocks
 ;; comment -- open only comment blocks
 ;; t       -- open both code and comment blocks
 ;; nil     -- open neither code nor comment blocks
-(setq hs-isearch-open 'code)
+;; (setq hs-isearch-open 'code)
 
 ;;; I use outline minor mode now.....!!!
 ;; (add-hook 'emacs-lisp-mode-hook 'hs-minor-mode)

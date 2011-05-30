@@ -59,3 +59,16 @@
 (when (> emacs-major-version 22)
   (define-coding-system-alias 'gb2312 'gbk)
   (define-coding-system-alias 'x-gbk 'gbk))
+
+
+
+
+;;; Difference between "exec-path" and "PATH"
+;; The value of “ PATH ” is used by emacs when you are running a shell in emacs, similar to when you
+;; are using a shell in a terminal.
+;; The "exec-path" is used by emacs itself to find programs it needs for its features, such as spell
+;; checking, file compression, compiling, grep, diff, etc.
+
+(mapc (lambda (n) (add-to-list 'exec-path n))
+      '("/usr/local/bin" "/usr/X11R6/bin"))
+

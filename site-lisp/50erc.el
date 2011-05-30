@@ -18,13 +18,8 @@
   "Connect to IRC."
   (interactive)
   (when (y-or-n-p "You really want to play Irc? ")
-    ;; (erc :server "localhost" :port 6668
-    ;;      :nick "deftsp" :full-name "S.P.Tseng" )
     (erc :server "irc.freenode.net" :port 6667
-         :nick "deftsp" :full-name "S.P.Tseng")
-    ;; (erc :server "irc.oftc.net" :port 6667
-         ;; :nick "deftsp" :full-name "S.P.Tseng")
-    ))
+         :nick "deftsp" :full-name "Shihpin Tseng")))
 
 (add-hook 'erc-after-connect
           '(lambda (SERVER NICK)

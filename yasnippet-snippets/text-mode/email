@@ -1,3 +1,0 @@
-#name : (user's email)
-# --
-`(format "%s <%s>" (user-full-name) user-mail-address)`$0

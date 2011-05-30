@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2009-12-08 12:58:54 S.P.Tseng>
+;; Time-stamp: <2011-04-03 00:52:55 S.P.Tseng>
 
 ;;; imenu
 (require 'imenu)
@@ -191,15 +191,16 @@
 
 ;;----------------------------------------------------------------------------------------------------
 
-(defun byte-compile-visited-file ()
-  (let ((byte-compile-verbose t))
-    (unless (eq major-mode 'sawfish-mode)
-      (byte-compile-file buffer-file-name))))
+;; auto compile el file
+;; (defun byte-compile-visited-file ()
+;;   (let ((byte-compile-verbose t))
+;;     (unless (eq major-mode 'sawfish-mode)
+;;       (byte-compile-file buffer-file-name))))
 
-(add-hook 'emacs-lisp-mode-hook
-          (lambda ()
-            (when buffer-file-name
-              (add-hook 'after-save-hook 'byte-compile-visited-file nil t))))
+;; (add-hook 'emacs-lisp-mode-hook
+;;           (lambda ()
+;;             (when buffer-file-name
+;;               (add-hook 'after-save-hook 'byte-compile-visited-file nil t))))
 
 ;;----------------------------------------------------------------------------------------------------
 ;; (defun unicode-symbol (name)

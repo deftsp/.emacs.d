@@ -1,7 +1,7 @@
 
 ;;--------------------------------------------------------------------------------
 ;;; Personal data
-(setq user-full-name "S.P.Tseng"        ; "Tseng Shih Pin"
+(setq user-full-name "Shihpin Tseng"
       user-mail-address "deftsp@gmail.com"
       change-log-default-name "ChangeLog"
       vc-user-login-name "author")
@@ -201,10 +201,6 @@
 ;;; physical line move
 ;; (autoload 'physical-line-mode "physical-line" "" t)
 ;; (add-hook 'find-file-hooks 'physical-line-mode )
-
-;; exec-path.  this isn't always set properly, so...
-;; (mapc (lambda (n) (add-to-list 'exec-path n))
-;;       '("/sbin" "/usr/sbin" "/bin" "/usr/bin" "/usr/local/bin" "/usr/X11R6/bin"))
 
 
 
@@ -589,32 +585,43 @@
 ;; (autoload 'js2-mode "js2-mode" nil t)
 ;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
+
 (mapcar #'(lambda (lst)
-            (add-to-list 'auto-mode-alist lst))
-        '(("\\.\\(xml\\|rdf\\)\\'" . sgml-mode)
-          ;; ("\\.\\([ps]?html?\\|cfm\\|asp\\)\\'" . html-helper-mode)
-          ("\\.css\\'" . css-mode)
-          ("\\.\\(emacs\\|session\\|gnus\\)\\'" . emacs-lisp-mode)
-          ("\\.\\(jl\\|sawfishrc\\)\\'" . sawfish-mode)
-          ("\\.scm\\'" . scheme-mode)
-          ("\\.py\\'" . python-mode)
-          ("\\.\\(ba\\)?sh\\'" . sh-mode)
-          ("\\.l\\'" . c-mode)
-          ("\\.o\\'" . hexl-mode)
-          ("\\.max\\'" . maxima-mode)
-          ("\\.fvwm2rc$" . fvwm-mode)
-          ("/f\\..*" . fvwm-mode)
-          ;; ("\\.Xdefaults$"     . xrdb-mode)
-          ;; ("\\.Xenvironment$"  . xrdb-mode)
-          ;; ("\\.Xresources$"    . xrdb-mode)
-          ("\\.tei$"           . xml-mode)
-          ("\\.dps$"           . pascal-mode)
-          ("\\.bash_aliases$"  . shell-script-mode)
-          ("\\.procmailrc$"    . conf-mode)
-          ("fonts.conf"        . xml-mode)
-          ("\\.org$"           . org-mode)
-          ("\\.markdown$"      . markdown-mode)
-          ("\\.lrc$"           . emms-lyrics-mode)))
+            (if lst (add-to-list 'auto-mode-alist lst)))
+        (list
+
+         '("\\.\\(xml\\|rdf\\)\\'" . sgml-mode)
+         ;; ("\\.\\([ps]?html?\\|cfm\\|asp\\)\\'" . html-helper-mode)
+         '("\\.css\\'" . css-mode)
+         '("\\.\\(emacs\\|session\\|gnus\\)\\'" . emacs-lisp-mode)
+         '("\\.\\(jl\\|sawfishrc\\)\\'" . sawfish-mode)
+         '("\\.scm\\'" . scheme-mode)
+         '("\\.py\\'" . python-mode)
+         '("\\.\\(ba\\)?sh\\'" . sh-mode)
+         '("\\.l\\'" . c-mode)
+         '("\\.o\\'" . hexl-mode)
+         '("\\.max\\'" . maxima-mode)
+         '("\\.fvwm2rc$" . fvwm-mode)
+         '("/f\\..*" . fvwm-mode)
+         ;; ("\\.Xdefaults$"     . xrdb-mode)
+         ;; ("\\.Xenvironment$"  . xrdb-mode)
+         ;; ("\\.Xresources$"    . xrdb-mode)
+         '("\\.tei$"           . xml-mode)
+         '("\\.dps$"           . pascal-mode)
+         '("\\.bash_aliases$"  . shell-script-mode)
+         '("\\.procmailrc$"    . conf-mode)
+         '("fonts.conf"        . xml-mode)
+         '("\\.org$"           . org-mode)
+         '("\\.markdown$"      . markdown-mode)
+         '("\\.lrc$"           . emms-lyrics-mode)
+         (if (eq system-type 'darwin)
+             '("\\.\\(h\\|mm?\\)\\'" . objc-mode))))
+
+;; Since emacs 22 we can use magic-mode-alist to set mode
+;; (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@implementation" . objc-mode))
+;; (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@interface" . objc-mode))
+;; (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@protocol" . objc-mode))
+
 
 
 ;;; insert DATE and some usefull things
@@ -721,7 +728,8 @@ that was stored with tsp-point-to-register."
 (setq time-stamp-active t
       time-stamp-warn-inactive t        ;去掉time-stamp的警告？
       time-stamp-line-limit 8           ;; check the first 10 lines of the file for Time-stamp: <>
-      time-stamp-format "%:y-%02m-%02d %02H:%02M:%02S S.P.Tseng")
+      time-stamp-format (concat "%:y-%02m-%02d %02H:%02M:%02S " user-full-name)
+      )
 (add-hook 'write-file-hooks 'time-stamp)
 (add-hook 'before-save-hook 'time-stamp)
 

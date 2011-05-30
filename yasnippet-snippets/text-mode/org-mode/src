@@ -1,6 +1,0 @@
-#contributor : S.P.Tseng <deftsp@gmail.com>
-#name : #+BEGIN_SRC...#+END_SRC
-# --
-#+BEGIN_SRC ${1:major-mode}
-$0
-#+END_SRC

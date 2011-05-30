@@ -18,22 +18,20 @@
       file-cache-ignore-case t
       file-cache-filter-regexps '("~$" "\\.o$" "\\.exe$" "\\.a$" "\\.elc$"
                                   ",v$" "\\.output$" "\\.$" "#$" "\\.class$"
-                                  "\\.svn-base$" "\\.svn" "\\.jar$"))
+                                  "\\.svn-base$" "\\.svn" "\\.jar$" "\\.git$"
+                                  "\\.gz$" "\\.tar$" "\\.rar$"))
 
-(defun file-cache-add ()
-  (interactive)
-  (eval-after-load "filecache"
-    '(progn
-      (message "Loading file cache...")
-      (file-cache-add-directory-using-find "~/proj")
-      (file-cache-add-directory-list load-path)
-      ;; (file-cache-add-file-list (list "~/foo/bar" "~/baz/bar"))
-      (let ((cache-dirs '("~/public_html/" "~/" "/etc/")))
-        (dolist (dir cache-dirs) (file-cache-add-directory dir))))))
 
-(defun file-cache-update ()
-  (run-at-time "8:00pm" nil 'file-cache-add))
-(add-hook 'midnight-hook 'file-cache-update)
+(eval-after-load "filecache"
+  '(progn
+     (message "Loading file cache...")
+     (file-cache-add-directory-using-find "~/proj")
+     (file-cache-add-directory-list load-path)
+     ;; (file-cache-add-file-list (list "~/foo/bar" "~/baz/bar"))
+     (let ((cache-dirs '("~/" "/etc/")))
+       (dolist (dir cache-dirs) (file-cache-add-directory dir)))))
+
+;; (add-hook 'midnight-hook 'file-cache-update)
 (add-hook 'midnight-hook 'save-merge-file-cache)
 
 ;; Save cache to a file
@@ -66,13 +64,15 @@ For later retrieval using `file-cache-read-cache-from-file'"
   (file-cache-read-cache-from-file "~/.filecache"))
 
 
-(if (file-exists-p (expand-file-name "~/.filecache"))
-    (file-cache-read-cache-from-file "~/.filecache"))
-
-
-;; Add to file-cache when `kill-buffer'
+;;; Add to file-cache when `kill-buffer'
 (defun file-cache-add-this-file ()
   (and buffer-file-name
        (file-exists-p buffer-file-name)
        (file-cache-add-file buffer-file-name)))
+
 (add-hook 'kill-buffer-hook 'file-cache-add-this-file)
+
+
+
+(if (file-exists-p (expand-file-name "~/.filecache"))
+    (file-cache-read-cache-from-file "~/.filecache"))

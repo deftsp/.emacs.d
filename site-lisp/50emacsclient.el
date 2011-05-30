@@ -2,7 +2,7 @@
 
 ;; This starts up a server automatically.
 ;; use emacs daemon instead
-(add-hook 'after-init-hook 'server-start)
+;; (add-hook 'after-init-hook 'server-start)
 ;; make the server raise the Emacs window, work fine with stumpwm
 (setq server-raise-frame t)
 

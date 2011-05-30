@@ -1,7 +1,7 @@
 ;;; 50tramp.el ---
 ;;
 ;; Description:
-;; Author: S.P.Tseng <kirby1985@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Created: Tue Oct 16 20:12:51 2007
 ;; Version:
 
@@ -90,4 +90,3 @@
 ;; Using su to edit stuff as root
 ;; C-x C-f /su::/etc/hosts RET
 
-;;; tsp-tramp.el ends here

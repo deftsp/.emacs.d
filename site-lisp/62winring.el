@@ -1,8 +1,8 @@
 ;;; 62winring.el ---
 
-;; Copyright (C) 2008  S.P.Tseng
+;; Copyright (C) 2008  Shhiping Tseng
 
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihping Tseng <deftsp@gmail.com>
 (defvar winring-map nil
   "Keymap used for winring, window configuration rings.")
 (setq winring-map (make-sparse-keymap))

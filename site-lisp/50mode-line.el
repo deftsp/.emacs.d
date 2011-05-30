@@ -103,7 +103,7 @@
         appt-mode-string
         working-mode-line-message
         display-time-string " "
-        battery-mode-line-string " "
+        ;; battery-mode-line-string " "
         ;; win:mode-string
         "["
         (:propertize winring-name  face font-lock-constant-face)

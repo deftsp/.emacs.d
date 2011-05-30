@@ -1,17 +1,19 @@
 ;;; 00util.el ---
 
-;; Copyright (C) 2010  S.P.Tseng
+;; Copyright (C) 2010  Shihpin Tseng
 
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
+
+(load "~/.emacs.d/site-lisp/01el-get.el")
 
 (load "~/.emacs.d/site-lisp/39util.el")
 
 (when (eq system-type 'gnu/linux)
-     (load "~/.emacs.d/site-lisp/40cedet.el"))
+  (load "~/.emacs.d/site-lisp/40cedet.el"))
 
 (when (eq system-type 'gnu/linux)
-    (load "~/.emacs.d/site-lisp/42ecb.el"))
+  (load "~/.emacs.d/site-lisp/42ecb.el"))
 
 (load "~/.emacs.d/site-lisp/50alias.el")
 (load "~/.emacs.d/site-lisp/50android.el")
@@ -70,32 +72,22 @@
 (load "~/.emacs.d/site-lisp/50switching-buffers.el")
 (load "~/.emacs.d/site-lisp/50tab-completion.el")
 (load "~/.emacs.d/site-lisp/50tempo.el")
-
-(when (eq system-type 'gnu/linux)
-  (load "~/.emacs.d/site-lisp/50tex.el"))
-
 (load "~/.emacs.d/site-lisp/50tools.el")
 (load "~/.emacs.d/site-lisp/50tramp.el")
 (load "~/.emacs.d/site-lisp/50traverselisp.el")
 (load "~/.emacs.d/site-lisp/50unicode-input.el")
 (load "~/.emacs.d/site-lisp/50vc.el")
-
-(when (eq system-type 'gnu/linux)
-  (load "~/.emacs.d/site-lisp/50w3m.el"))
-
 (load "~/.emacs.d/site-lisp/50window-operate.el")
 (load "~/.emacs.d/site-lisp/50yasnippet.el")
-
-(when (eq system-type 'gnu/linux)
-  (load "~/.emacs.d/site-lisp/51anything.el"))
-
 (load "~/.emacs.d/site-lisp/51CommonLispTemplates.el")
-
-(when (eq system-type 'gnu/linux)
-  (load "~/.emacs.d/site-lisp/52emms.el"))
-
+(load "~/.emacs.d/site-lisp/51anything.el")
 (load "~/.emacs.d/site-lisp/52icicles.el")
 (load "~/.emacs.d/site-lisp/60session.el")
 (load "~/.emacs.d/site-lisp/62winring.el")
+(load "~/.emacs.d/site-lisp/99face.el")
 
 
+(when (eq system-type 'gnu/linux)
+  (load "~/.emacs.d/site-lisp/50tex.el")
+  (load "~/.emacs.d/site-lisp/50w3m.el")
+  (load "~/.emacs.d/site-lisp/52emms.el"))
