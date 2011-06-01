@@ -15,25 +15,9 @@
      (eval-print-last-sexp))))
 
 
-(eval-after-load "el-get"
-  '(progn
-     (setq el-get-sources
-           '(cssh el-get switch-window vkill google-maps nxhtml xcscope yasnippet
-                  ;; (:name magit
-                  ;;        :after (lambda () (global-set-key (kbd "C-x C-z") 'magit-status)))
 
-                  (:name asciidoc
-                         :type elpa
-                         :after (lambda ()
-                                  (autoload 'doc-mode "doc-mode" nil t)
-                                  (add-to-list 'auto-mode-alist '("\\.adoc$" . doc-mode))
-                                  (add-hook 'doc-mode-hook '(lambda ()
-                                                              (turn-on-auto-fill)
-                                                              (require 'asciidoc)))))
-
-                  (:name lisppaste        :type elpa)
-                  (:name dictionary-el    :type apt-get)
-                  ))))
-;; (el-get 'sync)
-;; (el-get 'wait)
-;; (el-get)
+(setq el-get-sources
+      '(cssh el-get emacs-w3m switch-window vkill
+             xcscope yasnippet package magit dired+
+             bbdb))
+(el-get)                          ; 'sync 'wait

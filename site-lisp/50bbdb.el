@@ -10,7 +10,7 @@
 ;; (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
 (setq bbdb-north-american-phone-numbers-p nil
       bbdb-check-zip-codes-p nil
-      bbdb-user-mail-names (regexp-opt '("deftsp@gmail.com" "mendouer@163.com" "kirby1985@gmail.com" "shielder@yeah.net"))
+      bbdb-user-mail-names (regexp-opt '("deftsp@gmail.com" "mendouer@163.com" "kirby1985@gmail.com"))
       bbdb-no-duplicates-p nil            ; must be set to nil to edit a list of email addresses
       bbdb-use-pop-up nil
       bbdb-complete-name-allow-cycling t

@@ -38,7 +38,7 @@
 (load "~/.emacs.d/site-lisp/50ediff.el")
 (load "~/.emacs.d/site-lisp/50eim.el")
 (load "~/.emacs.d/site-lisp/50emacsclient.el")
-(load "~/.emacs.d/site-lisp/50environment.el")
+(load "~/.emacs.d/site-lisp/50env.el")
 (load "~/.emacs.d/site-lisp/50epg.el")
 (load "~/.emacs.d/site-lisp/50erc.el")
 (load "~/.emacs.d/site-lisp/50eshell.el")
@@ -77,6 +77,7 @@
 (load "~/.emacs.d/site-lisp/50traverselisp.el")
 (load "~/.emacs.d/site-lisp/50unicode-input.el")
 (load "~/.emacs.d/site-lisp/50vc.el")
+(load "~/.emacs.d/site-lisp/50w3m.el")
 (load "~/.emacs.d/site-lisp/50window-operate.el")
 (load "~/.emacs.d/site-lisp/50yasnippet.el")
 (load "~/.emacs.d/site-lisp/51CommonLispTemplates.el")
@@ -89,5 +90,4 @@
 
 (when (eq system-type 'gnu/linux)
   (load "~/.emacs.d/site-lisp/50tex.el")
-  (load "~/.emacs.d/site-lisp/50w3m.el")
   (load "~/.emacs.d/site-lisp/52emms.el"))

@@ -1,9 +1,7 @@
 ;;; w3m
 
-(add-to-list 'load-path "~/.emacs.d/packages/emacs-w3m")
-
-(require 'w3m-ems)
 (require 'w3m)
+(require 'w3m-ems)
 (require 'w3m-session)
 
 ;; Rendering Frames
@@ -31,58 +29,57 @@
 ;; You might also need to configure w3mmee such that "English" is set as the "Language" in the "Character Encoding
 ;; Settings" section of the "Option Setting Panel".
 
-(setq w3m-language "en"
-      w3m-bookmark-file-coding-system 'utf-8
-      w3m-coding-system 'utf-8
-      w3m-default-coding-system 'utf-8
-      w3m-file-coding-system 'utf-8
-      w3m-file-name-coding-system 'utf-8
-      w3m-terminal-coding-system 'utf-8
-      w3m-input-coding-system 'utf-8
-      w3m-output-coding-system 'utf-8)
+(eval-after-load "w3m"
+  '(progn
+     (setq w3m-language "en"
+           w3m-bookmark-file-coding-system 'utf-8
+           w3m-coding-system 'utf-8
+           w3m-default-coding-system 'utf-8
+           w3m-file-coding-system 'utf-8
+           w3m-file-name-coding-system 'utf-8
+           w3m-terminal-coding-system 'utf-8
+           w3m-input-coding-system 'utf-8
+           w3m-output-coding-system 'utf-8
 
-(setq w3m-favicon-image nil
-      w3m-use-favicon nil
-      w3m-use-toolbar t
-      w3m-symbol 'w3m-default-symbol
-      w3m-key-binding 'info
-      w3m-tab-width 16
-      w3m-process-modeline-format " loaded: %s"
-      ;; Conkeror seems not to understand the "new-tab" option to be an 'openURL' call
-      browse-url-firefox-new-window-is-tab t
-      browse-url-new-window-flag t
-      w3m-session-autosave t)
+           w3m-favicon-image nil
+           w3m-use-favicon nil
+           w3m-use-toolbar t
+           w3m-symbol 'w3m-default-symbol
+           w3m-key-binding 'info
+           w3m-tab-width 16
+           w3m-process-modeline-format " loaded: %s"
+           ;; Conkeror seems not to understand the "new-tab" option to be an 'openURL' call
+           browse-url-firefox-new-window-is-tab t
+           browse-url-new-window-flag t
+           w3m-session-autosave t
+           w3m-form-textarea-edit-mode 'org-mode
 
-(setq w3m-form-textarea-edit-mode 'org-mode)
-(add-hook 'w3m-form-input-textarea-mode-hook
-          '(lambda nil
-            (setq outline-regexp "=+")))
+           w3m-enable-google-feeling-lucky nil
+           w3m-command-arguments '("-F") ; default arguments passed to the w3m command
+           w3m-use-cookies t
+           w3m-cookie-accept-bad-cookies t
+           w3m-icon-directory "~/.emacs.d/packages/w3m/icons"
+           w3m-fill-column 100)
 
-
-(if window-system
-    (setq browse-url-generic-program "firefox" ; The name of the browser program used by `browse-url-generic'.
-          ;; used by the `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file' commands.
-          ;; browse-url-generic w3m-browse-url w3m-browse-url-new-tab or browse-url-firefox
-          browse-url-browser-function '(("file:.*/usr/local/share/gtk-doc/html" . w3m-goto-url-new-session)
-                                        ("file:.*/usr/share/gtk-doc/html" . w3m-goto-url-new-session)
-                                        ("." . w3m-goto-url-new-session)))
-    ;; browse-url-lynx-emacs
-    (setq browse-url-browser-function 'w3m-goto-url-new-session))
+     ;; (add-hook 'w3m-form-input-textarea-mode-hook
+     ;;           '(lambda nil
+     ;;              (setq outline-regexp "=+")))
 
 
-(global-set-key (kbd "C-c C-o") 'browse-url-at-point)
-(global-set-key (kbd "C-c O") 'browse-url)
+     (if window-system
+         (setq browse-url-generic-program "firefox" ; The name of the browser program used by `browse-url-generic'.
+               ;; used by the `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file' commands.
+               ;; browse-url-generic w3m-browse-url w3m-browse-url-new-tab or browse-url-firefox
+               browse-url-browser-function '(("file:.*/usr/local/share/gtk-doc/html" . w3m-goto-url-new-session)
+                                             ("file:.*/usr/share/gtk-doc/html" . w3m-goto-url-new-session)
+                                             ("." . w3m-goto-url-new-session)))
+       ;; browse-url-lynx-emacs
+       (setq browse-url-browser-function 'w3m-goto-url-new-session))))
 
 (autoload 'browse-url "browse-url" "Open up in browsers hyperlinks." t)
-
-;; When browsing in Gnus, sometimes it's a good idea to open up something graphically.
+(global-set-key (kbd "C-c C-o") 'browse-url-at-point)
+(global-set-key (kbd "C-c O") 'browse-url)
 (global-set-key (kbd "C-c B") 'browse-url-firefox)
-
-(setq w3m-command-arguments '("-F") ; default arguments passed to the w3m command
-      w3m-use-cookies t
-      w3m-cookie-accept-bad-cookies t
-      w3m-icon-directory "~/.emacs.d/packages/w3m/icons"
-      w3m-fill-column 100)
 
 
 ;;; w3m-toggle-proxy
@@ -103,7 +100,7 @@
 
 (setq w3m-default-display-inline-image nil)
 (setq w3m-default-toggle-inline-images nil)
-(setq w3m-home-page "file:///home/deftsp/proj/personal-site/web/WelcomePage.html")
+(setq w3m-home-page "")
 
 
 ;; Run `w3m-view-this-url' without switching to the newly created buffer.
@@ -869,11 +866,11 @@ entries in the `no-check' list."
 
 ;;; wget
 
-(autoload 'wget "wget" "wget interface for Emacs." t)
-(autoload 'wget-web-page "wget" "wget interface to download whole web page." t)
-(load "w3m-wget")
-(setq wget-basic-options '("-v"))
-(setq wget-download-directory "~/dl")
+;; (autoload 'wget "wget" "wget interface for Emacs." t)
+;; (autoload 'wget-web-page "wget" "wget interface to download whole web page." t)
+;; (load "w3m-wget")
+;; (setq wget-basic-options '("-v"))
+;; (setq wget-download-directory "~/dl")
 
 ;; FIXME: find way to let ad-do-it run after w3m session been selected.
 (defadvice slime-hyperspec-lookup (around open/restore-w3m-session-first activate compile)

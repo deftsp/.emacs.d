@@ -72,3 +72,9 @@
 (mapc (lambda (n) (add-to-list 'exec-path n))
       '("/usr/local/bin" "/usr/X11R6/bin"))
 
+;; EPREFIX="$HOME/Gentoo""
+(when (eq system-type 'darwin)
+ (let ((eprefix (expand-file-name "~/Gentoo")))
+  (when (file-directory-p eprefix)
+    (add-to-list 'exec-path (concat eprefix "/bin"))
+    (add-to-list 'exec-path (concat eprefix "/usr/bin")))))

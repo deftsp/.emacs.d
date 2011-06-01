@@ -56,8 +56,6 @@
 (when (featurep 'vc-git)
   (add-to-list 'vc-handled-backends 'git))
 
-;;; magit ---------------------------------------------------------
-(autoload 'magit-status "magit" nil t)
 ;; ----------------------------------------------------------------
 
 ;;; gitsum: do interactive partial commits with Emacs in the style of darcs record.
