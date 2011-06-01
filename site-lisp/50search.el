@@ -19,6 +19,7 @@
 ;; C-s SOMETHING M-% SOMEOTHERS
 
 ;;; grep-find 搜索当前目录及子目录文件中包含的子串
+(setq grep-find-use-xargs 'exec)
 
 ;; M-x grep-find
 

@@ -8,7 +8,6 @@
 (load "~/.emacs.d/site-lisp/01el-get.el")
 
 (load "~/.emacs.d/site-lisp/39util.el")
-
 (when (eq system-type 'gnu/linux)
   (load "~/.emacs.d/site-lisp/40cedet.el"))
 
@@ -77,7 +76,7 @@
 (load "~/.emacs.d/site-lisp/50traverselisp.el")
 (load "~/.emacs.d/site-lisp/50unicode-input.el")
 (load "~/.emacs.d/site-lisp/50vc.el")
-(load "~/.emacs.d/site-lisp/50w3m.el")
+;; (load "~/.emacs.d/site-lisp/50w3m.el")
 (load "~/.emacs.d/site-lisp/50window-operate.el")
 (load "~/.emacs.d/site-lisp/50yasnippet.el")
 (load "~/.emacs.d/site-lisp/51CommonLispTemplates.el")

@@ -1,8 +1,8 @@
 ;;; 50flymake.el ---
 
-;; Copyright (C) 2008  S.P.Tseng
+;; Copyright (C) 2008  Shihpin Tseng
 
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;;----------------------------------------------------------------------------------------------------
 ;; flymake mode
@@ -11,7 +11,22 @@
 
 ;; check-syntax:
 ;;       gcc -o nul -Wall -Wextra -fsyntax-only $(CHK_SOURCES)
-;;flymode mode ends here------------------------------------------------------------------------------
+
+;; (autoload 'flymake-find-file-hook "flymake" "" t)
+;; (add-hook 'find-file-hook 'flymake-find-file-hook)
+;; (setq flymake-gui-warnings-enabled nil)
+;; (setq flymake-log-level 0)
+
+
+;;; flymake will excute check-syntax when:
+;; open file
+;; new line (flymake-start-syntax-check-on-newline)
+;; code change after 0.5s (flymake-no-changes-timeout)
+;; execute, flymake-start-syntax-check
+
+
+;; flymake-allowed-file-name-masks
+
 
 ;;; align
 ;; (when (require 'align nil t)
@@ -66,3 +81,5 @@
 ;;           ))
 
 ;;   (add-hook 'c-mode-hook (lambda () (setq align-mode-rules-list xsteve-c-align-rules-list))))
+
+;;flymode mode ends here------------------------------------------------------------------------------
