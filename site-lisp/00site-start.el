@@ -20,7 +20,7 @@
 (load "~/.emacs.d/site-lisp/50auto-complete.el")
 (load "~/.emacs.d/site-lisp/50auto-fill.el")
 (load "~/.emacs.d/site-lisp/50auto-insert.el")
-(load "~/.emacs.d/site-lisp/50bbdb.el")
+;; (load "~/.emacs.d/site-lisp/50bbdb.el")
 (load "~/.emacs.d/site-lisp/50calendar.el")
 
 (when (eq system-type 'gnu/linux)
@@ -76,7 +76,7 @@
 (load "~/.emacs.d/site-lisp/50traverselisp.el")
 (load "~/.emacs.d/site-lisp/50unicode-input.el")
 (load "~/.emacs.d/site-lisp/50vc.el")
-;; (load "~/.emacs.d/site-lisp/50w3m.el")
+(load "~/.emacs.d/site-lisp/50w3m.el")
 (load "~/.emacs.d/site-lisp/50window-operate.el")
 (load "~/.emacs.d/site-lisp/50yasnippet.el")
 (load "~/.emacs.d/site-lisp/51CommonLispTemplates.el")

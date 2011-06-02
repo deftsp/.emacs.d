@@ -172,7 +172,11 @@
 
   ;; (set-face-foreground 'setnu-line-number-face "DarkSlateGray")
 
-  (set-face-background 'anything-ff-directory "#222222")
+  (eval-after-load "anything-config"
+    '(progn
+       (set-face-background 'anything-ff-directory "#222222")))
+
+
 
   (eval-after-load "ido"
     '(progn
@@ -184,7 +188,7 @@
     '(progn
        (set-face-attribute 'diredp-dir-heading nil :foreground "white" :background "DeepSkyBlue")
        (set-face-attribute 'diredp-display-msg nil :foreground "chartreuse")
-       (set-face-attribute 'diredp-file-name nil :foreground "doger blue")
+       (set-face-attribute 'diredp-file-name nil :foreground "dodger blue")
        (set-face-attribute 'diredp-dir-priv nil :foreground "steel blue" :background nil :weight 'bold)
        (set-face-attribute 'diredp-no-priv nil :foreground nil :background nil)
        (set-face-attribute 'diredp-read-priv nil :foreground "deep sky blue" :background nil)
