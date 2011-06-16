@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2011-04-03 00:52:55 S.P.Tseng>
+;; Time-stamp: <2011-06-16 19:18:17 Shihpin Tseng>
 
 ;;; imenu
 (require 'imenu)
@@ -96,7 +96,7 @@
 ;;           (t (message "Oh, I catch it!")))))
 ;;--------------------------------------------------------------------------------
 ;; _+ comment current line
-(defun tsp-comment-or-uncomment-region (&optional line)
+(defun comment-or-uncomment-region-plus (&optional line)
   "This function is to comment or uncomment a line or a region"
   (interactive "P")
   (unless (or line (and mark-active (not (equal (mark) (point)))))
@@ -112,7 +112,7 @@
            (point))))
       (call-interactively 'comment-or-uncomment-region)))
 ;; bind it
-(global-set-key (kbd "C-;") 'tsp-comment-or-uncomment-region)
+(global-set-key (kbd "C-;") 'comment-or-uncomment-region-plus)
 ;;----------------------------------------------------------------------------------
 
 ;;------------------------------------------------------------------------------------------
@@ -156,17 +156,17 @@
 (setq highlight-symbol-idle-delay 0.5)
 
 ;;----------------------------------------------------------------------------------------------------
-;; 插入 -*- MODENAME -*- 标签
+;; insert -*- MODENAME -*- tag
 
-;; (defun chunyu-insert-file-variable ()
-;;   "Insert file variable string \"-*- Major-Mode-Name -*-\" with
-;;   comment char"
-;;   (interactive)
-;;   (insert
-;;    (concat comment-start " -*- "
-;;            (substring
-;;             (symbol-name (symbol-value 'major-mode)) 0 -5)
-;;            " -*- " comment-end)))
+(defun insert-file-variable ()
+  "Insert file variable string \"-*- Major-Mode-Name -*-\" with
+  comment char"
+  (interactive)
+  (insert
+   (concat comment-start " -*- "
+           (substring
+            (symbol-name (symbol-value 'major-mode)) 0 -5)
+           " -*- " comment-end)))
 ;;----------------------------------------------------------------------------------------------------
 
 ;;;;; Let's make Haskell and Lisp look more like the math they should!
@@ -191,7 +191,7 @@
 
 ;;----------------------------------------------------------------------------------------------------
 
-;; auto compile el file
+;;; auto compile el file
 ;; (defun byte-compile-visited-file ()
 ;;   (let ((byte-compile-verbose t))
 ;;     (unless (eq major-mode 'sawfish-mode)

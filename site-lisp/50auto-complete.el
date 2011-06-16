@@ -1,17 +1,28 @@
 ;;; 50auto-complete.el ---
 
-;; Copyright (C) 2009  S.P.Tseng
+;; Copyright (C) 2009  Shihpin Tseng
 
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
 
 ;;; auto-complete
 (require 'auto-complete)
 (require 'auto-complete-config)
+
+(require 'ac-company)
+
 (autoload 'auto-complete-mode "auto-complete"
   "This extension provides a way to select a completion with popup menu." t)
-;; (global-auto-complete-mode t)
+(global-auto-complete-mode t)
+
+(eval-after-load "ac-company"
+  '(progn
+     (ac-company-define-source ac-source-company-xcode company-xcode)
+     (add-to-list 'ac-modes 'objc-mode)))
+
+
+
 
 (set-face-background 'ac-selection-face "steelblue")
 (set-face-foreground 'ac-selection-face "white")
@@ -33,9 +44,12 @@
 ;; (global-set-key "\M-/" 'ac-start)
 
 ;; start completion when entered 3 characters
-(setq ac-auto-start 2)
+(setq ac-auto-start nil)                ; 2
 (setq ac-dwim t)
-;; (ac-set-trigger-key  "S-TAB" )
+(ac-set-trigger-key "TAB")
+
+(setq ac-candidate-max 20)
+
 
 ;; Completion by TAB
 ;; (define-key ac-complete-mode-map "\t" 'ac-complete)
@@ -50,6 +64,14 @@
 (define-key ac-complete-mode-map "\M-/" 'ac-stop)
 
 ;; (define-key ac-mode-map (kbd "<backtab>") 'auto-complete)
+
+(defvar ac-source-etags
+  '((candidates . (lambda ()
+                    (all-completions ac-target (tags-completion-table))))
+    (candidate-face . ac-candidate-face)
+    (selection-face . ac-selection-face)
+    (requires . 3)) ; at least 3 cha
+  "etags source")
 
 
 (dolist (hook (list 'emacs-lisp-mode-hook 'lisp-interaction-mode))
@@ -68,3 +90,9 @@
 
 
 
+(add-hook 'objc-mode-hook
+          (lambda ()
+            ;; (define-key objc-mode-map (kbd "\t") 'ac-complete)
+            ;; (push'ac-source-c++-keywords ac-sources)
+            ;; use xcode's complete
+            (push 'ac-source-company-xcode ac-source-etags ac-sources) ))

@@ -66,6 +66,9 @@
 ;; (standard-display-ascii ?\223 [?\"])
 ;; (standard-display-ascii ?\224 [?\"])
 ;; (standard-display-ascii ?\227 " -- ")
+
+
+
 (when window-system
   ;; lambda
   (set-fontset-font "fontset-default"
@@ -164,13 +167,16 @@
                                               ('ns "STHeiti")
                                               ('w32 "微软雅黑")
                                               (t (error "Can not set font in this window system.")))
-                                    :weight 'medium :size 12 :width 'normal)))
+                                    :weight 'medium :size 12 :width 'normal))
+
+
 
   ;; ‼ & ‽
   (set-fontset-font "fontset-default"
                     (cons (decode-char 'ucs #x203c)
                           (decode-char 'ucs #x203d))
-                    (font-spec :family "FreeMono" :size 12))
+                    (font-spec :family "FreeMono" :size 12)))
+
 
 
 ;; (set-fontset-font (frame-parameter nil 'font)

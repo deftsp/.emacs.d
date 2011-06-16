@@ -29,6 +29,7 @@ server
 emacs.desktop*
 .session
 .wmncach.el
+ac-comphist.dat
 
 packages/emacs-w3m/
 packages/emms/
@@ -62,3 +63,4 @@ packages/redshank/
 packages/bookmark-extension/
 packages/auto-complete/
 el-get/
+share/

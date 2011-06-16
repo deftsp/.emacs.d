@@ -1,8 +1,4 @@
-;;; tsp-etags.el ---
-
-;; Copyright (C) 2007  S.P.Tseng
-
-;; Author: S.P.Tseng <mendouer@163.com>
+;;; 50etags.el ---
 
 ;; M. find a tag(a definition)
 ;; C-u M-. find next occurence of tag
@@ -19,9 +15,16 @@
 ;; etags
 ;;----------------------------------------------------------------------------------------------------
 
-;; 让 etags 在当前目录和上级目录中搜索 TAGS 文件
-(setq tags-table-list '("." ".." "../.."))
+(require 'etags-table)
+(require 'etags-select)
 
+(setq etags-table-search-up-depth 10)
+;; (setq tags-table-list '("." ".." "../.."))
+
+(setq etags-table-alist
+      (list
+       `("\\.[mh]$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS"))
+       '("\\.mm$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS"))))
 
 ;; 一个目录下所有的 *.cpp 和 *.h 文件使用这样的正则表达式 *.[ch]*
 (defun tsp-create-tags (dir-name)

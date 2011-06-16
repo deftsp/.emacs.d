@@ -97,9 +97,27 @@
 (defconst +f-color+ "#b6d3d6" "foreground color")
 (defconst +b-color+ "#282c30" "background color")
 
+
 (when (eq window-system 'ns)
-  (set-foreground-color +f-color+) ; "lightblue"
-  (set-background-color +b-color+) ; "#1D2C3F" "#102332" "#003c3c"
+  (setq initial-frame-alist `((tool-bar-lines . 0)
+                              (menu-bar-lines . 0)
+                              (width . 256)
+                              (height . 66)
+                              (foreground-color . ,+f-color+)
+                              (background-color . ,+b-color+)
+                              (alpha . (98 80)) ; first number is for the active window and the second for the inactive window
+                              ;; (right-fringe)
+                              ;; (left-fringe)
+                              ;; (scroll-bar-width . 12)
+                              (vertical-scroll-bars . right))
+
+        ;; default-frame-alist is defined in terms of initial-frame-alist.  Don't
+        ;; use copy-sequence here -- it doesn't copy the list elements, just the
+        ;; list's cons cells.  Use copy-alist instead.
+        default-frame-alist (copy-alist initial-frame-alist))
+
+  ;; (set-foreground-color +f-color+) ; "lightblue"
+  ;; (set-background-color +b-color+) ; "#1D2C3F" "#102332" "#003c3c"
   (set-mouse-color "gray80")
   (set-cursor-color "#cd0000")
   (set-face-foreground 'fringe "green")
@@ -204,6 +222,7 @@
        (set-face-attribute 'woman-bold nil :foreground "cyan4" :weight 'bold)
        (set-face-attribute 'woman-italic nil :foreground "orange2" :underline nil)
        (set-face-attribute 'woman-unknown nil :foreground "LightSalmon2"))))
+
 
 
 ;;; font lock

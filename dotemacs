@@ -1,4 +1,4 @@
-;;Time-stamp: <2011-05-26 14:11:21 S.P.Tseng>
+;;Time-stamp: <2011-06-16 16:06:21 Shihpin Tseng>
 ;; $Id$
 
 ;; First, avoid the evil:
@@ -36,23 +36,6 @@
 
 (load "~/.emacs.d/site-lisp/00site-start.el")
 
-(when window-system
-  (setq initial-frame-alist '((tool-bar-lines . 0)
-                              (menu-bar-lines . 0)
-                              (width . 256)
-                              (height . 66)
-                              ;; (foreground-color . "#b6d3d6")
-                              ;; (background-color . "#000000")
-                              ;; (right-fringe)
-                              ;; (left-fringe)
-                              ;; (scroll-bar-width . 12)
-                              (vertical-scroll-bars . right))
-
-        ;; default-frame-alist is defined in terms of initial-frame-alist.  Don't
-        ;; use copy-sequence here -- it doesn't copy the list elements, just the
-        ;; list's cons cells.  Use copy-alist instead.
-        default-frame-alist (copy-alist initial-frame-alist)))
-
 ;; A fun startup message, somewhat reminiscent of "The Matrix: Reloaded"
 (defconst animate-n-steps 3)
 (defun emacs-reloaded ()
@@ -81,3 +64,15 @@
 
 ;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
+(custom-set-variables
+  ;; custom-set-variables was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ '(el-get-standard-packages (quote ("el-get" "cssh" "emacs-w3m" "switch-window" "vkill" "xcscope" "yasnippet" "package" "magit" "dired+" "bbdb" "auto-complete" "ecb" "cedet" "etags-select" "emacs-xcode-document-viewer" "ac-company"))))
+(custom-set-faces
+  ;; custom-set-faces was added by Custom.
+  ;; If you edit it by hand, you could mess it up, so be careful.
+  ;; Your init file should contain only one such instance.
+  ;; If there is more than one, they won't work right.
+ )

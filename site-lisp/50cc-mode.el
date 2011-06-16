@@ -1,6 +1,6 @@
-;;; 50c-mode.el ---
-;; Author: S.P.Tseng <deftsp@gmail.com>
-;; Time-stamp: <2011-04-15 12:49:57 S.P.Tseng>
+;;; 50cc-mode.el ---
+;; Author: Shihpin Tsing <deftsp@gmail.com>
+;; Time-stamp: <2011-06-16 22:20:33 Shihpin Tseng>
 
 (require 'smarter-operator)
 
@@ -10,22 +10,22 @@
 (setq c-electric-pound-behavior (quote (alignleft)))
 ;; variable: comment-padding Padding string that `comment-region' puts between comment chars and text.
 
-(defun tsp-c-mode-hook ()
-  (interactive)
+(defun local-c-mode-hook ()
   (c-set-style "bsd")
-  ;; (c-toggle-auto-state) ; 当你输入时自动缩进，自动换行
-  (c-toggle-hungry-state)              ; 此模式下，当按Backspace时会删除最多的空格
+  ;; (c-toggle-auto-newline 1)
+  (c-toggle-hungry-state 1)              ; the delete key gobbles all preceding whitespace in one fell swoop
   ;; (c-subword-mode 1)                   ; makes some movement and text commands recognize case-change as a word boundary.
   ;; (setq c-tab-always-indent nil)
-  (require 'ctypes)                     ; ctypes 可以识别你的 C 文件里的类型定义 (typedef)。自动对它们进行语法加亮。
+  (require 'ctypes)                     ; beautify typedefs
   (ctypes-auto-parse-mode 1)
+
   (setq c-basic-offset 4)
   ;;(local-set-key [(control tab)] 'tempo-forward-mark)    ; move to next tempo mark
-  (imenu-add-menubar-index)             ; 在菜单中加入当前Buffer的函数索引
-  (define-key c-mode-base-map (kbd "s-o") 'eassist-switch-h-cpp) ; 列出当前buffer中的各个方法的列表，包括参数列表和返回类型
-  (define-key c-mode-base-map (kbd "C-x , m") 'eassist-list-methods) ; 在buffer中，切换同一个目录下的头文件和源文件
+  (imenu-add-menubar-index)             ; Add an Imenu "Index" entry on the menu bar for the current buffer
+  (define-key c-mode-base-map (kbd "s-o") 'eassist-switch-h-cpp) ; Switch header and body file according to `eassist-header-switches' var.
+  (define-key c-mode-base-map (kbd "C-x , m") 'eassist-list-methods)
   ;; for outline minor mode
-  (outline-minor-mode)
+  (outline-minor-mode 1)
   (make-local-variable 'outline-regexp)
   ;; (setq outline-regexp ".*{")
   ;; (setq outline-regexp "[:blank:]*\\(.*{\\|.*}\\)")
@@ -75,19 +75,18 @@
 
 
 (defun local-objc-mode-hook ()
-  ;;  (c-toggle-auto-state)
-  ;; (c-toggle-hungry-state)
+  (c-toggle-auto-newline 1)
+  (c-toggle-hungry-state 1)
   ;; (c-set-style "stroustrup")
-  ;; (require 'ctypes)
-  ;; (ctypes-auto-parse-mode 1)
   ;; makes some movement and text commands recognize case-change as a word boundary.
   ;; (c-subword-mode 1)
   (setq c-basic-offset 4)
   ;; (imenu-add-menubar-index)
+  (define-key objc-mode-map (kbd "C-c C-r") 'xcode:build-and-run)
   (smarter-operator-mode))
 
 
-(defun tsp-cpp-mode-hook ()
+(defun local-cpp-mode-hook ()
   ;;  (c-toggle-auto-state)
   (c-toggle-hungry-state)
   (c-set-style "stroustrup")
@@ -98,10 +97,45 @@
   (setq c-basic-offset 4)
   (imenu-add-menubar-index)
   (smarter-operator-mode))
-(add-hook 'c-mode-hook 'tsp-c-mode-hook)
-(add-hook 'c++-mode-hook 'tsp-cpp-mode-hook)
+
+
+(add-hook 'c-mode-hook 'local-c-mode-hook)
+(add-hook 'c++-mode-hook 'local-cpp-mode-hook)
 (add-hook 'objc-mode-hook 'local-objc-mode-hook)
-;;============================================================
+
+;;; ff-find-other-file and friends
+
+(eval-after-load "find-file"
+  '(progn
+     (push ".m" (cadr (assoc "\\.h\\'" cc-other-file-alist)))
+     (push ".mm" (cadr (assoc "\\.h\\'" cc-other-file-alist)))
+     (push '("\\.m\\'" (".h")) cc-other-file-alist)
+     (push '("\\.mm\\'" (".h")) cc-other-file-alist)))
+
+
+(defadvice ff-get-file-name (around ff-get-file-name-framework
+                                    (search-dirs
+                                     fname-stub
+                                     &optional suffix-list))
+  "Search for Mac framework headers as well as POSIX headers."
+  (or
+   (if (string-match "\\(.*?\\)/\\(.*\\)" fname-stub)
+       (let* ((framework (match-string 1 fname-stub))
+              (header (match-string 2 fname-stub))
+              (fname-stub (concat framework ".framework/Headers/" header)))
+         ad-do-it))
+   ad-do-it))
+(ad-enable-advice 'ff-get-file-name 'around 'ff-get-file-name-framework)
+(ad-activate 'ff-get-file-name)
+
+(when (eq system-type 'darwin)
+  (setq cc-search-directories '("." "../include" "/usr/include" "/usr/local/include/*"
+                                "/System/Library/Frameworks" "/Library/Frameworks")))
+
+
+(global-set-key (kbd "C-x O") 'ff-find-other-file)
+
+
 
 ;;;
 ;; move current function up

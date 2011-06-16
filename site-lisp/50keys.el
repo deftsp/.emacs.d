@@ -135,6 +135,8 @@
   (global-set-key (kbd "C-c u") 'revert-buffer))
 
 
+(global-set-key (kbd "C-c o x") 'open-with-xcode)
+
 ;;;_, view-mode--------------------------------------------------
 (global-set-key (kbd "C-c v") 'view-mode)
 ;; 为 view-mode 加入 vim 的按键。

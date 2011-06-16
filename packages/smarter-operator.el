@@ -135,7 +135,7 @@ When ONLY-AFTER, insert space at back only."
   (interactive)
   (if (thing-at-point-looking-at "\".*\"")
       (insert "/")
-      (smarter-operator-self-insert-command)))
+    (smarter-operator-self-insert-command)))
 
 
 (defun smarter-operator-< ()
@@ -168,6 +168,8 @@ When ONLY-AFTER, insert space at back only."
          (if (looking-back "\\?.+" (smarter-operator-bol))
              (smarter-operator-insert ":")
            (insert ":")))
+        ((memq major-mode '(objc-mode))
+         (insert ":"))
         (t
          (smarter-operator-insert ":" t))))
 

@@ -17,9 +17,9 @@
       size-indication-mode t            ; show file size (emacs 22+)
       view-read-only nil
       ;; system-name "xxxxxx"
-      ;; default-indicate-empty-lines 'right
-      ;; don't change my windowconfiguration assure my window-configuration is kept
-      ;; pop-up-windows nil
+      ;; indicate-empty-lines 'right
+
+      ;; pop-up-windows nil ; don't change my windowconfiguration assure my window-configuration is kept
       ;; x-use-underline-position-properties nil
       read-quoted-char-radix 10         ; accept decimal input when using ^q, e.g.: ^q 13 [RET] -> ^M
       history-length 250
@@ -97,6 +97,11 @@
 (which-function-mode 1)
 
 (display-battery-mode t)
+
+;; do not create new frame with `open' in Mac OS X
+(when (eq window-system 'ns)
+  (setq ns-pop-up-frames nil))
+
 
 ;;; diminish
 ;; Makes minor mode names in the modeline shorter.
@@ -412,8 +417,8 @@
 (global-set-key (kbd "C-x %") 'tsp-kill-outside-paren-with-elt)
 ;; paren end there----------------------------------------------------------------------
 
-;; 使用滚轴鼠标
-(mouse-wheel-mode t)
+(when window-system
+  (mouse-wheel-mode t))
 
 ;;Scroll;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
