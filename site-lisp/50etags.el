@@ -21,10 +21,11 @@
 (setq etags-table-search-up-depth 10)
 ;; (setq tags-table-list '("." ".." "../.."))
 
-(setq etags-table-alist
-      (list
-       `("\\.[mh]$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS"))
-       '("\\.mm$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS"))))
+
+(add-to-list  'etags-table-alist '("\\.[mh]$" "~/.emacs.d/share/tags/objc.TAGS"))
+(add-to-list  'etags-table-alist '("\\.mm$" "~/.emacs.d/share/tags/objc.TAGS"))
+
+
 
 ;; 一个目录下所有的 *.cpp 和 *.h 文件使用这样的正则表达式 *.[ch]*
 (defun tsp-create-tags (dir-name)

@@ -90,9 +90,13 @@
 
 
 
+;; TODO: ac-source-company-xcode can not work
 (add-hook 'objc-mode-hook
           (lambda ()
             ;; (define-key objc-mode-map (kbd "\t") 'ac-complete)
             ;; (push'ac-source-c++-keywords ac-sources)
             ;; use xcode's complete
-            (push 'ac-source-company-xcode ac-source-etags ac-sources) ))
+            (push ac-source-etags ac-sources)))
+
+
+

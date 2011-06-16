@@ -1,6 +1,6 @@
 ;;; 50cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2011-06-16 22:20:33 Shihpin Tseng>
+;; Time-stamp: <2011-06-17 03:06:57 Shihpin Tseng>
 
 (require 'smarter-operator)
 
@@ -75,7 +75,7 @@
 
 
 (defun local-objc-mode-hook ()
-  (c-toggle-auto-newline 1)
+  ;; (c-toggle-auto-newline 1)
   (c-toggle-hungry-state 1)
   ;; (c-set-style "stroustrup")
   ;; makes some movement and text commands recognize case-change as a word boundary.
