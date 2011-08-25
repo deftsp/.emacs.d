@@ -1,4 +1,4 @@
-;;Time-stamp: <2011-06-16 16:06:21 Shihpin Tseng>
+;;Time-stamp: <2011-08-25 16:39:42 Shihpin Tseng>
 ;; $Id$
 
 ;; First, avoid the evil:
@@ -64,15 +64,3 @@
 
 ;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(el-get-standard-packages (quote ("el-get" "cssh" "emacs-w3m" "switch-window" "vkill" "xcscope" "yasnippet" "package" "magit" "dired+" "bbdb" "auto-complete" "ecb" "cedet" "etags-select" "emacs-xcode-document-viewer" "ac-company"))))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )

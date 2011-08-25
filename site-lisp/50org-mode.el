@@ -1,14 +1,13 @@
-;;; tsp-org-mode.el ---
+;;; 50org-mode.el ---
 
-;; Copyright (C) 2007  S.P.Tseng
+;; Copyright (C) 2007  Shihpin Tseng
 
-;; Author: S.P.Tseng <mendouer@163.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
 (require 'org)
 (require 'org-publish nil t)
 ;; (require 'org-mtags nil t)
-(require 'org-remember)
 
 ;; org-mode with GTD
 ;; (require 'org-gtd)
@@ -16,7 +15,8 @@
 ;; (require 'org-blog)
 ;; (setq org-blog-directory "~/blog/")
 
-;; C-c C-o org-mode 在找不到合适的程序的时候就会让 mailcap 来帮忙。
+;; C-c C-o Open link at or after point.
+;; if no appropriate application, it will use mailcap's config.
 ;; to set `org-file-apps'
 
 (global-set-key "\C-cl" 'org-store-link)
@@ -111,14 +111,14 @@
 (setq org-special-ctrl-a/e t
       org-cycle-separator-lines 2
       org-cycle-include-plain-lists t
-      org-directory "~/proj/org"
+      org-directory "~/Proj/Org"
       org-archive-location "%s_archive::"
       org-hide-leading-stars t
       org-log-done 'time
       ;; org-default-notes-files is used by remember.el in certain situations
       ;; where it needs a path to store simple notes in.
-      org-default-notes-file "~/proj/org/Notes"
-      org-agenda-files (directory-files "~/proj/org" t ".*\\.org$")
+      org-default-notes-file (concat org-directory "/Notes.org")
+      org-agenda-files (directory-files org-directory t ".*\\.org$")
       org-agenda-show-all-dates t
       org-agenda-ndays 7
       org-agenda-skip-deadline-if-done t
@@ -157,7 +157,11 @@
 ;;;-------------------------------------------------------------------------------------------------------------------
 ;;; remember
 ;;;-------------------------------------------------------------------------------------------------------------------
-(require 'remember)
+
+(org-remember-insinuate)
+;; (define-key global-map "\C-cr" 'org-remember)
+
+
 ;; If you think of something, rather than searching for the right project/day page, just type M-x remember. A buffer
 ;; will pop up allowing you to jot your thoughts, then insert them into whatever page you specify, with a link to
 ;; today's page!

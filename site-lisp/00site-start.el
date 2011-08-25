@@ -9,9 +9,7 @@
 
 (load "~/.emacs.d/site-lisp/39util.el")
 (when (eq system-type 'gnu/linux)
-  (load "~/.emacs.d/site-lisp/40cedet.el"))
-
-(when (eq system-type 'gnu/linux)
+  (load "~/.emacs.d/site-lisp/40cedet.el")
   (load "~/.emacs.d/site-lisp/42ecb.el"))
 
 (load "~/.emacs.d/site-lisp/50alias.el")
@@ -41,7 +39,7 @@
 (load "~/.emacs.d/site-lisp/50epg.el")
 (load "~/.emacs.d/site-lisp/50erc.el")
 (load "~/.emacs.d/site-lisp/50eshell.el")
-;; (load "~/.emacs.d/site-lisp/50etags.el")
+(load "~/.emacs.d/site-lisp/50etags.el")
 (load "~/.emacs.d/site-lisp/50ffap.el")
 (load "~/.emacs.d/site-lisp/50filecache.el")
 (load "~/.emacs.d/site-lisp/50flashcard.el")

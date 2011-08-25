@@ -36,13 +36,13 @@
     (list flymake-objc-compiler (append flymake-objc-compile-default-options flymake-objc-compile-options (list local-file)))))
 
 
-(add-hook 'objc-mode-hook
-          (lambda ()
-            (push '("\\.m$" flymake-objc-init) flymake-allowed-file-name-masks)
-            (push '("\\.mm$" flymake-objc-init) flymake-allowed-file-name-masks)
-            (push '("\\.h$" flymake-objc-init) flymake-allowed-file-name-masks)
-            (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
-                (flymake-mode t))))
+;; (add-hook 'objc-mode-hook
+;;           (lambda ()
+;;             (push '("\\.m$" flymake-objc-init) flymake-allowed-file-name-masks)
+;;             (push '("\\.mm$" flymake-objc-init) flymake-allowed-file-name-masks)
+;;             (push '("\\.h$" flymake-objc-init) flymake-allowed-file-name-masks)
+;;             (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
+;;                 (flymake-mode t))))
 
 
 

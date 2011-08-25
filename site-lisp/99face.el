@@ -101,7 +101,7 @@
 (when (eq window-system 'ns)
   (setq initial-frame-alist `((tool-bar-lines . 0)
                               (menu-bar-lines . 0)
-                              (width . 256)
+                              (width . 268)
                               (height . 66)
                               (foreground-color . ,+f-color+)
                               (background-color . ,+b-color+)
@@ -162,15 +162,21 @@
   ;;(set-face-foreground 'menu "#50bbff")
   ;;(set-face-background 'menu "gray20")
 
-  (set-face-foreground 'org-level-1 "lightcoral")
-  (set-face-foreground 'org-level-2 "dodgerblue2")
-  (set-face-foreground 'org-level-3 "darkolivegreen2")
-  (set-face-foreground 'org-level-4 "lightsteelblue")
-  (set-face-foreground 'org-level-5 "cyan4")
-  (set-face-foreground 'org-level-6 "Aquamarine")
-  (set-face-foreground 'org-level-7 "LightSteelBlue")
-  (set-face-foreground 'org-level-8 "LightSalmon")
-  (set-face-foreground 'org-hide +b-color+)
+
+  (eval-after-load "org"
+    '(progn
+       (set-face-foreground 'org-level-1 "lightcoral")
+       (set-face-foreground 'org-level-2 "dodgerblue2")
+       (set-face-foreground 'org-level-3 "darkolivegreen2")
+       (set-face-foreground 'org-level-4 "lightsteelblue")
+       (set-face-foreground 'org-level-5 "cyan4")
+       (set-face-foreground 'org-level-6 "Aquamarine")
+       (set-face-foreground 'org-level-7 "LightSteelBlue")
+       (set-face-foreground 'org-level-8 "LightSalmon")
+       (set-face-foreground 'org-hide +b-color+)))
+
+
+
 
   (set-face-foreground 'icompletep-keys "LawnGreen")
   (set-face-foreground 'icompletep-determined "DarkMagenta")
