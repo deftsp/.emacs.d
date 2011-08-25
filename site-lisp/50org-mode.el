@@ -28,29 +28,29 @@
 ;; (org-defkey org-mode-map (kbd "C-c C-'") 'org-edit-special)
 ;; (define-key org-exit-edit-mode-map (kbd "C-c C-'") 'org-edit-src-exit)
 
-(org-defkey org-mode-map (kbd "H-,") 'org-shiftup)
-(org-defkey org-mode-map (kbd "H-.") 'org-shiftdown)
+;; (org-defkey org-mode-map (kbd "H-,") 'org-shiftup)
+;; (org-defkey org-mode-map (kbd "H-.") 'org-shiftdown)
 
 ;; Structure editing
 
 ;; Cursor keys with modifiers
-(org-defkey org-mode-map (kbd "H-o H") 'org-metaleft)
-(org-defkey org-mode-map (kbd "H-o L") 'org-metaright)
-(org-defkey org-mode-map (kbd "H-o K") 'org-metaup)
-(org-defkey org-mode-map (kbd "H-o J") 'org-metadown)
+;; (org-defkey org-mode-map (kbd "H-o H") 'org-metaleft)
+;; (org-defkey org-mode-map (kbd "H-o L") 'org-metaright)
+;; (org-defkey org-mode-map (kbd "H-o K") 'org-metaup)
+;; (org-defkey org-mode-map (kbd "H-o J") 'org-metadown)
 
-(org-defkey org-mode-map (kbd "H-o M-h") 'org-shiftmetaleft)
-(org-defkey org-mode-map (kbd "H-o M-l") 'org-shiftmetaright)
-(org-defkey org-mode-map (kbd "H-o M-k") 'org-shiftmetaup)
-(org-defkey org-mode-map (kbd "H-o M-j") 'org-shiftmetadown)
+;; (org-defkey org-mode-map (kbd "H-o M-h") 'org-shiftmetaleft)
+;; (org-defkey org-mode-map (kbd "H-o M-l") 'org-shiftmetaright)
+;; (org-defkey org-mode-map (kbd "H-o M-k") 'org-shiftmetaup)
+;; (org-defkey org-mode-map (kbd "H-o M-j") 'org-shiftmetadown)
 
-(org-defkey org-mode-map (kbd "H-o k") 'org-shiftup)
-(org-defkey org-mode-map (kbd "H-o j") 'org-shiftdown)
-(org-defkey org-mode-map (kbd "H-o h") 'org-shiftleft)
-(org-defkey org-mode-map (kbd "H-o l") 'org-shiftright)
+;; (org-defkey org-mode-map (kbd "H-o k") 'org-shiftup)
+;; (org-defkey org-mode-map (kbd "H-o j") 'org-shiftdown)
+;; (org-defkey org-mode-map (kbd "H-o h") 'org-shiftleft)
+;; (org-defkey org-mode-map (kbd "H-o l") 'org-shiftright)
 
-(org-defkey org-mode-map (kbd "H-o C-l") 'org-shiftcontrolright)
-(org-defkey org-mode-map (kbd "H-o C-h") 'org-shiftcontrolleft)
+;; (org-defkey org-mode-map (kbd "H-o C-l") 'org-shiftcontrolright)
+;; (org-defkey org-mode-map (kbd "H-o C-h") 'org-shiftcontrolleft)
 
 
 
@@ -111,13 +111,13 @@
 (setq org-special-ctrl-a/e t
       org-cycle-separator-lines 2
       org-cycle-include-plain-lists t
-      org-directory "~/Proj/Org"
+      org-directory "~/proj/org"
       org-archive-location "%s_archive::"
       org-hide-leading-stars t
       org-log-done 'time
       ;; org-default-notes-files is used by remember.el in certain situations
       ;; where it needs a path to store simple notes in.
-      org-default-notes-file (concat org-directory "/Notes.org")
+      org-default-notes-file (concat org-directory "/notes.org")
       org-agenda-files (directory-files org-directory t ".*\\.org$")
       org-agenda-show-all-dates t
       org-agenda-ndays 7
@@ -158,7 +158,7 @@
 ;;; remember
 ;;;-------------------------------------------------------------------------------------------------------------------
 
-(org-remember-insinuate)
+;; (org-remember-insinuate)
 ;; (define-key global-map "\C-cr" 'org-remember)
 
 
@@ -174,20 +174,20 @@
 ;; (setq remember-annotation-functions planner-annotation-functions)
 
 ;;; copy the entire note to the daily page, not just the header (t)
-(setq remember-planner-copy-on-xref-flag t
-      remember-data-file "~/.emacs.d/notes"
-      remember-filter-functions (quote ((lambda nil (delete-trailing-whitespace))))
-      remember-annotation-functions '(org-remember-annotation)
-      org-remember-store-without-prompt t
-      remember-handler-functions '(org-remember-handler))
-(add-hook 'remember-mode-hook 'org-remember-apply-template)
+;; (setq remember-planner-copy-on-xref-flag t
+;;       remember-data-file "~/.emacs.d/notes"
+;;       remember-filter-functions (quote ((lambda nil (delete-trailing-whitespace))))
+;;       remember-annotation-functions '(org-remember-annotation)
+;;       org-remember-store-without-prompt t
+;;       remember-handler-functions '(org-remember-handler))
+;; (add-hook 'remember-mode-hook 'org-remember-apply-template)
 ;; org-remember-templates defines two templates I use with remember-mode. Because I bind the remember function to C-c R,
 ;; with these templates I can quickly type either C-c R t to joy a new task, or to create a brief note.
-(setq org-remember-templates
-      (quote ((?t "* TODO %?\n  %u" "~/proj/org/ToDo.org" "Tasks")
-              (?m "* TODO %?\n  %u" "~/proj/org/Misc.org" "Tasks")
-              (?n "* %u %?" "~/proj/org/Notes" "Notes"))))
-(global-set-key (kbd "C-c R") 'remember)
+;; (setq org-remember-templates
+;;       (quote ((?t "* TODO %?\n  %u" "~/proj/org/ToDo.org" "Tasks")
+;;               (?m "* TODO %?\n  %u" "~/proj/org/Misc.org" "Tasks")
+;;               (?n "* %u %?" "~/proj/org/Notes" "Notes"))))
+;; (global-set-key (kbd "C-c R") 'remember)
 
 ;; (setq org-remember-templates
 ;;       '((?t "* TODO %?\n  %i\n  %a" "~/org/TODO.org")
@@ -232,6 +232,15 @@
 ;;       (goto-char (point-min)))
 ;;     (message "Use C-c C-c to remember the data.")))
 ;;remember ends there---------------------------------------------------------------------------
+
+;;;; Capture
+(define-key global-map "\C-cc" 'org-capture)
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "~/proj/org/gtd.org" "Tasks")
+         "* TODO %?\n  %i%u")
+        ("j" "Journal" entry (file+datetree "~/proj/org/journal.org")
+         "* %?\nEntered on %U\n  %i\n  %a")))
+
 
 ;;(org-agenda-to-appt)
 
