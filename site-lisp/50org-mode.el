@@ -106,7 +106,18 @@
           (org-agenda-overriding-header "Unscheduled TODO entries: ")))
         ("w" todo "WAITING" nil)
         ;; ("W" todo-tree "WAITING")
-        ("W" agenda "agenda for 21 days" ((org-agenda-ndays 21)))))
+        ("W" agenda "agenda for 21 days" ((org-agenda-ndays 21)))
+        ;; ("G" "Geektool agenda" ((agenda "") (alltodo))
+        ;;  ((org-agenda-ndays 1) (org-deadline-warning-days 7))
+        ;;  ("~/proj/org/Agenda.txt"))
+
+        ("g" "GeekTool Agenda" ((agenda ""))
+         ((org-agenda-todo-keyword-format "%-11s")
+          (org-agenda-prefix-format "  %-10T%?-16t% s")
+          (org-agenda-show-inherited-tags nil)
+          (org-agenda-remove-tags 'prefix)
+          (org-agenda-tags-column 70))
+         ("~/proj/org/Agenda.txt"))))
 
 (setq org-special-ctrl-a/e t
       org-cycle-separator-lines 2

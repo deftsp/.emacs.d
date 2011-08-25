@@ -31,7 +31,7 @@
 (load "~/.emacs.d/site-lisp/50dictionary.el")
 (load "~/.emacs.d/site-lisp/50dired.el")
 (load "~/.emacs.d/site-lisp/50display.el")
-(load "~/.emacs.d/site-lisp/50door-gnus.el")
+;; (load "~/.emacs.d/site-lisp/50door-gnus.el")
 (load "~/.emacs.d/site-lisp/50ediff.el")
 (load "~/.emacs.d/site-lisp/50eim.el")
 (load "~/.emacs.d/site-lisp/50emacsclient.el")
