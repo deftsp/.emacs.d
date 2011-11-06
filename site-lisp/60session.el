@@ -53,7 +53,7 @@
       (semantic-idle-summary-mode nil)
       (semantic-idle-scheduler-mode nil))))
 
-(setq desktop-load-locked-desktop 'ask)
+(setq desktop-load-locked-desktop t) ; 'ask
 (setq desktop-path '("~/.emacs.d"))
 (setq desktop-missing-file-warning nil)
 

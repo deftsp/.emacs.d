@@ -80,7 +80,7 @@
 (load "~/.emacs.d/site-lisp/50yasnippet.el")
 (load "~/.emacs.d/site-lisp/51CommonLispTemplates.el")
 (load "~/.emacs.d/site-lisp/51anything.el")
-(load "~/.emacs.d/site-lisp/52icicles.el")
+;; (load "~/.emacs.d/site-lisp/52icicles.el")
 (load "~/.emacs.d/site-lisp/60session.el")
 (load "~/.emacs.d/site-lisp/62winring.el")
 (load "~/.emacs.d/site-lisp/99face.el")

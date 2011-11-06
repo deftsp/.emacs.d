@@ -1262,6 +1262,11 @@ This command is to be used interactively."
   (define-key browse-kill-ring-mode-map [up] 'browse-kill-ring-previous))
 (global-set-key (kbd "C-c k r") 'browse-kill-ring)
 
+;;;
+(eval-after-load "undo-tree"
+  '(global-undo-tree-mode t))
+
+
 
 ;;; recursive-edit
 ;; Hitting C-c r e will put you in a "recursive editing mode", that is simply an embedded call to the editing loop. The
