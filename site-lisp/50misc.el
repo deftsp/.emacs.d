@@ -619,8 +619,9 @@
          '("\\.org$"           . org-mode)
          '("\\.markdown$"      . markdown-mode)
          '("\\.lrc$"           . emms-lyrics-mode)
+         '("\\.mm$"           . c++-mode)
          (if (eq system-type 'darwin)
-             '("\\.\\(h\\|mm?\\)\\'" . objc-mode))))
+             '("\\.\\(h\\|m$\\)\\'" . objc-mode))))
 
 ;; Since emacs 22 we can use magic-mode-alist to set mode
 ;; (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@implementation" . objc-mode))

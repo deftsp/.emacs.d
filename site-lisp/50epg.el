@@ -1,8 +1,8 @@
 ;;; 50epg.el ---
 
-;; Copyright (C) 2009  S.P.Tseng
+;; Copyright (C) 2009  Shihpin Tseng
 
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;; EasyPG
 ;; every time you open a file with the extension .gpg, EasyPG will do the work for you.
