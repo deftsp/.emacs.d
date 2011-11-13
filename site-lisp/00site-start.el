@@ -53,7 +53,6 @@
 (load "~/.emacs.d/site-lisp/50major-modes.el")
 (load "~/.emacs.d/site-lisp/50maxima.el")
 (load "~/.emacs.d/site-lisp/50misc.el")
-(load "~/.emacs.d/site-lisp/50mldonkey.el")
 (load "~/.emacs.d/site-lisp/50mode-line.el")
 (load "~/.emacs.d/site-lisp/50nethack.el")
 (load "~/.emacs.d/site-lisp/50org-mode.el")

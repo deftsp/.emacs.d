@@ -1,10 +1,10 @@
 ;;; tsp-haskell.el ---
 
-;; Copyright (C) 2007  S.P.Tseng
+;; Copyright (C) 2007  Shihpin Tseng
 
 ;; Keywords:
 
-(load "~/.emacs.d/packages/haskell-mode/haskell-site-file")
+;; (load "~/.emacs.d/packages/haskell-mode/haskell-site-file")
 (setq haskell-font-lock-symbols t)
 ;; (require 'haskell-mode nil t)
 
