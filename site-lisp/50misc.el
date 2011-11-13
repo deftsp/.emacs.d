@@ -794,7 +794,7 @@ if it is displayed there."
 ;;         (/ 10.0 (+ 80.0 rows))))
 
 ;;; charset-to-oem
-(defun tsp-charset-to-oem (start end)
+(defun replace-charset-to-oem (start end)
   (interactive "r")
   (save-excursion
     (format-replace-strings '(("’" . "'")
@@ -815,7 +815,7 @@ if it is displayed there."
                             nil
                             start
                             end)))
-(global-set-key (kbd "C-c t o") 'tsp-charset-to-oem)
+(global-set-key (kbd "C-c t o") 'replace-charset-to-oem)
 
 ;; (defun cdf-copy-line (n)
 ;;     "Copy N lines at point to the kill-ring."
