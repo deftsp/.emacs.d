@@ -73,16 +73,11 @@
     (requires . 3)) ; at least 3 cha
   "etags source")
 
-
-(dolist (hook (list 'emacs-lisp-mode-hook 'lisp-interaction-mode))
-  (add-hook hook '(lambda ()
-                   (add-to-list 'ac-sources 'ac-source-symbols))))
-
-;; TODO: ac-source-company-xcode can not work
-(add-hook 'objc-mode-hook
-          (lambda ()
-            (push ac-source-etags ac-sources)
-            (push ac-source-company-xcode ac-sources))) ; use xcode's complete
+(defun ac-objc-mode-setup ()
+  (setq ac-sources (append '(ac-source-etags ac-source-company-xcode) ac-sources)))
 
 
 
+(ac-config-default)
+(add-hook 'lisp-interaction-mode 'ac-emacs-lisp-mode-setup)
+(add-hook 'objc-mode-hook 'ac-objc-mode-setup)

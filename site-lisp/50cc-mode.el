@@ -1,6 +1,6 @@
 ;;; 50cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2011-11-13 09:40:00 Shihpin Tseng>
+;; Time-stamp: <2011-11-13 13:26:09 Shihpin Tseng>
 
 (require 'smarter-operator)
 
@@ -82,8 +82,7 @@
   ;; (c-subword-mode 1)
   (setq c-basic-offset 4)
   ;; (imenu-add-menubar-index)
-  (define-key objc-mode-map (kbd "C-c C-r") 'xcode:build-and-run)
-  (smarter-operator-mode))
+  (define-key objc-mode-map (kbd "C-c C-r") 'xcode:build-and-run))
 
 
 (defun local-cpp-mode-hook ()
