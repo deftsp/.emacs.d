@@ -134,7 +134,7 @@
 
 
 (eval-after-load "cc-mode"
-  '((define-key c-mode-base-map (kbd "C-c S") 'ff-find-other-file))
+  '(define-key c-mode-base-map (kbd "C-c S") 'ff-find-other-file))
 
 
 
