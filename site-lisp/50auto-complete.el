@@ -78,25 +78,11 @@
   (add-hook hook '(lambda ()
                    (add-to-list 'ac-sources 'ac-source-symbols))))
 
-(add-hook 'emacs-lisp-mode-hook
-          (lambda ()
-            (make-local-variable 'ac-sources)
-            (add-to-list 'ac-sources 'ac-source-symbols)))
-
-;; C++-mode
-;; Keywords.
-(add-hook 'c++-mode-hook '(lambda ()
-                           (add-to-list 'ac-sources 'ac-c++-sources)))
-
-
-
 ;; TODO: ac-source-company-xcode can not work
 (add-hook 'objc-mode-hook
           (lambda ()
-            ;; (define-key objc-mode-map (kbd "\t") 'ac-complete)
-            ;; (push'ac-source-c++-keywords ac-sources)
-            ;; use xcode's complete
-            (push ac-source-etags ac-sources)))
+            (push ac-source-etags ac-sources)
+            (push ac-source-company-xcode ac-sources))) ; use xcode's complete
 
 
 
