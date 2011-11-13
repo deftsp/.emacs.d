@@ -54,7 +54,7 @@
 (setq site-packages
       (append '(org-mode cssh el-get emacs-w3m switch-window
                          vkill lua-mode xcscope yasnippet package
-                         magit dired+ bbdb auto-complete undo-tree)
+                         magit dired+ bbdb auto-complete undo-tree anything)
               (mapcar 'el-get-source-name el-get-sources)))
 
 (el-get 'sync site-packages)

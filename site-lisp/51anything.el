@@ -40,30 +40,32 @@
 (global-set-key (kbd "M-X") 'anything)
 
 
-;; (eval-after-load "anything"
-;;   '(progn
-;;     (require 'anything-config)
-;;     ;; (require 'anything-emms)
-;;     ;; (require 'anything-match-plugin)
-;;     (setq anything-sources '(anything-c-source-call-source
-;;                              anything-c-source-buffers+
-;;                              anything-c-source-bbdb
-;;                              ;; anything-c-source-file-name-history
-;;                              anything-c-source-recentf
-;;                              ;; anything-c-source-occur
-;;                              ;; anything-c-source-info-pages
-;;                              anything-c-source-man-pages
-;;                              ;; anything-c-source-w3m-bookmarks
-;;                              ;; anything-c-source-locate
-;;                              ;; anything-c-source-file-cache
-;;                              ;; anything-c-source-emacs-commands
-;;                              anything-c-source-buffer-not-found))
-;;     (define-key anything-map "\M-p" 'anything-previous-source)
-;;     (define-key anything-map "\M-n" 'anything-next-source)
-;;     (define-key anything-map "A" 'anything-deftsp-show-all)
-;;     (define-key anything-map "T" 'anything-deftsp-show-traverse-only)
-;;     (define-key anything-map "L" 'anything-deftsp-show-locate-only)
-;;     (define-key anything-map "O" 'anything-deftsp-show-occur-only)))
+(eval-after-load "anything"
+  '(progn
+    ;; (require 'anything-config)
+    ;; (require 'anything-emms)
+    ;; (require 'anything-match-plugin)
+     ;; (setq anything-sources '(anything-c-source-call-source
+     ;;                         anything-c-source-buffers+
+     ;;                         anything-c-source-bbdb
+     ;;                         ;; anything-c-source-file-name-history
+     ;;                         anything-c-source-recentf
+     ;;                         ;; anything-c-source-occur
+     ;;                         ;; anything-c-source-info-pages
+     ;;                         anything-c-source-man-pages
+     ;;                         ;; anything-c-source-w3m-bookmarks
+     ;;                         ;; anything-c-source-locate
+     ;;                         ;; anything-c-source-file-cache
+     ;;                         ;; anything-c-source-emacs-commands
+     ;;                         anything-c-source-buffer-not-found))
+    ;; (define-key anything-map "\M-p" 'anything-previous-source)
+    ;; (define-key anything-map "\M-n" 'anything-next-source)
+    ;; (define-key anything-map "A" 'anything-deftsp-show-all)
+    ;; (define-key anything-map "T" 'anything-deftsp-show-traverse-only)
+    ;; (define-key anything-map "L" 'anything-deftsp-show-locate-only)
+    ;; (define-key anything-map "O" 'anything-deftsp-show-occur-only)
+     (set-face-attribute 'anything-candidate-number nil :foreground "Yellow" :background nil)))
+
 
 (eval-after-load "anything-config"
   '(progn

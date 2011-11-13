@@ -1,6 +1,6 @@
 ;;; 50cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2011-06-17 03:06:57 Shihpin Tseng>
+;; Time-stamp: <2011-11-13 09:25:51 Shihpin Tseng>
 
 (require 'smarter-operator)
 
@@ -133,8 +133,7 @@
                                 "/System/Library/Frameworks" "/Library/Frameworks")))
 
 
-(global-set-key (kbd "C-x O") 'ff-find-other-file)
-
+(define-key c-mode-base-map (kbd "C-c S") 'ff-find-other-file)
 
 
 ;;;
