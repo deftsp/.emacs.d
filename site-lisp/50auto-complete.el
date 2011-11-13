@@ -53,12 +53,11 @@
 
 ;; Completion by TAB
 ;; (define-key ac-complete-mode-map "\t" 'ac-complete)
-(define-key ac-complete-mode-map "\t" 'ac-expand)
-(define-key ac-complete-mode-map "\r" 'ac-complete)
-(define-key ac-complete-mode-map  (kbd "<backtab>") 'ac-previous)
+;; (define-key ac-complete-mode-map  (kbd "<backtab>") 'ac-previous)
 ;; Use M-n/M-p to select candidates
-(define-key ac-complete-mode-map "\M-n" 'ac-next)
-(define-key ac-complete-mode-map "\M-p" 'ac-previous)
+(define-key ac-complete-mode-map "\C-n" 'ac-next)
+(define-key ac-complete-mode-map "\C-p" 'ac-previous)
+
 
 ;; Stop completion by pressing M-/.
 (define-key ac-complete-mode-map "\M-/" 'ac-stop)
