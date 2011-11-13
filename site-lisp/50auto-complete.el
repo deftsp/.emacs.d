@@ -37,14 +37,14 @@
 (set-face-foreground 'popup-scroll-bar-background-face "lightgray")
 (set-face-foreground 'popup-menu-selection-face "white")
 (set-face-background 'popup-menu-selection-face "#0000ff")
+(set-face-foreground 'ac-completion-face "black")
+(set-face-background 'ac-completion-face "violet")
 
-;; Don't start completion automatically
-;; Add following code to your .emacs.
-;; (setq ac-auto-start nil)
+
 ;; (global-set-key "\M-/" 'ac-start)
 
-;; start completion when entered 3 characters
-(setq ac-auto-start nil)                ; 2
+;; start completion when entered 2 characters
+(setq ac-auto-start nil)                ; do not start automatically
 (setq ac-dwim t)
 (ac-set-trigger-key "TAB")
 
