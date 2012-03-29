@@ -1,5 +1,8 @@
 *~
 *.elc
+lisp/
+ede-projects.el
+.DS_Store
 \#*\#
 *customzation*
 .emacs.bmk
@@ -62,5 +65,6 @@ packages/android-mode/
 packages/redshank/
 packages/bookmark-extension/
 packages/auto-complete/
+packages/cedet/
 el-get/
 share/

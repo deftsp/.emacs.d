@@ -102,10 +102,12 @@
   (setq initial-frame-alist `((tool-bar-lines . 0)
                               (menu-bar-lines . 0)
                               (width . 268)
-                              (height . 66)
+                              (height . 68)
+                              (top . 0)
+                              (left . 0)
                               (foreground-color . ,+f-color+)
                               (background-color . ,+b-color+)
-                              (alpha . (98 80)) ; first number is for the active window and the second for the inactive window
+                              (alpha . (98 86)) ; first number is for the active window and the second for the inactive window
                               ;; (right-fringe)
                               ;; (left-fringe)
                               ;; (scroll-bar-width . 12)
@@ -186,7 +188,7 @@
   (set-face-background 'highlight-symbol-face "dodgerblue2")
 
   ;; (set-face-background 'highlight-current-line-face "#222222")
-  (set-face-background 'hl-line "#222222")
+
 
   (set-face-foreground 'region "white")
   (set-face-background 'region "dodgerblue2")
@@ -269,15 +271,26 @@
 ;;                         exit-minibuffer keyboard-quit))
 ;;           (ding))))
 
-;; Changing Cursor Dynamically
-(defun set-cursor-color-according-to-mode ()
+;; (require 'cursor-chg)
+;; (change-cursor-mode 1) ; On for overwrite/read-only/input mode
+;; (toggle-cursor-type-when-idle nil) ; On when idle
+
+;;; Change cursor color according to mode
+(defvar hcz-set-cursor-color-color "")
+(defvar hcz-set-cursor-color-buffer "")
+(defun hcz-set-cursor-color-according-to-mode ()
   "change cursor color according to some minor modes."
-  (set-cursor-color (if buffer-read-only
-                        "DodgerBlue"
-                        (if overwrite-mode
-                            "yellow"
-                            "#cd0000"))))
-(add-hook 'post-command-hook 'set-cursor-color-according-to-mode)
+  ;; set-cursor-color is somewhat costly, so we only call it when needed:
+  (let ((color
+         (if buffer-read-only "DodgerBlue"
+           (if overwrite-mode "yellow"
+             "#cd0000"))))
+    (unless (and
+             (string= color hcz-set-cursor-color-color)
+             (string= (buffer-name) hcz-set-cursor-color-buffer))
+      (set-cursor-color (setq hcz-set-cursor-color-color color))
+      (setq hcz-set-cursor-color-buffer (buffer-name)))))
+(add-hook 'post-command-hook 'hcz-set-cursor-color-according-to-mode)
 
 
 (defun underline-with-char (char)
@@ -291,5 +304,3 @@
             (make-string (- (point-at-eol)
                             (point-at-bol))
                          char))))
-
-

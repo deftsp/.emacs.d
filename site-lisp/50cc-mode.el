@@ -1,6 +1,6 @@
 ;;; 50cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2011-11-13 13:26:09 Shihpin Tseng>
+;; Time-stamp: <2012-03-28 20:00:44 Shihpin Tseng>
 
 (require 'smarter-operator)
 
@@ -253,9 +253,9 @@
                           ("\\<\\(OUTPUT\\)" 1 font-lock-warning-face t)
                           ("\\<\\(IMPORTANT\\)" 1 font-lock-warning-face t)))
 
-(eval-after-load "cc-mode"
-  '(dolist (type (list "UCHAR" "USHORT" "ULONG" "BOOL" "BOOLEAN" "LPCTSTR" "C[A-Z]\\sw+" "\\sw+_t"))
-    (add-to-list 'c-font-lock-extra-types type)))
+;; (eval-after-load "cc-mode"
+;;   '(dolist (type (list "UCHAR" "USHORT" "ULONG" "BOOL" "BOOLEAN" "LPCTSTR" "C[A-Z]\\sw+" "\\sw+_t"))
+;;     (add-to-list 'c-font-lock-extra-types type)))
 
 ;; indent the entire buffer
 (defun indent-entire-c-buffer ()
@@ -326,4 +326,3 @@
     (shell-command
      (concat "cdecl explain \"" (buffer-substring (region-beginning)
                                                   (region-end)) "\"")))
-

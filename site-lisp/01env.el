@@ -68,13 +68,30 @@
 ;; are using a shell in a terminal.
 ;; The "exec-path" is used by emacs itself to find programs it needs for its features, such as spell
 ;; checking, file compression, compiling, grep, diff, etc.
+(setenv "PATH"
+        (concat
+         (expand-file-name "~/bin") ":"
+         (expand-file-name "~/local/bin") ":"
+         "/usr/local/bin" ":"
+         (if (file-directory-p "/Applications/Xcode.app/Contents/Developer/usr/bin")
+             "/Applications/Xcode.app/Contents/Developer/usr/bin:"
+           "")
+         (getenv "PATH")))
+
+
+(when (eq system-type 'darwin)
+  (let ((eprefix (expand-file-name "~/Gentoo")))
+    (when (file-directory-p eprefix)
+      (setenv "PATH"
+       (concat eprefix "/bin" ":" eprefix "/usr/bin" ":" (getenv "PATH"))))))
+
 
 (mapc (lambda (n) (add-to-list 'exec-path n))
       `(,(expand-file-name  "~/bin") "/usr/local/bin" "/usr/X11R6/bin"))
 
-;; EPREFIX="$HOME/Gentoo""
+;; EPREFIX="$HOME/Library/Gentoo""
 (when (eq system-type 'darwin)
- (let ((eprefix (expand-file-name "~/Gentoo")))
+ (let ((eprefix (expand-file-name "~/Library/Gentoo")))
   (when (file-directory-p eprefix)
     (add-to-list 'exec-path (concat eprefix "/bin"))
     (add-to-list 'exec-path (concat eprefix "/usr/bin")))))

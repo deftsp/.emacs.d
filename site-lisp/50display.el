@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2008  S.P.Tseng
 
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
 ;; ----------------------------------------------------------------------------------------------------

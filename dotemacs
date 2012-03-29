@@ -1,5 +1,11 @@
-;;Time-stamp: <2011-08-25 16:39:42 Shihpin Tseng>
-;; $Id$
+;;Time-stamp: <2012-03-29 08:10:25 Shihpin Tseng>
+
+;;; boot sequence
+;; site-start.el --> .emacs --> default.el and terminal type file.
+
+
+;; I use the Common Lisp stuff all the time
+(require 'cl)
 
 ;; First, avoid the evil:
 (when (featurep 'xemacs)
@@ -20,21 +26,31 @@
 
 (setq emacs-load-start-time (current-time))
 (setq debug-on-error t)                 ;will be cleared at end of buffer
-;; (setq stack-trace-on-error t)
+(setq stack-trace-on-error t)
 
-;; I use the Common Lisp stuff all the time
-(require 'cl)
 
-;; Load init-settings-path
-(add-to-list 'load-path "~/.emacs.d/packages")
+;;;  Load Path stuff
+(unless (boundp 'user-emacs-directory)
+  (defvar user-emacs-directory "~/.emacs.d/"
+    "Directory beneath which additional per-user Emacs-specificfiles are placed. Various programs in
+  Emacs store information in this directory. Note that this should end with a directory separator.
+  See also ‘ `locate-user-emacs-file'."))
+
+(defvar user-package-directory (concat user-emacs-directory "packages/"))
+
+(add-to-list 'load-path user-package-directory)
+
+
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
     (let* ((default-directory (expand-file-name "~/.emacs.d/packages/")))
-      (normal-top-level-add-subdirs-to-load-path)))
-;; If you only want some of the subdirectories added you can use
-;; (normal-top-level-add-to-load-path '("emms" "erc" "planner" "w3"))
-;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
+      ;; If you only want some of the subdirectories added you can use
+      ;; (normal-top-level-add-to-load-path '("cedet"))
+      (normal-top-level-add-subdirs-to-load-path)
+))
 
 (load "~/.emacs.d/site-lisp/00site-start.el")
+;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
+
 
 ;; A fun startup message, somewhat reminiscent of "The Matrix: Reloaded"
 (defconst animate-n-steps 3)
@@ -46,21 +62,9 @@
 (add-hook 'after-init-hook 'emacs-reloaded)
 
 (setq debug-on-error nil)                 ; was set t at top of buffer
-;; (setq stack-trace-on-error nil)
+(setq stack-trace-on-error nil)
 
 (when (require 'time-date nil t)
   (message "Emacs startup time: %d seconds." (time-to-seconds (time-since emacs-load-start-time))))
 
 ;;; init end there ----------------------------------------------------------------
-
-
-;; Tips
-;; If you want to require lots of module you do like this
-;; (dolist (module '(module1
-;;                   module2
-;;                   module3))
-;;   (require module))
-
-
-;; boot sequence
-;; site-start.el --> .emacs --> default.el and terminal type file.

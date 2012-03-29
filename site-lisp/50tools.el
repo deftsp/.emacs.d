@@ -6,10 +6,10 @@
 ;; (setq system-trash-exclude-matches '(".*~$" "#[^/]+#$" ".*\\.elc$" "\\.session$" "\\.emacs\\.desktop.*" "\\..newsrc-dribble"))
 
 
-(require 'auto-install)
-(setq auto-install-directory "~/.emacs.d/auto-install/")
-(add-to-list 'load-path "~/.emacs.d/auto-install")
-(auto-install-compatibility-setup)
+;; (require 'auto-install)
+;; (setq auto-install-directory "~/.emacs.d/auto-install/")
+;; (add-to-list 'load-path "~/.emacs.d/auto-install")
+;; (auto-install-compatibility-setup)
 
 (autoload 'rfc "rfc-util"
   "Prompt for an rfc number and display it in a new buffer." t)
@@ -25,6 +25,7 @@
 
 (require 'highlight-parentheses)
 
+(require 'pulse-settings)
 
 
 (require 'thing-cmds)
@@ -42,9 +43,9 @@
 
 ;; (require 'misc-fns)
 
-(when (require 'pretty-symbols nil t)
-  (dolist (hook '(lisp-mode-hook emacs-lisp-mode-hook scheme-mode-hook c-mode-common-hook))
-    (add-hook hook 'turn-on-pretty-symbols-mode)))
+;; (when (require 'pretty-symbols nil t)
+;;   (dolist (hook '(lisp-mode-hook emacs-lisp-mode-hook scheme-mode-hook c-mode-common-hook))
+;;     (add-hook hook 'turn-on-pretty-symbols-mode)))
 ;; (global-pretty-symbols-mode 1)
 
 ;;; key-chord
@@ -210,7 +211,10 @@ Nth occurence of CHAR."
 
 ;;; highlight current line in buffer
 (require 'hl-line)
-(global-hl-line-mode t)
+(eval-after-load "hl-line"
+  '(progn
+     (global-hl-line-mode t)
+     (set-face-background 'hl-line "#222222")))
 
 ;; (require 'highlight-current-line)
 ;; (highlight-current-line-on t)

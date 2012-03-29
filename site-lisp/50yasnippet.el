@@ -9,7 +9,7 @@
 (eval-after-load "yasnippet"
   '(progn
      (yas/initialize)
-     (yas/load-directory "~/.emacs.d/yasnippet-snippets")
+     ;; (yas/load-directory "~/.emacs.d/yasnippet-snippets")
      (setq yas/prompt-functions
            '(yas/ido-prompt yas/dropdown-prompt  yas/completing-prompt yas/x-prompt yas/no-prompt))))
 

@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2008  S.P.Tseng
 
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 (defmacro aif (&rest forms)
   "Create an anonymous interactive function.
@@ -213,3 +213,188 @@ If FORCE is non-nil, overwrite any existing line-height properties."
     (let ((str (match-string 1)))
       (replace-match (concatenate 'string str ")")))))
 
+
+
+
+(defun pretty-return-type-str (str &optional add-space)
+  (let ((substr-1 (substring str -1))
+        (substr-2 (substring str -2 -1)))
+    (if (string= substr-1 "*")
+        (concat (if (not (string= substr-2 " ")) (concat (substring str 0 -1) " *") str)
+                (if add-space " " ""))
+      (concat str " "))))
+
+(defun objc-call-to-cpp-without-nesting (from to)
+  (interactive "r")
+  (let* ((method-call-part-name " *: *")
+         (method-call-formal-name "\\([^]:]*\\)")
+         (method-call-suffix " *\\] *;")
+         (method-call-base "\\[ *\\([^ ]*\\) *\\([^ :]*\\)")
+         (method-call-no-arg (concat method-call-base method-call-suffix))
+         (method-call-1-arg (concat method-call-base
+                                    method-call-part-name
+                                    method-call-formal-name
+                                    method-call-suffix))
+         (method-call-2-arg (concat method-call-base
+                                    method-call-part-name
+                                    method-call-formal-name
+                                    method-call-part-name
+                                    method-call-formal-name
+                                    method-call-suffix)))
+
+    (goto-char from)
+    (while (search-forward-regexp method-call-no-arg to t)
+      (replace-match (concat (match-string 1)
+                             "->"
+                             (match-string 2)
+                             "();")))
+
+    (goto-char from)
+    (while (search-forward-regexp method-call-1-arg to t)
+      (replace-match (concat (match-string 1)
+                             "->"
+                             (match-string 2)
+                             "("
+                             (match-string 3)
+                             ")")))
+
+
+
+    (goto-char from)
+    (while (search-forward-regexp method-call-2-arg to t)
+     (replace-match (concat (match-string 1)
+                            "->"
+                            (match-string 2)
+                            "("
+                            (match-string 3)
+                            ", "
+                            (match-string 4)
+                            ")"
+
+                            )))
+
+
+    ))
+
+
+;;; TODO: recursive
+(defun handle-square-bracket (from to expr)
+  (let ((open-bracket (search-forward "[" nil t))
+        (next-bracket (search-forward-regexp "\\[\\|\\]" nil t))
+        (expr (if expr expr "")))
+
+    ;; (concat expr )
+
+      (if (string= next-bracket "[")
+          (handle-square-bracket (match-beginning 1) to)
+
+        )
+
+
+    ))
+
+;;; special region to eval
+(defun objc-to-cpp (from to)
+  "convert objc code to cpp code."
+  (interactive
+   (if (region-active-p)
+       (list (region-beginning) (region-end))
+     (list (point-min) (point-max))))
+
+  (save-excursion
+    (let* ((class-name-str (file-name-sans-extension (buffer-name)))
+           (method-prefix-regexp "^ *[-\\+] *( *")
+           (type-regexp "\\([^ ]* *\\*?\\)")
+           (method-name-regexp "\\([^ :;\n]*\\)")
+           (method-name-base-regexp (concat
+                                     method-prefix-regexp
+                                     type-regexp
+                                     " *) *"
+                                     method-name-regexp))
+           (method-declare-suffix-regexp " *;")
+           (method-define-suffix-regexp " *\\([\{\n]\\)")
+           (method-argument-name-regexp "[^ :;\n]*")
+           (method-formal-argument-name-regexp "\\([^ :\n]*\\)")
+           (method-name-with-1-arg-base (concat method-name-base-regexp
+                                                " *: *( *"
+                                                type-regexp
+                                                " *) *"
+                                                method-formal-argument-name-regexp
+                                                )))
+
+      (dolist (convertor
+               '((while (search-forward-regexp "\\(@ *\\)\".*\"" to t)
+                   (replace-match "" nil t nil 1))
+
+                 (while (search-forward-regexp "\\(@ *\\)\".*\"" to t)
+                   (replace-match "" nil t nil 1))
+
+                 (while (search-forward-regexp "\\bYES\\b" to t)
+                   (replace-match "true" t t nil))
+
+                 (while (search-forward-regexp "\\bNO\\b" to t)
+                   (replace-match "false" t t nil))
+
+                 (while (search-forward-regexp "\\bNO\\b" to t)
+                   (replace-match "false" t t nil))
+
+
+                 (while (search-forward-regexp "#\\(import\\)\\b " to t)
+                   (replace-match "include" nil t nil 1))
+
+                 ;; NSXxx / CGXxx
+                 (while (search-forward-regexp "\\b\\(NS\\|CG\\)[A-Z]" to t)
+                   (replace-match "CC" nil t nil 1))
+
+                 ;; -/+(xx) xxx;
+                 (while (search-forward-regexp (concat method-name-base-regexp method-declare-suffix-regexp) to t)
+                   (let ((return-type-str (pretty-return-type-str (match-string 1)))
+                         (method-name-str (match-string 2)))
+                     (replace-match (concat return-type-str method-name-str "();"))))
+
+                 ;; -/+(xx) xxx {
+                 ;; auto add xxx:: by filename
+                 (while (search-forward-regexp (concat method-name-base-regexp method-define-suffix-regexp) to t)
+                   (let ((return-type-str (pretty-return-type-str (match-string 1)))
+                         (method-name-str (match-string 2))
+                         (same-lines-p (string= (match-string 3) "{")))
+                     (replace-match (concat return-type-str class-name-str "::" method-name-str
+                                            (if same-lines-p "\n{" "\n")))))
+
+                 ;; -(xxx) xxx: (xxx)xxx
+                 (while (search-forward-regexp (concat method-name-with-1-arg-base method-declare-suffix-regexp) to t)
+                   (let ((return-type-str (pretty-return-type-str (match-string 1)))
+                         (method-name-str (match-string 2))
+                         (argument-1-type-str (pretty-return-type-str (match-string 3)))
+                         (argument-1-name-str (match-string 4)))
+                     (replace-match (concat return-type-str
+                                            method-name-str
+                                            "("
+                                            argument-1-type-str
+                                            argument-1-name-str
+                                            ");"))))
+
+                 (while (search-forward-regexp (concat method-name-with-1-arg-base method-define-suffix-regexp) to t)
+                   (let ((return-type-str (pretty-return-type-str (match-string 1)))
+                         (method-name-str (match-string 2))
+                         (argument-1-type-str (pretty-return-type-str (match-string 3)))
+                         (argument-1-name-str (match-string 4))
+                         (same-lines-p (string= (match-string 5) "{")))
+                     (replace-match (concat return-type-str
+                                            class-name-str "::"
+                                            method-name-str
+                                            "("
+                                            argument-1-type-str
+                                            argument-1-name-str
+                                            ")"
+                                            (if same-lines-p "\n{" "\n")))))
+
+
+
+
+
+
+
+                 ))
+        (goto-char from)
+        (eval convertor)))))

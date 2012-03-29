@@ -1,4 +1,4 @@
-;;; 01el-get.el ---
+;;; 05el-get.el ---
 
 ;; Copyright (C) 2011  Shihpin Tseng
 
@@ -15,30 +15,21 @@
      (eval-print-last-sexp))))
 
 
-
+;; el-get-sources is another source location for recipes, adding to your el-get-recipe-path.
 (setq el-get-sources
       '((:name org-mac-protocol
                :type git
                :url "git://github.com/claviclaws/org-mac-protocol.git"
                :features org-mac-protocol)
-        ;; (:name ecb
-        ;;        :type cvs
-        ;;        :module "ecb"
-        ;;        :url ":pserver:anonymous@ecb.cvs.sourceforge.net:/cvsroot/ecb"
-        ;;        :build `(,(concat  "make CEDET=" " EMACS=" el-get-emacs)))
-        ;; (:name cedet
-        ;;        :type bzr
-        ;;        :url "bzr://cedet.bzr.sourceforge.net/bzrroot/cedet/code/trunk"
-        ;;        :build ("touch `find . -name Makefile`" "make")
-        ;;        :build/windows-nt ("echo #!/bin/sh > tmp.sh & echo touch `/usr/bin/find . -name Makefile` >> tmp.sh & echo make FIND=/usr/bin/find >> tmp.sh"
-        ;;                           "sed 's/^M$//' tmp.sh  > tmp2.sh"
-        ;;                           "sh ./tmp2.sh" "rm ./tmp.sh ./tmp2.sh")
-        ;;        :load-path ("./common")
-        ;;        :post-init (lambda ()
-        ;;                     (require 'cedet)))
         (:name etags-select
                :type emacswiki
                :features etags-select)
+
+        (:name cursor-chg
+               :description "Change cursor dynamically, depending on the context."
+               :type emacswiki
+               :features cursor-chg)
+
 
         (:name emacs-xcode-document-viewer
                :type git
@@ -50,19 +41,19 @@
                :type http
                :url "https://raw.github.com/buzztaiki/auto-complete/master/ac-company.el")))
 
+;; (el-get-save-package-status "package-name-here" "removed")
 
 (setq site-packages
       (append '(org-mode cssh el-get emacs-w3m switch-window
                          vkill lua-mode xcscope yasnippet package
-                         magit dired+ bbdb auto-complete undo-tree anything
+                         magit dired+ auto-complete undo-tree anything
                          git-emacs emacs-goodies-el emms haskell-mode
-                         haskell-mode-exts predictive icomplete+ redshank)
+                         haskell-mode-exts predictive icomplete+ redshank
+                         auto-complete-clang bbdb cursor-chg)
+
               (mapcar 'el-get-source-name el-get-sources)))
 
+
+
 (el-get 'sync site-packages)
-
 ;; (el-get)                          ; 'sync 'wait
-
-
-
-

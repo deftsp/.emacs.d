@@ -126,8 +126,8 @@
           (?⁻ "~"                    (,@mlen)) ; unary negation
           (?≤ "<="                   t)
           (?≥ ">="                   t)
-          (?≪ "<<"                   (,@c-like shell-mode))
-          (?≫ ">>"                   (,@c-like shell-mode))
+          ;; (?≪ "<<"                   (,@c-like shell-mode))
+          ;; (?≫ ">>"                   (,@c-like shell-mode))
           ;; (?∖ "\\<set-difference\\>" (,@lispen))
           ;; (?⋂ "(\\(intersection\\>\\)"   (,@lispen)) ; "\\<intersection\\>"
           ;; (?⋃ "(\\(union\\>\\)"      (,@lispen))     ; "\\<union\\>"
