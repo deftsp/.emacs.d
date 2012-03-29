@@ -49,7 +49,8 @@
                          magit dired+ auto-complete undo-tree anything
                          git-emacs emacs-goodies-el emms haskell-mode
                          haskell-mode-exts predictive icomplete+ redshank
-                         auto-complete-clang bbdb cursor-chg)
+                         auto-complete-clang bbdb cursor-chg markdown-mode
+                         android-mode)
 
               (mapcar 'el-get-source-name el-get-sources)))
 

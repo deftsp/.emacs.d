@@ -576,9 +576,6 @@
 ;;       (setq-default line-spacing 5)
 ;;       (setq-default line-spacing 1)))
 
-(autoload 'markdown-mode "markdown-mode.el"
-  "Major mode for editing Markdown files" t)
-
 ;;; fvwm
 (setq fvwm-fvwmcommand-path "/usr/bin/FvwmCommand")
 ;; before modify it, use C-h v auto-mode-alist to check it.

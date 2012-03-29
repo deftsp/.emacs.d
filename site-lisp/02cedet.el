@@ -229,9 +229,10 @@
         ))
 
 (defconst cedet-cocos2d-include-dir
-  (list "../libs/cocos2dx/include"
+  (list "../libs"
+        "../libs/cocos2dx/include"
         "../libs/cocos2dx/platform"
-   "../cocos2dx/include"
+        "../cocos2dx/include"
         "../cocos2dx/platform"
         "../../Classes"
         "../Box2D"
