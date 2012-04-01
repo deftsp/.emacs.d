@@ -182,7 +182,9 @@
 ;; check that the file specified by `display-time-mail-file' is nonempty or that the
 ;; directory `display-time-mail-directory' contains nonempty files.
 
-(setq display-time-mail-directory "~/Mail/inbox/new/")
+(if (eq system-type 'gnu/linux)
+    (setq display-time-mail-directory "~/Mail/inbox/new/"))
+
 (setq display-time-string-forms
       '((substring year -2) "/" month "/" day "("dayname")"
         (propertize (concat " " 24-hours ":" minutes)
@@ -338,7 +340,7 @@
   (file-name-shadow-mode t))
 
 ;;; Paren
-;; (global-set-key (kbd "C-c %") 'goto-match-paren)
+(global-set-key (kbd "C-c %") 'delete-pair-plus)
 (define-key lisp-mode-map (kbd "C-c %") 'goto-match-paren)
 (define-key emacs-lisp-mode-map (kbd "C-c %") 'goto-match-paren)
 (define-key lisp-interaction-mode-map (kbd "C-c %") 'goto-match-paren)
@@ -351,6 +353,26 @@
 ;;   (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
 ;;         ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
 ;;         (t (self-insert-command (or arg 1)))))
+
+
+(defun delete-pair-plus (&optional skip-pair-count)
+  (interactive)
+  (when (not (=  (point-min) (point)))
+    (let ((skip-pair-count (if skip-pair-count skip-pair-count 0)))
+      (cond ((looking-at "[([{]")
+             (if (= skip-pair-count 0)
+                 (delete-pair)
+               (setq skip-pair-count (1- skip-pair-count))
+               (backward-char 1)
+               (delete-pair-plus skip-pair-count)))
+            (t
+             (if (looking-at "[])}]")
+                 (setq skip-pair-count (1+ skip-pair-count)))
+             (backward-char 1)
+             (delete-pair-plus skip-pair-count))))))
+
+
+
 
 (defun goto-match-paren (arg)
   "Go to the matching parenthesis if on paranthesis. Else go to the
@@ -370,24 +392,8 @@
                          (backward-list 1)
                          (backward-char 1)))))))))
 
-;; 删除匹配括号及括号内的内容
-;; (defun tsp-kill-match-paren (arg)
-;;   (interactive "p")
-;;   (cond ((looking-at "[([{]") (kill-sexp 1) (backward-char))
-;;         ((looking-at "[])}]") (forward-char) (backward-kill-sexp 1))
-;;         (t (let ((opoint (if (re-search-backward "[([{]" nil t)
-;;                              (1+ (match-beginning 0))
-;;                              (error "Current sexp is not in paren!")))
-;;                  (oopoint (if (re-search-forward "[])}]" nil t)
-;;                               (match-beginning 0)
-;;                               (error "Current sexp is not in paren!"))))
-;;              (if (< opoint oopoint)
-;;                  (progn
-;;                    (kill-region opoint oopoint)
-;;                    (backward-char))
-;;                  (error "Current sexp is not in paren!"))))))
-
-(defun tsp-kill-match-paren (arg)
+(defun kill-match-paren (arg)
+  "kill pair sexp."
   (interactive "p")
   (cond ((looking-at "[([{]") (kill-sexp 1))
         ((looking-at "[])}]") (forward-char) (backward-kill-sexp 1))
@@ -401,11 +407,11 @@
            (kill-region (1+ opoint) (1- (point))))
          (backward-char))))
 
-;; (global-set-key (kbd "C-c %") 'delete-pair)
-(global-set-key (kbd "C-c M-%") 'tsp-kill-match-paren)
+(global-set-key (kbd "C-c M-%") 'kill-match-paren)
 
 
-(defun tsp-kill-outside-paren-with-elt (arg)
+
+(defun kill-outside-paren-with-elt (arg)
   (interactive "p")
   (if (not (looking-at "[([{]"))
       (up-list -1))
@@ -414,7 +420,7 @@
   (kill-sexp 1)
   (yank 2))
 
-(global-set-key (kbd "C-x %") 'tsp-kill-outside-paren-with-elt)
+(global-set-key (kbd "C-x %") 'kill-outside-paren-with-elt)
 ;; paren end there----------------------------------------------------------------------
 
 (when window-system

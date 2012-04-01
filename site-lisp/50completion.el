@@ -64,7 +64,7 @@
 ;; The list of expansion functions tried in order by `hippie-expand'.
 (autoload 'senator-try-expand-semantic "senator")
 (setq hippie-expand-try-functions-list
-      '(senator-try-expand-semantic        ; prefer senatro
+      '(;; senator-try-expand-semantic        ; prefer senatro
         try-expand-all-abbrevs             ; Try to expand word before point according to all abbrev tables.
         try-expand-dabbrev-visible         ; Try to expand word "dynamically", searching visible window parts.
         try-expand-dabbrev                 ; Try to expand word "dynamically", searching the current buffer.

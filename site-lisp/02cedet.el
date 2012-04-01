@@ -412,7 +412,8 @@ save the pointer marker if tag is found"
 
 (eval-after-load "semantic"
   '(progn
-     (set-face-attribute 'semantic-decoration-on-unparsed-includes nil :background "#5555")))
+     (set-face-attribute 'semantic-decoration-on-private-members-face nil :background "#333333")
+     (set-face-attribute 'semantic-decoration-on-unparsed-includes nil :background "#555555")))
 
 
 (defun cedet-settings-4-info ()
