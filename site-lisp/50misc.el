@@ -1264,8 +1264,7 @@ This command is to be used interactively."
 (global-set-key (kbd "C-c k r") 'browse-kill-ring)
 
 ;;;
-(eval-after-load "undo-tree"
-  '(global-undo-tree-mode t))
+(global-undo-tree-mode t)
 
 
 
