@@ -595,7 +595,7 @@ Nth occurence of CHAR."
 ;; (add-hook 'activate-mark-hook 'tsp-show-mark)
 ;; ----------------------------------------------------------------------------------------------------
 ;; mark word be bound to M-@
-(global-set-key (kbd "C-c SPC") 'deftsp-mark-current-word)
+;; (global-set-key (kbd "C-c SPC") 'deftsp-mark-current-word)
 (global-set-key (kbd "C-c k w") 'deftsp-kill-current-word)
 (defun deftsp-mark-current-word ()
   "Put point at beginning of current word, set mark at end."
@@ -1253,3 +1253,6 @@ such character is found, following options are shown:
 
 ;; I bound it to C-x r M-k to compliment C-x r k (just like M-w compliments C-w):
 (global-set-key (kbd "C-x r M-k") 'kill-save-rectangle)
+
+;;;
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
