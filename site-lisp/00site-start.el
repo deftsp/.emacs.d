@@ -19,7 +19,7 @@
 (load "~/.emacs.d/site-lisp/50auto-complete.el")
 (load "~/.emacs.d/site-lisp/50auto-fill.el")
 (load "~/.emacs.d/site-lisp/50auto-insert.el")
-(load "~/.emacs.d/site-lisp/50bbdb.el")
+;; (load "~/.emacs.d/site-lisp/50bbdb.el")
 (load "~/.emacs.d/site-lisp/50calendar.el")
 
 (when (eq system-type 'gnu/linux)

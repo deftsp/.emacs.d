@@ -16,7 +16,7 @@
 ;;----------------------------------------------------------------------------------------------------
 
 (require 'etags-table)
-(require 'etags-select)
+;; (require 'etags-select)
 
 (setq etags-table-search-up-depth 10)
 ;; (setq tags-table-list '("." ".." "../.."))

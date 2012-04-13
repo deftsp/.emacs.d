@@ -16,45 +16,31 @@
 
 
 ;; el-get-sources is another source location for recipes, adding to your el-get-recipe-path.
-(setq el-get-sources
-      '((:name org-mac-protocol
-               :type git
-               :url "git://github.com/claviclaws/org-mac-protocol.git"
-               :features org-mac-protocol)
-        (:name etags-select
-               :type emacswiki
-               :features etags-select)
+ (setq el-get-sources
+       '((:name org-mac-protocol
+                :type git
+                :url "git://github.com/claviclaws/org-mac-protocol.git"
+                :features org-mac-protocol)
+         (:name etags-select
+                :type emacswiki
+                :features etags-select)
 
-        (:name cursor-chg
-               :description "Change cursor dynamically, depending on the context."
-               :type emacswiki
-               :features cursor-chg)
+         (:name cursor-chg
+                :description "Change cursor dynamically, depending on the context."
+                :type emacswiki
+                :features cursor-chg)
 
 
-        (:name emacs-xcode-document-viewer
-               :type git
-               :url "git://github.com/sakito/emacs-xcode-document-viewer.git"
-               :features el-get
-               :load    "xcode-document-viewer.el"
-               :compile "xcode-document-viewer.el")
-        (:name ac-company
-               :type http
-               :url "https://raw.github.com/buzztaiki/auto-complete/master/ac-company.el")))
+         (:name emacs-xcode-document-viewer
+                :type git
+                :url "git://github.com/sakito/emacs-xcode-document-viewer.git"
+                :features el-get
+                :load    "xcode-document-viewer.el"
+                :compile "xcode-document-viewer.el")
+         (:name ac-company
+                :type http
+                :url "https://raw.github.com/buzztaiki/auto-complete/master/ac-company.el")))
 
 ;; (el-get-save-package-status "package-name-here" "removed")
 
-(setq site-packages
-      (append '(org-mode cssh el-get emacs-w3m switch-window
-                         vkill lua-mode xcscope yasnippet package
-                         magit dired+ auto-complete undo-tree anything
-                         git-emacs emacs-goodies-el emms haskell-mode
-                         haskell-mode-exts predictive icomplete+ redshank
-                         auto-complete-clang bbdb cursor-chg markdown-mode
-                         android-mode)
-
-              (mapcar 'el-get-source-name el-get-sources)))
-
-
-
-(el-get 'sync site-packages)
-;; (el-get)                          ; 'sync 'wait
+ (el-get 'sync)                          ; 'sync 'wait

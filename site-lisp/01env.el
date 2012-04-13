@@ -68,23 +68,22 @@
 ;; are using a shell in a terminal.
 ;; The "exec-path" is used by emacs itself to find programs it needs for its features, such as spell
 ;; checking, file compression, compiling, grep, diff, etc.
-(setenv "PATH"
-        (concat
-         (expand-file-name "~/bin") ":"
-         (expand-file-name "~/local/bin") ":"
-         "/usr/local/bin" ":"
-         (if (file-directory-p "/Applications/Xcode.app/Contents/Developer/usr/bin")
-             "/Applications/Xcode.app/Contents/Developer/usr/bin:"
-           "")
-         (getenv "PATH")))
-
-
-(when (eq system-type 'darwin)
-  (let ((eprefix (expand-file-name "~/Gentoo")))
-    (when (file-directory-p eprefix)
-      (setenv "PATH"
-       (concat eprefix "/bin" ":" eprefix "/usr/bin" ":" (getenv "PATH"))))))
-
+(let ((darwin-path ""))
+  (when (eq system-type 'darwin)
+    (let ((eprefix (expand-file-name "~/Library/Gentoo")))
+      (when (file-directory-p eprefix)
+        (setq darwin-path
+              (concat eprefix "/bin" ":"
+                      eprefix "/usr/bin" ":"
+                      (if (file-directory-p "/Applications/Xcode.app/Contents/Developer/usr/bin")
+                          "/Applications/Xcode.app/Contents/Developer/usr/bin:" ""))))))
+  (setenv "PATH"
+          (concat
+           (expand-file-name "~/bin") ":"
+           (expand-file-name "~/local/bin") ":"
+           "/usr/local/bin" ":"
+           darwin-path
+           (getenv "PATH"))))
 
 (mapc (lambda (n) (add-to-list 'exec-path n))
       `(,(expand-file-name  "~/bin") "/usr/local/bin" "/usr/X11R6/bin"))
