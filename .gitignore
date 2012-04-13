@@ -68,3 +68,5 @@ packages/auto-complete/
 packages/cedet/
 el-get/
 share/
+packages/lunar-mode-line/
+workgroups
