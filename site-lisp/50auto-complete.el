@@ -94,3 +94,5 @@
 (add-hook 'lisp-interaction-mode 'ac-emacs-lisp-mode-setup)
 (add-hook 'objc-mode-hook 'ac-objc-mode-setup)
 (ac-config-default)
+
+(provide '50auto-complete)

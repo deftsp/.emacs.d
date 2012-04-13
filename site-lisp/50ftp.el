@@ -19,3 +19,6 @@
 ;;   (dired *ftp-images-directory*))
 
 ;; (global-set-key "\C-Ci" 'ftp-dired-get-images-dir)
+
+
+(provide '50ftp)

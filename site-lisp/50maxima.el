@@ -71,7 +71,7 @@
 
 
 
+(provide '50maxima)
 
 
-
-;;; tsp-maxima.el ends here
+;;; 50maxima.el ends here

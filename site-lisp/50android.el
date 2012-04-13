@@ -7,3 +7,9 @@
 
 ;; (require 'android-mode)
 ;; (setq android-mode-sdk-dir "~/opt/android-sdk-linux")
+
+
+
+
+
+(provide '50android)

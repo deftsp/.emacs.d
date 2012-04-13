@@ -25,3 +25,6 @@
 
 (yas/advise-indent-function 'org-cycle)
 
+
+
+(provide '50yasnippet)

@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2009-03-23 08:13:38 S.P.Tseng>
+;; Time-stamp: <2012-04-13 14:52:51 Shihpin Tseng>
 
 (setq scheme-program-name "mzscheme"
       scheme-mit-dialect nil)
@@ -262,3 +262,6 @@
             (eldoc-mode)))
 
 ;; (setq scheme-default-implementation "mzscheme")
+
+
+(provide '50scheme)

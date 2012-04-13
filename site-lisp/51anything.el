@@ -167,3 +167,6 @@ Or else erases whole minibuffer. "
 ;; (defun anything-deftsp-show-occur-only ()
 ;;   (interactive)
 ;;   (anything-set-source-filter '("Occur")))
+
+
+(provide '51anything)

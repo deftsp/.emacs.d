@@ -12,4 +12,7 @@
                                     (if (> (frame-width) 150)
                                         (split-window-horizontally arg)
                                         (split-window-vertically arg))))
+
+
+(provide '50ediff)
 ;;; 50ediff.el ends here

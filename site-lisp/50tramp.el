@@ -85,8 +85,12 @@
 
 
 
+(provide '50tramp)
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Tips
 ;; Using su to edit stuff as root
 ;; C-x C-f /su::/etc/hosts RET
+
 

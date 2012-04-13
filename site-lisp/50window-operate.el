@@ -85,3 +85,9 @@
              (buffer-name))))
 
 (global-set-key (kbd "M-D") 'toggle-current-window-dedication)
+
+
+
+
+
+(provide '50window-operate)

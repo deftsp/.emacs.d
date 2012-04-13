@@ -100,3 +100,6 @@
 ;;   (unless (or (consp prefix)
 ;;              mark-active)
 ;;     (looking-at "\\_>")))
+
+
+(provide '50tab-completion)

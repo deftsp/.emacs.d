@@ -734,3 +734,4 @@ e.g., (tsp-dircolors-get-escape-seq \"*.gz\") => \"01;31\""
 ;; 进入dired模式，然后在各个文件上用m标记多个需要编译的el文件，然后按一下B就可以批量重编译el文件了。方便吧
 
 
+(provide '50dired)

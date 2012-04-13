@@ -549,3 +549,4 @@ Goes backward if ARG is negative; error if CHAR not found."
 ;; C-x 5 V find-variable-other-frame
 
 
+(provide '50keys)

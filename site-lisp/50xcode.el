@@ -53,3 +53,6 @@
 ;; (add-hook 'objc-mode-hook
 ;;           (lambda ()
 ;;             (define-key objc-mode-map (kbd "C-c w") 'xcdoc:ask-search)))
+
+
+(provide '50xcode)

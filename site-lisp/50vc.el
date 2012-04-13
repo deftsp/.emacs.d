@@ -89,3 +89,5 @@
 ;;              (log-edit-files) "\n"))
 ;;     (align-regexp pos (point) ": " 0 2)))
 
+
+(provide '50vc)

@@ -132,3 +132,5 @@
 ;;       "</html>\n"
 ;;       (previous-line 4)
 ;;       (end-of-line)))
+
+(provide '50auto-insert)

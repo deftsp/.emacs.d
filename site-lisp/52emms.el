@@ -678,3 +678,7 @@ If we can't find it from local disk, then search it from internet."
                 ".mov" ".avi" ".divx" ".ogm" ".asf" ".mkv" "http://" "mms://"
                 ".rm" ".rmvb" ".mp4" ".flac" ".vob" ".m4a" ".ape" ".flv"))
   "Mplayer" "-Slave" "-Quiet" "-really-quiet")
+
+
+
+(provide '52emms)

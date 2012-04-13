@@ -208,6 +208,7 @@
 ;;         charset-font))
 
 
+(provide '50display)
 
 ;;; 50display.el ends here
 

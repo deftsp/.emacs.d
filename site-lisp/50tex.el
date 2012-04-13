@@ -194,3 +194,6 @@
 ;; (when (require 'latex-doc nil t)
 ;;   (latex-doc-initialize))
 
+
+
+(provide '50tex)

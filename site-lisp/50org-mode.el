@@ -391,7 +391,7 @@
 ;;               turn-on-auto-fill
 ;;               bbdb-define-all-aliases)))
 
-
+(provide '50org-mode)
 
 ;; Local Variables:
 ;; outline-regexp: ";;; "

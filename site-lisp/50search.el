@@ -1,5 +1,5 @@
 ;;------------------------------------------------------------
-;;searches
+;; searches
 ;;------------------------------------------------------------
 ;; enable the use of vertical scrolling during incremental, but I bind C-v M-v to other command.
 (setq isearch-allow-scroll t)
@@ -236,4 +236,7 @@
 ;; ^ to move point back to previous match,
 ;; E to edit the replacement string
 
-;;searches ends there------------------------------------------
+(provide '50search)
+
+
+;; 50searches ends there------------------------------------------

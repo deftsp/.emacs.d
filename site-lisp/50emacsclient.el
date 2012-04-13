@@ -44,3 +44,7 @@
   '(when (and (= emacs-major-version 23)
           (equal system-type 'windows-nt))
     (defun server-ensure-safe-dir (dir) "Noop" t)))
+
+
+
+(provide '50emacsclient)

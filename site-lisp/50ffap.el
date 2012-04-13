@@ -25,3 +25,6 @@
 
 ;; (global-set-key (kbd "C-x f") 'find-file-at-point)
 ;; (global-set-key (kbd "C-x f") 'find-file-root)
+
+
+(provide '50ffap)

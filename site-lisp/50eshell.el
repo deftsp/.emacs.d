@@ -57,3 +57,5 @@
 
 (defalias 'eshell/emacs 'find-file)
 (defun eshell/dired () (dired (eshell/pwd)))
+
+(provide '50eshell)

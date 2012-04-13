@@ -28,9 +28,23 @@
 (require 'pulse-settings)
 
 
-(require 'thing-cmds)
-(global-set-key (kbd "C-M-?") 'mark-thing) ; vs `mark-sexp', how to press?
-(global-set-key (kbd "M-@") 'cycle-thing-region) ; vs `mark-word'
+;;; thing-cmds
+;; ‘C-M-SPC’ – `mark-thing’ (overwrites the standard binding for ‘mark-sexp’; `sexp’ is the default thing type)
+;; `M-@’ – `cycle-thing-region’ (overwrites the standard binding for ‘mark-word’)
+;; ‘C-M-U’ (aka ‘C-M-S-u’) – `mark-enclosing-sexp’
+;; ‘C-M-F’ (aka ‘C-M-S-f’) – `mark-enclosing-sexp-forward’
+;; ‘C-M-B’ (aka ‘C-M-S-b’) – `mark-enclosing-sexp-backward’
+;; ‘C-x down’ – `next-visible-thing-repeat’ (Emacs 22 and later)
+;; ‘C-x up’ – `previous-visible-thing-repeat’ (Emacs 22 and later)
+(thgcmd-bind-keys)
+;; (global-set-key (kbd "C-M-?") 'mark-thing) ; vs `mark-sexp', how to press?
+;; (global-set-key (kbd "M-@") 'cycle-thing-region) ; vs `mark-word'
+
+
+;;; expand-region
+(global-set-key (kbd "C-=") 'er/expand-region)
+
+
 
 ;;; let ^L looks beautiful
 ;; (require 'pp-c-l)
@@ -1256,3 +1270,5 @@ such character is found, following options are shown:
 
 ;;;
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+
+(provide '50tools)

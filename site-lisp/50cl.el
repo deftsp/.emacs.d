@@ -641,3 +641,5 @@ scan-error if not."
 ;;                                   (define-key slime-mode-map (kbd "C-c D") 'slime-javadoc)
 ;;                                   (define-key slime-repl-mode-map (kbd "C-c D") 'slime-javadoc)))
 
+
+(provide '50cl)

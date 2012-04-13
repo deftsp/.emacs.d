@@ -23,3 +23,4 @@
 ;;         (expand-file-name (concat file ".dfsg") data-directory))))
 
 
+(provide '50patch)

@@ -1,4 +1,4 @@
-;;Time-stamp: <2012-03-29 08:10:25 Shihpin Tseng>
+;;Time-stamp: <2012-04-13 15:02:10 Shihpin Tseng>
 
 ;;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
@@ -39,16 +39,16 @@
 (defvar user-package-directory (concat user-emacs-directory "packages/"))
 
 (add-to-list 'load-path user-package-directory)
+(add-to-list 'load-path "~/.emacs.d/site-lisp/")
 
 
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)
     (let* ((default-directory (expand-file-name "~/.emacs.d/packages/")))
       ;; If you only want some of the subdirectories added you can use
       ;; (normal-top-level-add-to-load-path '("cedet"))
-      (normal-top-level-add-subdirs-to-load-path)
-))
+      (normal-top-level-add-subdirs-to-load-path)))
 
-(load "~/.emacs.d/site-lisp/00site-start.el")
+(require '00site-start)
 ;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
 
 

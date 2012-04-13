@@ -145,4 +145,6 @@
 
 ;;   (add-hook 'c-mode-hook (lambda () (setq align-mode-rules-list xsteve-c-align-rules-list))))
 
-;;flymode mode ends here------------------------------------------------------------------------------
+
+(provide '50flymake)
+;; 50flymode mode ends here------------------------------------------------------------------------------

@@ -260,3 +260,6 @@ Or else erases whole minibuffer. "
                     (string= (car imenu--rescan-item) name))
           (add-to-list 'symbol-names name)
           (add-to-list 'name-and-pos (cons name position))))))))
+
+
+(provide '50ido)

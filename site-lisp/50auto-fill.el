@@ -118,3 +118,5 @@
                                    (add-blank-in-chinese-and-english (point-at-bol)
                                                                      (point-at-eol))
                                    (do-auto-fill)))
+
+(provide '50auto-fill)

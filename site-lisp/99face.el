@@ -304,3 +304,6 @@
             (make-string (- (point-at-eol)
                             (point-at-bol))
                          char))))
+
+
+(provide '99face)

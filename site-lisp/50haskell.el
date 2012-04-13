@@ -143,3 +143,4 @@
 
 
 
+(provide '50haskell)

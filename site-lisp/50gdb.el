@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2008-09-07 21:11:28 S.P.Tseng>
+;; Time-stamp: <2012-04-13 14:39:08 Shihpin Tseng>
 
 (setq gdb-many-windows t)
 (setq gdb-use-separate-io-buffer t)
@@ -32,3 +32,6 @@
 ;;       (message "GUD interaction window is inactive")))
 
 ;; (define-key global-map [(f9)] 'select-gud-interaction-window)
+
+
+(provide '50gdb)

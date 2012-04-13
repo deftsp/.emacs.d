@@ -119,3 +119,5 @@
   (if point-mode-line-string
       (setq point-mode-line-string nil)
       (setq point-mode-line-string '(:eval (format "P[%d] " (point))))))
+
+(provide '50mode-line)

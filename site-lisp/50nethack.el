@@ -53,3 +53,5 @@
 ;;                   (if (re-search-forward (car x) nil t)
 ;;                       (put-text-property start end 'face (cdr x))))
 ;;                 nethack-x-highlights))))))
+
+(provide '50nethack)

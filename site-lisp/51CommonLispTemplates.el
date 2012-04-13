@@ -122,3 +122,7 @@
 
 ;; One could also change the skeleton to not read the system name as a string but with a default of the name of the
 ;; current directory. This is left as an exercise to the reader or next editor
+
+
+
+(provide '51CommonLispTemplates)

@@ -85,3 +85,5 @@
   (shell-command cmd)
   (shell-command "rm /tmp/tmp.ps")
   (message (concat "Saved to:  " (buffer-name) ".pdf")))
+
+(provide '50printing)

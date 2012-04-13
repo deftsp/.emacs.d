@@ -146,3 +146,7 @@
         ad-do-it)
     ad-do-it))
 (ad-activate 'desktop-restore-file-buffer)
+
+
+
+(provide '60session)

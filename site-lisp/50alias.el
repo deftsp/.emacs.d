@@ -3,3 +3,5 @@
 ;; M-x open file when I can’t remember what C-x C-f does ;P
 (defalias 'open 'find-file)
 (defalias 'openo 'find-file-other-window)
+
+(provide '50alias)

@@ -184,3 +184,5 @@
 ;;                          r> n>
 ;;                          "\\end{" (s environment) "}" > n))
 
+
+(provide '50tempo)

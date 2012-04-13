@@ -15,3 +15,6 @@
 (define-key sawfish-mode-map (kbd "C-h C-f") 'sawfish-info-function)
 (define-key sawfish-mode-map (kbd "C-h a") 'sawfish-apropos)
 ;; (define-key sawfish-mode-map (kbd "C-h i") 'sawfish-info)
+
+
+(provide '50sawfish)

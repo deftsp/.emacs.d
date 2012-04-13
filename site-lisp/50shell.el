@@ -93,3 +93,6 @@
 ;; (add-hook 'completion-setup-hook
 ;;           (lambda () (run-at-time 6 nil
 ;;                                   (lambda () (delete-windows-on "*Completions*")))))
+
+
+(provide '50shell)

@@ -305,3 +305,5 @@ See also `sacha/bbdb-filter-displayed-records-by-alias'."
   "Prompt for the birthdate as well."
   (bbdb-record-putprop ad-return-value 'birthdate
                        (bbdb-read-string "Birthdate (YYYY.MM.DD): ")))
+
+(provide '50bbdb)

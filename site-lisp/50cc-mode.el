@@ -1,6 +1,6 @@
 ;;; 50cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2012-03-28 20:00:44 Shihpin Tseng>
+;; Time-stamp: <2012-04-13 14:34:25 Shihpin Tseng>
 
 (require 'smarter-operator)
 
@@ -326,3 +326,5 @@
     (shell-command
      (concat "cdecl explain \"" (buffer-substring (region-beginning)
                                                   (region-end)) "\"")))
+
+(provide '50cc-mode)

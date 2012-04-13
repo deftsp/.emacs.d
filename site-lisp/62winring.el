@@ -95,3 +95,7 @@
     (winring-set-name new-name)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+
+(provide '62winring)

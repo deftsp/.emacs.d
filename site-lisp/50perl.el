@@ -12,3 +12,4 @@
 (add-to-list 'interpreter-mode-alist '("miniperl" . cperl-mode))
 
 
+(provide '50perl)

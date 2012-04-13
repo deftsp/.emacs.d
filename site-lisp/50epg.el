@@ -31,3 +31,5 @@
   (ad-disable-advice 'epg--start 'around 'advice-epg-disable-agent)
   (ad-activate 'epg--start)
   (message "EasyPG gpg-agent re-enabled"))
+
+(provide '50epg)

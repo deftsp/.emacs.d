@@ -14,3 +14,6 @@
 (global-set-key ";" 'eim-insert-ascii)
 
 (set-default 'default-input-method "eim-eb")
+
+
+(provide '50eim)

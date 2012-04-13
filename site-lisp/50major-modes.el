@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2011-06-16 19:18:17 Shihpin Tseng>
+;; Time-stamp: <2012-04-13 14:42:49 Shihpin Tseng>
 
 ;;; imenu
 (require 'imenu)
@@ -341,5 +341,8 @@
   "Simple mode for xmodmap files.")
 
 
+
 ;; (autoload 'gtk-lookup-symbol "gtk-look" nil t)
 ;; (define-key global-map [?\C-h ?\C-j] 'gtk-lookup-symbol)
+
+(provide '50major-modes)

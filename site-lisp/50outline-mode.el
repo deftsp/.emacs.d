@@ -187,6 +187,9 @@
 ;;     (run-hooks 'outline-view-change-hook)))
 
 
+(provide '50outline-mode)
+
+
 ;; Local Variables:
 ;; outline-regexp: ";;; "
 ;; mode: outline-minor

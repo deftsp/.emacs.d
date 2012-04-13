@@ -51,3 +51,6 @@ the values from the Unicode charts, you should set it to 16."
   (interactive)
   (find-file "~/.emacs.d/unicode_template.txt"))
 
+
+
+(provide '50unicode-input)

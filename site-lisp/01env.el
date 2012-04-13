@@ -94,3 +94,6 @@
   (when (file-directory-p eprefix)
     (add-to-list 'exec-path (concat eprefix "/bin"))
     (add-to-list 'exec-path (concat eprefix "/usr/bin")))))
+
+
+(provide '01env)

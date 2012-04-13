@@ -398,3 +398,5 @@ If FORCE is non-nil, overwrite any existing line-height properties."
                  ))
         (goto-char from)
         (eval convertor)))))
+
+(provide '39util)

@@ -238,3 +238,5 @@ serial port."
             )
           )
 
+
+(provide '50asm-mode)

@@ -76,3 +76,6 @@ For later retrieval using `file-cache-read-cache-from-file'"
 
 (if (file-exists-p (expand-file-name "~/.filecache"))
     (file-cache-read-cache-from-file "~/.filecache"))
+
+
+(provide '50filecache)

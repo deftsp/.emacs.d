@@ -1529,6 +1529,8 @@ This command is to be used interactively."
 ;;;;;;;;;;;;
 ;; stumpwm ends there------------------------------------------------------------------------------------
 
+(provide '50misc)
+
 ;; Local Variables: **
 ;; outline-regexp: ";;; " **
 ;; End: **

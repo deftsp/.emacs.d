@@ -1,9 +1,4 @@
-;;; tsp-flashcard.el ---
-
-;; Copyright (C) 2008  S.P.Tseng
-
-;; Author: S.P.Tseng <deftsp@gmail.com>
-
+;;; 50flashcard.el ---
 
 ;; (setq fc-base "~/.emacs.d/packages/flashcard")
 ;; (setq fc-default-lang 'en)
@@ -30,3 +25,6 @@
 
 ;; (set-face-attribute 'flashcard-question-face nil :height 1.5)
 ;; (set-face-attribute 'flashcard-answer-face nil :height 1.5)
+
+
+(provide '50flashcard)

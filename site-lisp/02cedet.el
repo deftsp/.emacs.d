@@ -426,6 +426,7 @@ save the pointer marker if tag is found"
   `(cedet-settings-4-info))
 
 
+(provide '02cedet)
 
 ;; Local Variables:
 ;; outline-regexp: ";;; *"

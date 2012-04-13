@@ -260,3 +260,6 @@
 (icomplete-mode t)
 (eval-after-load "icomplete" '(progn (require 'icomplete+)))
 (setq icomplete-prospects-height 1)
+
+
+(provide '50completion)

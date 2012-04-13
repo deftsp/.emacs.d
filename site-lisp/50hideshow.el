@@ -63,6 +63,10 @@
 ;(screen-lines-mode t)
 ;; (global-set-key [(shift ? )] 'screen-lines-mode)
 
+(provide '50hideshow)
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; tsp-hideshow.el ends here
+;;; 50hideshow.el ends here
+
 

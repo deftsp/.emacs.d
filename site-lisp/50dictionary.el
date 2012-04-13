@@ -252,3 +252,5 @@ i.e.,
 ;;                                         ; that contains information about a database.
 ;; (add-hook 'dictem-postprocess-show-info-hook
 ;;           'dictem-postprocess-definition-hyperlinks)
+
+(provide '50dictionary)

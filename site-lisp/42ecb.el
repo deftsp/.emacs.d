@@ -106,3 +106,4 @@
 ;; (add-hook 'after-init-hook 'set-winring-name-and-activate-ecb)
 ;;; 42ecb.el ends here
 
+(provide '42ecb)
