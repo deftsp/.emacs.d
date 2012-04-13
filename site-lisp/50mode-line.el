@@ -6,96 +6,86 @@
 ;; %% – read-only, not modifed
 
 
-;; (copy-face 'default 'my-ml-position-face)
-;; (set-face-foreground 'my-ml-position-face "Blue2")
-;; (set-face-background 'my-ml-position-face nil)
-;; (setf mode-line-position '(:eval (if (>= (current-column) 80)
-;;                                      '(:propertize "(%l,%c)" face ml-position-face)
-;;                                      '(:propertize "(%l,%c)" face ml-position-normal-face))))
 
-
-;; (when window-system
-;;   (let ((help-echo
-;;          "mouse-1: select (drag to resize), mouse-2: delete others, mouse-3: delete this"))
-;;     (setq mode-line-position
-;;           `((size-indication-mode
-;;              (8 ,(propertize " of %I" 'help-echo help-echo)))
-;;             (line-number-mode
-;;              ((column-number-mode
-;;                (10 ,(propertize " (%l,%c)" 'help-echo help-echo))
-;;                (6 ,(propertize " L%l" 'help-echo help-echo))))
-;;              ((column-number-mode
-;;                (5 ,(propertize " C%c" 'help-echo help-echo)))))))))
-
-
-(defface ml-position-normal-face '((((type x w32 mac))
-                                 ;; #060525
-                                 (:foreground "CornflowerBlue" :inherit bold))
-                                (((type tty))
-                                 (:foreground "blue")))
+(defface mode-line-position-normal-face
+  '((((type x w32 ns))
+     (:foreground "CornflowerBlue" :inherit bold))
+    (((type tty))
+     (:foreground "blue")))
   "Face used to display the position in the mode line.")
 
 
-(defface ml-position-face '((((type x w32 mac))
-                                 ;; #060525
-                                 (:foreground "orange red" :inherit bold))
-                                (((type tty))
-                                 (:foreground "blue")))
+(defface mode-line-position-exceed-face
+  '((((type x w32 ns))
+     (:foreground "orange red" :inherit bold))
+    (((type tty))
+     (:foreground "blue")))
   "Face used to display the position of over 80 column in the mode line.")
 
 
 
+;;;
+(setq-default mode-line-position
+              `((:eval point-mode-line-string)
+                "%p"
+                (:eval (if (and mark-active (not (equal (mark) (point))))
+                           (format " Over:%d lines,%d chars  "
+                                   (count-lines (region-beginning)
+                                                (region-end))
+                                   (- (region-end) (region-beginning)))))
+
+                (line-number-mode (" " (:eval
+                                        (propertize
+                                         (format "L%%l/%d," (count-lines (point-min) (point-max)))
+                                         'face 'mode-line-position-normal-face))))
+                (column-number-mode ("" (:eval
+                                         (propertize "C%c"
+                                                     'face (if (>= (current-column) 80)
+                                                               'mode-line-position-exceed-face
+                                                             'mode-line-position-normal-face)))
+                                     ""))))
+
+
 (let* ((help-echo
-        "mouse-1: Select (drag to resize)\nmouse-2: Make current window occupy the whole frame\nmouse-3: Remove current window from display")
-       (dashes (propertize "-" 'help-echo help-echo))
-       (standard-mode-line-format
-        (list
-         "%e"
-         (propertize "-" 'help-echo help-echo)
-         'mode-line-mule-info
-         'mode-line-client
-         'mode-line-modified
-         'mode-line-remote
-         'mode-line-frame-identification
-         'mode-line-buffer-identification
-         (propertize "   " 'help-echo help-echo)
-         "%p"
-         ;; " of %I"
-         `(:eval (if (>= (current-column) 80)
-                     '(:propertize "(%l,%c)" face ml-position-face)
-                     '(:propertize "(%l,%c)" face ml-position-normal-face)))
-         `(:eval point-mode-line-string)
-         '(vc-mode vc-mode)
-         (propertize "  " 'help-echo help-echo)
-         'mode-line-modes
-         `(which-func-mode ("" which-func-format ,dashes))
-         `(:eval (if (and mark-active (not (equal (mark) (point))))
-                     (format "Over:%d lines,%d chars  "
-                             (count-lines (region-beginning)
-                                          (region-end))
-                             (- (region-end) (region-beginning)))))
-         `(global-mode-string ("" global-mode-string))
-         (propertize "-%-" 'help-echo help-echo)))
+        "mouse-1: Select (drag to resize)\nmouse-2: Make current window occupy the whole frame\n mouse-3: Remove current window from display")
+       (recursive-edit-help-echo "Recursive edit, type C-M-c to get out")
        (standard-mode-line-modes
         (list
-         (propertize "%[(" 'help-echo help-echo)
+         " "
+         (propertize "%[" 'help-echo recursive-edit-help-echo)
+         (propertize "(" 'help-echo help-echo)
          `(:propertize ("" mode-name)
-                       help-echo "mouse-1: major mode, mouse-2: major mode help, mouse-3: toggle minor modes"
+                       help-echo "Major mode\nmouse-1: Display major mode menu\nmouse-2: Show help for major mode\n mouse-3: Toggle minor modes"
                        mouse-face mode-line-highlight
                        local-map ,mode-line-major-mode-keymap)
          '("" mode-line-process)
-         ;; `(:propertize ("" minor-mode-alist)
-         ;;               mouse-face mode-line-highlight
-         ;;               help-echo "mouse-2: minor mode help, mouse-3: toggle minor modes"
-         ;;               local-map ,mode-line-minor-mode-keymap)
-         (propertize "%n" 'help-echo "mouse-2: widen"
+         `(:propertize ("" minor-mode-alist)
+                       mouse-face mode-line-highlight
+                       help-echo "Minor mode\nmouse-1: Display minor mode menu\nmouse-2: Show help for minor mode\nmouse-3: Toggle minor modes"
+                       local-map ,mode-line-minor-mode-keymap)
+         (propertize "%n" 'help-echo "mouse-2: Remove narrowing from the current buffer"
                      'mouse-face 'mode-line-highlight
                      'local-map (make-mode-line-mouse-map
-                                 'mouse-2 #'mode-line-widen))
-         (propertize ")%] " 'help-echo help-echo))))
-
-  (setq-default mode-line-format standard-mode-line-format)
-  (setq-default mode-line-modes standard-mode-line-modes))
+                                 'mouse-1 #'mode-line-widen))
+         (propertize ")" 'help-echo help-echo)
+         (propertize "%]" 'help-echo recursive-edit-help-echo))))
+  (setq-default mode-line-modes standard-mode-line-modes)
+  (setq-default mode-line-format
+                `("%e"  ;  When Emacs is nearly out of memory for Lisp objects, a brief message saying so.  Otherwise, this is empty.
+                  mode-line-mule-info
+                  mode-line-client
+                  mode-line-modified
+                  mode-line-remote
+                  mode-line-frame-identification
+                  mode-line-buffer-identification
+                  ,(propertize "    " 'help-echo help-echo)
+                  mode-line-position
+                  (vc-mode vc-mode)
+                  mode-line-modes
+                  (which-func-mode (" --" which-func-format "-- "))
+                  (global-mode-string ("" global-mode-string))
+                  (working-mode-line-message (" " working-mode-line-message))
+                  ,(propertize "-%-" 'help-echo help-echo))))
 
 
 (setq global-mode-string
@@ -104,7 +94,51 @@
         working-mode-line-message
         display-time-string " "
         ;; battery-mode-line-string " "
-        ;; win:mode-string
+                ;; (:eval
+;;                  (if line-number-mode
+;;                      (if column-number-mode
+;;                          (propertize
+;;                           (format " (%%l/%d,%%c)" (count-lines (point-min) (point-max)))
+;;                           'face (if (>= (current-column) 80) 'mode-line-position-exceed-face 'mode-line-position-normal-face)
+;;                           'local-map mode-line-column-line-number-mode-map
+;;                           'mouse-face 'mode-line-highlight
+;;                           'help-echo "Line number and Column number\n\
+;; mouse-1: Display Line and Column Mode Menu")
+;;                        (propertize
+;;                         (format " L%%l/%d" (count-lines (point-min) (point-max)))
+;;                         'local-map mode-line-column-line-number-mode-map
+;;                         'mouse-face 'mode-line-highlight
+;;                         'help-echo "Line Number\n\
+;; mouse-1: Display Line and Column Mode Menu"))
+;;                    (if column-number-mode
+;;                        (propertize
+;;                         " C%c"
+;;                         'local-map mode-line-column-line-number-mode-map
+;;                         'mouse-face 'mode-line-highlight
+;;                         'help-echo "Column number\n\
+;; mouse-1: Display Line and Column Mode Menu"))))                ;; (:eval
+;;                  (if line-number-mode
+;;                      (if column-number-mode
+;;                          (propertize
+;;                           (format " (%%l/%d,%%c)" (count-lines (point-min) (point-max)))
+;;                           'face (if (>= (current-column) 80) 'mode-line-position-exceed-face 'mode-line-position-normal-face)
+;;                           'local-map mode-line-column-line-number-mode-map
+;;                           'mouse-face 'mode-line-highlight
+;;                           'help-echo "Line number and Column number\n\
+;; mouse-1: Display Line and Column Mode Menu")
+;;                        (propertize
+;;                         (format " L%%l/%d" (count-lines (point-min) (point-max)))
+;;                         'local-map mode-line-column-line-number-mode-map
+;;                         'mouse-face 'mode-line-highlight
+;;                         'help-echo "Line Number\n\
+;; mouse-1: Display Line and Column Mode Menu"))
+;;                    (if column-number-mode
+;;                        (propertize
+;;                         " C%c"
+;;                         'local-map mode-line-column-line-number-mode-map
+;;                         'mouse-face 'mode-line-highlight
+;;                         'help-echo "Column number\n\
+;; mouse-1: Display Line and Column Mode Menu"))))        ;; win:mode-string
         "["
         (:propertize winring-name  face font-lock-constant-face)
         "]"
@@ -118,6 +152,6 @@
   (interactive)
   (if point-mode-line-string
       (setq point-mode-line-string nil)
-      (setq point-mode-line-string '(:eval (format "P[%d] " (point))))))
+    (setq point-mode-line-string '(:eval (format "P[%d] " (point))))))
 
 (provide '50mode-line)
