@@ -60,7 +60,7 @@
   (let ((keymap (make-sparse-keymap)))
     (define-key keymap "=" 'smarter-operator-self-insert-command)
     (define-key keymap "<" 'smarter-operator-<)
-    (define-key keymap ">" 'smarter-operator->)
+    ;; (define-key keymap ">" 'smarter-operator->)
     (define-key keymap "%" 'smarter-operator-%)
     (define-key keymap "+" 'smarter-operator-+)
     (define-key keymap "-" 'smarter-operator--)
@@ -72,7 +72,7 @@
     (define-key keymap ":" 'smarter-operator-:)
     (define-key keymap "?" 'smarter-operator-?)
     (define-key keymap "," 'smarter-operator-comma)
-    (define-key keymap "." 'smarter-operator-.)
+    ;; (define-key keymap "." 'smarter-operator-.)
     keymap)
   "Keymap used my `smarter-operator-mode'.")
 

@@ -607,6 +607,7 @@
          '("\\.py\\'" . python-mode)
          '("\\.\\(ba\\)?sh\\'" . sh-mode)
          '("\\.l\\'" . c-mode)
+         '("\\.mm\\'" . objc-mode)
          '("\\.o\\'" . hexl-mode)
          '("\\.max\\'" . maxima-mode)
          '("\\.fvwm2rc$" . fvwm-mode)
@@ -624,9 +625,9 @@
          '("\\.lrc$"           . emms-lyrics-mode)))
 
 ;; Since emacs 22 we can use magic-mode-alist to set mode
-;; (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@implementation" . objc-mode))
-;; (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@interface" . objc-mode))
-;; (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@protocol" . objc-mode))
+(add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@implementation" . objc-mode))
+(add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@interface" . objc-mode))
+(add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@protocol" . objc-mode))
 
 
 
@@ -1493,23 +1494,6 @@ This command is to be used interactively."
 
 ;; (global-set-key (kbd "C-k") 'kill-and-join-forward)
 
-;;; Alias Long Commands to Shorter Names
-;; shortening of often used commands
-(defalias 'ddqrr 'dired-do-query-replace-regexp)
-
-(defalias 'gf 'grep-find)
-(defalias 'fd 'find-dired)
-(defalias 'sh 'shell)
-
-(defalias 'qrr 'query-replace-regexp)
-(defalias 'ntr 'narrow-to-region)
-(defalias 'lml 'list-matching-lines)
-(defalias 'dml 'delete-matching-lines)
-(defalias 'rof 'recentf-open-files)
-
-(defalias 'eb 'eval-buffer)
-(defalias 'er 'eval-region)
-(defalias 'ee 'eval-expression)
 
 ;;----------------------------------------------------------------------------------------------------
 ;;; stumpwm

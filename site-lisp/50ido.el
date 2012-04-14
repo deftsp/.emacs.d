@@ -183,7 +183,8 @@ directory, select directory. Lastly the file is opened."
                 ido-temp-list)))))
 
 
-
+;;; // - go to the root directory.
+;;; ~/ - go to the home directory.
 (defun ido-erase-minibuffer-or-dwim ()
   "If cursor the EOL erases whole minibuffer and insert  `~/'.
 If cursor at the EOL and the whole minibuffer is `~/', erase whole minibuffer.

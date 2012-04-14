@@ -1,13 +1,12 @@
 ;;; tsp-outline-mode.el ---
 
-;; Copyright (C) 2008  S.P.Tseng
+;; Copyright (C) 2008  Shihpin Tseng
 
 ;; Author: S.P.Tseng <deftsp@gmail.com>
 
 ;;Change the prefix for outline commands
-;; (setq outline-minor-mode-prefix (kbd "C-o"))
+(setq outline-minor-mode-prefix (kbd "M-O"))
 
-(require 'outline nil t)
 (eval-after-load "outline"
   '(require 'foldout))
 
@@ -26,67 +25,43 @@
 
 ;;; key bindings
 (eval-after-load "outline"
-  '(mapc (lambda (bind)
-           (define-key outline-minor-mode-map
-               (car bind)
-             (cdr bind)))
-    `((,(kbd "H-o n") . outline-next-visible-heading)
-      (,(kbd "H-o p") . outline-previous-visible-heading)
-      (,(kbd "H-o f") . outline-forward-same-level)
-      (,(kbd "H-o b") . outline-backward-same-level)
-      (,(kbd "H-o u") . outline-up-heading)
-
-      (,(kbd "H-o t") . hide-body)
-      (,(kbd "H-o a") . show-all)
-      (,(kbd "H-o q") . hide-sublevels)
-
-      (,(kbd "H-o d") . hide-subtree)
-      (,(kbd "H-o s") . show-subtree)
-      (,(kbd "H-o TAB") . show-children)
-
-      (,(kbd "H-o c") . hide-entry)
-      (,(kbd "H-o e") . show-entry)
-      (,(kbd "H-o l") . hide-leaves)
-
-      (,(kbd "H-o k") . show-branches)
-
-      (,(kbd "H-o o") . hide-other)
-      (,(kbd "H-o RET") . outline-insert-heading)
-      (,(kbd "H-o v") . outline-move-subtree-down)
-      (,(kbd "H-o ^") . outline-move-subtree-up)
-      (,(kbd "H-o @") . outline-mark-subtree)
-      (,(kbd "H-o <") . outline-promote)
-      (,(kbd "H-o >") . outline-demote))))
+  '(let ((map (lookup-key outline-minor-mode-map
+                          outline-minor-mode-prefix)))
+	 (define-key map (kbd "C-a") 'show-all)
+	 (define-key map (kbd "C-b") 'outline-backward-same-level)
+	 (define-key map (kbd "C-c") 'hide-entry)
+	 (define-key map (kbd "C-d") 'hide-subtree)
+     (define-key map (kbd "C-e") 'show-entry)
+	 (define-key map (kbd "C-f") 'outline-forward-same-level)
+	 (define-key map (kbd "TAB") 'show-children)
+	 (define-key map (kbd "C-k") 'show-branches)
+	 (define-key map (kbd "C-l") 'hide-leaves)
+	 (define-key map (kbd "RET") 'outline-insert-heading)
+	 (define-key map (kbd "C-n") 'outline-next-visible-heading)
+     (define-key map (kbd "C-o") 'hide-other)
+     (define-key map (kbd "C-p") 'outline-previous-visible-heading)
+	 (define-key map (kbd "C-q") 'hide-sublevels)
+	 (define-key map (kbd "C-s") 'show-subtree)
+	 (define-key map (kbd "C-t") 'hide-body)
+	 (define-key map (kbd "C-u") 'outline-up-heading)
+	 (define-key map (kbd "C-v") 'outline-move-subtree-down)
+	 (define-key map (kbd "C-x") 'foldout-exit-fold)
+	 (define-key map (kbd "C-z") 'foldout-zoom-subtree)
+	 (define-key map (kbd "C-^") 'outline-move-subtree-up)
+	 (define-key map (kbd "@") 'outline-mark-subtree)
+	 (define-key map (kbd "C-<") 'outline-promote)
+	 (define-key map (kbd "C->") 'outline-demote)))
 
 
 
-;; Better use (set (make-local-variable 'outline-regexp) "...") as the above changes the global value.
 
-;; Even less obvious is how to use a different Face:
-;; (set-display-table-slot standard-display-table
-;;                         'selective-display
-;;                         (let ((face-offset (* (face-id font-lock-keyword-face) (expt 2 19))))
-;;                           (vconcat (mapcar (lambda (c) (+ face-offset c)) " ..."))))
+;;; change the characters outline mode uses for ellipsis (`…’ by default).
+(set-display-table-slot
+ standard-display-table
+ 'selective-display
+ (let ((face-offset (* (face-id 'shadow) (lsh 1 22))))
+   (vconcat (mapcar (lambda (c) (+ face-offset c)) " [...] "))))
 
-
-;;;----------------------------------------------------------------------------------------------------
-
-;; (add-hook 'php-mode-user-hook
-;;           '(lambda ()
-;;             (outline-minor-mode)
-;;             (setq outline-regexp " *\\(private funct\\|public funct\\|funct\\|class\\|#head\\)")
-;;             (hide-sublevels 1)))
-
-;; (add-hook 'python-mode-hook
-;;           '(lambda ()
-;;             (outline-minor-mode)
-;;             (setq outline-regexp " *\\(def \\|clas\\|#hea\\)")
-;;             (hide-sublevels 1)))
-
-(add-hook 'change-log-mode-hook
-          (lambda ()
-            (setq outline-regexp "[[:digit:]]+")))
-;; note that the "^" is *implicit* at the beginning of the regexp
 
 ;;; Explorer like Key-Bindings ---------------------------
 
@@ -185,6 +160,46 @@
 ;;             (setq beginning (point)))
 ;;           (outline-flag-region-make-overlay beginning to)))
 ;;     (run-hooks 'outline-view-change-hook)))
+
+;;; outline minor mode
+
+
+(defun outline-local-set-regexp (regexp &optional fun)
+  ;; Set `outline-regexp' locally to REGEXP and `outline-level' to FUN.
+  ;; Will not set either of these if one of them already have a local value.
+  (or (assq 'outline-regexp (buffer-local-variables))
+      (assq 'outline-level (buffer-local-variables))
+      (progn
+        (make-local-variable 'outline-regexp)
+        (setq outline-regexp regexp)
+        (if (null fun)
+            ()
+          (make-local-variable 'outline-level)
+          (setq outline-level fun)))))
+
+;; (add-hook 'php-mode-user-hook
+;;           '(lambda ()
+;;             (outline-minor-mode)
+;;             (setq outline-regexp " *\\(private funct\\|public funct\\|funct\\|class\\|#head\\)")
+;;             (hide-sublevels 1)))
+
+;; (add-hook 'python-mode-hook
+;;           '(lambda ()
+;;             (outline-minor-mode)
+;;             (setq outline-regexp " *\\(def \\|clas\\|#hea\\)")
+;;             (hide-sublevels 1)))
+
+;; (add-hook 'change-log-mode-hook
+;;           (lambda ()
+;;             (outline-local-set-regexp "[[:digit:]]+")
+;;             (outline-minor-mode)))
+
+;; (add-hook 'emacs-lisp-mode-hook
+;;           (function (lambda ()
+;;                       (outline-local-set-regexp ";;; \\|(....")
+;;                       (outline-minor-mode 1))))
+
+
 
 
 (provide '50outline-mode)
