@@ -64,19 +64,19 @@
 
 ;;; key-chord
 (require 'key-chord)
-(setq key-chord-two-keys-delay 0.04)    ; default 0.1
-(setq key-chord-one-key-delay 0.15)    ; default 0.2
-;; (key-chord-mode 1)
-(defun turn-on-key-chord-mode ()
-  (key-chord-mode 1))
-(add-hook 'find-file-hook 'turn-on-key-chord-mode)
+(key-chord-mode 1)
+(setq key-chord-one-key-delay 0.12)    ; default 0.2
+(setq key-chord-two-keys-delay 0.18)    ; default 0.1
+
 
 (key-chord-define-global "''" "`'\C-b")
 (key-chord-define-global "RR" 'anything-resume)
-(key-chord-define-global "JJ" 'anything)
 (key-chord-define-global "HH" 'woman)
-(key-chord-define-global "OO" 'anything-occur)
-;; space-chord
+(key-chord-define-global "JJ" 'anything)
+(key-chord-define-global "ao" 'anything-occur)
+(key-chord-define-global "rf" 'ido-choose-from-recentf)
+
+;;; space-chord
 (require 'space-chord)
 (setq space-chord-delay 0.08)           ; default 0.08
 (space-chord-define-global "f" 'find-file)
