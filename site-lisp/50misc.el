@@ -1266,7 +1266,9 @@ This command is to be used interactively."
 
 ;;;
 (global-undo-tree-mode t)
-
+(eval-after-load "undo-tree"
+  '(progn
+    (setq undo-tree-mode-lighter " UT")))
 
 
 ;;; recursive-edit
