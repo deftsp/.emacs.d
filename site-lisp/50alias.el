@@ -13,6 +13,7 @@
 (defalias 'dnml 'delete-non-matching-lines)
 (defalias 'dtw 'delete-trailing-whitespace)
 (defalias 'sl 'sort-lines)
+(defalias 'rc 'run-scheme)
 (defalias 'rr 'reverse-region)
 (defalias 'rb 'revert-buffer)
 (defalias 'rs 'replace-string)

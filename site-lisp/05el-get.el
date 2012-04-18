@@ -21,6 +21,9 @@
                :type git
                :url "git://github.com/claviclaws/org-mac-protocol.git"
                :features org-mac-protocol)
+        (:name flymake-cursor
+               :type emacswiki
+               :features flymake-cursor)
         (:name etags-select
                :type emacswiki
                :features etags-select)
@@ -58,7 +61,8 @@
 
 ;; (el-get-save-package-status "package-name-here" "removed")
 
-(el-get 'sync)                          ; 'sync 'wait
+(el-get 'sync 'org-mode)                ; init org-mode first
+(el-get 'wait)                          ; 'sync 'wait
 
 
 (provide '05el-get)

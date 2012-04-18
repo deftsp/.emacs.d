@@ -9,9 +9,15 @@
 (require '02cedet)
 (require '05el-get)
 
+(require '37org-mode)
+
+
 (require '39util)
 (when (eq system-type 'gnu/linux)
   (require '42ecb.el))
+
+
+
 
 (require '50alias)
 (require '50android)
@@ -22,10 +28,9 @@
 ;; (require '50bbdb)
 (require '50calendar)
 
-(when (eq system-type 'gnu/linux)
-  (require '50cl))
 
 (require '50cc-mode)
+;; (require '50cl)
 (require '50completion)
 (require '50css)
 (require '50customzation)
@@ -55,8 +60,8 @@
 (require '50misc)
 (require '50mode-line)
 ;; (require '50nethack)
-(require '50org-mode)
 (require '50outline-mode)
+(require '50paredit)
 (require '50patch)
 (require '50perl)
 (require '50predictive)

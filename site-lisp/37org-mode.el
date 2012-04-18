@@ -1,4 +1,4 @@
-;;; 50org-mode.el ---
+;;; 37org-mode.el ---
 
 ;; Copyright (C) 2007  Shihpin Tseng
 
@@ -321,8 +321,10 @@
     (org-agenda-list nil day)
     (select-window (get-buffer-window calendar-buffer))))
 
+(eval-after-load "calendar"
+  '(progn
+     (define-key calendar-mode-map (kbd "RET") 'th-calendar-open-agenda)))
 
-(define-key calendar-mode-map (kbd "RET") 'th-calendar-open-agenda)
 
 ;; And here’s a small minor mode which uses the function above to refresh the agenda buffer when you move point in the
 ;; calendar buffer, so calendar and agenda stay in sync.
@@ -391,7 +393,7 @@
 ;;               turn-on-auto-fill
 ;;               bbdb-define-all-aliases)))
 
-(provide '50org-mode)
+(provide '37org-mode)
 
 ;; Local Variables:
 ;; outline-regexp: ";;; "

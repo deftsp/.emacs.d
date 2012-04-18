@@ -707,19 +707,6 @@ Nth occurence of CHAR."
 (global-set-key (kbd "<M-S-return>") 'tsp-dup-line-down)
 ;;----------------------------------------------------------------------------------------------------
 
-;; (setq flymake-allowed-file-name-masks (quote (("\\.c\\'" flymake-simple-make-init)
-;;                                               ("\\.cpp\\'" flymake-simple-make-init)
-;;                                               ("\\.xml\\'" flymake-xml-init)
-;;                                               ("\\.html?\\'" flymake-xml-init)
-;;                                               ("\\.cs\\'" flymake-simple-make-init)
-;;                                               ("\\.pl\\'" flymake-perl-init)
-;;                                               ("\\.h\\'" flymake-master-make-header-init flymake-master-cleanup)
-;;                                               ("\\.java\\'" jde-ecj-server-flymake-init jde-ecj-flymake-cleanup)
-;;                                               ("[0-9]+\\.tex\\'" flymake-master-tex-init flymake-master-cleanup)
-;;                                               ("\\.tex\\'" flymake-simple-tex-init)
-;;                                               ("\\.idl\\'" flymake-simple-make-init)))
-;;       flymake-log-level 1)
-
 (defun deftsp-strip-all-blank-lines ()
   "Strip all blank lines in current buffer."
   (interactive)

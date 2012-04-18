@@ -1,6 +1,6 @@
 ;;; 50cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2012-04-15 00:10:48 Shihpin Tseng>
+;; Time-stamp: <2012-04-18 22:02:20 Shihpin Tseng>
 
 (require 'smarter-operator)
 

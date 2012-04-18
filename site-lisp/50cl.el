@@ -269,114 +269,7 @@ currently under the cursor."
 ;; (keyboard-translate ?\) ?\])
 ;; (keyboard-translate ?\] ?\))
 
-;;----------------------------------------------------------------------------------------------------
-;;paredit-mode
-;;----------------------------------------------------------------------------------------------------
-;; Reference Table http://mumble.net/~campbell/emacs/paredit/paredit.html
-;;(add-to-list 'load-path "~/.emacs.d/paredit/")
-;;(require 'paredit)
-
-;; Not sure whether we need this as opposed to a require...
-(autoload 'paredit-mode "paredit"
-  "Minor mode for pseudo-structurally editing Lisp code."
-  t)
-
-(eval-after-load 'paredit
-  '(progn
-    (define-key paredit-mode-map (kbd "H-m l")  'paredit-splice-sexp-killing-backward)
-    (define-key paredit-mode-map (kbd "H-m h")  'paredit-splice-sexp-killing-forward)
-
-    (define-key paredit-mode-map (kbd "H-l")   'paredit-forward-slurp-sexp)
-    (define-key paredit-mode-map (kbd "H-M-l") 'paredit-forward-barf-sexp)
-
-    (define-key paredit-mode-map (kbd "H-h")   'paredit-backward-slurp-sexp)
-    (define-key paredit-mode-map (kbd "H-M-h") 'paredit-backward-barf-sexp)))
-
-(dolist (hook '(emacs-lisp-mode-hook
-                lisp-mode-hook
-                inferior-lisp-mode-hook
-                inferior-scheme-mode-hook
-                slime-repl-mode-hook
-                scheme-mode-hook))
-  (add-hook hook #'(lambda nil (paredit-mode 1))))
-
-;; (mapc (lambda (mode)
-;;  (let ((hook (intern (concat (symbol-name mode)
-;;                  "-mode-hook"))))
-;;    (add-hook hook (lambda () (paredit-mode +1)))))
-;;       '(emacs-lisp lisp inferior-lisp))
-
-
-(defun check-region-parens ()
-  "Check if parentheses in the region are balanced. Signals a
-scan-error if not."
-  (interactive)
-  (save-restriction
-    (save-excursion
-      (let ((deactivate-mark nil))
-        (condition-case c
-            (progn
-              (narrow-to-region (region-beginning) (region-end))
-              (goto-char (point-min))
-              (while (/= 0 (- (point)
-                              (forward-list))))
-              t)
-          (scan-error (signal 'scan-error '("Region parentheses not balanced"))))))))
-
-(defun paredit-backward-maybe-delete-region ()
-  (interactive)
-  (if mark-active
-      (progn
-        (check-region-parens)
-        (cua-delete-region))
-      (paredit-backward-delete)))
-
-(defun paredit-forward-maybe-delete-region ()
-  (interactive)
-  (if mark-active
-      (progn
-        (check-region-parens)
-        (cua-delete-region))
-      (paredit-forward-delete)))
-
-
-
-;; Apparently this is better idea, because otherwise SLIME will not be a happy bunny.
-(eval-after-load 'paredit
-  '(progn
-    ;; (define-key paredit-mode-map (kbd ";")   'self-insert-command)
-    (define-key paredit-mode-map (kbd "<delete>") 'paredit-forward-maybe-delete-region)
-    (define-key paredit-mode-map (kbd "DEL") 'paredit-backward-maybe-delete-region)
-    ;; (define-key paredit-mode-map (kbd "RET") nil)
-    (define-key paredit-mode-map (kbd ")") 'paredit-close-parenthesis)
-    (define-key paredit-mode-map (kbd "M-)") 'paredit-close-parenthesis-and-newline)
-    ;; (define-key emacs-lisp-mode-map (kbd "RET") 'paredit-newline)
-    (define-key lisp-mode-shared-map (kbd "RET") 'paredit-newline)))
-
-(eval-after-load 'slime
-  '(progn
-    ;; (define-key slime-mode-map (kbd "[") 'insert-parentheses)
-    ;;(define-key slime-mode-map (kbd "]") 'move-past-close-and-reindent)
-    ;;(define-key slime-mode-map (kbd "(") (lambda () (interactive) (insert "[")))
-    ;;(define-key slime-mode-map (kbd ")") (lambda () (interactive) (insert "]")))
-    ;;(define-key slime-mode-map (kbd "(") 'paredit-open-parenthesis)
-    ;;(define-key slime-mode-map (kbd ")") 'paredit-close-parenthesis)
-
-    ;;(define-key slime-mode-map (kbd "C-M-l") 'paredit-recentre-on-sexp)
-    (define-key slime-mode-map (kbd "C-,") 'paredit-backward-slurp-sexp)
-    (define-key slime-mode-map (kbd "C-.") 'paredit-forward-slurp-sexp)
-    (define-key slime-mode-map (kbd "C-<") 'paredit-backward-barf-sexp)
-    (define-key slime-mode-map (kbd "C->") 'paredit-forward-barf-sexp)
-
-    (global-set-key (kbd "C-c s") 'slime-selector)
-    ;; (define-key slime-mode-map (kbd "C-c S") 'slime-selector)
-    ;; (define-key slime-repl-mode-map (kbd "C-c S") 'slime-selector)
-    ;; (define-key sldb-mode-map (kbd "C-c S") 'slime-selector)
-
-    ;; Balanced comments
-    (define-key slime-mode-map (kbd "C-c ;") 'slime-insert-balanced-comments)
-    (define-key slime-mode-map (kbd "C-c M-;") 'slime-remove-balanced-comments)))
-
+;;;
 (defun lisp-indent-or-complete (&optional arg)
   (interactive "p")
   (if (or (looking-back "^\\s-*") (bolp))
@@ -386,7 +279,6 @@ scan-error if not."
 (eval-after-load "lisp-mode"
   '(progn
     (define-key lisp-mode-map [tab] 'lisp-indent-or-complete)))
-;;(define-key slime-mode-map (kbd "C-<return>") 'paredit-newline)
 ;;;; i hate having to take my key off of ctrl for this and i don't use complete-form anyway...
 ;;(define-key slime-mode-map (kbd "C-c I") 'slime-inspect)
 

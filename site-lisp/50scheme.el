@@ -1,11 +1,23 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-04-13 14:52:51 Shihpin Tseng>
+;; Time-stamp: <2012-04-18 13:14:31 Shihpin Tseng>
 
-(setq scheme-program-name "mzscheme"
-      scheme-mit-dialect nil)
 
-;;; Tell emacs about your special interpreters. This is from the #! line.
-(add-to-list 'interpreter-mode-alist '("scsh" . scheme-mode))
+(autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
+(autoload 'gambit-mode "gambit" "Hook Gambit mode into scheme.")
+(add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
+(add-hook 'scheme-mode-hook (function gambit-mode))
+(setq scheme-program-name "gsi -:d-")   ; mzscheme
+
+
+
+;; (define-key scheme-mode-map (kbd "\t") 'scheme-complete-or-indent)
+
+
+
+;; (setqa scheme-mit-dialect nil)
+
+;; Tell emacs about your special interpreters. This is from the #! line.
+;; (add-to-list 'interpreter-mode-alist '("scsh" . scheme-mode))
 
 ;; (defun mit-scheme ()
 ;;     "Runs MIT scheme"
@@ -15,6 +27,7 @@
 
 
 ;;; You want quack. Really.
+;; http://alexott.net/en/writings/emacs-devenv/EmacsScheme.html
 ;; (require 'quack)
 ;; (setq quack-fontify-style 'emacs          ;or emacs
 ;;       quack-default-program "mzscheme"
@@ -241,25 +254,17 @@
 
 ;;========================================================================
 
-(eval-after-load 'scheme
-  '(progn
-    ;;(define-key scheme-mode-map (kbd "C-M-l") 'paredit-recentre-on-sexp)
-    (define-key scheme-mode-map (kbd "C-,") 'paredit-backward-slurp-sexp)
-    (define-key scheme-mode-map (kbd "C-.") 'paredit-forward-slurp-sexp)
-    (define-key scheme-mode-map (kbd "C-<") 'paredit-backward-barf-sexp)
-    (define-key scheme-mode-map (kbd "C->") 'paredit-forward-barf-sexp)))
+;; (autoload 'scheme-smart-complete "scheme-complete" nil t)
+;; (autoload 'scheme-complete-or-indent "scheme-complete" nil t)
+;; (autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
 
-(autoload 'scheme-smart-complete "scheme-complete" nil t)
-(autoload 'scheme-complete-or-indent "scheme-complete" nil t)
-(eval-after-load 'scheme
-  '(progn (define-key scheme-mode-map "\t" 'scheme-complete-or-indent)))
 
-(autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
-(add-hook 'scheme-mode-hook
-          (lambda ()
-            (make-local-variable 'eldoc-documentation-function)
-            (setq eldoc-documentation-function 'scheme-get-current-symbol-info)
-            (eldoc-mode)))
+
+;; (add-hook 'scheme-mode-hook
+;;           (lambda ()
+;;             (make-local-variable 'eldoc-documentation-function)
+;;             (setq eldoc-documentation-function 'scheme-get-current-symbol-info)
+;;             (eldoc-mode)))
 
 ;; (setq scheme-default-implementation "mzscheme")
 
