@@ -915,12 +915,35 @@ This command is to be used interactively."
 
 
 
-
+;;; midnight
 ;; What would life be like if there were only saving, and never killing? These two settings tell Emacs to, every
 ;; midnight, kill regular buffers which haven't been used in a while.
 ;; <http://www.gnu.org/software/emacs/manual/html_node/Kill-Buffer.html>
 (require 'midnight)
-(setq midnight-mode t)
+
+;; special buffers are cleaned every 12 hours
+(setq clean-buffer-list-delay-special (* 12 3600))
+
+(setq midnight-period (* 3 60 60))      ; occur every 3 hours default 86400 (24 hours)
+;; note period timer will occuer, even the time when set the timer (boot the emacs) is after
+;; "09:30am". see more..  run-at-time.
+;; (midnight-delay-set 'midnight-delay "09:30am")
+;; set midnight-delay after 30 min
+(midnight-delay-set 'midnight-delay
+                    (format-time-string "%H:%M"
+                                        (seconds-to-time (+ (time-to-seconds (current-time))
+                                                           (* 30 60)))))
+
+
+
+;; By default, clean-buffer-list will kill buffers that haven't been visited in 3 days, or in the last
+;; hour in the case of special buffer that are specified by `clean-buffer-list-kill-buffer-names'
+
+;; As of 2009-10-02, DeskTop mode does not preserve the value of ‘buffer-display-time’ for buffers,
+;; so the buffer’s “age” is effectively restarted. This means that buffers restored by a Desktop
+;; sessions are considered “new” by CleanBufferList, even though they may be considered“old”.
+
+;; http://www.emacswiki.org/emacs/CleanBufferList
 ;; The following variables can be used to customize the behavior of the
 ;; clean-buffer-list (which is run daily at midnight).
 ;; clean-buffer-list-kill-buffer-names
@@ -930,6 +953,33 @@ This command is to be used interactively."
 ;; clean-buffer-list-delay-general
 ;; clean-buffer-list-delay-special
 
+(mapcar (lambda (str) (add-to-list 'clean-buffer-list-kill-buffer-names str))
+        '("*buffer-selection*"
+          "*Finder*"
+          "*Finder Category*"
+          "*Finder-package*"
+          "*RE-Builder*"
+          "*vc-change-log*"))
+
+
+(mapcar (lambda (str) (add-to-list 'clean-buffer-list-kill-regexps str))
+        '("\\`\\*Customize .*\\*\\'"
+          "\\`\\*\\(Wo\\)?Man .*\\*\\'"))
+
+(mapcar (lambda (str) (add-to-list 'clean-buffer-list-kill-never-buffer-names str))
+        '("*eshell*"
+          "*ielm*"
+          "*mail*"
+          "*w3m*"
+          "*w3m-cache*"))
+
+(mapcar (lambda (str) (add-to-list 'clean-buffer-list-kill-never-regexps str))
+        '("\\`\\*tramp/.*\\*\\`"
+          "\\`\\*ftp .*\\*\\`"))
+
+
+
+;;;
 ;; Don't bother entering search and replace args if the buffer is read-only. Duh.
 ;; (defadvice query-replace-read-args (before barf-if-buffer-read-only activate)
 ;;   "Signal a `buffer-read-only' error if the current buffer is read-only."

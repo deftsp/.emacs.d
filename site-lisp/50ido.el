@@ -1,12 +1,10 @@
 ;;; 50ido.el ---
 
 ;; Copyright (C) 2008  S.P.Tseng
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;; ido seem much less annoying than icicles...
 (ido-mode t)                  ;  Turn on ido buffer and file behavior.
-;; turn off  ido speed-ups everywhere file and directory names are read, otherwise `C-Tab'
-;; (file-cache-minibuffer-complete) can not replace the previous path
 (ido-everywhere t)
 (setq ido-enable-prefix nil
       ido-enable-regexp t
@@ -111,7 +109,8 @@ directory, select directory. Lastly the file is opened."
            (setq ido-temp-list choices))))
     (ido-read-buffer prompt)))
 
-(global-set-key (kbd "ESC ESC f") 'file-cache-ido-find-file)
+(global-set-key (kbd "ESC ESC f") 'file-cache-ido-find-file) ; equal to 'C-[ C-[ f'
+(define-key minibuffer-local-map [C-tab] 'file-cache-ido-find-file)
 ;; ---------------------------------------------------------------------------------
 
 ;; Invoking bookmarks from ido
@@ -159,7 +158,7 @@ directory, select directory. Lastly the file is opened."
 (defun ido-my-keys ()
   "Add my keybindings for ido."
   (define-key ido-completion-map (kbd "C-.") 'ido-delete-backward-updir)
-  (define-key ido-completion-map (kbd "C-k") 'ido-erase-minibuffer-or-dwim)
+  ;; (define-key ido-completion-map (kbd "C-k") 'ido-erase-minibuffer-or-dwim)
   (define-key ido-completion-map (kbd "ESC ESC k") 'ido-delete-file-at-head))
 
 
@@ -185,20 +184,20 @@ directory, select directory. Lastly the file is opened."
 
 ;;; // - go to the root directory.
 ;;; ~/ - go to the home directory.
-(defun ido-erase-minibuffer-or-dwim ()
-  "If cursor the EOL erases whole minibuffer and insert  `~/'.
-If cursor at the EOL and the whole minibuffer is `~/', erase whole minibuffer.
-Or else erases whole minibuffer. "
-  (interactive)
-  (flet ((ido-chdir-1 (&optional dir)
-           (setq ido-text-init (if dir dir "~/"))
-           (setq ido-exit 'chdir)
-           (exit-minibuffer)))
-    (if (eolp)
-        (if (string= ido-current-directory "~/")
-            (ido-chdir-1 "/")
-            (ido-chdir-1))
-        (ido-chdir-1 ))))
+;; (defun ido-erase-minibuffer-or-dwim ()
+;;   "If cursor the EOL erases whole minibuffer and insert  `~/'.
+;; If cursor at the EOL and the whole minibuffer is `~/', erase whole minibuffer.
+;; Or else erases whole minibuffer. "
+;;   (interactive)
+;;   (flet ((ido-chdir-1 (&optional dir)
+;;            (setq ido-text-init (if dir dir "~/"))
+;;            (setq ido-exit 'chdir)
+;;            (exit-minibuffer)))
+;;     (if (eolp)
+;;         (if (string= ido-current-directory "~/")
+;;             (ido-chdir-1 "/")
+;;             (ido-chdir-1))
+;;         (ido-chdir-1 ))))
 
 
 ;; (defun my-ido-ignore-buffers (name)
@@ -261,6 +260,5 @@ Or else erases whole minibuffer. "
                     (string= (car imenu--rescan-item) name))
           (add-to-list 'symbol-names name)
           (add-to-list 'name-and-pos (cons name position))))))))
-
 
 (provide '50ido)

@@ -379,27 +379,7 @@ Nth occurence of CHAR."
 
 
 ;;; Open new line
-;; behave like vi's o command
-(global-set-key (kbd "M-o") 'vi-open-next-line)
-(defun vi-open-next-line (arg)
-  "Move to the next line (like vi) and then opens a line."
-  (interactive "p")
-  (end-of-line)
-  (open-line arg)
-  (next-line 1)
-  (indent-according-to-mode))
-
-;; behave like vi's O command
-(global-set-key (kbd "M-O") 'vi-open-above-line)
-(defun vi-open-above-line (arg)
-  "Open a new line before the current one."
-  (interactive "p")
-  (beginning-of-line)
-  (open-line arg)
-  (indent-according-to-mode))
-
-(global-set-key (kbd "C-o") 'open-line-with-indent)
-(defun open-line-with-indent ()
+(defun pl/open-line-with-indent ()
   "open-line with indent without moving cursor."
   (interactive)
   (save-excursion
@@ -407,6 +387,31 @@ Nth occurence of CHAR."
     (next-line 1)
     (indent-according-to-mode)
     (next-line -1)))
+
+(global-set-key (kbd "C-o") 'pl/open-line-with-indent)
+
+
+;; behave like vi's o command
+(defun pl/vi-open-next-line (arg)
+  "Move to the next line (like vi) and then opens a line."
+  (interactive "p")
+  (end-of-line)
+  (open-line arg)
+  (next-line 1)
+  (indent-according-to-mode))
+
+(global-set-key (kbd "M-o") 'pl/vi-open-next-line)
+
+
+;; behave like vi's O command
+;; (global-set-key (kbd "M-O") 'pl/vi-open-above-line)
+;; (defun pl/vi-open-above-line (arg)
+;;   "Open a new line before the current one."
+;;   (interactive "p")
+;;   (beginning-of-line)
+;;   (open-line arg)
+;;   (indent-according-to-mode))
+
 
 ;;------------------------------------------------------------------------------------------
 ;;Shell command on region

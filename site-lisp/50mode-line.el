@@ -147,7 +147,7 @@
         emms-lyrics-mode-line-string " "
         emms-playing-time-string))
 
-(defvar point-mode-line-string nil)
+(defvar point-mode-line-string nil "point string to display on mode line")
 (defun toggle-display-point ()
   (interactive)
   (if point-mode-line-string

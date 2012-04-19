@@ -66,15 +66,10 @@
  "<f12>"   'list-bookmarks
  "<M-f12>" 'recentf-open-files)
 
-(global-set-key (kbd "C-o") (lambda ()
-                              (interactive)
-                              (open-line 1)
-                              (next-line 1)
-                              (indent-according-to-mode)
-                              (next-line -1)))
 
-;; maybe I should use rgrep to replace it.
+
 (global-set-key (kbd "C-c g f") 'grep-find)
+(global-set-key (kbd "C-c r g") 'rgrep)
 
 ;;(global-set-key "\C-cw" 'compare-windows)
 ;; (define-prefix-command 'menu-map)
@@ -565,6 +560,10 @@ Goes backward if ARG is negative; error if CHAR not found."
 ;; C-x V   find-variable
 ;; C-x 4 V find-variable-other-window
 ;; C-x 5 V find-variable-other-frame
+
+
+;;;
+(global-set-key (kbd "C-x \\") 'align-regexp)
 
 
 (provide '50keys)

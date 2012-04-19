@@ -1,6 +1,6 @@
 ;;; 50filecache.el ---
 
-;; Copyright (C) 2008  S.P.Tseng
+;; Copyright (C) 2008  Shihpin Tseng
 
 ;; Author: S.P.Tseng <deftsp@gmail.com>
 ;; Keywords:
@@ -9,6 +9,10 @@
 
 ;; You can start the file-cache by either using 'C-TAB' when entering a file name in the MiniBuffer ('C-x C-f C-TAB C-g'
 ;; works)
+
+;; if ido-everywhere is on, `C-Tab' file-cache-minibuffer-complete can not replace the previous
+;; path.`minibuffer-prompt-end' can not work correctly.
+
 
 (require 'filecache)
 ;; define dirs for cacheing file dirs
@@ -31,8 +35,9 @@
      (let ((cache-dirs '("~/" "/etc/")))
        (dolist (dir cache-dirs) (file-cache-add-directory dir)))))
 
-;; (add-hook 'midnight-hook 'file-cache-update)
-(add-hook 'midnight-hook 'save-merge-file-cache)
+(eval-after-load "midnight"
+  '(add-hook 'midnight-hook 'save-merge-file-cache))
+
 
 ;; Save cache to a file
 (defun file-cache-save-cache-to-file (file)
