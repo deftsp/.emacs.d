@@ -6,18 +6,14 @@
 ;; Keywords:
 
 (require '01env)
-(require '02cedet)
-(require '05el-get)
-
+(require '05cc-mode)
+(require '09cedet)
+(require '12el-get)
 (require '37org-mode)
-
 
 (require '39util)
 (when (eq system-type 'gnu/linux)
   (require '42ecb.el))
-
-
-
 
 (require '50alias)
 (require '50android)
@@ -29,7 +25,6 @@
 (require '50calendar)
 
 
-(require '50cc-mode)
 ;; (require '50cl)
 (require '50completion)
 (require '50css)
