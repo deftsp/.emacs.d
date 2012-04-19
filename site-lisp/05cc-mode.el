@@ -1,6 +1,15 @@
-;;; 50cc-mode.el ---
+;;; 05cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2012-04-18 22:02:20 Shihpin Tseng>
+;; Time-stamp: <2012-04-20 01:17:42 Shihpin Tseng>
+
+
+(let ((cc-mode-dir (expand-file-name "~/.emacs.d/lisp/cc-mode")))
+  (when (file-directory-p cc-mode-dir)
+    (add-to-list 'load-path cc-mode-dir)))
+
+(eval-after-load "info"
+  '(pushnew (expand-file-name "~/.emacs.d/lisp/cc-mode") Info-default-directory-list :test #'equal))
+
 
 (require 'smarter-operator)
 
@@ -355,4 +364,4 @@
    (concat "cdecl explain \"" (buffer-substring (region-beginning)
                                                 (region-end)) "\"")))
 
-(provide '50cc-mode)
+(provide '05cc-mode)

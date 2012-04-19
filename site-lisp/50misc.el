@@ -1043,12 +1043,12 @@ This command is to be used interactively."
 
 ;;----------------------------------------------------------------------------------------------------
 ;;; info
-(setq Info-dir-contents nil
-      Info-additional-directory-list '("~/share/info")
-      ;; Info-default-directory-list (append Info-default-directory-list
-      ;;                                     '( "~/share/info" "~/info/share/perl-info"))
-      ;; Info-directory-list Info-default-directory-list
-      Info-directory-list nil)
+
+;; (setq Info-dir-contents nil)
+;; (pushnew (expand-file-name "~/share/info") Info-default-directory-list :test #'equal)
+;; (setq Info-additional-directory-list '("~/share/info"))
+;; (setq Info-directory-list Info-default-directory-list)
+;; (setq Info-directory-list nil)
 
 ;; (defun add-init-path-to-info-path ()
 ;;   "Add the subdirectories of init-path that contain info directory

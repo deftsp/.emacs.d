@@ -96,4 +96,8 @@
     (add-to-list 'exec-path (concat eprefix "/usr/bin")))))
 
 
+
+(when (eq system-type 'darwin)
+  (setenv "INFOPATH" (concat (expand-file-name "~/share/info:") (getenv "INFOPATH"))))
+
 (provide '01env)

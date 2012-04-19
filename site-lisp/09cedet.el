@@ -1,4 +1,4 @@
-;;; 02cedet.el ---
+;;; 09cedet.el ---
 
 ;; Copyright (C) 2008  Shihpin Tseng
 
@@ -420,13 +420,13 @@ save the pointer marker if tag is found"
   "`cedet' settings for `info'."
   (info-initialize)
   (dolist (package `("cogre" "common" "ede" "eieio" "semantic/doc" "speedbar" "srecode"))
-    (add-to-list 'Info-directory-list (concat "~/.emacs.d/lisp/cedet/" package "/"))))
+    (add-to-list 'Info-default-directory-list (concat "~/.emacs.d/lisp/cedet/" package "/"))))
 
 (eval-after-load "info"
   `(cedet-settings-4-info))
 
 
-(provide '02cedet)
+(provide '09cedet)
 
 ;; Local Variables:
 ;; outline-regexp: ";;; *"

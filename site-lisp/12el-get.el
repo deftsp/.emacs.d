@@ -1,4 +1,4 @@
-;;; 05el-get.el ---
+;;; 12el-get.el ---
 
 ;; Copyright (C) 2011  Shihpin Tseng
 
@@ -65,4 +65,4 @@
 (el-get 'wait)                          ; 'sync 'wait
 
 
-(provide '05el-get)
+(provide '12el-get)
