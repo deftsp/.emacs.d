@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-04-13 14:42:49 Shihpin Tseng>
+;; Time-stamp: <2012-04-20 12:47:11 Shihpin Tseng>
 
 ;;; imenu
 (require 'imenu)
@@ -344,5 +344,12 @@
 
 ;; (autoload 'gtk-lookup-symbol "gtk-look" nil t)
 ;; (define-key global-map [?\C-h ?\C-j] 'gtk-lookup-symbol)
+
+
+;;; Lua mode
+;; (eval-after-load "lua-mode"
+;;   '(progn
+;;      (setq lua-search-url-prefix
+;;            (concat "file://" (expand-file-name "~/") "share/doc/lua/5.1/manual.html#pdf-"))))
 
 (provide '50major-modes)

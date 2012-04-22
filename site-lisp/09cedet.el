@@ -16,6 +16,7 @@
 (semantic-load-enable-semantic-debugging-helpers)
 (global-semantic-stickyfunc-mode -1)
 
+(global-semantic-show-unmatched-syntax-mode -1)
 
 ;;; for eassist-lists-methods, and eassist-switch-h-cpp
 (require 'eassist)

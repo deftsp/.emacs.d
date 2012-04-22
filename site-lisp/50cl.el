@@ -2,8 +2,8 @@
 
 ;; http://common-lisp.net/project/clbuild/
 ;; $ clbuild slime-configuration
-(add-to-list 'load-path "~/src/clbuild/source/slime/")
-(add-to-list 'load-path "~/src/clbuild/source/slime/contrib")
+(add-to-list 'load-path "~/opt/clbuild2/source/slime/")
+(add-to-list 'load-path "~/opt/clbuild2/source/slime/contrib")
 
 ;; swank-clojure
 (add-to-list 'load-path "~/lisp/clj/swank-clojure/src/emacs")
@@ -11,7 +11,7 @@
 
 
 
-(setq slime-backend "~/src/clbuild/.swank-loader.lisp")
+(setq slime-backend "~/opt/clbuild2/.swank-loader.lisp")
 
 (require 'slime)
 (require 'clojure-mode)
