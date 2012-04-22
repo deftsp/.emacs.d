@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-04-18 13:14:31 Shihpin Tseng>
+;; Time-stamp: <2012-04-22 17:37:45 Shihpin Tseng>
 
 
 (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
@@ -28,10 +28,21 @@
 
 ;;; You want quack. Really.
 ;; http://alexott.net/en/writings/emacs-devenv/EmacsScheme.html
-;; (require 'quack)
-;; (setq quack-fontify-style 'emacs          ;or emacs
-;;       quack-default-program "mzscheme"
-;;       quack-newline-behavior 'indent-newline-indent)
+(require 'quack)
+(setq quack-fontify-style 'emacs          ;or 'plt
+      quack-default-program "gsi -:d-"
+      quack-newline-behavior 'indent-newline-indent)
+
+
+(eval-after-load "quack"
+  '(progn
+     (set-face-attribute quack-pltish-paren-face nil :foreground "#ccffcc" :weight 'normal)
+     (set-face-attribute quack-pltish-comment-face nil :foreground "#008888" :weight 'normal)
+     (set-face-attribute quack-pltish-keyword-face nil :foreground "#bbbb99" :weight 'bold)
+     (set-face-attribute quack-pltish-selfeval-face nil :foreground "#a800a8")
+     (set-face-attribute quack-pltish-defn-face nil :foreground "#ff7f00")
+     (set-face-attribute quack-threesemi-semi-face nil :background 'unspecified)
+     (set-face-attribute quack-threesemi-text-face nil :background 'unspecified)))
 
 ;; Examples for quick documentation access. Quack does similar stuff.
 ;; (defun s48-doc ()

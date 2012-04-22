@@ -107,7 +107,7 @@
                               (left . 0)
                               (foreground-color . ,+f-color+)
                               (background-color . ,+b-color+)
-                              (alpha . (98 86)) ; first number is for the active window and the second for the inactive window
+                              (alpha . (98 92)) ; first number is for the active window and the second for the inactive window
                               ;; (right-fringe)
                               ;; (left-fringe)
                               ;; (scroll-bar-width . 12)
@@ -139,7 +139,7 @@
   (set-face-foreground 'which-func "SteelBlue")
 
   (set-face-foreground 'font-lock-builtin-face "LightSteelBlue")
-  (set-face-foreground 'font-lock-comment-face "cyan4")
+  (set-face-foreground 'font-lock-comment-face "#008888")
   (set-face-foreground 'font-lock-constant-face "Aquamarine")
   ;; (set-face-foreground 'font-lock-doc-string-face "DarkOrange")
   (set-face-foreground 'font-lock-function-name-face "LightCoral")
