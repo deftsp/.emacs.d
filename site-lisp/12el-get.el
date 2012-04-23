@@ -33,6 +33,12 @@
                :type emacswiki
                :features cursor-chg)
 
+        (:name window-extension
+               :description "Some extension functions manipulate window."
+               :type emacswiki
+               :features window-extension)
+
+
         (:name hide-comnt
                :description "Hide/show comments in code."
                :type emacswiki

@@ -88,9 +88,6 @@
       bookmark-save-flag 1              ; save bookmark every time you set bookmark, not only when you exit emacs
       next-screen-context-lines 2
       mail-user-agent 'gnus-user-agent
-      ;; Minimum width of window to be split horizontally for `display-buffer'
-      split-width-threshold 200
-      split-height-threshold 40
       ;; default-enable-multibyte-characters t
       enable-local-variables :safe)
 

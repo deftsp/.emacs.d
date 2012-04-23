@@ -25,7 +25,7 @@
 
 
 (setq emacs-load-start-time (current-time))
-(setq debug-on-error t)                 ;will be cleared at end of buffer
+;; (setq debug-on-error t)                 ;will be cleared at end of buffer
 (setq stack-trace-on-error t)
 
 
@@ -61,7 +61,7 @@
 
 (add-hook 'after-init-hook 'emacs-reloaded)
 
-(setq debug-on-error nil)                 ; was set t at top of buffer
+;; (setq debug-on-error nil)                 ; was set t at top of buffer
 (setq stack-trace-on-error nil)
 
 (when (require 'time-date nil t)

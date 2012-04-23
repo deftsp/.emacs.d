@@ -107,7 +107,7 @@
                               (left . 0)
                               (foreground-color . ,+f-color+)
                               (background-color . ,+b-color+)
-                              (alpha . (98 92)) ; first number is for the active window and the second for the inactive window
+                              (alpha . (98 98)) ; first number is for the active window and the second for the inactive window
                               ;; (right-fringe)
                               ;; (left-fringe)
                               ;; (scroll-bar-width . 12)

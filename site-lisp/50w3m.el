@@ -1,8 +1,10 @@
 ;;; w3m
 
-(require 'w3m)
-(require 'w3m-ems)
-(require 'w3m-session)
+(require 'w3m-load)
+
+;; (require 'w3m)
+;; (require 'w3m-ems)
+;; (require 'w3m-session)
 
 ;; Rendering Frames
 
@@ -548,7 +550,7 @@
 
 ;; webjump
 (require 'webjump)
-(global-set-key (kbd "C-c j j") 'webjump)
+;; (global-set-key (kbd "C-c j j") 'webjump)
 (setq webjump-sites
       '(("google" . [simple-query "www.google.com" "www.google.com/search?q=" ""])
         ("Google Groups" . [simple-query "groups.google.com" "groups.google.com/groups?q=" ""])
@@ -889,5 +891,6 @@ entries in the `no-check' list."
           ad-do-it)))
 
 
+(provide '50w3m)
 ;; tips
 ;; a tab list via C-c C-s

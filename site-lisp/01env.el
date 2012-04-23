@@ -70,7 +70,7 @@
 ;; checking, file compression, compiling, grep, diff, etc.
 (let ((darwin-path ""))
   (when (eq system-type 'darwin)
-    (let ((eprefix (expand-file-name "~/Library/Gentoo")))
+    (let ((eprefix (expand-file-name "~/Library/Gentoo"))) ; Gentoo Prefix
       (when (file-directory-p eprefix)
         (setq darwin-path
               (concat eprefix "/bin" ":"

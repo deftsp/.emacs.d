@@ -73,8 +73,8 @@
 (require '50traverselisp)
 (require '50unicode-input)
 (require '50vc)
- ;; (require '50w3m)
-(require '50window-operate)
+(require '50w3m)  ; anything-config will defvar w3m-command, require it before that
+(require '50window)
 (require '50xcode)
 (require '50yasnippet)
 (require '50workgroups)
