@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-04-22 17:37:45 Shihpin Tseng>
+;; Time-stamp: <2012-04-23 22:49:53 Shihpin Tseng>
 
 
 (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
@@ -10,7 +10,6 @@
 
 
 
-;; (define-key scheme-mode-map (kbd "\t") 'scheme-complete-or-indent)
 
 
 
@@ -265,17 +264,33 @@
 
 ;;========================================================================
 
-;; (autoload 'scheme-smart-complete "scheme-complete" nil t)
-;; (autoload 'scheme-complete-or-indent "scheme-complete" nil t)
+
+
+;;; scheme-complete
+(autoload 'scheme-smart-complete "scheme-complete" nil t)
+(autoload 'scheme-complete-or-indent "scheme-complete" nil t)
+(autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
+
+(autoload 'scheme-smart-complete "scheme-complete" nil t)
+(eval-after-load 'scheme
+  '(progn
+     (define-key scheme-mode-map "\e\t" 'scheme-smart-complete) ; "\e" is the escape key. "\e\t" is escape-tab
+     (define-key scheme-mode-map "\t" 'scheme-complete-or-indent)))
+
+
+;; If you use eldoc-mode (included in Emacs), you can also get live
+;; scheme documentation with:
+;;
 ;; (autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
-
-
-
 ;; (add-hook 'scheme-mode-hook
-;;           (lambda ()
-;;             (make-local-variable 'eldoc-documentation-function)
-;;             (setq eldoc-documentation-function 'scheme-get-current-symbol-info)
-;;             (eldoc-mode)))
+;;   (lambda ()
+;;     (make-local-variable 'eldoc-documentation-function)
+;;     (setq eldoc-documentation-function 'scheme-get-current-symbol-info)
+;;     (eldoc-mode)))
+;;
+;; You can enable slightly smarter indentation with
+;; (setq lisp-indent-function 'scheme-smart-indent-function)
+
 
 ;; (setq scheme-default-implementation "mzscheme")
 

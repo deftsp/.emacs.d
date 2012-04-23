@@ -18,8 +18,7 @@
       ;; tramp-default-method "ssh"
       tramp-auto-save-directory "~/.tmp")
 ;; Tramp `debugging' options
-(setq debug-on-error 1
-      tramp-debug-buffer 1
+(setq tramp-debug-buffer 1
       tramp-verbose 10)
 
 ;; Default method to use for specific host/user pairs.

@@ -7,15 +7,14 @@
 
 
 ;;; auto-complete
-(require 'auto-complete)
-(require 'auto-complete-config)
-(require 'auto-complete-clang)
+
 
 
 (autoload 'auto-complete-mode "auto-complete"
   "This extension provides a way to select a completion with popup menu." t)
 
 ;; (require 'ac-company)
+
 ;; (eval-after-load "ac-company"
 ;;   '(progn
 ;;      (ac-company-define-source ac-source-company-xcode company-xcode)
@@ -35,7 +34,7 @@
   "etags source")
 
 
-(defun auto-complete-settings ()
+(defun pl/auto-complete-settings ()
   "Settings for `auto-complete'."
 
 
@@ -63,7 +62,7 @@
   ;; start completion when entered 2 characters
   (setq ac-auto-start nil)                ; do not start automatically
   (setq ac-dwim t)
-  (ac-set-trigger-key "TAB")
+  (ac-set-trigger-key "<C-tab>")
 
   (setq ac-candidate-max 20)
 
@@ -84,15 +83,22 @@
   ;; (define-key ac-mode-map (kbd "<backtab>") 'auto-complete)
   (define-key ac-complete-mode-map "\M-/" 'ac-stop))
 
-(eval-after-load "auto-complete-config"
-  '(auto-complete-settings))
 
-(defun ac-objc-mode-setup ()
-  (setq ac-sources (append '(ac-source-clang ac-source-etags) ; ac-source-company-xcode
-                           ac-sources)))
+(defun pl/ac-objc-mode-setup ()
+  ;; (add-to-list 'ac-sources 'ac-source-company-xcode)
+  (add-to-list 'ac-sources 'ac-source-clang)
+  (add-to-list 'ac-sources 'ac-source-etags))
 
 (add-hook 'lisp-interaction-mode 'ac-emacs-lisp-mode-setup)
-(add-hook 'objc-mode-hook 'ac-objc-mode-setup)
-(ac-config-default)
+(add-hook 'objc-mode-hook 'pl/ac-objc-mode-setup)
+
+
+(eval-after-load "auto-complete"
+  '(progn
+     (require 'auto-complete-config)
+     (require 'auto-complete-clang)
+     (pl/auto-complete-settings)
+     (ac-config-default)))
+
 
 (provide '50auto-complete)
