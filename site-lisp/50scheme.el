@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-04-23 22:49:53 Shihpin Tseng>
+;; Time-stamp: <2012-04-28 20:40:48 Shihpin Tseng>
 
 
 (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
@@ -7,10 +7,6 @@
 (add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
 (add-hook 'scheme-mode-hook (function gambit-mode))
 (setq scheme-program-name "gsi -:d-")   ; mzscheme
-
-
-
-
 
 
 ;; (setqa scheme-mit-dialect nil)
@@ -27,10 +23,10 @@
 
 ;;; You want quack. Really.
 ;; http://alexott.net/en/writings/emacs-devenv/EmacsScheme.html
-(require 'quack)
-(setq quack-fontify-style 'emacs          ;or 'plt
-      quack-default-program "gsi -:d-"
-      quack-newline-behavior 'indent-newline-indent)
+;; (require 'quack)
+;; (setq quack-fontify-style 'emacs          ;or 'plt
+;;       quack-default-program "gsi -:d-"
+;;       quack-newline-behavior 'indent-newline-indent)
 
 
 (eval-after-load "quack"
