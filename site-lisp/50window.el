@@ -185,4 +185,8 @@
 ;;         (car (cdr windows))))))
 
 
+;;; switch window
+(eval-after-load "switch-window"
+  '(setq switch-window-shortcut-style 'alphabet))
+
 (provide '50window)

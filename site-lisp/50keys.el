@@ -145,7 +145,7 @@
   ;; define a prefix command, make it possible to define key sequence like`C-z c c' 'C-z n`
   ;; (define-prefix-command 'ctl-z-map)
   ;; (global-set-key (kbd "C-z") 'ctl-z-map)
-  (global-set-key (kbd "C-c u") 'revert-buffer))
+  (global-set-key (kbd "C-c u") 'revert-buffer)) ; how about C-x C-v?
 
 
 (global-set-key (kbd "C-c o x") 'open-with-xcode)

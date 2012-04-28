@@ -11,11 +11,12 @@
 ;; package (Gnus, auth-source, ...).
 ;; don't add cedet directory recursive, it'll cause strange problem
 (load-file "~/.emacs.d/lisp/cedet/common/cedet.el")
+;; (load-file "~/.emacs.d/lisp/cedet/cedet-devel-load.el")
 
 (semantic-load-enable-excessive-code-helpers)
 (semantic-load-enable-semantic-debugging-helpers)
-(global-semantic-stickyfunc-mode -1)
 
+(global-semantic-stickyfunc-mode -1)
 (global-semantic-show-unmatched-syntax-mode -1)
 
 ;;; for eassist-lists-methods, and eassist-switch-h-cpp
@@ -38,6 +39,11 @@
 (semanticdb-enable-gnu-global-databases 'c-mode)
 (semanticdb-enable-gnu-global-databases 'c++-mode)
 
+;;; Enable SRecode (Template management) minor-mode.
+(global-srecode-minor-mode 1)
+
+(remove-hook 'scheme-mode-hook 'semantic-default-scheme-setup)
+
 
 ;;; ctags
 ;; * This enables the use of Exuberent ctags if you have it installed.
@@ -49,8 +55,6 @@
 ;;   Add support for using ctags as a backup parser.
 ;; (semantic-load-enable-secondary-exuberent-ctags-support)
 
-;;; Enable SRecode (Template management) minor-mode.
-(global-srecode-minor-mode 1)
 
 
 (setq semantic-complete-inline-analyzer-displayor-class
@@ -407,6 +411,7 @@ save the pointer marker if tag is found"
         (goto-char pos))
       (set-marker marker nil nil))))
 
+;;; face
 (eval-after-load "pulse"
   '(progn
     (set-face-attribute 'pulse-highlight-start-face nil :background "#222222")))
@@ -414,7 +419,8 @@ save the pointer marker if tag is found"
 (eval-after-load "semantic"
   '(progn
      (set-face-attribute 'semantic-decoration-on-private-members-face nil :background "#333333")
-     (set-face-attribute 'semantic-decoration-on-unparsed-includes nil :background "#555555")))
+     (set-face-attribute 'semantic-decoration-on-unparsed-includes nil :background "#555555")
+     (set-face-attribute 'semantic-tag-boundary-face nil :overline "#227777")))
 
 
 (defun cedet-settings-4-info ()

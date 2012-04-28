@@ -93,7 +93,8 @@
 
 (which-function-mode 1)
 
-(display-battery-mode t)
+(if (eq system-type 'gnu/linux)
+    (display-battery-mode t))
 
 ;; do not create new frame with `open' in Mac OS X
 (when (eq window-system 'ns)
@@ -326,9 +327,9 @@
 (setq show-paren-delay 0
       show-paren-style 'parenthesis)    ;expression
 
-(require 'mic-paren)
-(paren-activate)
-(setf paren-priority 'close)
+;; (require 'mic-paren)
+;; (paren-activate)
+;; (setf paren-priority 'close)
 
 
 ;;; file-name-shadow-mode
