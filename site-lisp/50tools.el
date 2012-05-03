@@ -74,7 +74,7 @@
 (key-chord-define-global "HH" 'woman)
 (key-chord-define-global "JJ" 'anything)
 (key-chord-define-global "OO" 'anything-occur)
-(key-chord-define-global "rf" 'ido-choose-from-recentf)
+(key-chord-define-global "RF" 'ido-choose-from-recentf)
 
 ;;; space-chord
 (require 'space-chord)

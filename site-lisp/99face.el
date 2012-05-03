@@ -102,7 +102,7 @@
   (setq initial-frame-alist `((tool-bar-lines . 0)
                               (menu-bar-lines . 0)
                               (width . 268)
-                              (height . 68)
+                              (height . 65)
                               (top . 0)
                               (left . 0)
                               (foreground-color . ,+f-color+)
