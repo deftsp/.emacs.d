@@ -103,7 +103,7 @@
                               (menu-bar-lines . 0)
                               (width . 268)
                               (height . 65)
-                              (top . 0)
+                              (top . 22) ; (frame-parameter nil 'top)
                               (left . 0)
                               (foreground-color . ,+f-color+)
                               (background-color . ,+b-color+)
