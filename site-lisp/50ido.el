@@ -84,12 +84,12 @@
             ido-text))))
 
 ;;; Using ido to open files from file name cache-------------------------------
-(defun file-cache-ido-find-file (file)
+(defun pl/file-cache-ido-find-file (file)
   "Using ido, interactively open file from file cache'.
 First select a file, matched using ido-switch-buffer against the contents
 in `file-cache-alist'. If the file exist in more than one
 directory, select directory. Lastly the file is opened."
-  (interactive (list (file-cache-ido-read "File: "
+  (interactive (list (pl/file-cache-ido-read "File: "
                                           (mapcar
                                            (lambda (x)
                                              (car x))
@@ -100,17 +100,17 @@ directory, select directory. Lastly the file is opened."
       file
       (if (= (length record) 2)
           (car (cdr record))
-          (file-cache-ido-read
+          (pl/file-cache-ido-read
            (format "Find %s in dir: " file) (cdr record)))))))
 
-(defun file-cache-ido-read (prompt choices)
+(defun pl/file-cache-ido-read (prompt choices)
   (let ((ido-make-buffer-list-hook
          (lambda ()
            (setq ido-temp-list choices))))
     (ido-read-buffer prompt)))
 
-(global-set-key (kbd "ESC ESC f") 'file-cache-ido-find-file) ; equal to 'C-[ C-[ f'
-(define-key minibuffer-local-map [C-tab] 'file-cache-ido-find-file)
+(global-set-key (kbd "ESC ESC f") 'pl/file-cache-ido-find-file) ; equal to 'C-[ C-[ f'
+(define-key minibuffer-local-map [C-tab] 'pl/file-cache-ido-find-file)
 ;; ---------------------------------------------------------------------------------
 
 ;; Invoking bookmarks from ido
