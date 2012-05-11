@@ -14,7 +14,7 @@
 (setq slime-backend "~/opt/clbuild2/.swank-loader.lisp")
 
 (require 'slime)
-(require 'clojure-mode)
+;; (require 'clojure-mode)
 
 ;; (require 'slime-autoloads)
 (slime-setup '(slime-fancy slime-asdf slime-tramp))
@@ -29,7 +29,7 @@
       swank-clojure-extra-classpaths (list
                                       "~/lisp/clj/swank-clojure/src/main/clojure"
                                       "~/.clojure/clojure-contrib.jar"))
-(require 'swank-clojure-autoload)
+;; (require 'swank-clojure-autoload)
 
 
 

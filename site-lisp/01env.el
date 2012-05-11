@@ -60,7 +60,29 @@
   (define-coding-system-alias 'gb2312 'gbk)
   (define-coding-system-alias 'x-gbk 'gbk))
 
-
+;;; modifier
+(case system-type
+  (darwin
+   ;; setting Super ＆ Hyper keys for the Mac keyboard, for emacs running in OS X
+   ;; Super/Meta/Hyer
+   (setq mac-option-modifier 'super) ; sets the Option key as Super
+   (setq mac-command-modifier 'meta) ; sets the Command key as Meta
+   (setq mac-control-modifier 'control))
+  (wndows-nt
+   ;; setting the PC keyboard's various keys to
+   ;; Super or Hyper, for emacs running on Windows.
+   (setq w32-pass-lwindow-to-system nil
+         w32-pass-rwindow-to-system nil
+         w32-pass-apps-to-system nil
+         ;; Left Windows key
+         w32-lwindow-modifier 'super
+         ;; Right Windows key
+         w32-rwindow-modifier 'super
+         ;; Menu key
+         w32-apps-modifier 'hyper))
+  (gnu/linux
+   ;; do nothing. You should set Super and Hyper from your OS
+   nil))
 
 
 ;;; Difference between "exec-path" and "PATH"
