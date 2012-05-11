@@ -29,7 +29,7 @@
 (require '50completion)
 (require '50css)
 (require '50customzation)
-(require '50dictionary)
+;; (require '50dictionary)
 (require '50dired)
 (require '50display)
 (require '50door-gnus)

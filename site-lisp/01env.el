@@ -104,11 +104,12 @@
            (expand-file-name "~/bin") ":"
            (expand-file-name "~/local/bin") ":"
            "/usr/local/bin" ":"
+           "/opt/bin" ":"
            darwin-path
            (getenv "PATH"))))
 
 (mapc (lambda (n) (add-to-list 'exec-path n))
-      `(,(expand-file-name  "~/bin") "/usr/local/bin" "/usr/X11R6/bin"))
+      `(,(expand-file-name  "~/bin") "/usr/local/bin" "/opt/bin" "/usr/X11R6/bin"))
 
 ;; EPREFIX="$HOME/Library/Gentoo""
 (when (eq system-type 'darwin)

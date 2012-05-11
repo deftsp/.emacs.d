@@ -1,8 +1,7 @@
-;;; emacs-dictionary.el ---
+;;; 50dictionary.el ---
 ;;
-;; Filename: emacs-dictionary.el
 ;; Description:
-;; Author: Tseng Shih-pin <detfsp@gmail.com>
+;; Author: Shihpin Tseng <detfsp@gmail.com>
 ;; Created: Thu Sep 13 14:17:37 2007
 ;; Version:
 
