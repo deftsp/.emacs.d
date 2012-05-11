@@ -1,73 +1,83 @@
 ;;; 09cedet.el ---
 
-;; Copyright (C) 2008  Shihpin Tseng
+;; Copyright (C) 2012  Shihpin Tseng
 
 ;;; CEDET
+
+;; using cedet from bzr
+;; bzr revert
+;; bzr clean-tree
+;; bzr clean-tree --ignore
+;; touch `find . -name Makefile`
+;; make EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
 
 ;; Load CEDET.
 ;; See cedet/common/cedet.info for configuration details.
 ;; IMPORTANT: For Emacs >= 23.2, you must place this *before* any
 ;; CEDET component (including EIEIO) gets activated by another
 ;; package (Gnus, auth-source, ...).
-;; don't add cedet directory recursive, it'll cause strange problem
-(load-file "~/.emacs.d/lisp/cedet/common/cedet.el")
-;; (load-file "~/.emacs.d/lisp/cedet/cedet-devel-load.el")
 
-(semantic-load-enable-excessive-code-helpers)
-(semantic-load-enable-semantic-debugging-helpers)
+;; note: don't add cedet directory recursive, it'll cause strange problem
 
-(global-semantic-stickyfunc-mode -1)
-(global-semantic-show-unmatched-syntax-mode -1)
+(load-file "~/.emacs.d/lisp/cedet/cedet-devel-load.el")
 
-;;; for eassist-lists-methods, and eassist-switch-h-cpp
-(require 'eassist)
+;; Add further minor-modes to be enabled by semantic-mode.
+;; See doc-string of `semantic-default-submodes' for other things
+;; you can use here.
+(add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode t)
+(add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode t)
+(add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
+(add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t)
+(add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode t)
+(add-to-list 'semantic-default-submodes 'global-semantic-mru-bookmark-mode t)
+(add-to-list 'semantic-default-submodes 'global-semantic-decoration-mode t) ; Additional tag decorations.
+(add-to-list 'semantic-default-submodes 'global-semantic-highlight-func-mode t) ; Highlight the current tag.
+;; Highlight references of the symbol under point.
+(add-to-list 'semantic-default-submodes 'global-semantic-idle-local-symbol-highlight-mode t)
+(add-to-list 'semantic-default-submodes 'global-semantic-show-parser-state-mode t)
+;; Show current fun in header line
+;; (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode t)
+;; (add-to-list 'semantic-default-submodes 'global-semantic-show-unmatched-syntax-mode t)
 
-
-(require 'cedet-contrib-load)
-
-;; x-max-tooltip-size is not defined in Mac
-;; it should be removed after this bug is fixed
-(if (not (boundp 'x-max-tooltip-size))
-    (setq x-max-tooltip-size '(1000 . 1000)))
+;; Enable Semantic
+(semantic-mode 1)
 
 ;; Enable EDE (Project Management) features
 (global-ede-mode 1)
 
+;;; for eassist-lists-methods, and eassist-switch-h-cpp
+;; (require 'eassist)
+
+
+;; (require 'cedet-contrib-load)
+
 ;;; global support
-(require 'semanticdb-system)
-(require 'semanticdb-global)
 (semanticdb-enable-gnu-global-databases 'c-mode)
 (semanticdb-enable-gnu-global-databases 'c++-mode)
 
 ;;; Enable SRecode (Template management) minor-mode.
 (global-srecode-minor-mode 1)
 
-(remove-hook 'scheme-mode-hook 'semantic-default-scheme-setup)
+;; (remove-hook 'scheme-mode-hook 'semantic-default-scheme-setup)
 
 
 ;;; ctags
-;; * This enables the use of Exuberent ctags if you have it installed.
-;;   If you use C++ templates or boost, you should NOT enable it.
-;; (semantic-load-enable-all-exuberent-ctags-support)
-;;   Or, use one of these two types of support.
-;;   Add support for new languges only via ctags.
-;; (semantic-load-enable-primary-exuberent-ctags-support)
-;;   Add support for using ctags as a backup parser.
-;; (semantic-load-enable-secondary-exuberent-ctags-support)
+;; (semantic-load-enable-all-ectags-support)
 
+;;; complete
+;; (setq semantic-complete-inline-analyzer-displayor-class
+;;       'semantic-displayor-traditional-with-focus-highlight) ; semantic-displayor-ghost
 
+;;; List of active decoration styles.
+;; (setq semantic-decoration-styles '(("semantic-decoration-on-includes" . t)
+;;                                    ("semantic-decoration-on-protected-members" . t)
+;;                                    ("semantic-decoration-on-private-members" . t)
+;;                                    ("semantic-tag-boundary" . t)))
 
-(setq semantic-complete-inline-analyzer-displayor-class
-      'semantic-displayor-traditional-with-focus-highlight) ; semantic-displayor-ghost
+;;; tag format
+(setq semantic-idle-breadcrumbs-format-tag-function ; default semantic-format-tag-abbreviate
+      'semantic-format-tag-prototype) ; semantic-format-tag-uml-prototype
 
-(setq semantic-decoration-styles '(("semantic-decoration-on-includes" . t)
-                                   ("semantic-decoration-on-protected-members" . t)
-                                   ("semantic-decoration-on-private-members" . t)
-                                   ("semantic-tag-boundary" . t)))
-
-(setq semantic-idle-breadcrumbs-format-tag-function
-      'semantic-format-tag-prototype)
-;;      'semantic-format-tag-uml-prototype) ; default semantic-format-tag-abbreviate
 (setq semantic-idle-work-parse-neighboring-files-flag t)
 (setq semantic-idle-work-update-headers-flag t)
 
@@ -76,14 +86,8 @@
 ;; (global-set-key [(s-down-mouse-3)] 'senator-completion-menu-popup)
 
 
-
-
-
-
 ;;; cscope
-(require 'semanticdb-cscope)
-
-(global-semanticdb-minor-mode 1)
+;; (require 'semanticdb-cscope)
 ;; (add-to-list 'semanticdb-project-roots "~/proj")
 
 (global-set-key (kbd "C-x , j") 'semantic-ia-fast-jump)
@@ -252,7 +256,6 @@
         "C:/MinGW/lib/gcc/mingw32/3.4.5/include"
         "C:/Program Files/Microsoft Visual Studio/VC98/MFC/Include"))
 
-(require 'semantic-c nil 'noerror)
 (let ((include-dirs cedet-user-include-dirs))
   (setq include-dirs (append include-dirs cedet-cocos2d-include-dir))
   (when (eq system-type 'windows-nt)
@@ -417,10 +420,10 @@ save the pointer marker if tag is found"
     (set-face-attribute 'pulse-highlight-start-face nil :background "#222222")))
 
 (eval-after-load "semantic"
-  '(progn
-     (set-face-attribute 'semantic-decoration-on-private-members-face nil :background "#333333")
-     (set-face-attribute 'semantic-decoration-on-unparsed-includes nil :background "#555555")
-     (set-face-attribute 'semantic-tag-boundary-face nil :overline "#227777")))
+ '(progn
+    (set-face-attribute 'semantic-decoration-on-private-members-face nil :background "#333333")
+    (set-face-attribute 'semantic-decoration-on-unparsed-includes nil :background "#555555")
+    (set-face-attribute 'semantic-tag-boundary-face nil :overline "#227777")))
 
 
 (defun cedet-settings-4-info ()
