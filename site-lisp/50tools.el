@@ -25,7 +25,7 @@
 
 (require 'highlight-parentheses)
 
-(require 'pulse-settings)
+;; (require 'pulse-settings)
 
 
 ;;; thing-cmds
