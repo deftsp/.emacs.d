@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-04-28 20:40:48 Shihpin Tseng>
+;; Time-stamp: <2012-05-08 15:02:30 Shihpin Tseng>
 
 
 (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
@@ -7,6 +7,10 @@
 (add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
 (add-hook 'scheme-mode-hook (function gambit-mode))
 (setq scheme-program-name "gsi -:d-")   ; mzscheme
+
+(eval-after-load "gambit"
+  '(progn
+    (set-face-attribute  gambit-highlight-face nil :foreground "#000000")))
 
 
 ;; (setqa scheme-mit-dialect nil)
