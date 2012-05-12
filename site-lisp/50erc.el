@@ -270,7 +270,7 @@
 (global-set-key (kbd "M-E") 'switch-to-irc)
 
 ;;; Select  erc buffers, and M-g to 'land' in one of them:
-(require 'assoc)                        ; for aget
+;; (require 'assoc)                        ; for aget
 ;; TODO: Package assoc is obsolete, use something instead.
 
 (defun tsp-get-char ()
