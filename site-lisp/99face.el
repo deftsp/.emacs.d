@@ -128,12 +128,8 @@
   (set-face-background 'tooltip "#bcc8dd")
   ;; mode line
   (set-face-foreground 'mode-line-buffer-id "#90377d")
-  (set-face-foreground 'mode-line +f-color+)
-  (set-face-background 'mode-line "#222222")
-  (set-face-foreground 'mode-line-inactive "Blue4")
-  (set-face-background 'mode-line-inactive "#111111")
-  (set-face-attribute 'mode-line nil :box nil)
-  (set-face-attribute 'mode-line-inactive nil :box nil)
+  (set-face-attribute 'mode-line nil :box nil :background "#222222" :foreground "SteelBlue2")
+  (set-face-attribute 'mode-line-inactive nil :box nil :background "#111111" :foreground "PaleTurquoise4")
   (set-face-attribute 'mode-line-highlight nil :box nil)
 
   (set-face-foreground 'which-func "SteelBlue")
