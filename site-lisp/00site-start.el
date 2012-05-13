@@ -59,7 +59,6 @@
 (require '50paredit)
 (require '50patch)
 (require '50perl)
-(require '50predictive)
 (require '50printing)
 (require '50sawfish)
 (require '50scheme)
