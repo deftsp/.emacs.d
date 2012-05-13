@@ -14,15 +14,6 @@
 (autoload 'rfc "rfc-util"
   "Prompt for an rfc number and display it in a new buffer." t)
 
-(autoload 'babel "babel"
-  "Use a web translation service to translate the message MSG." t)
-(autoload 'babel-region "babel"
-  "Use a web translation service to translate the current region." t)
-(autoload 'babel-as-string "babel"
-  "Use a web translation service to translate MSG, returning a string." t)
-(autoload 'babel-buffer "babel"
-  "Use a web translation service to translate the current buffer." t)
-
 (require 'highlight-parentheses)
 
 ;; (require 'pulse-settings)
