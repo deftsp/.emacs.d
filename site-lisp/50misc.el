@@ -586,7 +586,6 @@
 (autoload 'fvwm-mode "fvwm-mode" "Major mode for editing FVWM configuration files." t)
 
 ;; (add-hook 'fvwm-mode-hook '(lambda () (fvwm-enable-indentation)))
-;; (autoload 'html-helper-mode "html-helper-mode" "Yay HTML" t)
 ;; (autoload 'xrdb-mode "xrdb-mode" "Mode for editing X resource files" t)
 ;; (autoload 'js2-mode "js2-mode" nil t)
 ;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
@@ -597,7 +596,6 @@
         (list
 
          '("\\.\\(xml\\|rdf\\)\\'" . sgml-mode)
-         ;; ("\\.\\([ps]?html?\\|cfm\\|asp\\)\\'" . html-helper-mode)
          '("\\.css\\'" . css-mode)
          '("\\.\\(emacs\\|session\\|gnus\\)\\'" . emacs-lisp-mode)
          '("\\.\\(jl\\|sawfishrc\\)\\'" . sawfish-mode)
