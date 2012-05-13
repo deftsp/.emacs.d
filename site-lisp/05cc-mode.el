@@ -1,6 +1,6 @@
 ;;; 05cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2012-04-20 01:17:42 Shihpin Tseng>
+;; Time-stamp: <2012-05-13 21:54:50 Shihpin Tseng>
 
 
 (let ((cc-mode-dir (expand-file-name "~/.emacs.d/lisp/cc-mode")))
@@ -80,33 +80,11 @@
 
 (eval-after-load "cc-mode"
   '(progn
-     ;; Switch header and body file according to `eassist-header-switches' var.
-     ;; (define-key c-mode-base-map (kbd "s-o") 'eassist-switch-h-cpp) ; use ff-find-other-file instead
-     (define-key c-mode-base-map (kbd "C-x , m") 'eassist-list-methods)
      (define-key c-mode-base-map (kbd "C-m") 'c-context-line-break) ; Do a line break suitable to the context.
-     ;; (local-set-key (kbd "M-/") 'semantic-complete-analyze-inline)
-
-     ;; ifdef - Parse the #if...#elif...#else...#endif block in a C file.
-     (local-set-key (kbd "<M-S-iso-lefttab>") 'mark-ifdef)
-     ;; (define-key c-mode-base-map (kbd "M-TAB") 'semantic-ia-complete-symbol)
-     ;; (define-key c-mode-base-map (kbd "C-c ?") 'semantic-ia-complete-symbol-menu)
-     ;; (define-key c-mode-base-map (kbd "C-c >") 'semantic-complete-analyze-inline)
-     ;; (define-key c-mode-base-map (kbd "C-c p") 'semantic-analyze-proto-impl-toggle)
-     ;; (define-key c-mode-base-map (kbd "C-c =") 'semantic-decoration-include-visit)
-     ;; (define-key c-mode-base-map (kbd "C-c D") 'semantic-ia-show-doc)
-     ;; (define-key c-mode-base-map (kbd "H-SPC") 'semantic-ia-show-summary)
-     ;; (define-key c-mode-base-map (kbd "C-c C-r") 'semantic-symref)
-
-     ;; (define-key c-mode-base-map (kbd "H-M-n") 'senator-previous-token)
-     ;; (define-key c-mode-base-map (kbd "H-M-p") 'senator-next-token)
      ;; (define-key c-mode-base-map (kbd "H-M-j") 'pl/move-function-down)
      ;; (define-key c-mode-base-map (kbd "H-M-k") 'pl/move-function-up)
-     (define-key c-mode-base-map (kbd ".") (if (fboundp 'semantic-complete-self-insert)
-                                               'semantic-complete-self-insert
-                                             'self-insert-command))
-     (define-key c-mode-base-map (kbd ">") (if (fboundp 'semantic-complete-self-insert)
-                                               'semantic-complete-self-insert
-                                             'self-insert-command))))
+     ;; ifdef - Parse the #if...#elif...#else...#endif block in a C file.
+     (local-set-key (kbd "<M-S-iso-lefttab>") 'mark-ifdef)))
 
 
 (defun pl/c-mode-common-hook ()
