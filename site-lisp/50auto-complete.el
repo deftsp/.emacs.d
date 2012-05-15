@@ -79,7 +79,6 @@
 
 
 (add-hook 'lisp-interaction-mode 'ac-emacs-lisp-mode-setup)
-(add-hook 'objc-mode-hook 'pl/ac-objc-mode-setup)
 (add-hook 'c-mode-common-hook 'pl/ac-c-mode-common-setup)
 
 (eval-after-load "popup"
