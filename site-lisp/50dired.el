@@ -710,7 +710,7 @@ e.g., (tsp-dircolors-get-escape-seq \"*.gz\") => \"01;31\""
 ;;            (funcall dired-omit-regexp-orig))))))
 ;; -----------------------------------------------------------------------------------------
 
-;; tumme - Dired 的图片浏览器
+;;; tumme - Dired 的图片浏览器
 ;; "tumme" means thumb in Swedish. You need ImageMagick installed for tumme to work.
 ;; M-x tummel-dired RET path/to/photo/dir RET
 ;; C-S-{n,p} 逐个浏览图片的缩略图
@@ -729,7 +729,18 @@ e.g., (tsp-dircolors-get-escape-seq \"*.gz\") => \"01;31\""
 ;;           (lambda ()
 ;;             (local-set-key "I" 'dired-do-info)))
 
-;;tips
+
+(eval-after-load "dired+"
+  '(progn
+     (set-face-attribute 'diredp-dir-heading nil :background "#555555" :foreground "magenta")
+     (set-face-attribute 'diredp-dir-priv nil :foreground "steel blue")
+     (set-face-attribute 'diredp-read-priv nil :background 'unspecified)
+     (set-face-attribute 'diredp-write-priv nil :background 'unspecified)
+     (set-face-attribute 'diredp-exec-priv nil :background 'unspecified)
+     (set-face-attribute 'diredp-flag-mark-line nil :foreground "gray60" :background "DarkBlue")))
+
+
+;;;tips
 
 ;; 进入dired模式，然后在各个文件上用m标记多个需要编译的el文件，然后按一下B就可以批量重编译el文件了。方便吧
 
