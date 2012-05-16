@@ -1,6 +1,6 @@
 ;;; 05cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2012-05-13 21:54:50 Shihpin Tseng>
+;; Time-stamp: <2012-05-16 16:36:21 Shihpin Tseng>
 
 
 (let ((cc-mode-dir (expand-file-name "~/.emacs.d/lisp/cc-mode")))
@@ -9,9 +9,6 @@
 
 (eval-after-load "info"
   '(pushnew (expand-file-name "~/.emacs.d/lisp/cc-mode") Info-default-directory-list :test #'equal))
-
-
-(require 'smarter-operator)
 
 (eval-after-load "cc-mode"
   '(progn
@@ -88,8 +85,8 @@
 
 
 (defun pl/c-mode-common-hook ()
-  (c-toggle-hungry-state 1)              ; the delete key gobbles all preceding whitespace in one fell swoop
-  (smarter-operator-mode))
+  ;; the delete key gobbles all preceding whitespace in one fell swoop
+  (c-toggle-hungry-state 1))
 
 
 (defun pl/c-mode-hook ()
