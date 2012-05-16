@@ -6,11 +6,6 @@
 ;; (setq system-trash-exclude-matches '(".*~$" "#[^/]+#$" ".*\\.elc$" "\\.session$" "\\.emacs\\.desktop.*" "\\..newsrc-dribble"))
 
 
-;; (require 'auto-install)
-;; (setq auto-install-directory "~/.emacs.d/auto-install/")
-;; (add-to-list 'load-path "~/.emacs.d/auto-install")
-;; (auto-install-compatibility-setup)
-
 (autoload 'rfc "rfc-util"
   "Prompt for an rfc number and display it in a new buffer." t)
 
@@ -223,10 +218,6 @@ Nth occurence of CHAR."
 
 ;; (require 'highlight-current-line)
 ;; (highlight-current-line-on t)
-
-;; (require 'highline)                     ; powerfull but slow
-;; (global-highline-mode t)
-;; (set-face-background 'highline-face "#222222")
 
 ;;; buffer action
 ;; http://xwl.appspot.com/ref/buffer-action.el
