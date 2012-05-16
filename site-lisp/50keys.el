@@ -107,8 +107,8 @@
 ;; (global-set-key (kbd "C-c p t") 'planner-create-task-from-buffer)
 ;; (global-set-key (kbd "C-c p d") 'planner-diary-add-entry)
 ;; indent the whole buffer
-(global-set-key (kbd "C-c i w") 'deftsp-iwb)
-(defun deftsp-iwb ()
+(global-set-key (kbd "C-c i w") 'pl/indent-whole-buffer)
+(defun pl/indent-whole-buffer ()
   "indent whole buffer"
   (interactive)
   (delete-trailing-whitespace)
