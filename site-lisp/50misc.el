@@ -337,79 +337,25 @@
 (when (fboundp 'file-name-shadow-mode)
   (file-name-shadow-mode t))
 
-;;; Paren
-(global-set-key (kbd "C-c %") 'delete-pair-plus)
-(define-key lisp-mode-map (kbd "C-c %") 'goto-match-paren)
-(define-key emacs-lisp-mode-map (kbd "C-c %") 'goto-match-paren)
-(define-key lisp-interaction-mode-map (kbd "C-c %") 'goto-match-paren)
-(eval-after-load "scheme"
-  '(define-key scheme-mode-map (kbd "C-c %") 'goto-match-paren))
-;; (global-set-key "\C-c%" 'self-insert-command) ;C-q %
-;; (defun match-paren (arg)
-;;   "Go to the matching paren if on a paren; otherwise insert %."
-;;   (interactive "p")
-;;   (cond ((looking-at "\\s\(") (forward-list 1) (backward-char 1))
-;;         ((looking-at "\\s\)") (forward-char 1) (backward-list 1))
-;;         (t (self-insert-command (or arg 1)))))
-
-
-(defun delete-pair-plus (&optional skip-pair-count)
-  (interactive)
-  (when (not (=  (point-min) (point)))
-    (let ((skip-pair-count (if skip-pair-count skip-pair-count 0)))
-      (cond ((looking-at "[([{]")
-             (if (= skip-pair-count 0)
-                 (delete-pair)
-               (setq skip-pair-count (1- skip-pair-count))
-               (backward-char 1)
-               (delete-pair-plus skip-pair-count)))
-            (t
-             (if (looking-at "[])}]")
-                 (setq skip-pair-count (1+ skip-pair-count)))
-             (backward-char 1)
-             (delete-pair-plus skip-pair-count))))))
-
-
-
-
-(defun goto-match-paren (arg)
-  "Go to the matching parenthesis if on paranthesis. Else go to the
-   opening paranthesis one level up."
+;;; Paren ----------------------------------------------------------
+(global-set-key (kbd "%") 'pl/goto-match-paren)
+(defun pl/goto-match-paren (arg)
+  "Go to the matching parenthesis if on parenthesis,
+C-u delte pair if on parenthesis
+ otherwise insert %.
+vi style of % jumping to matching brace."
   (interactive "p")
-  (cond ((looking-at "\\s\(") (forward-list 1))
-        (t
-         (backward-char 1)
-         (cond ((looking-at "\\s\)")
-                (forward-char 1) (backward-list 1))
-               (t
-                (while (not (looking-at "\\s("))
-                  (backward-char 1)
-                  (cond ((looking-at "\\s\)")
-                         (message "->> )")
-                         (forward-char 1)
-                         (backward-list 1)
-                         (backward-char 1)))))))))
+  ;; first, check for "outside of bracket" positions expected by forward-sexp, etc.
+  (cond ((looking-at "[\[\(\{]")
+         (if (>= arg 4) (delete-pair) (forward-sexp) (backward-char 1)))
+        ((looking-at "[\]\)\}]")
+         (forward-char)
+         (backward-sexp)
+         (if (>= arg 4) (delete-pair)))
+        (t (self-insert-command (or arg 1)))))
 
-(defun kill-match-paren (arg)
-  "kill pair sexp."
-  (interactive "p")
-  (cond ((looking-at "[([{]") (kill-sexp 1))
-        ((looking-at "[])}]") (forward-char) (backward-kill-sexp 1))
-        (t
-         (while (not (looking-at "[([{]"))
-           (backward-char 1)
-           (if (looking-at "[])}]")
-               (error "Current sexp is not in paren!")))
-         (let ((opoint (point)))
-           (forward-list 1)
-           (kill-region (1+ opoint) (1- (point))))
-         (backward-char))))
-
-(global-set-key (kbd "C-c M-%") 'kill-match-paren)
-
-
-
-(defun kill-outside-paren-with-elt (arg)
+(global-set-key (kbd "C-x %") 'pl/kill-outside-paren-with-elt)
+(defun pl/kill-outside-paren-with-elt (arg)
   (interactive "p")
   (if (not (looking-at "[([{]"))
       (up-list -1))
@@ -418,7 +364,7 @@
   (kill-sexp 1)
   (yank 2))
 
-(global-set-key (kbd "C-x %") 'kill-outside-paren-with-elt)
+
 ;; paren end there----------------------------------------------------------------------
 
 (when window-system
@@ -1405,8 +1351,6 @@ This command is to be used interactively."
 
 ;;; Blank mode
 ;; (autoload 'blank-mode "blank-mode" "Toggle blank visualization." t)
-;; (autoload 'highline-mode "highline" "Toggle global minor mode to highlight current line in buffer." t)
-;; (autoload 'highline-local-mode "highline" "Toggle local minor mode to highlight current line in buffer."  t)
 
 ;;; tmmoffl
 ;; (when (require 'tmmofl nil t)
