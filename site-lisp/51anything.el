@@ -91,13 +91,6 @@ Or else erases whole minibuffer. "
 ;; (setq anything-save-configuration-functions
 ;;       '(set-window-configuration . current-window-configuration))
 
-;; ;; (install-elisp-from-emacswiki "anything-auto-install.el")
-;; (require 'anything-auto-install)
-
-;; ;; (install-elisp-from-emacswiki "anything-match-plugin.el")
-;; (require 'anything-match-plugin)
-
-
 ;; ;; --------------------------------------------------------------------------------
 
 ;; (eval-after-load "anything"
