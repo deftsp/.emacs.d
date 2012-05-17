@@ -211,21 +211,6 @@
        (set-face-attribute 'ido-subdir nil :foreground "DarkTurquoise" :weight 'bold)
        (set-face-attribute 'ido-first-match nil :foreground "DarkMagenta")))
 
-
-  (eval-after-load "dired+"
-    '(progn
-       (set-face-attribute 'diredp-dir-heading nil :foreground "white" :background "DeepSkyBlue")
-       (set-face-attribute 'diredp-display-msg nil :foreground "chartreuse")
-       (set-face-attribute 'diredp-file-name nil :foreground "dodger blue")
-       (set-face-attribute 'diredp-dir-priv nil :foreground "steel blue" :background nil :weight 'bold)
-       (set-face-attribute 'diredp-no-priv nil :foreground nil :background nil)
-       (set-face-attribute 'diredp-read-priv nil :foreground "deep sky blue" :background nil)
-       (set-face-attribute 'diredp-write-priv nil :foreground "yellow" :background nil)
-       (set-face-attribute 'diredp-exec-priv nil :foreground "red" :background nil)
-       (set-face-attribute 'diredp-flag-mark-line nil :foreground "blue")))
-
-
-
   (eval-after-load "woman"
     '(progn
        (set-face-attribute 'woman-addition nil :foreground "DarkMagenta" :weight 'bold)

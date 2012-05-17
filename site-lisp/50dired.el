@@ -732,13 +732,15 @@ e.g., (tsp-dircolors-get-escape-seq \"*.gz\") => \"01;31\""
 
 (eval-after-load "dired+"
   '(progn
-     (set-face-attribute 'diredp-dir-heading nil :background "#555555" :foreground "magenta")
-     (set-face-attribute 'diredp-dir-priv nil :foreground "steel blue")
-     (set-face-attribute 'diredp-read-priv nil :background 'unspecified)
-     (set-face-attribute 'diredp-write-priv nil :background 'unspecified)
-     (set-face-attribute 'diredp-exec-priv nil :background 'unspecified)
-     (set-face-attribute 'diredp-flag-mark-line nil :foreground "gray60" :background "DarkBlue")))
-
+     (set-face-attribute 'diredp-dir-heading nil :foreground "magenta" :background "#555555")
+     (set-face-attribute 'diredp-display-msg nil :foreground "chartreuse")
+     (set-face-attribute 'diredp-file-name nil :foreground "dodger blue")
+     (set-face-attribute 'diredp-dir-priv nil :foreground "steel blue" :background nil :weight 'bold)
+     (set-face-attribute 'diredp-no-priv nil :foreground nil :background nil)
+     (set-face-attribute 'diredp-read-priv nil :foreground "deep sky blue" :background 'unspecified)
+     (set-face-attribute 'diredp-write-priv nil :foreground "yellow" :background 'unspecified)
+     (set-face-attribute 'diredp-exec-priv nil :foreground "red" :background 'unspecified)
+     (set-face-attribute 'diredp-flag-mark-line nil :foreground "blue")))
 
 ;;;tips
 
