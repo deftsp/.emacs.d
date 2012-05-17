@@ -1,36 +1,36 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-04-20 12:47:11 Shihpin Tseng>
+;; Time-stamp: <2012-05-18 00:20:10 Shihpin Tseng>
 
 ;;; imenu
-(require 'imenu)
+;; (require 'imenu)
 ;;设置imenu的排序方式为按名称排序
-(setq imenu-sort-function 'imenu--sort-by-name)
-(setq imenu-max-items 40)
+;; (setq imenu-sort-function 'imenu--sort-by-name)
+;; (setq imenu-max-items 40)
 
-(defun imenu--completion-buffer (index-alist &optional prompt)
-  ;; Create a list for this buffer only when needed.
-  (let ((name (thing-at-point 'symbol))
-        choice
-        (prepared-index-alist
-         (if (not imenu-space-replacement) index-alist
-             (mapcar
-              (lambda (item)
-                (cons (subst-char-in-string ?\s (aref imenu-space-replacement 0)
-                                            (car item))
-                      (cdr item)))
-              index-alist))))
-    (when (stringp name)
-      (setq name (or (imenu-find-default name prepared-index-alist) name)))
-    (setq name (ido-completing-read
-                "Index item: "
-                (mapcar 'car prepared-index-alist)
-                nil t nil 'imenu--history-list
-                (and name (imenu--in-alist name prepared-index-alist) name)))
-    (when (stringp name)
-      (setq choice (assoc name prepared-index-alist))
-      (if (imenu--subalist-p choice)
-          (imenu--completion-buffer (cdr choice) prompt)
-          choice))))
+;; (defun imenu--completion-buffer (index-alist &optional prompt)
+;;   ;; Create a list for this buffer only when needed.
+;;   (let ((name (thing-at-point 'symbol))
+;;         choice
+;;         (prepared-index-alist
+;;          (if (not imenu-space-replacement) index-alist
+;;              (mapcar
+;;               (lambda (item)
+;;                 (cons (subst-char-in-string ?\s (aref imenu-space-replacement 0)
+;;                                             (car item))
+;;                       (cdr item)))
+;;               index-alist))))
+;;     (when (stringp name)
+;;       (setq name (or (imenu-find-default name prepared-index-alist) name)))
+;;     (setq name (ido-completing-read
+;;                 "Index item: "
+;;                 (mapcar 'car prepared-index-alist)
+;;                 nil t nil 'imenu--history-list
+;;                 (and name (imenu--in-alist name prepared-index-alist) name)))
+;;     (when (stringp name)
+;;       (setq choice (assoc name prepared-index-alist))
+;;       (if (imenu--subalist-p choice)
+;;           (imenu--completion-buffer (cdr choice) prompt)
+;;           choice))))
 
 
 

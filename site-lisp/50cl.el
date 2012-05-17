@@ -37,7 +37,7 @@
 (defun my-lisp-mode-hook ()
   (slime-mode t)
   ;; (ignore-errors (semantic-default-elisp-setup))
-  (imenu-add-to-menubar "Symbols")
+  ;; (imenu-add-to-menubar "Symbols")
   ;; (make-local-variable 'outline-regexp)
   ;; (setq outline-regexp "^(.*")
   (outline-minor-mode))
