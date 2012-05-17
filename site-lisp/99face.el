@@ -152,8 +152,8 @@
   (set-face-foreground 'show-paren-mismatch "white")
   (set-face-background 'show-paren-mismatch "purple")
 
-  ;; (set-face-foreground 'highlight "#50bbff")
-  (set-face-background 'highlight "LightBlue4")
+  (set-face-attribute 'highlight nil :background "LightBlue4" :foreground 'unspecified)
+  (set-face-attribute 'link nil :background 'unspecified :foreground "#00cdcd" :underline t)
 
   ;;(set-face-background 'trailing-whitespace "#999999")
 
