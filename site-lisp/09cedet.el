@@ -43,12 +43,12 @@
 ;; Enable Semantic
 (semantic-mode 1)
 
-;; (require 'semantic/bovine/c)
-;; (require 'semantic/bovine/gcc)
-;; (require 'semantic/bovine/clang)
-;; (require 'semantic/ia)
-;; (require 'semantic/decorate/include)
-;; (require 'semantic/lex-spp)
+(require 'semantic/bovine/c)
+(require 'semantic/bovine/gcc)
+(require 'semantic/bovine/clang)
+(require 'semantic/ia)
+(require 'semantic/decorate/include)
+(require 'semantic/lex-spp)
 (require 'eassist) ; for eassist-lists-methods, and eassist-switch-h-cpp
 
 ;;; global support
@@ -66,6 +66,7 @@
   (local-set-key "\C-x,?" 'semantic-ia-complete-symbol) ; M-TAB
   (local-set-key "\C-x,>" 'semantic-complete-analyze-inline)
   (local-set-key "\C-x,=" 'semantic-decoration-include-visit)
+  (local-set-key "\C-x,d" 'pl/semantic-find-definition)
   (local-set-key "\C-x,j" 'semantic-ia-fast-jump)
   (local-set-key "\C-x,q" 'semantic-ia-show-doc) ; C-x,D
   (local-set-key "\C-x,s" 'semantic-ia-show-summary)
@@ -93,9 +94,10 @@
 
 
 ;;; ctags
-(when (cedet-ectag-version-check t)
-  ;; (semantic-load-enable-all-ectags-support)
-  (semantic-load-enable-primary-ectags-support))
+;; (semantic-load-enable-all-ectags-support)
+;;; cscope
+(require 'semantic/db-cscope)
+(semanticdb-enable-cscope-databases t)
 
 ;;; complete
 (setq semantic-complete-inline-analyzer-displayor-class
@@ -117,17 +119,11 @@
 ;; (setq semantic-imenu-auto-rebuild-directory-indexes nil)
 ;; (global-set-key [(s-down-mouse-3)] 'senator-completion-menu-popup)
 
-
-;;; cscope
-;; (require 'semanticdb-cscope)
 ;; (add-to-list 'semanticdb-project-roots "~/proj")
 
 
 ;;; EDE (Project Management)
 (global-ede-mode 1)
-;; Enable EDE for a pre-existing C++ project
-;; (ede-cpp-root-project "NAME" :file "~/myproject/Makefile")
-;; (require 'semantic-lex-spp)
 
 ;; cpp-tests project definition
 ;; (ede-cpp-root-project "cpp-tests" :file "~/projects/lang-exp/cpp/CMakeLists.txt"
@@ -147,30 +143,17 @@
 ;; If you use GCC for programming in C & C++, then Semantic can automatically find path, where
 ;; system include files are located. To do this, you need to load semantic-gcc package with
 ;; following command:
-;; (when (string= emacs-version "23.1.1")
-;; (require 'semantic-gcc))
-;; You can also explicitly specify additional paths for look up of include files (and these paths also could vary for specific modes).
+;; (require 'semantic/bovine/gcc)
+
+;; You can also explicitly specify additional paths which must be absolute path not relative path with
+;; `semantic-add-system-include' for look up of include files (and these paths also could vary for
+;; specific modes).
+;;
 ;; (semantic-add-system-include "~/exp/include/boost_1_37" 'c++-mode)
 ;; (semantic-add-system-include "/usr/include/gtk-2.0/" 'c-mode)
 ;; (semantic-add-system-include "/usr/include/glib-2.0/" 'c-mode)
 
-(defconst cedet-user-include-dirs
-  (list ".." "../include" "../inc" "../common" "../public"
-        "../.." "../../include" "../../inc" "../../common" "../../public"
-        ))
-
-(defconst cedet-cocos2d-include-dir
-  (list "../libs"
-        "../libs/cocos2dx/include"
-        "../libs/cocos2dx/platform"
-        "../cocos2dx/include"
-        "../cocos2dx/platform"
-        "../../Classes"
-        "../Box2D"
-        "/Applications/Xcode.app/Contents/Developer\
-/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/usr/include/c++/4.2.1"))
-
-(defconst cedet-win32-include-dirs
+(defconst pl/cedet-win32-include-dirs
   (list "C:/MinGW/include"
         "C:/MinGW/include/c++/3.4.5"
         "C:/MinGW/include/c++/3.4.5/mingw32"
@@ -178,28 +161,29 @@
         "C:/MinGW/lib/gcc/mingw32/3.4.5/include"
         "C:/Program Files/Microsoft Visual Studio/VC98/MFC/Include"))
 
-(let ((include-dirs cedet-user-include-dirs))
-  (setq include-dirs (append include-dirs cedet-cocos2d-include-dir))
-  (when (eq system-type 'windows-nt)
-    (setq include-dirs (append include-dirs
-                               cedet-win32-include-dirs)))
-
+(when (eq system-type 'windows-nt)
   (mapc (lambda (dir)
           (semantic-add-system-include dir 'c++-mode)
           (semantic-add-system-include dir 'c-mode))
-        include-dirs))
+        pl/cedet-win32-include-dirs))
 
-
-
-;;; smart complitions
-;; (setq-mode-local c-mode semanticdb-find-default-throttle
-;;                  '(project unloaded system recursive))
-;; (setq-mode-local c++-mode semanticdb-find-default-throttle
-;;                  '(project unloaded system recursive))
-;; (setq-mode-local erlang-mode semanticdb-find-default-throttle
-;;                  '(project unloaded system recursive))
-
-
+;;;
+(defun pl/semantic-find-definition (arg)
+  "Jump to the definition of the symbol, type or function at point.
+  With prefix arg, find in other window."
+  (interactive "P")
+  (let* ((tag (or (semantic-idle-summary-current-symbol-info-context)
+                  (semantic-idle-summary-current-symbol-info-brutish)
+                  (error "No known tag at point")))
+         (pos (or (semantic-tag-start tag)
+                  (error "Tag definition not found")))
+         (file (semantic-tag-file-name tag)))
+    (if file
+        (if arg (find-file-other-window file) (find-file file))
+      (if arg (switch-to-buffer-other-window (current-buffer))))
+    (push-mark)
+    (goto-char pos)
+    (end-of-line)))
 
 ;;; face
 (eval-after-load "pulse"
@@ -216,6 +200,7 @@
   '(progn
      (set-face-attribute 'semantic-decoration-on-unparsed-includes nil :background "#555555")))
 
+;;; info
 (defun cedet-settings-4-info ()
   "`cedet' settings for `info'."
   (info-initialize)

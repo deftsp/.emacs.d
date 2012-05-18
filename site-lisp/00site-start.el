@@ -90,4 +90,6 @@
   (require '52emms))
 
 
+(load-file "~/.emacs.d/private-ede-projects.el")
+
 (provide '00site-start)

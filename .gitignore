@@ -2,6 +2,7 @@
 *.elc
 lisp/
 ede-projects.el
+private-ede-projects.el
 .DS_Store
 \#*\#
 *customzation*
