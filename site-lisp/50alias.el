@@ -1,6 +1,7 @@
 
 (defalias 'open 'find-file)
 (defalias 'openo 'find-file-other-window)
+(defalias 'lf 'load-file)
 
 ;; (defalias 'yes-or-no-p 'y-or-n-p) ; y or n is enough
 ;; (defalias 'list-buffers 'ibuffer) ; always use ibuffer
