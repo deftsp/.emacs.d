@@ -22,7 +22,7 @@
 ;; ‘C-M-B’ (aka ‘C-M-S-b’) – `mark-enclosing-sexp-backward’
 ;; ‘C-x down’ – `next-visible-thing-repeat’ (Emacs 22 and later)
 ;; ‘C-x up’ – `previous-visible-thing-repeat’ (Emacs 22 and later)
-(thgcmd-bind-keys)
+;; (thgcmd-bind-keys)
 ;; (global-set-key (kbd "C-M-?") 'mark-thing) ; vs `mark-sexp', how to press?
 ;; (global-set-key (kbd "M-@") 'cycle-thing-region) ; vs `mark-word'
 
