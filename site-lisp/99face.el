@@ -140,8 +140,6 @@
                       "PaleTurquoise3")
   (set-face-attribute 'mode-line-highlight nil :box nil)
 
-  (set-face-foreground 'which-func "SteelBlue")
-
   (set-face-foreground 'font-lock-builtin-face "LightSteelBlue")
   (set-face-foreground 'font-lock-comment-face "#008888")
   (set-face-foreground 'font-lock-constant-face "Aquamarine")

@@ -38,7 +38,6 @@
       enable-recursive-minibuffers t     ;; 递归使用minibuffer.
       ;;允许minibuffer自由变化其大小（指宽度）
       resize-mini-windows t
-      find-function-C-source-directory "~/src/emacs/src"
       max-lisp-eval-depth 1500
       max-specpdl-size 3000
       comment-multi-line nil
@@ -91,7 +90,21 @@
       ;; default-enable-multibyte-characters t
       enable-local-variables :safe)
 
+
+;;;
+(when (eq system-type 'darwin)
+  ;; (setq find-function-C-source-directory "")
+  (setq source-directory "/Library/Caches/Homebrew/emacs--git"))
+
+
+
+;;; which func mode
 (which-function-mode 1)
+(eval-after-load "which-func"
+  '(set-face-foreground 'which-func "SteelBlue"))
+
+
+
 
 (if (eq system-type 'gnu/linux)
     (display-battery-mode t))
