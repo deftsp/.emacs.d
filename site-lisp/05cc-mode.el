@@ -1,6 +1,6 @@
 ;;; 05cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2012-05-16 16:36:21 Shihpin Tseng>
+;; Time-stamp: <2012-05-19 10:39:23 Shihpin Tseng>
 
 
 (let ((cc-mode-dir (expand-file-name "~/.emacs.d/lisp/cc-mode")))
@@ -90,28 +90,19 @@
 
 
 (defun pl/c-mode-hook ()
-  (c-set-style "palory")
   ;; (local-set-key [(control tab)] 'tempo-forward-mark)    ; move to next tempo mark
-  (outline-minor-mode 1))
+  (pl/outline-local-set-regexp pl/c-mode-common-outline-regexp)
+  (c-set-style "palory"))
 
 
 (defun pl/objc-mode-hook ()
   (c-set-style "palory")
-  (define-key objc-mode-map (kbd "C-c C-r") 'xcode:build-and-run)
-  (outline-minor-mode 1))
+  (define-key objc-mode-map (kbd "C-c C-r") 'xcode:build-and-run))
 
 
 (defun pl/cpp-mode-hook ()
-  (c-set-style "palory")
-  ;; for outline minor mode
-  ;; (setq outline-regexp ".*{")
-  ;; (setq outline-regexp "[:blank:]*\\(.*{\\|.*}\\)")
-  ;; (setq outline-regexp "[^ #\t\n]\\|[:blank:]*\\([{}]\\|[^* \t\n\^M\^L]\\|\\*+[a-zA-Z_0-9=(]\\)")
-  ;; (setq outline-regexp "[ \t]*\\([^* \t\n\^M\^L]\\|\\*+[a-zA-Z_0-9=(]\\)")
-  ;; (hide-sublevels 2)
-  ;; (hide-body)
-  (outline-local-set-regexp "[^ #\t\n]\\|[:blank:]*\\(.*{\\|.*}\\)")
-  (outline-minor-mode 1))
+  (pl/outline-local-set-regexp pl/c-mode-common-outline-regexp)
+  (c-set-style "palory"))
 
 (add-hook 'c-mode-common-hook 'pl/c-mode-common-hook)
 (add-hook 'c-mode-hook 'pl/c-mode-hook)

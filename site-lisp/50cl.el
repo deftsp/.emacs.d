@@ -34,16 +34,15 @@
 
 
 
-(defun my-lisp-mode-hook ()
-  (slime-mode t)
+(defun pl/lisp-mode-hook ()
   ;; (ignore-errors (semantic-default-elisp-setup))
   ;; (imenu-add-to-menubar "Symbols")
   ;; (make-local-variable 'outline-regexp)
   ;; (setq outline-regexp "^(.*")
-  (outline-minor-mode))
+  (slime-mode t))
 
 
-(add-hook 'lisp-mode-hook 'my-lisp-mode-hook)
+(add-hook 'lisp-mode-hook 'pl/lisp-mode-hook)
 
 
 ;; Making slime connect to your lisp automatically when you open a lisp file.

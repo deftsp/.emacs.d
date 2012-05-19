@@ -1,11 +1,11 @@
-;;; tsp-outline-mode.el ---
+;;; 50outline-mode.el ---
 
 ;; Copyright (C) 2008  Shihpin Tseng
 
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;;Change the prefix for outline commands
-(setq outline-minor-mode-prefix (kbd "M-O"))
+(setq outline-minor-mode-prefix (kbd "M-O")) ; "\C-c\C-o"
 
 (eval-after-load "outline"
   '(require 'foldout))
@@ -27,32 +27,35 @@
 (eval-after-load "outline"
   '(let ((map (lookup-key outline-minor-mode-map
                           outline-minor-mode-prefix)))
-	 (define-key map (kbd "C-a") 'show-all)
-	 (define-key map (kbd "C-b") 'outline-backward-same-level)
-	 (define-key map (kbd "C-c") 'hide-entry)
-	 (define-key map (kbd "C-d") 'hide-subtree)
-     (define-key map (kbd "C-e") 'show-entry)
-	 (define-key map (kbd "C-f") 'outline-forward-same-level)
+	 (define-key map (kbd "a") 'show-all)
+	 (define-key map (kbd "b") 'outline-backward-same-level)
+	 (define-key map (kbd "c") 'hide-entry)
+	 (define-key map (kbd "d") 'hide-subtree)
+     (define-key map (kbd "e") 'show-entry)
+	 (define-key map (kbd "f") 'outline-forward-same-level)
 	 (define-key map (kbd "TAB") 'show-children)
-	 (define-key map (kbd "C-k") 'show-branches)
-	 (define-key map (kbd "C-l") 'hide-leaves)
+	 (define-key map (kbd "k") 'show-branches)
+	 (define-key map (kbd "l") 'hide-leaves)
 	 (define-key map (kbd "RET") 'outline-insert-heading)
-	 (define-key map (kbd "C-n") 'outline-next-visible-heading)
-     (define-key map (kbd "C-o") 'hide-other)
-     (define-key map (kbd "C-p") 'outline-previous-visible-heading)
-	 (define-key map (kbd "C-q") 'hide-sublevels)
-	 (define-key map (kbd "C-s") 'show-subtree)
-	 (define-key map (kbd "C-t") 'hide-body)
-	 (define-key map (kbd "C-u") 'outline-up-heading)
-	 (define-key map (kbd "C-v") 'outline-move-subtree-down)
-	 (define-key map (kbd "C-x") 'foldout-exit-fold)
-	 (define-key map (kbd "C-z") 'foldout-zoom-subtree)
-	 (define-key map (kbd "C-^") 'outline-move-subtree-up)
+	 (define-key map (kbd "n") 'outline-next-visible-heading)
+     (define-key map (kbd "o") 'hide-other)
+     (define-key map (kbd "p") 'outline-previous-visible-heading)
+	 (define-key map (kbd "q") 'hide-sublevels)
+	 (define-key map (kbd "s") 'show-subtree)
+	 (define-key map (kbd "t") 'hide-body)
+	 (define-key map (kbd "u") 'outline-up-heading)
+	 (define-key map (kbd "v") 'outline-move-subtree-down)
+	 (define-key map (kbd "x") 'foldout-exit-fold)
+	 (define-key map (kbd "z") 'foldout-zoom-subtree)
+	 (define-key map (kbd "^") 'outline-move-subtree-up)
 	 (define-key map (kbd "@") 'outline-mark-subtree)
-	 (define-key map (kbd "C-<") 'outline-promote)
-	 (define-key map (kbd "C->") 'outline-demote)))
+	 (define-key map (kbd "<") 'outline-promote)
+	 (define-key map (kbd ">") 'outline-demote)))
 
-
+(eval-after-load 'outline
+  '(progn
+     (require 'outline-magic)
+     (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle)))
 
 
 ;;; change the characters outline mode uses for ellipsis (`…’ by default).
@@ -162,20 +165,46 @@
 ;;     (run-hooks 'outline-view-change-hook)))
 
 ;;; outline minor mode
-
-
-(defun outline-local-set-regexp (regexp &optional fun)
+(defun pl/outline-local-set-regexp (regexp &optional fun)
   ;; Set `outline-regexp' locally to REGEXP and `outline-level' to FUN.
-  ;; Will not set either of these if one of them already have a local value.
-  (or (assq 'outline-regexp (buffer-local-variables))
-      (assq 'outline-level (buffer-local-variables))
-      (progn
-        (make-local-variable 'outline-regexp)
-        (setq outline-regexp regexp)
-        (if (null fun)
-            ()
-          (make-local-variable 'outline-level)
-          (setq outline-level fun)))))
+  (set (make-local-variable 'outline-regexp) regexp)
+  (if fun
+    (set (make-local-variable 'outline-level) fun)))
+
+;; all text-based major modes run `text-mode-hook', and all programming language modes run
+;; `prog-mode-hook', prior to running their own mode hooks
+(add-hook 'prog-mode-hook 'outline-minor-mode)
+
+;;; c-mode
+;; "[:blank:]*\\(.*{\\|.*}\\)"
+;; "[^ #\t\n]\\|[:blank:]*\\([{}]\\|[^* \t\n\^M\^L]\\|\\*+[a-zA-Z_0-9=(]\\)"
+;; "[ \t]*\\([^* \t\n\^M\^L]\\|\\*+[a-zA-Z_0-9=(]\\)"
+(defconst pl/c-mode-common-outline-regexp (concat
+                                           "^"                ; beginning of line is required
+                                           "\\(template[ \t]*<[^>]+>[ \t]*\\)?" ; there may be a "template <...>"
+                                           "\\([a-zA-Z0-9_:]+[ \t]+\\)?" ; type specs; there can be no
+                                           "\\([a-zA-Z0-9_:]+[ \t]+\\)?" ; more than 3 tokens, right?
+
+                                           "\\("                ; last type spec including */&
+                                           "[a-zA-Z0-9_:]+"
+                                           "\\([ \t]*[*&]+[ \t]*\\|[ \t]+\\)" ; either pointer/ref sign or whitespace
+                                           "\\)?"                ; if there is a last type spec
+                                           "\\("                ; name; take that into the imenu entry
+                                           "[a-zA-Z0-9_:~]+" ; member function, ctor or dtor...
+                                                             ; (may not contain * because then
+                                                             ; "a::operator char*" would become "char*"!)
+                                           "\\|"
+                                           "\\([a-zA-Z0-9_:~]*::\\)?operator"
+                                           "[^a-zA-Z1-9_][^(]*" ; ...or operator
+                                           " \\)"
+                                           "[ \t]*([^)]*)[ \t\n]*[^ ;]" ; require something other than a ; after
+                                           )
+  "outline regexp for C and C++")
+
+;; (hide-sublevels 2)
+;; (hide-body)
+;; (outline-local-set-regexp "[^ #\t\n]\\|[:blank:]*\\(.*{\\|.*}\\)")
+
 
 ;; (add-hook 'php-mode-user-hook
 ;;           '(lambda ()
@@ -199,7 +228,13 @@
 ;;                       (outline-local-set-regexp ";;; \\|(....")
 ;;                       (outline-minor-mode 1))))
 
-
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; safe locals; we mark these as 'safe', so emacs22+ won't give us annoying
+;; warnings
+;; (setq safe-local-variable-values
+;;       (quote ((auto-recompile . t)
+;;               (outline-minor-mode . t)
+;;               auto-recompile outline-minor-mode)))
 
 
 (provide '50outline-mode)

@@ -1455,13 +1455,7 @@ This command is to be used interactively."
 ;;             (replace-match "" nil nil))
 ;;           (goto-char next-line))))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; safe locals; we mark these as 'safe', so emacs22+ won't give us annoying
-;; warnings
-;; (setq safe-local-variable-values
-;;       (quote ((auto-recompile . t)
-;;               (outline-minor-mode . t)
-;;               auto-recompile outline-minor-mode)))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Let yank and yank-pop to indent whatever they just pasted. This is useful if, for example, you
