@@ -1,9 +1,11 @@
+;;; 50auto-insert.el ---
+
 
 (add-hook 'find-file-hooks 'auto-insert)
 ;; (add-hook 'write-file-hooks 'copyright-update)
 (setq auto-insert t)
 (setq auto-insert-query nil)
-(setq auto-insert-directory "~/.emacs.d/elisp/templates/")
+(setq auto-insert-directory "~/.emacs.d/templates/")
 ;;(define-auto-insert "\\.el" lisp-template.el")
 ;;(define-auto-insert "\\.c" "c-template.c")
 ;;(define-auto-insert "\\.cpp" "cpp-template.cpp")
@@ -12,7 +14,7 @@
 (define-auto-insert "\\.asm" "asm-template.asm")
 ;;(define-auto-insert "\\.scm" "scheme-template.scm")
 
-(define-auto-insert 'sh-mode '(nil "#!/bin/bash\n\n"))
+(define-auto-insert 'sh-mode '(nil "#!/bin/sh\n\n"))
 
 ;; (define-auto-insert
 ;;     '("\\.\\([Hh]\\|hh\\|hxx\\|hpp\\)\\'" . "C / C++ header")
@@ -24,6 +26,12 @@
 ;;       "#define " str "\n\n"
 ;;       _ "\n\n#endif"))
 
+(defun pl/auto-inset-copyright ()
+  (concat " * (C)opyright "
+          (format-time-string "%Y")
+          " by "
+          (user-full-name)
+          ". All rights reserved.\n"))
 
 ;;; Header files
 (define-auto-insert
@@ -34,7 +42,7 @@
       " * Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       " * Created: "(current-time-string) "\n"
       " * Description: \n"
-      " * (C)opyright 2005 - 2009 "(user-full-name)". All rights reserved.\n"
+      (pl/auto-inset-copyright)
       " */\n\n"
       (let* ((nopath (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
              (indent (concat "__" (upcase nopath)
@@ -55,7 +63,7 @@
       " * Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       " * Created: "(current-time-string) "\n"
       " * Description: \n"
-      " * (C)opyright 2005 - 2009 "(user-full-name)". All rights reserved.\n"
+      (pl/auto-inset-copyright)
       " */\n\n"
       ;; (let* ((nopath (file-name-nondirectory buffer-file-name))
       ;;        (noext  (file-name-sans-extension nopath)))
@@ -72,7 +80,7 @@
       ";; Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       ";; Created: "(current-time-string) "\n"
       ";; Description: \n"
-      ";; (C)opyright 2005 - 2009 "(user-full-name)". All rights reserved.\n"
+      (pl/auto-inset-copyright)
       "\n\n"
       (previous-line 4)
       (end-of-line)))
@@ -85,7 +93,7 @@
       ";; Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       ";; Created: "(current-time-string) "\n"
       ";; Description: \n"
-      ";; (C)opyright 2005 - 2009 "(user-full-name)". All rights reserved.\n"
+      (pl/auto-inset-copyright)
       "\n\n"
       (previous-line 4)
       (end-of-line)))
