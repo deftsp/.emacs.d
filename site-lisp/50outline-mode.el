@@ -63,7 +63,7 @@
  standard-display-table
  'selective-display
  (let ((face-offset (* (face-id 'shadow) (lsh 1 22))))
-   (vconcat (mapcar (lambda (c) (+ face-offset c)) " [...] "))))
+   (vconcat (mapcar (lambda (c) (+ face-offset c)) " {...} "))))
 
 
 ;;; Explorer like Key-Bindings ---------------------------
