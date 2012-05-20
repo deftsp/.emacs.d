@@ -27,9 +27,8 @@
 ;;       _ "\n\n#endif"))
 
 (defun pl/auto-inset-copyright ()
-  (concat " * (C)opyright "
-          (format-time-string "%Y")
-          " by "
+  (concat " * Copyright (C) "
+          (format-time-string "%Y ")
           (user-full-name)
           ". All rights reserved.\n"))
 
