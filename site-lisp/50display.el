@@ -69,146 +69,103 @@
 
 
 
+;; A "script name symbol" is a means to associate a lisp symbol with a particular charset, a set of
+;; charsets, or a range of characters. So, for example, if you look at the value of the variable
+;; "charset-script-alist", you will see an Alist of charsets vs the corresponding most appropriate
+;; script name symbols. If you look at the value of the variable "script-representative-chars", you
+;; will see an Alist of script name symbols vs the representative characters. The variable
+;; "char-script-table" shows the full mapping of characters to script name symbols (as specified by
+;; "script-representative-chars"). I don't know of any "definitive" list of script names (for
+;; example, "ascii" is a script name as well but isn't contained in these 2 variables); however, the
+;; values that are contained in the variables "charset-script-alist" and "char-script-table" are
+;; probably most of them.
+
+
+;; To get a list of all the possible values of "charset" that is available to set-fontset-font, use
+;; the "list-character-sets" function. You can also use the "list-charset-chars" function to see the
+;; list of characters contained in a specific charset.
+
+(defun pl/set-font ()
+  (let* ((default-font-size
+          (case window-system
+            ('x   12)
+            ('ns  12)
+            ('w32 13)
+            (t (error "Can not set font in this window system."))))
+
+         (cjk-font-size 14)
+         (font-pool
+          '((x   . ("DejaVu Sans Mono" "Microsoft YaHei"))
+            (ns  . ("Monaco" "STHeiti"))
+            (w32 . ("Monaco" "Microsoft YaHei"))))
+         (font-list (cdr (assoc window-system font-pool)))
+         (default-font-name (format "%s:pixelsize=%d" (car font-list) default-font-size))
+         (cjk-font-family (cadr font-list)))
+
+    ;; This will decide default font size.
+    (set-frame-font default-font-name)
+    ;; Fallback font
+    (set-fontset-font t 'unicode "Arial Unicode MS")
+    ;; Font for CJK characters
+    (mapc (lambda (range)
+            (set-fontset-font
+             "fontset-default" `(,(car range) . ,(cadr range)) (font-spec :family cjk-font-family :size cjk-font-size)))
+          '((#x2E80 #x2EFF)                    ; CJK Radicals Supplement
+            (#x3000 #x303F)                    ; CJK Symbols and Punctuation
+            (#x31C0 #x31EF)                    ; CJK Strokes
+            (#x3200 #x32FF)                    ; Enclosed CJK Letters and Months
+            (#x3300 #x33FF)                    ; CJK Compatibility
+            (#x3400 #x4DBF)                    ; CJK Unified Ideographs Extension A
+            (#x4E00 #x9FFF)                    ; CJK Unified Ideographs
+            (#xF900 #xFAFF)                    ; CJK Compatibility Ideographs
+            (#xFE30 #xFE4F)                    ; CJK Compatibility Forms
+
+            (#x2000 #x206f)                    ; General Punctuation
+            (#xFF00 #xFFEF)                    ; Halfwidth and Fullwidth Form
+            ))
+
+    ;; #x03A8 ?Ψ
+    ;; #x03BB Lambda
+    ;; #x0192 ?ƒ
+    (mapc
+     (lambda (range)
+       (set-fontset-font
+        "fontset-default" `(,(car range) . ,(cadr range)) (font-spec :family "dejavu sans mono" :size default-font-size)))
+     '((#x0180 #x024F)                    ; Latin Extended-B
+       (#x0370 #x03FF)                    ; Greek
+       (#x2000 #x206f)                    ; General Punctuation
+       ;; (#x2200 #x22ff)                 ; Mathematical Operator
+       ))
+
+    ;; ⋂ & ⋃
+    (set-fontset-font "fontset-default"
+                      (cons #x22c2
+                            #x22c3)
+                      (font-spec :family "FreeMono" :size default-font-size))
+
+    (when (eq window-system 'x)
+      ;; IPA Extensions
+      (set-fontset-font "fontset-default"
+                        (cons #x0250
+                              #x02AF)
+                        (font-spec :family "Gentium" :size default-font-size))
+
+      ;; Phonetic Extensions
+      (set-fontset-font "fontset-default"
+                        (cons #x1D00
+                              #x1D7F)
+                        (font-spec :family "Gentium" :size default-font-size))
+      ;; ☹ & ☺
+      (set-fontset-font "fontset-default"
+                        (cons #x2639
+                              #x263a)
+                        (font-spec :family "fixed" :size default-font-size)))))
+
 (when window-system
-  ;; lambda
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #x03bb)
-                          (decode-char 'ucs #x03bb))
-                    (font-spec :family "dejavu sans mono" :weight 'normal :size 12 :width 'normal))
+  (pl/set-font))
 
-  ;; (set-fontset-font "fontset-global"
-  ;;                   (cons (decode-char 'ucs #x03bb)
-  ;;                         (decode-char 'ucs #x03bb))
-  ;;                   "-schumacher-clean-medium-r-*-*-12-*-*-*-*-*-iso8859-7")
-  ;; logical not
-  ;; (set-fontset-font "fontset-global"
-  ;;                   (cons (decode-char 'ucs #xac)
-  ;;                         (decode-char 'ucs #xac))
-  ;;                   "-*-terminus-medium-r-*-*-12-*-*-*-*-*-iso8859-7")
-  ;; (set-fontset-font "fontset-global"
-  ;;                   (cons (decode-char 'ucs #xff00)
-  ;;                         (decode-char 'ucs #xffef))
-  ;;                   "-*-wenquanyi bitmap song-*-*-*-*-12-*-*-*-*-*-*-*")
-  ;; (set-fontset-font "fontset-global"
-  ;;                   (cons (decode-char 'ucs #x3000)
-  ;;                         (decode-char 'ucs #x303f))
-  ;;                   "-*-wenquanyi bitmap song-*-*-*-*-12-*-*-*-*-*-*-*")
-  ;; ?Ψ
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #x03a8)
-                          (decode-char 'ucs #x03a8))
-                    (font-spec :family "dejavu sans mono" :weight 'normal :size 12 :width 'normal))
-  ;; ?ƒ
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #x192)
-                          (decode-char 'ucs #x192))
-                    (font-spec :family "dejavu sans mono" :weight 'normal :size 12 :width 'normal))
-
-
-  (when (eq window-system 'x)
-    ;; IPA Extensions
-    (set-fontset-font "fontset-default"
-                      (cons (decode-char 'ucs #x250)
-                            (decode-char 'ucs #x2af))
-                      (font-spec :family "Gentium" :size 14))
-
-
-
-    ;; Phonetic Extensions
-    (set-fontset-font "fontset-default"
-                      (cons (decode-char 'ucs #x1d00)
-                            (decode-char 'ucs #x1d7f))
-                      (font-spec :family "Gentium" :size 14)))
-
-
-  ;; Mathematical Operator
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #x2200)
-                          (decode-char 'ucs #x22ff))
-                    (font-spec :family "dejavu sans mono" :weight 'medium  :size 12))
-  ;; ⋂ & ⋃
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #x22c2)
-                          (decode-char 'ucs #x22c3))
-                    (font-spec :family "FreeMono" :size 12))
-
-  ;; ☹ & ☺
-  ;; (set-fontset-font "fontset-default"
-  ;;                   (cons (decode-char 'ucs #x2639)
-  ;;                         (decode-char 'ucs #x263a))
-  ;;                   (font-spec :family "fixed" :size 12))
-
-
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #x3000)
-                          (decode-char 'ucs #x303f))
-                    (font-spec :family (case window-system
-                                         ('x "微软雅黑")
-                                         ('ns "STHeiti")
-                                         ('w32 "微软雅黑")
-                                         (t (error "Can not set font in this window system.")))
-                               :size 12))
-
-
-  ;; Halfwidth and Fullwidth Form
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #xff00)
-                          (decode-char 'ucs #xffef))
-                    (font-spec :family (case window-system
-                                         ('x "微软雅黑")
-                                         ('ns "STHeiti")
-                                         ('w32 "微软雅黑")
-                                         (t (error "Can not set font in this window system.")))
-                               :size 12))
-
-  (set-fontset-font (frame-parameter nil 'font)
-                    'han (font-spec :family (case window-system
-                                              ('x "微软雅黑")
-                                              ('ns "STHeiti")
-                                              ('w32 "微软雅黑")
-                                              (t (error "Can not set font in this window system.")))
-                                    :weight 'medium :size 12 :width 'normal))
-
-
-
-  ;; ‼ & ‽
-  (set-fontset-font "fontset-default"
-                    (cons (decode-char 'ucs #x203c)
-                          (decode-char 'ucs #x203d))
-                    (font-spec :family "FreeMono" :size 12)))
-
-
-
-;; (set-fontset-font (frame-parameter nil 'font)
-;;        'han '("cwTeXHeiBold" . "unicode-bmp"))
-
-;; set the font for new frames in Emacs 23
-;; (if (>= emacs-major-version 23)
-;;     (modify-all-frames-parameters
-;;      '((font . "Monospace-11"))))
-
-
-;; (setq xwl-default-font "Monaco-10"
-;;       xwl-chinese-font "NSimSun"
-;;       xwl-japanese-font xwl-chinese-font)
-
-;; (let ((charset-font `((japanese-jisx0208   . ,xwl-japanese-font)
-;;                       (chinese-gb2312      . ,xwl-chinese-font)
-;;                       (chinese-gbk         . ,xwl-chinese-font)
-;;                       (gb18030             . ,xwl-chinese-font)
-;;                       ;; (big5             . "Hei")
-;;                       (japanese-jisx0208   . ,xwl-japanese-font)
-;;                       ;; (japanese-jisx0212 . ,xwl-japanese-font)
-;;                       )))
-;;   (set-default-font xwl-default-font) ; this will decide font size.
-;;   (mapc (lambda (charset-font)
-;;           (set-fontset-font (frame-parameter nil 'font)
-;;                             (car charset-font)
-;;                             (font-spec :family (cdr charset-font) :size 14)))
-;;         charset-font))
 
 
 (provide '50display)
 
 ;;; 50display.el ends here
-
