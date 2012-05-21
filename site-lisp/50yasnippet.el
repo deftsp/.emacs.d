@@ -8,8 +8,8 @@
 
 (eval-after-load "yasnippet"
   '(progn
-     (yas/initialize)
-     ;; (yas/load-directory "~/.emacs.d/yasnippet-snippets")
+     (setq yas/snippet-dirs '("~/.emacs.d/snippets"))
+     (yas/global-mode 1)
      (setq yas/prompt-functions
            '(yas/ido-prompt yas/dropdown-prompt  yas/completing-prompt yas/x-prompt yas/no-prompt))))
 
@@ -24,7 +24,6 @@
                ad-do-it)))))
 
 (yas/advise-indent-function 'org-cycle)
-
 
 
 (provide '50yasnippet)
