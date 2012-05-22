@@ -101,7 +101,7 @@
 ;;; which func mode
 (which-function-mode 1)
 (eval-after-load "which-func"
-  '(set-face-foreground 'which-func "SteelBlue"))
+  '(set-face-foreground 'which-func "Yellow"))
 
 
 
