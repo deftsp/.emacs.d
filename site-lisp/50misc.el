@@ -1000,7 +1000,7 @@ This command is to be used interactively."
 ;;; info
 
 ;; (setq Info-dir-contents nil)
-;; (pushnew (expand-file-name "~/share/info") Info-default-directory-list :test #'equal)
+(add-to-list 'Info-directory-list "~/share/info/")
 ;; (setq Info-additional-directory-list '("~/share/info"))
 ;; (setq Info-directory-list Info-default-directory-list)
 ;; (setq Info-directory-list nil)
