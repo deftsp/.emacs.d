@@ -34,7 +34,7 @@
 
 ;;; Header files
 (define-auto-insert
-    (cons "\\.\\([Hh]\\)$" "C/C++ Header File Template")
+    (cons "\\.\\([Hh]\\|hpp\\)$" "C/C++ Header File Template")
     '(nil
       "/* "(buffer-name) " ---\n"
       ;; " * $Id$\n"
