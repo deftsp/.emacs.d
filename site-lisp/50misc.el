@@ -333,16 +333,15 @@
 ;;; paren
 ;;----------------------------------------------------------------------------------------------------
 ;; better than paren for lisp code
-;; (require 'stig-paren)
 (show-paren-mode t)
-(setq blink-matching-paren-on-screen t)
-;;; Also highlight parens
 (setq show-paren-delay 0
       show-paren-style 'parenthesis)    ;expression
-
-;; (require 'mic-paren)
-;; (paren-activate)
-;; (setf paren-priority 'close)
+;; rainbow-delimiters
+(eval-after-load "rainbow-delimiters.el"
+  '(progn
+     ;; - To enable in all programming-related modes (Emacs 24+):
+     ;; (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+     (global-rainbow-delimiters-mode)))
 
 
 ;;; file-name-shadow-mode
