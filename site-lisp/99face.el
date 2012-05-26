@@ -80,20 +80,8 @@
       (set 'num (1+ num)))))
 ;;;
 
-(set-face-color info-node "DodgerBlue1" nil
-                info-title-1 "DarkMagenta" nil
-                info-title-2 "green1" nil
-                info-title-3 "green2" nil
-                info-title-4 "green3" nil
-                info-menu-header "LawnGreen" nil
-                info-menu-5 "normal" nil
-                info-xref "DeepSkyBlue2" nil)
-
-
-
-
-
-;;; see m-x list-faces-display too.................................................
+;;; face
+;; M-x list-faces-display
 (defconst +f-color+ "#b6d3d6" "foreground color")
 (defconst +b-color+ "#282c30" "background color")
 
@@ -105,8 +93,6 @@
                               (height . 65)
                               (top . 22) ; (frame-parameter nil 'top)
                               (left . 0)
-                              (foreground-color . ,+f-color+)
-                              (background-color . ,+b-color+)
                               (alpha . (98 98)) ; first number is for the active window and the second for the inactive window
                               ;; (right-fringe)
                               ;; (left-fringe)

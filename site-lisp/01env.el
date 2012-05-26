@@ -1,4 +1,7 @@
-;;;;
+;;; 01evn.el ---
+
+
+(load-theme 'palory t)
 
 ;; (setenv "LANG" "C")
 ;; (setenv "SBCL_HOME" "/usr/lib/sbcl")

@@ -1,6 +1,6 @@
 ;;; 50display.el ---
 
-;; Copyright (C) 2008  S.P.Tseng
+;; Copyright (C) 2008  Shihpin Tseng
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
