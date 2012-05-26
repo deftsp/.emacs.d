@@ -122,11 +122,6 @@
   (set-face-foreground 'font-lock-variable-name-face "DodgerBlue2")
   (set-face-foreground 'font-lock-warning-face "Pink")
 
-
-  (set-face-foreground 'show-paren-match "SteelBlue3")
-  (set-face-foreground 'show-paren-mismatch "white")
-  (set-face-background 'show-paren-mismatch "purple")
-
   (set-face-attribute 'highlight nil :background "LightBlue4" :foreground 'unspecified)
   (set-face-attribute 'link nil :background 'unspecified :foreground "#00cdcd" :underline t)
 

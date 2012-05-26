@@ -59,6 +59,9 @@
    ;; tooltip
    '(tooltip ((t (:foreground "#111111" :background "#bcc8dd"))))
 
+   ;; show-paren
+   '(show-paren-match ((t (:foreground "SteelBlue3"))))
+   '(show-paren-mismatch ((t (:foreground "white" :background "purple"))))
 
    ;; rainbow-delimiters
    '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))
