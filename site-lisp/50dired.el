@@ -61,8 +61,14 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;; Enable `a' in dired-mode, to open files/dirs in the same buffer.
 (put 'dired-find-alternate-file 'disabled nil)
 
-;;dired-use-ls-dired is set to nil for suppressing "listing directory failed".
-;;(setq dired-use-ls-dired nil)
+(when (eq system-type 'darwin)
+  (let ((ls (executable-find "gls")))   ;; brew insall coreutils
+    (cond (ls (setq dired-use-ls-dired t)
+              (setq insert-directory-program ls))
+          (t (require 'ls-lisp)
+             (setq ls-lisp-use-insert-directory-program nil)))))
+
+
 
 (setq dired-kept-versions 1)
 ;; (add-hook 'dired-load-hook
