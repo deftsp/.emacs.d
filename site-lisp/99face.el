@@ -108,23 +108,6 @@
   ;; (set-background-color +b-color+) ; "#1D2C3F" "#102332" "#003c3c"
   (set-mouse-color "gray80")
   (set-cursor-color "#cd0000")
-  (set-face-foreground 'fringe "green")
-  (set-face-background 'fringe +b-color+)
-  (set-face-foreground 'tooltip "#111111")
-  (set-face-background 'tooltip "#bcc8dd")
-  ;; mode line
-  (set-face-foreground 'mode-line-buffer-id "#90377d")
-  (set-face-attribute 'mode-line
-                      nil
-                      :box nil
-                      :background "#000000" ; #222222
-                      :foreground "SteelBlue2")
-  (set-face-attribute 'mode-line-inactive nil
-                      :box nil
-                      :background "#222222" ; #111111
-                      :foreground
-                      "PaleTurquoise3")
-  (set-face-attribute 'mode-line-highlight nil :box nil)
 
   (set-face-foreground 'font-lock-builtin-face "LightSteelBlue")
   (set-face-foreground 'font-lock-comment-face "#008888")

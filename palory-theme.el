@@ -47,6 +47,17 @@
    '(info-menu-header ((t (:foreground "LawnGreen"))))
    '(info-header-node ((t (:weight normal))))
 
+   ;; mode-line
+   '(mode-line-buffer-id ((t (:foreground "#90377d"))))
+   '(mode-line ((t (:foreground "SteelBlue2" :background "#000000" :box nil)))) ; #222222
+   '(mode-line-inactive ((t (:foreground "PaleTurquoise3" :background "#222222" :box nil)))) ; #111111
+   '(mode-line-highlight ((t (:box nil))))
+
+   ;; fringe
+   `(fringe ((t (:foreground "green" :background ,palory-bg))))
+
+   ;; tooltip
+   '(tooltip ((t (:foreground "#111111" :background "#bcc8dd"))))
 
 
    ;; rainbow-delimiters
