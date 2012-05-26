@@ -9,8 +9,6 @@
 (autoload 'rfc "rfc-util"
   "Prompt for an rfc number and display it in a new buffer." t)
 
-(require 'highlight-parentheses)
-
 ;; (require 'pulse-settings)
 
 
