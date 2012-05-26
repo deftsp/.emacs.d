@@ -1,6 +1,6 @@
 ;;; 05cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2012-05-26 18:15:01 Shihpin Tseng>
+;; Time-stamp: <2012-05-26 18:20:26 Shihpin Tseng>
 
 
 (let ((cc-mode-dir (expand-file-name "~/.emacs.d/lisp/cc-mode")))
@@ -218,7 +218,8 @@
                                 ("\\<\\(DEBUG\\)" 1 font-lock-warning-face t)
                                 ("\\<\\(OUTPUT\\)" 1 font-lock-warning-face t)
                                 ("\\<\\(IMPORTANT\\)" 1 font-lock-warning-face t)
-                                ))))
+                                ;; highlight line that are too long
+                                ("^[^\n]\\{80\\}\\(.*\\)$" 1 font-lock-warning-face t)))))
 
 (eval-after-load "cc-mode"
   (progn
