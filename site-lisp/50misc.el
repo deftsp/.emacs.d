@@ -330,12 +330,29 @@
       ((file-exists-p (expand-file-name "~/proj/org"))
        (set-register ?t '(file . "~/proj/org/ToDo.org"))))
 
+
+;;; file-name-shadow-mode
+;; be smart about filenames understand ~/ etc
+(when (fboundp 'file-name-shadow-mode)
+  (file-name-shadow-mode t))
+
+
+
 ;;; paren
 ;;----------------------------------------------------------------------------------------------------
-;; better than paren for lisp code
-(show-paren-mode t)
-(setq show-paren-delay 0
-      show-paren-style 'parenthesis)    ;expression
+;; use mic-paren instead
+;; (show-paren-mode t)
+;; (setq show-paren-delay 0
+;;       show-paren-style 'parenthesis)    ;expression
+
+;; mic-paren
+(require 'mic-paren) ; loading
+(paren-activate)     ; activating
+(eval-after-load "mic-paren"
+  '(progn
+     (set-face-attribute 'paren-face-match nil :foreground "#222222" :background "DeepSkyBlue3")))
+
+
 ;; rainbow-delimiters
 (eval-after-load "rainbow-delimiters.el"
   '(progn
@@ -344,12 +361,7 @@
      (global-rainbow-delimiters-mode)))
 
 
-;;; file-name-shadow-mode
-;; be smart about filenames understand ~/ etc
-(when (fboundp 'file-name-shadow-mode)
-  (file-name-shadow-mode t))
 
-;;; Paren ----------------------------------------------------------
 (global-set-key (kbd "%") 'pl/goto-match-paren)
 (defun pl/goto-match-paren (arg)
   "Go to the matching parenthesis if on parenthesis,
