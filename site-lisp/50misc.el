@@ -354,11 +354,11 @@
 
 
 ;; rainbow-delimiters
-(eval-after-load "rainbow-delimiters.el"
-  '(progn
-     ;; - To enable in all programming-related modes (Emacs 24+):
-     ;; (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
-     (global-rainbow-delimiters-mode)))
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+;; (eval-after-load "rainbow-delimiters.el"
+;;   '(progn
+;;      ;; To enable in all programming-related modes (Emacs 24+):
+;;      (global-rainbow-delimiters-mode)))
 
 
 
