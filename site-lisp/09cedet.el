@@ -72,8 +72,7 @@
   (local-set-key "\C-x,s" 'semantic-ia-show-summary)
   (local-set-key "\C-x,p" 'semantic-analyze-proto-impl-toggle)
   (local-set-key "\C-x,F" 'semantic-tag-folding-fold-block)
-  (local-set-key "\C-x,S" 'semantic-tag-folding-show-block)
-  (add-to-list 'ac-sources 'ac-source-semantic))
+  (local-set-key "\C-x,S" 'semantic-tag-folding-show-block))
 
 ;; (add-hook 'semantic-init-hooks 'pl/cedet-hook)
 (add-hook 'c-mode-common-hook 'pl/cedet-hook)

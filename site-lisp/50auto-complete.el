@@ -73,6 +73,7 @@
 
 (defun pl/ac-c-mode-common-setup ()
   ;; (add-to-list 'ac-sources 'ac-source-company-xcode)
+  (add-to-list 'ac-sources 'ac-source-semantic)
   (add-to-list 'ac-sources 'ac-source-clang)
   (add-to-list 'ac-sources 'ac-source-gtags)
   (add-to-list 'ac-sources 'ac-source-etags))
