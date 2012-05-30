@@ -27,7 +27,7 @@
 ;;       _ "\n\n#endif"))
 
 (defun pl/auto-inset-copyright ()
-  (concat " * Copyright (C) "
+  (concat "Copyright (C) "
           (format-time-string "%Y ")
           (user-full-name)
           ". All rights reserved.\n"))
@@ -39,9 +39,9 @@
       "/* "(buffer-name) " ---\n"
       ;; " * $Id$\n"
       " * Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
-      " * Created: "(current-time-string) "\n"
+      " * Created: " (current-time-string) "\n"
       " * Description: \n"
-      (pl/auto-inset-copyright)
+      " * " (pl/auto-inset-copyright)
       " */\n\n"
       (let* ((nopath (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
              (indent (concat "__" (upcase nopath)
@@ -62,7 +62,7 @@
       " * Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       " * Created: "(current-time-string) "\n"
       " * Description: \n"
-      (pl/auto-inset-copyright)
+      " * " (pl/auto-inset-copyright)
       " */\n\n"
       ;; (let* ((nopath (file-name-nondirectory buffer-file-name))
       ;;        (noext  (file-name-sans-extension nopath)))
@@ -79,7 +79,7 @@
       ";; Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       ";; Created: "(current-time-string) "\n"
       ";; Description: \n"
-      (pl/auto-inset-copyright)
+      ";; " (pl/auto-inset-copyright)
       "\n\n"
       (previous-line 4)
       (end-of-line)))
@@ -92,7 +92,7 @@
       ";; Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       ";; Created: "(current-time-string) "\n"
       ";; Description: \n"
-      (pl/auto-inset-copyright)
+      ";; " (pl/auto-inset-copyright)
       "\n\n"
       (previous-line 4)
       (end-of-line)))

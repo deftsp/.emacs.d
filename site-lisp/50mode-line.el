@@ -40,7 +40,7 @@
                                          'face 'mode-line-position-normal-face))))
                 (column-number-mode ("" (:eval
                                          (propertize "C%c"
-                                                     'face (if (>= (current-column) 80)
+                                                     'face (if (>= (current-column) 81)
                                                                'mode-line-position-exceed-face
                                                              'mode-line-position-normal-face)))
                                      ""))))
@@ -94,51 +94,7 @@
         working-mode-line-message
         display-time-string " "
         ;; battery-mode-line-string " "
-                ;; (:eval
-;;                  (if line-number-mode
-;;                      (if column-number-mode
-;;                          (propertize
-;;                           (format " (%%l/%d,%%c)" (count-lines (point-min) (point-max)))
-;;                           'face (if (>= (current-column) 80) 'mode-line-position-exceed-face 'mode-line-position-normal-face)
-;;                           'local-map mode-line-column-line-number-mode-map
-;;                           'mouse-face 'mode-line-highlight
-;;                           'help-echo "Line number and Column number\n\
-;; mouse-1: Display Line and Column Mode Menu")
-;;                        (propertize
-;;                         (format " L%%l/%d" (count-lines (point-min) (point-max)))
-;;                         'local-map mode-line-column-line-number-mode-map
-;;                         'mouse-face 'mode-line-highlight
-;;                         'help-echo "Line Number\n\
-;; mouse-1: Display Line and Column Mode Menu"))
-;;                    (if column-number-mode
-;;                        (propertize
-;;                         " C%c"
-;;                         'local-map mode-line-column-line-number-mode-map
-;;                         'mouse-face 'mode-line-highlight
-;;                         'help-echo "Column number\n\
-;; mouse-1: Display Line and Column Mode Menu"))))                ;; (:eval
-;;                  (if line-number-mode
-;;                      (if column-number-mode
-;;                          (propertize
-;;                           (format " (%%l/%d,%%c)" (count-lines (point-min) (point-max)))
-;;                           'face (if (>= (current-column) 80) 'mode-line-position-exceed-face 'mode-line-position-normal-face)
-;;                           'local-map mode-line-column-line-number-mode-map
-;;                           'mouse-face 'mode-line-highlight
-;;                           'help-echo "Line number and Column number\n\
-;; mouse-1: Display Line and Column Mode Menu")
-;;                        (propertize
-;;                         (format " L%%l/%d" (count-lines (point-min) (point-max)))
-;;                         'local-map mode-line-column-line-number-mode-map
-;;                         'mouse-face 'mode-line-highlight
-;;                         'help-echo "Line Number\n\
-;; mouse-1: Display Line and Column Mode Menu"))
-;;                    (if column-number-mode
-;;                        (propertize
-;;                         " C%c"
-;;                         'local-map mode-line-column-line-number-mode-map
-;;                         'mouse-face 'mode-line-highlight
-;;                         'help-echo "Column number\n\
-;; mouse-1: Display Line and Column Mode Menu"))))        ;; win:mode-string
+        ;; win:mode-string
         "["
         (:propertize winring-name  face font-lock-constant-face)
         "]"

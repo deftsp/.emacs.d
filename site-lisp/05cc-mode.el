@@ -1,6 +1,6 @@
 ;;; 05cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2012-05-26 18:20:26 Shihpin Tseng>
+;; Time-stamp: <2012-05-30 09:41:14 Shihpin Tseng>
 
 
 (let ((cc-mode-dir (expand-file-name "~/.emacs.d/lisp/cc-mode")))
@@ -204,73 +204,6 @@
 ;; (setq comment-start "//")
 ;; (setq compilation-read-command 'nil)
 (setq comment-style 'extra-line)        ;default "indent"
-
-;;; font-lock
-(defun pl/add-c-common-mode-font-lock-keywords ()
-  (dolist (m '(c-mode objc-mode c++-mode))
-    ;; Colorisation : C/C++/Object-C : Commentaires
-    (font-lock-add-keywords m '(("\\<\\(FIXME\\):" 1 font-lock-warning-face prepend)
-                                ("\\<\\(TODO\\):" 1 font-lock-warning-face prepend)
-                                ("\\<\\(td_[-.a-z0-9_]*;?\\)\\>" . font-lock-builtin-face)
-                                ("\\<\\(WARNING\\)" 1 font-lock-warning-face t)
-                                ("\\<\\(NOTE\\)" 1 font-lock-warning-face t)
-                                ("\\<\\(NOTES\\)" 1 font-lock-warning-face t)
-                                ("\\<\\(DEBUG\\)" 1 font-lock-warning-face t)
-                                ("\\<\\(OUTPUT\\)" 1 font-lock-warning-face t)
-                                ("\\<\\(IMPORTANT\\)" 1 font-lock-warning-face t)
-                                ;; highlight line that are too long
-                                ("^[^\n]\\{80\\}\\(.*\\)$" 1 font-lock-warning-face t)))))
-
-(eval-after-load "cc-mode"
-  (progn
-    (pl/add-c-common-mode-font-lock-keywords)
-    (dolist (type (list "UCHAR" "USHORT" "ULONG" "BOOL" "BOOLEAN" "LPCTSTR" "C[A-Z]\\sw+" "\\sw+_t"))
-      (add-to-list 'c-font-lock-extra-types type))))
-
-
-;; Colorisation : C : Grands classiks
-;; (font-lock-add-keywords 'c-mode
-;;                         '(("\\<\\(string\\)\\>" . font-lock-type-face)
-;;                           ("\\<\\(vector\\)\\>" . font-lock-type-face)
-;;                           ("\\<\\(namespace\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(class\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(virtual\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(printf\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(getc\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(strtok\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(strcmp\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(strlen\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(atoi\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(fgets\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(fprintf\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(remove\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(rename\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(stat\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(open\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(opendir\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(closedir\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(fstat\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(fopen\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(freopen\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(fclose\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(fflush\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(fpurge\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(feof\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(dlopen\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(dlsym\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(dlerror()\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(sleep;?\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(setenv;?\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(pthread_[-.a-z0-9_]*;?\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(sem_[-.a-z0-9_]*;?\\)\\>" . font-lock-keyword-face)
-;;                           ;; Colorisation : Glib Gdk Gtk+ GNOME
-;;                           ("\\<\\(g_[-.a-z0-9_]*;?\\)\\>" . font-lock-keyword-face)
-;;                           ("\\<\\(gdk_[-.a-z0-9_]*;?\\)\\>" . font-lock-constant-face)
-;;                           ("\\<\\(gtk_[-.a-z0-9_]*;?\\)\\>" . font-lock-constant-face)
-;;                           ("\\<\\(gnome_[-.a-z0-9_]*;?\\)\\>" . font-lock-constant-face)
-;;                           ("\\<\\(poptGetArgs\\)\\>" . font-lock-constant-face)
-;;                           ))
-
 
 ;;; indent the entire buffer
 (defun indent-entire-c-buffer ()

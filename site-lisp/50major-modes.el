@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-05-18 00:20:10 Shihpin Tseng>
+;; Time-stamp: <2012-05-30 10:12:55 Shihpin Tseng>
 
 ;;; imenu
 ;; (require 'imenu)
@@ -35,47 +35,54 @@
 
 
 ;;; indent
-;;不用 TAB 字符来indent。编辑 Makefile 的时候也不用担心，因为 makefile-mode 会把 TAB 键设置成真正的 TAB 字符，并且加亮显
-;;示的。 indent-tabs-mode 如果 设置为 t ，那么就会选择 TAB 作为格式化字符; 如果是 nil 那么就选择 SPACE 作为格式化字符。
-;;注意，这里使用了setq-default而不是使用setq。setq-default命令只会在局部变量没有值时设置这个变量的值。
-(setq-default indent-tabs-mode nil)       ; Prevent Extraneous Tabs
+
+;; use space to indent instead of TAB character to indent, but for
+;; makefile-mode.
+;; setq-default change the value of the variable only when the local variable do
+;; have value.
+
+(setq-default indent-tabs-mode nil) ; Prevent Extraneous Tabs
 ;; you can use "M-x untabify" to change tab to space of a region
 (set-default 'tab-width 4)
 ;; (setq tab-stop-list '(4 8 12 16 20 24 28 32 36))
-
 ;;(setq standard-indent 2) ; default 4
 
-;; show some functions as keywords
-(font-lock-add-keywords 'emacs-lisp-mode
-                        '(("\\<\\(quote\\|add-hook\\)" .
-                           font-lock-keyword-face)))
-;; recognize some things as functions
+
+;;; font-lock
+(defun pl/font-lock-add-commentaires-keywords (m)
+  (font-lock-add-keywords m '(("\\<\\(FIXME\\):" 1 font-lock-warning-face prepend)
+                              ("\\<\\(XXX+\\):" 1 font-lock-warning-face prepend)
+                              ("\\<\\(TODO\\):" 1 font-lock-warning-face prepend)
+                              ("\\<\\(BUG\\):" 1 font-lock-warning-face prepend)
+                              ("\\<\\(td_[-.a-z0-9_]*;?\\)\\>" . font-lock-builtin-face)
+                              ("\\<\\(WARNING\\)" 1 font-lock-warning-face t)
+                              ("\\<\\(NOTE\\)" 1 font-lock-warning-face t)
+                              ("\\<\\(NOTES\\)" 1 font-lock-warning-face t)
+                              ("\\<\\(DEBUG\\)" 1 font-lock-warning-face t)
+                              ("\\<\\(OUTPUT\\)" 1 font-lock-warning-face t)
+                              ("\\<\\(IMPORTANT\\)" 1 font-lock-warning-face t)
+                              ;; highlight line that are too long
+                              ("^[^\n]\\{121\\}\\(.*\\)$" 1 font-lock-warning-face t))))
+
+
+(pl/font-lock-add-commentaires-keywords 'emacs-lisp-mode)
+
+(eval-after-load "scheme"
+  '(progn
+    (pl/font-lock-add-commentaires-keywords 'scheme-mode)))
+
+(eval-after-load "cc-mode"
+  '(progn
+     (dolist (m '(c-mode objc-mode c++-mode))        ; Colorisation : C/C++/Object-C : Commentaires
+       (pl/font-lock-add-commentaires-keywords m))
+     (dolist (type (list "UCHAR" "USHORT" "ULONG" "BOOL" "BOOLEAN" "LPCTSTR" "C[A-Z]\\sw+" "\\sw+_t"))
+      (add-to-list 'c-font-lock-extra-types type))))
+
 (font-lock-add-keywords
  'emacs-lisp-mode
- '(("\\<\\(set\\|setq\\|require-soft\\|when-available\\|add-hook\\)\\>" .
-    font-lock-function-name-face)))
-;; recognize some things as constants
-(font-lock-add-keywords 'emacs-lisp-mode
-                        '(("\\<\\(nil\\|\\t\\)\\_>" .
-                           font-lock-constant-face)))
-
-(font-lock-add-keywords 'emacs-lisp-mode
-                        '(("\\<\\(FIXME\\|TODO\\|XXX+\\|BUG\\):"
-                           1 font-lock-warning-face prepend)))
-
-(font-lock-add-keywords 'lisp-mode
-                        '(("\\<\\(FIXME\\|TODO\\|XXX+\\|BUG\\):"
-                           1 font-lock-warning-face prepend)))
-
-;; (when (fboundp 'font-lock-add-keywords)
-;;   (dolist (mode '(emacs-lisp-mode
-;;           cperl-mode))
-;;     (let ((hook (intern (concat (symbol-name mode) "-hook"))))
-;;       (add-hook hook
-;;         `(lambda ()
-;;            (font-lock-add-keywords nil '(("FIXME[:!]?" 0
-;;                           'show-paren-mismatch-face
-;;                           prepend))))))))
+ '(("\\<\\(set\\|setq\\|require-soft\\|quote\\|when-available\\|add-hook\\)\\>" .
+    font-lock-function-name-face)
+   ("\\<\\(nil\\|\\t\\)\\_>" . font-lock-constant-face)))
 
 ;;; auto close *compilation* buffer, if no compile error
 ;; (setq compilation-finish-functions 'compile-autoclose)

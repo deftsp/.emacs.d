@@ -39,8 +39,7 @@
   (temp-buffer-resize-mode 1))
 
 ;;; auto fill mode
-(setq auto-fill-column 1
-      default-fill-column 100)
+(setq fill-column 120)
 
 (defun tsp-unfill-buffer ()
   "Undo filling for all paragraphs."
