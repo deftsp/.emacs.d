@@ -41,7 +41,7 @@
 ;;; auto fill mode
 (setq-default fill-column 120)
 
-(defun tsp-unfill-buffer ()
+(defun pl/unfill-buffer ()
   "Undo filling for all paragraphs."
   (interactive)
   (goto-char (point-min))
@@ -60,12 +60,12 @@
 
 ;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph Takes a multi-line paragraph and makes it into
 ;; a single line of text.
-(defun unfill-paragraph ()
+(defun pl/unfill-paragraph ()
   (interactive)
   (let ((fill-column (point-max)))
     (fill-paragraph nil)))
 
-;; You can convert an entire buffer from paragraphs to lines by recording a macro that calls 'unfill-paragraph' and
+;; You can convert an entire buffer from paragraphs to lines by recording a macro that calls 'pl/unfill-paragraph' and
 ;; moves past the blank-line to the next unfilled paragraph and then executing that macro on the whole buffer, 'C-u 0
 ;; C-x e'
 
