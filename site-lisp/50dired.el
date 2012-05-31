@@ -746,7 +746,8 @@ e.g., (tsp-dircolors-get-escape-seq \"*.gz\") => \"01;31\""
      (set-face-attribute 'diredp-read-priv nil :foreground "deep sky blue" :background 'unspecified)
      (set-face-attribute 'diredp-write-priv nil :foreground "yellow" :background 'unspecified)
      (set-face-attribute 'diredp-exec-priv nil :foreground "red" :background 'unspecified)
-     (set-face-attribute 'diredp-flag-mark-line nil :foreground "blue")))
+     (set-face-attribute 'diredp-flag-mark-line nil :foreground "white"
+                         :background "Blue4")))
 
 ;;;tips
 
