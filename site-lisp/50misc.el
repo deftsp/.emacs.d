@@ -666,32 +666,29 @@ vi style of % jumping to matching brace."
 
 ;; ISO Date formatting
 
-(defvar iso-date-format "%Y-%m-%dT%H:%M:%S%z"
+(defvar pl/iso-date-format "%Y-%m-%dT%H:%M:%S%z"
   "Format string for ISO dates.")
 
-(defun iso-timestamp (&optional time)
+(defun pl/iso-timestamp (&optional time)
   (format-time-string iso-date-format
                       (or time (current-time))))
-(defun insert-iso-timestamp ()
+(defun pl/insert-iso-timestamp ()
   (interactive)
   (insert (iso-timestamp)))
 
-(defun iso-timestamp-sexp (&optional time)
+(defun pl/iso-timestamp-sexp (&optional time)
   (parse-time-string (iso-timestamp)))
 
 ;;----------------------------------------------------------------------------------------------------
 
-(defun do-nothing ()
-  "Just to remind me this keybind is not used anymore."
-  (interactive)
-  (message "Hi! :-)") )
+
 
 ;; (defun select-until-end-of-line ()
 ;;   "Select until the end of a line without killing it."
 ;;   (interactive)
 ;;   (copy-region-as-kill (point) (line-end-position)) )
 
-(defun insert-userid ()
+(defun pl/insert-userid ()
   "Insert the users email address"
   (interactive)
   (insert user-full-name " <" user-mail-address ">" ) )
@@ -702,7 +699,6 @@ vi style of % jumping to matching brace."
 ;;   (recenter "1"))
 ;; (global-set-key  "\C-cl"      'recenter-to-first-line)
 
-;;临时记号
 (defun pl/point-to-register()
   "Store cursorposition _fast_ in a register.
 Use pl/jump-to-register to jump back to the stored
@@ -724,10 +720,9 @@ that was stored with pl/point-to-register."
 
 ;;=============================================
 (setq time-stamp-active t
-      time-stamp-warn-inactive t        ;去掉time-stamp的警告？
+      time-stamp-warn-inactive t
       time-stamp-line-limit 8           ;; check the first 10 lines of the file for Time-stamp: <>
-      time-stamp-format (concat "%:y-%02m-%02d %02H:%02M:%02S " user-full-name)
-      )
+      time-stamp-format (concat "%:y-%02m-%02d %02H:%02M:%02S " user-full-name))
 (add-hook 'write-file-hooks 'time-stamp)
 (add-hook 'before-save-hook 'time-stamp)
 
