@@ -1,6 +1,6 @@
 ;;; 50ido.el ---
 
-;; Copyright (C) 2008  S.P.Tseng
+;; Copyright (C) 2008  Shihpin Tseng
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;; ido seem much less annoying than icicles...

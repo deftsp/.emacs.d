@@ -1,8 +1,8 @@
 ;;; 50nethack.el ---
 
-;; Copyright (C) 2008  S.P.Tseng
+;; Copyright (C) 2008  Shihpin Tseng
 
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
 ;;Well, nethack, and nethack-el are installed, so let's modify Nethack to make it usable.

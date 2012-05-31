@@ -150,8 +150,6 @@
   (set-face-foreground 'icompletep-determined "DarkMagenta")
   (set-face-foreground 'icompletep-choices "burlywood")
 
-  (set-face-foreground 'highlight-symbol-face +f-color+)
-  (set-face-background 'highlight-symbol-face "dodgerblue2")
 
   ;; (set-face-background 'highlight-current-line-face "#222222")
 

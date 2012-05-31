@@ -45,7 +45,7 @@
                                         (forward-line 1))))))
 
 ;; term
-(defun tsp-ansi-term ()
+(defun pl/ansi-term ()
   "Use bash for ansi term"
   (interactive)
   (ansi-term "/bin/zsh"))
@@ -70,11 +70,11 @@
 ;; (global-set-key [(control 7)] (lambda () (interactive) (switch-to-buffer "*shell7*")))
 
 ;;; auto close shell buffer, after execute `exit' exit shell
-(add-hook 'shell-mode-hook 'tsp-shell-mode-hook-func)
-(defun tsp-shell-mode-hook-func  ()
+(add-hook 'shell-mode-hook 'pl/shell-mode-hook-func)
+(defun pl/shell-mode-hook-func  ()
   (set-process-sentinel (get-buffer-process (current-buffer))
-                        #'tsp-shell-mode-kill-buffer-on-exit))
-(defun tsp-shell-mode-kill-buffer-on-exit (process state)
+                        #'pl/shell-mode-kill-buffer-on-exit))
+(defun pl/shell-mode-kill-buffer-on-exit (process state)
   (message "%s" state)
   (if (or
        (string-match "exited abnormally with code.*" state)

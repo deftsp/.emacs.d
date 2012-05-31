@@ -1,4 +1,4 @@
-;;; tsp-unicode-input.el ---
+;;; 50unicode-input.el ---
 
 ;;;; INSERT UNICODE AND MATH CHARS
 (global-set-key (kbd "s-i s-i") 'open-unicode-template)

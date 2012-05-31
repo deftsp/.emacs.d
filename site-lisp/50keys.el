@@ -35,8 +35,8 @@
  "<f9>"    'door-gnus
  "<S-f9>"  'ascii-table-show
  "<C-f9>"  'shell
- "<M-f9>"  'tsp-ansi-term
- "<f10>"   'tsp-w3m-switch-to-buffer
+ "<M-f9>"  'pl/ansi-term
+ "<f10>"   'pl/w3m-switch-to-buffer
  ;; "<f11>"
  "<S-f11>" 'appt-add
  "<S-f12>" 'recentf-open-files
@@ -207,20 +207,20 @@
 ;;Maverick WOO <sw77@cornell.edu>" This is complex. In short, the first invocation of Home/End moves to the beginning of
 ;;the *text* line. A second invocation moves the cursor to the beginning of the *absolute* line. Most of the time this
 ;;won't matter or even be noticeable, but when it does (in comments, for example) it will be quite convenient.
-(global-set-key [home] 'tsp-smart-home)
-(global-set-key [end] 'tsp-smart-end)
-(defun tsp-smart-home ()
+(global-set-key [home] 'pl/smart-home)
+(global-set-key [end] 'pl/smart-end)
+(defun pl/smart-home ()
   "Odd home to beginning of line, even home to beginning of
 text/code."
   (interactive)
-  (if (and (eq last-command 'tsp-smart-home)
+  (if (and (eq last-command 'pl/smart-home)
            (/= (line-beginning-position) (point)))
       (beginning-of-line)
       (beginning-of-line-text)))
-(defun tsp-smart-end ()
+(defun pl/smart-end ()
   "Odd end to end of line, even end to begin of text/code."
   (interactive)
-  (if (and (eq last-command 'tsp-smart-end)
+  (if (and (eq last-command 'pl/smart-end)
            (= (line-end-position) (point)))
       (end-of-line-text)
       (end-of-line)))
@@ -285,64 +285,32 @@ Require `font-lock'."
 ;;Unshifted special characters ends there-------------------------------------------------------------------------------------
 
 
-;;----------------------------------------------------------------------------------------------------
-(defun sfp-page-down ()
-  (interactive)
+;;; Scrolling ---------
+
+(defun sfp-page-down (&optional arg)
+  (interactive "^P")
   (setq this-command 'next-line)
   (next-line
    (- (window-text-height)
       next-screen-context-lines)))
+(put 'sfp-page-down 'isearch-scroll t)
+(put 'sfp-page-down 'CUA 'move)
 
-(defun sfp-page-up ()
-  (interactive)
+(defun sfp-page-up (&optional arg)
+  (interactive "^P")
   (setq this-command 'previous-line)
   (previous-line
    (- (window-text-height)
       next-screen-context-lines)))
+(put 'sfp-page-up 'isearch-scroll t)
+(put 'sfp-page-up 'CUA 'move)
 
 (global-set-key (kbd "C-v") 'sfp-page-down)
 (global-set-key (kbd "M-v") 'sfp-page-up)
 
-;;------------------------------------------
-
-
-;;(global-set-key "\C-z" 'set-mark-command)
-;; C-x C-SPC pop-global-mark)
-
-
-;;mouse
-;; (global-set-key (kbd "<mouse-1>") 'mouse-set-point)
-;; (global-set-key (kbd "<down-mouse-1>") 'mouse-drag-region)
-;; (global-set-key (kbd "<C-down-mouse-1>") 'mouse-buffer-menu)
-
-;; (global-set-key [M-down-mouse-1] 'mouse-drag-secondary-pasting)
-;; (global-set-key [M-S-down-mouse-1] 'mouse-drag-secondary-moving)
-(global-set-key (kbd "<H-mouse-1>") 'browse-url-at-mouse)
-
-;; mouse button one drags the scroll bar
-;; (global-set-key [vertical-scroll-bar down-mouse-1] 'scroll-bar-drag)
-
-;; ;; setup scroll mouse settings
-;; (defun up-slightly () (interactive) (scroll-up 5))
-;; (defun down-slightly () (interactive) (scroll-down 5))
-;; (global-set-key [mouse-4] 'down-slightly)
-;; (global-set-key [mouse-5] 'up-slightly)
-
-;; (defun up-one () (interactive) (scroll-up 1))
-;; (defun down-one () (interactive) (scroll-down 1))
-;; (global-set-key [S-mouse-4] 'down-one)
-;; (global-set-key [S-mouse-5] 'up-one)
-
-;; (defun up-a-lot () (interactive) (scroll-up))
-;; (defun down-a-lot () (interactive) (scroll-down))
-;; (global-set-key [C-mouse-4] 'down-a-lot)
-;; (global-set-key [C-mouse-5] 'up-a-lot)
-
-;;----------------------------------------------------------------------------------------------------
-;;----------------------------------------------------------------------------------------------------
-;; mark一行,如果绑定到C-z，按住Ctrl连续按z可以mark多行,就像C-x z 重复上一个复杂命令的还有 C-x ESC ESC
-
-(defun tsp-mark-line (&optional arg allow-extend)
+;;; repeat to mark multi-line
+(global-set-key (kbd "C-z") 'pl/mark-line)
+(defun pl/mark-line (&optional arg allow-extend)
   "Put point at beginning of this line, mark at end.
 The line marked is the one that contains point or follows point.
 
@@ -371,11 +339,11 @@ it marks the next ARG lines after the ones already marked."
          (forward-line arg)
          (push-mark nil t t)
          (forward-line (- arg)))))
-(global-set-key (kbd "H-n") 'tsp-mark-line)
+
 
 ;;-------------------------------------------------------------------------------------------------------
 
-(defun tsp-return-current-point ()
+(defun pl/return-current-point ()
   (interactive)
   (message "Current point is: %d" (point)))
 ;;----------------------------------------------------------------------------------------------------
@@ -435,17 +403,17 @@ Goes backward if ARG is negative; error if CHAR not found."
 ;; (global-set-key (kbd "H-b") 'backward-delete-char)
 
 ;;----------------------------------------------------------------------------------------------------
-(global-set-key (kbd "C-c k f") 'tsp-kill-syntax-forward)
-(global-set-key (kbd "C-c k b") 'tsp-kill-syntax-backward)
+(global-set-key (kbd "C-c k f") 'pl/kill-syntax-forward)
+(global-set-key (kbd "C-c k b") 'pl/kill-syntax-backward)
 
-(defun tsp-kill-syntax-forward ()
+(defun pl/kill-syntax-forward ()
   "Kill characters with syntax at point."
   (interactive)
   (kill-region (point)
                (progn (skip-syntax-forward (string (char-syntax (char-after))))
                       (point))))
 
-(defun tsp-kill-syntax-backward ()
+(defun pl/kill-syntax-backward ()
   "Kill characters with syntax at point."
   (interactive)
   (kill-region (point)
@@ -470,10 +438,10 @@ Goes backward if ARG is negative; error if CHAR not found."
 ;; (setq w32-rwindow-modifier 'hyper)  ; rwindow acts as hyper
 
 
-;; (setq tsp-global-extra-key-map (make-keymap))
-;; (global-set-key [(super z)] tsp-global-extra-key-map)
-;; (define-key tsp-global-extra-key-map "b" 'bbdb)
-;; (define-key tsp-global-extra-key-map "m" 'bbdb-and-mail-with-default-mailer)
+;; (setq pl/global-extra-key-map (make-keymap))
+;; (global-set-key [(super z)] pl/global-extra-key-map)
+;; (define-key pl/global-extra-key-map "b" 'bbdb)
+;; (define-key pl/global-extra-key-map "m" 'bbdb-and-mail-with-default-mailer)
 
 ;; (when (eq window-system 'w32)
 ;;   (setq w32-pass-lwindow-to-system nil

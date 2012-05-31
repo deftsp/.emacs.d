@@ -1,6 +1,6 @@
 ;;; 50window.el ---
 
-;; Copyright (C) 2009  S.P.Tseng
+;; Copyright (C) 2009  Shihpin Tseng
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
@@ -43,7 +43,7 @@
 (global-set-key (kbd "H-M-]") 'enlarge-window-horizontally)
 
 ;; horizontal-to-vertical
-(defun deftsp-window-horizontal-to-vertical ()
+(defun pl/window-horizontal-to-vertical ()
   "Switches from a horizontal split to a vertical split."
   (interactive)
   (let ((one-buf (window-buffer (selected-window)))
@@ -55,7 +55,7 @@
     (goto-char buf-point)))
 
 ;; vertical-to-horizontal
-(defun deftsp-window-vertical-to-horizontal ()
+(defun pl/window-vertical-to-horizontal ()
   "Switches from a vertical split to a horizontal split."
   (interactive)
   (let ((one-buf (window-buffer (selected-window)))
@@ -66,9 +66,9 @@
     (switch-to-buffer one-buf)
     (goto-char buf-point)))
 
-(global-set-key (kbd "C-x !") 'deftsp-swap-windows)
+(global-set-key (kbd "C-x !") 'pl/swap-windows)
 ;; someday might want to rotate windows if more than 2 of them
-(defun deftsp-swap-windows ()
+(defun pl/swap-windows ()
   "If you have 2 windows, it swaps them."
   (interactive)
   (cond ((not (= (count-windows) 2))

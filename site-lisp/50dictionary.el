@@ -73,27 +73,27 @@
               ("cdict"   . gbk))
      dictionary-coding-systems-for-dictionaries)))
 
-(defun tsp-dictionary-next-dictionary ()
+(defun pl/dictionary-next-dictionary ()
   (interactive)
   (end-of-line)
   (search-forward-regexp "^From" nil t)
   (beginning-of-line))
 
-(defun tsp-dictionary-prev-dictionary ()
+(defun pl/dictionary-prev-dictionary ()
   (interactive)
   (beginning-of-line)
   (search-backward-regexp "^From" nil t)
   (beginning-of-line))
 
-(defun tsp-dictionary-mode-hook ()
+(defun pl/dictionary-mode-hook ()
   ;; faces
   (set-face-foreground 'dictionary-word-entry-face "magenta")
 
   (define-key dictionary-mode-map (kbd "<backtab>") 'dictionary-prev-link)
-  (define-key dictionary-mode-map (kbd "n") 'tsp-dictionary-next-dictionary)
-  (define-key dictionary-mode-map (kbd "p") 'tsp-dictionary-prev-dictionary))
+  (define-key dictionary-mode-map (kbd "n") 'pl/dictionary-next-dictionary)
+  (define-key dictionary-mode-map (kbd "p") 'pl/dictionary-prev-dictionary))
 
-(add-hook 'dictionary-mode-hook 'tsp-dictionary-mode-hook)
+(add-hook 'dictionary-mode-hook 'pl/dictionary-mode-hook)
 
 ;;;; wordnet
 ;; -------------
@@ -180,7 +180,7 @@ not selected."
         (his-transpose-windows 1))))
   t)
 
-(defun tsp-edict-search-kanji (word)
+(defun pl/edict-search-kanji (word)
   "Search the word at point when given.
 It presents the word at point as default input and allows editing
 it."
@@ -192,10 +192,10 @@ it."
   (edict-search-and-display (edict-clean-up-kanji word)
                             '日本語))
 
-;; (global-set-key (kbd "M-S") 'tsp-edict-search-kanji)
+;; (global-set-key (kbd "M-S") 'pl/edict-search-kanji)
 
 ;; search japanese on goo.ne.jp
-(defun tsp-urllib-quote-plus (str from to)
+(defun pl/urllib-quote-plus (str from to)
   "Run python's urllib.quote_plus function.
 FROM and TO are coding system symbols.
 i.e.,
@@ -207,14 +207,14 @@ i.e.,
                       (symbol-name to)))))
     (substring ret 0 (1- (length ret)))))
 
-(defun tsp-search-jp (beg end)
+(defun pl/search-jp (beg end)
   "Search WORD(utf8 coding) on goo.ne.jp in firefox."
   (interactive "r")
-  (tsp-shell-command-asynchronously
+  (pl/shell-command-asynchronously
    (concat
     "firefox -new-tab '"
     "http://dictionary.goo.ne.jp/search.php?MT="
-    (tsp-urllib-quote-plus (buffer-substring beg end) 'utf-8 'euc-jp)
+    (pl/urllib-quote-plus (buffer-substring beg end) 'utf-8 'euc-jp)
     "&search_history=%CA%D8%CD%F8&kind=all&kwassist=0&all.x=31&all.y=8&all=%BC%AD%BD%F1%A4%B9%A4%D9%A4%C6&mode=0"
     "'")))
 

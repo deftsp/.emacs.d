@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-05-30 10:12:55 Shihpin Tseng>
+;; Time-stamp: <2012-05-31 15:57:08 Shihpin Tseng>
 
 ;;; imenu
 ;; (require 'imenu)
@@ -142,25 +142,23 @@
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
+
 ;; (add-hook 'rcirc-mode-hook 'turn-on-eldoc-mode)
 ;;;;; symbol highlight mode
 
 ;; (require 'tooltip-help)
 ;; (define-key emacs-lisp-mode-map (kbd "<f1>") 'th-show-help)
 
-;;; light-symbol-mode
-(autoload 'light-symbol-mode "light-symbol" "highlights the symbol under point in the current buffer.")
-;; (add-hook 'emacs-lisp-mode-hook 'light-symbol-mode)
-;; (add-hook 'lisp-mode-hook 'light-symbol-mode)
-(setf light-symbol-idle-delay 0.25)
-;; (setf light-symbol-face 'light-symbol-face)
 
+(eval-after-load "highlight-symbol"
+  '(progn
+     (add-hook 'lisp-mode-hook 'highlight-symbol-mode)
+     (add-hook 'emacs-lisp-mode-hook 'highlight-symbol-mode)
+     (add-hook 'scheme-mode-hook 'highlight-symbol-mode)
+     (setq highlight-symbol-idle-delay 1.2)
+     (set-face-foreground 'highlight-symbol-face "#bebebe")
+     (set-face-background 'highlight-symbol-face "dodgerblue2")))
 
-(autoload 'highlight-symbol-mode "highlight-symbol" "keep the symbol at point highlighted" t)
-(autoload 'highlight-symbol-at-point "highlight-symbol" "highlight-symbol-faces" t)
-(add-hook 'emacs-lisp-mode-hook 'highlight-symbol-mode)
-(add-hook 'lisp-mode-hook 'highlight-symbol-mode)
-(setq highlight-symbol-idle-delay 0.5)
 
 ;;----------------------------------------------------------------------------------------------------
 ;; insert -*- MODENAME -*- tag
@@ -305,7 +303,7 @@
 ;;          (cons "\\(\\.\\.\\)" 'horizontal-ellipsis))))
 
 
-;; (defun tsp-fonts-replace ()
+;; (defun pl/fonts-replace ()
 ;;   (interactive)
 ;;   (substitute-patterns-with-unicode
 ;;    (list (cons "\\(<\\)" 'less-than)

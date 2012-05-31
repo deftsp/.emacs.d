@@ -28,13 +28,13 @@
 
 
 ;; 一个目录下所有的 *.cpp 和 *.h 文件使用这样的正则表达式 *.[ch]*
-(defun tsp-create-tags (dir-name)
+(defun pl/create-tags (dir-name)
   "Create tags file."
   (interactive "DDirectory: ")
   (shell-command
    (concat "find " dir-name " -type f -name  *.[ch]*  | xargs etags -a ")))
 
-(defun tsp-generate-tag-table ()
+(defun pl/generate-tag-table ()
   "Generate tag tables under current directory(Linux)."
   (interactive)
   (let
@@ -49,7 +49,7 @@
        (concat "find " dir " -name \"" exp "\" | xargs etags ")
        (buffer-name)))))
 
-(defun tsp-create-update-tags ()
+(defun pl/create-update-tags ()
   "Create *.[ch]* and update tags"
   (interactive)
   (shell-command

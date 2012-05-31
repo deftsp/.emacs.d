@@ -58,10 +58,10 @@
      ;;                         ;; anything-c-source-file-cache
      ;;                         ;; anything-c-source-emacs-commands
      ;;                         anything-c-source-buffer-not-found))
-     ;; (define-key anything-map "A" 'anything-deftsp-show-all)
-     ;; (define-key anything-map "T" 'anything-deftsp-show-traverse-only)
-     ;; (define-key anything-map "L" 'anything-deftsp-show-locate-only)
-     ;; (define-key anything-map "O" 'anything-deftsp-show-occur-only)
+     ;; (define-key anything-map "A" 'anything-pl/show-all)
+     ;; (define-key anything-map "T" 'anything-pl/show-traverse-only)
+     ;; (define-key anything-map "L" 'anything-pl/show-locate-only)
+     ;; (define-key anything-map "O" 'anything-pl/show-occur-only)
      (set-face-attribute 'anything-candidate-number nil :foreground "Yellow" :background 'unspecified)))
 
 
@@ -143,19 +143,19 @@ Or else erases whole minibuffer. "
 ;; (define-key lisp-interaction-mode-map (kbd "TAB")
 ;;   'anything-el-swank-fuzzy-indent-and-complete-symbol)
 
-;; (defun anything-deftsp-show-all ()
+;; (defun anything-pl/show-all ()
 ;;   (interactive)
 ;;   (anything-set-source-filter nil))
 
-;; (defun anything-deftsp-show-traverse-only ()
+;; (defun anything-pl/show-traverse-only ()
 ;;   (interactive)
 ;;   (anything-set-source-filter '("Traverse Occur")))
 
-;; (defun anything-deftsp-show-locate-only ()
+;; (defun anything-pl/show-locate-only ()
 ;;   (interactive)
 ;;   (anything-set-source-filter '("Locate")))
 
-;; (defun anything-deftsp-show-occur-only ()
+;; (defun anything-pl/show-occur-only ()
 ;;   (interactive)
 ;;   (anything-set-source-filter '("Occur")))
 

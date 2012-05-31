@@ -279,7 +279,7 @@
          :style "<link rel=\"stylesheet\"
                        href=\"common.css\" type=\"text/css\"/>"
          :preamble "<div class=\"menu\" style=\"float: right;\"> <a href=\"./index.html\">Home</a> - <a href=\"./PageIndex.html\">Index</a> </div>"
-         :postamble "<font color=\"white\">&copy; 2005 - 2009 S.P.Tseng. All Rights Reserved.</font>"
+         :postamble "<font color=\"white\">&copy; 2005 - 2009 Shihpin Tseng. All Rights Reserved.</font>"
 
          :auto-postamble nil
          :auto-preamble t)

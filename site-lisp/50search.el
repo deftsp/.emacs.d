@@ -67,14 +67,14 @@
 ;; C-s C-w [C-w] [C-w]... behaviour.
 
 ;; (require 'thingatpt)
-;; (defun tsp-isearch-yank-word-or-char-from-beginning ()
+;; (defun pl/isearch-yank-word-or-char-from-beginning ()
 ;;   "Move to beginning of word before yanking word in isearch-mode."
 ;;   (interactive)
 ;;   (if (= 0 (length isearch-string))
 ;;       (beginning-of-thing 'word))
 ;;   (isearch-yank-word-or-char)
 ;;   ;; Revert to 'isearch-yank-word-or-char for subsequent calls
-;;   (substitute-key-definition 'tsp-isearch-yank-word-or-char-from-beginning
+;;   (substitute-key-definition 'pl/isearch-yank-word-or-char-from-beginning
 ;;                              'isearch-yank-word-or-char
 ;;                              isearch-mode-map))
 
@@ -82,7 +82,7 @@
 ;;           (lambda ()
 ;;             "Activate tsp customized Isearch word yank command."
 ;;             (substitute-key-definition 'isearch-yank-word-or-char
-;;                                        'tsp-isearch-yank-word-or-char-from-beginning
+;;                                        'pl/isearch-yank-word-or-char-from-beginning
 ;;                                        isearch-mode-map)))
 ;;----------------------------------------------------------------------------------------------------
 

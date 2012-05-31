@@ -1,8 +1,8 @@
 ;;; 50door-gnus.el ---
 
-;; Copyright (C) 2009  S.P.Tseng
+;; Copyright (C) 2009  Shihpin Tseng
 
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
 ;; This program is free software; you can redistribute it and/or modify

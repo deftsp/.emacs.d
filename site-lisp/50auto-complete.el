@@ -6,6 +6,8 @@
 ;; Keywords:
 
 
+(require 'auto-complete)
+
 ;;; auto-complete
 ;; (require 'ac-company)
 ;; (eval-after-load "ac-company"

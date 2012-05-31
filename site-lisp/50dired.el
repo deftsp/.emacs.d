@@ -29,7 +29,7 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;; How to open several files at once?
 ;; `C-u F' in Dired.
 ;; (dired-do-find-marked-files) has an optional `noselect' option.
-;; (defun tsp-dired-do-find-marked-files ()
+;; (defun pl/dired-do-find-marked-files ()
 ;;     "Visit all marked files at once."
 ;;     (interactive)
 ;;     (let ((file-list (dired-get-marked-files)))
@@ -209,7 +209,7 @@ and blocks emacs.  The default for ASYNC is t." t)
     (dired-advertised-find-file)
     (kill-buffer buf)))
 
-;; (defun tsp-dired-mode-hook-fun ()
+;; (defun pl/dired-mode-hook-fun ()
 ;; (setq dired-bind-jump nil
 ;;       dired-bind-man nil
 ;;       dired-bind-info nil)
@@ -218,10 +218,10 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;; (define-key dired-mode-map "^" 'dired-up-directory-after-kill)
 ;; (define-key dired-mode-map "\M-\C-m" 'dired-advertised-find-file-after-kill)
 ;; (define-key dired-mode-map "\C-co" 'dired-omit-mode)
-;; (if (tsp-locate-file ".tex" (pwd))
+;; (if (pl/locate-file ".tex" (pwd))
 ;;     (add-to-list 'dired-omit-extensions ".log")
 ;;     (setq dired-omit-extensions (remove ".log" dired-omit-extensions))))
-;; (defun tsp-locate-file (suffix dir)
+;; (defun pl/locate-file (suffix dir)
 ;;   ;; return non-nil or nil
 ;;   (with-temp-buffer
 ;;     (goto-char (point-min))
@@ -229,7 +229,7 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;;     (goto-char (point-min))
 ;;     (search-forward-regexp (concat "^.*" suffix "$") (point-max) t)))
 
-;; (add-hook 'dired-mode-hook 'tsp-dired-mode-hook-fun)
+;; (add-hook 'dired-mode-hook 'pl/dired-mode-hook-fun)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -240,30 +240,30 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;; (define-key dired-mode-map (kbd ":") 'dired-view-minor-mode-dired-toggle)
 
 
-;; (defun tsp-dired-wvHtml ()
+;; (defun pl/dired-wvHtml ()
 ;;   (concat "wvHtml --charset=gb2312 * "
-;;    (tsp-dired-get-filename-no-extention) ".html"))
+;;    (pl/dired-get-filename-no-extention) ".html"))
 
-;; (define-key dired-mode-map (kbd "v") 'tsp-dired-w3m-find-file)
+;; (define-key dired-mode-map (kbd "v") 'pl/dired-w3m-find-file)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Sorting
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; "s" Toggle between sort by date/name and refresh the dired buffer.
-;; (defmacro tsp-dired-define-sort (key switch)
+;; (defmacro pl/dired-define-sort (key switch)
 ;;   "redefine the key `s KEY' to sort use switch to ls."
 ;;   `(define-key dired-mode-map ,(concat "s" key)
 ;;      (lambda ()
 ;;        (interactive)
 ;;        (dired-sort-other (concat dired-listing-switches
 ;;                                  ,switch
-;;                                  (if tsp-dired-sort-reverse
+;;                                  (if pl/dired-sort-reverse
 ;;                                      "r"
 ;;                                      "")
-;;                                  (if tsp-dired-sort-recursive
+;;                                  (if pl/dired-sort-recursive
 ;;                                      "R"
 ;;                                      ""))))))
-;; (defmacro tsp-dired-define-toggle (key var)
+;; (defmacro pl/dired-define-toggle (key var)
 ;;   `(define-key dired-mode-map ,(concat "s" key)
 ;;      (lambda ()
 ;;        (interactive)
@@ -280,86 +280,86 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;;             (define-key dired-mode-map
 ;;                 (kbd "s")
 ;;               nil)
-;;             (defvar tsp-dired-sort-reverse nil
+;;             (defvar pl/dired-sort-reverse nil
 ;;               "sort reversely")
-;;             (defvar tsp-dired-sort-recursive nil
+;;             (defvar pl/dired-sort-recursive nil
 ;;               "sort recursively")
-;;             (tsp-dired-define-sort "X" "X")
-;;             (tsp-dired-define-sort "t" "t")
-;;             (tsp-dired-define-sort "S" "S")
-;;             (tsp-dired-define-sort "U" "U")
-;;             (tsp-dired-define-sort "u" "ut") ; sort by access time
-;;             (tsp-dired-define-sort "c" "ct") ; sort by ctime
-;;             (tsp-dired-define-sort "n" "")   ; sort by name :)
-;;             (tsp-dired-define-toggle "r" tsp-dired-sort-reverse)
-;;             (tsp-dired-define-toggle "R" tsp-dired-sort-recursive)))
+;;             (pl/dired-define-sort "X" "X")
+;;             (pl/dired-define-sort "t" "t")
+;;             (pl/dired-define-sort "S" "S")
+;;             (pl/dired-define-sort "U" "U")
+;;             (pl/dired-define-sort "u" "ut") ; sort by access time
+;;             (pl/dired-define-sort "c" "ct") ; sort by ctime
+;;             (pl/dired-define-sort "n" "")   ; sort by name :)
+;;             (pl/dired-define-toggle "r" pl/dired-sort-reverse)
+;;             (pl/dired-define-toggle "R" pl/dired-sort-recursive)))
 
 
 ;; Sort methods that affect future sessions
-(defun tsp-dired-sort-by-default ()
+(defun pl/dired-sort-by-default ()
   (interactive)
   (setq dired-listing-switches "-lh")
   (dired-sort-other dired-listing-switches))
 
-(defun tsp-dired-sort-by-show-all ()
+(defun pl/dired-sort-by-show-all ()
   (interactive)
   (setq dired-listing-switches "-lhA")
   (dired-sort-other dired-listing-switches))
 
-(defun tsp-dired-sort-by-for-solaris ()
+(defun pl/dired-sort-by-for-solaris ()
   "Solaris `ls' doesn't support `-h' option, stupid!"
   (interactive)
   (setq dired-listing-switches "-lA")
   (dired-sort-other dired-listing-switches))
 
 ;; Sort methods that affect current session only
-(defun tsp-dired-sort-by-date ()
+(defun pl/dired-sort-by-date ()
   (interactive)
   (dired-sort-other
    (concat dired-listing-switches "tr")))
 
-(defun tsp-dired-sort-by-extenstion ()
+(defun pl/dired-sort-by-extenstion ()
   (interactive)
   (dired-sort-other
    (concat dired-listing-switches "X")))
 
-(defun tsp-dired-sort-by-invisible-only ()
+(defun pl/dired-sort-by-invisible-only ()
   (interactive)
   (dired-sort-other
    (concat dired-listing-switches "d .*")))
 
-(defun tsp-dired-sort-by-size ()
+(defun pl/dired-sort-by-size ()
   (interactive)
   (dired-sort-other
    (concat dired-listing-switches "S")))
 
 (define-key dired-mode-map (kbd "s") nil)
-(define-key dired-mode-map (kbd "s RET") 'tsp-dired-sort-by-default)
-(define-key dired-mode-map (kbd "s a") 'tsp-dired-sort-by-show-all)
-(define-key dired-mode-map (kbd "s t") 'tsp-dired-sort-by-date)
-(define-key dired-mode-map (kbd "s X") 'tsp-dired-sort-by-extenstion)
-(define-key dired-mode-map (kbd "s s") 'tsp-dired-sort-by-for-solaris)
-(define-key dired-mode-map (kbd "s .") 'tsp-dired-sort-by-invisible-only)
-(define-key dired-mode-map (kbd "s z") 'tsp-dired-sort-by-size)
+(define-key dired-mode-map (kbd "s RET") 'pl/dired-sort-by-default)
+(define-key dired-mode-map (kbd "s a") 'pl/dired-sort-by-show-all)
+(define-key dired-mode-map (kbd "s t") 'pl/dired-sort-by-date)
+(define-key dired-mode-map (kbd "s X") 'pl/dired-sort-by-extenstion)
+(define-key dired-mode-map (kbd "s s") 'pl/dired-sort-by-for-solaris)
+(define-key dired-mode-map (kbd "s .") 'pl/dired-sort-by-invisible-only)
+(define-key dired-mode-map (kbd "s z") 'pl/dired-sort-by-size)
 
 ;; Sorting ends there-------------------------------------------------------------------------------------
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Shell command guess
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (defadvice dired-run-shell-command (around tsp-dired-run-shell-command (command))
+;; (defadvice dired-run-shell-command (around pl/dired-run-shell-command (command))
 ;;   "run a shell command COMMAND .
 ;; If the COMMAND ends with `&' then run it in background and *discard* the
 ;; output, otherwise simply let the original `dired-run-shell-command' run it."
 ;;   (if (string-match "&[[:blank:]]*$" command)
-;;       (let ((proc (start-process "tsp-shell" nil shell-file-name
+;;       (let ((proc (start-process "pl/shell" nil shell-file-name
 ;;                                  shell-command-switch
 ;;                                  (substring command 0 (match-beginning 0)))))
 ;;         (set-process-sentinel proc 'shell-command-sentinel))
 ;;       ad-do-it))
 ;; (ad-activate 'dired-run-shell-command)
 
-;; (defmacro tsp-dired-define-assoc-group (patterns actions &optional name)
+;; (defmacro pl/dired-define-assoc-group (patterns actions &optional name)
 ;;   "define an assoc entry to help dired guess the shell command.
 ;; PATTERN is a list of regexps used to match the filename.
 ;; NAME is a list of string or expression which eval to a string
@@ -373,23 +373,23 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;; (add-hook 'dired-load-hook
 ;;           (lambda ()
 ;;             (setq dired-guess-shell-alist-user nil)
-;;             (tsp-dired-define-assoc-group
+;;             (pl/dired-define-assoc-group
 ;;              ("rm" "rmvb" "RM" "RMVB" "avi" "mpg" "mpeg" "mov")
 ;;              ("mplayer * &")
 ;;              video)
-;;             (tsp-dired-define-assoc-group
+;;             (pl/dired-define-assoc-group
 ;;              ("pdf" "PDF")
 ;;              ("acroread * &" "xpdf * &")
 ;;              pdf-document)
-;;             (tsp-dired-define-assoc-group
+;;             (pl/dired-define-assoc-group
 ;;              ("png" "jpg" "jpeg" "gif")
 ;;              ("xloadimage * &" "gqview * &")
 ;;              image)
-;;             (tsp-dired-define-assoc-group
+;;             (pl/dired-define-assoc-group
 ;;              ("chm" "CHM")
 ;;              ("xchm * &")
 ;;              chm-document)
-;;             (tsp-dired-define-assoc-group
+;;             (pl/dired-define-assoc-group
 ;;              ("html" "HTML" "htm" "HTML")
 ;;              ("firefox * &"))))
 
@@ -405,11 +405,11 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;;     (if handler
 ;;  (apply handler 'shell-command (list command))
 ;;       ;; (shell-command command)))
-;;       (tsp-shell-command-asynchronously command)))
+;;       (pl/shell-command-asynchronously command)))
 ;;   ;; Return nil for sake of nconc in dired-bunch-files.
 ;;   nil)
 
-;; (defun tsp-shell-command-asynchronously (cmd)
+;; (defun pl/shell-command-asynchronously (cmd)
 ;;   (start-process-shell-command cmd nil cmd))
 
 
@@ -482,7 +482,7 @@ and blocks emacs.  The default for ASYNC is t." t)
        (car (split-string (shell-command-to-string "echo $OSTYPE")))
        "linux-gnu")
 
-  (setq tsp-dircolors-string
+  (setq pl/dircolors-string
         (replace-regexp-in-string
          ":$" "" (cadr
                   (split-string
@@ -490,18 +490,18 @@ and blocks emacs.  The default for ASYNC is t." t)
                    "'"))))
 
   ;; colored by file extensions
-  (setq tsp-dircolors-extensions
+  (setq pl/dircolors-extensions
         (split-string
          (replace-regexp-in-string
           "=[0-9;]+\\|\\*\\." ""
-          (replace-regexp-in-string "^[^*]*" "" tsp-dircolors-string))
+          (replace-regexp-in-string "^[^*]*" "" pl/dircolors-string))
          ":"))
 
-  (defun tsp-dircolors-get-escape-seq (regexp)
-    "Get escape-seq by matching REGEXP against `tsp-dircolors-string'.
-e.g., (tsp-dircolors-get-escape-seq \"*.gz\") => \"01;31\""
-    (string-match (concat regexp "=\\([^:]+\\):") tsp-dircolors-string)
-    (match-string 1 tsp-dircolors-string))
+  (defun pl/dircolors-get-escape-seq (regexp)
+    "Get escape-seq by matching REGEXP against `pl/dircolors-string'.
+e.g., (pl/dircolors-get-escape-seq \"*.gz\") => \"01;31\""
+    (string-match (concat regexp "=\\([^:]+\\):") pl/dircolors-string)
+    (match-string 1 pl/dircolors-string))
 
   (setq dired-font-lock-keywords
         `(,(list dired-subdir-regexp '(1 dired-header-face)) ; Directory headers.
@@ -555,7 +555,7 @@ e.g., (tsp-dircolors-get-escape-seq \"*.gz\") => \"01;31\""
                   `(".+"
                     (dired-move-to-filename)
                     nil
-                    (0 (ansi-color-get-face ,(tsp-dircolors-get-escape-seq "ex")))))
+                    (0 (ansi-color-get-face ,(pl/dircolors-get-escape-seq "ex")))))
 
            ;; colorful by extensions
            ,@(mapcar (lambda (ext)
@@ -563,8 +563,8 @@ e.g., (tsp-dircolors-get-escape-seq \"*.gz\") => \"01;31\""
                           (".+"
                            (dired-move-to-filename)
                            nil
-                           (0 (ansi-color-get-face ,(tsp-dircolors-get-escape-seq ext))))))
-                     tsp-dircolors-extensions)
+                           (0 (ansi-color-get-face ,(pl/dircolors-get-escape-seq ext))))))
+                     pl/dircolors-extensions)
 
            ;;
            ;; Files suffixed with `completion-ignored-extensions'.
@@ -591,7 +591,7 @@ e.g., (tsp-dircolors-get-escape-seq \"*.gz\") => \"01;31\""
                          nil (0 dired-ignored-face)))))))
 
 
-(defun tsp-view-chm (file)
+(defun pl/view-chm (file)
   (interactive
    (list (let ((file (dired-get-filename)))
            (or file

@@ -99,7 +99,8 @@
 
 
 ;;; which func mode
-(which-function-mode 1)
+;; BUG: GNU Emacs 24.1.50.1, it will casue tons of error error.
+;; (which-function-mode 1)
 (eval-after-load "which-func"
   '(set-face-foreground 'which-func "Yellow"))
 
@@ -391,26 +392,50 @@ vi style of % jumping to matching brace."
 
 ;; paren end there----------------------------------------------------------------------
 
+;;; scroll
 (when window-system
-  (mouse-wheel-mode t))
+  (mouse-wheel-mode t)
+  ;; scroll one line at a time (less "jumpy" than defaults)
+  (setq mouse-wheel-scroll-amount '(1  ; one line at a time
+                                    ((shift) . 1)
+                                    ((control))))
+  (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
+  ;; scroll window under mouse
+  (setq mouse-wheel-follow-mouse t))
 
-;;Scroll;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (global-set-key (kbd "<mouse-1>") 'mouse-set-point)
+;; (global-set-key (kbd "<down-mouse-1>") 'mouse-drag-region)
+;; (global-set-key (kbd "<C-down-mouse-1>") 'mouse-buffer-menu)
 
-;; (set-face-background 'scroll-bar "slategray4")
-;; (set-face-foreground 'scroll-bar "white")
-;;不要滚动栏，现在都用滚轴鼠标了，可以不用滚动栏了
-;;(scroll-bar-mode nil)
+;; (global-set-key [M-down-mouse-1] 'mouse-drag-secondary-pasting)
+;; (global-set-key [M-S-down-mouse-1] 'mouse-drag-secondary-moving)
+(global-set-key (kbd "<H-mouse-1>") 'browse-url-at-mouse)
 
-;; (require 'smooth-scrolling nil t)
-;; (setq smooth-scroll-margin 3)
+;; mouse button one drags the scroll bar
+(global-set-key [vertical-scroll-bar down-mouse-1] 'scroll-bar-drag)
 
-;; 防止页面滚动时跳动， scroll-margin 3 可以在靠近屏幕边沿6行时就开始滚动，可以很好的看到上下文
-(setq scroll-step 1                     ; Scroll by one line at a time
+;; ;; setup scroll mouse settings
+;; (defun up-slightly () (interactive) (scroll-up 5))
+;; (defun down-slightly () (interactive) (scroll-down 5))
+;; (global-set-key [mouse-4] 'down-slightly)
+;; (global-set-key [mouse-5] 'up-slightly)
+
+;; (defun up-one () (interactive) (scroll-up 1))
+;; (defun down-one () (interactive) (scroll-down 1))
+;; (global-set-key [S-mouse-4] 'down-one)
+;; (global-set-key [S-mouse-5] 'up-one)
+
+;; (defun up-a-lot () (interactive) (scroll-up))
+;; (defun down-a-lot () (interactive) (scroll-down))
+;; (global-set-key [C-mouse-4] 'down-a-lot)
+;; (global-set-key [C-mouse-5] 'up-a-lot)
+
+(setq scroll-step 1                     ; keyboard scroll one line at a time
       scroll-margin 3
       scroll-conservatively 10000)     ; Fix the whole huge-jumps-scrolling-between-windows nastiness
-;; (setq next-screen-context-lines 2)  ; how many from page up/down
+(setq next-screen-context-lines 3)  ; how many from page up/down
 ;; What it says. Keeps the cursor in the same relative row during pgups and dwns.
-;; (setq scroll-preserve-screen-position t)
+(setq scroll-preserve-screen-position t)
 
 ;; "Don't hscroll unless needed"- ? More voodoo lisp.
 (setq hscroll-margin 1)
@@ -678,23 +703,23 @@ vi style of % jumping to matching brace."
 ;; (global-set-key  "\C-cl"      'recenter-to-first-line)
 
 ;;临时记号
-(defun tsp-point-to-register()
+(defun pl/point-to-register()
   "Store cursorposition _fast_ in a register.
-Use tsp-jump-to-register to jump back to the stored
+Use pl/jump-to-register to jump back to the stored
 position."
   (interactive)
   (point-to-register 6)
   (message "point-to-register 6"))
 
-(defun tsp-jump-to-register()
+(defun pl/jump-to-register()
   "Switches between current cursorposition and position
-that was stored with tsp-point-to-register."
+that was stored with pl/point-to-register."
   (interactive)
   (let ((tmp (point-marker)))
     (jump-to-register 6)
     (set-register 6 tmp)))
-(global-set-key (kbd "C-c 6") 'tsp-point-to-register)
-(global-set-key (kbd "C-c ^") 'tsp-jump-to-register)
+(global-set-key (kbd "C-c 6") 'pl/point-to-register)
+(global-set-key (kbd "C-c ^") 'pl/jump-to-register)
 ;;===========================================================
 
 ;;=============================================
@@ -707,7 +732,7 @@ that was stored with tsp-point-to-register."
 (add-hook 'before-save-hook 'time-stamp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun tsp-insert-file-variable ()
+(defun pl/insert-file-variable ()
   "Insert file variable string \"-*- Major-Mode-Name -*-\" with
   comment char"
   (interactive)
@@ -747,7 +772,7 @@ if it is displayed there."
 
 ;;----------------------------------------------------------------------
 
-;; (defun tsp-create/switch-scratch ()
+;; (defun pl/create/switch-scratch ()
 ;;   (interactive)
 ;;   (let ((buf (get-buffer "*scratch*")))
 ;;     (switch-to-buffer (get-buffer-create "*scratch*"))
@@ -1096,7 +1121,7 @@ This command is to be used interactively."
 
 
 ;;;###autoload
-(defun deftsp-insert-char-next-line (arg)
+(defun pl/insert-char-next-line (arg)
   "insert char below the cursor"
   (interactive "p")
   (let ((col (current-column))
@@ -1119,13 +1144,13 @@ This command is to be used interactively."
                          " line.")))))
 
 ;;;###autoload
-(defun deftsp-insert-char-prior-line (arg)
+(defun pl/insert-char-prior-line (arg)
   "insert char above the cursor"
   (interactive "p")
-  (tsp-insert-char-next-line (- arg)))
+  (pl/insert-char-next-line (- arg)))
 
-(global-set-key (kbd "M-[") 'deftsp-insert-char-prior-line)
-(global-set-key (kbd "M-]") 'deftsp-insert-char-next-line)
+(global-set-key (kbd "M-[") 'pl/insert-char-prior-line)
+(global-set-key (kbd "M-]") 'pl/insert-char-next-line)
 
 ;;----------------------------------------------------------------------------------------------------
 ;; (add-hook 'find-file-hooks
@@ -1184,7 +1209,7 @@ This command is to be used interactively."
 ;;   (shell-command "rsync -u ~/diary a013775@serdis.dis.ulpgc.es:~/diary"))
 
 
-;; (defun tsp-shell-command ()
+;; (defun pl/shell-command ()
 ;;   "Launch a shell command."
 ;;   (interactive)
 ;;   (let ((command (read-string "Command: ")))
@@ -1192,7 +1217,7 @@ This command is to be used interactively."
 
 
 ;; check for unsaved changes for killing
-;; (defun tsp-context-kill (arg)
+;; (defun pl/context-kill (arg)
 ;;   "Kill buffer, taking gnuclient into account."
 ;;   (interactive "p")
 ;;   (when (eq major-mode 'erc-mode)

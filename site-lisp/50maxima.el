@@ -1,8 +1,8 @@
-;;; tsp-maxima.el ---
+;;; 50maxima.el ---
 
-;; Copyright (C) 2007  S.P.Tseng
+;; Copyright (C) 2007  Shihpin Tseng
 
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 
 ;; maxima include imaxima, there's no need to install app-emacs/imaxima
@@ -25,17 +25,17 @@
 ;; (setq maxima-info-dir "/usr/share/info/"
 ;;       maxima-use-dynamic-complete t)
 
-;; (defun tsp-maxima-mode-hook ()
-;;   (setq tsp-starting-imaxima nil)
+;; (defun pl/maxima-mode-hook ()
+;;   (setq pl/starting-imaxima nil)
 ;;   (defun maxima-start ()
 ;;     "Start the Maxima process."
 ;;     (interactive)
 ;;     (if (not (processp inferior-maxima-process))
-;;         (if (not tsp-starting-imaxima)
+;;         (if (not pl/starting-imaxima)
 ;;             (let ((origbuffer (current-buffer)))
-;;               (setq tsp-starting-imaxima t)
+;;               (setq pl/starting-imaxima t)
 ;;               (imaxima)
-;;               (setq tsp-starting-imaxima nil)
+;;               (setq pl/starting-imaxima nil)
 ;;               (switch-to-buffer origbuffer))))
 ;;     (if (processp inferior-maxima-process)
 ;;         (unless (eq (process-status inferior-maxima-process) 'run)
@@ -66,7 +66,7 @@
 ;;           (inferior-maxima-mode)))
 ;;       (sit-for 0 maxima-after-output-wait))))
 
-;; (add-remove-hook 'maxima-mode-hook 'tsp-maxima-mode-hook)
+;; (add-remove-hook 'maxima-mode-hook 'pl/maxima-mode-hook)
 
 
 

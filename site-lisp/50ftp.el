@@ -1,6 +1,6 @@
 ;;; 50ftp.el ---
 
-;; Copyright (C) 2008  S.P.Tseng
+;; Copyright (C) 2008  Shihpin Tseng
 
 
 ;; (require 'ftp-file-upload)

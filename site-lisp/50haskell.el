@@ -1,4 +1,4 @@
-;;; tsp-haskell.el ---
+;;; 50haskell.el ---
 
 ;; Copyright (C) 2007  Shihpin Tseng
 

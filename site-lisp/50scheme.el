@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-05-08 15:02:30 Shihpin Tseng>
+;; Time-stamp: <2012-05-31 14:56:56 Shihpin Tseng>
 
 
 (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
@@ -221,7 +221,7 @@
 
 ;;给cmuscheme.el加入执行命令时，自动启动scheme解释器，自动显示Scheme buffer。加
 ;;加入了scheme-send-line函数，并且绑定到 C-c C-c
-;; (defun tsp-scheme-mode-hook ()
+;; (defun pl/scheme-mode-hook ()
 ;;   (defun scheme-send-region (start end)
 ;;     "Send the current region to the inferior Scheme process."
 ;;     (interactive "r")
@@ -240,7 +240,7 @@
 ;;     (comint-send-string (scheme-proc) "\n")
 ;;     (scheme-display-buffer)))
 
-;; (add-hook 'scheme-mode-hook 'tsp-scheme-mode-hook)
+;; (add-hook 'scheme-mode-hook 'pl/scheme-mode-hook)
 
 ;; (defun scheme-display-buffer ()
 ;;   "Display the inferior-maxima-process buffer so the recent output is visible."

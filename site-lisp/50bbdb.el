@@ -1,6 +1,6 @@
-;;; tsp-bbdb.el ---
-;; Copyright (C) 2008  S.P.Tseng
-;; Author: S.P.Tseng <mendouer@163.com>
+;;; 50bbdb.el ---
+;; Copyright (C) 2008  Shihpin Tseng
+;; Author: Shihpin Tseng <mendouer@163.com>
 
 (setq bbdb-file "~/.bbdb")
 (setq bbdb-file-coding-system 'utf-8)

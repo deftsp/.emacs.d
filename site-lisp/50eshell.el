@@ -1,7 +1,7 @@
 ;;; 50eshell.el ---
 
-;; Copyright (C) 2008  S.P.Tseng
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Copyright (C) 2008  Shihpin Tseng
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 
 ;;; eshell-glob

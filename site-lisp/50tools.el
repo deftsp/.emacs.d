@@ -134,9 +134,9 @@
 (autoload 'ascii-table-show "ascii-table-show" "Create a buffer and print the ascii table" t)
 
 ;;; go-to-char
-(defun tsp-go-to-char (n char)
+(defun pl/go-to-char (n char)
   "Move forward to Nth occurence of CHAR.
-Typing `tsp-go-to-char-key' again will move forwad to the next
+Typing `pl/go-to-char-key' again will move forwad to the next
 Nth occurence of CHAR."
   (interactive "p\ncGo to char: ")
   (search-forward (string char) nil nil n)
@@ -144,7 +144,7 @@ Nth occurence of CHAR."
                      char)
     (search-forward (string char) nil nil n))
   (setq unread-command-events (list last-input-event)))
-(define-key global-map (kbd "C-c C-a") 'tsp-go-to-char)
+(define-key global-map (kbd "C-c C-a") 'pl/go-to-char)
 
 
 
@@ -267,25 +267,25 @@ Nth occurence of CHAR."
 ;;(add-hook 'emacs-lisp-mode-hook 'auto-make-header)
 ;;(add-hook 'c-mode-common-hook   'auto-make-header)
 
-;; (defsubst tsp-header-author ()
+;; (defsubst pl/header-author ()
 ;;   "Insert current user's name (`user-full-name') as this file's author."
 ;;   (insert header-prefix-string "Author: " (user-full-name) " <kirby1985@gmail.com>" "\n")
 ;;   )
 
-;; (defsubst tsp-header-svn-keyword ()
+;; (defsubst pl/header-svn-keyword ()
 ;;   "Insert $Id$."
 ;;   (insert header-prefix-string "$Id$" "\n"))
 
 ;; (setq make-header-hook '(
 ;;                          ;;header-mode-line
 ;;                          header-title
-;;                          tsp-header-svn-keyword
+;;                          pl/header-svn-keyword
 ;;                          ;;header-blank
 ;;                          ;;header-file-name
 ;;                          header-description
 ;;                          ;;header-status
 ;;                          ;;header-author
-;;                          tsp-header-author
+;;                          pl/header-author
 ;;                          ;;header-maintainer
 ;;                          ;;header-copyright
 ;;                          header-creation-date
@@ -449,7 +449,7 @@ Nth occurence of CHAR."
 
 
 ;;Turns tabs into spaces
-;; (defun tsp-untabify ()
+;; (defun pl/untabify ()
 ;;   "My untabify function as discussed and described at
 ;;  http://www.jwz.org/doc/tabs-vs-spaces.html
 ;;  and improved by Claus Brunzema:
@@ -465,7 +465,7 @@ Nth occurence of CHAR."
 ;; (add-hook 'some-mode-hook
 ;;           '(lambda ()
 ;;             (make-local-hook 'write-contents-hooks)
-;;             (add-hook 'write-contents-hooks 'tsp-untabify nil t)))
+;;             (add-hook 'write-contents-hooks 'pl/untabify nil t)))
 
 
 ;;Enable undoc; a mode which edits MS Word .doc files.
@@ -499,7 +499,7 @@ Nth occurence of CHAR."
 
 ;;-----------------------------------------------------------------------------------------------
 
-;; (defun tsp-transpose-buffers ()
+;; (defun pl/transpose-buffers ()
 ;;   "Transpose this buffer and the buffer in other window"
 ;;   (interactive)
 ;;   (let ((current-window-buffer (current-buffer)))
@@ -511,7 +511,7 @@ Nth occurence of CHAR."
 ;;   (other-window 1))
 
 
-;; (defun tsp-value-to-string (value)
+;; (defun pl/value-to-string (value)
 ;;   "Convert VALUE to string.
 ;; This function will automatically identify the type of VALUE, and invoke
 ;; the appropiate conversion function"
@@ -523,7 +523,7 @@ Nth occurence of CHAR."
 ;;          (error "Cannot convert value to string."))))
 
 
-;; (defun tsp-read-lines-in-buffer (&optional buffer)
+;; (defun pl/read-lines-in-buffer (&optional buffer)
 ;;   "Return list of lines in current buffer.
 ;; If BUFFER if non-nil, switch to BUFFER before reading lines. The list returned
 ;; will be in reverse with regard to the sequence of lines in the buffer read.
@@ -566,37 +566,37 @@ Nth occurence of CHAR."
 ;; nice mark - shows mark as a highlighted 'cursor' so user 'always'
 ;; sees where the mark is. Especially nice for killing a region.
 
-;; (defvar tsp-mark-overlay nil
+;; (defvar pl/mark-overlay nil
 ;;   "Overlay to show the position where the mark is")
-;; (make-variable-buffer-local 'tsp-mark-overlay)
+;; (make-variable-buffer-local 'pl/mark-overlay)
 
-;; (put 'tsp-mark-mark 'face 'secondary-selection)
+;; (put 'pl/mark-mark 'face 'secondary-selection)
 
-;; (defvar tsp-mark-old-position nil
+;; (defvar pl/mark-old-position nil
 ;;   "The position the mark was at. To be able to compare with the
 ;; current position")
 
-;; (defun tsp-show-mark ()
+;; (defun pl/show-mark ()
 ;;   "Display an overlay where the mark is at. Should be hooked into
 ;; activate-mark-hook"
-;;   (unless tsp-mark-overlay
-;;     (setq tsp-mark-overlay (make-overlay 0 0))
-;;     (overlay-put tsp-mark-overlay 'category 'tsp-mark-mark))
+;;   (unless pl/mark-overlay
+;;     (setq pl/mark-overlay (make-overlay 0 0))
+;;     (overlay-put pl/mark-overlay 'category 'pl/mark-mark))
 ;;   (let ((here (mark t)))
 ;;     (when here
-;;       (move-overlay tsp-mark-overlay here (1+ here)))))
+;;       (move-overlay pl/mark-overlay here (1+ here)))))
 
-;; (defadvice  exchange-point-and-mark (after tsp-mark-exchange-point-and-mark)
+;; (defadvice  exchange-point-and-mark (after pl/mark-exchange-point-and-mark)
 ;;   "Show visual marker"
-;;   (tsp-show-mark))
+;;   (pl/show-mark))
 
 ;; (ad-activate 'exchange-point-and-mark)
-;; (add-hook 'activate-mark-hook 'tsp-show-mark)
+;; (add-hook 'activate-mark-hook 'pl/show-mark)
 ;; ----------------------------------------------------------------------------------------------------
 ;; mark word be bound to M-@
-;; (global-set-key (kbd "C-c SPC") 'deftsp-mark-current-word)
-(global-set-key (kbd "C-c k w") 'deftsp-kill-current-word)
-(defun deftsp-mark-current-word ()
+;; (global-set-key (kbd "C-c SPC") 'pl/mark-current-word)
+(global-set-key (kbd "C-c k w") 'pl/kill-current-word)
+(defun pl/mark-current-word ()
   "Put point at beginning of current word, set mark at end."
   (interactive)
   (let* ((opoint (point))
@@ -621,7 +621,7 @@ Nth occurence of CHAR."
 ;;   (mark-word nil t))
 
 
-(defun deftsp-kill-current-word ()
+(defun pl/kill-current-word ()
   "kill current word."
   (interactive)
   (let* ((opoint (point))
@@ -679,7 +679,7 @@ Nth occurence of CHAR."
     (setq next-line-add-newlines nil)
     (kill-new (buffer-substring s (point)))))
 
-(defun tsp-dup-line-down ()
+(defun pl/dup-line-down ()
   "duplicate this line at next line"
   (interactive)
   (let ((c (current-column)))
@@ -689,10 +689,10 @@ Nth occurence of CHAR."
     (yank)
     (previous-line 1)
     (move-to-column c)))
-(global-set-key (kbd "<M-S-return>") 'tsp-dup-line-down)
+(global-set-key (kbd "<M-S-return>") 'pl/dup-line-down)
 ;;----------------------------------------------------------------------------------------------------
 
-(defun deftsp-strip-all-blank-lines ()
+(defun pl/strip-all-blank-lines ()
   "Strip all blank lines in current buffer."
   (interactive)
   (save-excursion
@@ -700,7 +700,7 @@ Nth occurence of CHAR."
       (replace-match "" t t))))
 
 ;; resolve file names
-(defun deftsp-resolve-file-name (file type)
+(defun pl/resolve-file-name (file type)
   "Resolve file name in various ways.
 
 file is the abosolute filename.
@@ -718,7 +718,7 @@ type stands for different kinds of resolve.
     (t (file-name-extension file))))
 
 ;; insert line number before each line.
-(defun deftsp-numerate-lines ()
+(defun pl/numerate-lines ()
   "Insert line numbers into buffer"
   (interactive)
   (save-excursion
@@ -805,7 +805,7 @@ is all)"
             (setq p (point)))))))
 
 ;; count Chinese, English words
-(defun deftsp-count-ce-word (beg end)
+(defun pl/count-ce-word (beg end)
   "Count Chinese and English words in marked region."
   (interactive "r")
   (let ((cn-word 0)
@@ -819,8 +819,8 @@ is all)"
     (message (format "Total: %d (cn: %d, en: %d) words, %d bytes."
                      total-word cn-word en-word total-byte))))
 
-;; tsp-word-count-analysis (how many times a word has appeared).
-(defun deftsp-word-count-analysis (start end)
+;; pl/word-count-analysis (how many times a word has appeared).
+(defun pl/word-count-analysis (start end)
   "Count how many times each word is used in the region.
     Punctuation is ignored."
   (interactive "r")
@@ -838,18 +838,18 @@ is all)"
     words))
 
 
-(defun deftsp-hide-buffer ()
+(defun pl/hide-buffer ()
   "Hide current buffer, and enlarge the other one if exists."
   (interactive)
   (delete-windows-on (buffer-name)))
 
-(defun deftsp-list-ref (list ref)
+(defun pl/list-ref (list ref)
   "Return the ref-th element of list."
   (if (= ref 0)
       (car list)
-      (tsp-list-ref (cdr list) (1- ref))))
+      (pl/list-ref (cdr list) (1- ref))))
 
-(defun deftsp-info (file)
+(defun pl/info (file)
   (interactive
    (list (read-file-name "info: ")))
   (info file))
@@ -869,13 +869,13 @@ is all)"
   (while (search-forward "\n" nil t)
     (replace-match "\r\n")))
 
-(defun deftsp-delete-line (&optional arg)
+(defun pl/delete-line (&optional arg)
   "Delete the rest of the current line; if no nonblanks there, delete thru newline.
 With prefix argument, delete that many lines from point.
 Negative arguments delete lines backward.
 With zero argument, deletes the text before point on the current line.
 
-Note its difference between `tsp-delete-line' and `kill-line' is
+Note its difference between `pl/delete-line' and `kill-line' is
 that, the deleted contents won't be inserted to the `kill-ring'."
   (if arg
       (dotimes (i arg)
@@ -887,7 +887,7 @@ that, the deleted contents won't be inserted to the `kill-ring'."
           (delete-region (point) (save-excursion (end-of-line)
                                                  (point))))))
 
-;; (defun deftsp-soft-kill-ring-save (beg end)
+;; (defun pl/soft-kill-ring-save (beg end)
 ;;   "Same as `kill-ring-save' except it will convert hard newlines to soft newlines.
 ;; This could be useful for copying texts from Emacs and pasting it to blog websites."
 ;;   (interactive "r")
@@ -913,7 +913,7 @@ that, the deleted contents won't be inserted to the `kill-ring'."
 ;;----------------------------------------------------------------------------------------------------
 ;;; Cool utility function to refresh all open buffers
 ;;----------------------------------------------------------------------------------------------------
-(defun deftsp-revert-all-buffers()
+(defun pl/revert-all-buffers()
   "Refreshs all open buffers from their respective files"
   (interactive)
   (let* ((list (buffer-list))
@@ -1222,7 +1222,7 @@ such character is found, following options are shown:
 ;; (require 'generic-apt-install)
 
 ;;; Insert a path into the current buffer
-(defun deftsp-insert-path (file)
+(defun pl/insert-path (file)
   "insert file"
   (interactive "FPath: ")
   (insert (expand-file-name file)))

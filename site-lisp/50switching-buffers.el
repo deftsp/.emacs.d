@@ -1,5 +1,5 @@
 ;;;
-;; created by S.P.Tseng
+;; created by Shihpin Tseng
 
 
 ;;; ibuffer.el

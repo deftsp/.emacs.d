@@ -1,8 +1,8 @@
 ;;; 50tab-completion.el ---
 
-;; Copyright (C) 2008  S.P.Tseng
+;; Copyright (C) 2008  Shihpin Tseng
 
-;; Author: S.P.Tseng <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
 (require 'tabkey2)
@@ -12,7 +12,7 @@
 
 ;; --------------------------------------------------------------------------------
 ;; tab completion
-;; (defun tsp-indent-or-complete ()
+;; (defun pl/indent-or-complete ()
 ;;   "Complete if point is at end of a word, otherwise indent line."
 ;;   (interactive)
 ;;   (if (looking-at "\\>")
@@ -21,7 +21,7 @@
 
 ;; (add-hook 'c-mode-common-hook
 ;;           (function (lambda ()
-;;             (local-set-key (kbd "<tab>") 'tsp-indent-or-complete))))
+;;             (local-set-key (kbd "<tab>") 'pl/indent-or-complete))))
 
 
 ;; "To hit tab to auto-complete (like bash does) put this in

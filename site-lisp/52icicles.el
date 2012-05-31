@@ -1,8 +1,8 @@
 ;; ;;; some config about icicle
 
-;; ;; Copyright (C) 2008  S.P.Tseng
+;; ;; Copyright (C) 2008  Shihpin Tseng
 
-;; ;; Author: S.P.Tseng <deftsp@gmail.com>
+;; ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;; (require 'icicles nil t)
 ;; (setq icicle-fuzzy-completion-flag nil        ; Fuzzy-Match Completion
@@ -176,7 +176,7 @@
 ;;          (error "%s is not a project directory." default-directory))))
 
 
-;; (icicle-define-command tsp-change-font
+;; (icicle-define-command pl/change-font
 ;;                        "Change font of current frame."
 ;;                        (lambda (font)
 ;;                          (modify-frame-parameters orig-frame
