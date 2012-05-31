@@ -1,6 +1,5 @@
-;;----------------------------------------------------------------------------
-;; by S.P.Tseng
-;;----------------------------------------------------------------------------
+;;; 50dired.el ---
+;; by Shihpin Tseng
 
 (require 'dired)
 (require 'ansi-color)
@@ -39,10 +38,11 @@ and blocks emacs.  The default for ASYNC is t." t)
 
 (setq dired-isearch-filenames 'dwim)
 
-;; 让dired可以递归的拷贝和删除目录。
 (setq dired-recursive-copies 'always)
 (setq dired-recursive-deletes 'top)
-;; 复制和移动时把当前 emacs 中另一个窗口中的目录为对象。这通常是我们希望的方式。
+;; If non-nil, Dired tries to guess a default target directory.
+;; This means: if there is a dired buffer displayed in the next window,
+;; use its current subdir, instead of the current subdir of this dired buffer.
 (setq dired-dwim-target t)
 
 ;; Enable `a' in dired-mode, to open files/dirs in the same buffer.
