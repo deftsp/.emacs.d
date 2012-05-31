@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-05-31 16:13:25 Shihpin Tseng>
+;; Time-stamp: <2012-05-31 16:15:01 Shihpin Tseng>
 
 ;;; imenu
 ;; (require 'imenu)
@@ -155,9 +155,7 @@
      (add-hook 'lisp-mode-hook 'highlight-symbol-mode)
      (add-hook 'emacs-lisp-mode-hook 'highlight-symbol-mode)
      (add-hook 'scheme-mode-hook 'highlight-symbol-mode)
-     (setq highlight-symbol-idle-delay 1.2)
-     (set-face-foreground 'highlight-symbol-face "#111111")
-     (set-face-background 'highlight-symbol-face "dodgerblue2")))
+     (setq highlight-symbol-idle-delay 1.2)))
 
 
 ;;----------------------------------------------------------------------------------------------------

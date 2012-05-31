@@ -33,6 +33,9 @@
 
    `(default ((t (:background ,palory-bg :foreground ,palory-fg))))
 
+   ;; highlight-symbol
+   `(highlight-symbol-face ((t (:background "dodgerblue3" :foreground ,palory-fg))))
+
    ;; info
    '(info-xref ((t (:foreground "DeepSkyBlue2" :weight bold :underline nil))))
    '(info-xref-visited ((t (:inherit info-xref :weight normal))))
