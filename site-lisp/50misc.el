@@ -396,7 +396,7 @@ vi style of % jumping to matching brace."
 (when window-system
   (mouse-wheel-mode t)
   ;; scroll one line at a time (less "jumpy" than defaults)
-  (setq mouse-wheel-scroll-amount '(1  ; one line at a time
+  (setq mouse-wheel-scroll-amount '(0.01  ; one line at a time
                                     ((shift) . 1)
                                     ((control))))
   (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
