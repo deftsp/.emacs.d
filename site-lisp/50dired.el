@@ -24,19 +24,6 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;; FIXME: some of the file extension will not be treat as txt file,such as .js
 ;; (add-hook 'find-file-hook 'mailcap-view-find-file-hook)
 
-;; dired-x 是 dired-mode 的一个扩展。提供了许多很有用的命令和特性。
-;; 1. 隐藏配置文件和其它类型的文件。通过设置 dired-omit-extensions 和
-;;    dired-omit-files
-;; 2. 把文件和特定的 shell 程序关联。通过设置
-;;    dired-guess-shell-alist-default， 在文件上使用 "!" 会调用相应的命令
-;; 另外 dired-mode 下还有不常用但是比较有用的命令。比如
-;; dired-compare-directories 可以用于比较文件夹。
-
-
-;; i    插入子目录
-;; C-u i 使用特定的 ls 参数，插入子目录
-;; C-u l 改变子目录 ls 的参数
-
 ;;some useful variable
 ;;dired-omit-extensions
 
@@ -99,7 +86,7 @@ and blocks emacs.  The default for ASYNC is t." t)
           ".pdb" ".ilk" ".lrc"))
 
   (setq dired-omit-size-limit 150000)
-  (setq dired-guess-shell-alist-user
+  (setq dired-guess-shell-alist-user    ; use ! to call guess command
         `((,(regexp-opt '(".gif" ".png" ".bmp" ".jpg" ".tif" ".jpeg"))
             '("qiv"                     ; feh, "xloadimage -onroot"
               ))
@@ -134,17 +121,14 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-;;显示文件大小按k bytes
-;;(setq dired-listing-switches "-lA")
 (setq dired-listing-switches "-alh")
 
-;; 通过编辑 buffer 编辑文件名,之后 C-c C-c 提交修改；
+;; press `r' to modify the filename in the dired buffer, `C-c C-c' to commit
 (require 'wdired nil t)
 (when (featurep 'wdired)
   (autoload 'wdired-change-to-wdired-mode "wdired")
   (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode))
-;; % u 将标记的文件改为大写；
-;; % l 将标记的文件改为小写。
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; List directories first in dired(seems to not work)
@@ -716,13 +700,13 @@ e.g., (tsp-dircolors-get-escape-seq \"*.gz\") => \"01;31\""
 ;;            (funcall dired-omit-regexp-orig))))))
 ;; -----------------------------------------------------------------------------------------
 
-;;; tumme - Dired 的图片浏览器
+;;; tumme - Dired's image browser
 ;; "tumme" means thumb in Swedish. You need ImageMagick installed for tumme to work.
 ;; M-x tummel-dired RET path/to/photo/dir RET
-;; C-S-{n,p} 逐个浏览图片的缩略图
-;; C-t .     当前文件的缩略图
-;; C-t d     所有标记的文件的缩略图
-;; TAB       互换窗口
+;; C-S-{n,p} browser thumbnail one by one
+;; C-t .     thumbnail fo current file
+;; C-t d     thumbnails of all of the marked file
+;; TAB       exchange windows
 
 
 
@@ -750,8 +734,15 @@ e.g., (tsp-dircolors-get-escape-seq \"*.gz\") => \"01;31\""
                          :background "Blue4")))
 
 ;;;tips
+;; mark mutiple files in dired mode with m, press B to compile them to *.el.
+;; dired-compare-directories
+;; i     insert sub-directory
+;; C-u i insert sub-directory with specify arguments of ls
+;; C-u l change the arguments of ls of sub-directory
 
-;; 进入dired模式，然后在各个文件上用m标记多个需要编译的el文件，然后按一下B就可以批量重编译el文件了。方便吧
+;; % u   Rename all marked (or next ARG) files to upper case.
+;; % l   Rename all marked (or next ARG) files to lower case.
+
 
 
 (provide '50dired)
