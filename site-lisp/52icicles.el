@@ -4,15 +4,15 @@
 
 ;; ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-;; (require 'icicles nil t)
-;; (setq icicle-fuzzy-completion-flag nil        ; Fuzzy-Match Completion
-;;       icicle-command-abbrev-match-all-parts-flag nil
-;;       icicle-redefine-standard-commands-flag nil
-;;       ;; use `TAB' and `S-TAB' to change the behavior of cycling keys.
-;;       icicle-cycling-respects-completion-mode-flag t
-;;       icicle-ignore-space-prefix-flag t ; toggle this option from the minibuffer using `M-_'.
-;;       icicle-modal-cycle-up-keys '([up] "\C-p")      ;  I HATE arrow keys.
-;;       icicle-modal-cycle-down-keys '([down] "\C-n"))
+
+(add-to-list 'load-path "~/.emacs.d/lisp/icicles/")
+(require 'icicles)
+
+(setq icicle-show-Completions-initially-flag nil
+      icicle-command-abbrev-match-all-parts-flag nil)
+
+(icy-mode 1)
+
 
 ;; ;; (icicle-toggle-remote-file-testing)
 ;; (setq icicle-test-for-remote-files-flag nil)
@@ -189,3 +189,13 @@
 ;;                        (modify-frame-parameters orig-frame
 ;;                                                 (list (cons 'font orig-font)))
 ;;                        nil)
+
+(eval-after-load "icicles"
+  '(progn
+     (set-face-attribute 'icicle-current-candidate-highlight nil :background "orchid4")
+     (set-face-attribute 'icicle-mustmatch-completion nil :box nil)
+     (set-face-attribute 'icicle-multi-command-completion nil :background 'unspecified :foreground "sandybrown")))
+
+
+
+(provide '52icicles)
