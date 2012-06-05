@@ -27,7 +27,7 @@
              '("\\.svn-base$" "\\.svn" "\\.jar$" "\\.git$" "\\.gz$" "\\.tar$" "\\.rar$"))
      (file-cache-add-directory-using-find "~/proj/notebook")
      ;; (file-cache-add-directory-list load-path)
-     (let ((cache-dirs '("~/" "/etc/")))
+     (let ((cache-dirs '("~/" "/etc/" "~/.emacs.d/site-lisp/")))
        (dolist (dir cache-dirs) (file-cache-add-directory dir)))))
 
 (provide '50filecache)
