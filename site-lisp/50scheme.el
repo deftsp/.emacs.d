@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-05-31 14:56:56 Shihpin Tseng>
+;; Time-stamp: <2012-06-04 09:03:36 Shihpin Tseng>
 
 
 (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
@@ -267,15 +267,15 @@
 
 
 ;;; scheme-complete
-(autoload 'scheme-smart-complete "scheme-complete" nil t)
-(autoload 'scheme-complete-or-indent "scheme-complete" nil t)
-(autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
+;; (autoload 'scheme-smart-complete "scheme-complete" nil t)
+;; (autoload 'scheme-complete-or-indent "scheme-complete" nil t)
+;; (autoload 'scheme-get-current-symbol-info "scheme-complete" nil t)
 
-(autoload 'scheme-smart-complete "scheme-complete" nil t)
-(eval-after-load 'scheme
-  '(progn
-     (define-key scheme-mode-map "\e\t" 'scheme-smart-complete) ; "\e" is the escape key. "\e\t" is escape-tab
-     (define-key scheme-mode-map "\t" 'scheme-complete-or-indent)))
+;; (autoload 'scheme-smart-complete "scheme-complete" nil t)
+;; (eval-after-load 'scheme
+;;   '(progn
+;;      (define-key scheme-mode-map "\e\t" 'scheme-smart-complete) ; "\e" is the escape key. "\e\t" is escape-tab
+;;      (define-key scheme-mode-map "\t" 'scheme-complete-or-indent)))
 
 
 ;; If you use eldoc-mode (included in Emacs), you can also get live
