@@ -159,10 +159,10 @@
   "put the special buffers in the bottom right"
   ;; The top left corner of the frame is considered to be row 0,
   ;; column 0.
-  (let ((target-window (window-at 4 (- (frame-height) 4)))
-        (pop-up-windows t))
-    (set-window-buffer (window--try-to-split-window target-window) buffer)
-    target-window))
+  (let* ((target-window (window-at 6 (- (frame-height) 6)))
+         (pop-up-windows t)
+         (window (window--try-to-split-window target-window)))
+    (set-window-buffer window buffer)))
 
 
 

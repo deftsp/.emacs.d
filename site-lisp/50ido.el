@@ -28,30 +28,21 @@
       ido-confirm-unique-completion t)
 
 ;;;
-;; C-f         切换成普通的 Minibuffer 输入模式
-;; C-j         新建或打开文件
-;; M-m         新建目录
-;; C-s, C-r    循环可选文件列表
-;; C-e         编辑
+;; C-f         fallback to non-ido `find-file' or switch to `ido-find-file' in ido-switch-buffer
+;; C-j         If no buffer or file exactly matching the prompt exists, maybe create a new one.
+;; M-m         current directory
+;; C-e         Edit absolute file name entered so far with ido; terminate by RET.
 
-;; M-n, M-p    工作目录历史
-;; M-o, C-M-o  工作文件历史
-;; M-f, M-d    使用 find 从当前位置查找文件或目录
+;; M-n, M-p    change working directory in list
+;; M-o, C-M-o  change working file name in list.
+;; M-f, M-d    find file or directory will find commnd from current direcotry
 
-;; C-t         Regexp 匹配开关
-;; C-p         前缀/子串匹配开关
-;; C-c         区分大小写匹配开关
-;; C-v         版本控制开关
-;; M-l         无修饰的直接打开文件
+;; C-t         toggle regexp
+;; C-p         toggle prefix
+;; C-c         toggle case
+;; M-l         Toggle literal reading of this file.
+;; C-a         toggle ignoring files specified with `ido-ignore-files'.
 
-;; 有时候你要创建一个新文件，这个文件名刚好是目录下某个文件名的一部分，如果直接回车会打开已经存在文件。解决的办法是输入文
-;; 件名后用 C-j 选择当前的输入。
-
-;; 在选择缓冲区时，默认隐藏的缓冲区（也就是缓冲区名的第一个字符是空格）是不显示的。可以用 C-a 切换显示隐藏的缓冲区。
-
-;; ido 匹配时默认是可以从文件名或缓冲区名任何位置开始。可以用 C-p 切换成前缀匹配。
-
-;; ido 的匹配可以是精确匹配，也可以是使用正则表达式。控制的选项是 ido-enable-regexp 变量。也可以用 C-t 临时切换匹配方式。
 
 (mapcar (lambda (str) (add-to-list 'ido-ignore-buffers str))
         '("^\\ " "^\\*Completions*" "^\\*Article\\*" "^\\*Apropos*"  "^\\*Ibuffer*"
@@ -63,19 +54,20 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;uses ido on the recently opened files
-(global-set-key (kbd "C-c r f") 'ido-choose-from-recentf)
-(defun ido-choose-from-recentf ()
+(global-set-key (kbd "C-c r f") 'pl/ido-choose-from-recentf)
+(defun pl/ido-choose-from-recentf ()
   "Use ido to select a recently opened file from the `recentf-list'"
   (interactive)
-  (let ((home (expand-file-name (getenv "HOME"))))
-    (find-file
-     (ido-completing-read "Recentf open: "
-                          (mapcar (lambda (path)
-                                    (replace-regexp-in-string home "~" path))
-                                  recentf-list)
-                          nil t))))
+  (find-file
+   (ido-completing-read "Recentf open: "
+                        (mapcar (lambda (path)
+                                  (replace-regexp-in-string
+                                   (expand-file-name "~") "~" path))
+                                recentf-list)
+                        nil t)))
 
-(defun fc-ido-copy-selection ()
+;;; ido copy selection
+(defun pl/ido-copy-selection ()
   "Copy the current ido selection to the kill ring."
   (interactive)
   (kill-new
@@ -84,33 +76,49 @@
             ido-text))))
 
 ;;; Using ido to open files from file name cache-------------------------------
-(defun pl/file-cache-ido-find-file (file)
-  "Using ido, interactively open file from file cache'.
-First select a file, matched using ido-switch-buffer against the contents
-in `file-cache-alist'. If the file exist in more than one
-directory, select directory. Lastly the file is opened."
-  (interactive (list (pl/file-cache-ido-read "File: "
-                                          (mapcar
-                                           (lambda (x)
-                                             (car x))
-                                           file-cache-alist))))
-  (let* ((record (assoc file file-cache-alist)))
+(defun pl/ido-file-cache-find-file (&optional init-text)
+  ;;   "Using ido, interactively open file from file cache'.
+  ;; First select a file, matched using ido-switch-buffer against the contents
+  ;; in `file-cache-alist'. If the file exist in more than one
+  ;; directory, select directory. Lastly the file is opened."
+  ;;   (interactive (list (pl/ido-file-cache-read "File: "
+  (interactive)
+  (let* ((file-name-list (mapcar (lambda (x)
+                                   (car x))
+                                 file-cache-alist))
+         (file (let ((ido-make-buffer-list-hook
+                      (lambda ()
+                        (setq ido-temp-list file-name-list)
+                        (setq ido-text-init (if init-text init-text "")))))
+                 (ido-read-buffer "File: ")))
+         (record (assoc file file-cache-alist)))
+
+    (ido-set-current-directory (cadr record))
+
     (find-file
      (expand-file-name
       file
       (if (= (length record) 2)
-          (car (cdr record))
-          (pl/file-cache-ido-read
-           (format "Find %s in dir: " file) (cdr record)))))))
+          (cadr record)
 
-(defun pl/file-cache-ido-read (prompt choices)
-  (let ((ido-make-buffer-list-hook
-         (lambda ()
-           (setq ido-temp-list choices))))
-    (ido-read-buffer prompt)))
+        (let ((ido-make-buffer-list-hook
+               (lambda ()
+                 (setq ido-text-init "")
+                 (setq ido-temp-list (cdr record)))))
+          (ido-read-buffer (format "Find %s in dir: " file))))))))
 
-(global-set-key (kbd "ESC ESC f") 'pl/file-cache-ido-find-file) ; equal to 'C-[ C-[ f'
-(define-key minibuffer-local-map [C-tab] 'pl/file-cache-ido-find-file)
+(global-set-key (kbd "ESC ESC f") 'pl/ido-file-cache-find-file) ; equal to 'C-[ C-[ f'
+(define-key minibuffer-local-map [C-tab] 'pl/ido-magic-file-cache)
+
+(defun pl/ido-magic-file-cache (arg)
+  "Drop into `pl/ido-file-cache-find-file'."
+  (interactive "P")
+  (when (memq ido-cur-item '(file buffer))
+    (setq ido-exit 'refresh)
+    (pl/ido-file-cache-find-file ido-text)
+    (exit-minibuffer)))
+
+
 ;; ---------------------------------------------------------------------------------
 
 ;; Invoking bookmarks from ido
