@@ -102,7 +102,7 @@
 
 ;; minimum width of window to be split horizontally for `display-buffer'
 (setq split-width-threshold 200
-      split-height-threshold 40)
+      split-height-threshold 20)
 
 
 ;; (defvaralias 'split-window-horizontally-threshold-width 'split-width-threshold)
@@ -148,41 +148,22 @@
 
 ;;; special window
 ;; thanks to http://stackoverflow.com/questions/1002091/how-to-force-emacs-not-to-display-buffer-in-a-specific-window
+(mapcar #'(lambda (buffer-name)
+            (add-to-list 'special-display-buffer-names buffer-name))
+        (list "*Ido Completions*" "*Completions*"))
 
-
-
-;; (mapcar #'(lambda (buffer-name)
-;;             (add-to-list 'special-display-buffer-names buffer-name))
-;;         (list "*Help*" "*Ido Completions*"))
-
-;; (add-to-list 'special-display-regexps '(".*" my-display-buffers))
-
-;; (setq special-display-function 'pl/special-display-buffer-popup)
+(setq special-display-function 'pl/display-special-buffer-popup)
 ;; (add-to-list 'special-display-regexps ".*")  ; match any window
-;; (setq special-display-regexps nil)  ; see also `same-window-buffer-names'
 
-;; (defun pl/display-special-buffer (buf)
-;;   "put the special buffers in the bottom right"
-;;   ;; The top left corner of the frame is considered to be row 0,
-;;   ;; column 0.
-;;   (let ((target-window (window-at (- (frame-width) 4) (- (frame-height) 4)))
-;;         (pop-up-windows t))
-;;     (set-window-buffer target-window buf)
-;;     (message "xxx")
-;;     target-window))
+(defun pl/display-special-buffer-popup (buffer &optional args)
+  "put the special buffers in the bottom right"
+  ;; The top left corner of the frame is considered to be row 0,
+  ;; column 0.
+  (let ((target-window (window-at 4 (- (frame-height) 4)))
+        (pop-up-windows t))
+    (set-window-buffer (window--try-to-split-window target-window) buffer)
+    target-window))
 
-;; (defun pl/special-display-buffer-popup (buffer &optional args)
-;;   "put all buffers in a window other than the one in the bottom right"
-;;   (message (buffer-name  buffer))
-;;   (if (member (buffer-name buffer) special-display-buffer-names)
-;;       (pl/display-special-buffer buffer)
-;;     (progn
-;;       (let ((pop-up-windows t)
-;;             (windows (delete (window-at (- (frame-width) 4) (- (frame-height) 4))
-;;                              (window-list nil -1))))
-;;         (message (buffer-name (window-buffer (car windows))))
-;;         (set-window-buffer (car (cdr windows)) buffer)
-;;         (car (cdr windows))))))
 
 
 ;;; switch window
