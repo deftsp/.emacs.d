@@ -92,9 +92,9 @@
 
 
 ;;;
-(when (eq system-type 'darwin)
-  ;; (setq find-function-C-source-directory "")
-  (setq source-directory "/Library/Caches/Homebrew/emacs--git"))
+;; (when (eq system-type 'darwin)
+;;   ;; (setq find-function-C-source-directory "")
+;;   (setq source-directory "/Library/Caches/Homebrew/emacs--git"))
 
 
 
@@ -248,17 +248,16 @@
 
 (setq compilation-window-height 16      ; Some windows's height
       compilation-ask-about-save nil
-      completion-ignored-extensions '(".svn/" "CVS/" ".o" "~" ".bin" ".lbin" ".so" ".a" ".ln" ".blg" ".bbl"
-                                      ".elc" ".lof" ".glo" ".idx" ".lot" ".dvi" ".fmt" ".tfm" ".pdf" ".class"
-                                      ".fas" ".lib" ".mem" ".x86f" ".sparcf" ".fasl" ".ufsl" ".fsl" ".dxl"
-                                      ".pfsl" ".dfsl" ".lo" ".la" ".gmo" ".mo" ".toc" ".aux" ".cp" ".fn"
-                                      ".ky" ".pg" ".tp" ".vr" ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs"
-                                      ".pyc" ".pyo" ".class" "*Help*" "*Completions*")
       ;; compilation-context-lines 3
       ;; compilation-skip-threshold 1
       ;; compilation-skip-visited t
       ;; keep scrolling in compilation result buffer
       compilation-scroll-output t)
+
+(dolist (str '("*Help*" "*Completions*"))
+  (add-to-list 'completion-ignored-extensions str))
+
+
 
 ;; (setq next-error-highlight 3
 ;;       next-error-highlight-no-select t)
@@ -1028,6 +1027,17 @@ This command is to be used interactively."
 ;; (auto-show-make-point-visible)
 
 ;;----------------------------------------------------------------------------------------------------
+
+;;; buffer-move
+
+(eval-after-load "buffer-move"
+  '(progn
+     (global-set-key (kbd "ESC ESC C-p") 'buf-move-up)
+     (global-set-key (kbd "ESC ESC C-n") 'buf-move-down)
+     (global-set-key (kbd "ESC ESC C-b") 'buf-move-left)
+     (global-set-key (kbd "ESC ESC C-f") 'buf-move-right)))
+
+
 ;;; info
 
 ;; (setq Info-dir-contents nil)
@@ -1068,12 +1078,6 @@ This command is to be used interactively."
 ;; (add-init-path-to-info-path)
 
 
-;;;------------------------------------------------------------
-
-;; Display various non-editing buffers in their own frames
-;; (setq special-display-buffer-names
-;;       (nconc '("*Backtrace*" "*VC-log*" "*compilation*" "*grep*")
-;;              special-display-buffer-names))
 
 ;;----------------------------------------------------------------------------------------------------
 ;;;; bondage and discipline
@@ -1488,13 +1492,13 @@ This command is to be used interactively."
 
 
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; auto indent region after yank and yank-pop
 ;; Let yank and yank-pop to indent whatever they just pasted. This is useful if, for example, you
 ;; copy some code from another file at a different indentation level than you want to paste it at.
 ;; With these advice, the code will be indented properly relative to wherever you paste it.
 (defadvice yank (after indent-region activate)
   (if (member major-mode
-          '(emacs-lisp-mode lisp-interaction-mode scheme-mode lisp-mode
+          '(emacs-lisp-mode lisp-interaction-mode lisp-mode
             c-mode c++-mode objc-mode
             latex-mode plain-tex-mode))
       (let ((mark-even-if-inactive t))
@@ -1502,7 +1506,7 @@ This command is to be used interactively."
 
 (defadvice yank-pop (after indent-region activate)
   (if (member major-mode
-          '(emacs-lisp-mode lisp-interaction-mode scheme-mode lisp-mode
+          '(emacs-lisp-mode lisp-interaction-mode lisp-mode
             c-mode c++-mode objc-mode
             latex-mode plain-tex-mode))
       (let ((mark-even-if-inactive t))
