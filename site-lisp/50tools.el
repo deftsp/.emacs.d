@@ -1198,6 +1198,43 @@ such character is found, following options are shown:
 ;;(setq load-path (cons "/home/owner/global" load-path))
 ;;(autoload 'gtags-mode "gtags" "" t)
 
+;;; ff-find-other-file and friends
+(eval-after-load "find-file"
+  '(progn
+     (push '("\\.scm\\'" ("#.scm")) cc-other-file-alist)
+     (push '("\\#.scm\\'" (".scm")) cc-other-file-alist)
+     (push ".m" (cadr (assoc "\\.h\\'" cc-other-file-alist)))
+     (push ".mm" (cadr (assoc "\\.h\\'" cc-other-file-alist)))
+     (push '("\\.m\\'" (".h")) cc-other-file-alist)
+     (push '("\\.mm\\'" (".h")) cc-other-file-alist)))
+
+
+(defadvice ff-get-file-name (around ff-get-file-name-framework
+                                    (search-dirs
+                                     fname-stub
+                                     &optional suffix-list))
+  "Search for Mac framework headers as well as POSIX headers."
+  (or
+   (if (string-match "\\(.*?\\)/\\(.*\\)" fname-stub)
+       (let* ((framework (match-string 1 fname-stub))
+              (header (match-string 2 fname-stub))
+              (fname-stub (concat framework ".framework/Headers/" header)))
+         ad-do-it))
+   ad-do-it))
+(ad-enable-advice 'ff-get-file-name 'around 'ff-get-file-name-framework)
+(ad-activate 'ff-get-file-name)
+
+(when (eq system-type 'darwin)
+  (setq cc-search-directories '("." "../include" "/usr/include" "/usr/local/include/*"
+                                "/System/Library/Frameworks" "/Library/Frameworks")))
+
+(eval-after-load "scheme"
+  '(define-key scheme-mode-map (kbd "C-c S") 'ff-find-other-file))
+
+(eval-after-load "cc-mode"
+  '(define-key c-mode-base-map (kbd "C-c S") 'ff-find-other-file))
+
+
 
 ;;; FindingNonAsciiCharacters
 (defun find-first-non-ascii-char ()

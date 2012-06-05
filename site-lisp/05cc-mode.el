@@ -1,6 +1,6 @@
 ;;; 05cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2012-05-30 09:41:14 Shihpin Tseng>
+;; Time-stamp: <2012-06-01 16:37:22 Shihpin Tseng>
 
 
 (let ((cc-mode-dir (expand-file-name "~/.emacs.d/lisp/cc-mode")))
@@ -108,41 +108,6 @@
 (add-hook 'c-mode-hook 'pl/c-mode-hook)
 (add-hook 'c++-mode-hook 'pl/cpp-mode-hook)
 (add-hook 'objc-mode-hook 'pl/objc-mode-hook)
-
-;;; ff-find-other-file and friends
-
-(eval-after-load "find-file"
-  '(progn
-     (push ".m" (cadr (assoc "\\.h\\'" cc-other-file-alist)))
-     (push ".mm" (cadr (assoc "\\.h\\'" cc-other-file-alist)))
-     (push '("\\.m\\'" (".h")) cc-other-file-alist)
-     (push '("\\.mm\\'" (".h")) cc-other-file-alist)))
-
-
-(defadvice ff-get-file-name (around ff-get-file-name-framework
-                                    (search-dirs
-                                     fname-stub
-                                     &optional suffix-list))
-  "Search for Mac framework headers as well as POSIX headers."
-  (or
-   (if (string-match "\\(.*?\\)/\\(.*\\)" fname-stub)
-       (let* ((framework (match-string 1 fname-stub))
-              (header (match-string 2 fname-stub))
-              (fname-stub (concat framework ".framework/Headers/" header)))
-         ad-do-it))
-   ad-do-it))
-(ad-enable-advice 'ff-get-file-name 'around 'ff-get-file-name-framework)
-(ad-activate 'ff-get-file-name)
-
-(when (eq system-type 'darwin)
-  (setq cc-search-directories '("." "../include" "/usr/include" "/usr/local/include/*"
-                                "/System/Library/Frameworks" "/Library/Frameworks")))
-
-
-(eval-after-load "cc-mode"
-  '(define-key c-mode-base-map (kbd "C-c S") 'ff-find-other-file))
-
-
 
 ;;;
 ;; move current function up
