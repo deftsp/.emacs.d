@@ -1277,6 +1277,16 @@ such character is found, following options are shown:
 ;; I bound it to C-x r M-k to compliment C-x r k (just like M-w compliments C-w):
 (global-set-key (kbd "C-x r M-k") 'kill-save-rectangle)
 
+;; smex
+(eval-after-load "smex"
+  '(progn
+     ;; (smex-initialize)                  ; el-get has do it
+     (global-set-key (kbd "M-x") 'smex)
+     ;; (global-set-key (kbd "M-X") 'smex-major-mode-commands) ;
+     ;; This is your old M-x.
+     (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)))
+
+
 ;;; ace jump
 ;; 'C-c SPC' is used by Org mode
 ;; gud-break is bound to C-c C-b, C-x SPC, C-x C-a C-b.
