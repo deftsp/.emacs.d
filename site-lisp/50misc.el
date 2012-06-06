@@ -763,22 +763,6 @@ if it is displayed there."
 
 ;;cscope ends there---------------------------------------------------------------
 
-
-;;----------------------------------------------------------------------
-
-;; (defun pl/create/switch-scratch ()
-;;   (interactive)
-;;   (let ((buf (get-buffer "*scratch*")))
-;;     (switch-to-buffer (get-buffer-create "*scratch*"))
-;;     (when (null buf)
-;;       (lisp-interaction-mode))))
-
-;;; Game
-;; 把俄罗斯方块的速度调快一些
-;; (setq tetris-update-speed-function
-;;       (lambda (shapes rows)
-;;         (/ 10.0 (+ 80.0 rows))))
-
 ;;; charset-to-oem
 (defun replace-charset-to-oem (start end)
   (interactive "r")
@@ -803,14 +787,8 @@ if it is displayed there."
                             end)))
 (global-set-key (kbd "C-c t o") 'replace-charset-to-oem)
 
-;; (defun cdf-copy-line (n)
-;;     "Copy N lines at point to the kill-ring."
-;;     (interactive "p")
-;;     (kill-ring-save (line-beginning-position) (line-beginning-position (1+
-;; n))))
 
-;;------------------------------------------------------------------------------------------
-
+;;; kill/yank
 ;; Change cutting behaviour:
 ;; "Many times you'll do a kill-line command with the only intention of getting the contents of the line into the
 ;; killring. Here's an idea stolen from Slickedit, if you press copy or cut when no region is active you'll copy or cut
@@ -824,8 +802,6 @@ if it is displayed there."
 ;;        (list (line-beginning-position)
 ;;              (line-beginning-position 2)))))
 
-
-
 (defadvice kill-region (before slickcut activate compile)
   "When called interactively with no active region, kill a single line instead."
   (interactive
@@ -837,7 +813,7 @@ if it is displayed there."
 ;;; versatile kill-ring-save-dwim
 (global-set-key (kbd "M-w") 'kill-ring-save-dwim)
 
-(defun kill-ring-save-dwim ()
+(defun pl/kill-ring-save-dwim ()
   "This command dwim on saving text. \n
 If region is active, call `kill-ring-save'. Else, call
 `sdl-kill-ring-save-thing-at-point'. \n
@@ -845,7 +821,9 @@ This command is to be used interactively."
   (interactive)
   (if (use-region-p)
       (call-interactively 'kill-ring-save)
-      (call-interactively 'kill-ring-save-thing-at-point)))
+      (call-interactively 'pl/kill-ring-save-thing-at-point)))
+
+
 
 ;; M-w if thing at point is url or mail address copy it, or copy current line
 ;; After press M-w, if press following key...
@@ -854,11 +832,8 @@ This command is to be used interactively."
 ;; l     list
 ;; s     sexp
 ;; f     file name
-
 ;; and it can accpet prefix, M-3 M-w will copy three lines and M-3 M-w w will copy three words.
-
-
-(defun kill-ring-save-thing-at-point (&optional n)
+(defun pl/kill-ring-save-thing-at-point (&optional n)
   "Save THING at point to kill-ring."
   (interactive "p")
   (let ((things '((?l . list) (?f . filename) (?w . word) (?s . sexp)))
