@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-05-31 16:15:01 Shihpin Tseng>
+;; Time-stamp: <2012-06-06 08:11:33 Shihpin Tseng>
 
 ;;; imenu
 ;; (require 'imenu)
@@ -102,31 +102,28 @@
 ;;            (message "NO SUCH STRING IN CURRENT DIRECTORY"))
 ;;           (t (message "Oh, I catch it!")))))
 ;;--------------------------------------------------------------------------------
-;; _+ comment current line
-(defun comment-or-uncomment-region-plus (&optional line)
-  "This function is to comment or uncomment a line or a region"
-  (interactive "P")
-  (unless (or line (and mark-active (not (equal (mark) (point)))))
-    (setq line 1))
-  (if line
-      (save-excursion
-        (comment-or-uncomment-region
-         (progn
-           (beginning-of-line)
-           (point))
-         (progn
-           (end-of-line)
-           (point))))
-      (call-interactively 'comment-or-uncomment-region)))
-;; bind it
-(global-set-key (kbd "C-;") 'comment-or-uncomment-region-plus)
-;;----------------------------------------------------------------------------------
+
+;;; _+ comment current line
+;; Original idea from
+;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
+(defun pl/comment-dwim (&optional arg)
+  "Replacement for the comment-dwim command.
+        If no region is selected and current line is not blank and we are not at the end of the line,
+        then comment current line.
+        Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
+  (interactive "*P")
+  (comment-normalize-vars)
+  (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
+      (comment-or-uncomment-region (line-beginning-position) (line-end-position))
+    (comment-dwim arg)))
+(global-set-key (kbd "C-;") 'pl/comment-dwim)
 
 ;;------------------------------------------------------------------------------------------
 ;; now '-' is not considered a word-delimiter
 ;; (add-hook 'emacs-lisp-mode-hook '(lambda ()
 ;;                                   (modify-syntax-entry ?- "w")))
 ;; (modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table)
+
 ;;;;; eldoc
 ;; mini-buffer 中显示 point 处 eLisp 函数的定义格式。
 (autoload 'turn-on-eldoc-mode "eldoc" nil t)
