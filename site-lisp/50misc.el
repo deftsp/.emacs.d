@@ -811,7 +811,7 @@ if it is displayed there."
              (line-beginning-position 2)))))
 
 ;;; versatile kill-ring-save-dwim
-(global-set-key (kbd "M-w") 'kill-ring-save-dwim)
+(global-set-key (kbd "M-w") 'pl/kill-ring-save-dwim)
 
 (defun pl/kill-ring-save-dwim ()
   "This command dwim on saving text. \n
