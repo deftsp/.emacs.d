@@ -1279,6 +1279,14 @@ This command is to be used interactively."
   (define-key browse-kill-ring-mode-map [up] 'browse-kill-ring-previous))
 (global-set-key (kbd "C-c k r") 'browse-kill-ring)
 
+;;; kill-ring-search
+
+(autoload 'kill-ring-search "kill-ring-search"
+  "Search the kill ring in the minibuffer."
+  (interactive))
+(global-set-key "\M-\C-y" 'kill-ring-search)
+
+
 ;;;
 (global-undo-tree-mode t)
 (eval-after-load "undo-tree"
