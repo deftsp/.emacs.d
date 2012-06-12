@@ -145,11 +145,6 @@
 ;; search. Most of the time you'll want to have the point at the beginning of the match which is what we'll optimize
 ;; for:
 
-;; default C-u C-s and C-M-s is isearch-forward
-(global-set-key (kbd "C-s")  'isearch-forward-regexp)
-(global-set-key (kbd "C-r") 'isearch-backward-regexp)
-(global-set-key (kbd "C-M-s") 'isearch-forward)
-(global-set-key (kbd "C-M-r") 'isearch-backward)
 ;; Always end searches at the beginning of the matching expression.
 (add-hook 'isearch-mode-end-hook 'custom-goto-match-beginning)
 
