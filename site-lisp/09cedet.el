@@ -28,7 +28,8 @@
 (add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode t)
 (add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
-(add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t)
+;; use auto completion instead
+;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t)
 (add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-mru-bookmark-mode t)
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-decoration-mode t) ; Additional tag decorations.
