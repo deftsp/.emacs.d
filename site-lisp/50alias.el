@@ -65,5 +65,7 @@
 ;; (defalias '\[ 'remove-square-brackets)
 ;; (defalias '\" 'replace-straight-quotes)
 
+;; dev
+(defalias 'grr 'pl/gambit-remote-repl)
 
 (provide '50alias)
