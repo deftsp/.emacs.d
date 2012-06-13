@@ -150,15 +150,11 @@
   (set-face-foreground 'icompletep-determined "DarkMagenta")
   (set-face-foreground 'icompletep-choices "burlywood")
 
-
   ;; (set-face-background 'highlight-current-line-face "#222222")
 
-
-  (set-face-foreground 'region "white")
-  (set-face-background 'region "dodgerblue2")
-
-  (set-face-foreground 'secondary-selection "white")
-  (set-face-background 'secondary-selection "DarkGray")
+  ;; background #282c30 ==> #484c50
+  (set-face-attribute 'region nil :foreground 'unspecified :background "#484c50")
+  (set-face-attribute 'secondary-selection nil :foreground 'unspecified :background "#485c60")
 
   ;; (set-face-foreground 'setnu-line-number-face "DarkSlateGray")
 
