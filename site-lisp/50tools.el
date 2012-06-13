@@ -1292,6 +1292,15 @@ such character is found, following options are shown:
 ;; gud-break is bound to C-c C-b, C-x SPC, C-x C-a C-b.
 (define-key global-map (kbd "C-x SPC") 'ace-jump-mode)
 
+;;; jump-char
+;; <char> :: move to the next match in the current direction.
+;; ; :: next match forward (towards end of buffer)
+;; , :: next match backward (towards beginning of buffer)
+;; C-c C-c :: invoke ace-jump-mode if available (also <M-/>)
+(require 'jump-char)
+(global-set-key (kbd "ESC ESC j") 'jump-char-forward)
+(global-set-key (kbd "ESC ESC J") 'jump-char-backward)
+
 ;;; cclookup
 ;; add cclookup to your loadpath, ex) ~/.emacs.d/cclookup
 (setq cclookup-dir "~/.emacs.d/lisp/cclookup")
@@ -1310,6 +1319,7 @@ such character is found, following options are shown:
 
 (autoload 'cclookup-update "cclookup"
   "Run cclookup-update and create the database at `cclookup-db-file'." t)
+
 
 ;;; mark-multiple
 (require 'inline-string-rectangle)
