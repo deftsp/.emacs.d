@@ -1,15 +1,9 @@
-;;; some useful packages
-
-;;; FIXME: `delete-directory' only delete non-empty directory. But `trash-or-rm' is not.
-;; `emms-browser-delete-files' will be wrong behavior.
-;; (require 'system-trash)
-;; (setq system-trash-exclude-matches '(".*~$" "#[^/]+#$" ".*\\.elc$" "\\.session$" "\\.emacs\\.desktop.*" "\\..newsrc-dribble"))
-
+;;;; some useful packages
 
 (autoload 'rfc "rfc-util"
   "Prompt for an rfc number and display it in a new buffer." t)
 
-;; (require 'pulse-settings)
+;;; (require 'pulse-settings)
 
 
 ;;; thing-cmds

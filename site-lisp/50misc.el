@@ -95,6 +95,10 @@
 ;;   ;; (setq find-function-C-source-directory "")
 ;;   (setq source-directory "/Library/Caches/Homebrew/emacs--git"))
 
+;;; Move to trash when deleting stuff
+(when (eq system-type 'darwin)
+  (setq delete-by-moving-to-trash t
+        trash-directory "~/.Trash/__emacs_trash"))
 
 
 ;;; which func mode
