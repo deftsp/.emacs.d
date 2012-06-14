@@ -83,7 +83,6 @@
       ;;在emacs读man文档时，使用当前buffer
       Man-notify-method 'pushy
       default-major-mode 'text-mode
-      bookmark-default-file "~/.emacs.d/.emacs.bmk"
       bookmark-save-flag 1              ; save bookmark every time you set bookmark, not only when you exit emacs
       next-screen-context-lines 2
       mail-user-agent 'gnus-user-agent

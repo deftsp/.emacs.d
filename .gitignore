@@ -6,7 +6,7 @@ private-ede-projects.el
 .DS_Store
 \#*\#
 *customzation*
-.emacs.bmk
+bookmarks
 .emacs.desktop*
 UnicodeData.txt
 unicode_template.txt
