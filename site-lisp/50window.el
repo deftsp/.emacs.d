@@ -148,21 +148,21 @@
 
 ;;; special window
 ;; thanks to http://stackoverflow.com/questions/1002091/how-to-force-emacs-not-to-display-buffer-in-a-specific-window
-(mapcar #'(lambda (buffer-name)
-            (add-to-list 'special-display-buffer-names buffer-name))
-        (list "*Ido Completions*" "*Completions*"))
+;; (mapcar #'(lambda (buffer-name)
+;;             (add-to-list 'special-display-buffer-names buffer-name))
+;;         (list "*Ido Completions*" "*Completions*"))
 
-(setq special-display-function 'pl/display-special-buffer-popup)
+;; (setq special-display-function 'pl/display-special-buffer-popup)
 ;; (add-to-list 'special-display-regexps ".*")  ; match any window
 
-(defun pl/display-special-buffer-popup (buffer &optional args)
-  "put the special buffers in the bottom right"
-  ;; The top left corner of the frame is considered to be row 0,
-  ;; column 0.
-  (let* ((target-window (window-at 6 (- (frame-height) 6)))
-         (pop-up-windows t)
-         (window (window--try-to-split-window target-window)))
-    (set-window-buffer window buffer)))
+;; (defun pl/display-special-buffer-popup (buffer &optional args)
+;;   "put the special buffers in the bottom right"
+;;   ;; The top left corner of the frame is considered to be row 0,
+;;   ;; column 0.
+;;   (let* ((target-window (window-at 6 (- (frame-height) 6)))
+;;          (pop-up-windows t)
+;;          (window (window--try-to-split-window target-window)))
+;;     (set-window-buffer window buffer)))
 
 
 
