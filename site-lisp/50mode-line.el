@@ -36,10 +36,10 @@
 
                 (line-number-mode (" " (:eval
                                         (propertize
-                                         (format "L%%l/%d," (count-lines (point-min) (point-max)))
+                                         (format "L:%%l/%d," (count-lines (point-min) (point-max)))
                                          'face 'mode-line-position-normal-face))))
                 (column-number-mode ("" (:eval
-                                         (propertize "C%c"
+                                         (propertize "C:%c"
                                                      'face (if (>= (current-column) 81)
                                                                'mode-line-position-exceed-face
                                                              'mode-line-position-normal-face)))
