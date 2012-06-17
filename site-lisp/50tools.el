@@ -1314,6 +1314,9 @@ such character is found, following options are shown:
 (autoload 'cclookup-update "cclookup"
   "Run cclookup-update and create the database at `cclookup-db-file'." t)
 
+;;; per-window-point
+(require 'per-window-point)
+(pwp-mode 1)
 
 ;;; mark-multiple
 (require 'inline-string-rectangle)
