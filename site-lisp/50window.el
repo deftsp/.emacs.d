@@ -19,12 +19,13 @@
 (winner-mode t)
 
 (require 'windmove)
-(global-set-keys "H-r" 'winner-redo
-                 "H-u" 'winner-undo
-                 "M-P" 'windmove-up
-                 "M-N" 'windmove-down
-                 "M-B" 'windmove-left
-                 "M-F" 'windmove-right)
+(global-set-key (kbd "H-r") 'winner-redo)
+(global-set-key (kbd "H-u") 'winner)
+(global-set-key (kbd "H-u") 'winner-undo)
+(global-set-key (kbd "M-P") 'windmove-up)
+(global-set-key (kbd "M-N") 'windmove-down)
+(global-set-key (kbd "M-B") 'windmove-lef)
+(global-set-key (kbd "M-F") 'windmove-right)
 
 ;; (global-set-key "\C-x2" '(lambda ()
 ;;                           (interactive)
