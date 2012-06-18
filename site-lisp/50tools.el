@@ -28,8 +28,6 @@
 ;; (require 'pp-c-l)
 ;; (pretty-control-l-mode 1)
 
-;; http://nschum.de/src/emacs/company-mode/
-
 ;; (load "~/.emacs.d/packages/nxhtml/autostart.el")
 ;; (setq nxhtml-skip-welcome t)
 
@@ -66,18 +64,14 @@
 ;;; linkd
 (autoload 'linkd-mode "linkd" "Create or follow hypertext links." t)
 
-
 ;;; uptime
 (require 'uptimes nil t)
 
-
+;;; visible mark
 ;; (require 'visible-mark)
 ;; (visible-mark-mode t)
 
-;; (require 'voctest nil t)
-;; (load-library "cdargs")
-
-;;load recentf.el 这个扩展可以帮你保存一个"最近打开的文件"列表
+;;; recentf
 (require 'recentf)
 (recentf-mode 1)
 (setq recentf-max-saved-items 500)
@@ -91,6 +85,7 @@
 ;;(recentf-exclude (quote (".ftp:.*" ".sudo:.*")))
 ;;(recentf-keep (file-remote-p file-readable-p))
 
+;;; unicad
 ;; Unicad is short for Universal Charset Auto Detector. It is an Emacs-Lisp port of Mozilla Universal Charset Detector.
 ;; Unicad helps Emacs to guess the correct coding system when opening a file. It's designed to work automatically and
 ;; quietly without user interaction.
@@ -98,107 +93,24 @@
 ;; (unicad-enable)
 ;; (add-hook 'kill-emacs-hook 'unicad-disable)
 
-;; load swbuff.el
-;;(load "~/.emacs.d/elisp/swbuff")
-;; (require 'swbuff)
-;; (global-set-key (kbd "") 'swbuff-switch-to-previous-buffer)
-;; (global-set-key (kbd "") 'swbuff-switch-to-next-buffer)
-;; (setq swbuff-exclude-buffer-regexps
-;;       '("^ " "\\*.*\\*"))
-;; (setq swbuff-status-window-layout 'scroll)
-;; (setq swbuff-clear-delay 1)
-;; (setq swbuff-separator "|")
-;; (setq swbuff-window-min-text-height 1)
-
-;; load tabbar.el 你可以用 customize-group RET tabbar RET 来设置它的选项。
-                                        ;(load "~/.emacs.d/elisp/tabbar")
-;;(if (not window-system)
-;;    (progn
-;;      (tabbar-mode)))
-;;(tabbar-mode)
-;;(global-set-key (kbd "C-=") 'tabbar-backward-group)
-;;(global-set-key (kbd "C--") 'tabbar-forward-group)
-;;(global-set-key (kbd "C-9") 'tabbar-backward)
-;;(global-set-key (kbd "C-0") 'tabbar-forward)
-
-
-(autoload 'wajig "wajig"
-  "Create a *wajig* buffer." t)
-
+;;; ascii table
 (autoload 'ascii-table-show "ascii-table-show" "Create a buffer and print the ascii table" t)
 
-;;; Go to char
-(defun pl/go-to-char (n char)
-  "Move forward to Nth occurence of CHAR.
-Typing `pl/go-to-char-key' again will move forwad to the next
-Nth occurence of CHAR."
-  (interactive "p\ncGo to char: ")
-  (search-forward (string char) nil nil n)
-  (while (char-equal (read-char)
-                     char)
-    (search-forward (string char) nil nil n))
-  (setq unread-command-events (list last-input-event)))
-;; (define-key global-map (kbd "C-c C-a") 'pl/go-to-char)
-
-
-
-
-;;----------------------------------------------------------------------------------------------------
-;;;line number
-;;----------------------------------------------------------------------------------------------------
-
-;;load setnu setnu-plus 这两个包可以用来显示文件的行号。并且根据是否空行和文件行的语法加亮显示不同的数字颜色
-;;(load "~/.emacs.d/elisp/setnu")
-;;(load "~/.emacs.d/elisp/setnu-plus")
-;;(setnu-mode -1)
-;;(setq setnu-line-number-format "%3d| ")
-
-
-;;===========================================================
-;; ChunYe Wang
-;;(require 'display-line-number)
-;; 如果想所有打开的文件都显示行的话就打开下面的注释
-;;(global-display-line-number-mode 1)
-;; 设置显示格式
-;;(setq display-line-number-format "%2d| ")
-;; 在 tool bar 上增加一个图标，
-;; 注意: 一定要在 load-path 中 可以找到 display-line-nuber.xpm 文件才行。
-;;
-;;(tool-bar-add-item "display-line-number"
-;;                  'display-line-number-mode
-;;                   'display-line-number-mode
-;;                   :help "display line number!"
-;;                   :button (cons :toggle  '(and (boundp
-;;                                                display-line-number-mode)
-;;                                              display-line-number-mode)))
-
-;;
-;; 使用方法
-;; M-x display-line-number-mode
-;; 用来 toggle 显示行号的模式
-;; M-x display-line-number-mode-on
-;; 启动显示行号的模式
-;; M-x display-line-number-mode-off
-;; 关闭显示行号的模式
-;; 仅对某种 mode 启动显示行号的模式
-;; (add-hook 'c-mode-hook 'display-line-number-mode)
-
 ;;; line numbers
-;; (global-linum-mode 1) ; always show line numbers
 (eval-after-load "linum"
   '(progn
-    (set-face-foreground 'linum "#5cb2b3")
-    (set-face-background 'linum "#222222")
+     (set-face-foreground 'linum "#5cb2b3")
+     (set-face-background 'linum "#222222")
 
-    (setq linum-format 'my-linum-format) ; dynamic
-    (defun my-linum-format (line)
-      (propertize (format (let ((w (length (number-to-string
-                                            (count-lines
-                                             (point-min)
-                                             (point-max))))))
-                            (concat "%" (number-to-string w) "d|"))
-                          line)
-                  'face 'linum))))
+     (setq linum-format 'pl/linum-format) ; dynamic
+     (defun pl/linum-format (line)
+       (propertize (format (let ((w (length (number-to-string
+                                             (count-lines
+                                              (point-min)
+                                              (point-max))))))
+                             (concat "%" (number-to-string w) "d|"))
+                           line)
+                   'face 'linum))))
 
 
 ;;; highlight current line in buffer
@@ -207,9 +119,6 @@ Nth occurence of CHAR."
   '(progn
      (global-hl-line-mode t)
      (set-face-background 'hl-line "#222222")))
-
-;; (require 'highlight-current-line)
-;; (highlight-current-line-on t)
 
 ;;; buffer action
 ;; http://xwl.appspot.com/ref/buffer-action.el
@@ -243,17 +152,15 @@ Nth occurence of CHAR."
                             ("\\.dot$" "dot -Tjpg %f -o %n.jpg" "%n.png" "qiv %f &")))
 
 
-;;可以为重名的 buffer 在前面加上其父目录的名字来让 buffer 的名字区分开来，而不是单纯的加一个没有太多意义的序号
+;;; uniquify
+;; add parent directory name to the buffers of the same name
 (require 'uniquify)
-;;当寻找一个同名的文件，自动关联上那个文件？
 (setq uniquify-buffer-name-style 'forward)
 (setq uniquify-after-kill-buffer-p t)
 (setq uniquify-ignore-buffers-re "\\`\\*")
 ;; (toggle-uniquify-buffer-names)
 
-;;===========================================================================
-;;about header2
-
+;;; header2
 ;;(load "~/.emacs.d/elisp/header2")
 ;; Update file headers when write files.
 ;;(add-hook 'write-file-hooks 'update-file-header)
@@ -263,8 +170,7 @@ Nth occurence of CHAR."
 
 ;; (defsubst pl/header-author ()
 ;;   "Insert current user's name (`user-full-name') as this file's author."
-;;   (insert header-prefix-string "Author: " (user-full-name) " <kirby1985@gmail.com>" "\n")
-;;   )
+;;   (insert header-prefix-string "Author: " (user-full-name) " <deftsp@gmail.com>" "\n"))
 
 ;; (defsubst pl/header-svn-keyword ()
 ;;   "Insert $Id$."
@@ -310,25 +216,13 @@ Nth occurence of CHAR."
 ;;                          ;;header-eof
 ;;                          ))
 
-;;===========================================================================
 
-
-;;(load "~/.emacs.d/elisp/htmlize")
-
-;;It converts PDF, PS and DVI files to a set of PNG files, one PNG for each page, and displays
-;; git-clone http://www.tsdh.de/repos/git/doc-view.git
-;;(load "~/.emacs.d/elisp/doc-view")
-
-;;----------------------------------------------------------------------------------------------------
-;;Moving lines
-;;----------------------------------------------------------------------------------------------------
-
+;;; Moving lines
 ;; Many times you'll kill a line with the intention of pasting it back a couple of lines up/below.
+(global-set-key (kbd "H-k") 'pl/move-line-up)
+(global-set-key (kbd "H-j") 'pl/move-line-down)
 
-(global-set-key (kbd "H-k") 'move-line-up)
-(global-set-key (kbd "H-j") 'move-line-down)
-
-(defun move-line (&optional n)
+(defun pl/move-line (&optional n)
   "Move current line N (1) lines up/down leaving point in place."
   (interactive "p")
   (when (null n)
@@ -340,15 +234,15 @@ Nth occurence of CHAR."
     (previous-line 1)
     (move-to-column col)))
 
-(defun move-line-up (n)
+(defun pl/move-line-up (n)
   "Moves current line N (1) lines up leaving point in place."
   (interactive "p")
-  (move-line (if (null n) -1 (- n))))
+  (pl/move-line (if (null n) -1 (- n))))
 
-(defun move-line-down (n)
+(defun pl/move-line-down (n)
   "Moves current line N (1) lines down leaving point in place."
   (interactive "p")
-  (move-line (if (null n) 1 n)))
+  (pl/move-line (if (null n) 1 n)))
 ;;Moving lines ends there---------------------------------------------------------------------------------------
 
 
@@ -386,12 +280,9 @@ Nth occurence of CHAR."
 ;;   (open-line arg)
 ;;   (indent-according-to-mode))
 
-
-;;------------------------------------------------------------------------------------------
-;;Shell command on region
-;;------------------------------------------------------------------------------------------
-;;A somewhat insanely powerful trick, evaluate a region via a shell command and replace the region with the resulting
-;;output. Normally you would access this command via C-u M-| but since we're trying to optimize things a bit:
+;;; Shell command on region
+;; A somewhat insanely powerful trick, evaluate a region via a shell command and replace the region with the resulting
+;; output. Normally you would access this command via C-u M-| but since we're trying to optimize things a bit:
 
 ;; (local-set-key [(meta ?!)] 'custom-shell-command-on-region)
 
@@ -412,16 +303,13 @@ Nth occurence of CHAR."
 ;;     (shell-command-on-region (region-beginning) (region-end) string -1)
 ;;                                         ; Get rid of final newline cause I normally did by hand anyway.
 ;;     (delete-char -1)))
-;;Shell-command-on-region----------------------------------------------------------------------
 
-;;Global mark ring
-;;Emacs keeps track of the locations where you were previously working and allows you to re-visit them by issuing the
-;;pop-global-mark command (C-u C-Space).
+;;; Global mark ring
+;; Emacs keeps track of the locations where you were previously working and allows you to re-visit them by issuing the
+;; pop-global-mark command (C-u C-Space).
 
-;;-----------------------------------------------------------------------------------------------------------
-;;Bookmarking - history stack
-;;-----------------------------------------------------------------------------------------------------------
-;;Use the following to maintain a stack of buffer locations which you can use as a simple bookmarking system.
+;;;Bookmarking - history stack
+;; Use the following to maintain a stack of buffer locations which you can use as a simple bookmarking system.
 (global-set-key (kbd "C-c r SPC") 'point-stack-push)
 (global-set-key (kbd "C-c r p") 'point-stack-pop)
 
@@ -442,7 +330,7 @@ Nth occurence of CHAR."
       (setq point-stack (cdr point-stack))))
 
 
-;;Turns tabs into spaces
+;;; Turns tabs into spaces
 ;; (defun pl/untabify ()
 ;;   "My untabify function as discussed and described at
 ;;  http://www.jwz.org/doc/tabs-vs-spaces.html
@@ -462,27 +350,25 @@ Nth occurence of CHAR."
 ;;             (add-hook 'write-contents-hooks 'pl/untabify nil t)))
 
 
-;;Enable undoc; a mode which edits MS Word .doc files.
+;;; undoc
+;;; Enable undoc; a mode which edits MS Word .doc files.
 ;;<http://www.ccs.neu.edu/home/guttman/undoc.el>
 (autoload 'undoc "undoc" "A minor mode which kills MS Word files dead." t)
 (autoload 'undoc-current-buffer "undoc" "" t)
 (autoload 'undoc-region-after-mime-decode "undoc" "" t)
 
-;;The normal man command doesn't allow tab-completion.
+;;; The normal man command doesn't allow tab-completion.
 ;;iman is a wrapper around man which does so allow.
 ;;<http://homepage1.nifty.com/bmonkey/emacs/elisp/iman.el>
-(autoload 'iman "iman" "Call the viewers of man pages and GNU Info with completion."
-          t nil)
+(autoload 'iman "iman" "Call the viewers of man pages and GNU Info with completion." t nil)
 
 ;; A game for fast typers! A game for Emacs!
 (autoload 'typing-of-emacs "typing" "The Typing Of Emacs, a game." t)
 
 ;; Sets +x on scripts stating with a shebang
-(add-hook 'after-save-hook
-          'executable-make-buffer-file-executable-if-script-p)
+(add-hook 'after-save-hook 'executable-make-buffer-file-executable-if-script-p)
 
-;;--------------------------------------------------------------------------------
-;; shell-toggle.el
+;;; shell-toggle.el
 ;; shell-toggle-patched.el eshell port.
 (autoload 'shell-toggle "shell-toggle"
   "Toggles between the *shell* buffer and whatever buffer you are editing." t)
@@ -491,20 +377,8 @@ Nth occurence of CHAR."
 (global-set-key (kbd "C-c g S") 'shell-toggle)    ;see also shell-toggle
 (global-set-key (kbd "C-c g s") 'shell-toggle-cd) ;see also shell-toggle-cd
 
-;;-----------------------------------------------------------------------------------------------
 
-;; (defun pl/transpose-buffers ()
-;;   "Transpose this buffer and the buffer in other window"
-;;   (interactive)
-;;   (let ((current-window-buffer (current-buffer)))
-;;     (other-window 1)
-;;     (let ((other-window-buffer (current-buffer)))
-;;       (switch-to-buffer current-window-buffer)
-;;       (other-window -1)
-;;       (switch-to-buffer other-window-buffer)))
-;;   (other-window 1))
-
-
+;;; misc func
 ;; (defun pl/value-to-string (value)
 ;;   "Convert VALUE to string.
 ;; This function will automatically identify the type of VALUE, and invoke
@@ -539,132 +413,34 @@ Nth occurence of CHAR."
 ;;         (forward-line))
 ;;       stringlist)))
 
-;;----------------------------------------------------------------------------------------------------
-;;convert a buffer from dos ^M end of lines to unix end of lines
-;;----------------------------------------------------------------------------------------------------
-(defun dos2unix ()
+;;; convert a buffer from dos ^M end of lines to unix end of lines
+;; dos <--> unix
+(defun pl/dos2unix ()
   (interactive)
   (goto-char (point-min))
   (while (search-forward "\r" nil t) (replace-match "")))
 
-;;vice versa
-(defun unix2dos ()
+;; vice versa
+(defun pl/unix2dos ()
   (interactive)
   (goto-char (point-min))
   (while (search-forward "\n" nil t) (replace-match "\r\n")))
-;;----------------------------------------------------------------------------------------------------
 
-
-;;----------------------------------------------------------------------------------------------------
-;; Author: Patrick Gundlach
-;; nice mark - shows mark as a highlighted 'cursor' so user 'always'
-;; sees where the mark is. Especially nice for killing a region.
-
-;; (defvar pl/mark-overlay nil
-;;   "Overlay to show the position where the mark is")
-;; (make-variable-buffer-local 'pl/mark-overlay)
-
-;; (put 'pl/mark-mark 'face 'secondary-selection)
-
-;; (defvar pl/mark-old-position nil
-;;   "The position the mark was at. To be able to compare with the
-;; current position")
-
-;; (defun pl/show-mark ()
-;;   "Display an overlay where the mark is at. Should be hooked into
-;; activate-mark-hook"
-;;   (unless pl/mark-overlay
-;;     (setq pl/mark-overlay (make-overlay 0 0))
-;;     (overlay-put pl/mark-overlay 'category 'pl/mark-mark))
-;;   (let ((here (mark t)))
-;;     (when here
-;;       (move-overlay pl/mark-overlay here (1+ here)))))
-
-;; (defadvice  exchange-point-and-mark (after pl/mark-exchange-point-and-mark)
-;;   "Show visual marker"
-;;   (pl/show-mark))
-
-;; (ad-activate 'exchange-point-and-mark)
-;; (add-hook 'activate-mark-hook 'pl/show-mark)
-;; ----------------------------------------------------------------------------------------------------
-;; mark word be bound to M-@
-;; (global-set-key (kbd "C-c SPC") 'pl/mark-current-word)
-(global-set-key (kbd "C-c k w") 'pl/kill-current-word)
-(defun pl/mark-current-word ()
-  "Put point at beginning of current word, set mark at end."
-  (interactive)
-  (let* ((opoint (point))
-         (word (current-word))
-         (word-length (length word)))
-    (if (save-excursion
-          ;; Avoid signaling error when moving beyond buffer.
-          (if (> (point-min)  (- (point) word-length))
-              (goto-char (point-min))
-              (forward-char (- (length word))))
-          (search-forward word (+ opoint (length word))
-                          'noerror))
-        (progn (push-mark (match-end 0) nil t)
-               (goto-char (match-beginning 0)))
-        (error "No word at point"))))
-
-;; (defun mark-current-word ()
-;;   "Put point at beginning of current word, set mark at end."
-;;   (interactive)
-;;   (unless (or (looking-at "\\<") (not (current-word t)))
-;;     (backward-word))
-;;   (mark-word nil t))
-
-
-(defun pl/kill-current-word ()
-  "kill current word."
-  (interactive)
-  (let* ((opoint (point))
-         (word (current-word))
-         (word-length (length word)))
-    (if (save-excursion
-          ;; Avoid signaling error when moving beyond buffer.
-          (if (> (point-min)  (- (point) word-length))
-              (goto-char (point-min))
-              (forward-char (- (length word))))
-          (search-forward word (+ opoint (length word))
-                          'noerror))
-        (kill-region (goto-char (match-beginning 0))
-                     (match-end 0))
-        (error "No word at point"))))
-
-;;; replace-word-at-point
-(autoload 'word-at-point "thingatpt" nil t)
-
-(defun replace-word-at-point (from to)
-  "Replace word at point."
-  (interactive (let ((from (word-at-point)))
-                 (list from (query-replace-read-to from "Replace" nil))))
-  (query-replace from to))
-
-(global-set-key (kbd "C-c r w") 'replace-word-at-point)
-
+;;; gse number
 (require 'gse-number-rect)
 (global-set-key "\C-xru" 'gse-number-rectangle)
 
-(defun yank-secondary ()
+;;; yank secondary
+(defun pl/yank-secondary ()
   "Insert the secondary selection at point.
   Moves point to the end of the inserted text.  Does not change mark."
   (interactive) (insert (x-get-selection 'SECONDARY)))
 
 
-;; add in your commonly used packages/include directories here, for
-;; example, SDL or OpenGL. this shouldn't slow down cpp, even if
-;; you've got a lot of them
-;; (setq c-eldoc-includes "`pkg-config gtk+-2.0 --cflags` -I./ -I../ ")
-;; (load "c-eldoc")
-;; (add-hook 'c-mode-hook 'c-turn-on-eldoc-mode)
+;;; Copy current line to next line
+(global-set-key (kbd "<M-S-return>") 'pl/dup-line-down)
 
-
-;;----------------------------------------------------------------------------------------------------
-;;Copy current line to next line
-;;----------------------------------------------------------------------------------------------------
-
-(defun ue-select-line-down ()
+(defun pl/ue-select-line-down ()
   "like Shift+down in UltraEdit."
   (interactive)
   (let ((s (point)))
@@ -678,13 +454,12 @@ Nth occurence of CHAR."
   (interactive)
   (let ((c (current-column)))
     (beginning-of-line)
-    (ue-select-line-down)
+    (pl/ue-select-line-down)
     (beginning-of-line)
     (yank)
     (previous-line 1)
     (move-to-column c)))
-(global-set-key (kbd "<M-S-return>") 'pl/dup-line-down)
-;;----------------------------------------------------------------------------------------------------
+
 
 (defun pl/strip-all-blank-lines ()
   "Strip all blank lines in current buffer."
@@ -711,7 +486,7 @@ type stands for different kinds of resolve.
     ((string= type "n") (file-name-sans-extension (file-name-nondirectory file)))
     (t (file-name-extension file))))
 
-;; insert line number before each line.
+;;; insert line number before each line.
 (defun pl/numerate-lines ()
   "Insert line numbers into buffer"
   (interactive)
@@ -725,8 +500,8 @@ type stands for different kinds of resolve.
         (setq line (+ line 1))))))
 
 
-;; a simple way of aligning columns
-(defun his-align-cols (start end max-cols)
+;;; a simple way of aligning columns
+(defun pl/align-cols (start end max-cols)
   "Align text between point and mark as columns.  Columns are separated by
 whitespace characters.  Prefix arg means align that many columns. (default
 is all)"
@@ -798,7 +573,7 @@ is all)"
         (if (= p (point-min)) (setq p (1- p))
             (setq p (point)))))))
 
-;; count Chinese, English words
+;;; count Chinese, English words
 (defun pl/count-ce-word (beg end)
   "Count Chinese and English words in marked region."
   (interactive "r")
@@ -813,7 +588,7 @@ is all)"
     (message (format "Total: %d (cn: %d, en: %d) words, %d bytes."
                      total-word cn-word en-word total-byte))))
 
-;; pl/word-count-analysis (how many times a word has appeared).
+;;; pl/word-count-analysis (how many times a word has appeared).
 (defun pl/word-count-analysis (start end)
   "Count how many times each word is used in the region.
     Punctuation is ignored."
@@ -832,11 +607,6 @@ is all)"
     words))
 
 
-(defun pl/hide-buffer ()
-  "Hide current buffer, and enlarge the other one if exists."
-  (interactive)
-  (delete-windows-on (buffer-name)))
-
 (defun pl/list-ref (list ref)
   "Return the ref-th element of list."
   (if (= ref 0)
@@ -848,20 +618,6 @@ is all)"
    (list (read-file-name "info: ")))
   (info file))
 
-;; dos <--> unix
-(defun his-dos2unix ()
-  "\r\n --> \r."
-  (interactive)
-  (goto-char (point-min))
-  (while (search-forward "\r" nil t)
-    (replace-match "")))
-
-(defun his-unix2dos ()
-  "\n --> \r\n."
-  (interactive)
-  (goto-char (point-min))
-  (while (search-forward "\n" nil t)
-    (replace-match "\r\n")))
 
 (defun pl/delete-line (&optional arg)
   "Delete the rest of the current line; if no nonblanks there, delete thru newline.
@@ -917,54 +673,15 @@ that, the deleted contents won't be inserted to the `kill-ring'."
           (progn
             (setq list (cdr list))
             (setq buffer (car list)))
-          (progn
-            (set-buffer buffer)
-            (revert-buffer t t t)
-            (setq list (cdr list))
-            (setq buffer (car list))))))
+        (progn
+          (set-buffer buffer)
+          (revert-buffer t t t)
+          (setq list (cdr list))
+          (setq buffer (car list))))))
   (message "Refreshing open files"))
-;;----------------------------------------------------------------------------------------------------
 
-;;
-;; Para poner quotes/backquotes alrededor de un string.
-;;
-;; (defalias 'single-quote-balanced (read-kbd-macro
-;;                                   " C-q ` ESC C-s [ SPC C-q TAB C-q LFD ] RET <left> ' "))
-;; (global-set-key [?\C-`] 'single-quote-balanced)
-
-;; (defalias 'single-quote-balanced-pos2 (read-kbd-macro
-;;                                        (concat "<left> C-SPC ESC C-r [ SPC C-q LFD C-q "
-;;                                                "TAB ] RET <right> ` C-x C-x <right> '")))
-
-;; (defun single-quote-balanced-pos3()
-;;   (interactive)
-;;   ;;  (message "word: \"%s\"" (thing-at-point 'word))
-;;   (save-excursion
-;;     (forward-word -1)
-;;     (insert "`")
-;;     (forward-word +1)
-;;     (insert "'")))
-
-;; (defun single-quote-balanced-pos()
-;;   (interactive)
-;;   (let ((white-space-re "\\(\\s-\\|\n\\)")
-;;         (end-pos))
-;;     (save-excursion
-;;       (cond ((re-search-forward white-space-re nil t)
-;;              (forward-char -1))
-;;             (t (goto-char (point-max))))
-;;       (insert "'")
-;;       (setq end-pos (point))
-;;       (forward-char -1)
-;;       (cond ((re-search-backward white-space-re nil t)
-;;              (forward-char +1))
-;;             (t (goto-char (point-min))))
-;;       (insert "`"))
-;;     (goto-char end-pos)
-;;     (forward-char +1)))
-
-
-;; (defun xmsg (string &optional geom process-name)
+;;; xmsg
+;; (defun pl/xmsg (string &optional geom process-name)
 ;;   "Invoke xmessage(1) to display message STRING.
 ;; However, do nothing if `window-system' is not `x'.  Other args
 ;; are optional: GEOM is the window geometry (default \"+0+0\");
@@ -976,7 +693,7 @@ that, the deleted contents won't be inserted to the `kill-ring'."
 ;;                    (or string "Emacs says hi!"))))
 
 ;; It's often nice to find the true path to a file or directory.
-;; (defun resolve-sym-link ()
+;; (defun pl/resolve-sym-link ()
 ;;   "Replace the string at the point with the true path."
 ;;   (interactive)
 ;;   (beginning-of-line)
@@ -990,48 +707,8 @@ that, the deleted contents won't be inserted to the `kill-ring'."
 
 ;; (define-key minibuffer-local-completion-map (kbd "C-r") 'resolve-sym-link)
 
-;; (defconst grepsource-command
-;;   "find . -name "*.c" -or -name "*.cc" -or -name "*.cpp" -or -name "*.m" -or -name "*.mm" -or -name "*.java" -or -name "*.h" -or -name "*.hh" -or -name "*.hpp" -or -name "*.el" | xargs grep -n "
-;;   "Base command for grepsource. (Basically quoted version of
-;; whatever my current grepsource alias is.")
-;; (defun grepsource (cmd-args)
-;;   "Invoke an in-emacs equivalent of my grepsource bash alias,
-;; defaulting withing the current project."
-;;   (interactive (list (read-from-minibuffer "Grep project for string: ")))
-;;   (let ((default-directory (or local-project-root default-directory)))
-;;     (grep (concat grepsource-command """
-;;                   (replace-regexp-in-string """ "\\\\"" cmd-args) """))))
-
-
-;; (defun intelligent-close ()
-;;   "quit a frame the same way no matter what kind of frame you are on.
-;; This method, when bound to C-x C-c, allows you to close an emacs frame the
-;; same way, whether it's the sole window you have open, or whether it's
-;; a "child" frame of a "parent" frame.  If you're like me, and use emacs in
-;; a windowing environment, you probably have lots of frames open at any given
-;; time.  Well, it's a pain to remember to do Ctrl-x 5 0 to dispose of a child
-;; frame, and to remember to do C-x C-x to close the main frame (and if you're
-;; not careful, doing so will take all the child frames away with it).  This
-;; is my solution to that: an intelligent close-frame operation that works in
-;; all cases (even in an emacs -nw session).
-;; Stolen from http://www.dotemacs.de/dotfiles/BenjaminRutt.emacs.html."
-;;   (interactive)
-;;   (if (eq (car (visible-frame-list)) (selected-frame))
-;;       ;;for parent/master frame...
-;;       (if (> (length (visible-frame-list)) 1)
-;;           ;;close a parent with children present
-;;           (delete-frame (selected-frame))
-;;           ;;close a parent with no children present
-;;           (save-buffers-kill-emacs))
-;;       ;;close a child frame
-;;       (delete-frame (selected-frame))))
-
-
-
 ;;;_. boxquote
 (require 'boxquote nil t)
-
-
 (global-set-key (kbd "C-c b y")   'boxquote-yank)
 (global-set-key (kbd "C-c b r")   'boxquote-region)
 (global-set-key (kbd "C-c b u")   'boxquote-unbox-region)
@@ -1049,44 +726,6 @@ that, the deleted contents won't be inserted to the `kill-ring'."
 (global-set-key (kbd "C-c b d k") 'boxquote-describe-key)
 (global-set-key (kbd "C-c b d v") 'boxquote-describe-variable)
 
-
-;; (when (require 'autoinfo nil t)
-;;   (setq-default autoinfo-mode nil))
-;; I use w3m-decode-entities-string to let it able to display unicode
-;; (defun autoinfo-handle-google-response (status)
-;;   "Handle response returned by Google."
-;;   (message "")
-;;   (let ((response (buffer-string)))
-;;     (funcall autoinfo-show-result-function
-;;              (if (string-match "Definitions of.*?\\(<li>.*?\\)<br>" response)
-;;                  (let ((results (match-string 1 response)))
-;;                    (concat "Definitions by Google:\n"
-;;                            (w3m-decode-entities-string (replace-regexp-in-string "<li>" "\n- " results))))
-
-;;                  "No definition found"))))
-
-(when (require 'mm-url nil t)
-  (require 'mm-url)
-  (defun google-define-word-or-phrase (query)
-    (interactive "sInsert word or phrase to search: ")
-    (let* ((url (concat "http://www.google.com.pe/search?hl=en&q=define%3A"
-                        (replace-regexp-in-string " " "+" query)))
-           (definition
-            (save-excursion
-              (with-temp-buffer
-                (mm-url-insert url)
-                (goto-char (point-min))
-                (if (search-forward "No definitions found of " nil t)
-                    "No definitions found"
-                    (buffer-substring (search-forward "<li>") (- (search-forward "<") 1)))))))
-      (message "%s: %s" query definition)))
-
-  (global-set-key (kbd "C-c d g") 'google-define-word-or-phrase))
-
-
-
-
-
 ;;; fuzz-match.el
 (require 'fuzzy-match)
 
@@ -1096,8 +735,8 @@ that, the deleted contents won't be inserted to the `kill-ring'."
 (define-key esc-map "#" 'lisp-spell-symbol)
 
 ;;; replace-recent-char
-(global-set-key (kbd "M-R")  'replace-recent-char)
-(defun replace-recent-char ()
+(global-set-key (kbd "M-R")  'pl/replace-recent-char)
+(defun pl/replace-recent-char ()
   "Replace-recent-character is interactive function for quick corrections of
 recenlty typed text. It first prompts for character to search backwards. If
 such character is found, following options are shown:
@@ -1113,47 +752,47 @@ such character is found, following options are shown:
     (labels
         ((check () (if (fboundp 'flyspell-word) (flyspell-word)))
          (rec ()
-           (save-excursion
-             (let ((point (search-backward repstr (point-at-bol -3) t)))
-               (if point
-                   (let (repwithev
-                         (ov (make-overlay point (1+ point))))
-                     (overlay-put ov 'face isearch)
-                     (overlay-put ov 'priority 1)
-                     (unwind-protect
-                          (setq repwithev
-                                (read-char "Replace with (repeat  previous, M-R  delete, C-t  transpose, TAB  insert):" t))
-                       (delete-overlay ov))
-                     (cond ((equal repwithev (event-convert-list '(meta ?R)))
-                            (delete-char 1)
-                            ;; (check)
-                            (message (format "Character \"%s\" deleted." repstr)))
-                           ((equal repwithev (event-convert-list '(control ?t)))
-                            (forward-char)
-                            (transpose-chars 1)
-                            ;; (check)
-                            (message "Transposed."))
-                           ((equal repwithev ?\t)
-                            (forward-char)
-                            (insert-char (read-char "Character to insert after match:" t) 1 t)
-                            ;; (check)
-                            (message "Insert."))
-                           ((equal repwithev ?\e)
-                            (message "Replace aborted."))
-                           ((equal repwithev repev)
-                            (rec))
-                           (t
-                            (delete-char 1)
-                            (insert-char repwithev 1 t)
-                            ;; (check)
-                            (message
-                             (format "Replace \"%s\" -> \"%s\" done." repstr (string repwithev))))))
-                   (message (format "\"%s\" is not recent." repstr)))))))
+              (save-excursion
+                (let ((point (search-backward repstr (point-at-bol -3) t)))
+                  (if point
+                      (let (repwithev
+                            (ov (make-overlay point (1+ point))))
+                        (overlay-put ov 'face 'isearch)
+                        (overlay-put ov 'priority 1)
+                        (unwind-protect
+                            (setq repwithev
+                                  (read-char "Replace with (repeat  previous, M-R  delete, C-t  transpose, TAB  insert):" t))
+                          (delete-overlay ov))
+                        (cond ((equal repwithev (event-convert-list '(meta ?R)))
+                               (delete-char 1)
+                               ;; (check)
+                               (message (format "Character \"%s\" deleted." repstr)))
+                              ((equal repwithev (event-convert-list '(control ?t)))
+                               (forward-char)
+                               (transpose-chars 1)
+                               ;; (check)
+                               (message "Transposed."))
+                              ((equal repwithev ?\t)
+                               (forward-char)
+                               (insert-char (read-char "Character to insert after match:" t) 1 t)
+                               ;; (check)
+                               (message "Insert."))
+                              ((equal repwithev ?\e)
+                               (message "Replace aborted."))
+                              ((equal repwithev repev)
+                               (rec))
+                              (t
+                               (delete-char 1)
+                               (insert-char repwithev 1 t)
+                               ;; (check)
+                               (message
+                                (format "Replace \"%s\" -> \"%s\" done." repstr (string repwithev))))))
+                    (message (format "\"%s\" is not recent." repstr)))))))
       (rec))))
 
-;; (dec|inc)rement number at point
+;;; (dec|inc)rement number at point
 ;; The following functions allow you increment or decrement what they think is a number under point:
-;; (defun increment-number-at-point (&optional amount)
+;; (defun pl/increment-number-at-point (&optional amount)
 ;;   "Increment the number under point by `amount'"
 ;;   (interactive "p")
 ;;   (let ((num (number-at-point)))
@@ -1166,15 +805,15 @@ such character is found, following options are shown:
 ;;           (insert (number-to-string newnum)))
 ;;         (goto-char p)))))
 
-;; (defun decrement-number-at-point (&optional amount)
+;; (defun pl/decrement-number-at-point (&optional amount)
 ;;   (interactive "p")
 ;;   "Decrement the number under point by `amount'"
-;;   (increment-number-at-point (- (abs amount))))
+;;   (pl/increment-number-at-point (- (abs amount))))
 ;; I don't use the arrow keys so I have the above functions bound like this:
-;; (define-key global-map (kbd "<C-up>") 'increment-number-at-point)
-;; (define-key global-map (kbd "<C-down>") 'decrement-number-at-point)
+;; (define-key global-map (kbd "<C-up>") 'pl/increment-number-at-point)
+;; (define-key global-map (kbd "<C-down>") 'pl/decrement-number-at-point)
 
-
+;;; incr-dwim
 (autoload 'incr-dwim "incr"
   "Use `incr-try-alist' to find most possible method to increase thing at point or region" t)
 (autoload 'decr-dwim "incr" t)
@@ -1185,12 +824,6 @@ such character is found, following options are shown:
 (global-set-key (kbd "C-c x") 'incr-dwim)
 (global-set-key (kbd "C-c z") 'decr-dwim)
 
-;; global
-;; put global-tags-mode.el into load-path
-
-
-;;(setq load-path (cons "/home/owner/global" load-path))
-;;(autoload 'gtags-mode "gtags" "" t)
 
 ;;; ff-find-other-file and friends
 (eval-after-load "find-file"
@@ -1230,8 +863,8 @@ such character is found, following options are shown:
 
 
 
-;;; FindingNonAsciiCharacters
-(defun find-first-non-ascii-char ()
+;;; finding non ascii characters
+(defun pl/find-first-non-ascii-char ()
   "Find the first non-ascii character from point onwards."
   (interactive)
   (let (point)
@@ -1245,12 +878,13 @@ such character is found, following options are shown:
                 (forward-char 1)))))
     (if point
         (goto-char point)
-        (message "No non-ascii characters."))))
+      (message "No non-ascii characters."))))
 
+
+;;; who calls
 (autoload 'who-calls "who-calls" "Display all known callers of a function" t)
 (define-key emacs-lisp-mode-map "\C-c\C-w" 'who-calls)
 
-;; (require 'generic-apt-install)
 
 ;;; Insert a path into the current buffer
 (defun pl/insert-path (file)
@@ -1259,6 +893,7 @@ such character is found, following options are shown:
   (insert (expand-file-name file)))
 
 
+;;; kill save rectangle
 ;; FIXME: it will make file be changed not line M-w
 (defun kill-save-rectangle (start end &optional fill)
   "Save the rectangle as if killed, but don't kill it.  See
@@ -1271,7 +906,7 @@ such character is found, following options are shown:
 ;; I bound it to C-x r M-k to compliment C-x r k (just like M-w compliments C-w):
 (global-set-key (kbd "C-x r M-k") 'kill-save-rectangle)
 
-;; smex
+;;; smex
 (eval-after-load "smex"
   '(progn
      ;; (smex-initialize)                  ; el-get has do it
