@@ -4,7 +4,9 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-;;Change the prefix for outline commands
+
+;;Change outline commands prefix to `M-o'
+(global-unset-key (kbd "M-o"))
 (setq outline-minor-mode-prefix (kbd "M-o")) ; "\C-c\C-o"
 
 (eval-after-load "outline"
