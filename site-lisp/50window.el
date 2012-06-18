@@ -22,9 +22,11 @@
 (global-set-key (kbd "H-r") 'winner-redo)
 (global-set-key (kbd "H-u") 'winner)
 (global-set-key (kbd "H-u") 'winner-undo)
+
+
 (global-set-key (kbd "M-P") 'windmove-up)
 (global-set-key (kbd "M-N") 'windmove-down)
-(global-set-key (kbd "M-B") 'windmove-lef)
+(global-set-key (kbd "M-B") 'windmove-left)
 (global-set-key (kbd "M-F") 'windmove-right)
 
 ;; (global-set-key "\C-x2" '(lambda ()
