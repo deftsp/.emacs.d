@@ -5,7 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;;Change the prefix for outline commands
-(setq outline-minor-mode-prefix (kbd "M-O")) ; "\C-c\C-o"
+(setq outline-minor-mode-prefix (kbd "M-o")) ; "\C-c\C-o"
 
 (eval-after-load "outline"
   '(require 'foldout))

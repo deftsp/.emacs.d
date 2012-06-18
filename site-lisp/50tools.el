@@ -127,7 +127,7 @@
 
 (autoload 'ascii-table-show "ascii-table-show" "Create a buffer and print the ascii table" t)
 
-;;; go-to-char
+;;; Go to char
 (defun pl/go-to-char (n char)
   "Move forward to Nth occurence of CHAR.
 Typing `pl/go-to-char-key' again will move forwad to the next
@@ -138,7 +138,7 @@ Nth occurence of CHAR."
                      char)
     (search-forward (string char) nil nil n))
   (setq unread-command-events (list last-input-event)))
-(define-key global-map (kbd "C-c C-a") 'pl/go-to-char)
+;; (define-key global-map (kbd "C-c C-a") 'pl/go-to-char)
 
 
 
@@ -374,7 +374,7 @@ Nth occurence of CHAR."
   (next-line 1)
   (indent-according-to-mode))
 
-(global-set-key (kbd "M-o") 'pl/vi-open-next-line)
+(global-set-key (kbd "C-M-o") 'pl/vi-open-next-line)  ; `C-M-o' default bind to split-line'
 
 
 ;; behave like vi's O command
