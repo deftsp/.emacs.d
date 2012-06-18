@@ -5,7 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-;; (defun xcode-compile (directory build-action)
+;; (defun pl/xcode-compile (directory build-action)
 ;;   "Enhanced bh-compile function by Brett Hutley"
 ;;   (interactive
 ;;    (list (read-directory-name "Directory name: " nil default-directory nil)
@@ -25,15 +25,15 @@
 ;;       (compile "make"))))
 
 
-
-(defun open-with-xcode ()
+(global-set-key (kbd "C-c o x") 'pl/open-with-xcode)
+(defun pl/open-with-xcode ()
   "Open current file with Xcode."
   (interactive)
   (shell-command
-   (concat "open -a /Developer/Applications/Xcode.app " "\"" (buffer-file-name) "\"")))
+   (concat "open -a /Applications/Xcode.app " "\"" (buffer-file-name) "\"")))
 
 
-(defun xcode:build-and-run ()
+(defun pl/xcode:build-and-run ()
   (interactive)
   (if (directory-files "." nil ".*\.xcodeproj$" nil)
       (compile "xcodebuild -configuration Debug")
@@ -47,7 +47,9 @@
 ;;; https://github.com/imakado/emacs-xcode-document-viewer.git
 ;; orig: https://github.com/sakito/emacs-xcode-document-viewer.git
 (setq xcdoc:document-path
-      "/Developer/Platforms/iPhoneOS.platform/Developer/Documentation/DocSets/com.apple.adc.documentation.AppleiOS4_3.iOSLibrary.docset ")
+      "/Applications/Xcode.app/Contents/Developer/Platforms/\
+iPhoneOS.platform/Developer/Documentation/DocSets/\
+com.apple.adc.documentation.AppleiOS5_1.iOSLibrary.docset")
 
 (setq xcdoc:open-w3m-other-buffer t)
 ;; (add-hook 'objc-mode-hook

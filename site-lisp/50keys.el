@@ -1,7 +1,6 @@
+;;; 50keys.el ---
 
-;;; --- Keybindings ---
-
-(defun global-set-keys (&rest keycommands)
+(defun pl/global-set-keys (&rest keycommands)
   "Register keys to commands."
   (while keycommands
     (let ((key (car keycommands))
@@ -11,7 +10,7 @@
 
 
 ;; register my preferred keybindings
-(global-set-keys
+(pl/global-set-keys
  "<f1>"    'anything-man ; 'woman-word-at-point
  "<C-f1>"  '(lambda () (interactive) (manual-entry (current-word))) ;;; load man pages when on a word and F1 is pressed
  "<S-f1>"  'iman
@@ -48,7 +47,9 @@
 (global-set-key (kbd "C-c g f") 'grep-find)
 (global-set-key (kbd "C-c r g") 'rgrep)
 
-;;(global-set-key "\C-cw" 'compare-windows)
+;; (global-set-key "\C-cw" 'compare-windows)
+
+
 ;; (define-prefix-command 'menu-map)
 ;; (global-set-key (kbd "<menu>") 'menu-map)
 ;; (global-set-key (kbd "<menu> <menu>") (lookup-key global-map (kbd "<menu>")))
@@ -57,56 +58,12 @@
 
 (global-set-key (kbd "<Scroll_Lock>") (lambda () (interactive) nil))
 
-;;--------------------------------------------------------------------------------------------------------------------
+;;-------------------------------------------------------------------------------------
 
-;;使得回车开始下一行的时候，立即缩进，而不是等我写完这一行之后再缩进
-(global-set-key "\C-m" 'reindent-then-newline-and-indent)
+(global-set-key "\C-m" 'reindent-then-newline-and-indent) ; 'newline-and-indent
 (global-set-key "\C-j" 'reindent-then-newline-and-indent)
-;;(global-set-key "\C-m" 'newline-and-indent)
 
-
-;; (global-set-key [(control return)] 'set-mark-command)
-
-;;取消一个键的绑定
-;;(global-set-key (kbd "C-SPC") 'nil)
-;;(global-unset-key "\C-xf")
-
-;;==========================================================
-;;使CTRL-h可以删除前面的字符。通常，这将回使你进入帮助系统
-;;(define-key global-map "\C-h" 'delete-backward-char)
-;;确认CTRL-h也在搜索中
-;;(setq search-delete-char (string-to-char "\C-h"))
-;;CTRL-underscore可以将帮助绑定到别的地方
-;;注意有的终端上CTRL-underscore未被定义
-;;(define-key global-map "\C-_" 'help-command) ;;replacement
-;;(setq help-char (string-to-char "\C-_"))
-;;使ESC-h可以删除前面的单词
-;;(define-key global-map "\M-h" 'backward-kill-word)
-;;===========================================================
-
-;; (global-set-key (kbd "M-<return>") 'complete-tag)
-
-
-;; undo C-/ 如果需要重做（Redo）功能，可以先用 C-g 再用 C-/
-
-
-;; Control tab quotes a tab.
-;;(global-set-key [C-tab] "\C-q\t")
-
-;;; imenu
-;; (defun his-imenu()
-;;   "Call imenu, showing completions."
-;;   (interactive)
-;;   (setq unread-command-events (list 9))
-;;   (imenu (imenu-choose-buffer-index)))
-
-;; I use ido style now
-(global-set-key (kbd "C-c i m") 'imenu)
-
-;; (global-set-key  "\C-cn" 'planner-goto-today)
-;; (global-set-key (kbd "C-c p t") 'planner-create-task-from-buffer)
-;; (global-set-key (kbd "C-c p d") 'planner-diary-add-entry)
-;; indent the whole buffer
+;;; indent the whole buffer
 (global-set-key (kbd "C-c i w") 'pl/indent-whole-buffer)
 (defun pl/indent-whole-buffer ()
   "indent whole buffer"
@@ -115,100 +72,33 @@
   (indent-region (point-min) (point-max) nil)
   (untabify (point-min) (point-max)))
 ;;----------------------------------------------------------------------
-;; iconify-or-deiconify-frame (C-x C-z)
+;; suspend-frame `C-x C-z'
+;; (when window-system
+;;   (global-unset-key "\C-z")
+;;   ;; define a prefix command, make it possible to define key sequence like`C-z c c' 'C-z n`
+;;   (define-prefix-command 'ctl-z-map)
+;;   (global-set-key (kbd "C-z") 'ctl-z-map))
 
-(when window-system
-  ;; (global-unset-key "\C-z")
-  ;; define a prefix command, make it possible to define key sequence like`C-z c c' 'C-z n`
-  ;; (define-prefix-command 'ctl-z-map)
-  ;; (global-set-key (kbd "C-z") 'ctl-z-map)
-  (global-set-key (kbd "C-c u") 'revert-buffer)) ; how about C-x C-v?
+(global-set-key (kbd "C-c u") 'revert-buffer) ; how about C-x C-v?
 
-
-(global-set-key (kbd "C-c o x") 'open-with-xcode)
-
-;;;_, view-mode--------------------------------------------------
+;;; view mode
 (global-set-key (kbd "C-c v") 'view-mode)
-;; 为 view-mode 加入 vim 的按键。
-;; (setq view-mode-hook
-;;       (lambda ()
-;;         (define-key view-mode-map "h" 'backward-char)
-;;         (define-key view-mode-map "l" 'forward-char)
-;;         (define-key view-mode-map "j" 'next-line)
-;;         (define-key view-mode-map "k" 'previous-line)))
-;;---------------------------------------------------------------
-
-;;Add alternatives to M-x, on the recommendation of Steve Yegge.
-;;(global-set-key "\C-c\C-m" 'execute-extended-command)
-
-;;IMPORTANT! This overrides a default binding! I don't use C-l much, and it makes more sense to me for it to kill
-;;backwards the line, like C-k kills forward the line.C-u 0 C-k do the same thing.
-;;;define the function to kill the characters from the cursor
-;;;to the beginning of the current line
-;; (defun backward-kill-line (arg)
-;;   "Kill chars backward until encountering the end of a line."
-;;   (interactive "p")
-;;   (kill-line 0))
-;; (global-set-key "\C-l" 'backward-kill-line)
+(add-hook 'view-mode-hook 'pl/view-mode-hook)
+(defun pl/view-mode-hook ()
+  (define-key view-mode-map "h" 'backward-char)
+  (define-key view-mode-map "l" 'forward-char)
+  (define-key view-mode-map "j" 'next-line)
+  (define-key view-mode-map "k" 'previous-line))
 
 
-;; Enable smart syntax based deletion commands. IMPORTANT! This overrides default bindings!
-;;<http://www.zafar.se/bkz/Articles/EmacsTips>
-;;(global-set-key [(meta backspace)] 'kill-syntax-backward)
-;;(global-set-key [(meta d)] 'kill-syntax-forward)
-
-;; (defun kill-syntax-forward ()
-;;   "Kill characters with syntax at point."
-;;   (interactive)
-;;   (kill-region (point)
-;;                (progn (skip-syntax-forward (string (char-syntax (char-after))))
-;;                       (point))))
-;; (defun kill-syntax-backward ()
-;;   "Kill characters with syntax at point."
-;;   (interactive)
-;;   (kill-region (point)
-;;                (progn (skip-syntax-backward (string (char-syntax (char-before))))
-;;                       (point))))
-
-
-;;IMPORTANT! This overrides the default binding! The idea is to sort of imitate Stumpwm for buffer management, so to
-;;speak.
-;;(global-set-key "\C-n" 'bury-buffer)
-;;(global-set-key "\C-p" '(lambda () (interactive) (switch-to-buffer (other-buffer))))
-
-
-;;Add stumpwm-like buffer movement.  First two require
-;;cyclebuffer.el (available in the emacs-goodies-el Debian package).
-;; (global-set-key "\356" 'cyclebuffer-forward)    ;;M-n
-;; (global-set-key "\360" 'cyclebuffer-backward)   ;;M-p
-;; (global-set-key "\215" 'mode-line-other-buffer) ;;M-RET
-;;(global-set-key (quote [f5]) 'mode-line-other-buffer) ;;M-RET;
-;;;This works becase function keys 7,8,9,11,12 are undefined
-;;(global-set-key (quote [C-tab]) 'other-window) ;;C-Tab
-
-;; Need because of urxvt
-;;(global-set-key "\M-o\ c" 'forward-word)
-;;(global-set-key "\M-o\ d" 'backward-word) ;this overrides some fontlock binding
-
-;;M-down and M-up do nothing! :(  Let's make them do something, like M-left
-;; and M-right do.
-;;(global-set-key [M-down] '(lambda () (interactive) (progn (forward-line 10) (recenter) ) ))
-;;(global-set-key [M-up]   '(lambda () (interactive) (progn (forward-line -10) (recenter) ) ))
-
-;;M-down and M-up do nothing! :( Let's make them do something, like M-left and M-right do.
-;;(global-set-key [M-down] '(lambda () (interactive) (progn (forward-line 10) (recenter))))
-;;(global-set-key [M-up]   '(lambda () (interactive) (progn (forward-line -10) (recenter) )))
-
-
-;;----------------------------------------------------------------------------------------------------------------------
-;;
-;;----------------------------------------------------------------------------------------------------------------------
+;;; HOME & END
 ;;"Redefine the Home/End keys to (nearly) the same as visual studio behavior... special home and end by Shan-leung
 ;;Maverick WOO <sw77@cornell.edu>" This is complex. In short, the first invocation of Home/End moves to the beginning of
 ;;the *text* line. A second invocation moves the cursor to the beginning of the *absolute* line. Most of the time this
 ;;won't matter or even be noticeable, but when it does (in comments, for example) it will be quite convenient.
 (global-set-key [home] 'pl/smart-home)
 (global-set-key [end] 'pl/smart-end)
+
 (defun pl/smart-home ()
   "Odd home to beginning of line, even home to beginning of
 text/code."
@@ -216,14 +106,16 @@ text/code."
   (if (and (eq last-command 'pl/smart-home)
            (/= (line-beginning-position) (point)))
       (beginning-of-line)
-      (beginning-of-line-text)))
+    (beginning-of-line-text)))
+
 (defun pl/smart-end ()
   "Odd end to end of line, even end to begin of text/code."
   (interactive)
   (if (and (eq last-command 'pl/smart-end)
            (= (line-end-position) (point)))
       (end-of-line-text)
-      (end-of-line)))
+    (end-of-line)))
+
 (defun end-of-line-text ()
   "Move to end of current line and skip comments and trailing space.
 Require `font-lock'."
@@ -236,13 +128,11 @@ Require `font-lock'."
                       (get-text-property (point) 'face)))
         (backward-char 1))
       (unless (= (point) bol)
-        (forward-char 1) (skip-chars-backward " \t\n"))))) ;;Done with home and end keys.
-;;-------------------------------------------------------------------------------------------------------------------------
+        (forward-char 1) (skip-chars-backward " \t\n"))))) ; Done with home and end keys.
 
 ;;--------------------------------------------------------------------------------
-;;Unshifted special characters
+;;;Unshifted special characters
 ;;--------------------------------------------------------------------------------
-
 ;; In almost any given programming language you will use the special characters a lot more than numbers. Why not
 ;; optimize for the most common case? While the code below is for the standard US layout it will automatically handle
 ;; multibyte characters in order to support extended layouts.
@@ -282,7 +172,7 @@ Require `font-lock'."
 ;;    mapping))
 
 ;; (remap-keyboard *unshifted-special-chars-layout*)
-;;Unshifted special characters ends there-------------------------------------------------------------------------------------
+;;Unshifted special characters ends there--------------------------------------------------------------------------------
 
 
 ;;; Scrolling ---------
@@ -373,90 +263,47 @@ it marks the next ARG lines after the ones already marked."
 ;; "' and kill upto and including the final ", allowing you to change the output. In this case you'd
 ;; better use 'C-M-k' at the starting "
 
+(global-set-key (kbd "M-z") 'pl/zap-up-to-char)
 
-
-(global-set-key (kbd "M-Z") 'zap-up-to-char)
-(defun zap-up-to-char (arg char)
-  "Kill up to and not including ARG'th occurrence of CHAR.
+(defun pl/zap-up-to-char (arg char)
+  "Kill up to and including ARGth occurrence of CHAR.
 Case is ignored if `case-fold-search' is non-nil in the current buffer.
 Goes backward if ARG is negative; error if CHAR not found."
-  (interactive "p\ncZap up to char: ")
-  (if (char-table-p translation-table-for-input)
-      (setq char (or (aref translation-table-for-input char) char)))
+  (interactive (list (prefix-numeric-value current-prefix-arg)
+                     (read-char "Zap to char: " t)))
+  ;; Avoid "obsolete" warnings for translation-table-for-input.
+  (with-no-warnings
+    (if (char-table-p translation-table-for-input)
+        (setq char (or (aref translation-table-for-input char) char))))
   (kill-region (point) (1- (progn
-                             (search-forward (char-to-string char) nil nil arg)
-                             ;;  (goto-char (if (> arg 0) (1- (point)) (1+ (point))))
-                             (point))))
+                          (search-forward (char-to-string char) nil nil arg)
+                          (point))))
   (backward-char))
 
-(global-set-key (kbd "C-c M-z") 'zap-to-char-save)
-(defun zap-to-char-save (arg char)
+(global-set-key (kbd "M-Z") 'pl/zap-to-char-save)
+(defun pl/zap-to-char-save (arg char)
   "Zap to a character, but save instead of kill."
   (interactive "p\ncZap to char: ")
   (save-excursion
     (zap-to-char arg char)
     (yank)))
 
-;; See also: http://www.emacswiki.org/emacs/ZapToISearch
-
-
-;; (global-set-key (kbd "H-b") 'backward-delete-char)
-
-;;----------------------------------------------------------------------------------------------------
-(global-set-key (kbd "C-c k f") 'pl/kill-syntax-forward)
-(global-set-key (kbd "C-c k b") 'pl/kill-syntax-backward)
-
-(defun pl/kill-syntax-forward ()
-  "Kill characters with syntax at point."
-  (interactive)
-  (kill-region (point)
-               (progn (skip-syntax-forward (string (char-syntax (char-after))))
-                      (point))))
-
-(defun pl/kill-syntax-backward ()
-  "Kill characters with syntax at point."
-  (interactive)
-  (kill-region (point)
-               (progn (skip-syntax-backward (string (char-syntax (char-before))))
-                      (point))))
-;;----------------------------------------------------------------------------------------------------
-;; use yank menu
+;;; use yank menu
 ;; (global-set-key "\C-\M-y"
-;;                 (lambda () (interactive )(popup-menu 'yank-menu)))
+;;                 (lambda () (interactive ) (popup-menu 'yank-menu)))
+
+;;; extral key map
+;; (setq pl/extra-key-map (make-keymap))
+;; (global-set-key [(super z)] pl/extra-key-map)
+;; (define-key pl/extra-key-map "b" 'bbdb)
+;; (define-key pl/extra-key-map "m" 'bbdb-and-mail-with-default-mailer)
 
 
-;;that is cool - now I have many more keys in emacs!!! yeah!!!
-;;you can use: shift,ctrl/control, alt, meta, super, hyper, or nothing at all
-;;(setq w32-lwindow-modifier 'hyper)  ; lwindow acts as hyper
-;;(setq w32-rwindow-modifier t)       ; rwindow is ignored
-;;(setq w32-apps-modifier nil)        ; can now bind [apps] et al
-
-;; (setq w32-pass-lwindow-to-system nil
-;;       w32-pass-rwindow-to-system nil)
-
-;; (setq w32-lwindow-modifier 'super)  ; lwindow acts as super
-;; (setq w32-rwindow-modifier 'hyper)  ; rwindow acts as hyper
-
-
-;; (setq pl/global-extra-key-map (make-keymap))
-;; (global-set-key [(super z)] pl/global-extra-key-map)
-;; (define-key pl/global-extra-key-map "b" 'bbdb)
-;; (define-key pl/global-extra-key-map "m" 'bbdb-and-mail-with-default-mailer)
-
-;; (when (eq window-system 'w32)
-;;   (setq w32-pass-lwindow-to-system nil
-;;         w32-lwindow-modifier 'super
-;;         w32-pass-rwindow-to-system nil
-;;         w32-rwindow-modifier 'hyper))
-
-
-
-
-;; M-^: delete-indentation
+;;; M-^: delete-indentation
 ;; join-line is an alias for `delete-indentation'
 
 
-;; the point doesn’t move, the window does.
+;;; the point doesn’t move, the window does.
 (global-set-key (kbd "<H-M-up>")
                 (lambda ()
                   (interactive)
@@ -476,8 +323,9 @@ Goes backward if ARG is negative; error if CHAR not found."
 
 ;;----------------------------------------------------------------------------------------------------
 
-(global-set-key (kbd "H--") '_-SPC)
-(defun _-SPC ()
+;;; _/-/SPACE
+(global-set-key (kbd "H--") 'pl/_-SPC)
+(defun pl/_-SPC ()
   (interactive)
   (let ((char (following-char)))
     (case char
