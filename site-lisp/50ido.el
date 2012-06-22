@@ -6,7 +6,7 @@
 ;; ido seem much less annoying than icicles...
 (ido-mode t)                  ;  Turn on ido buffer and file behavior.
 (ido-everywhere t)
-(setq ido-enable-prefix nil
+(setq ido-enable-prefix t
       ido-enable-regexp t
       ido-case-fold  t                  ; be case-insensitive
       ido-create-new-buffer 'always
@@ -18,6 +18,7 @@
       ;; use `find-file-at-point' that I have binding to `C-x f' instead.
       ido-use-filename-at-point nil
       ido-use-url-at-point nil            ; ... or url at point
+      ido-use-virtual-buffers t
       ido-enable-tramp-completion t
       ido-default-buffer-method 'samewindow
 
