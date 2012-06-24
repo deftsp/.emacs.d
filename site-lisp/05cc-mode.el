@@ -1,14 +1,13 @@
 ;;; 05cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
-;; Time-stamp: <2012-06-01 16:37:22 Shihpin Tseng>
 
+;; FIXME: if not use build in cc-mode, `TAB' will be bound to `c-indent-command', not `c-indent-line-or-region'
+;; (let ((cc-mode-dir (expand-file-name "~/.emacs.d/lisp/cc-mode")))
+;;   (when (file-directory-p cc-mode-dir)
+;;     (add-to-list 'load-path cc-mode-dir)))
 
-(let ((cc-mode-dir (expand-file-name "~/.emacs.d/lisp/cc-mode")))
-  (when (file-directory-p cc-mode-dir)
-    (add-to-list 'load-path cc-mode-dir)))
-
-(eval-after-load "info"
-  '(pushnew (expand-file-name "~/.emacs.d/lisp/cc-mode") Info-default-directory-list :test #'equal))
+;; (eval-after-load "info"
+;;   '(pushnew (expand-file-name "~/.emacs.d/lisp/cc-mode") Info-default-directory-list :test #'equal))
 
 (eval-after-load "cc-mode"
   '(progn
@@ -16,7 +15,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;;make a #define be left-aligned
+;; make a #define be left-aligned
 (setq c-electric-pound-behavior (quote (alignleft)))
 ;; variable: comment-padding Padding string that `comment-region' puts between comment chars and text.
 
