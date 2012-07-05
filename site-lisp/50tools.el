@@ -920,7 +920,7 @@ such character is found, following options are shown:
 ;; 'C-c SPC' is used by Org mode
 ;; gud-break is bound to C-c C-b, C-x SPC, C-x C-a C-b.
 ;; both of 'M-g M-g' and 'M-g g' are bound to goto-line
-(define-key global-map (kbd "M-g M-g") 'ace-jump-mode)
+(define-key global-map (kbd "M-g g") 'ace-jump-mode)
 
 ;;; jump-char
 ;; <char> :: move to the next match in the current direction.

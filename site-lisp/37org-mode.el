@@ -146,6 +146,13 @@
       org-deadline-warning-days 7
       org-display-internal-link-with-indirect-buffer nil)
 
+;;; for MobileOrg
+;; Set to the name of the file where new notes will be stored
+(setq org-mobile-inbox-for-pull "~/proj/org/flagged.org")
+;; Set to <your Dropbox root directory>/MobileOrg.
+(setq org-mobile-directory "~/Dropbox/MobileOrg")
+
+
 ;; (setq org-stuck-projects '("+LEVEL=2/-DONE"
 ;;                            ("TODO" "NEXT" "NEXTACTION")
 ;;                            nil))
@@ -379,6 +386,8 @@
 ;;                                 mumamo-org-modes "\n"))
 ;;             ("Org Source Blocks Family" org-mode ,mumamo-org-chunk-functions)))))
 ;;;-------------------------------------------------------------------------------------------
+
+
 
 
 ;; To be remove
