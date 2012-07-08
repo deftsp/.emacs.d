@@ -25,7 +25,7 @@
 (require '50calendar)
 
 
-;; (require '50cl)
+(require '50cl)
 (require '50completion)
 (require '50css)
 (require '50customzation)

@@ -5,12 +5,6 @@
 (add-to-list 'load-path "~/opt/clbuild2/source/slime/")
 (add-to-list 'load-path "~/opt/clbuild2/source/slime/contrib")
 
-;; swank-clojure
-(add-to-list 'load-path "~/lisp/clj/swank-clojure/src/emacs")
-(add-to-list 'load-path "~/lisp/clj/clojure-mode")
-
-
-
 (setq slime-backend "~/opt/clbuild2/.swank-loader.lisp")
 
 (require 'slime)
@@ -18,6 +12,7 @@
 
 ;; (require 'slime-autoloads)
 (slime-setup '(slime-fancy slime-asdf slime-tramp))
+;; (slime-setup '(slime-js))
 (slime-require :swank-listener-hooks)
 ;; the rest of SLIME should be loaded automatically when one of the commands `M-x slime' or `M-x slime-connect' is
 ;; executed the first time.
@@ -25,15 +20,16 @@
 ;; (when (slime-connected-p)
 ;;   (slime-eval-async '(swank:swank-require :swank-arglists)))
 
+;;; swank-clojure
+(add-to-list 'load-path "~/lisp/clj/swank-clojure/src/emacs")
+(add-to-list 'load-path "~/lisp/clj/clojure-mode")
 (setq swank-clojure-jar-path "~/.clojure/clojure.jar"
       swank-clojure-extra-classpaths (list
                                       "~/lisp/clj/swank-clojure/src/main/clojure"
                                       "~/.clojure/clojure-contrib.jar"))
 ;; (require 'swank-clojure-autoload)
 
-
-
-
+;;;
 (defun pl/lisp-mode-hook ()
   ;; (ignore-errors (semantic-default-elisp-setup))
   ;; (imenu-add-to-menubar "Symbols")
@@ -41,37 +37,35 @@
   ;; (setq outline-regexp "^(.*")
   (slime-mode t))
 
-
 (add-hook 'lisp-mode-hook 'pl/lisp-mode-hook)
 
 
-;; Making slime connect to your lisp automatically when you open a lisp file.
-(defun start-slime ()
-  (interactive)
-  (unless (slime-connected-p)
-    (save-excursion (slime))))
-
-;; (add-hook 'slime-mode-hook 'start-slime)
+;;; Making slime connect to your lisp automatically when you open a lisp file.
+;; (defun pl/start-slime ()
+;;   (interactive)
+;;   (unless (slime-connected-p)
+;;     (save-excursion (slime))))
+;; (add-hook 'slime-mode-hook 'pl/start-slime)
 
 ;; this prevents us from requiring the user get dev-lisp/hyperspec (which is non-free) as a hard dependency
 (if (file-exists-p "/usr/share/doc/hyperspec")
     (setq common-lisp-hyperspec-root "file:///usr/share/doc/hyperspec/HyperSpec/")
     (setq common-lisp-hyperspec-root "http://www.lispworks.com/reference/HyperSpec/"))
 
-(setq inferior-lisp-program "~/src/clbuild/clbuild lisp" ; "/usr/bin/sbcl --noinform"
-      lisp-indent-function 'common-lisp-indent-function ;lisp-indent-function
-      slime-complete-symbol-function 'slime-fuzzy-complete-symbol
-      slime-net-coding-system 'utf-8-unix
-      slime-startup-animation t
-      slime-default-lisp 'sbcl
-      slime-enable-evaluate-in-emacs nil
-      slime-log-events t
-      slime-outline-mode-in-events-buffer nil
-      ;;slime-repl-return-behaviour :send-only-if-after-complete
-      slime-autodoc-use-multiline-p t
-      slime-use-autodoc-mode t
-      slime-highlight-compiler-notes t
-      slime-fuzzy-completion-in-place nil)
+(eval-after-load "slime"
+  '(setq inferior-lisp-program "~/src/clbuild/clbuild lisp" ; "/usr/bin/sbcl --noinform"
+         lisp-indent-function 'common-lisp-indent-function  ;lisp-indent-function
+         slime-complete-symbol-function 'slime-fuzzy-complete-symbol
+         slime-net-coding-system 'utf-8-unix
+         slime-default-lisp 'sbcl
+         slime-enable-evaluate-in-emacs nil
+         slime-log-events t
+         slime-outline-mode-in-events-buffer nil ; means use outline-mode in *slime-events*
+         ;; slime-repl-return-behaviour :send-only-if-after-complete
+         slime-autodoc-use-multiline-p t
+         slime-use-autodoc-mode t
+         slime-highlight-compiler-notes t
+         slime-fuzzy-completion-in-place nil))
 
 ;; You start up your lisps using M-- M-x Slime. It will ask you which Lisp to start up, and you use
 ;; the name you defined in slime-lisp-implementations.
@@ -83,11 +77,11 @@
 (mapcar (lambda (lst) (add-to-list 'slime-lisp-implementations lst))
         '((sbcl ("~/src/clbuild/clbuild" "lisp"))
           (sbcl.core ("sbcl" "--core" "sbcl.core-with-swank")
-           :init (lambda (port-file _)
-                   (format
-                    "(swank:start-server %S :coding-system \"utf-8-unix\")\n"
-                    port-file))
-           :coding-system utf-8-unix)
+                     :init (lambda (port-file _)
+                             (format
+                              "(swank:start-server %S :coding-system \"utf-8-unix\")\n"
+                              port-file))
+                     :coding-system utf-8-unix)
           (cmucl ("lisp"))
           (clozure ("/usr/bin/ccl"))
           (ecl ("ecl"))
@@ -106,7 +100,7 @@
 (defslime-start clisp "/usr/bin/clisp")
 (defslime-start cmucl "/usr/bin/cmucl")
 
-;;(setf slime-save-buffers nil)
+;; (setf slime-save-buffers nil)
 ;; (require 'parenface)
 
 ;; (defvar slime-auto-compile-timer nil)
@@ -174,26 +168,19 @@
 ;;                   post-command-hook)))
 
 ;;; ansicl
-;;
 ;; Look up stuff in the ANSI Common Lisp Standard.
-;;
 ;; downloading instructions: (find-file "~/e/cl.e")
-
 ;; To use `C-h S' (`info-lookup-symbol') to look up the symbol at
 ;; point in the manual, add the following
 
 (require 'info-look)
-
 (info-lookup-add-help
  :mode 'lisp-mode
  :regexp "[^][()'\" \t\n]+"
  :ignore-case t
  :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
 
-;;ansi ends there--------------------------------------------------------------------------------------
-
-
-;; Fontify *SLIME Description* buffer for SBCL
+;;; Fontify *SLIME Description* buffer for SBCL
 (defun slime-description-fontify ()
   "Fontify sections of SLIME Description."
   (let ((buffer "*SLIME Description <sbcl>*"))
@@ -231,7 +218,7 @@
 
 
 ;;----------------------------------------------------------------------------------------------------
-(defun lispdoc (arg)
+(defun pl/lispdoc (arg)
   "Searches lispdoc.com for SYMBOL, which is by default the symbol
 currently under the cursor."
   (interactive "P")
@@ -249,7 +236,7 @@ currently under the cursor."
           (browse-url (concat "http://lispdoc.com?q=" target-symbol
                               "&search=" search-type))))))
 
-(define-key help-map (kbd "l") 'lispdoc) ; was view-lossage
+(define-key help-map (kbd "l") 'pl/lispdoc) ; was view-lossage
 ;;----------------------------------------------------------------------------------------------------
 
 ;;; cldoc -- can not work well with slime, use autodoc instead of.
@@ -408,8 +395,6 @@ currently under the cursor."
     (message "%S" lines)
     lines))
 
-;; (count-loc-lisp)
-
 ;; (defun stump-autocompile nil "compile itself if ~/.stumpwmrc"
 ;;        (interactive)
 ;;        (require 'bytecomp)
@@ -431,7 +416,7 @@ currently under the cursor."
     (insert "(in-package #:" package ")\n\n")))
 
 ;;; redshank
-(require 'redshank-loader nil t)
+;; (require 'redshank-loader nil t)
 ;; (eval-after-load "redshank-loader"
 ;;   `(redshank-setup '(lisp-mode-hook
 ;;                      slime-repl-mode-hook) t))
