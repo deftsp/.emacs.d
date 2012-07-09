@@ -151,7 +151,10 @@
 (setq org-mobile-inbox-for-pull "~/proj/org/flagged.org")
 ;; Set to <your Dropbox root directory>/MobileOrg.
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
-
+;; Enable encryption
+(setq org-mobile-use-encryption t)
+;; Set a password
+(setq org-mobile-encryption-password "op'et6m")
 
 ;; (setq org-stuck-projects '("+LEVEL=2/-DONE"
 ;;                            ("TODO" "NEXT" "NEXTACTION")
