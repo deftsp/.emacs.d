@@ -255,7 +255,7 @@
 ;;remember ends there---------------------------------------------------------------------------
 
 ;;;; Capture
-(define-key global-map "\C-cC" 'org-capture)
+(define-key global-map "\C-cc" 'org-capture)
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/proj/org/GTD.org" "Tasks")
          "* TODO %?\n  %i%u")
