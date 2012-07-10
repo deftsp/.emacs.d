@@ -168,10 +168,10 @@
 
 ;;; outline minor mode
 (defun pl/outline-local-set-regexp (regexp &optional fun)
-  ;; Set `outline-regexp' locally to REGEXP and `outline-level' to FUN.
+  "Set `outline-regexp' locally to REGEXP and `outline-level' to FUN."
   (set (make-local-variable 'outline-regexp) regexp)
   (if fun
-    (set (make-local-variable 'outline-level) fun)))
+      (set (make-local-variable 'outline-level) fun)))
 
 ;; all text-based major modes run `text-mode-hook', and all programming language modes run
 ;; `prog-mode-hook', prior to running their own mode hooks
@@ -203,10 +203,11 @@
                                            )
   "outline regexp for C and C++")
 
-;; (hide-sublevels 2)
-;; (hide-body)
-;; (outline-local-set-regexp "[^ #\t\n]\\|[:blank:]*\\(.*{\\|.*}\\)")
+(add-hook 'c-mode-hook (lambda ()
+                         (pl/outline-local-set-regexp pl/c-mode-common-outline-regexp)))
 
+(add-hook 'c++-mode-hook (lambda ()
+                           (pl/outline-local-set-regexp pl/c-mode-common-outline-regexp)))
 
 ;; (add-hook 'php-mode-user-hook
 ;;           '(lambda ()
@@ -230,13 +231,7 @@
 ;;                       (outline-local-set-regexp ";;; \\|(....")
 ;;                       (outline-minor-mode 1))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; safe locals; we mark these as 'safe', so emacs22+ won't give us annoying
-;; warnings
-;; (setq safe-local-variable-values
-;;       (quote ((auto-recompile . t)
-;;               (outline-minor-mode . t)
-;;               auto-recompile outline-minor-mode)))
+
 
 
 (provide '50outline-mode)

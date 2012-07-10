@@ -90,7 +90,6 @@
 
 (defun pl/c-mode-hook ()
   ;; (local-set-key [(control tab)] 'tempo-forward-mark)    ; move to next tempo mark
-  (pl/outline-local-set-regexp pl/c-mode-common-outline-regexp)
   (c-set-style "palory"))
 
 
@@ -100,7 +99,6 @@
 
 
 (defun pl/cpp-mode-hook ()
-  (pl/outline-local-set-regexp pl/c-mode-common-outline-regexp)
   (c-set-style "palory"))
 
 (add-hook 'c-mode-common-hook 'pl/c-mode-common-hook)
