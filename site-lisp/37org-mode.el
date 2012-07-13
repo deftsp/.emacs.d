@@ -115,7 +115,7 @@
 
 ;;; for MobileOrg
 ;; Set to the name of the file where new notes will be stored
-(setq org-mobile-inbox-for-pull "~/proj/org/flagged.org")
+(setq org-mobile-inbox-for-pull "~/proj/org/from-mobile.org")
 ;; Set to <your Dropbox root directory>/MobileOrg.
 (setq org-mobile-directory "~/Dropbox/MobileOrg")
 ;; Enable encryption
