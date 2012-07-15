@@ -9,6 +9,10 @@
 ;;
 ;;; Code:
 
+
+;; In order to edit a root-owned file on the local host you enter something like: `C-x C-f'
+;; /sudo::<path-to-root-owned-file>. sudo:: is a shortcut for sudo's default, which is /sudo:root@localhost:.
+
 (require 'ange-ftp)
 (require 'tramp)
 
@@ -21,7 +25,13 @@
 (setq tramp-debug-buffer 1
       tramp-verbose 10)
 
+
 ;; Default method to use for specific host/user pairs.
+;; enable edit remote root files
+(add-to-list 'tramp-default-proxies-alist
+             '(nil "\\`root\\'" "/ssh:%h:"))
+(add-to-list 'tramp-default-proxies-alist
+             '((regexp-quote (system-name)) nil nil))
 ;; (add-to-list 'tramp-default-method-alist
 ;;              '("10.13.122.225" "" "ssh"))
 ;; (add-to-list 'tramp-default-method-alist
@@ -85,11 +95,3 @@
 
 
 (provide '50tramp)
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Tips
-;; Using su to edit stuff as root
-;; C-x C-f /su::/etc/hosts RET
-
-
