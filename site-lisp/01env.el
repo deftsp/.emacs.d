@@ -97,23 +97,23 @@
   (if (eq system-type 'darwin)
       (let ((eprefix (expand-file-name "~/Library/Gentoo"))) ; Gentoo Prefix
         (if (file-directory-p eprefix)
-            (concat eprefix "/bin" ":"
-                    eprefix "/usr/bin" ":")
+            (concat eprefix "/bin:"
+                    eprefix "/usr/bin:")
             ""))
       ""))
 
 (defun pl/xcode-bin-path ()
   (if (eq system-type 'darwin)
       (let ((p "/Applications/Xcode.app/Contents/Developer/usr/bin"))
-        (if (file-directory-p p) p ""))
+        (if (file-directory-p p) (concat p ":") ""))
       ""))
 
 (setenv "PATH"
         (concat
-         (expand-file-name "~/bin") ":"
-         (expand-file-name "~/local/bin") ":"
-         "/usr/local/bin" ":"
-         "/opt/bin" ":"
+         (expand-file-name "~/bin:")
+         (expand-file-name "~/local/bin:")
+         "/usr/local/bin:"
+         "/opt/bin:"
          (pl/gentoo-prefix-path)
          (pl/xcode-bin-path)
          (getenv "PATH")))
