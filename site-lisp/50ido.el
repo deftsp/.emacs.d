@@ -6,7 +6,7 @@
 ;; ido seem much less annoying than icicles...
 (ido-mode t)                  ;  Turn on ido buffer and file behavior.
 (ido-everywhere t)
-(setq ido-enable-prefix t
+(setq ido-enable-prefix nil
       ido-enable-regexp t
       ido-case-fold  t                  ; be case-insensitive
       ido-create-new-buffer 'always
