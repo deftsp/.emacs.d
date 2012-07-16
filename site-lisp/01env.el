@@ -93,26 +93,43 @@
 ;; are using a shell in a terminal.
 ;; The "exec-path" is used by emacs itself to find programs it needs for its features, such as spell
 ;; checking, file compression, compiling, grep, diff, etc.
-(let ((darwin-path ""))
-  (when (eq system-type 'darwin)
-    (let ((eprefix (expand-file-name "~/Library/Gentoo"))) ; Gentoo Prefix
-      (when (file-directory-p eprefix)
-        (setq darwin-path
-              (concat eprefix "/bin" ":"
-                      eprefix "/usr/bin" ":"
-                      (if (file-directory-p "/Applications/Xcode.app/Contents/Developer/usr/bin")
-                          "/Applications/Xcode.app/Contents/Developer/usr/bin:" ""))))))
-  (setenv "PATH"
-          (concat
-           (expand-file-name "~/bin") ":"
-           (expand-file-name "~/local/bin") ":"
-           "/usr/local/bin" ":"
-           "/opt/bin" ":"
-           darwin-path
-           (getenv "PATH"))))
+(defun pl/gentoo-prefix-path ()
+  (if (eq system-type 'darwin)
+      (let ((eprefix (expand-file-name "~/Library/Gentoo"))) ; Gentoo Prefix
+        (if (file-directory-p eprefix)
+            (concat eprefix "/bin" ":"
+                    eprefix "/usr/bin" ":")
+            ""))
+      ""))
 
-(mapc (lambda (n) (add-to-list 'exec-path n))
-      `(,(expand-file-name  "~/bin") "/usr/local/bin" "/opt/bin" "/usr/X11R6/bin"))
+(defun pl/xcode-bin-path ()
+  (if (eq system-type 'darwin)
+      (let ((p "/Applications/Xcode.app/Contents/Developer/usr/bin"))
+        (if (file-directory-p p) p ""))
+      ""))
+
+(setenv "PATH"
+        (concat
+         (expand-file-name "~/bin") ":"
+         (expand-file-name "~/local/bin") ":"
+         "/usr/local/bin" ":"
+         "/opt/bin" ":"
+         (pl/gentoo-prefix-path)
+         (pl/xcode-bin-path)
+         (getenv "PATH")))
+
+(let ((gentoo-prefix-path (pl/gentoo-prefix-path))
+      (xcode-bin-path (pl/xcode-bin-path)))
+  (mapc (lambda (n) (add-to-list 'exec-path n))
+        `(,(expand-file-name  "~/bin") "/usr/local/bin" "/opt/bin" "/usr/X11R6/bin"))
+
+  (unless (string-equal gentoo-prefix-path "")
+    (add-to-list 'exec-path gentoo-prefix-path))
+  (unless (string-equal xcode-bin-path "")
+    (add-to-list 'exec-path xcode-bin-path)))
+
+
+
 
 ;; EPREFIX="$HOME/Library/Gentoo""
 (when (eq system-type 'darwin)

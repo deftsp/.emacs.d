@@ -971,4 +971,18 @@ such character is found, following options are shown:
 ;; (define-key js2-mode-map (kbd "C-c C-r") 'js2-rename-var)
 
 
+;;; docsetutil
+(require 'docsetutil)
+(define-key help-map "D" 'docsetutil-search) ; C-h D
+;; Choose a docset to use:
+;; M-x docsetutil-choose-docset
+
+;; API search with completion:
+;; M-x docsetutil-search
+
+;; Full text search:
+;; C-u M-x docsetutil-search
+
+
+
 (provide '50tools)
