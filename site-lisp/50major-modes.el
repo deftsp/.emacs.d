@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-06-06 08:11:33 Shihpin Tseng>
+;; Time-stamp: <2012-07-16 16:35:00 Shihpin Tseng>
 
 ;;; imenu
 ;; (require 'imenu)
@@ -158,7 +158,7 @@
 ;;----------------------------------------------------------------------------------------------------
 ;; insert -*- MODENAME -*- tag
 
-(defun insert-file-variable ()
+(defun pl/insert-file-variable ()
   "Insert file variable string \"-*- Major-Mode-Name -*-\" with
   comment char"
   (interactive)
@@ -307,14 +307,16 @@
 ;; (add-hook 'lisp-mode-hook 'lisp-unicode)
 ;; (add-hook 'emacs-lisp-mode-hook 'lisp-unicode)
 ;;----------------------------------------------------------------------------------------------------
-;; (defun pretty-lambdas ()
-;;   (font-lock-add-keywords
-;;    nil `(("(\\(lambda\\>\\)"
-;;         (0 (progn (compose-region (match-beginning 1) (match-end 1)
-;;                                   ,(make-char 'greek-iso8859-7 107))
-;;                   nil))))))
-;; (add-hook 'emacs-lisp-mode-hook 'pretty-lambdas)
-;; (add-hook 'lisp-mode-hook 'pretty-lambdas)
+
+;;; pretty lambda
+(defun pl/pretty-lambdas ()
+  (font-lock-add-keywords
+   nil `(("(?\\(lambda\\>\\)"
+          (0 (progn (compose-region (match-beginning 1) (match-end 1)
+                                    ,(make-char 'greek-iso8859-7 107))
+                    nil))))))
+
+(add-hook 'prog-mode-hook 'pl/pretty-lambdas)
 
 ;; function to comment a region using #if 0 -----------------------------------
 ;; (defun if0-region (p1 p2)
