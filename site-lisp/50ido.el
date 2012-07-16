@@ -314,5 +314,11 @@
           '(lambda ()
              (set (make-local-variable 'ido-enable-replace-completing-read) nil)))
 
+;;; find file with ido and open it with sudo
+(defun pl/ido-sudo-edit (&optional arg)
+  (interactive "p")
+  (if (or arg (not buffer-file-name))
+      (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
+      (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
 (provide '50ido)
