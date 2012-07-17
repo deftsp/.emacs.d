@@ -68,4 +68,13 @@
 ;; dev
 (defalias 'grr 'pl/gambit-remote-repl)
 
+;; bm
+(defalias 'bt  'bm-toggle)
+(defalias 'btp 'bm-toggle-buffer-persistence)
+(defalias 'bn  'bm-next)
+(defalias 'bp  'bm-previous)
+(defalias 'bs  'bm-show)
+(defalias 'bsa 'bm-show-all)
+(defalias 'abl 'anything-bm-list)
+
 (provide '50alias)
