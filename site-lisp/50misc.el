@@ -48,7 +48,6 @@
       ;; require-final-newline nil        ; let major modes to set it
       track-eol nil
       read-mail-command 'gnus
-      ;; paren-sexp-mode t
       ;; temporary-file-directory "~/tmp/"
       read-file-name-completion-ignore-case t
       ;; ispell-dictionary "english"
@@ -59,8 +58,9 @@
       display-time-interval 10          ; Seconds between updates of time in the mode line
       window-min-height 4               ; Let's not have too-tiny windows.
       ;; undo-no-redo t
-      ;; redisplay-dont-pause t
-      ;; mark-even-if-inactive t
+      redisplay-dont-pause t
+      mark-even-if-inactive t
+      set-mark-command-repeat-pop t
       x-select-enable-clipboard t ;;允许 emacs 和外部其他程序的粘贴
       ;; default-directory "/"
       visible-bell nil                    ;no f* beep on error.
@@ -348,12 +348,13 @@
 ;; (setq show-paren-delay 0
 ;;       show-paren-style 'parenthesis)    ;expression
 
-;; mic-paren
+;;; mic-paren
 (require 'mic-paren) ; loading
 (paren-activate)     ; activating
 (eval-after-load "mic-paren"
   '(progn
-     (set-face-attribute 'paren-face-match nil :foreground "#222222" :background "DeepSkyBlue3")))
+    (setq paren-sexp-mode 'mismatch)
+    (set-face-attribute 'paren-face-match nil :foreground "#222222" :background "DeepSkyBlue3")))
 
 
 ;; rainbow-delimiters
