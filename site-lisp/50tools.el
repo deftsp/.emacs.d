@@ -306,41 +306,41 @@
 
 ;; visible bookmarks in buffer
 ;; To load the repository when bm is loaded set the variable `bm-restore-repository-on-load' to t,*before* loading bm
-(setq bm-restore-repository-on-load t)
-(require 'bm)
-(setq bm-marker 'bm-marker-right
-      bm-highlight-style 'bm-highlight-only-fringe
-      bm-repository-file "~/.emacs.d/.bm-repository")
+;; (setq bm-restore-repository-on-load t)
+;; (require 'bm)
+;; (setq bm-marker 'bm-marker-right
+;;       bm-highlight-style 'bm-highlight-only-fringe
+;;       bm-repository-file "~/.emacs.d/.bm-repository")
 
-;; (setq-default bm-buffer-persistence nil)
+;; ;; (setq-default bm-buffer-persistence nil)
 
-(eval-after-load "bm"
-  '(progn
-    (set-face-attribute 'bm-fringe-face nil :foreground "#6666aa" :background "DarkOrange1")
-    (set-face-attribute 'bm-fringe-persistent-face nil :foreground "Black":background "DarkOrange1")))
+;; (eval-after-load "bm"
+;;   '(progn
+;;     (set-face-attribute 'bm-fringe-face nil :foreground "#6666aa" :background "DarkOrange1")
+;;     (set-face-attribute 'bm-fringe-persistent-face nil :foreground "Black":background "DarkOrange1")))
 
-;; If you are using desktop or other packages that restore buffers on start up, bookmarks will not be restored. Loading
-;; the repository from file when on start up.
-(add-hook' after-init-hook 'bm-repository-load)
+;; ;; If you are using desktop or other packages that restore buffers on start up, bookmarks will not be restored. Loading
+;; ;; the repository from file when on start up.
+;; (add-hook' after-init-hook 'bm-repository-load)
 
-;; Restoring bookmarks when on file find.
-(add-hook 'find-file-hooks 'bm-buffer-restore)
+;; ;; Restoring bookmarks when on file find.
+;; (add-hook 'find-file-hooks 'bm-buffer-restore)
 
-;; Saving bookmark data on killing a buffer
-(add-hook 'kill-buffer-hook 'bm-buffer-save)
+;; ;; Saving bookmark data on killing a buffer
+;; (add-hook 'kill-buffer-hook 'bm-buffer-save)
 
-;; Saving the repository to file when on exit.
-;; kill-buffer-hook is not called when Emacs is killed, so we
-;; must save all bookmarks first.
-(add-hook 'kill-emacs-hook '(lambda nil
-                             (bm-buffer-save-all)
-                             (bm-repository-save)))
+;; ;; Saving the repository to file when on exit.
+;; ;; kill-buffer-hook is not called when Emacs is killed, so we
+;; ;; must save all bookmarks first.
+;; (add-hook 'kill-emacs-hook '(lambda nil
+;;                              (bm-buffer-save-all)
+;;                              (bm-repository-save)))
 
-;; Update bookmark repository when saving the file.
-(add-hook 'after-save-hook 'bm-buffer-save)
+;; ;; Update bookmark repository when saving the file.
+;; (add-hook 'after-save-hook 'bm-buffer-save)
 
-;; Restore bookmarks when buffer is reverted.
-(add-hook 'after-revert-hook 'bm-buffer-restore)
+;; ;; Restore bookmarks when buffer is reverted.
+;; (add-hook 'after-revert-hook 'bm-buffer-restore)
 
 ;;; bookmark+
 (setq bmkp-last-as-first-bookmark-file nil)
@@ -358,11 +358,11 @@
 (set-face-attribute 'bmkp-light-fringe-autonamed nil :foreground "#6666aa" :background "DarkOrange1")
 (set-face-attribute 'bmkp-light-fringe-non-autonamed nil :foreground "Black":background "DarkOrange1")
 
-
 ;;; bookmark history stack
 ;; Use the following to maintain a stack of buffer locations which you can use as a simple bookmarking system.
 (global-set-key (kbd "C-c r SPC") 'point-stack-push)
 (global-set-key (kbd "C-c r p") 'point-stack-pop)
+
 
 (defvar point-stack nil)
 (defun point-stack-push ()
@@ -379,7 +379,6 @@
       (switch-to-buffer (caar point-stack))
       (goto-char (cadar point-stack))
       (setq point-stack (cdr point-stack))))
-
 
 ;;; Turns tabs into spaces
 ;; (defun pl/untabify ()
