@@ -33,10 +33,8 @@
 
 ;; (require 'misc-fns)
 
-;; (when (require 'pretty-symbol nil t)
-;;   (dolist (hook '(lisp-mode-hook emacs-lisp-mode-hook scheme-mode-hook c-mode-common-hook))
-;;     (add-hook hook 'turn-on-pretty-symbols-mode)))
-;; (global-pretty-symbols-mode 1)
+(when (require 'beautify-symbol nil t)
+  (global-beautify-symbol-mode 1))
 
 ;;; key-chord
 (require 'key-chord)

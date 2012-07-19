@@ -113,9 +113,7 @@
           (?∓ "minus-plus"           nil)
           (?√ "\\<sqrt\\>"           (tuareg-mode))
           (?∞ "\\<infinity\\>"       nil)
-          ;; (?∧ "(\\(and\\>\\)"        (,@lispen scheme-mode)) ; "\\<and\\>"
           (?∧ "\\<andalso\\>"        (,@mlen))
-          ;; (?∨ "(\\(or\\>\\)"         (,@lispen scheme-mode)) ; "\\<or\\>"
           (?∨ "\\<orelse\\>"         (,@mlen))
           (?≈ "~="                   (perl-mode))
           ;; (?≠ "/="                   (,@lispen haskell-mode))
@@ -141,9 +139,11 @@
           ;; (?≡ "\\<eql\\>"            (,@lispen))
           ;; (?≣ "\\<equal\\>"          (,@lispen))
           ;; (?∖ "\\<set-difference\\>" (,@lispen))
-          ;; (?⋂ "(\\(intersection\\>\\)"   (,@lispen)) ; "\\<intersection\\>"
-          ;; (?⋃ "(\\(union\\>\\)"      (,@lispen))     ; "\\<union\\>"
+          (?⋂ "(\\(intersection\\>\\)"   (,@lispen)) ; "\\<intersection\\>"
+          (?⋃ "(\\(union\\>\\)"      (,@lispen))     ; "\\<union\\>"
           ;; (?∈ "\\<member\\>"         (,@lispen scheme-mode))
+          (?∧ "(\\(and\\>\\)"        (,@lispen scheme-mode)) ; "\\<and\\>"
+          (?∨ "(\\(or\\>\\)"         (,@lispen scheme-mode)) ; "\\<or\\>"
           (?∅ "\\<nil\\>"            (,@lispen tuareg-mode))
           (?∅ "'\\(()\\)"             (,@lispen scheme-mode))
           (?λ "(\\(lambda\\>\\)"     (,@lispen scheme-mode))
