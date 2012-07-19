@@ -33,7 +33,7 @@
 
 ;; (require 'misc-fns)
 
-;; (when (require 'pretty-symbols nil t)
+;; (when (require 'pretty-symbol nil t)
 ;;   (dolist (hook '(lisp-mode-hook emacs-lisp-mode-hook scheme-mode-hook c-mode-common-hook))
 ;;     (add-hook hook 'turn-on-pretty-symbols-mode)))
 ;; (global-pretty-symbols-mode 1)

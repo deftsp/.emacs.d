@@ -1,22 +1,34 @@
 ;; -*- coding: utf-8; mode: emacs-lisp; -*-
-;; Author: Trent W.Buck S.P.Tseng
-;; License: Public Domain
 
-;; Install
-;; (require 'pretty-mode)
-;; (global-pretty-mode 1)
-;; (add-hook 'language-hook 'turn-on-pretty-symbols-mode)
+;; (require 'beautify-symbol)
 
+(eval-when-compile
+  (require 'cl))
 
-(require 'cl)
+;; see also
+;; http://lists.nongnu.org/archive/html/geiser-users/2011-06/msg00004.html
 
-(defcustom pretty-symbol-patterns nil
+(defvar beautify-symbol-modes '(emacs-lisp-mode
+                                ilisp-mode
+                                inferior-lisp-mode
+                                lisp-interaction-mode
+                                lisp-mode
+                                sml-mode
+                                inferior-sml-mode
+                                latex-mode
+                                c-mode
+                                c++-mode
+                                perl-mode
+                                sh-mode
+                                scheme-mode))
+
+(defcustom beautify-symbol-patterns nil
   "A structure ((pattern symbol major-modes*)*)."
   ;; only one variable, so we won't bother creating a whole new group.
   :group 'font-lock
   :type '(repeat (list char string list)))
 
-(setq pretty-symbol-patterns
+(setq beautify-symbol-patterns
       (let ((lispen '(emacs-lisp-mode
                       ilisp-mode
                       inferior-lisp-mode
@@ -36,8 +48,6 @@
           (?£ "pounds?"              nil)
           (?¥ "yen"                  nil)
           (?© "&copy;"               nil)
-          (?¬ "[( ]\\(!\\b\\)"       (,@c-like))                                 ; "\\<!\\>"
-          (?¬ "(\\(not\\>\\)"        (,@lispen tuareg-mode haskell-mode ,@mlen)) ; "\\<not\\>"
           (?± "plus-minus"           nil)
           (?² "square"               nil)
           (?³ "cube"                 nil)
@@ -53,8 +63,6 @@
           (?β "\\<beta\\>"           (tuareg-mode haskell-mode))
           (?γ "\\<gamma\\>"          (tuareg-mode haskell-mode))
           (?δ "\\<delta\\>"          (tuareg-mode haskell-mode))
-          (?λ "\\<lambda\\>"         (,@lispen))
-          ;; ((decode-coding-string "\xEB" 'greek-iso-8bit) "\\<lambda\\>" (,@lispen scheme-mode))
           (?λ "\\<fn\\>"             (,@mlen))
           (?– "--"                   (texen))
           (?‖ "^ +\\(|\\)"           (tuareg-mode))
@@ -97,42 +105,61 @@
           (?∀ "\\<forall\\>"         (perl-mode))
           (?∃ "\\<List.exists\\>"    (tuareg-mode))
           (?∃ "\\<thereexists\\>"    nil)
-          (?∅ "\\<NULL\\>"           (c-mode))
-          (?∅ "\\<nil\\>"            (,@lispen tuareg-mode))
-          (?∅ " \\(()\\)"             (,@lispen scheme-mode))
           (?∅ "\\[\\]"               (haskell-mode))
           (?∈ "\\<List.mem\\>"       (tuareg-mode))
           (?∈ "\\<for\\s +[^\\s ]+\\s +\\(in\\)\\>" (sh-mode))
-          ;; (?∈ "\\<member\\>"         (,@lispen scheme-mode))
           (?∏ "\\<product\\>"        nil)
           (?∑ "\\<sum\\>"            nil)
           (?∓ "minus-plus"           nil)
           (?√ "\\<sqrt\\>"           (tuareg-mode))
-          (?√ " +\\(sqrt\\)("        (,@c-like))
           (?∞ "\\<infinity\\>"       nil)
-          (?∧ "&&"                   (,@c-like tuareg-mode))
           ;; (?∧ "(\\(and\\>\\)"        (,@lispen scheme-mode)) ; "\\<and\\>"
           (?∧ "\\<andalso\\>"        (,@mlen))
           ;; (?∨ "(\\(or\\>\\)"         (,@lispen scheme-mode)) ; "\\<or\\>"
           (?∨ "\\<orelse\\>"         (,@mlen))
-          (?∨ "||"                   (,@c-like tuareg-mode))
           (?≈ "~="                   (perl-mode))
           ;; (?≠ "/="                   (,@lispen haskell-mode))
           (?≠ "<>"                   (tuareg-mode ,@mlen))
-          (?≠ "\\!="                 (,@c-like tuareg-mode))
-          (?≡ "=="                   (,@c-like tuareg-mode haskell-mode joy-mode))
-          ;; (?≡ "\\<eql\\>"            (,@lispen))
-          ;; (?≣ "\\<equal\\>"          (,@lispen))
+
           (?⁻ "~"                    (,@mlen)) ; unary negation
           (?≤ "<="                   t)
           (?≥ ">="                   t)
           ;; (?≪ "<<"                   (,@c-like shell-mode))
           ;; (?≫ ">>"                   (,@c-like shell-mode))
+
+          ;;; c-like mode
+          (?∅ "\\<NULL\\>"           (,@c-like))
+          (?¬ "[( ]\\(!\\b\\)"       (,@c-like))                                 ; "\\<!\\>"
+          (?√ " +\\(sqrt\\)("        (,@c-like))
+          (?∧ "&&"                   (,@c-like tuareg-mode))
+          (?∨ "||"                   (,@c-like tuareg-mode))
+          (?≠ "\\!="                 (,@c-like tuareg-mode))
+          (?≡ "=="                   (,@c-like tuareg-mode haskell-mode joy-mode))
+
+
+          ;;; lispen & scheme
+          ;; (?≡ "\\<eql\\>"            (,@lispen))
+          ;; (?≣ "\\<equal\\>"          (,@lispen))
           ;; (?∖ "\\<set-difference\\>" (,@lispen))
           ;; (?⋂ "(\\(intersection\\>\\)"   (,@lispen)) ; "\\<intersection\\>"
           ;; (?⋃ "(\\(union\\>\\)"      (,@lispen))     ; "\\<union\\>"
+          ;; (?∈ "\\<member\\>"         (,@lispen scheme-mode))
+          (?∅ "\\<nil\\>"            (,@lispen tuareg-mode))
+          (?∅ "'\\(()\\)"             (,@lispen scheme-mode))
+          (?λ "(\\(lambda\\>\\)"     (,@lispen scheme-mode))
+          (?λ "(c-\\(lambda\\>\\)"     (,@lispen scheme-mode)) ; gambit c-lambda
+          (?¬ "(\\(not\\>\\)"        (,@lispen scheme-mode tuareg-mode haskell-mode ,@mlen)) ; "\\<not\\>"
           (?ƒ "(\\(defun\\>\\)"      (,@lispen))     ; "\\<defun\\>"
           (?Ψ "(\\(defvar\\>\\)"     (,@lispen))     ; "\\<defvar\\>"
+          (?δ "[[(]\\(define\\)[^)]" (scheme-mode))
+          (?δ "(c-\\(define\\)[^)]" (scheme-mode))   ; gambit c-define
+          (?β "[[(]\\(let\\)\\(*\\|-\\)?" (,@lispen scheme-mode))
+          (?ς "[[(]\\(set!\\)\\>" (scheme-mode))
+          (?ρ  "[[(]\\(begin\\)\\>" (scheme-mode))
+          (?ι "[[(]\\(if\\)\\>" (scheme-mode))
+          (?⊤ "\\(#t\\)\\>" (scheme-mode))
+          (?⊥ "\\(#f\\)\\>" (scheme-mode))
+
 
           ;; I make the assumption that you write "... *pointer", but
           ;; "...*..." or "... * ..." for multiplication.
@@ -205,8 +232,8 @@
                    "rsquo" "sbquo" "ldquo" "rdquo" "bdquo" "dagger" "Dagger"
                    "permil" "lsaquo" "rsaquo" "euro")))))
 
-(defun pretty-symbols-enable/disable (font-lock-add/remove-keywords)
-  (dolist (x pretty-symbol-patterns)
+(defun beautify-symbol-toggle (font-lock-add/remove-keywords)
+  (dolist (x beautify-symbol-patterns)
     (if (or (eql t (third x))
             (find major-mode (third x)))
         (funcall font-lock-add/remove-keywords
@@ -219,45 +246,30 @@
                                         (match-end       ,(if (string-match "\\\\(.*\\\\)" (second x)) 1 0))
                                         ,(first x))))))))))
 
-(defun pretty-symbols-enable ()
-  (pretty-symbols-enable/disable #'font-lock-add-keywords)
+(defun beautify-symbol-enable ()
+  (beautify-symbol-toggle #'font-lock-add-keywords)
   (font-lock-fontify-buffer))
 
-(defun pretty-symbols-disable ()
-  (pretty-symbols-enable/disable #'font-lock-remove-keywords)
+(defun beautify-symbol-disable ()
+  (beautify-symbol-toggle #'font-lock-remove-keywords)
   (remove-text-properties (point-min) (point-max) '(composition nil)))
 
-(defun turn-on-pretty-symbols-if-enable ()
-  (if global-pretty-symbols-mode
-      (pretty-symbols-mode 1)))
-
-(defun turn-off-pretty-symbols ()
-  (interactive)
-  (pretty-symbols-mode -1))
-
-
-(defun turn-on-pretty-symbols-mode ()
-  (interactive)
-  (pretty-symbols-mode 1))
-
-
 ;;;###autoload
-(define-minor-mode pretty-symbols-mode
-    "A font-lock extension to draw multi-character codes in programming buffers
-as Unicode glyphs.  For example, in C \"!=\" would be drawn as the not-equals
-symbol."
-  ;; Initial value.
-  nil
-  ;; Indicator.
-  " λ"
-  ;; Key map.
-  nil
-  (if pretty-symbols-mode
-      (pretty-symbols-enable)
-      (pretty-symbols-disable)))
+(define-globalized-minor-mode global-beautify-symbol-mode
+    beautify-symbol-mode turn-on-beautify-symbol-mode)
 
-(define-globalized-minor-mode global-pretty-symbols-mode
-    pretty-symbols-mode turn-on-pretty-symbols-if-enable
-    :init-value t)
+(defun turn-on-beautify-symbol-mode ()
+  (if (and (not (minibufferp (current-buffer)))
+           (memq major-mode beautify-symbol-modes))
+      (beautify-symbol-mode 1)))
 
-(provide 'pretty-symbols)
+(define-minor-mode beautify-symbol-mode
+    "Minor mode for smooth scrolling."
+  nil                     ; init value
+  " λ"                    ; lighter
+  nil                     ; keymap
+  (if beautify-symbol-mode
+      (beautify-symbol-enable)
+      (beautify-symbol-disable)))
+
+(provide 'beautify-symbol)

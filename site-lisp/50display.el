@@ -134,7 +134,7 @@
      '((#x0180 #x024F)                    ; Latin Extended-B
        (#x0370 #x03FF)                    ; Greek
        (#x2000 #x206f)                    ; General Punctuation
-       ;; (#x2200 #x22ff)                 ; Mathematical Operator
+       (#x2200 #x22ff)                 ; Mathematical Operator
        ))
 
     ;; ⋂ & ⋃

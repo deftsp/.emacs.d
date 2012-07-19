@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-07-16 16:35:00 Shihpin Tseng>
+;; Time-stamp: <2012-07-19 09:45:14 Shihpin Tseng>
 
 ;;; imenu
 ;; (require 'imenu)
@@ -309,14 +309,14 @@
 ;;----------------------------------------------------------------------------------------------------
 
 ;;; pretty lambda
-(defun pl/pretty-lambdas ()
-  (font-lock-add-keywords
-   nil `(("(?\\(lambda\\>\\)"
-          (0 (progn (compose-region (match-beginning 1) (match-end 1)
-                                    ,(make-char 'greek-iso8859-7 107))
-                    nil))))))
+;; (defun pl/pretty-lambdas ()
+;;   (font-lock-add-keywords
+;;    nil `(("(?\\(lambda\\>\\)"
+;;           (0 (progn (compose-region (match-beginning 1) (match-end 1)
+;;                                     ,(make-char 'greek-iso8859-7 107))
+;;                     nil))))))
 
-(add-hook 'prog-mode-hook 'pl/pretty-lambdas)
+;; (add-hook 'prog-mode-hook 'pl/pretty-lambdas)
 
 ;; function to comment a region using #if 0 -----------------------------------
 ;; (defun if0-region (p1 p2)
