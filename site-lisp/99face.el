@@ -212,16 +212,6 @@
 (setq blink-cursor-delay 0.2
       blink-cursor-interval 0.3)
 
-(setq ring-bell-function 'ignore)
-;; Emacs does not beep when you hit `C-g' in the minibuffer or during
-;; an `isearch' (http://www.emacswiki.org/cgi-bin/wiki.pl?AlarmBell)
-;; (setq ring-bell-function
-;;       (lambda ()
-;;         (unless (memq this-command
-;;                       '(isearch-abort abort-recursive-edit find-file
-;;                         exit-minibuffer keyboard-quit))
-;;           (ding))))
-
 ;; (require 'cursor-chg)
 ;; (change-cursor-mode 1) ; On for overwrite/read-only/input mode
 ;; (toggle-cursor-type-when-idle nil) ; On when idle

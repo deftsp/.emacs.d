@@ -91,6 +91,15 @@
       ;; default-enable-multibyte-characters t
       enable-local-variables :safe)
 
+(setq ring-bell-function 'ignore)
+;; Emacs does not beep when you hit `C-g' in the minibuffer or during
+;; an `isearch' (http://www.emacswiki.org/cgi-bin/wiki.pl?AlarmBell)
+;; (setq ring-bell-function
+;;       (lambda ()
+;;         (unless (memq this-command
+;;                       '(isearch-abort abort-recursive-edit find-file
+;;                         exit-minibuffer keyboard-quit))
+;;           (ding))))
 
 ;;;
 ;; (when (eq system-type 'darwin)
