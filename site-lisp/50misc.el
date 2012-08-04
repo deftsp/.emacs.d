@@ -360,7 +360,10 @@
 
 
 ;; rainbow-delimiters
-(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'scheme-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+(add-hook 'lisp-mode-hook 'rainbow-delimiters-mode)
+;; (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
 ;; (eval-after-load "rainbow-delimiters.el"
 ;;   '(progn
 ;;      ;; To enable in all programming-related modes (Emacs 24+):
