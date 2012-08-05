@@ -98,7 +98,7 @@
    (define-abbrev-table mode '(("inc" "" pl/skel-include 1))))
  '(c-mode-abbrev-table c++-mode-abbrev-table))
 
-;; input inc and space, auto prompt input filename which can be auto-comlete.
+;; input inc and space, auto prompt input filename which can be auto-complete.
 (define-skeleton pl/skel-include
     "generate include<>" ""
     > "#include <"
