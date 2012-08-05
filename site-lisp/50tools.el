@@ -33,8 +33,9 @@
 
 ;; (require 'misc-fns)
 
-(when (require 'beautify-symbol nil t)
-  (global-beautify-symbol-mode 1))
+;;; beautify symbol mode will cause symbol indent incorrect
+(require 'beautify-symbol nil t)
+;; (global-beautify-symbol-mode 1)
 
 ;;; key-chord
 (require 'key-chord)
