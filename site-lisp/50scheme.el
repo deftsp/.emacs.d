@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-08-03 00:53:03 Shihpin Tseng>
+;; Time-stamp: <2012-08-05 16:11:54 Shihpin Tseng>
 
 
 (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
@@ -11,6 +11,9 @@
 ;;; geiser
 (setq geiser-active-implementations '(racket))
 (setq geiser-repl-history-filename "~/.emacs.d/geiser-history")
+;; do not auto turn on geiser
+(eval-after-load "geiser"
+  '(remove-hook 'scheme-mode-hook 'geiser-mode--maybe-activate))
 
 (eval-after-load "gambit"
   '(progn
