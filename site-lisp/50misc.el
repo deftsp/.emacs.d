@@ -527,12 +527,16 @@ vi style of % jumping to matching brace."
 ;; Use cperl-mode instead of perl-mode
 ;;(defalias 'perl-mode 'cperl-mode)
 
+;;; whitespace mode
 ;; If you don't like having lines of code/text with whitespace at the ends,Emacs highlight the offending whitespace.
 ;; When set, the variable's value becomes buffer local, so set it to true in the mode-hooks for your preferred modes.
 ;; Or, if you want it on all the time, change the default value with:
 
 ;; (if (>= emacs-major-version 21)
 ;;     (setq-default show-trailing-whitespace t))
+;; (setq whitespace-style '(face trailing  lines-tail tabs))
+(setq whitespace-line-column 80)
+
 
 ;;I do not want excess trailing whitespace
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
