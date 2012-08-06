@@ -1032,6 +1032,11 @@ such character is found, following options are shown:
 ;; Full text search:
 ;; C-u M-x docsetutil-search
 
-
+;;; find-file-in-project
+(global-set-key (kbd "C-x f") 'find-file-in-project)
+(eval-after-load "find-file-in-project"
+  '(progn
+    (dolist (pattern '("*.cpp" "*.hpp" "*.scm"))
+      (add-to-list 'ffip-patterns pattern))))
 
 (provide '50tools)
