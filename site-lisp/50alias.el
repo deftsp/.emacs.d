@@ -77,4 +77,7 @@
 (defalias 'bsa 'bm-show-all)
 (defalias 'abl 'anything-bm-list)
 
+;; traverselisp
+(defalias 'tdr 'traverse-deep-rfind)
+
 (provide '50alias)
