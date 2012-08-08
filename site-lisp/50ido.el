@@ -6,6 +6,7 @@
 ;; ido seem much less annoying than icicles...
 (ido-mode t)                  ;  Turn on ido buffer and file behavior.
 (ido-everywhere t)
+(ido-hacks-mode 1)
 (setq ido-enable-prefix nil
       ido-enable-regexp t
       ido-case-fold  t                  ; be case-insensitive
@@ -281,38 +282,38 @@
 ;; Using the defadvice as described does not work for me? Is it just me or is this a bug? TIA – sebhofer
 ;; Fixed. It seems in version >=23, ido-cur-list is always bound and you need to check it as well. – LeWang
 
-(defvar ido-enable-replace-completing-read nil
-  "If t, use ido-completing-read instead of completing-read if possible.
+;; (defvar ido-enable-replace-completing-read nil
+;;   "If t, use ido-completing-read instead of completing-read if possible.
 
-    Set it to nil using let in around-advice for functions where the
-    original completing-read is required.  For example, if a function
-    foo absolutely must use the original completing-read, define some
-    advice like this:
+;;     Set it to nil using let in around-advice for functions where the
+;;     original completing-read is required.  For example, if a function
+;;     foo absolutely must use the original completing-read, define some
+;;     advice like this:
 
-    (defadvice foo (around original-completing-read-only activate)
-      (let (ido-enable-replace-completing-read) ad-do-it))")
-(set-default 'ido-enable-replace-completing-read t)
-;; Replace completing-read wherever possible, unless directed otherwise
-(defadvice completing-read
-  (around use-ido-when-possible activate)
-  (if (or (not ido-enable-replace-completing-read) ; Manual override disable ido
-          (and (boundp 'ido-cur-list)
-               ido-cur-list)) ; Avoid infinite loop from ido calling this
-      ad-do-it
-    (let ((allcomp (all-completions "" collection predicate)))
-      (if allcomp
-          (setq ad-return-value
-                (ido-completing-read prompt
-                                     allcomp
-                                     nil require-match initial-input hist def))
-        ad-do-it))))
+;;     (defadvice foo (around original-completing-read-only activate)
+;;       (let (ido-enable-replace-completing-read) ad-do-it))")
+;; (set-default 'ido-enable-replace-completing-read t)
+;; ;; Replace completing-read wherever possible, unless directed otherwise
+;; (defadvice completing-read
+;;   (around use-ido-when-possible activate)
+;;   (if (or (not ido-enable-replace-completing-read) ; Manual override disable ido
+;;           (and (boundp 'ido-cur-list)
+;;                ido-cur-list)) ; Avoid infinite loop from ido calling this
+;;       ad-do-it
+;;     (let ((allcomp (all-completions "" collection predicate)))
+;;       (if allcomp
+;;           (setq ad-return-value
+;;                 (ido-completing-read prompt
+;;                                      allcomp
+;;                                      nil require-match initial-input hist def))
+;;         ad-do-it))))
 
 ;; ido-completing-read to interfere when using dired mode buffers (e.g., renaming files). To turn it off:
 ;; in dired buffer, use original completing-read
 ;; TODO: find a better way to solve this conflict
-(add-hook 'dired-mode-hook
-          '(lambda ()
-             (set (make-local-variable 'ido-enable-replace-completing-read) nil)))
+;; (add-hook 'dired-mode-hook
+;;           '(lambda ()
+;;              (set (make-local-variable 'ido-enable-replace-completing-read) nil)))
 
 ;;; find file with ido and open it with sudo
 (defun pl/ido-sudo-edit (&optional arg)
