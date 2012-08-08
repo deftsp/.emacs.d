@@ -48,10 +48,10 @@
                              ;; anything-c-source-bbdb
                              ;; anything-c-source-file-name-history
                              anything-c-source-recentf
-                             anything-c-source-occur
+                             ;; anything-c-source-occur
                              anything-c-source-traverse-occur
-                             anything-c-source-info-pages
-                             anything-c-source-man-pages
+                             ;; anything-c-source-info-pages
+                             ;; anything-c-source-man-pages
                              ;; anything-c-source-w3m-bookmarks
                              ;; anything-c-source-locate
                              ;; anything-c-source-file-cache
