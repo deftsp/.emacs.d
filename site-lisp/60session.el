@@ -32,7 +32,7 @@
 (when (require 'session nil t)
   (setq session-save-file "~/.emacs.d/.session")
   (setq session-save-file-coding-system 'utf-8)
-  ;; org-mark-ring 是一个循环结构。如果不除掉，使用 org-mode 后就关不了emacs 了。
+  ;; exclude org-mark-ring which is a circular object. otherwise, emacs can not be closed if open org file.
   (add-to-list 'session-globals-exclude 'org-mark-ring)
   (add-hook 'after-init-hook 'session-initialize))
 
