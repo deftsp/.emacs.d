@@ -111,7 +111,7 @@
 
   (set-face-foreground 'font-lock-builtin-face "LightSteelBlue")
   (set-face-foreground 'font-lock-comment-face "#008888")
-  (set-face-foreground 'font-lock-constant-face "Aquamarine")
+  (set-face-foreground 'font-lock-constant-face "#22ccee")
   ;; (set-face-foreground 'font-lock-doc-string-face "DarkOrange")
   (set-face-foreground 'font-lock-function-name-face "LightCoral")
   (set-face-foreground 'font-lock-keyword-face "DarkOliveGreen2")
