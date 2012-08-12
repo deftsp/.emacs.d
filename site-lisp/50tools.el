@@ -969,7 +969,13 @@ such character is found, following options are shown:
 ;; 'C-c SPC' is used by Org mode
 ;; gud-break is bound to C-c C-b, C-x SPC, C-x C-a C-b.
 ;; both of 'M-g M-g' and 'M-g g' are bound to goto-line
-(define-key global-map (kbd "M-g g") 'ace-jump-mode)
+(eval-after-load "ace-jump-mode"
+  '(progn
+    (ace-jump-mode-enable-mark-sync)
+    ;; after enable ace jump mode mark sync, use `C-u C-SPC' is enough
+    ;; (define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
+    (define-key global-map (kbd "M-g g") 'ace-jump-mode)))
+
 
 ;;; jump-char
 ;; <char> :: move to the next match in the current direction.
