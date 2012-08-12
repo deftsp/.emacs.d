@@ -68,9 +68,8 @@
 ;;; git-emacs
 ;; http://tsgates.cafe24.com/git/git-emacs.html
 (require 'git-emacs)
-(if window-system
-    (setq git-state-modeline-decoration 'git-state-decoration-small-dot))
-(setq git--state-mark-modeline t)
+(when window-system
+  (setq git-state-modeline-decoration 'git-state-decoration-colored-letter))   ; git-state-decoration-small-dot
 
 ;;; darcs
 (require 'vc-darcs)
