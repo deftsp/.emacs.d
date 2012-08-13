@@ -1045,4 +1045,10 @@ such character is found, following options are shown:
     (dolist (pattern '("*.cpp" "*.hpp" "*.scm"))
       (add-to-list 'ffip-patterns pattern))))
 
+;;; info+
+;; (eval-after-load "info+"
+;;   '(progn
+;;     ))
+
+
 (provide '50tools)
