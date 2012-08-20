@@ -76,7 +76,7 @@
 (require '50window)
 (require '50xcode)
 (require '50yasnippet)
-(require '50workgroups)
+;; (require '50workgroups)
 (require '51CommonLispTemplates)
 (require '51anything)
 ;; ;; (require '52icicles)
