@@ -52,7 +52,7 @@
   (set-face-background 'ac-completion-face "violet")
 
   ;; start completion when entered 2 characters
-  (setq ac-auto-start t)                ; do not start automatically
+  (setq ac-auto-start 2)                ; do not start automatically
   (setq ac-dwim t)
   (setq ac-use-quick-help nil)          ; TODO: tooltip positon is not correct
 
