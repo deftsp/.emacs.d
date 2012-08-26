@@ -61,14 +61,21 @@
 
 
 ;; style I want to use in c++ mode
+;; +   `c-basic-offset' times 1
+;; -   `c-basic-offset' times -1
+;; ++  `c-basic-offset' times 2
+;; --  `c-basic-offset' times -2
+;; *   `c-basic-offset' times 0.5
+;; /   `c-basic-offset' times -0.5
 (c-add-style "palory"
              '((indent-tabs-mode . nil)        ; use spaces rather than tabs
                (c-basic-offset . 4)            ; indent by four spaces
                (c-comment-only-line-offset . 0)
                (c-offsets-alist
                 (statement-block-intro . +)
-                (substatement-open . 0)
+                (substatement-open . 0)  ; brackets should be at same indentation level as the statements they open
                 (substatement-label . 0)
+                (case-label . +)         ; indent case labels by c-indent-level, too
                 (label . 0)
                 (statement-cont . +)
                 (inline-open . 0))))
