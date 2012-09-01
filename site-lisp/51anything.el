@@ -50,6 +50,7 @@
                              anything-c-source-recentf
                              ;; anything-c-source-occur
                              anything-c-source-traverse-occur
+                             anything-c-source-bookmarks
                              ;; anything-c-source-info-pages
                              ;; anything-c-source-man-pages
                              ;; anything-c-source-w3m-bookmarks
@@ -58,6 +59,7 @@
                              ;; anything-c-source-emacs-commands
                              anything-c-source-buffer-not-found))
     (define-key anything-map "A" 'anything-pl/show-all)
+    (define-key anything-map "B" 'anything-pl/show-bookmarks-only)
     (define-key anything-map "T" 'anything-pl/show-traverse-only)
     (define-key anything-map "L" 'anything-pl/show-locate-only)
     (define-key anything-map "O" 'anything-pl/show-occur-only)
@@ -119,6 +121,10 @@ Or else erases whole minibuffer. "
 (defun anything-pl/show-occur-only ()
   (interactive)
   (anything-set-source-filter '("Occur")))
+
+(defun anything-pl/show-bookmarks-only ()
+  (interactive)
+  (anything-set-source-filter '("Bookmarks")))
 
 
 (provide '51anything)

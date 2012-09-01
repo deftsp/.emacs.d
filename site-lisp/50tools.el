@@ -345,6 +345,10 @@
 (setq bmkp-last-as-first-bookmark-file nil)
 ;; (bmkp-global-auto-idle-bookmark-mode 1)
 
+;; it seems  highlight automatically not work
+(setq bmkp-auto-light-when-set 'all-in-buffer
+      bmkp-auto-light-when-jump 'all-in-buffer)
+
 (setq bmkp-light-style-autonamed 'lfringe
       bmkp-light-style-non-autonamed 'lfringe)
 
@@ -354,7 +358,7 @@
   (setq bmkp-light-left-fringe-bitmap 'pl/marker-left)
   (setq bmkp-light-right-fringe-bitmap 'pl/marker-right))
 
-(set-face-attribute 'bmkp-light-fringe-autonamed nil :foreground "#6666aa" :background "DarkOrange1")
+(set-face-attribute 'bmkp-light-fringe-autonamed nil :foreground "#222222" :background "#778899")
 (set-face-attribute 'bmkp-light-fringe-non-autonamed nil :foreground "Black":background "DarkOrange1")
 
 ;;; bookmark history stack
