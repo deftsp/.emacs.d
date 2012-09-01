@@ -84,6 +84,23 @@
 (add-hook 'lisp-interaction-mode 'ac-emacs-lisp-mode-setup)
 (add-hook 'c-mode-common-hook 'pl/ac-c-mode-common-setup)
 
+
+;;; Scheme
+(require 'scheme-complete nil t)
+(eval-after-load "scheme-complete"
+  '(progn
+    (defvar ac-source-scheme
+      '((candidates . (lambda ()
+                        (all-completions ac-target (car (scheme-current-env))))))
+      "Source for scheme keywords.")))
+
+(defun pl/ac-scheme-mode-common-setup ()
+  (if (fboundp 'scheme-current-env)
+      (add-to-list 'ac-sources 'ac-source-scheme))
+  (add-to-list 'ac-sources 'ac-source-yasnippet))
+(add-hook 'scheme-mode-hook 'pl/ac-scheme-mode-common-setup)
+
+
 (eval-after-load "popup"
   '(progn
      (set-face-attribute 'popup-scroll-bar-foreground-face nil :foreground "white" :background "#999999")
