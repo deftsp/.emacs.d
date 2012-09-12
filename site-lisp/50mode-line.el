@@ -82,14 +82,14 @@
                   mode-line-position
                   (vc-mode vc-mode)
                   " " mode-line-modes
-                  (which-func-mode ("--" which-func-format "-- "))
+                  (which-func-mode ("--" which-func-format "--"))
                   (global-mode-string ("" global-mode-string))
                   (working-mode-line-message (" " working-mode-line-message))
                   ,(propertize "-%-" 'help-echo help-echo))))
 
 
 (setq global-mode-string
-      '(""
+      '(" "
         appt-mode-string
         working-mode-line-message
         display-time-string " "
