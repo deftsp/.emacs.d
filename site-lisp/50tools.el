@@ -1054,5 +1054,20 @@ such character is found, following options are shown:
 ;;   '(progn
 ;;     ))
 
+;;; diminish
+(when (require 'diminish nil 'noerror)
+  (eval-after-load "abbrev"
+    '(diminish 'abbrev-mode "Abv"))
+  (eval-after-load "yasnippet"
+    '(diminish 'yas-minor-mode " Y"))
+  (eval-after-load "paredit"
+    '(diminish 'paredit-mode " π"))
+  (eval-after-load "eldoc"
+    '(diminish 'eldoc-mode ""))
+  (eval-after-load "highlight-symbol"
+    '(diminish 'highlight-symbol-mode " H")))
+
+
+
 
 (provide '50tools)
