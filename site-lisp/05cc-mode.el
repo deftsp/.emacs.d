@@ -75,6 +75,7 @@
                 (statement-block-intro . +)
                 (substatement-open . 0)  ; brackets should be at same indentation level as the statements they open
                 (substatement-label . 0)
+                (member-init-intro . 0)  ; first line in a member initialization list
                 (case-label . +)         ; indent case labels by c-indent-level, too
                 (label . 0)
                 (statement-cont . +)
