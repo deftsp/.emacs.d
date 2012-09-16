@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-08-05 16:11:54 Shihpin Tseng>
+;; Time-stamp: <2012-09-16 09:24:06 Shihpin Tseng>
 
 
 (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
@@ -11,6 +11,10 @@
 ;;; geiser
 (setq geiser-active-implementations '(racket))
 (setq geiser-repl-history-filename "~/.emacs.d/geiser-history")
+(setq geiser-racket-binary "/Applications/Racket/bin/racket")
+;; (setq geiser-racket-collects ) ; it seems gesier can auto find racket collects
+
+
 ;; do not auto turn on geiser
 (eval-after-load "geiser"
   '(remove-hook 'scheme-mode-hook 'geiser-mode--maybe-activate))
