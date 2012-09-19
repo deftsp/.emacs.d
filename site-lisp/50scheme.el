@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-09-16 09:24:06 Shihpin Tseng>
+;; Time-stamp: <2012-09-19 10:36:30 Shihpin Tseng>
 
 
 (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
@@ -308,18 +308,11 @@
 (defun pl/gambit-remote-repl ()
   (interactive)
   (let ((scheme-program-name "telnet 127.0.0.1 7000"))
-    (let* ((buf (if scheme-buffer
-                    (get-buffer scheme-buffer)))
-           (proc (if buf
-                     (get-buffer-process buf))))
-      (if proc
-          (if (y-or-n-p "Scheme instance is running, kill and reconnect?")
-              (progn
-                (set-process-query-on-exit-flag proc nil)
-                (kill-buffer buf)
-                (scheme-interactively-start-process)))
-        (scheme-interactively-start-process))
-      (pop-to-buffer-same-window scheme-buffer))))
+    (when (not (comint-check-proc "*scheme*"))
+      (kill-buffer (get-buffer "*scheme*"))
+      (scheme-interactively-start-process))
+    (pop-to-buffer-same-window (get-buffer "*scheme*"))))
+
 
 
 (provide '50scheme)
