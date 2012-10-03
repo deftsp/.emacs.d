@@ -1013,15 +1013,22 @@ such character is found, following options are shown:
 (require 'per-window-point)
 (pwp-mode 1)
 
-;;; mark-multiple
-(require 'inline-string-rectangle)
-(global-set-key (kbd "C-x r t") 'inline-string-rectangle)
+;;; mutiple cursors
+;; From active region to multiple cursors:
+(global-set-key (kbd "ESC ESC c ESC ESC c") 'mc/edit-lines)
+(global-set-key (kbd "ESC ESC c C-e") 'mc/edit-ends-of-lines)
+(global-set-key (kbd "ESC ESC c C-a") 'mc/edit-beginnings-of-lines)
 
-(require 'mark-more-like-this)
-(global-set-key (kbd "C-<") 'mark-previous-like-this)
-(global-set-key (kbd "C->") 'mark-next-like-this)
-(global-set-key (kbd "C-M-m") 'mark-more-like-this) ; like the other two, but takes an argument (negative is previous)
-(global-set-key (kbd "C-*") 'mark-all-like-this)
+;; Rectangular region mode
+;; (global-set-key (kbd "H-SPC") 'set-rectangular-region-anchor)
+
+;; Mark more like this
+;; (global-set-key (kbd "M-æ") 'mc/mark-all-like-this)
+;; (global-set-key (kbd "C-å") 'mc/mark-previous-like-this)
+;; (global-set-key (kbd "C-æ") 'mc/mark-next-like-this)
+;; (global-set-key (kbd "C-Æ") 'mc/mark-more-like-this-extended)
+;; (global-set-key (kbd "M-å") 'mc/mark-all-in-region)
+
 
 ;; (require 'rename-sgml-tag)              ;
 ;; (define-key sgml-mode-map (kbd "C-c C-r") 'rename-sgml-tag)
