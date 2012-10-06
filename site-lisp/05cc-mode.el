@@ -92,6 +92,7 @@
 
 
 (defun pl/c-mode-common-hook ()
+  (subword-mode 1) ; C-c C-w toggle it
   ;; the delete key gobbles all preceding whitespace in one fell swoop
   (c-toggle-hungry-state 1))
 
