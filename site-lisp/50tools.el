@@ -1056,6 +1056,14 @@ such character is found, following options are shown:
     (dolist (pattern '("*.cpp" "*.hpp" "*.scm"))
       (add-to-list 'ffip-patterns pattern))))
 
+;;; VolatileHighlights
+(eval-after-load "volatile-highlights"
+  '(progn
+    (set-face-background 'vhl/default-face "#332244")
+    (volatile-highlights-mode t)))
+
+
+
 ;;; info+
 ;; (eval-after-load "info+"
 ;;   '(progn
