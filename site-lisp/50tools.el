@@ -342,24 +342,25 @@
 ;; (add-hook 'after-revert-hook 'bm-buffer-restore)
 
 ;;; bookmark+
-(setq bmkp-last-as-first-bookmark-file nil)
-;; (bmkp-global-auto-idle-bookmark-mode 1)
+(eval-after-load "bookmark+"
+  '(progn
+    (setq bmkp-last-as-first-bookmark-file nil)
+    ;; (bmkp-global-auto-idle-bookmark-mode 1)
+    ;; it seems  highlight automatically not work
+    (setq bmkp-auto-light-when-set 'all-in-buffer
+     bmkp-auto-light-when-jump 'all-in-buffer)
 
-;; it seems  highlight automatically not work
-(setq bmkp-auto-light-when-set 'all-in-buffer
-      bmkp-auto-light-when-jump 'all-in-buffer)
+    (setq bmkp-light-style-autonamed 'lfringe
+     bmkp-light-style-non-autonamed 'lfringe)
 
-(setq bmkp-light-style-autonamed 'lfringe
-      bmkp-light-style-non-autonamed 'lfringe)
+    (when (fboundp 'define-fringe-bitmap)
+      (define-fringe-bitmap 'pl/marker-left   [#x00 #x00 #xFC #xFE #x0F #xFE #xFC #x00])
+      (define-fringe-bitmap 'pl/marker-right  [#x00 #x00 #x3F #x7F #xF0 #x7F #x3F #x00])
+      (setq bmkp-light-left-fringe-bitmap 'pl/marker-left)
+      (setq bmkp-light-right-fringe-bitmap 'pl/marker-right))
 
-(when (fboundp 'define-fringe-bitmap)
-  (define-fringe-bitmap 'pl/marker-left   [#x00 #x00 #xFC #xFE #x0F #xFE #xFC #x00])
-  (define-fringe-bitmap 'pl/marker-right  [#x00 #x00 #x3F #x7F #xF0 #x7F #x3F #x00])
-  (setq bmkp-light-left-fringe-bitmap 'pl/marker-left)
-  (setq bmkp-light-right-fringe-bitmap 'pl/marker-right))
-
-(set-face-attribute 'bmkp-light-fringe-autonamed nil :foreground "#222222" :background "#778899")
-(set-face-attribute 'bmkp-light-fringe-non-autonamed nil :foreground "Black":background "DarkOrange1")
+    (set-face-attribute 'bmkp-light-fringe-autonamed nil :foreground "#222222" :background "#778899")
+    (set-face-attribute 'bmkp-light-fringe-non-autonamed nil :foreground "Black":background "DarkOrange1")))
 
 ;;; bookmark history stack
 ;; Use the following to maintain a stack of buffer locations which you can use as a simple bookmarking system.
