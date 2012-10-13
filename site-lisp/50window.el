@@ -5,46 +5,52 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-
-;; set-window-dedicated-p
-;; When a window is dedicated to its buffer, `display-buffer' will refrain
-;; from displaying another buffer in it.
-
-;; http://www.emacswiki.org/emacs/window-extension.el
-;; sticky-window-delete-other-windows
-
-
-
-
-(winner-mode t)
-
-(require 'windmove)
-(global-set-key (kbd "H-r") 'winner-redo)
-(global-set-key (kbd "H-u") 'winner)
-(global-set-key (kbd "H-u") 'winner-undo)
-
-
-(global-set-key (kbd "M-P") 'windmove-up)
-(global-set-key (kbd "M-N") 'windmove-down)
-(global-set-key (kbd "M-B") 'windmove-left)
-(global-set-key (kbd "M-F") 'windmove-right)
-
-;; (global-set-key "\C-x2" '(lambda ()
-;;                           (interactive)
-;;                           (split-window-vertically -22)))
-;; (global-set-key "\C-x3" '(lambda ()
-;;                           (interactive)
-;;                           (split-window-horizontally -80)))
+;;; key binding
+(global-set-key (kbd"C-x x") 'delete-window)
 
 (global-set-key (kbd "H-M-,") '(lambda() (interactive) (scroll-other-window -1)))
 (global-set-key (kbd "H-M-.") '(lambda() (interactive) (scroll-other-window 1)))
-
 
 (global-set-key (kbd "H-[") 'shrink-window)
 (global-set-key (kbd "H-]") 'enlarge-window)
 (global-set-key (kbd "H-M-[") 'shrink-window-horizontally)
 (global-set-key (kbd "H-M-]") 'enlarge-window-horizontally)
 
+
+;;; toggle window dedicaton
+;; set-window-dedicated-p
+;; When a window is dedicated to its buffer, `display-buffer' will refrain
+;; from displaying another buffer in it.
+(defun pl/toggle-current-window-dedication ()
+  (interactive)
+  (let* ((window (selected-window))
+         (dedicated (window-dedicated-p window)))
+    (set-window-dedicated-p window (not dedicated))
+    (message "Window %sdedicated to %s"
+             (if dedicated "no longer " "")
+             (buffer-name))))
+
+(global-set-key (kbd "M-D") 'pl/toggle-current-window-dedication)
+
+;;; window extension
+;; http://www.emacswiki.org/emacs/window-extension.el
+;; sticky-window-delete-other-windows
+
+;;; winner mode
+(winner-mode t)
+(global-set-key (kbd "H-r") 'winner-redo)
+(global-set-key (kbd "H-u") 'winner)
+(global-set-key (kbd "H-u") 'winner-undo)
+
+;;; windmove
+(require 'windmove)
+(global-set-key (kbd "M-P") 'windmove-up)
+(global-set-key (kbd "M-N") 'windmove-down)
+(global-set-key (kbd "M-B") 'windmove-left)
+(global-set-key (kbd "M-F") 'windmove-right)
+
+
+;;; horizontal <==> vertical
 ;; horizontal-to-vertical
 (defun pl/window-horizontal-to-vertical ()
   "Switches from a horizontal split to a vertical split."
@@ -69,6 +75,7 @@
     (switch-to-buffer one-buf)
     (goto-char buf-point)))
 
+;;; switch two windows
 (global-set-key (kbd "C-x !") 'pl/swap-windows)
 ;; someday might want to rotate windows if more than 2 of them
 (defun pl/swap-windows ()
@@ -89,24 +96,11 @@
            (set-window-start w2 s1)))))
 
 
-(defun toggle-current-window-dedication ()
-  (interactive)
-  (let* ((window    (selected-window))
-         (dedicated (window-dedicated-p window)))
-    (set-window-dedicated-p window (not dedicated))
-    (message "Window %sdedicated to %s"
-             (if dedicated "no longer " "")
-             (buffer-name))))
-
-(global-set-key (kbd "M-D") 'toggle-current-window-dedication)
-
 ;;; for wide-screen display
 ;; http://emacswiki.org/emacs/display-buffer-for-wide-screen.el
-
 ;; minimum width of window to be split horizontally for `display-buffer'
 (setq split-width-threshold 200
       split-height-threshold 20)
-
 
 ;; (defvaralias 'split-window-horizontally-threshold-width 'split-width-threshold)
 
