@@ -1075,6 +1075,11 @@ such character is found, following options are shown:
     (set-face-background 'vhl/default-face "#332244")
     (volatile-highlights-mode t)))
 
+;;; magit
+(eval-after-load "magit"
+  '(progn
+    (global-set-key (kbd "C-x C-g") 'magit-status)
+    (setq magit-completing-read-function 'magit-ido-completing-read)))
 
 
 ;;; info+

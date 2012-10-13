@@ -6,8 +6,8 @@
 ;; ido seem much less annoying than icicles...
 (ido-mode t)                  ;  Turn on ido buffer and file behavior.
 (ido-everywhere t)
-;;ido-hacks-mode can not work with `magit-builtin-completing-read'
-(ido-hacks-mode -1)
+(ido-hacks-mode 1)
+
 (setq ido-enable-prefix nil
       ido-enable-regexp t
       ido-case-fold  t                  ; be case-insensitive
@@ -19,7 +19,7 @@
       ido-show-dot-for-dired nil
       ;; use `find-file-at-point' that I have binding to `C-x f' instead.
       ido-use-filename-at-point nil
-      ido-use-url-at-point nil            ; ... or url at point
+      ido-use-url-at-point nil          ; ... or url at point
       ido-use-virtual-buffers t
       ido-enable-tramp-completion t
       ido-default-buffer-method 'samewindow
