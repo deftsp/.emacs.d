@@ -379,7 +379,9 @@
 ;;      (global-rainbow-delimiters-mode)))
 
 
-(define-key c-mode-base-map (kbd "%") 'pl/goto-match-paren)
+(eval-after-load "cc-mode"
+  '(define-key c-mode-base-map (kbd "%") 'pl/goto-match-paren))
+
 (defun pl/goto-match-paren (arg)
   "Go to the matching parenthesis if on parenthesis,
 C-u delte pair if on parenthesis
