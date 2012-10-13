@@ -988,8 +988,20 @@ such character is found, following options are shown:
 ;; , :: next match backward (towards beginning of buffer)
 ;; C-c C-c :: invoke ace-jump-mode if available (also <M-/>)
 (require 'jump-char)
-(global-set-key (kbd "ESC ESC j") 'jump-char-forward)
-(global-set-key (kbd "ESC ESC J") 'jump-char-backward)
+(global-set-key (kbd "M-m") 'jump-char-forward)
+(global-set-key (kbd "M-M") 'jump-char-backward)
+
+;; toggle between the beginning of the line and the beginning of the code.
+;; bind `C-a' to this function, `C-a C-a' can be used to  replace default `M-m' back-to-indentation
+(defun pl/beginning-of-line-or-indentation ()
+  "move to beginning of line, or indentation"
+  (interactive)
+  (if (bolp)
+      (back-to-indentation)
+      (beginning-of-line)))
+
+(global-set-key (kbd "C-a") 'pl/beginning-of-line-or-indentation)
+
 
 ;;; cclookup
 ;; add cclookup to your loadpath, ex) ~/.emacs.d/cclookup
