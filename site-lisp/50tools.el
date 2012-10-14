@@ -1036,7 +1036,7 @@ such character is found, following options are shown:
 ;; (global-set-key (kbd "H-SPC") 'set-rectangular-region-anchor)
 
 ;; Mark more like this
-(global-set-key (kbd "C-c C-<") 'mc/mark-all-like-this)
+(global-set-key (kbd "C-*") 'mc/mark-all-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
 ;; (global-set-key (kbd "C-Æ") 'mc/mark-more-like-this-extended)
