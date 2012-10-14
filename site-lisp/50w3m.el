@@ -497,7 +497,7 @@
 
 
 ;;; SwitchToBuffer
-(global-set-key (kbd "C-c w") 'my-w3m-switch-to-buffer)
+(global-set-key (kbd "C-c W") 'my-w3m-switch-to-buffer)
 
 (defvar *w3m-last-buffer* nil
   "Hold the buffer of last displayed.")
