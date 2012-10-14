@@ -73,6 +73,7 @@
 (require '50unicode-input)
 (require '50vc)
 (require '50w3m)  ; anything-config will defvar w3m-command, require it before that
+(require '50wcheck-mode)
 (require '50window)
 (require '50xcode)
 (require '50yasnippet)

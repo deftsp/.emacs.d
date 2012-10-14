@@ -1,5 +1,5 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-07-19 09:45:14 Shihpin Tseng>
+;; Time-stamp: <2012-10-14 11:31:40 Shihpin Tseng>
 
 ;;; imenu
 ;; (require 'imenu)
@@ -49,32 +49,32 @@
 
 
 ;;; font-lock
-(defun pl/font-lock-add-commentaires-keywords (m)
-  (font-lock-add-keywords m '(("\\<\\(FIXME\\):" 1 font-lock-warning-face prepend)
-                              ("\\<\\(XXX+\\):" 1 font-lock-warning-face prepend)
-                              ("\\<\\(TODO\\):" 1 font-lock-warning-face prepend)
-                              ("\\<\\(BUG\\):" 1 font-lock-warning-face prepend)
-                              ("\\<\\(td_[-.a-z0-9_]*;?\\)\\>" . font-lock-builtin-face)
-                              ("\\<\\(WARNING\\)" 1 font-lock-warning-face t)
-                              ("\\<\\(NOTE\\)" 1 font-lock-warning-face t)
-                              ("\\<\\(NOTES\\)" 1 font-lock-warning-face t)
-                              ("\\<\\(DEBUG\\)" 1 font-lock-warning-face t)
-                              ("\\<\\(OUTPUT\\)" 1 font-lock-warning-face t)
-                              ("\\<\\(IMPORTANT\\)" 1 font-lock-warning-face t)
-                              ;; highlight line that are too long
-                              ("^[^\n]\\{121\\}\\(.*\\)$" 1 font-lock-warning-face t))))
+;; (defun pl/font-lock-add-commentaires-keywords (m)
+;;   (font-lock-add-keywords m '(("\\<\\(FIXME\\):" 1 font-lock-warning-face prepend)
+;;                               ("\\<\\(XXX+\\):" 1 font-lock-warning-face prepend)
+;;                               ("\\<\\(TODO\\):" 1 font-lock-warning-face prepend)
+;;                               ("\\<\\(BUG\\):" 1 font-lock-warning-face prepend)
+;;                               ("\\<\\(td_[-.a-z0-9_]*;?\\)\\>" . font-lock-builtin-face)
+;;                               ("\\<\\(WARNING\\)" 1 font-lock-warning-face t)
+;;                               ("\\<\\(NOTE\\)" 1 font-lock-warning-face t)
+;;                               ("\\<\\(NOTES\\)" 1 font-lock-warning-face t)
+;;                               ("\\<\\(DEBUG\\)" 1 font-lock-warning-face t)
+;;                               ("\\<\\(OUTPUT\\)" 1 font-lock-warning-face t)
+;;                               ("\\<\\(IMPORTANT\\)" 1 font-lock-warning-face t)
+;;                               ;; highlight line that are too long
+;;                               ("^[^\n]\\{121\\}\\(.*\\)$" 1 font-lock-warning-face t))))
 
 
-(pl/font-lock-add-commentaires-keywords 'emacs-lisp-mode)
+;; (pl/font-lock-add-commentaires-keywords 'emacs-lisp-mode)
 
-(eval-after-load "scheme"
-  '(progn
-    (pl/font-lock-add-commentaires-keywords 'scheme-mode)))
+;; (eval-after-load "scheme"
+;;   '(progn
+;;     (pl/font-lock-add-commentaires-keywords 'scheme-mode)))
 
 (eval-after-load "cc-mode"
   '(progn
-     (dolist (m '(c-mode objc-mode c++-mode))        ; Colorisation : C/C++/Object-C : Commentaires
-       (pl/font-lock-add-commentaires-keywords m))
+    ;; (dolist (m '(c-mode objc-mode c++-mode))        ; Colorisation : C/C++/Object-C : Commentaires
+    ;; (pl/font-lock-add-commentaires-keywords m))
      (dolist (type (list "UCHAR" "USHORT" "ULONG" "BOOL" "BOOLEAN" "LPCTSTR" "C[A-Z]\\sw+" "\\sw+_t"))
       (add-to-list 'c-font-lock-extra-types type))))
 
