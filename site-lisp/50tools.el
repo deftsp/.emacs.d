@@ -1076,9 +1076,9 @@ such character is found, following options are shown:
     (volatile-highlights-mode t)))
 
 ;;; magit
+(global-set-key (kbd "C-x C-g") 'magit-status)
 (eval-after-load "magit"
   '(progn
-    (global-set-key (kbd "C-x C-g") 'magit-status)
     (setq magit-completing-read-function 'magit-ido-completing-read)))
 
 
