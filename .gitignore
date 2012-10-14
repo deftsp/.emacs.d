@@ -74,3 +74,6 @@ el-get/
 share/
 packages/lunar-mode-line/
 workgroups
+/.mc-lists.el
+/geiser-history.racket
+/orgcard.txt
