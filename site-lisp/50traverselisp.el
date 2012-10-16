@@ -9,7 +9,7 @@
 ;; (global-set-key (kbd "<f5> u") 'traverse-build-tags-in-project)
 ;; (global-set-key (kbd "C-c o") 'traverse-occur-current-buffer)
 ;; (global-set-key (kbd "C-c o") 'traverse-incremental-occur)
-(global-set-key (kbd "C-c C-f") 'anything-traverse)
+(global-set-key (kbd "C-c F") 'anything-traverse)
 ;; (global-set-key (kbd "C-M-|") 'traverse-toggle-split-window-h-v)
 
 
