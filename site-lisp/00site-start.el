@@ -15,6 +15,7 @@
 (when (eq system-type 'gnu/linux)
   (require '42ecb.el))
 
+(require '50abbrev)
 (require '50alias)
 (require '50android)
 (require '50asm-mode)

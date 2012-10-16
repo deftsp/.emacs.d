@@ -1,12 +1,11 @@
 ;;; Completion
 
 ;;; dabbrev-expand
-(setq dabbrev-case-fold-search 'case-fold-search)
 ;; (global-set-key (kbd "M-/") 'dabbrev-expand)
 ;; (define-key minibuffer-local-map (kbd "C-<tab>") 'dabbrev-expand)
+;; (setq dabbrev-case-fold-search 'case-fold-search)
 
-;;; Continuing Expansion
-
+;; Continuing Expansion
 ;; Once you have successfully used dabbrev-expand to expand a word, hitting <space> then immediately
 ;; using dabbrev-expand again will continue to expand from the point that the expansion was found.
 ;; For example. If previously in the buffer, you had made the function call:
@@ -26,6 +25,9 @@
 ;; (global-pabbrev-mode -1)
 
 ;;; hippie-expand (like dabbrev-expand, but more powerful) -----------------------------------------------------
+(global-set-key (kbd "M-/") 'hippie-expand)
+
+;;; try-expand-tag
 (defun he-tag-beg ()
   (let ((p (save-excursion
              (backward-word 1)
@@ -58,8 +60,6 @@
       (setq he-expand-list (cdr he-expand-list))
       t))
 
-;; (global-set-key (kbd "<C-tab>") 'hippie-expand)
-(global-set-key (kbd "M-/") 'hippie-expand)
 
 ;; The list of expansion functions tried in order by `hippie-expand'.
 (autoload 'senator-try-expand-semantic "senator")
@@ -82,17 +82,9 @@
         ;; ispell-complete-word               ; Try to complete the word before or under point
         ;; Try to complete text with something from the kill ring.
         try-expand-whole-kill))
-;; ---------------------------------------------------------------------------------------------------------x
-(setq-default abbrev-mode t)
-;;(read-abbrev-file "~/.abbrev_defs")
-(setq abbrev-file-name "~/.emacs.d/.abbrev_defs")
-;; do not auto save abbrevs
-(setq save-abbrevs nil)
-(if (file-exists-p  abbrev-file-name)
-    (quietly-read-abbrev-file abbrev-file-name))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; input inc, prompt inut file name.
+;;; input inc, prompt inut file name.
+
 (mapc
  (lambda (mode)
    (define-abbrev-table mode '(("inc" "" pl/skel-include 1))))
@@ -207,47 +199,23 @@
   (local-set-key (kbd "[") 'skeleton-pair-insert-maybe)
   (local-set-key (kbd "{") 'skeleton-pair-insert-maybe))
 
-(add-hook 'c-mode-hook 'pl/auto-pair)
-(add-hook 'c++-mode-hook 'pl/auto-pair)
+;; (add-hook 'c-mode-hook 'pl/auto-pair)
+;; (add-hook 'c++-mode-hook 'pl/auto-pair)
 
 ;; (global-set-key (kbd "<") 'skeleton-pair-insert-maybe)
 ;; (global-set-key (kbd "`") 'skeleton-pair-insert-maybe)
-(global-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
-(global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
-(global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
-(global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
 
-;; (global-set-key (kbd "(") (lambda () (interactive) (insert "()") (backward-char 1)))
+
+;; (global-set-key (kbd "\"") 'skeleton-pair-insert-maybe)
+;; (global-set-key (kbd "(") 'skeleton-pair-insert-maybe)
+;; (global-set-key (kbd "[") 'skeleton-pair-insert-maybe)
+;; (global-set-key (kbd "{") 'skeleton-pair-insert-maybe)
+
 ;; (global-set-key (kbd "“") (lambda () (interactive) (insert "“”") (backward-char 1)))
 ;; (global-set-key (kbd "‘") (lambda () (interactive) (insert "‘’") (backward-char 1)))
 ;; (global-set-key (kbd "«") (lambda () (interactive) (insert "«»") (backward-char 1)))
 ;;-----------------------------------------------------------------------------------
 
-(define-abbrev-table 'global-abbrev-table '(("alpha" "α" nil 0)
-                                            ("beta" "β" nil 0)
-                                            ("gamma" "γ" nil 0)
-                                            ("theta" "θ" nil 0)
-                                            ("Infinity" "∞" nil 0)
-                                            ("ar1" "→" nil 0)
-                                            ("ar2" "⇒" nil 0)
-                                            ("afaict" "as far as I can tell" nil 1)
-                                            ("omuse" "http://www.emacswiki.org/cgi-bin/oddmuse.pl" nil 0)
-                                            ("btw" "by the way" nil 3)
-                                            ("wether" "whether" nil 5)
-                                            ("ewiki" "http://www.emacswiki.org/cgi-bin/wiki.pl" nil 3)
-                                            ("pov" "point of view" nil 1)))
-
-;;; defun with abbrev
-;; (defun define-abbrev-function (table abbrev func)
-;;   (put func 'no-self-insert t)
-;;   (define-abbrev table abbrev "" `(lambda () (call-interactively ',func))))
-
-;; (defmacro defun-abbrev (funcname abbrev &rest body)
-;;   "Defun a function and define an abbrev.
-;; Note that `table' is abbrev table to use."
-;;   `(progn
-;;      (defun ,funcname ,@body)
-;;      (define-abbrev-function table ,abbrev ',funcname)))
 
 
 ;; turn on Partial Completion mode, for example 'M-x q r r' will equal to query-replace-regexp
