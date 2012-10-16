@@ -30,10 +30,9 @@
 
 ;;; Appointments
 (setq appt-display-diary t
-      appt-display-duration 30
+      appt-display-duration 10
       appt-display-format 'window  ; use a separate window to remind appointments
-      appt-display-duration 30
-      appt-message-warning-time 36
+      appt-message-warning-time 15 ; warn 15 min in advance
       appt-audible t ; beep to indicate appointment
       appt-display-mode-line t)
 (appt-activate 1)

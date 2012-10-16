@@ -142,7 +142,26 @@
         ("j" "Journal" entry (file+datetree "~/proj/org/journal.org")
          "* %?\nEntered on %U\n  %i\n  %a")))
 
+;;; work with appt
 ;; (org-agenda-to-appt)
+(defun pl/org-agenda-to-appt ()
+  ;; Dangerous!!! do not use `appt-add', this might remove entries added by `appt-add' manually.
+  (org-agenda-to-appt t "TODO"))
+
+;; update appt each time agenda opened
+(add-hook 'org-agenda-finalize-hook 'org-agenda-to-appt)
+
+;; use grow to notification
+(defun pl/grow-appt-display (min-to-app new-time msg)
+  (growl (format "Appointment in %s minute(s)" min-to-app) msg t))
+
+(if (eq system-type 'darwin)
+    (setq appt-disp-window-function (function pl/grow-appt-display))
+    (setq appt-disp-window-function (function appt-disp-window)))
+
+
+
+;;;
 (setq org-fontify-emphasized-text t
       org-fontify-done-headline nil)
 
