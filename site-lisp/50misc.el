@@ -1314,6 +1314,8 @@ This command is to be used interactively."
 (global-undo-tree-mode t)
 (eval-after-load "undo-tree"
   '(progn
+    (setq-default undo-tree-visualizer-timestamps t)
+    (setq-default undo-tree-visualizer-diff t)
     (setq undo-tree-mode-lighter " UT")))
 
 
