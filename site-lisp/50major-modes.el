@@ -1,5 +1,8 @@
-;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-10-14 11:31:40 Shihpin Tseng>
+;;; -*- mode: Emacs-Lisp -*-
+
+;;; auto insert the matching closing delimiter
+;; electric pair mode is a global minor mode
+(electric-pair-mode 1)
 
 ;;; imenu
 ;; (require 'imenu)
