@@ -112,6 +112,7 @@
         (concat
          (expand-file-name "~/bin:")
          "/usr/texbin:"
+         "/Applications/Gnuplot.app/Contents/Resources/bin:"
          (expand-file-name "~/local/bin:")
          "/usr/local/bin:"
          "/opt/bin:"
@@ -122,7 +123,12 @@
 (let ((gentoo-prefix-path (pl/gentoo-prefix-path))
       (xcode-bin-path (pl/xcode-bin-path)))
   (mapc (lambda (n) (add-to-list 'exec-path n))
-        `(,(expand-file-name  "~/bin") "/usr/texbin" "/usr/local/bin" "/opt/bin" "/usr/X11R6/bin"))
+        `(,(expand-file-name  "~/bin")
+           "/usr/texbin"
+           "/Applications/Gnuplot.app/Contents/Resources/bin"
+           "/usr/local/bin"
+           "/opt/bin"
+           "/usr/X11R6/bin"))
 
   (unless (string-equal gentoo-prefix-path "")
     (add-to-list 'exec-path gentoo-prefix-path))
