@@ -1,14 +1,13 @@
-
-/* -*- mode: Emacs-c++ -*- */
-/* Time-stamp: <2006-07-01 01:14:58 kirby> */
-/* coding: gbk-unix; -*- */
+/* -*- mode: c++ -*- */
+/* Time-stamp: <2012-10-19 18:28:37 Shihpin Tseng> */
+/* coding: utf-8-unix; -*- */
 
 #include <iostream>
 
 using namespace std;
 
-main()
+int main(int argc, char *argv[])
 {
 
+    return 0;
 }
-

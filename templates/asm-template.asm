@@ -1,6 +1,2 @@
-
-;;-*- mode: Emacs-asm -*-
-;;Time-stamp: <2006-06-17 13:26:26 kirby>
-;;coding: gbk-unix; -*-
-
-
+;; -*- mode: asm -*-
+;; Time-stamp: <2012-10-19 18:27:19 Shihpin Tseng>

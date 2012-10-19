@@ -1,3 +1,3 @@
-;; -*- mode: Emacs-Scheme -*-
-;; Time-stamp: <2006-10-22 15:24:44 kirby> 
-;; coding: gbk-unix; -*- 
+;; -*- mode: scheme -*-
+;; Time-stamp: <2012-10-19 18:26:43 Shihpin Tseng>
+;; coding: utf-8-unix; -*-

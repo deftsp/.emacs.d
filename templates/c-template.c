@@ -1,11 +1,11 @@
-/*  -*-  */
-/* Time-stamp: <2007-12-05 22:45:10 S.P.Tseng> */
-/* coding: gbk-unix; -*- */
+/* -*- mode: c -*- */
+/* Time-stamp: <2012-10-19 18:28:46 Shihpin Tseng> */
+/* coding: utf-8-unix; -*- */
 
 #include <stdio.h>
 
-int main()
+int main(int argc, char *argv[])
 {
 
+    return 0;
 }
-

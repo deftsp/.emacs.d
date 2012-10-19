@@ -1,7 +1,3 @@
-
-;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2006-03-13 19:27:40 kirby> 
-;; coding: gb2312-unix; -*- 
-
-
-
+;; -*- mode: lisp -*-
+;; Time-stamp: <2012-10-19 18:29:04 Shihpin Tseng>
+;; coding: utf-8-unix; -*-
