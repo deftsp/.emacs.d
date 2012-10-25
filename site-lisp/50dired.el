@@ -719,6 +719,37 @@ e.g., (pl/dircolors-get-escape-seq \"*.gz\") => \"01;31\""
 ;;           (lambda ()
 ;;             (local-set-key "I" 'dired-do-info)))
 
+;;; work with ImageMagic
+;; thanks to http://ergoemacs.org/emacs/emacs_dired_convert_images.html
+(defun pl/scale-image (file-list scale-percentage)
+  "Create a scaled version of images of marked files in dired.
+The new names have \"-s\" appended before the file name extension.
+Requires ImageMagick shell tool."
+  (interactive
+   (list (dired-get-marked-files) (read-from-minibuffer "scale percentage: ")))
+  (require 'dired)
+  (mapc
+   (lambda (ξf)
+     (let (new-file-name cmd-str)
+       (setq new-file-name (concat (file-name-sans-extension ξf) "-s" (file-name-extension ξf t)))
+       (while (file-exists-p new-file-name)
+         (setq new-file-name (concat (file-name-sans-extension new-file-name) "-s" (file-name-extension new-file-name t))))
+
+       ;; relative paths used to get around Windows/Cygwin path remapping problem
+       (setq cmd-str (concat "convert -scale " scale-percentage "% " (file-relative-name ξf) " " (file-relative-name new-file-name)))
+       (print cmd-str)
+       (shell-command cmd-str))) file-list))
+
+;;; zip file/dir
+(defun pl/2zip ()
+  "Zip the current file/dir in `dired'.
+If multiple files are marked, only zip the first one.
+Require unix zip commandline tool."
+  (interactive)
+  (require 'dired)
+  (let ((file-name (elt (dired-get-marked-files) 0)))
+    (shell-command (format "zip -r '%s.zip' '%s'" (file-relative-name file-name) (file-relative-name file-name)))))
+
 
 (eval-after-load "dired+"
   '(progn
