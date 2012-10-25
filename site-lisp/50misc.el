@@ -7,9 +7,8 @@
       vc-user-login-name "author")
 
 ;;; variables
-(setq custom-file "~/.emacs.d/site-lisp/50customzation.el"
-      inhibit-startup-message t
-      ;; inhibit-default-init t            ; 可关闭所有全局初始化值
+(setq inhibit-startup-message t
+      ;; inhibit-default-init t            ; Non-nil inhibits loading the `default' library.
       gnus-inhibit-startup-message t
       initial-scratch-message nil ;; no message in the scratch buff
       inhibit-startup-echo-area-message t
@@ -34,10 +33,9 @@
       comint-completion-autolist t
       comint-input-ignoredups t
       comint-prompt-read-only t
-      minibuffer-electric-default-mode 1 ; 启用minibuffer，好像是默认设置吧
-      enable-recursive-minibuffers t     ;; 递归使用minibuffer.
-      ;;允许minibuffer自由变化其大小（指宽度）
-      resize-mini-windows t
+      minibuffer-electric-default-mode 1
+      enable-recursive-minibuffers t
+      resize-mini-windows t ; allow minibuffer free resize
       max-lisp-eval-depth 1500
       max-specpdl-size 3000
       comment-multi-line nil
@@ -310,15 +308,16 @@
 
 
 (eval-after-load "man" '(require 'man-completion))
-;; add a womans touch ---------------------------------------------------------
 ;; (defalias 'man 'woman)
 (setq woman-show-log nil)
 (setq woman-cache-filename "~/.emacs.d/.wmncach.el")
-;;设置woman在新buffer中打开，而不是一个新窗口
 (setq woman-use-own-frame nil)
 (setq woman-fill-column 100)
 ;; Not to lookup POSFIX man page
 ;; `woman-manpath-man-regexp' should be set before requrie woman.el. So the it should be changed
+
+(eval-after-load "woman"
+  '(add-to-list 'woman-manpath "/usr/local/share/man"))
 ;; before require anything.
 (setq woman-manpath-man-regexp "[Mm][Aa][Nn][1-9][^p]*$")         ; "[Mm][Aa][Nn]"
 
