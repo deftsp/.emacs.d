@@ -12,6 +12,7 @@
 (define-abbrev-table 'global-abbrev-table '(("8alpha" "α")
                                             ("8beta" "β" )
                                             ("8gamma" "γ")
+                                            ("8xi" "ξ")
                                             ("8theta" "θ")
                                             ;; math/unicode symbols
                                             ("8in" "∈") ;
@@ -74,7 +75,9 @@
                                             ("8imf" "find . -name \"*png\" | xargs -l -i basename \"{}\" \".png\" | xargs -l -i  convert -quality 85% \"{}.png\" \"{}.jpg\"")
 
                                             ("8f0" "find . -type f -empty")
-                                            ("8f00" "find . -type f -size 0 -exec rm {} ';'")))
+                                            ("8f00" "find . -type f -size 0 -exec rm {} ';'")
+
+                                            ("flaot" "float")))
 
 (setq-default abbrev-mode t)
 
