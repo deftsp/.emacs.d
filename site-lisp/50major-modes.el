@@ -6,9 +6,10 @@
 
 ;;; imenu
 ;; (require 'imenu)
-;;设置imenu的排序方式为按名称排序
 ;; (setq imenu-sort-function 'imenu--sort-by-name)
 ;; (setq imenu-max-items 40)
+;; TODO: hacking it
+;; (setq-default imenu-create-index-function #'imenu-create-index-using-ctags)
 
 ;; (defun imenu--completion-buffer (index-alist &optional prompt)
 ;;   ;; Create a list for this buffer only when needed.
@@ -38,12 +39,7 @@
 
 
 ;;; indent
-
-;; use space to indent instead of TAB character to indent, but for
-;; makefile-mode.
-;; setq-default change the value of the variable only when the local variable do
-;; have value.
-
+;; use space to indent instead of TAB character to indent, but for makefile-mode.
 (setq-default indent-tabs-mode nil) ; Prevent Extraneous Tabs
 ;; you can use "M-x untabify" to change tab to space of a region
 (set-default 'tab-width 4)
