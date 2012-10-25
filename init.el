@@ -1,4 +1,4 @@
-;;Time-stamp: <2012-04-13 15:02:10 Shihpin Tseng>
+;;Time-stamp: <2012-10-25 22:34:27 Shihpin Tseng>
 
 ;;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
@@ -47,6 +47,11 @@
       ;; If you only want some of the subdirectories added you can use
       ;; (normal-top-level-add-to-load-path '("cedet"))
       (normal-top-level-add-subdirs-to-load-path)))
+
+
+(setq custom-file "~/.emacs.d/custom.el")
+(load custom-file)
+
 
 (require '00site-start)
 ;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
