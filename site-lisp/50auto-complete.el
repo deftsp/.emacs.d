@@ -58,10 +58,23 @@
 
   (setq ac-candidate-max 20)
 
-  (setq ac-clang-flags `(,(concat "-I" (expand-file-name "~/src/cocos2d-iphone/cocos2d"))
-                         ,(concat "-I" (expand-file-name "~/src/cocos2d-iphone/external/Box2d/Box2D"))
-                         "-I/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks"))
-
+  ;; find out the include file search pathes of your g++:
+  ;; echo "" | g++ -v -x c++ -E -
+  (setq ac-clang-flags
+        (mapcar (lambda (item)
+                  (concat "-I" item))
+                (split-string
+                 "
+ /usr/llvm-gcc-4.2/bin/../lib/gcc/i686-apple-darwin11/4.2.1/include
+ /usr/include/c++/4.2.1
+ /usr/include/c++/4.2.1/backward
+ /usr/local/include
+ /Applications/Xcode.app/Contents/Developer/usr/llvm-gcc-4.2/lib/gcc/i686-apple-darwin11/4.2.1/include
+ /usr/include
+ /System/Library/Frameworks
+ /Library/Frameworks
+"
+                 )))
 
   ;; Completion by TAB
   (ac-set-trigger-key "TAB")
@@ -75,7 +88,7 @@
 
 (defun pl/ac-c-mode-common-setup ()
   ;; (add-to-list 'ac-sources 'ac-source-company-xcode)
-  (add-to-list 'ac-sources 'ac-source-clang)
+  ;; (add-to-list 'ac-sources 'ac-source-clang)
   ;; (add-to-list 'ac-sources 'ac-source-gtags)
   ;; (add-to-list 'ac-sources 'ac-source-etags)
   (add-to-list 'ac-sources 'ac-source-semantic))
