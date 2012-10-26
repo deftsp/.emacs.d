@@ -4,29 +4,20 @@
 ;; enable the use of vertical scrolling during incremental, but I bind C-v M-v to other command.
 (setq isearch-allow-scroll t)
 
-
-;;The default i-search command in Emacs is C-s, and then type the word you want to search. If your cursor is current on
-;;the beginning of the word, then you can type C-s C-w. This is case insensitive.
-;; 搜索中，添加/删除当前单词/行/字符
-
+;;; tips
 ;; C-s ...
-;;     C-w / Backspace 一个单词
-;;     C-y / Backspace 一行
-;;     C-M-y / C-M-w   一个字符
+;;     C-w / Backspace:  appends / delete the next character or word at point to the search string.
+;;     C-y / Backspace:  appends / deletee the current kill to the search string.
+;;     C-M-y / C-M-w  Pull / delete next character from buffer into search string.
 
-;;把搜索内容直接当作被替换内容
 
+;;; Start `query-replace' with string to replace from last search string.
 ;; C-s SOMETHING M-% SOMEOTHERS
 
-;;; grep-find 搜索当前目录及子目录文件中包含的子串
-(setq grep-find-use-xargs 'exec)
+(setq grep-find-use-xargs 'exec) ; invoke find and grep with `find -exec {} ;'
 
-;; M-x grep-find
-
-;;使用了 grep, find, grep mode (from compile mode)，很方便，可以在任意buffer 用 C-x ` 定位，也可以在 *grep* buffer 用
-;;C-c C-c 定位！
-
-
+;;; M-x grep-find
+;; location resulte with `C-x `M-g n' `M-g p' `M-g'  `C-c C-c'.
 
 ;;ignore case searches
 (setq-default case-fold-search t)
@@ -91,7 +82,7 @@
 ;;----------------------------------------------------------------------------------------------------
 ;;; Search at point
 ;;----------------------------------------------------------------------------------------------------
-;;Many times you'll want to search for the word or expression at the point. Here is a feature stolen from vi:
+;; Many times you'll want to search for the word or expression at the point. Here is a feature stolen from vi:
 (global-set-key (kbd "<f7>")  'isearch-forward-current-symbol-keep-offset)
 (global-set-key (kbd "<f8>") 'isearch-backward-current-symbol-keep-offset)
 
@@ -136,9 +127,9 @@
                      (forward-char offset))
               (goto-char opoint)
               (message "Searching from bottom: Not found"))))))
-;;Search at point ends there--------------------------------------------------------------------------------
+;; Search at point ends there--------------------------------------------------------------------------------
 
-;;Moving around
+;;; Moving around
 ;; Use the largest monitor you can afford and try to maximize the number of lines of code your system can display. The
 ;; idea which Steve outlines - using incremental (regular expressions) search to move around is incredibly powerful. One
 ;; problem though is that the isearch system is not consistent as to where the point will be located when you exit the
@@ -155,10 +146,7 @@
 
 ;;------------------------------------------------------------------------------------------------------------------------------
 
-;;;edit all occurances in a buffer
-(autoload 'all "all" nil t)
-
-;;;edit occurances from grep output
+;;; edit occurances from grep output
 ;; (autoload 'global-replace-lines "globrep" "Put back grepped lines" t)
 ;; (autoload 'global-replace "globrep" "query-replace across files" t)
 ;; (autoload 'global-grep-and-replace "globrep" "grep and query-replace across files" t)
