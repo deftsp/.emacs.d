@@ -158,12 +158,6 @@
 
   ;; (set-face-foreground 'setnu-line-number-face "DarkSlateGray")
 
-
-  (eval-after-load "whitespace"
-    '(progn
-       (set-face-attribute 'whitespace-space nil :background 'unspecified)))
-
-
   (eval-after-load "anything-config"
     '(progn
        (set-face-background 'anything-ff-directory "#222222")))
