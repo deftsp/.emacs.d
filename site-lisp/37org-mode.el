@@ -16,8 +16,10 @@
 ;; (setq org-blog-directory "~/blog/")
 
 ;; C-c C-o Open link at or after point.
-;; if no appropriate application, it will use mailcap's config.
-;; to set `org-file-apps'
+;; if no appropriate application, it will use mailcap's config to set `org-file-apps'
+
+(add-to-list 'org-modules 'org-habits)
+
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
@@ -105,7 +107,7 @@
       org-agenda-todo-ignore-scheduled t
       org-agenda-skip-scheduled-if-done nil
       org-agenda-todo-list-sublevels t
-      org-agenda-include-diary nil
+      org-agenda-include-diary t
       ;; agenda view always starts out by showing me the next seven days.
       org-agenda-start-on-weekday nil
       org-fast-tag-selection-single-key (quote expert)
