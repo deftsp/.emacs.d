@@ -207,7 +207,10 @@ Argument REPLACE String used to replace the matched strings in the buffer.
           (query-replace-regexp reg replace)))
       (message "Not in a re-builder buffer!")))
 
-(define-key reb-mode-map "\C-c\M-%" 'pl/reb-query-replace-this-regxp)
+(eval-after-load "re-builder"
+  '(define-key reb-mode-map "\C-c\M-%" 'pl/reb-query-replace-this-regxp))
+
+
 
 
 ;; http://patricklogan.blogspot.com/2008/09/query-replace.html
