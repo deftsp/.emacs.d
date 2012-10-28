@@ -518,7 +518,7 @@ vi style of % jumping to matching brace."
 ;; (ad-activate 'ispell-word t)
 
 ;; Programming language modes use flyspell-prog-mode and not normal spell-check.
-;; (add-hook 'haskell-mode-hook 'flyspell-prog-mode)
+;; (add-hook 'haskell-mode-xhook 'flyspell-prog-mode)
 ;; (add-hook 'emacs-lisp-mode-hook (lambda () (flyspell-prog-mode)))
 ;; (add-hook 'lisp-mode-hook (lambda () (flyspell-prog-mode)))
 ;; (add-hook 'shell-mode-hook (lambda () (flyspell-prog-mode)))
@@ -529,18 +529,31 @@ vi style of % jumping to matching brace."
 ;;(defalias 'perl-mode 'cperl-mode)
 
 ;;; whitespace mode
-;; If you don't like having lines of code/text with whitespace at the ends,Emacs highlight the offending whitespace.
+;; If you don't like having lines of code/text with whitespace at the ends, Emacs highlight the offending whitespace.
 ;; When set, the variable's value becomes buffer local, so set it to true in the mode-hooks for your preferred modes.
 ;; Or, if you want it on all the time, change the default value with:
 
 ;; (if (>= emacs-major-version 21)
 ;;     (setq-default show-trailing-whitespace t))
 ;; (setq whitespace-style '(face trailing  lines-tail tabs))
-(setq whitespace-line-column 80)
+;; make whitespace-mode use just basic coloring
+(setq whitespace-style (quote (spaces tabs newline space-mark tab-mark newline-mark)))
+(setq whitespace-line-column nil) ; use `fill-column' variable value
 
+(setq whitespace-display-mappings
+      ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
+      '((space-mark 32 [183] [46])     ; 32   SPACE 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
+        (space-mark 160 [164] [95])    ; 160  NO-BREAK SPACE 「 」, 164 MIDDLE DOT 「¤」, 95 FULL STOP 「_」
+        (newline-mark 10 [182 10])     ; 10   LINE FEED, 182 PILCROW SIGN 「¶」
+        (tab-mark 9 [9655 9] [92 9])   ; 9 TAB, 9655 WHITE RIGHT-POINTING TRIANGLE 「▷」
+        ))
 
-;;I do not want excess trailing whitespace
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(eval-after-load "whitespace"
+  '(progn
+    (set-face-attribute 'whitespace-space nil :background "#aabbbb" :foreground "#226622")))
+
+;;; auto delete trailing whitespace
+(add-hook 'before-save-hook 'delete-trailing-whitespace) ; see also `whitespace-cleanup'
 (setq line-number-display-limit 10000000)
 
 ;;; set frame title
