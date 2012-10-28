@@ -1081,6 +1081,10 @@ such character is found, following options are shown:
   '(progn
     (setq magit-completing-read-function 'magit-ido-completing-read)))
 
+;;; xmsi-math-symbols-input.el
+(autoload 'xmsi-mode "xmsi-math-symbols-input" "Load xmsi minor mode for inputting math (Unicode) symbols." t)
+(xmsi-mode 1) ; activate the mode.
+
 
 ;;; info+
 ;; (eval-after-load "info+"
