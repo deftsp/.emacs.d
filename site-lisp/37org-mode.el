@@ -76,7 +76,7 @@
         ("h" "Daily habits"
          ((agenda ""))
          ((org-agenda-show-log t)
-          (org-agenda-ndays 7)
+          (org-agenda-span 'week)
           (org-agenda-log-mode-items '(state))
           (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":DAILY:"))))
         ("m" tags "PROJECT&MAYBE" nil)
