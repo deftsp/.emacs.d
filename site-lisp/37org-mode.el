@@ -7,6 +7,9 @@
 
 (require 'org)
 (require 'org-publish nil t)
+
+(add-to-list 'org-modules 'org-habits)
+(require 'org-habit nil t)
 ;; (require 'org-mtags nil t)
 
 ;; org-mode with GTD
@@ -18,7 +21,6 @@
 ;; C-c C-o Open link at or after point.
 ;; if no appropriate application, it will use mailcap's config to set `org-file-apps'
 
-(add-to-list 'org-modules 'org-habits)
 
 
 (global-set-key "\C-cl" 'org-store-link)
@@ -58,12 +60,25 @@
          ((org-agenda-skip-function
            (lambda nil
              (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]")))
-          (org-agenda-ndays 1)
+          (org-agenda-span 'week)
           (org-agenda-overriding-header "Today's Priority #A tasks: ")))
         ("c" todo "DONE|DEFERRED|CANCELLED" nil)
         ("d" todo "DELEGATED" nil)
         ;; to create a sparse tree (again: current buffer only) with all entries containing the word `FIXME'.
         ("f" occur-tree "\\<FIXME\\>")
+        ("g" "GeekTool Agenda" ((agenda ""))
+         ((org-agenda-todo-keyword-format "%-11s")
+          (org-agenda-prefix-format "  %-10T%?-16t% s")
+          (org-agenda-show-inherited-tags nil)
+          (org-agenda-remove-tags 'prefix)
+          (org-agenda-tags-column 70))
+         ("~/proj/org/Agenda.txt"))
+        ("h" "Daily habits"
+         ((agenda ""))
+         ((org-agenda-show-log t)
+          (org-agenda-ndays 7)
+          (org-agenda-log-mode-items '(state))
+          (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":DAILY:"))))
         ("m" tags "PROJECT&MAYBE" nil)
         ("p" tags "PROJECT-MAYBE-DONE" nil)
         ("P" todo "PROJECT-MAYBE-DONE" nil)
@@ -75,18 +90,12 @@
           (org-agenda-overriding-header "Unscheduled TODO entries: ")))
         ("w" todo "WAITING" nil)
         ;; ("W" todo-tree "WAITING")
-        ("W" agenda "agenda for 21 days" ((org-agenda-ndays 21)))
+        ("W" agenda "agenda for 21 days" ((org-agenda-span 21)))
         ;; ("G" "Geektool agenda" ((agenda "") (alltodo))
-        ;;  ((org-agenda-ndays 1) (org-deadline-warning-days 7))
+        ;;  ((org-agenda-span 'day) (org-deadline-warning-days 7))
         ;;  ("~/proj/org/Agenda.txt"))
 
-        ("g" "GeekTool Agenda" ((agenda ""))
-         ((org-agenda-todo-keyword-format "%-11s")
-          (org-agenda-prefix-format "  %-10T%?-16t% s")
-          (org-agenda-show-inherited-tags nil)
-          (org-agenda-remove-tags 'prefix)
-          (org-agenda-tags-column 70))
-         ("~/proj/org/Agenda.txt"))))
+        ))
 
 (setq org-special-ctrl-a/e t
       org-cycle-separator-lines 2
@@ -100,7 +109,7 @@
       org-default-notes-file (concat org-directory "/notes.org")
       org-agenda-files (directory-files org-directory t ".*\\.org$")
       org-agenda-show-all-dates t
-      org-agenda-ndays 7
+      org-agenda-span 'week
       org-agenda-skip-deadline-if-done t
       org-agenda-include-all-todo nil
       ;; exclude scheduled items from the global TODO list.
@@ -114,6 +123,14 @@
       org-reverse-note-order t
       org-deadline-warning-days 7
       org-display-internal-link-with-indirect-buffer nil)
+
+;;; org-habit
+(setq org-habit-preceding-days 21
+      org-habit-following-days 7)
+(eval-after-load "org-habit"
+  '(progn
+    (set-face-attribute 'org-habit-alert-face nil :foreground "#228822" :background "gold")))
+
 
 ;;; for MobileOrg
 ;; Set to the name of the file where new notes will be stored
@@ -149,6 +166,10 @@
 (defun pl/org-agenda-to-appt ()
   ;; Dangerous!!! do not use `appt-add', this might remove entries added by `appt-add' manually.
   (org-agenda-to-appt t "TODO"))
+;; update appt
+(run-at-time "24:01" nil 'pl/org-agenda-to-appt)
+
+
 
 ;; update appt each time agenda opened
 (add-hook 'org-agenda-finalize-hook 'org-agenda-to-appt)
