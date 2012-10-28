@@ -1039,13 +1039,13 @@ This command is to be used interactively."
 ;;----------------------------------------------------------------------------------------------------
 
 ;;; buffer-move
-
+;; swap buffers without typing C-x b on each window
 (eval-after-load "buffer-move"
   '(progn
-     (global-set-key (kbd "ESC ESC C-p") 'buf-move-up)
-     (global-set-key (kbd "ESC ESC C-n") 'buf-move-down)
-     (global-set-key (kbd "ESC ESC C-b") 'buf-move-left)
-     (global-set-key (kbd "ESC ESC C-f") 'buf-move-right)))
+     (global-set-key (kbd "M-[ p") 'buf-move-up)
+     (global-set-key (kbd "M-[ n") 'buf-move-down)
+     (global-set-key (kbd "M-[ b") 'buf-move-left)
+     (global-set-key (kbd "M-[ f") 'buf-move-right)))
 
 
 ;;; info
@@ -1157,9 +1157,6 @@ This command is to be used interactively."
   "insert char above the cursor"
   (interactive "p")
   (pl/insert-char-next-line (- arg)))
-
-(global-set-key (kbd "M-[") 'pl/insert-char-prior-line)
-(global-set-key (kbd "M-]") 'pl/insert-char-next-line)
 
 ;;----------------------------------------------------------------------------------------------------
 ;; (add-hook 'find-file-hooks
