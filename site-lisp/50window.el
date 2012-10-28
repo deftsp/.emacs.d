@@ -7,6 +7,8 @@
 
 ;;; key binding
 (global-set-key (kbd"C-x x") 'delete-window)
+(when window-system
+  (global-set-key (kbd "M-`") 'other-window))
 
 (global-set-key (kbd "H-M-,") '(lambda() (interactive) (scroll-other-window -1)))
 (global-set-key (kbd "H-M-.") '(lambda() (interactive) (scroll-other-window 1)))
