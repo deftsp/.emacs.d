@@ -1,5 +1,3 @@
-;;; -*- mode: Emacs-Lisp -*-
-
 ;; http://common-lisp.net/project/clbuild/
 ;; $ clbuild slime-configuration
 (add-to-list 'load-path "~/opt/clbuild2/source/slime/")
@@ -11,9 +9,8 @@
 ;; (require 'clojure-mode)
 
 ;; (require 'slime-autoloads)
-(slime-setup '(slime-fancy slime-asdf slime-tramp))
-;; (slime-setup '(slime-js))
-(slime-require :swank-listener-hooks)
+(slime-setup '(slime-fancy slime-asdf slime-tramp slime-js))
+;; (slime-require :swank-listener-hooks)
 ;; the rest of SLIME should be loaded automatically when one of the commands `M-x slime' or `M-x slime-connect' is
 ;; executed the first time.
 ;; (slime-setup '(slime-autodoc))
@@ -55,7 +52,8 @@
 (eval-after-load "slime"
   '(setq inferior-lisp-program "~/src/clbuild/clbuild lisp" ; "/usr/bin/sbcl --noinform"
          lisp-indent-function 'common-lisp-indent-function  ;lisp-indent-function
-         slime-complete-symbol-function 'slime-fuzzy-complete-symbol
+         slime-protocol-version 'ignore
+         slime-complete-symbol-function 'slime-simple-complete-symbol ; 'slime-fuzzy-complete-symbol
          slime-net-coding-system 'utf-8-unix
          slime-default-lisp 'sbcl
          slime-enable-evaluate-in-emacs nil

@@ -616,10 +616,12 @@ vi style of % jumping to matching brace."
 
 ;; (add-hook 'fvwm-mode-hook '(lambda () (fvwm-enable-indentation)))
 ;; (autoload 'xrdb-mode "xrdb-mode" "Mode for editing X resource files" t)
+
+;;; js2-mode
 ;; (autoload 'js2-mode "js2-mode" nil t)
 ;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-
+;;; auto mode alist
 (mapcar #'(lambda (lst)
             (if lst (add-to-list 'auto-mode-alist lst)))
         (list
@@ -649,7 +651,7 @@ vi style of % jumping to matching brace."
          '("\\.markdown$"      . markdown-mode)
          '("\\.lrc$"           . emms-lyrics-mode)))
 
-;; Since emacs 22 we can use magic-mode-alist to set mode
+;;; Since emacs 22 we can use magic-mode-alist to set mode
 (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@implementation" . objc-mode))
 (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@interface" . objc-mode))
 (add-to-list 'magic-mode-alist '("\\(.\\|\n\\)*\n@protocol" . objc-mode))

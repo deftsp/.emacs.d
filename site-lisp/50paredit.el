@@ -64,9 +64,9 @@
      (define-key scheme-mode-map (kbd "C-<") 'paredit-backward-barf-sexp)
      (define-key scheme-mode-map (kbd "C->") 'paredit-forward-barf-sexp)))
 
-(eval-after-load 'slime
-  '(progn
-     (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)))
+;; (eval-after-load 'slime
+;;   '(progn
+;;      (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)))
 
 
 (defun check-region-parens ()
