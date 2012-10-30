@@ -708,37 +708,35 @@ e.g., (pl/dircolors-get-escape-seq \"*.gz\") => \"01;31\""
 ;; C-t d     thumbnails of all of the marked file
 ;; TAB       exchange windows
 
-
-
-;; Read Info files with ‘I’ in Dired
-;; (defun dired-do-info ()
-;;   (interactive)
-;;   "In dired, read the Info file named on this line."
-;;   (info (dired-get-filename)))
-;; (add-hook 'dired-mode-hook
-;;           (lambda ()
-;;             (local-set-key "I" 'dired-do-info)))
-
 ;;; work with ImageMagic
 ;; thanks to http://ergoemacs.org/emacs/emacs_dired_convert_images.html
-(defun pl/scale-image (file-list scale-percentage)
+(define-key dired-mode-map (kbd "ESC ESC i s") 'pl/image-scale)
+(defun pl/image-scale (file-list scale-args)
   "Create a scaled version of images of marked files in dired.
 The new names have \"-s\" appended before the file name extension.
 Requires ImageMagick shell tool."
   (interactive
-   (list (dired-get-marked-files) (read-from-minibuffer "scale percentage: ")))
+   (list (dired-get-marked-files) (read-from-minibuffer "scale args: ")))
   (require 'dired)
   (mapc
    (lambda (ξf)
-     (let (new-file-name cmd-str)
-       (setq new-file-name (concat (file-name-sans-extension ξf) "-s" (file-name-extension ξf t)))
+     (let ((new-file-name (concat (file-name-sans-extension ξf) "-s" (file-name-extension ξf t)))
+           cmd-str)
        (while (file-exists-p new-file-name)
          (setq new-file-name (concat (file-name-sans-extension new-file-name) "-s" (file-name-extension new-file-name t))))
 
        ;; relative paths used to get around Windows/Cygwin path remapping problem
-       (setq cmd-str (concat "convert -scale " scale-percentage "% " (file-relative-name ξf) " " (file-relative-name new-file-name)))
-       (print cmd-str)
-       (shell-command cmd-str))) file-list))
+       (let ((cmd-str (concat "convert -scale "
+                              scale-args
+                              " "
+                              (file-relative-name ξf)
+                              " "
+                              (file-relative-name new-file-name))))
+         (print cmd-str)
+         ;; (shell-command cmd-str)
+         )))
+
+   file-list))
 
 ;;; zip file/dir
 (defun pl/2zip ()
@@ -750,7 +748,40 @@ Require unix zip commandline tool."
   (let ((file-name (elt (dired-get-marked-files) 0)))
     (shell-command (format "zip -r '%s.zip' '%s'" (file-relative-name file-name) (file-relative-name file-name)))))
 
+;;;
+(define-key dired-mode-map (kbd "M-O") 'pl/open-in-external-application)
+(defun pl/open-in-external-application ()
+  "Open the current file or dired marked files in external app.
+Works in Microsoft Windows, Mac OS X, Linux."
+  (interactive)
+  (let* ((ξfile-list (if (eq major-mode 'dired-mode)
+                         (dired-get-marked-files)
+                         (list (buffer-file-name))))
+         (do-or-not-p (if (<= (length ξfile-list) 5)
+                          t
+                          (y-or-n-p "Open more than 5 files?") )))
 
+    (when do-or-not-p
+      (cond
+        ((eq system-type 'windows-nt)
+         (mapc (lambda (file-path)
+                 (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" file-path t t)))
+               ξfile-list))
+        ((eq system-type 'darwin)
+         (mapc (lambda (file-path)
+                 (let ((process-connection-type nil))
+                   (start-process "" nil "open" file-path)))
+               ξfile-list))
+        ((eq system-type 'gnu/linux)
+         (mapc (lambda (file-path)
+                 (let ((process-connection-type nil))
+                   (start-process "" nil "xdg-open" file-path)))
+               ξfile-list))
+        (t (message "unsupported system!"))))))
+
+
+
+;;; color
 (eval-after-load "dired+"
   '(progn
      (set-face-attribute 'diredp-dir-heading nil :foreground "magenta" :background "#555555")
@@ -764,7 +795,7 @@ Require unix zip commandline tool."
      (set-face-attribute 'diredp-flag-mark-line nil :foreground "white"
                          :background "Blue4")))
 
-;;;tips
+;;; tips
 ;; mark mutiple files in dired mode with m, press B to compile them to *.el.
 ;; dired-compare-directories
 ;; i     insert sub-directory
