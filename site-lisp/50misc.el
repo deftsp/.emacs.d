@@ -35,7 +35,7 @@
       comint-prompt-read-only t
       minibuffer-electric-default-mode 1
       enable-recursive-minibuffers t
-      resize-mini-windows t ; allow minibuffer free resize
+      resize-mini-windows nil ; don't allow minibuffer free resize
       max-lisp-eval-depth 1500
       max-specpdl-size 3000
       comment-multi-line nil
