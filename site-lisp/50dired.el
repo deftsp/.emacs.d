@@ -732,9 +732,7 @@ Requires ImageMagick shell tool."
                               (file-relative-name ξf)
                               " "
                               (file-relative-name new-file-name))))
-         (print cmd-str)
-         ;; (shell-command cmd-str)
-         )))
+         (shell-command cmd-str))))
 
    file-list))
 
