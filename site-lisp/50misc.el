@@ -112,7 +112,7 @@
 
 ;;; which func mode
 ;; BUG: GNU Emacs 24.1.50.1, it will casue tons of error error.
-;; (which-function-mode 1)
+(which-function-mode 1)
 (eval-after-load "which-func"
   '(set-face-foreground 'which-func "Yellow"))
 
