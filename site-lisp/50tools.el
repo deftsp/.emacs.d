@@ -212,11 +212,42 @@
 ;;                          ))
 
 
-;;; Moving lines
+;;; moving region/line
 ;; Many times you'll kill a line with the intention of pasting it back a couple of lines up/below.
-(global-set-key (kbd "H-k") 'pl/move-line-up)
-(global-set-key (kbd "H-j") 'pl/move-line-down)
+(global-set-key (kbd "H-p") 'pl/move-line-region-up)
+(global-set-key (kbd "H-n") 'pl/move-line-region-down)
 
+(defun pl/move-line-region-up (start end n)
+  (interactive "r\np")
+  (if (region-active-p) (pl/move-region-up start end n) (call-interactively #'pl/move-line-up)))
+
+(defun pl/move-line-region-down (start end n)
+  (interactive "r\np")
+  (if (region-active-p) (pl/move-region-down start end n) (call-interactively #'pl/move-line-down)))
+
+;;
+(defun pl/move-region (start end n)
+  "Move the current region up or down by N lines."
+  (interactive "r\np")
+  (let ((line-text (delete-and-extract-region start end)))
+    (forward-line n)
+    (let ((start (point)))
+      (insert line-text)
+      (setq deactivate-mark nil)
+      (set-mark start))))
+
+(defun pl/move-region-up (start end n)
+  "Move the current line up by N lines."
+  (interactive "r\np")
+  (pl/move-region start end (if (null n) -1 (- n))))
+
+(defun pl/move-region-down (start end n)
+  "Move the current line down by N lines."
+  (interactive "r\np")
+  (pl/move-region start end (if (null n) 1 n)))
+
+
+;;
 (defun pl/move-line (&optional n)
   "Move current line N (1) lines up/down leaving point in place."
   (interactive "p")
@@ -238,7 +269,7 @@
   "Moves current line N (1) lines down leaving point in place."
   (interactive "p")
   (pl/move-line (if (null n) 1 n)))
-;;Moving lines ends there---------------------------------------------------------------------------------------
+;;  moving region/line ends there---------------------------------------------------------------------------------------
 
 
 ;;; Open new line
