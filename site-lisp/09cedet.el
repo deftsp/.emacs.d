@@ -19,12 +19,13 @@
 
 ;; note: don't add cedet directory recursive, it'll cause strange problem
 
-(load-file "~/.emacs.d/lisp/cedet/cedet-devel-load.el")
-(add-to-list 'load-path "~/.emacs.d/lisp/cedet/contrib/")
+(defvar pl/cedet-root-path (file-name-as-directory "~/.emacs.d/lisp/cedet/"))
+(load-file (concat pl/cedet-root-path "cedet-devel-load.el"))
+(add-to-list 'load-path (concat pl/cedet-root-path "contrib"))
 
-;; Add further minor-modes to be enabled by semantic-mode.
-;; See doc-string of `semantic-default-submodes' for other things
-;; you can use here.
+
+;; Add further minor-modes to be enabled by semantic-mode. See doc-string of `semantic-default-submodes' for other
+;; things you can use here.
 (add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode t)
 (add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
@@ -34,27 +35,23 @@
 (add-to-list 'semantic-default-submodes 'global-semantic-mru-bookmark-mode t)
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-decoration-mode t) ; Additional tag decorations.
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-highlight-func-mode t) ; Highlight the current tag.
-;; Highlight references of the symbol under point.
-;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-local-symbol-highlight-mode t)
+;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-local-symbol-highlight-mode t) ; Highlight references of the symbol under point.
+
 (add-to-list 'semantic-default-submodes 'global-semantic-show-parser-state-mode t)
-;; Show current fun in header line
-;; (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode t)
+(add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode t) ; show current fun in header line
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-show-unmatched-syntax-mode t)
 
-;; Enable Semantic
+;; Activate semantic
 (semantic-mode 1)
 
+(require 'semantic/ia)
 (require 'semantic/bovine/c)
 (require 'semantic/bovine/gcc)
 (require 'semantic/bovine/clang)
-(require 'semantic/ia)
 (require 'semantic/decorate/include)
 (require 'semantic/lex-spp)
 (require 'eassist) ; for eassist-lists-methods, and eassist-switch-h-cpp
 
-;;; global support
-(semanticdb-enable-gnu-global-databases 'c-mode)
-(semanticdb-enable-gnu-global-databases 'c++-mode)
 
 ;;; Enable SRecode (Template management) minor-mode.
 (global-srecode-minor-mode 1)
@@ -92,9 +89,21 @@
   (local-set-key "\C-x,m" 'eassist-list-methods))
 (add-hook 'c-mode-common-hook 'pl/c-mode-cedet-hook)
 
+;;; global support
+;;; brew install global
+(when (cedet-gnu-global-version-check t)
+  (semanticdb-enable-gnu-global-databases 'c-mode)
+  (semanticdb-enable-gnu-global-databases 'c++-mode))
 
 ;;; ctags
+;; enable ctags for some languages:
+;; Unix Shell, Perl, Pascal, Tcl, Fortran, Asm
+;; brew install ctags
+;; TODO: [cedit bug] (cedet-ectag-version-check t) will return nil, no matther
+;; (semantic-ectags-test-version) return t or nil
 ;; (semantic-load-enable-all-ectags-support)
+(semantic-load-enable-primary-ectags-support)
+
 ;;; cscope
 (require 'semantic/db-cscope)
 (semanticdb-enable-cscope-databases t)
@@ -116,7 +125,9 @@
 (setq semantic-idle-work-parse-neighboring-files-flag t)
 (setq semantic-idle-work-update-headers-flag t)
 
-;; (setq semantic-imenu-auto-rebuild-directory-indexes nil)
+;;; senator
+;; (add-hook 'semantic-init-hooks 'senator-minor-mode)
+;; (remove-hook 'semantic-init-hooks 'senator-minor-mode)
 ;; (global-set-key [(s-down-mouse-3)] 'senator-completion-menu-popup)
 
 ;; (add-to-list 'semanticdb-project-roots "~/proj")
@@ -184,6 +195,14 @@
     (push-mark)
     (goto-char pos)
     (end-of-line)))
+
+;;; integration with imenu
+(defun pl/imenu-add-to-menubar ()
+  (imenu-add-to-menubar "TAGS"))
+(add-hook 'semantic-init-hooks 'pl/imenu-add-to-menubar)
+;; (setq semantic-imenu-auto-rebuild-directory-indexes nil)
+
+
 
 ;;; face
 (eval-after-load "pulse"
