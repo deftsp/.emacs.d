@@ -66,9 +66,8 @@
 ;;; modifier
 (case system-type
   (darwin
-   ;; setting Super ＆ Hyper keys for the Mac keyboard, for emacs running in OS X
-   ;; Super/Meta/Hyer
-   (setq mac-option-modifier 'super) ; sets the Option key as Super
+   (setq mac-function-modifier 'super)
+   (setq mac-option-modifier 'hyper) ; sets the Option key as Super
    (setq mac-command-modifier 'meta) ; sets the Command key as Meta
    (setq mac-control-modifier 'control))
   (wndows-nt
@@ -108,8 +107,11 @@
         (if (file-directory-p p) (concat p ":") ""))
       ""))
 
+
 (setenv "PATH"
         (concat
+         "/Applications/Emacs.app/Contents/MacOS/bin:"  ; TODO: update for multi platform
+         "/Applications/Emacs.app/Contents/MacOS/libexec:"
          (expand-file-name "~/bin:")
          "/usr/texbin:"
          "/Applications/Gnuplot.app/Contents/Resources/bin:"
