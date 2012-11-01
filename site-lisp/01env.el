@@ -66,7 +66,7 @@
 ;;; modifier
 (case system-type
   (darwin
-   (setq mac-function-modifier 'super)
+   (setq mac-function-modifier 'super) ; 'none, super
    (setq mac-option-modifier 'hyper) ; sets the Option key as Super
    (setq mac-command-modifier 'meta) ; sets the Command key as Meta
    (setq mac-control-modifier 'control))
