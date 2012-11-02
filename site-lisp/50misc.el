@@ -33,9 +33,6 @@
       comint-completion-autolist t
       comint-input-ignoredups t
       comint-prompt-read-only t
-      minibuffer-electric-default-mode 1
-      enable-recursive-minibuffers t
-      resize-mini-windows nil ; don't allow minibuffer free resize
       max-lisp-eval-depth 1500
       max-specpdl-size 3000
       comment-multi-line nil
@@ -88,6 +85,14 @@
       mail-user-agent 'gnus-user-agent
       ;; default-enable-multibyte-characters t
       enable-local-variables :safe)
+
+
+;;; minibuffer
+(setq minibuffer-electric-default-mode 1
+      resize-mini-windows nil ; don't allow minibuffer free resize
+      enable-recursive-minibuffers t)
+(minibuffer-depth-indicate-mode 1)
+
 
 (setq ring-bell-function 'ignore)
 ;; Emacs does not beep when you hit `C-g' in the minibuffer or during
