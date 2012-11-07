@@ -105,17 +105,34 @@
 ;;; _+ comment current line
 ;; Original idea from
 ;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
-(defun pl/comment-dwim (&optional arg)
-  "Replacement for the comment-dwim command.
-        If no region is selected and current line is not blank and we are not at the end of the line,
-        then comment current line.
-        Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
-  (interactive "*P")
-  (comment-normalize-vars)
-  (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
-      (comment-or-uncomment-region (line-beginning-position) (line-end-position))
-    (comment-dwim arg)))
-(global-set-key (kbd "C-;") 'pl/comment-dwim)
+;; (global-set-key (kbd "M-;") 'pl/comment-dwim)
+;; (defun pl/comment-dwim (&optional arg)
+;;   "Replacement for the comment-dwim command.
+;;         If no region is selected and current line is not blank and we are not at the end of the line,
+;;         then comment current line.
+;;         Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
+;;   (interactive "*P")
+;;   (comment-normalize-vars)
+;;   (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
+;;       (comment-or-uncomment-region (line-beginning-position) (line-end-position))
+;;     (comment-dwim arg)))
+
+(global-set-key (kbd "C-;") 'pl/toggle-comment)
+(defun pl/toggle-comment (&optional line)
+  "This function is to comment or uncomment a line or a region"
+  (interactive "P")
+  (let ((line (unless (or line (and mark-active (not (equal (mark) (point)))))
+                t)))
+    (if line
+       (save-excursion
+         (comment-or-uncomment-region
+          (progn
+            (beginning-of-line)
+            (point))
+          (progn
+            (end-of-line)
+            (point))))
+       (call-interactively 'comment-or-uncomment-region))))
 
 ;;------------------------------------------------------------------------------------------
 ;; now '-' is not considered a word-delimiter
