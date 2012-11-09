@@ -31,6 +31,7 @@
 (defun pl/auto-complete-settings ()
   "Settings for `auto-complete'."
   (add-to-list 'ac-modes 'objc-mode) ; add objc-mode to ac-modes
+  (add-to-list 'ac-modes 'org-mode)
   (global-auto-complete-mode 1)
   ;; after editing and adding dictionary, you should do M-x ac-clear-dictionary-cache to apply changes
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
@@ -52,11 +53,12 @@
   (set-face-background 'ac-completion-face "violet")
 
   ;; start completion when entered 2 characters
-  (setq ac-auto-start nil)                ; do not start automatically
+  (setq ac-auto-start nil)         ; do not start automatically
   (setq ac-dwim t)
-  (setq ac-use-quick-help nil)          ; TODO: tooltip positon is not correct
+  (setq ac-use-quick-help t)
 
   (setq ac-candidate-max 20)
+  (setq ac-use-menu-map t)
 
   ;; find out the include file search pathes of your g++:
   ;; echo "" | g++ -v -x c++ -E -
@@ -77,13 +79,13 @@
                  )))
 
   ;; Completion by TAB
-  (ac-set-trigger-key "TAB")
-  (define-key ac-mode-map (kbd "<backtab>") 'auto-complete)
-  ;; (define-key ac-mode-map (kbd "<C-tab>") 'auto-complete)
-  (define-key ac-complete-mode-map  (kbd "<backtab>") 'ac-previous)
-  (define-key ac-complete-mode-map "\t" 'ac-complete)
-  (define-key ac-complete-mode-map "\C-n" 'ac-next)
-  (define-key ac-complete-mode-map "\C-p" 'ac-previous))
+  ;; (ac-set-trigger-key "TAB")
+  (ac-set-trigger-key "C-M-/")
+  ;; (define-key ac-mode-map (kbd "C-M-/") 'auto-complete)
+
+  (define-key ac-completing-map  (kbd "<backtab>") 'ac-previous)
+  (define-key ac-completing-map "\C-n" 'ac-next)
+  (define-key ac-completing-map "\C-p" 'ac-previous))
 
 
 (defun pl/ac-c-mode-common-setup ()
@@ -91,11 +93,13 @@
   ;; (add-to-list 'ac-sources 'ac-source-clang)
   ;; (add-to-list 'ac-sources 'ac-source-gtags)
   ;; (add-to-list 'ac-sources 'ac-source-etags)
+  (add-to-list 'ac-sources 'ac-source-yasnippet)
   (add-to-list 'ac-sources 'ac-source-semantic))
 
+(add-hook 'c-mode-common-hook 'pl/ac-c-mode-common-setup)
+(add-hook 'org-mode-hook 'pl/ac-c-mode-common-setup)
 
 (add-hook 'lisp-interaction-mode 'ac-emacs-lisp-mode-setup)
-(add-hook 'c-mode-common-hook 'pl/ac-c-mode-common-setup)
 
 
 ;;; Scheme
