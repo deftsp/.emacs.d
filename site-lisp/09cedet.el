@@ -41,8 +41,20 @@
 (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode t) ; show current fun in header line
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-show-unmatched-syntax-mode t)
 
+;;; inhibit semantic for some major modes
+(defun pl/semantic-inhibit-func ()
+  (cond
+    ((member major-mode '(scheme-mode javascript-mode html-helper-mode html-mode))
+     ;; to disable semantic, return non-nil.
+     t)
+    (t nil)))
+
+(add-to-list 'semantic-inhibit-functions 'pl/semantic-inhibit-func)
+
+
 ;; Activate semantic
 (semantic-mode 1)
+
 
 (require 'semantic/ia)
 (require 'semantic/bovine/c)
@@ -74,8 +86,8 @@
 
 ;; (add-hook 'semantic-init-hooks 'pl/cedet-hook)
 (add-hook 'c-mode-common-hook 'pl/cedet-hook)
-(add-hook 'lisp-mode-hook 'pl/cedet-hook)
-(add-hook 'scheme-mode-hook 'pl/cedet-hook)
+;; (add-hook 'lisp-mode-hook 'pl/cedet-hook)
+;; (add-hook 'scheme-mode-hook 'pl/cedet-hook)
 (add-hook 'emacs-lisp-mode-hook 'pl/cedet-hook)
 (add-hook 'erlang-mode-hook 'pl/cedet-hook)
 
