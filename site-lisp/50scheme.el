@@ -1,46 +1,36 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-10-04 10:33:43 Shihpin Tseng>
 
-
-
-(add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
-(setq scheme-program-name "gsi -:d-")   ; mzscheme
-
-
-
+;;; gambit
 (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")
 (autoload 'gambit-mode "gambit" "Hook Gambit mode into scheme.")
 
 (setq gambit-repl-command-prefix (kbd "ESC ESC g"))
-(add-hook 'scheme-mode-hook (function gambit-mode))
+(setq scheme-program-name "gsi -:d-")   ; mzscheme
 
-
-;;; geiser
-(setq geiser-active-implementations '(racket))
-(setq geiser-repl-history-filename "~/.emacs.d/geiser-history")
-(setq geiser-racket-binary "/Applications/Racket/bin/racket")
-;; (setq geiser-racket-collects ) ; it seems gesier can auto find racket collects
-
-
-;; do not auto turn on geiser
-(eval-after-load "geiser"
-  '(remove-hook 'scheme-mode-hook 'geiser-mode--maybe-activate))
+(defun pl/gambit-remote-repl ()
+  (interactive)
+  (let ((scheme-program-name "telnet 127.0.0.1 7000"))
+    (when (not (comint-check-proc "*scheme*"))
+      (kill-buffer (get-buffer "*scheme*"))
+      (scheme-interactively-start-process))
+    (pop-to-buffer-same-window (get-buffer "*scheme*"))))
 
 (eval-after-load "gambit"
   '(progn
     (set-face-attribute  gambit-highlight-face nil :foreground "#000000")))
 
+;; (add-hook 'scheme-mode-hook (function gambit-mode))
+;; (add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
 
-;; (setqa scheme-mit-dialect nil)
+;;; geiser
+(setq geiser-mode-auto-p nil)
+(setq geiser-active-implementations '(racket))
+(setq geiser-repl-history-filename "~/.emacs.d/geiser-history")
+(setq geiser-racket-binary "/Applications/Racket/bin/racket")
+;; (setq geiser-racket-collects ) ; it seems gesier can auto find racket collects
 
-;; Tell emacs about your special interpreters. This is from the #! line.
+;; scsh
 ;; (add-to-list 'interpreter-mode-alist '("scsh" . scheme-mode))
-
-;; (defun mit-scheme ()
-;;     "Runs MIT scheme"
-;;     (interactive)
-;;     (run-scheme "athrun scheme scheme -emacs")
-;;     (process-kill-without-query (get-process "scheme")))
 
 
 ;;; You want quack. Really.
@@ -53,34 +43,16 @@
 
 (eval-after-load "quack"
   '(progn
-     (set-face-attribute quack-pltish-paren-face nil :foreground "#ccffcc" :weight 'normal)
-     (set-face-attribute quack-pltish-comment-face nil :foreground "#008888" :weight 'normal)
-     (set-face-attribute quack-pltish-keyword-face nil :foreground "#bbbb99" :weight 'bold)
-     (set-face-attribute quack-pltish-selfeval-face nil :foreground "#a800a8")
-     (set-face-attribute quack-pltish-defn-face nil :foreground "#ff7f00")
-     (set-face-attribute quack-threesemi-semi-face nil :background 'unspecified)
-     (set-face-attribute quack-threesemi-text-face nil :background 'unspecified)))
+    (set-face-attribute quack-pltish-paren-face nil :foreground "#ccffcc" :weight 'normal)
+    (set-face-attribute quack-pltish-comment-face nil :foreground "#008888" :weight 'normal)
+    (set-face-attribute quack-pltish-keyword-face nil :foreground "#bbbb99" :weight 'bold)
+    (set-face-attribute quack-pltish-selfeval-face nil :foreground "#a800a8")
+    (set-face-attribute quack-pltish-defn-face nil :foreground "#ff7f00")
+    (set-face-attribute quack-threesemi-semi-face nil :background 'unspecified)
+    (set-face-attribute quack-threesemi-text-face nil :background 'unspecified)))
 
-;; Examples for quick documentation access. Quack does similar stuff.
-;; (defun s48-doc ()
-;;  "Browse the Scheme48 documentation."
-;;  (interactive)
-;;  (browse-url "file:///usr/share/doc/scheme48/html/s48manual.html"))
 
-;;(defun scsh-doc ()
-;;  "Browse the scsh documentation."
-;;  (interactive)
-;; (browse-url "file:///usr/share/doc/scsh-doc/scsh-manual/html/man-Z-H-1.html"))
-
-;;; Tell emacs about the indentation of some not-so-well-known
-;;; procedures.
-
-;; If you are running scheme48 download scheme48.el from
-;; http://www.emacswiki.org/cgi-bin/wiki/Scheme48Mode
-;; And add this provide
-;(require 'scheme48)
-
-;; gauche
+;;; Tell emacs about the indentation of some not-so-well-known procedures.
 ;; (put 'with-error-handler 'scheme-indent-function 1)     ; 'defun)
 ;; (put 'with-exception-handler 'scheme-indent-function 1)
 ;; (put 'with-exit-exception-handler 'scheme-indent-function 1)
@@ -91,10 +63,7 @@
 ;; (put 'call-with-input-string 'scheme-indent-function 1)
 ;; (put 'with-port-locking 'scheme-indent-function 1)
 
-
-
-;; ==================================================================
-;; A customized indentation function for receive.
+;;; A customized indentation function for receive.
 ;; It is adapted from lisp-indent-specform.
 
 ;; This will indent RECEIVE as follows:
@@ -309,16 +278,7 @@
 ;; You can enable slightly smarter indentation with
 ;; (setq lisp-indent-function 'scheme-smart-indent-function)
 
-
 ;; (setq scheme-default-implementation "mzscheme")
-
-(defun pl/gambit-remote-repl ()
-  (interactive)
-  (let ((scheme-program-name "telnet 127.0.0.1 7000"))
-    (when (not (comint-check-proc "*scheme*"))
-      (kill-buffer (get-buffer "*scheme*"))
-      (scheme-interactively-start-process))
-    (pop-to-buffer-same-window (get-buffer "*scheme*"))))
 
 
 
