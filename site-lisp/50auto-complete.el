@@ -120,8 +120,8 @@
 
 (eval-after-load "popup"
   '(progn
-     (set-face-attribute 'popup-scroll-bar-foreground-face nil :foreground "white" :background "#999999")
-     (set-face-attribute 'popup-scroll-bar-background-face nil :foreground "yellow" :background "#cccccc")))
+    (set-face-attribute 'popup-scroll-bar-foreground-face nil :foreground "white" :background "#bbbbbb")
+    (set-face-attribute 'popup-scroll-bar-background-face nil :foreground "yellow" :background "#dddddd")))
 
 
 (eval-after-load "auto-complete"
