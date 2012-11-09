@@ -23,7 +23,7 @@
 ;; (add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
 
 ;;; geiser
-(setq geiser-mode-auto-p nil)
+(setq geiser-mode-auto-p t)
 (setq geiser-active-implementations '(racket))
 (setq geiser-repl-history-filename "~/.emacs.d/geiser-history")
 (setq geiser-racket-binary "/Applications/Racket/bin/racket")
