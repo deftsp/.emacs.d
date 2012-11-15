@@ -1,5 +1,3 @@
-;;Time-stamp: <2012-11-15 10:00:39 Shihpin Tseng>
-
 ;;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
 

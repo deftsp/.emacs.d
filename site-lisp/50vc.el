@@ -1,9 +1,5 @@
-;;backup
-;;emacs还有一个自动保存功能，默认在~/.emacs.d/auto-save-list里。
-
-;; Enable backup files.
+;;; backup
 (setq make-backup-files t)
-(defconst use-backup-dir t)
 (setq backup-directory-alist (quote ((".*" . "~/.backup/temp/"))) ; don't litter my fs tree)
       version-control t                                          ; Use version numbers for backups
       kept-new-versions 16                                       ; Number of newest versions to keep
@@ -14,36 +10,8 @@
       backup-by-copying t               ; don't clobber symlinks
       ;; Copy linked files, don't rename.
       backup-by-copying-when-linked t)
-
-;; return a backup file path of a give file path with full directory mirroring from a root dir non-existant dir will be
-;; created
-;; (defun my-backup-file-name (fpath)
-;;   "Return a new file path of a given file path.
-;; If the new path's directories does not exist, create them."
-;;   (let (backup-root bpath)
-;;     (setq backup-root "~/.emacs.d/emacs-backup")
-;;     (setq bpath (concat backup-root fpath "~"))
-;;     (make-directory (file-name-directory bpath) bpath)
-;;     bpath))
-;; (setq make-backup-file-name-function 'my-backup-file-name)
-
-;; The above will mirror all directories at the given backup dir. For example, if you are editing a file
-;; "/Users/jane/web/xyz/myfile.txt", and your backup root is "/Users/jane/.emacs.d/emacs-backup", then the backup will
-;; be at "/Users/jane/.emacs.d/emacs-backup/Users/jane/web/xyz/myfile.txt~".
-
-;; If you want all backup to be flat in a dir, use the following:
-
-;; (setq backup-directory-alist '(("" . "~/.emacs.d/emacs-backup")))
-
-;; This will create backup files flat in the given dir, and the backup file names will have "!" characters in place of
-;; the directory separator. For example, if you are editing a file at "/Users/jane/web/xyz/myfile.txt", and your backup
-;; dir is set at "/Users/jane/.emacs.d/emacs-backup", then the backup file will be at:
-;; "/Users/jane/.emacs.d/emacs-backup/Users!jane!web!emacs!myfile.txt~". If you use long file names or many nested dirs,
-;; this scheme will reach file name length limit quickly.
-
 ;;;; VC
-
-;;While we are thinking about symlinks, I don't like being asked whether I want to follow a symlink; I do, already!
+;; While we are thinking about symlinks, I don't like being asked whether I want to follow a symlink; I do, already!
 (setq vc-follow-symlinks t
       vc-initial-comment t
       ;; auto-revert-check-vc-info t
@@ -69,10 +37,18 @@
 ;; http://tsgates.cafe24.com/git/git-emacs.html
 (require 'git-emacs)
 (when window-system
-  (setq git-state-modeline-decoration 'git-state-decoration-colored-letter))   ; git-state-decoration-small-dot
+  (setq git-state-modeline-decoration 'git-state-decoration-small-dot))   ; git-state-decoration-colored-letter
+
+;;; magit
+(global-set-key (kbd "C-x G") 'magit-status)
+(eval-after-load "magit"
+  '(progn
+     (setq magit-completing-read-function 'magit-ido-completing-read)))
+
+
 
 ;;; darcs
-(require 'vc-darcs)
+;; (require 'vc-darcs)
 
 ;; It will insert the list of edited files with a colon after the filename. One of those small, simple macros that I use
 ;; all of the time, and thought I might share.

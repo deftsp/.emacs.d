@@ -1106,11 +1106,6 @@ such character is found, following options are shown:
     (set-face-background 'vhl/default-face "#332244")
     (volatile-highlights-mode t)))
 
-;;; magit
-(global-set-key (kbd "C-x G") 'magit-status)
-(eval-after-load "magit"
-  '(progn
-    (setq magit-completing-read-function 'magit-ido-completing-read)))
 
 ;;; xmsi-math-symbols-input.el
 (autoload 'xmsi-mode "xmsi-math-symbols-input" "Load xmsi minor mode for inputting math (Unicode) symbols." t)

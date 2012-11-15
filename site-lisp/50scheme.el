@@ -32,16 +32,13 @@
 ;; (add-to-list 'interpreter-mode-alist '("scsh" . scheme-mode))
 
 
-;;; You want quack. Really.
 ;; http://alexott.net/en/writings/emacs-devenv/EmacsScheme.html
-;; (require 'quack)
-;; (setq quack-fontify-style 'emacs          ;or 'plt
-;;       quack-default-program "gsi -:d-"
-;;       quack-newline-behavior 'indent-newline-indent)
-
-
 (eval-after-load "quack"
   '(progn
+    (setq quack-fontify-style nil    ;or 'plt 'emacs
+          quack-default-program "gsi -:d-"
+          quack-newline-behavior 'indent-newline-indent)
+
     (set-face-attribute quack-pltish-paren-face nil :foreground "#ccffcc" :weight 'normal)
     (set-face-attribute quack-pltish-comment-face nil :foreground "#008888" :weight 'normal)
     (set-face-attribute quack-pltish-keyword-face nil :foreground "#bbbb99" :weight 'bold)

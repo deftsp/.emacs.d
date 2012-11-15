@@ -22,8 +22,7 @@
                     extended-command-history
                     query-replace-history))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;; Session Management
+;;; Session Management
 ;; Histories of user input. For example, strings used in a find/replace command, names of files you have visited, etc.
 ;; Contents of registers, whether they are texts or buffer/file positions. Buffer positions are automatically converted to file positions.
 ;; List of recently copied/cut text blocks to paste, global markers to jump to, and other so-called rings.
@@ -40,18 +39,18 @@
 (eval-after-load "desktop"
   '(mapc #'(lambda (lst)
              (add-to-list 'desktop-minor-mode-table lst))
-    '((icicle-mode nil)
-      (javascript-mode nil)
-      (nxhtml-mumamo-mode nil)
-      (autoinfo-mode nil)
-      (ecb-minor-mode nil)
-      ;; (key-chord-mode nil)
-      (senator-minor-mode nil)
-      (semantic-show-unmatched-syntax-mode nil)
-      (semantic-stickyfunc-mode nil)
-      (semantic-decoration-mode nil)
-      (semantic-idle-summary-mode nil)
-      (semantic-idle-scheduler-mode nil))))
+         '((icicle-mode nil)
+           (javascript-mode nil)
+           (nxhtml-mumamo-mode nil)
+           (autoinfo-mode nil)
+           (ecb-minor-mode nil)
+           ;; (key-chord-mode nil)
+           (senator-minor-mode nil)
+           (semantic-show-unmatched-syntax-mode nil)
+           (semantic-stickyfunc-mode nil)
+           (semantic-decoration-mode nil)
+           (semantic-idle-summary-mode nil)
+           (semantic-idle-scheduler-mode nil))))
 
 (setq desktop-load-locked-desktop t) ; 'ask
 (setq desktop-path '("~/.emacs.d"))

@@ -51,7 +51,7 @@
 
 (eval-after-load "slime"
   '(setq inferior-lisp-program "~/src/clbuild/clbuild lisp" ; "/usr/bin/sbcl --noinform"
-         lisp-indent-function 'common-lisp-indent-function  ;lisp-indent-function
+         ;; lisp-indent-function 'common-lisp-indent-function  ;lisp-indent-function
          slime-protocol-version 'ignore
          slime-complete-symbol-function 'slime-simple-complete-symbol ; 'slime-fuzzy-complete-symbol
          slime-net-coding-system 'utf-8-unix
