@@ -1,4 +1,4 @@
-;;Time-stamp: <2012-10-25 22:34:27 Shihpin Tseng>
+;;Time-stamp: <2012-11-15 10:00:39 Shihpin Tseng>
 
 ;;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
@@ -50,7 +50,7 @@
 
 
 (setq custom-file "~/.emacs.d/custom.el")
-(load custom-file)
+(load custom-file 'noerror)
 
 
 (require '00site-start)
