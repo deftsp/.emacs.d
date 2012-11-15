@@ -25,9 +25,8 @@
 ;;; geiser
 (setq geiser-mode-auto-p t)
 (setq geiser-active-implementations '(racket))
-(setq geiser-repl-history-filename "~/.emacs.d/geiser-history")
 (setq geiser-racket-binary "/Applications/Racket/bin/racket")
-;; (setq geiser-racket-collects ) ; it seems gesier can auto find racket collects
+;; (setq geiser-racket-collects nil) ; it seems gesier can auto find racket collects
 
 ;; scsh
 ;; (add-to-list 'interpreter-mode-alist '("scsh" . scheme-mode))
