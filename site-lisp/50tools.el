@@ -109,11 +109,11 @@
 
 
 ;;; highlight current line in buffer
-(require 'hl-line)
-(eval-after-load "hl-line"
-  '(progn
-     (global-hl-line-mode t)
-     (set-face-background 'hl-line "#222222")))
+;; (require 'hl-line)
+;; (eval-after-load "hl-line"
+;;   '(progn
+;;      (global-hl-line-mode t)
+;;      (set-face-background 'hl-line "#222222")))
 
 ;;; buffer action
 ;; http://xwl.appspot.com/ref/buffer-action.el
