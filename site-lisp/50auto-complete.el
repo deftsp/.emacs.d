@@ -109,11 +109,21 @@
                         (all-completions ac-target (car (scheme-current-env))))))
       "Source for scheme keywords.")))
 
-(defun pl/ac-scheme-mode-common-setup ()
+(defun pl/ac-scheme-mode-setup ()
   (if (fboundp 'scheme-current-env)
       (add-to-list 'ac-sources 'ac-source-scheme))
   (add-to-list 'ac-sources 'ac-source-yasnippet))
-(add-hook 'scheme-mode-hook 'pl/ac-scheme-mode-common-setup)
+(add-hook 'scheme-mode-hook 'pl/ac-scheme-mode-setup)
+
+(defun pl/ac-clojure-mode-setup ()
+  (add-to-list 'ac-sources 'ac-source-nrepl-all-classes)
+  (add-to-list 'ac-sources 'ac-source-nrepl-java-methods)
+  (add-to-list 'ac-sources 'ac-source-nrepl-ns)
+  (add-to-list 'ac-sources 'ac-source-nrepl-ns-classes)
+  (add-to-list 'ac-sources 'ac-source-nrepl-vars)
+  (add-to-list 'ac-sources 'ac-source-nrepl-static-methods))
+(add-hook 'clojure-mode-hook 'pl/ac-clojure-mode-setup)
+(add-hook 'nrepl-mode-hook 'pl/ac-clojure-mode-setup)
 
 
 (eval-after-load "popup"
