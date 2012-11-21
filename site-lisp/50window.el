@@ -169,4 +169,31 @@
 (eval-after-load "switch-window"
   '(setq switch-window-shortcut-style 'alphabet))
 
+;;; golden-ratio.el
+
+(defun pl/inhibit-golden-ratio-for-ediff-func ()
+  (let ((ediff-buffer (get-buffer "*Ediff Control Panel*"))
+        (cur-buffer (current-buffer))
+        (m major-mode))
+    (if ediff-buffer
+        (with-current-buffer ediff-buffer
+          (if (or (eq ediff-buffer-A cur-buffer)
+                  (eq ediff-buffer-B cur-buffer)
+                  (eq ediff-buffer-C cur-buffer)
+                  (eq m 'ediff-mode))
+              t)))))
+
+;; (defun pl/golden-ratio-inhibit-func ()
+;;   (cond
+;;    ((member major-mode '(ediff-mode help-mode))
+;;     ;; to inhabit golden-ratio, return non-nil.
+;;     t)
+;;    (t nil)))
+
+(eval-after-load "golden-ratio"
+  '(progn
+     (golden-ratio-enable)
+     (add-to-list 'golden-ratio-inhibit-functions 'pl/inhibit-golden-ratio-for-ediff-func)))
+
+
 (provide '50window)
