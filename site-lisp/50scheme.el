@@ -23,7 +23,7 @@
 ;; (add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
 
 ;;; geiser
-(setq geiser-mode-auto-p t)
+;; (setq geiser-mode-auto-p nil)
 (setq geiser-active-implementations '(racket))
 (setq geiser-racket-binary "/Applications/Racket/bin/racket")
 ;; (setq geiser-racket-collects nil) ; it seems gesier can auto find racket collects
