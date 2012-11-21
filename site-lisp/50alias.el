@@ -32,7 +32,6 @@
 (defalias 'sh 'shell)
 (defalias 'fb 'flyspell-buffer)
 (defalias 'sbc 'set-background-color)
-(defalias 'rof 'recentf-open-files)
 (defalias 'lcd 'list-colors-display)
 (defalias 'lfd 'list-faces-display)
 (defalias 'cc 'calc)

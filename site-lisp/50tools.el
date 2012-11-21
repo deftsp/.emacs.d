@@ -70,15 +70,13 @@
 (require 'recentf)
 (recentf-mode 1)
 (setq recentf-max-saved-items 500)
-(setq recentf-max-menu-items 60)
-(setq recentf-auto-cleanup 'never) ;;To protect tramp
-;;The remote connection is NOT opened
-(add-to-list 'recentf-keep 'file-remote-p)
+(setq recentf-max-menu-items 10)
+(setq recentf-auto-cleanup 'never) ; To protect tramp
+(add-to-list 'recentf-keep 'file-remote-p) ; the remote connection is NOT opened
+
 (add-to-list 'recentf-exclude "^/su:")
 (add-to-list 'recentf-exclude "^/sudo:")
 (add-to-list 'recentf-exclude "\\.gpg$")
-;;(recentf-exclude (quote (".ftp:.*" ".sudo:.*")))
-;;(recentf-keep (file-remote-p file-readable-p))
 
 ;;; unicad
 ;; Unicad is short for Universal Charset Auto Detector. It is an Emacs-Lisp port of Mozilla Universal Charset Detector.
