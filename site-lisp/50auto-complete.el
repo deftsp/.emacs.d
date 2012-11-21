@@ -79,10 +79,8 @@
                  )))
 
   ;; Completion by TAB
-  ;; (ac-set-trigger-key "TAB")
-  (ac-set-trigger-key "C-M-/")
-  ;; (define-key ac-mode-map (kbd "C-M-/") 'auto-complete)
-
+  (ac-set-trigger-key "C-M-/") ; "TAB"
+  (define-key ac-mode-map (kbd "C-M-/") 'auto-complete)
   (define-key ac-completing-map  (kbd "<backtab>") 'ac-previous)
   (define-key ac-completing-map "\C-n" 'ac-next)
   (define-key ac-completing-map "\C-p" 'ac-previous))

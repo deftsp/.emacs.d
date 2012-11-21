@@ -6,10 +6,10 @@
 (setq slime-backend "~/opt/clbuild2/.swank-loader.lisp")
 
 (require 'slime)
-;; (require 'clojure-mode)
+
 
 ;; (require 'slime-autoloads)
-(slime-setup '(slime-fancy slime-asdf slime-tramp slime-js))
+(slime-setup '(slime-fancy slime-asdf slime-tramp slime-js slime-repl))
 ;; (slime-require :swank-listener-hooks)
 ;; the rest of SLIME should be loaded automatically when one of the commands `M-x slime' or `M-x slime-connect' is
 ;; executed the first time.
@@ -17,14 +17,6 @@
 ;; (when (slime-connected-p)
 ;;   (slime-eval-async '(swank:swank-require :swank-arglists)))
 
-;;; swank-clojure
-(add-to-list 'load-path "~/lisp/clj/swank-clojure/src/emacs")
-(add-to-list 'load-path "~/lisp/clj/clojure-mode")
-(setq swank-clojure-jar-path "~/.clojure/clojure.jar"
-      swank-clojure-extra-classpaths (list
-                                      "~/lisp/clj/swank-clojure/src/main/clojure"
-                                      "~/.clojure/clojure-contrib.jar"))
-;; (require 'swank-clojure-autoload)
 
 ;;;
 (defun pl/lisp-mode-hook ()
@@ -52,7 +44,7 @@
 (eval-after-load "slime"
   '(setq inferior-lisp-program "~/src/clbuild/clbuild lisp" ; "/usr/bin/sbcl --noinform"
          ;; lisp-indent-function 'common-lisp-indent-function  ;lisp-indent-function
-         slime-protocol-version 'ignore
+         slime-protocol-version 'ignore  ; remove annoying warning
          slime-complete-symbol-function 'slime-simple-complete-symbol ; 'slime-fuzzy-complete-symbol
          slime-net-coding-system 'utf-8-unix
          slime-default-lisp 'sbcl
