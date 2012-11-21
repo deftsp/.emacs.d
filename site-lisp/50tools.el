@@ -993,10 +993,10 @@ such character is found, following options are shown:
 (eval-after-load "smex"
   '(progn
      ;; (smex-initialize)                  ; el-get has do it
-     (global-set-key (kbd "M-x") 'smex)
      ;; (global-set-key (kbd "M-X") 'smex-major-mode-commands) ;
      ;; This is your old M-x.
-     (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)))
+     ;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+     (global-set-key (kbd "M-x") 'smex)))
 
 
 ;;; ace jump
