@@ -18,16 +18,18 @@
 ;; define dirs for cacheing file dirs
 ;; see http://www.emacswiki.org/cgi-bin/wiki/FileNameCache for more tricks with this...
 
+(defvar pl/file-cache-dirs '("~/" "/etc/" "~/.emacs.d/site-lisp/" "~/Downloads/"))
+(defvar pl/file-cache-recursive-dirs '("~/proj"))
 
 (eval-after-load "filecache"
   '(progn
      (setq file-cache-completion-ignore-case t
            file-cache-ignore-case t)
      (mapcar (lambda (str) (add-to-list 'file-cache-filter-regexps str))
-             '("\\.svn-base$" "\\.svn" "\\.jar$" "\\.git$" "\\.gz$" "\\.tar$" "\\.rar$"))
-     (file-cache-add-directory-using-find "~/proj/notebook")
+             '("\\.svn-base$" "\\.svn" "\\.jar$" "\\.git$" "\\.gz$" "\\.tar$" "\\.rar$" "\\.exe$"))
+     (file-cache-add-directory-list pl/file-cache-dirs)
      ;; (file-cache-add-directory-list load-path)
-     (let ((cache-dirs '("~/" "/etc/" "~/.emacs.d/site-lisp/")))
-       (dolist (dir cache-dirs) (file-cache-add-directory dir)))))
+     (let ((cache-dirs pl/file-cache-recursive-dirs))
+       (dolist (dir cache-dirs) (file-cache-add-directory-recursively dir)))))
 
 (provide '50filecache)
