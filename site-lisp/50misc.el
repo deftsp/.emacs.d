@@ -806,7 +806,7 @@ if it is displayed there."
 ;;cscope ends there---------------------------------------------------------------
 
 ;;; charset-to-oem
-(defun replace-charset-to-oem (start end)
+(defun pl/replace-charset-to-oem (start end)
   (interactive "r")
   (save-excursion
     (format-replace-strings '(("’" . "'")
@@ -827,7 +827,7 @@ if it is displayed there."
                             nil
                             start
                             end)))
-(global-set-key (kbd "C-c t o") 'replace-charset-to-oem)
+(global-set-key (kbd "C-c t o") 'pl/replace-charset-to-oem)
 
 
 ;;; kill/yank
