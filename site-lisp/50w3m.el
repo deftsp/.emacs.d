@@ -1,35 +1,7 @@
-;;; w3m
+;;; 50w3m.el ---
 
-(require 'w3m-load)
-
-;; (require 'w3m)
-;; (require 'w3m-ems)
-;; (require 'w3m-session)
-
-;; Rendering Frames
-
-;; If you want to render frames within Emacs, you have to use w3mmee rather than w3m -- w3mmee is w3m with multibyte
-;; encoding extension. The problem seems to be that w3m and w3mmee behave differently with the -dump_extra flag.
-
-;; You will also need the utility mbconv (character encoding scheme converter) for this to work out of the box -- this
-;; is provided by either the libmoe1.5 or libmoe-dev package on Debian GNU/Linux systems.
-
-;; To use w3mmee/mbconv:
-
-;; (require 'executable)
-;; (let ((w3mmee (executable-find "w3mmee"))
-;;       (mbconv (executable-find "mbconv")))
-;;   (when (and w3mmee mbconv)
-;;     (setq w3m-command w3mmee)))
-;; (require 'w3m)
-
-;; In order to handle text/html part with emacs-w3m under SEMI MUAs such as Wanderlust, you have to put the following
-;; line in your ~/.emacs file:
-;; (require 'mime-w3m)
-
-
-;; You might also need to configure w3mmee such that "English" is set as the "Language" in the "Character Encoding
-;; Settings" section of the "Option Setting Panel".
+;;; install
+;; install emacs-w3m with el-get
 
 (eval-after-load "w3m"
   '(progn
@@ -43,71 +15,84 @@
            w3m-input-coding-system 'utf-8
            w3m-output-coding-system 'utf-8
 
+           w3m-home-page ""
+
            w3m-favicon-image nil
            w3m-use-favicon nil
            w3m-use-toolbar t
-           w3m-symbol 'w3m-default-symbol
            w3m-key-binding 'info
            w3m-tab-width 16
            w3m-process-modeline-format " loaded: %s"
-           ;; Conkeror seems not to understand the "new-tab" option to be an 'openURL' call
-           browse-url-firefox-new-window-is-tab t
-           browse-url-new-window-flag t
+
+           w3m-toggle-inline-images-permanently t
+
            w3m-session-autosave t
            w3m-form-textarea-edit-mode 'org-mode
 
-           w3m-enable-google-feeling-lucky nil
-           w3m-command-arguments '("-F") ; default arguments passed to the w3m command
+           w3m-new-session-in-background t
+
+           w3m-enable-google-feeling-lucky t
+           w3m-command-arguments '("-F") ; default arguments passed to the w3m command. "-F" automatically render frame
            w3m-use-cookies t
            w3m-cookie-accept-bad-cookies t
-           w3m-icon-directory "~/.emacs.d/packages/w3m/icons"
-           w3m-fill-column 100)
+           w3m-fill-column 120)
 
-     ;; (add-hook 'w3m-form-input-textarea-mode-hook
-     ;;           '(lambda nil
-     ;;              (setq outline-regexp "=+")))
+     (let ((p "~/.emacs.d/el-get/emacs-w3m/icons"))
+       (if (file-exists-p p)
+           (setq w3m-icon-directory p)
+         (message "w3m-icon-directory: %s is not exist" p)))))
 
+;;;
+(if window-system
+    (setq browse-url-generic-program "firefox" ; The name of the browser program used by `browse-url-generic'.
 
-     (if window-system
-         (setq browse-url-generic-program "firefox" ; The name of the browser program used by `browse-url-generic'.
-               ;; used by the `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file' commands.
-               ;; browse-url-generic w3m-browse-url w3m-browse-url-new-tab or browse-url-firefox
-               browse-url-browser-function '(("file:.*/usr/local/share/gtk-doc/html" . w3m-goto-url-new-session)
-                                             ("file:.*/usr/share/gtk-doc/html" . w3m-goto-url-new-session)
-                                             ("." . w3m-goto-url-new-session)))
-       ;; browse-url-lynx-emacs
-       (setq browse-url-browser-function 'w3m-goto-url-new-session))))
+          ;; used by the `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file' commands.
+          ;; browse-url-generic w3m-browse-url w3m-browse-url-new-tab or browse-url-firefox
+          browse-url-browser-function '(("file:.*/usr/local/share/gtk-doc/html" . w3m-goto-url-new-session)
+                                        ("file:.*/usr/share/gtk-doc/html" . w3m-goto-url-new-session)
+                                        ;; ("xxx" . browse-url-default-windows-browser) ; browse-url-default-macosx-browser
+                                        ("." . w3m-goto-url-new-session)))
+  (setq browse-url-browser-function 'w3m-goto-url-new-session))
 
-(autoload 'browse-url "browse-url" "Open up in browsers hyperlinks." t)
+(setq browse-url-firefox-new-window-is-tab t
+      browse-url-new-window-flag t)
+
 (global-set-key (kbd "C-c C-o") 'browse-url-at-point)
 (global-set-key (kbd "C-c O") 'browse-url)
-(global-set-key (kbd "C-c B") 'browse-url-firefox)
+
+;;; browse with firfox
+(global-set-key (kbd "C-c B") 'pl/browse-url-with-firefox)
+
+(defun pl/browse-url-with-firefox (url &optional new-window)
+  (interactive (browse-url-interactive-arg "URL: "))
+  (let ((f (case system-type
+             (darwin
+              #'browse-url-default-macosx-browser)
+             (windows-nt
+              #'browse-url-default-windows-browser)
+             (gnu/linux
+              #'browse-url-firefox))))
+    (funcall f url)))
 
 
 ;;; w3m-toggle-proxy
-(defvar pl/w3m-proxy nil)
+(defvar pl/w3m-proxy-p nil)
 (defun pl/w3m-toggle-proxy ()
   (interactive)
-  (if pl/w3m-proxy
+  (if pl/w3m-proxy-p
       (progn
         (setq w3m-command-arguments '("-F"))
-        (setq pl/w3m-proxy nil)
+        (setq pl/w3m-proxy-p nil)
         (message "w3m proxy: OFF"))
+    (progn
       (setq w3m-command-arguments '("-F" "-o" "http_proxy=http://127.0.0.1:8118/"))
-      (setq pl/w3m-proxy t)
-      (message "w3m proxy: ON")))
+      (setq pl/w3m-proxy-p t)
+      (message "w3m proxy: ON"))))
 
 (setq w3m-no-proxy-domains '("google.com" "google.cn"))
 
 
-(setq w3m-default-display-inline-image nil)
-(setq w3m-default-toggle-inline-images nil)
-(setq w3m-home-page "")
-
-
-;; Run `w3m-view-this-url' without switching to the newly created buffer.
-(setq w3m-view-this-url-new-session-in-background t)
-(setq w3m-toggle-inline-images-permanently t)
+;;; remove w3m output garbages
 ;; (add-hook 'w3m-fontify-after-hook 'remove-w3m-output-garbages)
 ;; (defun remove-w3m-output-garbages ()
 ;;   (interactive)
@@ -118,17 +103,7 @@
 ;;     (set-buffer-multibyte t))
 ;;   (set-buffer-modified-p nil))
 
-
-(setq w3m-default-symbol
-      '("─┼" " ├" "─┬" " ┌" "─┤" " │" "─┐" ""
-        "─┴" " └" "──" ""   "─┘" ""   ""   ""
-        "─┼" " ┠" "━┯" " ┏" "─┨" " ┃" "━┓" ""
-        "━┷" " ┗" "━━" ""   "━┛" ""   ""   ""
-        " ù" " □" " ☆" " ○" " ■" " ★" " ◎"
-        " ●" " △" " ●" " ○" " □" " ●" "≪ ↑ ↓ "))
-
-
-;; I decided I don't want to see some chars
+;;; I decided I don't want to see some chars
 ;; (add-hook 'w3m-display-hook
 ;;           (lambda (url)
 ;;             (let ((buffer-read-only nil))
@@ -139,9 +114,9 @@
 ;;; with dired
 (add-hook 'dired-mode-hook
           (lambda ()
-            (define-key dired-mode-map (kbd "C-c f w") 'dired-w3m-find-file)))
+            (define-key dired-mode-map (kbd "C-c f w") 'pl/dired-w3m-find-file)))
 
-(defun dired-w3m-find-file ()
+(defun pl/dired-w3m-find-file ()
   (interactive)
   (let ((file (dired-get-filename)))
     (if (y-or-n-p (format "Open 'w3m' %s " (file-name-nondirectory file)))
@@ -149,13 +124,13 @@
 
 ;;; Browsing the current buffer
 ;; Assign this code to a key to "preview" a buffer full of HTML in w3m.
-(defun w3m-browse-current-buffer ()
+(defun pl/w3m-browse-current-buffer ()
   (interactive)
   (let ((filename (concat (make-temp-file "w3m-") ".html")))
     (unwind-protect
-         (progn
-           (write-region (point-min) (point-max) filename)
-           (w3m-find-file filename))
+        (progn
+          (write-region (point-min) (point-max) filename)
+          (w3m-find-file filename))
       (delete-file filename))))
 
 (defun pl/w3m-goto-url ()
@@ -164,14 +139,12 @@
     (call-interactively #'w3m-goto-url)))
 
 
-;; Downloading Files Asynchronously
-
+;;; Downloading Files Asynchronously
 ;; Since w3m-el downloads everything synchronously it can sometimes interfere with productivity. If you use w3m-el to
 ;; download and save large files here are two solutions to do so asynchronously. One uses wget and the other uses cURL.
 ;; Neither of these solutions really helps with the problem of synchronous browsing,only eliminates synchronous
 ;; downloading. EmacsWget is probably superior than the following function.
-
-(defun w3m-download-with-wget (loc)
+(defun pl/w3m-download-with-wget (loc)
   (interactive "DSave to: ")
   (let ((url (or (w3m-anchor) (w3m-image))))
     (if url
@@ -184,7 +157,7 @@
                                        (message "wget download done"))))
         (message "Nothing to get"))))
 
-;; (defun w3m-download-with-curl (loc)
+;; (defun pl/w3m-download-with-curl (loc)
 ;;   (define-key w3m-mode-map "c"
 ;;     (lambda (dir)
 ;;       (interactive "DSave to: ")
@@ -195,47 +168,12 @@
 ;; directory to download the URL into. Note the examples of binding these functions below in the alternate keymap. These
 ;; functions are a replacement for w3m-download-this-url.
 
-
-;; Using TextMode for textareas
-
-;; The default mode for editing textareas is somewhat annoying - I'd much rather use TextMode?. Here's a small addition
-;; to your .emacs to make that possible:
-;; (eval-after-load "w3m-form"
-;;   '(progn
-;;     (define-minor-mode tsp:w3m-textarea-mode
-;;      "Minor mode used when editing w3m textareas."
-;;      nil " tsp:w3m-textarea" w3m-form-input-textarea-map)
-;;     (defun tsp:w3m-textarea-hook ()
-;;       ;; protect the form local variables from being killed by `text-mode'
-;;       (mapcar (lambda (v)
-;;                 (if (string-match "^w3m-form-input-textarea.*"
-;;                                   (symbol-name (car v)))
-;;                     (put (car v) 'permanent-local t)))
-;;               (buffer-local-variables))
-;;       (text-mode)
-;;       (tsp:w3m-textarea-mode))
-;;     (add-hook 'w3m-form-input-textarea-mode-hook 'tsp:w3m-textarea-hook)))
-;; (setq w3m-form-input-textarea-mode-hook nil)
-
-;; I just simply use this as my w3m-form-input-textarea-mode-hook:
-;; (defun dka-w3m-textarea-hook()
-;;   (save-excursion
-;;     (while (re-search-forward "\r\n" nil t)
-;;       (replace-match "\n" nil nil))
-;;     (delete-other-windows)))
-
-;; (add-hook 'w3m-form-input-textarea-mode-hook 'dka-w3m-textarea-hook)
-;;----------------------------------------------------------------------------------------------------
-;;Search
-;;----------------------------------------------------------------------------------------------------
-;; Make the previous search engine the default for the next
-;; search.
+;;; Search
+;; Make the previous search engine the default for the next search.
 (defadvice w3m-search (after change-default activate)
   (let ((engine (nth 1 minibuffer-history)))
     (when (assoc engine w3m-search-engine-alist)
       (setq w3m-search-default-engine engine))))
-
-;; (setq w3m-search-default-engine "google-groups")
 (setq w3m-search-engine-alist
       '(("yahoo" "http://search.yahoo.com/bin/search?p=%s")
         ("google" "http://www.google.com/search?q=%s")
@@ -259,124 +197,9 @@
 (eval-after-load "w3m"
   '(add-to-list 'w3m-uri-replace-alist '("\\`wi:" w3m-search-uri-replace "wikipedia")))
 
-;; Google Suggest
-;; Intrigued by the Firefox google bar completion, I hacked the following function for use with emacs-w3m:
 
-(defun google-suggest ()
-  "Search `w3m-search-default-engine' with google completion canditates."
-  (interactive)
-  (w3m-search w3m-search-default-engine
-              (completing-read  "Google search: "
-                                (dynamic-completion-table
-                                 google-suggest-aux))))
-
-(defun google-suggest-aux (input)
-  (with-temp-buffer
-    (insert
-     (shell-command-to-string
-      (format "w3m -dump_source %s"
-              (shell-quote-argument
-               (format
-                "http://www.google.com/complete/search?hl=en&js=true&qu=%s"
-                input)))))
-    (read
-     (replace-regexp-in-string "," ""
-                               (progn
-                                 (goto-char (point-min))
-                                 (re-search-forward "\(" (point-max) t 2)
-                                 (backward-char 1)
-                                 (forward-sexp)
-                                 (buffer-substring-no-properties
-                                  (1- (match-end 0)) (point)))))))
-
-
-
-;; Typing the search engine and query at once like Firefox
-
-;; Note: At least in the developer version of emacs-w3m (it's pretty stable, don't be afraid to grab a fresh CVS co) you can simply type
-
-;; gg:<your search string>
-
-;; to do a google search. There are some other search engines predefined and you can easily add your other favorite
-;; engines. Have a look at 'w3m-uri-replace-alist'.
-
-;; You know how Firefox or Internet Explorer lets you type in the address bar any search query if you define a bookmark
-;; with "keyword" (IE requires the registry, hm). Let's do the same thing with w3m by defining a new function.
-
-;; Add the following to your init files (eg. .emacs). Then run M-x piyo-w3m-search. By default, if you don't type your
-;; search engine name, the whole string will be the query. If you do type a search engine name "google" for example,
-;; that search engine will be used. I also enabled completion on the search engine name but allow space to enter as
-;; self-insert-command (thanks offby1).
-
-;; Here's a use case.
-
-;; 1. I want to look up the entry "recursion" on "wikipedia-en" (see Customization example above)
-;; 2. Type M-x piyo-w3m-search (you can bind this to a key, of course)
-;; 3. Type "wiki" then hit tab to complete "wikipedia-en"
-;; 4. Type space then "recursion".
-;; 5. Hit enter and bask in w3m search stuff
-
-;; The code:
-
-(require 'w3m-search)                   ; or auto-load?
-(defvar piyo-w3m--query-history nil
-  "The query history isn't saved seperately!")
-(defun piyo-w3m-search (line)
-  "Modeled on `w3m-search', but if the first word is a search engine as defined in `w3m-search-default-engine',
- then use that engine instead."
-  (interactive (piyo-w3m--read-query-smart))
-  (let* ((defeng w3m-search-default-engine)
-         (srceng (mapcar 'car w3m-search-engine-alist))
-         (sepr " ")
-         (brok (split-string line sepr))
-         (possiblesea (pop brok)))
-    (apply 'w3m-search
-           (if (member possiblesea srceng)
-               (list possiblesea (join-string brok " "))
-               (list defeng (join-string (push possiblesea brok) " "))))))
-
-(defun join-string (lst &optional seperator)
-  "The reverse of `split-string'"
-  (interactive)
-  (mapconcat 'identity lst seperator))
-
-(defun piyo-w3m--read-query-dumb ()
-  "For reference. Not reference by running code."
-  (let ((defeng w3m-search-default-engine))
-    (list (w3m-search-read-query
-           (format "%s search: " defeng)
-           (format "%s search (default %%s): " defeng)
-           'piyo-w3m--query-history))))
-
-(defun piyo-w3m--read-query-smart ()
-  "Use `completing-read' to find the first matching search engine. But allow space input."
-  (let ((defeng w3m-search-default-engine)
-        (minibuffer-local-completion-map (copy-sequence minibuffer-local-completion-map)))
-    (setcdr (assoc ?\s                  ; change space character
-                   minibuffer-local-completion-map) 'self-insert-command)
-    (let ((completion-ignore-case t))
-      (list (completing-read (format "%s search: " defeng)
-                             w3m-search-engine-alist nil nil nil 'piyo-w3m--query-history)))))
-
-
-
-;;Search ends here----------------------------------------------------------------------------------------------
-
-;;----------------------------------------------------------------------------------------------------
-
-(defun wicked/w3m-open-current-page-in-firefox ()
-  "Open the current URL in Mozilla Firefox."
-  (interactive)
-  (browse-url-firefox w3m-current-url))
-
-(defun wicked/w3m-open-link-or-image-in-firefox ()
-  "Open the current link or image in Firefox."
-  (interactive)
-  (browse-url-firefox (or (w3m-anchor)
-                          (w3m-image))))
-
-
-(defvar pl/w3m-map)
+;;; keys
+(defvar pl/w3m-map nil "w3m key map")
 (let ((map (make-keymap)))
   (suppress-keymap map)
   (define-key map [backspace] 'w3m-scroll-down-or-previous-url)
@@ -384,8 +207,8 @@
   (define-key map "u" 'w3m-scroll-up-or-next-url)
 
   (define-key map "b" 'w3m-scroll-down-or-previous-url)
-  (define-key map "f" 'wicked/w3m-open-current-page-in-firefox)
-  (define-key map "F" 'wicked/w3m-open-link-or-image-in-firefox)
+  (define-key map "f" 'pl/w3m-open-current-page-in-firefox)
+  (define-key map "F" 'pl/w3m-open-link-or-image-in-firefox)
 
   (define-key map "\t" 'w3m-next-anchor)
   (define-key map [tab] 'w3m-next-anchor)
@@ -405,8 +228,8 @@
   (define-key map "CC" 'w3m-redisplay-and-reset)
   (define-key map "d" 'w3m-download)
   ;; (define-key map "D" 'w3m-download-this-url)
-  ;; (define-key map "D" 'w3m-download-with-wget)
-  ;; (define-key map "D" 'w3m-download-with-curl)
+  ;; (define-key map "D" 'pl/w3m-download-with-wget)
+  ;; (define-key map "D" 'pl/w3m-download-with-curl)
   (define-key map "D" 'w3m-wget)
   (define-key map "\M-D" 'w3m-dtree)
   (define-key map "e" 'w3m-edit-current-url)
@@ -415,12 +238,12 @@
   (define-key map "G" 'w3m-goto-url-new-session)
   (define-key map "h" 'describe-mode)
   (define-key map "H" 'w3m-gohome)
-  (define-key map "i" (if (w3m-display-graphic-p)
+  (define-key map "i" (if (display-images-p)
                           'w3m-toggle-inline-image
                           'w3m-view-image))
   (define-key map "I" 'w3m-toggle-inline-images)
   (define-key map "k" 'w3m-delete-buffer)
-  (when (w3m-display-graphic-p)
+  (when (display-images-p)
     (define-key map "\M-[" 'w3m-zoom-out-image)
     (define-key map "\M-]" 'w3m-zoom-in-image))
   (define-key map "l" 'pl/w3m-go-to-linknum)
@@ -492,12 +315,25 @@
   (define-key map [(button2)] 'w3m-mouse-view-this-url)
   (define-key map [(shift button2)] 'w3m-mouse-view-this-url-new-session)
   (setq pl/w3m-map map))
-(add-hook 'w3m-mode-hook '(lambda () (use-local-map pl/w3m-map)))
 
+(defun pl/use-w3m-local-map ()
+  (use-local-map pl/w3m-map))
+
+(add-hook 'w3m-mode-hook 'pl/use-w3m-local-map)
+
+(defun pl/w3m-open-current-page-in-firefox ()
+  "Open the current URL in Mozilla Firefox."
+  (interactive)
+  (pl/browse-url-with-firefox w3m-current-url))
+
+(defun pl/w3m-open-link-or-image-in-firefox ()
+  "Open the current link or image in Firefox."
+  (interactive)
+  (pl/browse-url-with-firefox (or (w3m-anchor) (w3m-image))))
 
 
 ;;; SwitchToBuffer
-(global-set-key (kbd "C-c W") 'my-w3m-switch-to-buffer)
+(global-set-key (kbd "C-c W") 'pl/w3m-switch-to-buffer)
 
 (defvar *w3m-last-buffer* nil
   "Hold the buffer of last displayed.")
@@ -512,7 +348,7 @@
       (w3m-session-select)
       (call-interactively 'w3m)))
 
-(defun my-w3m-switch-to-buffer (arg)
+(defun pl/w3m-switch-to-buffer (arg)
   "Select the ARG'th w3m buffer."
   (interactive "p")
   (let* ((arg (if (= arg 0) 10 (1- arg)))
@@ -541,10 +377,10 @@
           (lambda ()
             (dolist (bufnum '(0 1 2 3 4 5 6 7 8 9))
               (let* ((bufstr (number-to-string bufnum))
-                     (funcname (concat "my-w3m-switch-to-buffer-" bufstr)))
+                     (funcname (concat "pl/w3m-switch-to-buffer-" bufstr)))
                 (eval `(defun ,(intern funcname) ()
                          (interactive)
-                         (my-w3m-switch-to-buffer ,bufnum)))
+                         (pl/w3m-switch-to-buffer ,bufnum)))
                 (define-key w3m-mode-map bufstr
                   (intern funcname))))))
 
@@ -864,15 +700,6 @@ entries in the `no-check' list."
 ;;          (url (replace-regexp-in-string host (idna-to-ascii host) url)))
 ;;     ad-do-it))
 ;; (ad-activate 'w3m-url-transfer-encode-string)
-
-
-;;; wget
-
-;; (autoload 'wget "wget" "wget interface for Emacs." t)
-;; (autoload 'wget-web-page "wget" "wget interface to download whole web page." t)
-;; (load "w3m-wget")
-;; (setq wget-basic-options '("-v"))
-;; (setq wget-download-directory "~/dl")
 
 ;; FIXME: find way to let ad-do-it run after w3m session been selected.
 (defadvice slime-hyperspec-lookup (around open/restore-w3m-session-first activate compile)
