@@ -6,7 +6,8 @@
 ;; ido seem much less annoying than icicles...
 (ido-mode t)                  ;  Turn on ido buffer and file behavior.
 (ido-everywhere t)
-(ido-hacks-mode 1)
+;; (ido-hacks-mode 1) ; use ido-ubiquitous-mode instead, it can work with info.
+(ido-ubiquitous-mode 1)
 
 (setq ido-enable-prefix nil
       ido-enable-regexp t
