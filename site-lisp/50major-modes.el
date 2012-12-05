@@ -165,9 +165,16 @@
 
 (eval-after-load "highlight-symbol"
   '(progn
-     (add-hook 'lisp-mode-hook 'highlight-symbol-mode)
-     (add-hook 'emacs-lisp-mode-hook 'highlight-symbol-mode)
-     (add-hook 'scheme-mode-hook 'highlight-symbol-mode)
+     (add-hook 'prog-mode-hook 'highlight-symbol-mode)
+     ;; (add-hook 'lisp-mode-hook 'highlight-symbol-mode)
+     ;; (add-hook 'emacs-lisp-mode-hook 'highlight-symbol-mode)
+     ;; (add-hook 'scheme-mode-hook 'highlight-symbol-mode)
+
+     ;; (global-set-key (kbd "M-s j") 'highlight-symbol-at-point)
+     ;; (global-set-key (kbd "M-s *") 'highlight-symbol-next)
+     ;; (global-set-key (kbd "M-s #") 'highlight-symbol-prev)
+     ;; (global-set-key (kbd "C-*") 'highlight-symbol-next)
+     ;; (global-set-key (kbd "C-#") 'highlight-symbol-prev)
      (setq highlight-symbol-idle-delay 1.2)))
 
 
