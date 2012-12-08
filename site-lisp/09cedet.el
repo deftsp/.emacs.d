@@ -44,7 +44,11 @@
 ;;; inhibit semantic for some major modes
 (defun pl/semantic-inhibit-func ()
   (cond
-    ((member major-mode '(scheme-mode javascript-mode html-helper-mode html-mode))
+    ((member major-mode '(scheme-mode
+                          python-mode
+                          javascript-mode
+                          html-helper-mode
+                          html-mode))
      ;; to disable semantic, return non-nil.
      t)
     (t nil)))

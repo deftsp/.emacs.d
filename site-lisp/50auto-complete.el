@@ -115,6 +115,7 @@
   (add-to-list 'ac-sources 'ac-source-yasnippet))
 (add-hook 'scheme-mode-hook 'pl/ac-scheme-mode-setup)
 
+;;; Clojure
 (defun pl/ac-clojure-mode-setup ()
   (add-to-list 'ac-sources 'ac-source-nrepl-all-classes)
   (add-to-list 'ac-sources 'ac-source-nrepl-java-methods)
@@ -125,6 +126,10 @@
 (add-hook 'clojure-mode-hook 'pl/ac-clojure-mode-setup)
 (add-hook 'nrepl-mode-hook 'pl/ac-clojure-mode-setup)
 
+;;; Python
+(defun pl/ac-python-mode-setup ()
+  (add-to-list 'ac-sources 'ac-source-ropemacs))
+(add-hook 'python-mode-hook 'pl/ac-python-mode-setup)
 
 (eval-after-load "popup"
   '(progn

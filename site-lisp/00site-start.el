@@ -62,6 +62,7 @@
 (require '50patch)
 (require '50perl)
 (require '50printing)
+(require '50python-mode)
 (require '50sawfish)
 (require '50scheme)
 (require '50search)
