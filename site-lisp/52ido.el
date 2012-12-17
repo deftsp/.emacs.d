@@ -1,4 +1,4 @@
-;;; 50ido.el ---
+;;; 52ido.el ---
 
 ;; Copyright (C) 2008  Shihpin Tseng
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
@@ -324,4 +324,4 @@
       (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
       (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
 
-(provide '50ido)
+(provide '52ido)
