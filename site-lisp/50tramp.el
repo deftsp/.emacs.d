@@ -48,6 +48,8 @@
 ;; (add-to-list 'auto-coding-alist
 ;;              '("^/tmp/ange-ftp" . gb2312))
 
+;;; backup
+(setq tramp-backup-directory-alist backup-directory-alist)
 
 ;;---------------------------------------------------------------------------------------------------------
 ;; reopen current file with tramp by the method of sudo
