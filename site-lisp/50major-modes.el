@@ -162,6 +162,12 @@
 ;; (require 'tooltip-help)
 ;; (define-key emacs-lisp-mode-map (kbd "<f1>") 'th-show-help)
 
+;;; elisp-slime-nav
+;; install with el-get
+;; Elisp go-to-definition with M-. and back again with M-,
+(add-hook 'emacs-lisp-mode-hook (lambda () (elisp-slime-nav-mode t)))
+(eval-after-load 'elisp-slime-nav '(diminish 'elisp-slime-nav-mode))
+
 
 (eval-after-load "highlight-symbol"
   '(progn
