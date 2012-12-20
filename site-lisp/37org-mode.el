@@ -159,7 +159,8 @@
       '(("t" "Todo" entry (file+headline "~/proj/org/GTD.org" "Tasks")
          "* TODO %?\n  %i%u")
         ("j" "Journal" entry (file+datetree "~/proj/org/journal.org")
-         "* %?\nEntered on %U\n  %i\n  %a")))
+         "* %?\n  %U\n  %i\n  %a")))
+
 
 ;;; work with appt
 ;; (org-agenda-to-appt)
