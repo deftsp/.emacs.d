@@ -29,20 +29,21 @@
               `((:eval point-mode-line-string)
                 "%p"
                 (:eval (if (and mark-active (not (equal (mark) (point))))
-                           (format " Over:%d lines,%d chars  "
+                           (format " Over:%d lines#%d chars  "
                                    (count-lines (region-beginning)
                                                 (region-end))
                                    (- (region-end) (region-beginning)))))
 
                 (line-number-mode (" " (:eval
                                         (propertize
-                                         (format "L:%%l/%d," (count-lines (point-min) (point-max)))
+                                         (format "◁L:%%l⊂%d " (count-lines (point-min) (point-max)))
                                          'face 'mode-line-position-normal-face))))
                 (column-number-mode ("" (:eval
-                                         (propertize "C:%c"
-                                                     'face (if (>= (current-column) 81)
-                                                               'mode-line-position-exceed-face
-                                                             'mode-line-position-normal-face)))
+                                         (propertize
+                                          (format "C:%%c⊂%d▷ " (pl/get-line-columns))
+                                          'face (if (>= (current-column) 81)
+                                                    'mode-line-position-exceed-face
+                                                  'mode-line-position-normal-face)))
                                      ""))))
 
 
@@ -109,5 +110,9 @@
   (if point-mode-line-string
       (setq point-mode-line-string nil)
     (setq point-mode-line-string '(:eval (format "P[%d] " (point))))))
+
+
+(defun pl/get-line-columns ()
+  (- (line-end-position) (line-beginning-position)))
 
 (provide '50mode-line)
