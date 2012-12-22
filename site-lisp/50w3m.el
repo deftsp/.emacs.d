@@ -169,31 +169,32 @@
 ;; functions are a replacement for w3m-download-this-url.
 
 ;;; Search
+(eval-after-load "w3m-search"
+  '(progn
+     (defadvice w3m-search (after change-default activate)
+       (let ((engine (nth 1 minibuffer-history)))
+         (when (assoc engine w3m-search-engine-alist)
+           (setq w3m-search-default-engine engine))))
+     (setq w3m-search-engine-alist
+           '(("yahoo" "http://search.yahoo.com/bin/search?p=%s")
+             ("google" "http://www.google.com/search?q=%s")
+             ("google-cn" "http://www.google.cn/search?q=%s")
+             ("google-groups" "http://groups.google.com/groups?q=%s")
+             ("All the Web" "http://www.alltheweb.com/search?web&_sb_lang=en&q=%s")
+             ("altavista" "http://altavista.com/sites/search/web?q=\"%s\"&kl=ja&search=Search")
+             ("rpmfind" "http://rpmfind.net/linux/rpm2html/search.php?query=%s" nil)
+             ("debian-pkg" "http://packages.debian.org/cgi-bin/search_contents.pl?directories=yes&arch=i386&version=unstable&case=insensitive&word=%s")
+             ("debian-bts" "http://bugs.debian.org/cgi-bin/pkgreport.cgi?archive=yes&pkg=%s")
+             ("eiei" "http://www.dictionary.com/cgi-bin/dict.pl?term=%s&r=67")
+             ("amazon" "http://www.amazon.com/exec/obidos/search-handle-form/250-7496892-7797857" nil "url=index=blended&field-keywords=%s")
+             ("weather" "http://www.weather.com/search/search?where=%s&what=WeatherLocalUndeclared")
+             ("ebay" "http://search.ebay.com/search/search.dll?query=%s")
+             ("wikipedia-en" "http://en.wikipedia.org/wiki/Special:Search?search=%s")
+             ("wikipedia-zh" "http://zh.wikipedia.org/wiki/Special:Search?search=%s")
+             ("worldclock" "http://www.timeanddate.com/worldclock/results.html?query=%s")
+             ("emacs-wiki" "http://www.emacswiki.org/cgi-bin/wiki.pl?search=%s")))))
+
 ;; Make the previous search engine the default for the next search.
-(defadvice w3m-search (after change-default activate)
-  (let ((engine (nth 1 minibuffer-history)))
-    (when (assoc engine w3m-search-engine-alist)
-      (setq w3m-search-default-engine engine))))
-(setq w3m-search-engine-alist
-      '(("yahoo" "http://search.yahoo.com/bin/search?p=%s")
-        ("google" "http://www.google.com/search?q=%s")
-        ("google-cn" "http://www.google.cn/search?q=%s")
-        ("google-groups" "http://groups.google.com/groups?q=%s")
-        ("All the Web" "http://www.alltheweb.com/search?web&_sb_lang=en&q=%s")
-        ("altavista" "http://altavista.com/sites/search/web?q=\"%s\"&kl=ja&search=Search")
-        ("rpmfind" "http://rpmfind.net/linux/rpm2html/search.php?query=%s" nil)
-        ("debian-pkg" "http://packages.debian.org/cgi-bin/search_contents.pl?directories=yes&arch=i386&version=unstable&case=insensitive&word=%s")
-        ("debian-bts" "http://bugs.debian.org/cgi-bin/pkgreport.cgi?archive=yes&pkg=%s")
-        ("eiei" "http://www.dictionary.com/cgi-bin/dict.pl?term=%s&r=67")
-        ("amazon" "http://www.amazon.com/exec/obidos/search-handle-form/250-7496892-7797857" nil "url=index=blended&field-keywords=%s")
-        ("weather" "http://www.weather.com/search/search?where=%s&what=WeatherLocalUndeclared")
-        ("ebay" "http://search.ebay.com/search/search.dll?query=%s")
-        ("wikipedia-en" "http://en.wikipedia.org/wiki/Special:Search?search=%s")
-        ("wikipedia-zh" "http://zh.wikipedia.org/wiki/Special:Search?search=%s")
-        ("worldclock" "http://www.timeanddate.com/worldclock/results.html?query=%s")
-        ("emacs-wiki" "http://www.emacswiki.org/cgi-bin/wiki.pl?search=%s")))
-
-
 (eval-after-load "w3m"
   '(add-to-list 'w3m-uri-replace-alist '("\\`wi:" w3m-search-uri-replace "wikipedia")))
 
