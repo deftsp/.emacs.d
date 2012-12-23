@@ -1011,6 +1011,20 @@ such character is found, following options are shown:
     (define-key global-map (kbd "M-g M-g") 'ace-jump-mode)))
 
 
+;;; goto line with feedback
+;; http://whattheemacsd.com//key-bindings.el-01.html
+;; remap all key bindings from goto-line to goto-line-with-feedback.
+(global-set-key (vector 'remap 'goto-line) 'pl/goto-line-with-feedback)
+(defun pl/goto-line-with-feedback ()
+  "Show line numbers temporarily, while prompting for the line number input"
+  (interactive)
+  (unwind-protect
+      (progn
+        (linum-mode 1)
+        (goto-line (read-number "Goto line: ")))
+    (linum-mode -1)))
+
+
 ;;; jump-char
 ;; <char> :: move to the next match in the current direction.
 ;; ; :: next match forward (towards end of buffer)
