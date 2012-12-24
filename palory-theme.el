@@ -99,6 +99,10 @@
    '(show-paren-match ((t (:foreground "SteelBlue3"))))
    '(show-paren-mismatch ((t (:foreground "white" :background "purple"))))
 
+   ;; term
+   '(term-color-blue ((t (:foreground "DeepSkyBlue4"))))
+
+
    ;; rainbow-delimiters
    '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))
    '(rainbow-delimiters-depth-2-face ((t (:foreground "#f0dfaf"))))
@@ -119,14 +123,7 @@
    `(ansi-color-names-vector ['palory-bg ,palory-red ,palory-green ,palory-yellow
                                          ,palory-blue ,palory-magenta ,palory-cyan ,palory-fg])
    ;; fill-column-indicator
-   `(fci-rule-color ,palory-bg-05))
-
-  ;;; colors for the ansi-term
-  (eval-after-load 'term
-    `(setq ansi-term-color-vector
-           (vector 'term ,palory-bg ,palory-red ,palory-green ,palory-yellow
-                   ,palory-blue ,palory-magenta ,palory-cyan ,palory-fg))))
-
+   `(fci-rule-color ,palory-bg-05)))
 
 
 

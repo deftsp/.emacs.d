@@ -252,7 +252,6 @@
 ;; pending-delete-mode is an alias for `delete-selection-mode'
 ;; (delete-selection-mode t)
 
-;;所有的问题用y/n方式，不用yes/no方式。有点懒，只想输入一个字母
 (fset 'yes-or-no-p 'y-or-n-p)
 ;;(setq internal-border-width 0)
 
@@ -293,9 +292,7 @@
 ;; (follow-mode t)
 
 
-;;鼠标自动避开指针，如当你输入的时候，指针到了鼠标的位置，鼠标有点挡住视线了
 (mouse-avoidance-mode 'animate)
-;;允许自动打开图片，如wiki里面
 (setq auto-image-file-mode nil)
 ;;Automatically uncompress .gz files
 (auto-compression-mode 1)

@@ -8,11 +8,13 @@
 (setq eshell-error-if-no-glob t
       eshell-history-size 500)
 
-(add-hook 'eshell-mode-hook
-          '(lambda ()
-            (local-set-key "\C-d" 'eshell-delchar-or-exit)
-            ;; (local-set-key "\C-u" 'eshell-kill-input)
-            (local-set-key "\C-a" 'eshell-maybe-bol)))
+(defun pl/eshell-mode-hook-func ()
+  (local-set-key "\C-d" 'eshell-delchar-or-exit)
+  ;; (local-set-key "\C-u" 'eshell-kill-input)
+  (local-set-key "\C-a" 'eshell-maybe-bol)
+  (set (make-local-variable 'scroll-margin) 0))
+
+(add-hook 'eshell-mode-hook 'pl/eshell-mode-hook-func)
 
 (defun eshell-delchar-or-exit (arg)
   (interactive "P")
