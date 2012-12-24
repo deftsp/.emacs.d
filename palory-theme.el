@@ -22,11 +22,44 @@
 
 ;;; Code:
 
+;;; base on https://github.com/bbatsov/zenburn-emacs/blob/master/zenburn-theme.el
+
 (deftheme palory
   "The palory theme.")
 
 (let ((palory-fg "#b6d3d6")
-      (palory-bg "#282c30"))
+      (palory-fg-1 "#656555")
+      (palory-bg-1 "#2b2b2b")
+      (palory-bg-05 "#383838")
+      (palory-bg "#282c30")
+      (palory-bg+1 "#4f4f4f")
+      (palory-bg+2 "#5f5f5f")
+      (palory-bg+3 "#6f6f6f")
+      (palory-red+1 "#dca3a3")
+      (palory-red "#cc9393")
+      (palory-red-1 "#bc8383")
+      (palory-red-2 "#ac7373")
+      (palory-red-3 "#9c6363")
+      (palory-red-4 "#8c5353")
+      (palory-orange "#dfaf8f")
+      (palory-yellow "#f0dfaf")
+      (palory-yellow-1 "#e0cf9f")
+      (palory-yellow-2 "#d0bf8f")
+      (palory-green-1 "#5f7f5f")
+      (palory-green "#7f9f7f")
+      (palory-green+1 "#8fb28f")
+      (palory-green+2 "#9fc59f")
+      (palory-green+3 "#afd8af")
+      (palory-green+4 "#bfebbf")
+      (palory-cyan "#93e0e3")
+      (palory-blue+1 "#94bff3")
+      (palory-blue "#8cd0d3")
+      (palory-blue-1 "#7cb8bb")
+      (palory-blue-2 "#6ca0a3")
+      (palory-blue-3 "#5c888b")
+      (palory-blue-4 "#4c7073")
+      (palory-blue-5 "#366060")
+      (palory-magenta "#dc8cc3"))
 
   (custom-theme-set-faces
    'palory
@@ -78,8 +111,32 @@
    '(rainbow-delimiters-depth-9-face ((t (:foreground "#d0bf8f"))))
    '(rainbow-delimiters-depth-10-face ((t (:foreground "#9fc59f"))))
    '(rainbow-delimiters-depth-11-face ((t (:foreground "#94bff3"))))
-   '(rainbow-delimiters-depth-12-face ((t (:foreground "#8c5353"))))))
+   '(rainbow-delimiters-depth-12-face ((t (:foreground "#8c5353")))))
 
+  ;;; custom theme variables
+  (custom-theme-set-variables
+   'palory
+   `(ansi-color-names-vector ['palory-bg ,palory-red ,palory-green ,palory-yellow
+                                         ,palory-blue ,palory-magenta ,palory-cyan ,palory-fg])
+   ;; fill-column-indicator
+   `(fci-rule-color ,palory-bg-05))
+
+  ;;; colors for the ansi-term
+  (eval-after-load 'term
+    `(setq ansi-term-color-vector
+           (vector 'unspecified ,palory-bg ,palory-red ,palory-green ,palory-yellow
+                   ,palory-blue ,palory-magenta ,palory-cyan ,palory-fg))))
+
+
+
+
+
+   ;;;###autoload
+(and load-file-name
+     (boundp 'custom-theme-load-path)
+     (add-to-list 'custom-theme-load-path
+                  (file-name-as-directory
+                   (file-name-directory load-file-name))))
 
 
 
@@ -87,4 +144,8 @@
 
 ;; Local Variables:
 ;; no-byte-compile: t
+;; indent-tabs-mode: nil
+;; eval: (when (fboundp 'rainbow-mode) (rainbow-mode +1))
 ;; End:
+
+;;; palory-theme.el ends here.
