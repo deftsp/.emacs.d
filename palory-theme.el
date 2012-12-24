@@ -124,7 +124,7 @@
   ;;; colors for the ansi-term
   (eval-after-load 'term
     `(setq ansi-term-color-vector
-           (vector 'unspecified ,palory-bg ,palory-red ,palory-green ,palory-yellow
+           (vector 'term ,palory-bg ,palory-red ,palory-green ,palory-yellow
                    ,palory-blue ,palory-magenta ,palory-cyan ,palory-fg))))
 
 
