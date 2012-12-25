@@ -102,6 +102,9 @@
    ;; term
    '(term-color-blue ((t (:foreground "DeepSkyBlue4"))))
 
+   ;; org-mode
+   '(org-headline-done ((t (:strike-through t))))
+   '(org-done ((t (:strike-through t))))
 
    ;; rainbow-delimiters
    '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))

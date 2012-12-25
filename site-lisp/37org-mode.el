@@ -40,7 +40,7 @@
 
 (setq org-todo-keyword-faces (quote (("TODO" :foreground "red" :weight bold)
                                      ("STARTED" :foreground "blue" :weight bold)
-                                     ("DONE" :foreground "forest green" :weight bold)
+                                     ("DONE" :foreground "forest green" :weight bold :strike-through t)
                                      ("WAITING" :foreground "orange" :weight bold)
                                      ("SOMEDAY" :foreground "magenta" :weight bold)
                                      ("CANCELLED" :foreground "forest green" :weight bold)
@@ -187,7 +187,7 @@
 
 ;;;
 (setq org-fontify-emphasized-text t
-      org-fontify-done-headline nil)
+      org-fontify-done-headline t)
 
 (setq org-adapt-indentation t)
 
