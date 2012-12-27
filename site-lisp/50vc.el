@@ -43,7 +43,24 @@
 (global-set-key (kbd "C-x G") 'magit-status)
 (eval-after-load "magit"
   '(progn
+     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
      (setq magit-completing-read-function 'magit-ido-completing-read)))
+;; (defun magit-toggle-whitespace ()
+;;   (interactive)
+;;   (if (member "-w" magit-diff-options)
+;;       (magit-dont-ignore-whitespace)
+;;     (magit-ignore-whitespace)))
+
+;; (defun magit-ignore-whitespace ()
+;;   (interactive)
+;;   (add-to-list 'magit-diff-options "-w")
+;;   (magit-refresh))
+
+;; (defun magit-dont-ignore-whitespace ()
+;;   (interactive)
+;;   (setq magit-diff-options (remove "-w" magit-diff-options))
+;;   (magit-refresh))
+
 
 
 
