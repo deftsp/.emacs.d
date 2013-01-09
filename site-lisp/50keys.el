@@ -82,7 +82,8 @@
 (global-set-key (kbd "C-c u") 'revert-buffer) ; how about C-x C-v?
 
 ;;; view mode
-(global-set-key (kbd "C-c v") 'view-mode)
+;; rebind "C-x C-q" to `view-mode' instead of `read-only-mode'
+(define-key ctl-x-map "\C-q" 'view-mode)
 (add-hook 'view-mode-hook 'pl/view-mode-hook)
 (defun pl/view-mode-hook ()
   (define-key view-mode-map "h" 'backward-char)
