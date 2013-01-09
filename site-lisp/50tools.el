@@ -249,13 +249,12 @@
 (defun pl/move-line (&optional n)
   "Move current line N (1) lines up/down leaving point in place."
   (interactive "p")
-  (when (null n)
-    (setq n 1))
-  (let ((col (current-column)))
-    (beginning-of-line)
-    (next-line 1)
+  (let ((n (if (null n) 1 n))
+        (col (current-column)))
+    (forward-line 1)
+    (if (/= (preceding-char) ?\n) (newline))
     (transpose-lines n)
-    (previous-line 1)
+    (previous-line (if (> n 0) 1 2))
     (move-to-column col)))
 
 (defun pl/move-line-up (n)
