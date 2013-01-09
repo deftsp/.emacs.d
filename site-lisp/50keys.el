@@ -86,6 +86,8 @@
 (define-key ctl-x-map "\C-q" 'view-mode)
 (add-hook 'view-mode-hook 'pl/view-mode-hook)
 (defun pl/view-mode-hook ()
+  (define-key view-mode-map "b" 'View-scroll-page-backward)
+  (define-key view-mode-map "f" 'View-scroll-page-forward)
   (define-key view-mode-map "h" 'backward-char)
   (define-key view-mode-map "l" 'forward-char)
   (define-key view-mode-map "j" 'next-line)
