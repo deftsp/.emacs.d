@@ -60,8 +60,8 @@
 
 ;;-------------------------------------------------------------------------------------
 
-(global-set-key "\C-m" 'reindent-then-newline-and-indent) ; 'newline-and-indent
-(global-set-key "\C-j" 'reindent-then-newline-and-indent)
+(global-set-key "\C-m" 'newline-and-indent) ; 'newline-and-indent 'reindent-then-newline-and-indent
+;; (global-set-key "\C-j" 'reindent-then-newline-and-indent)
 
 ;;; indent the whole buffer
 (global-set-key (kbd "C-c i w") 'pl/indent-whole-buffer)
