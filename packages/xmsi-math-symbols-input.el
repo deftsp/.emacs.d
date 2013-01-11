@@ -57,6 +57,10 @@
 
 ;;; HISTORY
 
+;; v1.4.1, 2013-01-04 • added symbol for meter squared (m2 → ㎡). • Fixed xml entity abbrevs {lang, rang} to the correct angle brackets 〈〉. • major overhaul of braket abbrevs, now more intuitive. Abbrevs include: "" <> <<>> () [] [[]] [()] and more. Call xmsi-list-math-symbols for a list.
+;; v1.4.0, 2012-12-24 • added cycle between several punctuations and the fullwidth version: {, . : ; ! ? &}
+;; v1.3.9, 2012-12-15 • added cycle for SPACE 「 」 → NO-BREAK SPACE 「 」 → IDEOGRAPHIC SPACE 「　」. Also, FULLWIDTH COMMA 「，」 and comma are now cycle. 
+;; v1.3.8, 2012-12-09 • added cycle for 「· ．。」. That is, one of these cycles to other. Also, 「,→，」.
 ;; v1.3.7, 2012-06-28 • much improved parsing the input string. Now, if there's no text selection, then grab string from cursor point to the left up to a whitespace char (limit to 10 chars max), then try that, if not found, try with one char minus. e.g. If text is 「some abc▮」, try 「abc」, then 「bc」, then 「c」. This way, user doesn't have to add a whitespace as separator before the abbrev, or having to make a text selection. e.g. in coding elisp, if current text is 「(a▮」, user can call xmsi-change-to-symbol directly to get 「(α▮」.
 ;; v1.3.6, 2012-05-08 • fixed a bug when any abbrev involving tilde ~ won't work.
 ;; v1.3.5.4, 2012-04-04 • stopped printing a message when “xmsi-change-to-symbol” is called. Minor improvement to inline doc of “xmsi-change-to-symbol”.
@@ -84,6 +88,10 @@
 ;; v1.1, 2010-12-12 added more symbols.
 ;; v1.0, 2010-12-08 First version.
 
+;;; TODO
+;; • make the activation key customizable
+;; • make it customizable to change/add abbrevs/symbols
+
 ;;; References
 ;; 〈Math Symbols in Unicode〉 http://xahlee.info/comp/unicode_math_operators.html
 ;; 〈HTML/XML Entities (Character/Unicode/Symbol) List〉 http://xahlee.info/comp/unicode_html_entities.html
@@ -98,7 +106,7 @@
 
 ;;; Code:
 
-(setq xmsi-version "v1.3.7")
+(setq xmsi-version "v1.4.0")
 
 (defvar xmsi-abrvs nil "A abbreviation hash table that maps a string to unicode char.")
 
@@ -339,8 +347,8 @@
     (puthash "rceil" "⌉" xmsi-abrvs)
     (puthash "lfloor" "⌊" xmsi-abrvs)
     (puthash "rfloor" "⌋" xmsi-abrvs)
-    (puthash "lang" "〈" xmsi-abrvs)
-    (puthash "rang" "〉" xmsi-abrvs)
+    (puthash "lang" "〈" xmsi-abrvs)
+    (puthash "rang" "〉" xmsi-abrvs)
     (puthash "loz" "◊" xmsi-abrvs)
     (puthash "spades" "♠" xmsi-abrvs)
     (puthash "clubs" "♣" xmsi-abrvs)
@@ -535,6 +543,7 @@
   (puthash "?!" "⁈" xmsi-abrvs)
   (puthash "!?" "⁉" xmsi-abrvs)
   (puthash "!!" "‼" xmsi-abrvs)
+  (puthash "m2" "㎡" xmsi-abrvs)        ;meter squared
 
   (puthash "ltrib" "◀" xmsi-abrvs)
   (puthash "rtrib" "▶" xmsi-abrvs)
@@ -552,7 +561,7 @@
   (puthash "diab" "◆" xmsi-abrvs)
   (puthash "<3" "♥" xmsi-abrvs)
 
-  (puthash ":)" "☺" xmsi-abrvs)
+  (puthash ":)" "☺" xmsi-abrvs)         ;smiley, happy face
   (puthash ":(" "☹" xmsi-abrvs)
 
   ;; computer keys and symbols
@@ -685,16 +694,27 @@
   ;; brackets, matching pairs
   (puthash "flr" "⌊⌋" xmsi-abrvs)
   (puthash "ceil" "⌈⌉" xmsi-abrvs)
+
   (puthash "\"" "“”" xmsi-abrvs)
+  (puthash "\"\"" "“”" xmsi-abrvs)
+
+  (puthash "<>" "‹›" xmsi-abrvs)
+  (puthash "<<>>" "«»" xmsi-abrvs)
+
   (puthash "[" "「」" xmsi-abrvs)
+  (puthash "[]" "「」" xmsi-abrvs)
   (puthash "[[" "『』" xmsi-abrvs)
-  (puthash "[2" "【】" xmsi-abrvs)
-  (puthash "[3" "〖〗" xmsi-abrvs)
+  (puthash "[[]]" "『』" xmsi-abrvs)
+  (puthash "[(" "【】" xmsi-abrvs)
+  (puthash "[()]" "【】" xmsi-abrvs)
   (puthash "(" "〔〕" xmsi-abrvs)
-  (puthash "<" "〈〉" xmsi-abrvs)
-  (puthash "<<" "《》" xmsi-abrvs)
-  (puthash "<2" "‹›" xmsi-abrvs)
-  (puthash "<<2" "«»" xmsi-abrvs)
+
+  (puthash "〘〙" "〔〕" xmsi-abrvs)
+  (puthash "〔〕" "〘〙" xmsi-abrvs)
+
+  (puthash "«»" "《》" xmsi-abrvs)
+  (puthash "‹›" "〈〉"  xmsi-abrvs)
+  (puthash "【】" "〖〗" xmsi-abrvs)
 
   ;; number forms
   (puthash "c1" "①" xmsi-abrvs)
@@ -913,6 +933,7 @@
 (puthash "diam" "♦" xmsi-abrvs)
 (puthash "diam2" "♢" xmsi-abrvs)
 
+;; full width characters
 (puthash "fw," "，" xmsi-abrvs)
 (puthash "fw." "．" xmsi-abrvs)
 (puthash "fw:" "：" xmsi-abrvs)
@@ -924,11 +945,11 @@
 (puthash "fw\"" "＂" xmsi-abrvs)
 (puthash "fw&" "＆" xmsi-abrvs)
 
-(puthash "fw(" "（" xmsi-abrvs)
+(puthash "fw(" "（）" xmsi-abrvs)
 (puthash "fw)" "）" xmsi-abrvs)
-(puthash "fw[" "［" xmsi-abrvs)
+(puthash "fw[" "［］" xmsi-abrvs)
 (puthash "fw]" "］" xmsi-abrvs)
-(puthash "fw{" "｛" xmsi-abrvs)
+(puthash "fw{" "｛｝" xmsi-abrvs)
 (puthash "fw}" "｝" xmsi-abrvs)
 
 (puthash "fw@" "＠" xmsi-abrvs)
@@ -1025,6 +1046,36 @@
 (puthash "fwx" "ｘ" xmsi-abrvs)
 (puthash "fwy" "ｙ" xmsi-abrvs)
 (puthash "fwz" "ｚ" xmsi-abrvs)
+
+
+
+;; non-ascii abbrevs
+
+(puthash "," "，" xmsi-abrvs)
+(puthash "，" "," xmsi-abrvs)
+
+(puthash "·" "．" xmsi-abrvs)      ; MIDDLE DOT to FULLWIDTH FULL STOP
+(puthash "．" "。" xmsi-abrvs) ; FULLWIDTH FULL STOP to IDEOGRAPHIC FULL STOP
+(puthash "。" "·" xmsi-abrvs)  ; IDEOGRAPHIC FULL STOP to MIDDLE DOT
+
+(puthash ":" "：" xmsi-abrvs)    ; FULLWIDTH COLON
+(puthash "：" ":" xmsi-abrvs)
+
+(puthash ";" "；" xmsi-abrvs)
+(puthash "；" ";" xmsi-abrvs)
+
+(puthash "!" "！" xmsi-abrvs)
+(puthash "！" "!" xmsi-abrvs)
+
+(puthash "?" "？" xmsi-abrvs)
+(puthash "？" "?" xmsi-abrvs)
+
+(puthash "&" "＆" xmsi-abrvs)
+(puthash "＆" "&" xmsi-abrvs)
+
+(puthash " " " " xmsi-abrvs)            ; space to NO-BREAK SPACE
+(puthash " " "　" xmsi-abrvs)           ; NO-BREAK SPACE to IDEOGRAPHIC SPACE
+(puthash "　" " " xmsi-abrvs)           ; IDEOGRAPHIC SPACE to space
 
   ;; 2010-12-10. char to add
   ;; soft hyphen ­
