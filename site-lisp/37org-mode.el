@@ -5,10 +5,6 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-(require 'org)
-(require 'org-publish nil t)
-
-(add-to-list 'org-modules 'org-habits)
 (require 'org-habit nil t)
 ;; (require 'org-mtags nil t)
 
@@ -20,7 +16,6 @@
 
 ;; C-c C-o Open link at or after point.
 ;; if no appropriate application, it will use mailcap's config to set `org-file-apps'
-
 
 
 (global-set-key "\C-cl" 'org-store-link)
