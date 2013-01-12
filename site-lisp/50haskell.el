@@ -24,6 +24,19 @@
 ;;(define-key haskell-mode-map [?\C-c ?h] 'hoogle-lookup)
 
 
+;;; ghc-mod
+;; install ghc-mod
+;; % cabal update
+;; % cabal install ghc-mod
+
+
+(autoload 'ghc-init "ghc" nil t)
+(defun haskell-mode-hook-funs ()
+  (define-key haskell-mode-map (kbd "C-M-d") 'anything-ghc-browse-document)
+  (flymake-mode)
+  (ghc-init))
+
+(add-hook 'haskell-mode-hook #'haskell-mode-hook-funs)
 
 
 

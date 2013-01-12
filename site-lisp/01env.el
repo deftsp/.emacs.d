@@ -126,6 +126,7 @@
       (xcode-bin-path (pl/xcode-bin-path)))
   (mapc (lambda (n) (add-to-list 'exec-path n))
         `(,(expand-file-name  "~/bin")
+          ,(expand-file-name "~/.cabal/bin")
            "/usr/texbin"
            "/Applications/Gnuplot.app/Contents/Resources/bin"
            "/usr/local/bin"

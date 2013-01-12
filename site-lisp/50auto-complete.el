@@ -99,6 +99,10 @@
 
 (add-hook 'lisp-interaction-mode 'ac-emacs-lisp-mode-setup)
 
+(defun pl/ac-haskell-mode-setup ()
+  (add-to-list 'ac-sources 'ac-source-ghc-mod))
+
+(add-hook 'haskell-mode-hook 'pl/ac-haskell-mode-setup)
 
 ;;; Scheme
 (require 'scheme-complete nil t)

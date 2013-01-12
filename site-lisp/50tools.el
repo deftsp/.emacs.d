@@ -50,7 +50,7 @@
 (key-chord-define-global "JJ" 'anything)
 (key-chord-define-global "OO" 'anything-occur)
 (key-chord-define-global "RF" 'pl/ido-choose-from-recentf)
-
+(key-chord-define-global "jk" 'ac-trigger-key-command) ; 'auto-complete
 ;;; space-chord
 (require 'space-chord)
 (setq space-chord-delay 0.08)           ; default 0.08
