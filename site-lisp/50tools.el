@@ -40,7 +40,7 @@
 ;;; key-chord
 (require 'key-chord)
 (key-chord-mode 1)
-(setq key-chord-one-key-delay 0.12)    ; default 0.2
+(setq key-chord-one-key-delay 0.16)    ; default 0.2
 (setq key-chord-two-keys-delay 0.06)    ; default 0.1
 
 
