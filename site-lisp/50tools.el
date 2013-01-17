@@ -41,7 +41,7 @@
 (require 'key-chord)
 (key-chord-mode 1)
 (setq key-chord-one-key-delay 0.12)    ; default 0.2
-(setq key-chord-two-keys-delay 0.18)    ; default 0.1
+(setq key-chord-two-keys-delay 0.08)    ; default 0.1
 
 
 (key-chord-define-global "''" "`'\C-b")
@@ -51,6 +51,8 @@
 (key-chord-define-global "OO" 'anything-occur)
 (key-chord-define-global "RF" 'pl/ido-choose-from-recentf)
 (key-chord-define-global "jk" 'ac-trigger-key-command) ; 'auto-complete
+(key-chord-define-global "aj" 'ace-jump-mode)
+
 ;;; space-chord
 (require 'space-chord)
 (setq space-chord-delay 0.08)           ; default 0.08
