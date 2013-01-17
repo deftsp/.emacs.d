@@ -41,7 +41,7 @@
 (require 'key-chord)
 (key-chord-mode 1)
 (setq key-chord-one-key-delay 0.12)    ; default 0.2
-(setq key-chord-two-keys-delay 0.08)    ; default 0.1
+(setq key-chord-two-keys-delay 0.06)    ; default 0.1
 
 
 (key-chord-define-global "''" "`'\C-b")
@@ -49,9 +49,13 @@
 (key-chord-define-global "HH" 'woman)
 (key-chord-define-global "JJ" 'anything)
 (key-chord-define-global "OO" 'anything-occur)
-(key-chord-define-global "RF" 'pl/ido-choose-from-recentf)
+(key-chord-define-global ";r" 'pl/ido-choose-from-recentf)
 (key-chord-define-global "jk" 'ac-trigger-key-command) ; 'auto-complete
-(key-chord-define-global "aj" 'ace-jump-mode)
+(key-chord-define-global ";c" 'ace-jump-char-mode)
+(key-chord-define-global ";w" 'ace-jump-word-mode)
+(key-chord-define-global ";l" 'ace-jump-line-mode)
+
+(key-chord-define-global ";g" 'magit-status)
 
 ;;; space-chord
 (require 'space-chord)
@@ -1010,6 +1014,12 @@ such character is found, following options are shown:
      ;; (define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
      ;; (define-key global-map (kbd "M-g M-g") 'ace-jump-mode)      ;; use key-chord "aj" instead now
      (ace-jump-mode-enable-mark-sync)))
+
+;; (defun pl/ace-jump-to-char ()
+;;   (call-interactively 'ace-jump-char-mode))
+
+;; (defun pl/ace-jump-mode ()
+;;   (ace-jump-mode 8))
 
 
 ;;; goto line with feedback
