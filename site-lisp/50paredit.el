@@ -102,7 +102,20 @@ scan-error if not."
     (paredit-forward-delete)))
 
 
+;; with point in front of a sexp, paredit-wrap-round (bound to M-(), will open a paren in front the the sexp, and place
+;; the closing paren at the end of it. That's pretty handy. This snippet does the same, but from the other end. It saves
+;; me a C-M-b ever so often. I like it.
 
+;; http://whattheemacsd.com//setup-paredit.el-01.html
+
+(defun pl/paredit-wrap-round-from-behind ()
+  (interactive)
+  (forward-sexp -1)
+  (paredit-wrap-round)
+  (insert " ")
+  (forward-char -1))
+
+;; (define-key paredit-mode-map (kbd "M-)") 'paredit-wrap-round-from-behind)
 
 (eval-after-load 'slime
   '(progn
