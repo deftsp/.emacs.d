@@ -1,6 +1,6 @@
 ;;; 50haskell.el ---
 
-;; Copyright (C) 2007  Shihpin Tseng
+;; Copyright (C) 2012  Shihpin Tseng
 
 ;; Keywords:
 
@@ -14,7 +14,8 @@
 ;; turn-on-haskell-indent
 ;; turn-on-haskell-simple-indent
 ;; Note that the three indentation modules are mutually exclusive - add at most one. In preference for the more advanced.
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;; (remove-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 
 
 ;;"Here comes a short Emacs helper for Haskell coders. It allows you to hoogle
@@ -32,12 +33,11 @@
 
 (autoload 'ghc-init "ghc" nil t)
 (defun haskell-mode-hook-funs ()
-  (define-key haskell-mode-map (kbd "C-M-d") 'anything-ghc-browse-document)
+  ;; (define-key haskell-mode-map (kbd "C-M-d") 'anything-ghc-browse-document)
   (flymake-mode)
   (ghc-init))
 
 (add-hook 'haskell-mode-hook #'haskell-mode-hook-funs)
-
 
 
 (provide '50haskell)

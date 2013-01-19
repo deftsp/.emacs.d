@@ -23,7 +23,6 @@
 (load-file (concat pl/cedet-root-path "cedet-devel-load.el"))
 (add-to-list 'load-path (concat pl/cedet-root-path "contrib"))
 
-
 ;; Add further minor-modes to be enabled by semantic-mode. See doc-string of `semantic-default-submodes' for other
 ;; things you can use here.
 (add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode t)
@@ -70,7 +69,7 @@
 
 
 ;;; Enable SRecode (Template management) minor-mode.
-;; (global-srecode-minor-mode 1)
+(global-srecode-minor-mode 1)
 
 ;; (remove-hook 'scheme-mode-hook 'semantic-default-scheme-setup)
 
@@ -115,17 +114,12 @@
 ;; enable ctags for some languages:
 ;; Unix Shell, Perl, Pascal, Tcl, Fortran, Asm
 ;; brew install ctags
-;; TODO: [cedit bug] (cedet-ectag-version-check t) will return nil, no matther
-;; (semantic-ectags-test-version) return t or nil
-;; (semantic-load-enable-all-ectags-support)
-;; (semantic-load-enable-primary-ectags-support)
+(semantic-load-enable-all-ectags-support)
+(semantic-load-enable-primary-ectags-support)
 
 ;;; cscope
-;; TODO: for now this is a bug of `cedet-called-interactively-p' and `cedet-called-interactively-p'
-;; it will case emacs hangs if eval (cedet-called-interactively-p 'interactive)
-;; http://thread.gmane.org/gmane.emacs.cedet/6206/focus=155687
-;; (require 'semantic/db-cscope)
-;; (semanticdb-enable-cscope-databases t)
+(require 'semantic/db-cscope)
+(semanticdb-enable-cscope-databases t)
 
 ;;; complete
 (setq semantic-complete-inline-analyzer-displayor-class
@@ -216,9 +210,9 @@
     (end-of-line)))
 
 ;;; integration with imenu
-(defun pl/imenu-add-to-menubar ()
-  (imenu-add-to-menubar "TAGS"))
-(add-hook 'semantic-init-hooks 'pl/imenu-add-to-menubar)
+;; (defun pl/imenu-add-to-menubar ()
+;;   (imenu-add-to-menubar "TAGS"))
+;; (add-hook 'semantic-init-hooks 'pl/imenu-add-to-menubar)
 ;; (setq semantic-imenu-auto-rebuild-directory-indexes nil)
 
 
@@ -247,6 +241,8 @@
 
 (eval-after-load "info"
   `(cedet-settings-4-info))
+
+
 
 
 (provide '09cedet)
