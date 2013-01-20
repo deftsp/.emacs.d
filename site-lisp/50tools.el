@@ -1105,8 +1105,8 @@ such character is found, following options are shown:
 
 
 ;;; docsetutil
-(require 'docsetutil)
 (define-key help-map "D" 'docsetutil-search) ; C-h D
+
 ;; Choose a docset to use:
 ;; M-x docsetutil-choose-docset
 
