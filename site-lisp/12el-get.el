@@ -7,13 +7,16 @@
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
 
+
 (unless (require 'el-get nil t)
   (url-retrieve
-   "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
+   "https://raw.github.com/dimitri/el-get/master/el-get-install.el"
    (lambda (s)
-     (end-of-buffer)
-     (eval-print-last-sexp))))
+     (let (el-get-master-branch)
+       (goto-char (point-max))
+       (eval-print-last-sexp)))))
 
+(setq el-get-github-default-url-type 'git)
 
 ;; el-get-sources is another source location for recipes, adding to your el-get-recipe-path.
 (setq el-get-sources
@@ -63,7 +66,18 @@
                :compile "xcode-document-viewer.el")
         (:name ac-company
                :type http
-               :url "https://raw.github.com/buzztaiki/auto-complete/master/ac-company.el")))
+               :url "https://raw.github.com/buzztaiki/auto-complete/master/ac-company.el")
+        (:name docsetutil-el
+               :type github
+               :description "Emacs Interface to `docsetutil'"
+               :pkgname "leoliu/docsetutil-el"
+               :features docsetutil)
+
+        (:name glsl-mode
+               :type github
+               :description "major mode for Open GLSL shader files"
+               :pkgname "jimhourihan/glsl-mode"
+               :features glsl-mode)))
 
 ;; (el-get-save-package-status "package-name-here" "removed")
 
