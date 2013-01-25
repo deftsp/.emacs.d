@@ -77,7 +77,13 @@
                :type github
                :description "major mode for Open GLSL shader files"
                :pkgname "jimhourihan/glsl-mode"
-               :features glsl-mode)))
+               :features glsl-mode)
+        (:name bookmark-plus
+               :pkgname "emacsmirror/bookmark-plus"
+               :website "http://www.emacswiki.org/emacs/BookmarkPlus"
+               :type github
+               :description "Extensions to standard library `bookmark.el'"
+               :features bookmark+)))
 
 ;; (el-get-save-package-status "package-name-here" "removed")
 
