@@ -153,4 +153,12 @@
 (when (eq system-type 'darwin)
   (setenv "INFOPATH" (concat (expand-file-name "~/share/info:") (getenv "INFOPATH"))))
 
+
+;;; preset variables
+;; `org-replace-disputed-keys' must be set before org.el is loaded, it seems some pacakge install by el-get will load
+;; org.el, so just preset it.
+(setq org-replace-disputed-keys t)
+
+
+
 (provide '01env)
