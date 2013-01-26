@@ -1,7 +1,7 @@
-;;; 01evn.el ---
+;;; 01env.el ---
 
-
-(load-theme 'palory t)
+(when (display-graphic-p)
+  (load-theme 'palory t))
 
 ;; (setenv "LANG" "C")
 ;; (setenv "SBCL_HOME" "/usr/lib/sbcl")
