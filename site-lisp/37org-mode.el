@@ -92,8 +92,7 @@
 
         ))
 
-(setq org-replace-disputed-keys t
-      org-special-ctrl-a/e t
+(setq org-special-ctrl-a/e t
       org-cycle-separator-lines 2
       org-cycle-include-plain-lists t
       org-directory "~/proj/org"
@@ -155,6 +154,8 @@
       '(("t" "Todo" entry (file+headline "~/proj/org/GTD.org" "Tasks")
          "* TODO %?\n  %i%u")
         ("j" "Journal" entry (file+datetree "~/proj/org/journal.org")
+         "* %?\n  %U\n")
+        ("J" "Journal with Annotation" entry (file+datetree "~/proj/org/journal.org")
          "* %?\n  %U\n  %i\n  %a")))
 
 
