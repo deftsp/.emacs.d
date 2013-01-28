@@ -175,11 +175,14 @@
   '(progn
      (golden-ratio-enable)
      (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
+     (add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p)
      (add-to-list 'golden-ratio-inhibit-functions 'pl/ediff-comparison-buffer-p)))
 
 (defun pl/ediff-comparison-buffer-p ()
   ediff-this-buffer-ediff-sessions)
 
-
+(defun pl/helm-alive-p ()
+  (if (boundp 'helm-alive-p)
+      (symbol-value 'helm-alive-p)))
 
 (provide '50window)
