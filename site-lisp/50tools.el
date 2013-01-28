@@ -49,6 +49,7 @@
 (key-chord-define-global "HH" 'woman)
 (key-chord-define-global "JJ" 'anything)
 (key-chord-define-global "OO" 'anything-occur)
+(key-chord-define-global ";f" 'helm-for-files)
 (key-chord-define-global ";r" 'pl/ido-choose-from-recentf)
 (key-chord-define-global "jk" 'ac-trigger-key-command) ; 'auto-complete
 (key-chord-define-global ";c" 'ace-jump-char-mode)
