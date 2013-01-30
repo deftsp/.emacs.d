@@ -116,6 +116,7 @@
          "/usr/texbin:"
          "/Applications/Gnuplot.app/Contents/Resources/bin:"
          (expand-file-name "~/local/bin:")
+         (expand-file-name "~/.cabal/bin:")
          "/usr/local/bin:"
          "/opt/bin:"
          (pl/gentoo-prefix-path)

@@ -12,7 +12,8 @@
 
 (eval-after-load "haskell-mode"
   '(progn
-    (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)))
+     (require 'haskell-process)
+     (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)))
 
 
 ;;; indent
@@ -44,6 +45,12 @@
   (ghc-init))
 
 (add-hook 'haskell-mode-hook #'haskell-mode-hook-funs)
+
+;;; navigation
+;; $ cabal install hasktags
+;; Run M-x haskell-process-generate-tags to generate the TAGS file of the current session directory.
+;; You can now use M-. on a name in a Haskell buffer which will jump directly to its definition.
+(setq haskell-tags-on-save t)
 
 
 (provide '50haskell)
