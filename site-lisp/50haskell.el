@@ -5,9 +5,15 @@
 ;; Keywords:
 
 (require 'haskell-mode nil t)
+
 (setq haskell-font-lock-symbols t)
 
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+
+(eval-after-load "haskell-mode"
+  '(progn
+    (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)))
+
 
 ;;; indent
 ;; turn-on-haskell-indentation
