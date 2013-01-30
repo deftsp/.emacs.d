@@ -69,6 +69,11 @@
           "*BBDB*" "*Tree*"  "*Group*" "*EMMS Playlist*"  "^\\*Summary\\ n"
           "Map_Sym.txt" "^\\*w3m*" "^\\#" "^\\irc.*:" "localhost:6668" "^\\*TeX\\ Help\\*"))
 
+
+(mapcar (lambda (str) (add-to-list 'ido-ignore-files str))
+        '("\\`auto/" "\\.prv/" "_region_" "^.DS_Store$" "\\.hi\\'"))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;uses ido on the recently opened files
 (global-set-key (kbd "C-c r f") 'pl/ido-choose-from-recentf)
