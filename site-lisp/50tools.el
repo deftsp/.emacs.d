@@ -334,48 +334,6 @@
 ;;                                         ; Get rid of final newline cause I normally did by hand anyway.
 ;;     (delete-char -1)))
 
-;;; visible mark
-;; (require 'visible-mark)
-;; (global-visible-mark-mode -1)
-
-;; visible bookmarks in buffer
-;; To load the repository when bm is loaded set the variable `bm-restore-repository-on-load' to t,*before* loading bm
-;; (setq bm-restore-repository-on-load t)
-;; (require 'bm)
-;; (setq bm-marker 'bm-marker-right
-;;       bm-highlight-style 'bm-highlight-only-fringe
-;;       bm-repository-file "~/.emacs.d/.bm-repository")
-
-;; ;; (setq-default bm-buffer-persistence nil)
-
-;; (eval-after-load "bm"
-;;   '(progn
-;;     (set-face-attribute 'bm-fringe-face nil :foreground "#6666aa" :background "DarkOrange1")
-;;     (set-face-attribute 'bm-fringe-persistent-face nil :foreground "Black":background "DarkOrange1")))
-
-;; ;; If you are using desktop or other packages that restore buffers on start up, bookmarks will not be restored. Loading
-;; ;; the repository from file when on start up.
-;; (add-hook' after-init-hook 'bm-repository-load)
-
-;; ;; Restoring bookmarks when on file find.
-;; (add-hook 'find-file-hooks 'bm-buffer-restore)
-
-;; ;; Saving bookmark data on killing a buffer
-;; (add-hook 'kill-buffer-hook 'bm-buffer-save)
-
-;; ;; Saving the repository to file when on exit.
-;; ;; kill-buffer-hook is not called when Emacs is killed, so we
-;; ;; must save all bookmarks first.
-;; (add-hook 'kill-emacs-hook '(lambda nil
-;;                              (bm-buffer-save-all)
-;;                              (bm-repository-save)))
-
-;; ;; Update bookmark repository when saving the file.
-;; (add-hook 'after-save-hook 'bm-buffer-save)
-
-;; ;; Restore bookmarks when buffer is reverted.
-;; (add-hook 'after-revert-hook 'bm-buffer-restore)
-
 ;;; bookmark+
 (eval-after-load "bookmark+"
   '(progn
@@ -383,10 +341,10 @@
     ;; (bmkp-global-auto-idle-bookmark-mode 1)
     ;; it seems  highlight automatically not work
     (setq bmkp-auto-light-when-set 'all-in-buffer
-     bmkp-auto-light-when-jump 'all-in-buffer)
+          bmkp-auto-light-when-jump 'all-in-buffer)
 
     (setq bmkp-light-style-autonamed 'lfringe
-     bmkp-light-style-non-autonamed 'lfringe)
+          bmkp-light-style-non-autonamed 'lfringe)
 
     (when (fboundp 'define-fringe-bitmap)
       (define-fringe-bitmap 'pl/marker-left   [#x00 #x00 #xFC #xFE #x0F #xFE #xFC #x00])
