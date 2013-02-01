@@ -3,77 +3,65 @@
 ;;; install
 ;; install emacs-w3m with el-get
 
-(eval-after-load "w3m"
-  '(progn
-     (setq w3m-language "en"
-           w3m-bookmark-file-coding-system 'utf-8
-           w3m-coding-system 'utf-8
-           w3m-default-coding-system 'utf-8
-           w3m-file-coding-system 'utf-8
-           w3m-file-name-coding-system 'utf-8
-           w3m-terminal-coding-system 'utf-8
-           w3m-input-coding-system 'utf-8
-           w3m-output-coding-system 'utf-8
+(setq w3m-key-binding 'info) ;; set before load "w3m.el"
 
-           w3m-home-page ""
+(require 'w3m)
 
-           w3m-favicon-image nil
-           w3m-use-favicon nil
-           w3m-use-toolbar t
-           w3m-key-binding 'info
-           w3m-tab-width 16
-           w3m-process-modeline-format " loaded: %s"
-
-           w3m-toggle-inline-images-permanently t
-
-           w3m-session-autosave t
-           w3m-form-textarea-edit-mode 'org-mode
-
-           w3m-new-session-in-background t
-
-           w3m-enable-google-feeling-lucky t
-           w3m-command-arguments '("-F") ; default arguments passed to the w3m command. "-F" automatically render frame
-           w3m-use-cookies t
-           w3m-cookie-accept-bad-cookies t
-           w3m-fill-column 120)
-
-     (let ((p "~/.emacs.d/el-get/emacs-w3m/icons"))
-       (if (file-exists-p p)
-           (setq w3m-icon-directory p)
-         (message "w3m-icon-directory: %s is not exist" p)))))
-
-;;;
-(if window-system
-    (setq browse-url-generic-program "firefox" ; The name of the browser program used by `browse-url-generic'.
-
-          ;; used by the `browse-url-at-point', `browse-url-at-mouse', and `browse-url-of-file' commands.
-          ;; browse-url-generic w3m-browse-url w3m-browse-url-new-tab or browse-url-firefox
-          browse-url-browser-function '(("file:.*/usr/local/share/gtk-doc/html" . w3m-goto-url-new-session)
-                                        ("file:.*/usr/share/gtk-doc/html" . w3m-goto-url-new-session)
-                                        ;; ("xxx" . browse-url-default-windows-browser) ; browse-url-default-macosx-browser
-                                        ("." . w3m-goto-url-new-session)))
-  (setq browse-url-browser-function 'w3m-goto-url-new-session))
+;;; browser
+(setq browse-url-browser-function '(("file:.*/usr/local/share/gtk-doc/html" . w3m-goto-url-new-session)
+                                    ("file:.*/usr/share/gtk-doc/html" . w3m-goto-url-new-session)
+                                    ("." . browse-url-default-browser)))
 
 (setq browse-url-firefox-new-window-is-tab t
-      browse-url-new-window-flag t)
+      browse-url-new-window-flag nil)
 
 (global-set-key (kbd "C-c C-o") 'browse-url-at-point)
 (global-set-key (kbd "C-c O") 'browse-url)
 
-;;; browse with firfox
-(global-set-key (kbd "C-c B") 'pl/browse-url-with-firefox)
+(setq w3m-language "en"
+      w3m-bookmark-file-coding-system 'utf-8
+      w3m-coding-system 'utf-8
+      w3m-default-coding-system 'utf-8
+      w3m-file-coding-system 'utf-8
+      w3m-file-name-coding-system 'utf-8
+      w3m-terminal-coding-system 'utf-8
+      w3m-input-coding-system 'utf-8
+      w3m-output-coding-system 'utf-8
+      w3m-home-page ""
+      w3m-favicon-image nil
+      w3m-use-favicon nil
+      w3m-use-toolbar t
+      w3m-tab-width 16
+      w3m-toggle-inline-images-permanently t
+      w3m-session-autosave t
+      w3m-new-session-in-background t
+      w3m-form-textarea-edit-mode 'org-mode
+      w3m-enable-google-feeling-lucky t
+      w3m-command-arguments '("-F") ; default arguments passed to the w3m command. "-F" automatically render frame
+      w3m-use-cookies t
+      w3m-cookie-accept-bad-cookies t
+      w3m-fill-column 120)
 
-(defun pl/browse-url-with-firefox (url &optional new-window)
-  (interactive (browse-url-interactive-arg "URL: "))
-  (let ((f (case system-type
-             (darwin
-              #'browse-url-default-macosx-browser)
-             (windows-nt
-              #'browse-url-default-windows-browser)
-             (gnu/linux
-              #'browse-url-firefox))))
-    (funcall f url)))
+;;; icon path
+(let ((p "~/.emacs.d/el-get/emacs-w3m/icons"))
+  (if (file-exists-p p)
+      (setq w3m-icon-directory p)
+    (message "w3m-icon-directory: %s is not exist" p)))
 
+(defun pl/w3m-mode-setup ()
+  ;; (define-key w3m-mode-map "S" 'w3m-session-save)
+  ;; (define-key w3m-mode-map "t" 'pl/w3m-toggle-proxy)
+  (define-key w3m-mode-map "N" 'surfkeys:next)
+  (define-key w3m-mode-map "P" 'surfkeys:prev)
+  ;; (define-key w3m-mode-map "d" 'pl/w3m-download-with-wget) ; default value: w3m-dtree 'pl/w3m-download-with-curl/w3m-wget
+  (define-key w3m-mode-map "\M-n" 'w3m-next-buffer)
+  (define-key w3m-mode-map "\M-p" 'w3m-previous-buffer)
+
+  (define-key w3m-mode-map "g" 'pl/w3m-goto-url)
+  (define-key w3m-mode-map "k" 'w3m-delete-buffer)
+  (define-key w3m-mode-map "u" 'w3m-scroll-up-or-next-url))
+
+(add-hook 'w3m-mode-hook 'pl/w3m-mode-setup)
 
 ;;; w3m-toggle-proxy
 (defvar pl/w3m-proxy-p nil)
@@ -92,26 +80,7 @@
 (setq w3m-no-proxy-domains '("google.com" "google.cn"))
 
 
-;;; remove w3m output garbages
-;; (add-hook 'w3m-fontify-after-hook 'remove-w3m-output-garbages)
-;; (defun remove-w3m-output-garbages ()
-;;   (interactive)
-;;   (let ((buffer-read-only))
-;;     (setf (point) (point-min))
-;;     (while (re-search-forward "[\200-\240]" nil t)
-;;       (replace-match " "))
-;;     (set-buffer-multibyte t))
-;;   (set-buffer-modified-p nil))
-
-;;; I decided I don't want to see some chars
-;; (add-hook 'w3m-display-hook
-;;           (lambda (url)
-;;             (let ((buffer-read-only nil))
-;;               (replace-string "\u00ad" ""))))
-
-
-
-;;; with dired
+;;; work with dired
 (add-hook 'dired-mode-hook
           (lambda ()
             (define-key dired-mode-map (kbd "C-c f w") 'pl/dired-w3m-find-file)))
@@ -122,21 +91,6 @@
     (if (y-or-n-p (format "Open 'w3m' %s " (file-name-nondirectory file)))
         (w3m-find-file file))))
 
-;;; Browsing the current buffer
-;; Assign this code to a key to "preview" a buffer full of HTML in w3m.
-(defun pl/w3m-browse-current-buffer ()
-  (interactive)
-  (let ((filename (concat (make-temp-file "w3m-") ".html")))
-    (unwind-protect
-        (progn
-          (write-region (point-min) (point-max) filename)
-          (w3m-find-file filename))
-      (delete-file filename))))
-
-(defun pl/w3m-goto-url ()
-  (interactive)
-  (let ((w3m-current-url ""))
-    (call-interactively #'w3m-goto-url)))
 
 
 ;;; Downloading Files Asynchronously
@@ -157,12 +111,12 @@
                                        (message "wget download done"))))
         (message "Nothing to get"))))
 
-;; (defun pl/w3m-download-with-curl (loc)
-;;   (define-key w3m-mode-map "c"
-;;     (lambda (dir)
-;;       (interactive "DSave to: ")
-;;       (cd dir)
-;;       (start-process "curl" "*curl*" "curl.exe" "-O" "-s" (w3m-anchor)))))
+(defun pl/w3m-download-with-curl (loc)
+  (define-key w3m-mode-map "c"
+    (lambda (dir)
+      (interactive "DSave to: ")
+      (cd dir)
+      (start-process "curl" "*curl*" "curl.exe" "-O" "-s" (w3m-anchor)))))
 
 ;; To take advantage of these, just call either function while the point is on a URL. You will then be prompted for the
 ;; directory to download the URL into. Note the examples of binding these functions below in the alternate keymap. These
@@ -199,143 +153,7 @@
   '(add-to-list 'w3m-uri-replace-alist '("\\`wi:" w3m-search-uri-replace "wikipedia")))
 
 
-;;; keys
-(defvar pl/w3m-map nil "w3m key map")
-(let ((map (make-keymap)))
-  (suppress-keymap map)
-  (define-key map [backspace] 'w3m-scroll-down-or-previous-url)
-  (define-key map " " 'w3m-scroll-up-or-next-url)
-  (define-key map "u" 'w3m-scroll-up-or-next-url)
-
-  (define-key map "b" 'w3m-scroll-down-or-previous-url)
-  (define-key map "f" 'pl/w3m-open-current-page-in-firefox)
-  (define-key map "F" 'pl/w3m-open-link-or-image-in-firefox)
-
-  (define-key map "\t" 'w3m-next-anchor)
-  (define-key map [tab] 'w3m-next-anchor)
-  (define-key map [(shift tab)] 'w3m-previous-anchor)
-  (define-key map [(shift iso-lefttab)] 'w3m-previous-anchor)
-  (define-key map "\C-m" 'w3m-view-this-url)
-  (define-key map (kbd "<C-return>") 'w3m-view-this-url-new-session)
-  (define-key map (kbd "<C-kp-enter>") 'w3m-view-this-url-new-session)
-
-  (define-key map "a" 'w3m-bookmark-add-current-url)
-  (define-key map "\M-a" 'w3m-bookmark-add-this-url)
-  (define-key map "+" 'w3m-antenna-add-current-url)
-  (define-key map "A" 'w3m-antenna)
-  (define-key map "C" (make-sparse-keymap))
-  (define-key map "Ct" 'w3m-redisplay-with-content-type)
-  (define-key map "Cc" 'w3m-redisplay-with-charset)
-  (define-key map "CC" 'w3m-redisplay-and-reset)
-  (define-key map "d" 'w3m-download)
-  ;; (define-key map "D" 'w3m-download-this-url)
-  ;; (define-key map "D" 'pl/w3m-download-with-wget)
-  ;; (define-key map "D" 'pl/w3m-download-with-curl)
-  (define-key map "D" 'w3m-wget)
-  (define-key map "\M-D" 'w3m-dtree)
-  (define-key map "e" 'w3m-edit-current-url)
-  (define-key map "E" 'w3m-edit-this-url)
-  (define-key map "g" 'pl/w3m-goto-url)
-  (define-key map "G" 'w3m-goto-url-new-session)
-  (define-key map "h" 'describe-mode)
-  (define-key map "H" 'w3m-gohome)
-  (define-key map "i" (if (display-images-p)
-                          'w3m-toggle-inline-image
-                          'w3m-view-image))
-  (define-key map "I" 'w3m-toggle-inline-images)
-  (define-key map "k" 'w3m-delete-buffer)
-  (when (display-images-p)
-    (define-key map "\M-[" 'w3m-zoom-out-image)
-    (define-key map "\M-]" 'w3m-zoom-in-image))
-  (define-key map "l" 'pl/w3m-go-to-linknum)
-  (define-key map "\M-i" 'w3m-save-image)
-
-  (define-key map "\M-l" 'w3m-horizontal-recenter)
-  (define-key map "M" 'w3m-view-url-with-external-browser)
-  (define-key map "o" 'w3m-history)
-  (define-key map "O" 'w3m-db-history)
-
-  (define-key map "\M-n" 'w3m-next-buffer)
-  (define-key map "\M-p" 'w3m-previous-buffer)
-  ;; (define-key map "N" 'w3m-namazu)
-  (define-key map "n" 'w3m-view-next-page)
-  (define-key map "p" 'w3m-view-previous-page)
-
-  (define-key map "N" 'surfkeys:next)
-  (define-key map "P" 'surfkeys:prev)
-
-  (define-key map "q" 'w3m-close-window)
-  (define-key map "Q" 'w3m-quit)
-  (define-key map "r" 'w3m-redisplay-this-page)
-  (define-key map "R" 'w3m-reload-this-page)
-  (define-key map "\C-tR" 'w3m-reload-all-pages)
-  (define-key map "s" 'w3m-search)
-  (define-key map "S" (lambda ()
-                        (interactive)
-                        (let ((current-prefix-arg t))
-                          (call-interactively 'w3m-search))))
-  (define-key map "\M-s" 'w3m-session-select)
-  (define-key map "\M-S" 'w3m-session-save)
-  (define-key map "t" 'pl/w3m-toggle-proxy)
-  (define-key map "^" 'w3m-view-parent-page)
-  (define-key map "v" 'w3m-bookmark-view)
-  (define-key map "V" 'w3m-bookmark-view-new-session)
-  (define-key map "W" 'w3m-weather)
-  (define-key map "y" 'w3m-print-this-url)
-  (define-key map "Y" 'w3m-print-current-url)
-  (define-key map "=" 'w3m-view-header)
-  (define-key map "\\" 'w3m-view-source)
-  (define-key map "?" 'describe-mode)
-  (define-key map "!" 'w3m-redisplay-with-content-type)
-  (define-key map ">" 'w3m-scroll-left)
-  (define-key map "<" 'w3m-scroll-right)
-  (define-key map "." 'w3m-shift-left)
-  (define-key map "," 'w3m-shift-right)
-  (define-key map "\C-a" 'w3m-beginning-of-line)
-  (define-key map "\C-e" 'w3m-end-of-line)
-
-  (define-key map "^" 'w3m-view-parent-page)
-  (define-key map "]" 'w3m-next-form)
-  (define-key map "[" 'w3m-previous-form)
-  (define-key map "}" 'w3m-next-image)
-  (define-key map "{" 'w3m-previous-image)
-  (define-key map "\C-c\M-l" 'w3m-delete-left-tabs)
-  (define-key map "\C-c\M-r" 'w3m-delete-right-tabs)
-  (define-key map "\C-c\M-w" 'w3m-delete-other-buffers)
-  (define-key map "\C-c\C-a" 'w3m-switch-buffer)
-  (define-key map "\C-c\C-c" 'w3m-submit-form)
-  (define-key map "\C-c\C-n" 'w3m-next-buffer)
-  (define-key map "\C-c\C-p" 'w3m-previous-buffer)
-  ;; a convenient interactive way to switch from the minibuffer with the common M-n and M-p keys.
-  (define-key map "\C-c\C-a" 'w3m-switch-buffer)
-  (define-key map "\C-c\C-k" 'w3m-process-stop)
-  (define-key map "\C-c\C-m" 'w3m-move-unseen-buffer)
-  (define-key map "\C-c\C-s" 'w3m-select-buffer)
-  (define-key map "\C-c\C-t" 'w3m-copy-buffer)
-  (define-key map "\C-c\C-w" 'w3m-delete-buffer)
-  (define-key map [(button2)] 'w3m-mouse-view-this-url)
-  (define-key map [(shift button2)] 'w3m-mouse-view-this-url-new-session)
-  (setq pl/w3m-map map))
-
-(defun pl/use-w3m-local-map ()
-  (use-local-map pl/w3m-map))
-
-(add-hook 'w3m-mode-hook 'pl/use-w3m-local-map)
-
-(defun pl/w3m-open-current-page-in-firefox ()
-  "Open the current URL in Mozilla Firefox."
-  (interactive)
-  (pl/browse-url-with-firefox w3m-current-url))
-
-(defun pl/w3m-open-link-or-image-in-firefox ()
-  "Open the current link or image in Firefox."
-  (interactive)
-  (pl/browse-url-with-firefox (or (w3m-anchor) (w3m-image))))
-
-
-;;; SwitchToBuffer
-(global-set-key (kbd "C-c W") 'pl/w3m-switch-to-buffer)
-
+;;; switch to buffer
 (defvar *w3m-last-buffer* nil
   "Hold the buffer of last displayed.")
 
@@ -349,6 +167,7 @@
       (w3m-session-select)
       (call-interactively 'w3m)))
 
+;; bind keychord ";w" to `pl/w3m-switch-to-buffer'
 (defun pl/w3m-switch-to-buffer (arg)
   "Select the ARG'th w3m buffer."
   (interactive "p")
@@ -385,8 +204,7 @@
                 (define-key w3m-mode-map bufstr
                   (intern funcname))))))
 
-;; webjump
-(require 'webjump)
+;;; webjump
 ;; (global-set-key (kbd "C-c j j") 'webjump)
 (setq webjump-sites
       '(("google" . [simple-query "www.google.com" "www.google.com/search?q=" ""])
@@ -408,119 +226,6 @@
         ("wetter" . "www.oon.at/wetter/oberoesterreich/prognose.asp")))
 
 
-
-;; (add-hook 'kill-buffer-hook 'make-w3m-backup-copy)
-
-;; (defun make-w3m-backup-copy ()
-;;   (when (string-match "^w3m" (buffer-name))
-;;     (write-file (concat (buffer-file-name) ".last"))))
-
-
-
-;; (defun w3m-new-tab ()
-;;   (interactive)
-;;   (w3m-copy-buffer nil nil nil t))
-
-;; (defun w3m-browse-url-new-tab (url &optional new-session)
-;;   (interactive)
-;;   (w3m-new-tab)
-;;   (w3m-browse-url url))
-
-
-(defun browse-url-default-browser (url &rest args)
-  (apply
-   (cond
-     ((executable-find browse-url-firefox-program) 'browse-url-firefox)
-     ((executable-find browse-url-xterm-program) 'browse-url-lynx-xterm)
-     (t
-      (lambda (&ignore args) (error "No usable browser found"))))
-   url args))
-
-
-(require 'w3m-lnum)
-(defun pl/w3m-go-to-linknum ()
-  "Turn on link numbers and ask for one to go to."
-  (interactive)
-  (let ((active w3m-link-numbering-mode))
-    (when (not active) (w3m-link-numbering-mode))
-    (unwind-protect
-         (w3m-move-numbered-anchor (read-number "Anchor number: "))
-      (when (not active) (w3m-link-numbering-mode)))))
-
-
-(defun campaigns/check-buffer-urls ()
-  "Checks the current buffer for broken links, skipping those that match
-entries in the `no-check' list."
-  (interactive)
-  (let ((matches '())
-        (no-check '("mailto"))
-        (fails 0))
-    (save-excursion
-      (goto-char (point-min))
-      (while (re-search-forward thing-at-point-url-regexp nil t)
-        (add-to-list 'matches (match-string-no-properties 0))
-        t))
-    (pop-to-buffer "*Link checking results*")
-    (erase-buffer)
-    (insert "Checking your links...\n\n")
-    (mapc (lambda (url)
-            (let ((parsed (url-generic-parse-url url)))
-              (insert (format "* %s ..." url))
-              (if (member (elt parsed 0) no-check)
-                  (insert "SKIPPING\n")
-                  (condition-case err
-                      (if (url-http-file-exists-p url)
-                          (insert "OK\n")
-                          (insert "ERROR!\n")
-                          (setq fails (1+ fails)))
-                    (error (insert "ERROR!\n")
-                           (setq fails (1+ fails)))))))
-          matches)
-    (insert (format "\nFinish checking %d links. There were %d problems.\n"
-                    (length matches) fails))))
-
-;;; Filtering To Downcast To ASCII
-
-;; emacs-w3m allows users to filter content, and this feature can be used to downcast entities, unicode, and other
-;; “?”-spawning characters into something of your choice in ASCII.
-
-;; (setq w3m-use-filter t)
-;; ;; send all pages through one filter
-;; (setq w3m-filter-rules `(("\\`.+" w3m-filter-all)))
-
-;; (defun w3m-filter-all (url)
-;;   (let ((list '(("&#187;" "&gt;&gt;")
-;;                 ("&laquo;" "&lt;")
-;;                 ("&raquo;" "&gt;")
-;;                 ("&ouml;" "o")
-;;                 ("&#8230;" "...")
-;;                 ("&#8216;" "'")
-;;                 ("&#8217;" "'")
-;;                 ("&rsquo;" "'")
-;;                 ("&lsquo;" "'")
-;;                 ("\u2019" "\'")
-;;                 ("\u2018" "\'")
-;;                 ("\u201c" "\"")
-;;                 ("\u201d" "\"")
-;;                 ("&rdquo;" "\"")
-;;                 ("&ldquo;" "\"")
-;;                 ("&#8220;" "\"")
-;;                 ("&#8221;" "\"")
-;;                 ("\u2013" "-")
-;;                 ("\u2014" "-")
-;;                 ("&#8211;" "-")
-;;                 ("&#8212;" "-")
-;;                 ("&ndash;" "-")
-;;                 ("&mdash;" "-")
-;;                 )))
-;;     (while list
-;;       (let ((pat (car (car list)))
-;;             (rep (car (cdr (car list)))))
-;;         (goto-char (point-min))
-;;         (while (search-forward pat nil t)
-;;           (replace-match rep))
-;;         (setq list (cdr list))))))
-
 ;;; Like surfkeys of firefox
 (defun surfkeys:next ()
   (interactive)
@@ -539,7 +244,7 @@ entries in the `no-check' list."
         (message "No such page"))))
 
 
-;; google-region
+;;; google-region
 (defun google-region (&optional flags)
   "Google the selected region"
   (interactive)
@@ -717,6 +422,55 @@ entries in the `no-check' list."
               (message "open/restore a w3m session and run `slime-hyperspec-lookup' again.")
               (w3m-session-select))
           ad-do-it)))
+
+;;; usefull function
+;; Browsing the current buffer
+;; "preview" a buffer full of HTML in w3m.
+(defun pl/w3m-browse-current-buffer ()
+  (interactive)
+  (let ((filename (concat (make-temp-file "w3m-") ".html")))
+    (unwind-protect
+        (progn
+          (write-region (point-min) (point-max) filename)
+          (w3m-find-file filename))
+      (delete-file filename))))
+
+(defun pl/w3m-goto-url ()
+  (interactive)
+  (let ((w3m-current-url ""))
+    (call-interactively #'w3m-goto-url)))
+
+(defun campaigns/check-buffer-urls ()
+  "Checks the current buffer for broken links, skipping those that match
+entries in the `no-check' list."
+  (interactive)
+  (let ((matches '())
+        (no-check '("mailto"))
+        (fails 0))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward thing-at-point-url-regexp nil t)
+        (add-to-list 'matches (match-string-no-properties 0))
+        t))
+    (pop-to-buffer "*Link checking results*")
+    (erase-buffer)
+    (insert "Checking your links...\n\n")
+    (mapc (lambda (url)
+            (let ((parsed (url-generic-parse-url url)))
+              (insert (format "* %s ..." url))
+              (if (member (elt parsed 0) no-check)
+                  (insert "SKIPPING\n")
+                (condition-case err
+                    (if (url-http-file-exists-p url)
+                        (insert "OK\n")
+                      (insert "ERROR!\n")
+                      (setq fails (1+ fails)))
+                  (error (insert "ERROR!\n")
+                         (setq fails (1+ fails)))))))
+          matches)
+    (insert (format "\nFinish checking %d links. There were %d problems.\n"
+                    (length matches) fails))))
+
 
 
 (provide '50w3m)

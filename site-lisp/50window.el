@@ -175,6 +175,8 @@
   '(progn
      (golden-ratio-enable)
      (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
+     (add-to-list 'golden-ratio-exclude-modes "w3m-select-buffer-mode")
+     (add-to-list 'golden-ratio-exclude-modes "w3m-mode")
      (add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p)
      (add-to-list 'golden-ratio-inhibit-functions 'pl/ediff-comparison-buffer-p)))
 
