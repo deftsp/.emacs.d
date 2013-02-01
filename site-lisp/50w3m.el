@@ -10,6 +10,7 @@
 ;;; browser
 (setq browse-url-browser-function '(("file:.*/usr/local/share/gtk-doc/html" . w3m-goto-url-new-session)
                                     ("file:.*/usr/share/gtk-doc/html" . w3m-goto-url-new-session)
+                                    ("file:///usr/local/.*html" . w3m-goto-url-new-session)
                                     ("." . browse-url-default-browser)))
 
 (setq browse-url-firefox-new-window-is-tab t

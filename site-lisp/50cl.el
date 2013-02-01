@@ -255,14 +255,10 @@ currently under the cursor."
 (eval-after-load "lisp-mode"
   '(progn
     (define-key lisp-mode-map [tab] 'lisp-indent-or-complete)))
-;;;; i hate having to take my key off of ctrl for this and i don't use complete-form anyway...
-;;(define-key slime-mode-map (kbd "C-c I") 'slime-inspect)
 
-;; (define-key slime-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)
-;; (define-key slime-repl-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)
-(global-set-key (kbd "C-c h") 'slime-hyperspec-lookup)
-;; (global-set-key (kbd "C-c C-z") 'slime-switch-to-output-buffer)
-
+;; (define-key slime-mode-map (kbd "C-c I") 'slime-inspect)
+(define-key slime-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)
+(define-key slime-repl-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)
 
 ;; (defun insert-balanced-comments (arg)
 ;;   "Insert a set of balanced comments around the s-expression

@@ -13,6 +13,7 @@
 (eval-after-load "haskell-mode"
   '(progn
      (require 'haskell-process)
+     (define-key haskell-mode-map (kbd "C-c h") 'haskell-hoogle)
      (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)))
 
 
@@ -51,6 +52,5 @@
 ;; Run M-x haskell-process-generate-tags to generate the TAGS file of the current session directory.
 ;; You can now use M-. on a name in a Haskell buffer which will jump directly to its definition.
 (setq haskell-tags-on-save t)
-
 
 (provide '50haskell)
