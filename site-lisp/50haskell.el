@@ -14,6 +14,7 @@
   '(progn
      (require 'haskell-process)
      ;; (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)
+     (define-key haskell-mode-map (kbd "C-j") 'newline)
      (define-key haskell-mode-map (kbd "C-c h") 'haskell-hoogle)))
 
 
