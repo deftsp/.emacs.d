@@ -13,8 +13,8 @@
 (eval-after-load "haskell-mode"
   '(progn
      (require 'haskell-process)
-     (define-key haskell-mode-map (kbd "C-c h") 'haskell-hoogle)
-     (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)))
+     ;; (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)
+     (define-key haskell-mode-map (kbd "C-c h") 'haskell-hoogle)))
 
 
 ;;; indent
@@ -22,8 +22,12 @@
 ;; turn-on-haskell-indent
 ;; turn-on-haskell-simple-indent
 ;; Note that the three indentation modules are mutually exclusive - add at most one. In preference for the more advanced.
-;; (remove-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(remove-hook 'haskell-mode-hook 'turn-on-haskell-indentation) ; el-get default install `turn-on-haskell-indentation'
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;; (setq haskell-indentation-layout-offset 4
+;;       haskell-indentation-left-offset 4
+;;       haskell-indentation-ifte-offset 4)
+
 
 ;;; ghc-mod
 ;; install ghc-mod
@@ -33,6 +37,7 @@
 
 (autoload 'ghc-init "ghc" nil t)
 (defun haskell-mode-hook-funs ()
+  (define-key haskell-mode-map (kbd "C-c |") 'haskell-indent-insert-guard)
   ;; (define-key haskell-mode-map (kbd "C-M-d") 'anything-ghc-browse-document)
   (flymake-mode)
   (ghc-init))
@@ -43,6 +48,6 @@
 ;; $ cabal install hasktags
 ;; Run M-x haskell-process-generate-tags to generate the TAGS file of the current session directory.
 ;; You can now use M-. on a name in a Haskell buffer which will jump directly to its definition.
-(setq haskell-tags-on-save t)
+(setq haskell-tags-on-save nil)
 
 (provide '50haskell)
