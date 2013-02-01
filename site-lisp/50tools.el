@@ -52,12 +52,13 @@
 (key-chord-define-global ";f" 'helm-for-files)
 (key-chord-define-global ";r" 'pl/ido-choose-from-recentf)
 (key-chord-define-global "jk" 'ac-trigger-key-command) ; 'auto-complete
-(key-chord-define-global ";c" 'ace-jump-char-mode)
-(key-chord-define-global ";w" 'ace-jump-word-mode)
-(key-chord-define-global ";l" 'ace-jump-line-mode)
+
+(key-chord-define-global "jc" 'ace-jump-char-mode)
+(key-chord-define-global "jw" 'ace-jump-word-mode)
+(key-chord-define-global "jl" 'ace-jump-line-mode)
 
 (key-chord-define-global ";g" 'magit-status)
-
+(key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
 ;;; space-chord
 (require 'space-chord)
 (setq space-chord-delay 0.08)           ; default 0.08
