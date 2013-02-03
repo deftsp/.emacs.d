@@ -24,9 +24,6 @@
                :type git
                :url "git://github.com/claviclaws/org-mac-protocol.git"
                :features org-mac-protocol)
-        (:name flymake-cursor
-               :type emacswiki
-               :features flymake-cursor)
         (:name etags-select
                :type emacswiki
                :features etags-select)
