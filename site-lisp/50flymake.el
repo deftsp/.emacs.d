@@ -4,25 +4,65 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-;;----------------------------------------------------------------------------------------------------
-;; flymake mode
-;;----------------------------------------------------------------------------------------------------
+;;; flymake will excute check-syntax when:
+;; open file
+;; new line (flymake-start-syntax-check-on-newline)
+;; code change after 0.5s (flymake-no-changes-timeout)
+;; execute, flymake-start-syntax-check
+
+
 ;; What you need is only a Makefile with an extra target "check-syntax":
 
 ;; check-syntax:
 ;;       gcc -o nul -Wall -Wextra -fsyntax-only $(CHK_SOURCES)
 
-
 (eval-after-load "flymake"
   '(progn
+     (require 'flymake-cursor)
      (set-face-attribute 'flymake-warnline nil :foreground "#ccccff" :background "#333300")
      (set-face-attribute 'flymake-errline nil :foreground "#cceecc" :background "#402222")))
 
+;; (define-key global-map (kbd "C-c d e") 'flymake-cursor-show-errors-at-point-now)
+;; (add-hook 'find-file-hook 'flymake-find-file-hook)
+;; (setq flymake-gui-warnings-enabled nil)
+;; (setq flymake-log-level 0) ; 1
 
+;; flymake-allowed-file-name-masks
 
+;;; elisp
+(defun flymake-elisp-init ()
+  (unless (string-match "^ " (buffer-name))
+    (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+                         'flymake-create-temp-inplace))
+           (local-file  (file-relative-name
+                         temp-file
+                         (file-name-directory buffer-file-name))))
+      (list
+       (expand-file-name invocation-name invocation-directory)
+       (list
+        "-Q" "--batch" "--eval"
+        (prin1-to-string
+         (quote
+          (dolist (file command-line-args-left)
+            (with-temp-buffer
+              (insert-file-contents file)
+              (emacs-lisp-mode)
+              (let ((parse-sexp-ignore-comments t))
+                (condition-case data
+                    (scan-sexps (point-min) (point-max))
+                  (scan-error
+                   (goto-char(nth 2 data))
+                   (princ (format "%s:%s: error: Unmatched bracket or quote\n"
+                                  file (line-number-at-pos))))))))))
+        local-file)))))
 
+(push '("\\.el$" flymake-elisp-init) flymake-allowed-file-name-masks)
 
+;; (add-hook 'emacs-lisp-mode-hook
+;;           ;; workaround for (eq buffer-file-name nil)
+;;           (function (lambda () (if buffer-file-name (flymake-mode)))))
 
+;;; objc
 ;; (defvar xcode:gccver "4.2")
 ;; (defvar xcode:sdkver "4.3")
 ;; (defvar xcode:sdkpath "/Developer/Platforms/iPhoneSimulator.platform/Developer")
@@ -49,32 +89,6 @@
 ;;             (push '("\\.h$" flymake-objc-init) flymake-allowed-file-name-masks)
 ;;             (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
 ;;                 (flymake-mode t))))
-
-
-
-;; (define-key global-map (kbd "C-c d e") 'flyc/show-fly-error-at-point-now)
-
-
-;; (add-hook 'find-file-hook 'flymake-find-file-hook)
-;; (setq flymake-gui-warnings-enabled nil)
-;; (setq flymake-log-level 0)
-
-
-;;; flymake will excute check-syntax when:
-;; open file
-;; new line (flymake-start-syntax-check-on-newline)
-;; code change after 0.5s (flymake-no-changes-timeout)
-;; execute, flymake-start-syntax-check
-
-
-;; flymake-allowed-file-name-masks
-
-
-
-
-;; (setq flymake-log-level 1)
-
-
 
 
 (provide '50flymake)
