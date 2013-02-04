@@ -29,6 +29,7 @@
           (hs-show-all))
     (pl/toggle-selective-display column)))
 
+(global-set-key (kbd "C-x $") 'pl/toggle-hiding)
 
 
 ;; code folding

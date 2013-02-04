@@ -209,6 +209,15 @@
 (add-hook 'c++-mode-hook (lambda ()
                            (pl/outline-local-set-regexp pl/c-mode-common-outline-regexp)))
 
+
+;;; Haskell
+;; outline uses this regexp to find headers. I match lines with no indent and indented
+;; some lines, such as "--" ... "class"
+(defconst pl/haskell-mode-outline-regexp
+  "^[^\t ].*\\|^.*[\t ]+\\(where\\|of\\|do\\|in\\|if\\|then\\|else\\|let\\|module\\|import\\|deriving\\|instance\\|class\\)[\t\n ]")
+
+(add-hook 'haskell-mode-hook (lambda () (pl/outline-local-set-regexp pl/haskell-mode-outline-regexp)))
+
 ;; (add-hook 'php-mode-user-hook
 ;;           '(lambda ()
 ;;             (outline-minor-mode)
