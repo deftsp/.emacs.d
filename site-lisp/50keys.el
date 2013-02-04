@@ -279,8 +279,9 @@ Goes backward if ARG is negative; error if CHAR not found."
     (if (char-table-p translation-table-for-input)
         (setq char (or (aref translation-table-for-input char) char))))
   (kill-region (point) (1- (progn
-                          (search-forward (char-to-string char) nil nil arg)
-                          (point))))
+                             (let ((case-fold-search nil))
+                               (search-forward (char-to-string char) nil nil arg))
+                             (point))))
   (backward-char))
 
 (global-set-key (kbd "M-Z") 'pl/zap-to-char-save)
