@@ -45,13 +45,12 @@
 
 
 (key-chord-define-global "''" "`'\C-b")
-(key-chord-define-global "RR" 'anything-resume)
 (key-chord-define-global "HH" 'woman)
-(key-chord-define-global "JJ" 'anything)
-(key-chord-define-global "OO" 'anything-occur)
+(key-chord-define-global ";r" 'helm-resume)
+(key-chord-define-global ";s" 'helm-occur)
 (key-chord-define-global ";f" 'helm-for-files)
-(key-chord-define-global ";r" 'pl/ido-choose-from-recentf)
-(key-chord-define-global "jk" 'ac-trigger-key-command) ; 'auto-complete
+
+(key-chord-define-global "jk" 'auto-complete)
 
 (key-chord-define-global "jc" 'ace-jump-char-mode)
 (key-chord-define-global "jw" 'ace-jump-word-mode)
@@ -59,14 +58,7 @@
 
 (key-chord-define-global ";g" 'magit-status)
 (key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
-;;; space-chord
-(require 'space-chord)
-(setq space-chord-delay 0.08)           ; default 0.08
-(space-chord-define-global "f" 'find-file)
-(space-chord-define-global "r" 'remember)
-(space-chord-define-global "b" 'switch-to-buffer)
-(space-chord-define-global "c" 'calendar)
-
+(key-chord-define-global "bl" 'switch-to-buffer);
 
 ;;; linkd
 (autoload 'linkd-mode "linkd" "Create or follow hypertext links." t)
@@ -968,12 +960,13 @@ such character is found, following options are shown:
 ;; 'C-c SPC' is used by Org mode
 ;; gud-break is bound to C-c C-b, C-x SPC, C-x C-a C-b.
 ;; both of 'M-g M-g' and 'M-g g' are bound to goto-line
+;; both 'M-j' and 'C-M-j' are bind to `indent-new-comment-line'
 (eval-after-load "ace-jump-mode"
   '(progn
      (setq ace-jump-mode-case-fold nil)
      ;; after enable ace jump mode mark sync, use `C-u C-SPC' is enough
      ;; (define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
-     ;; (define-key global-map (kbd "M-g M-g") 'ace-jump-mode)      ;; use key-chord "aj" instead now
+     ;; (define-key global-map (kbd "M-g M-g") 'ace-jump-mode)
      (ace-jump-mode-enable-mark-sync)))
 
 ;; (defun pl/ace-jump-to-char ()
@@ -1054,7 +1047,7 @@ such character is found, following options are shown:
 (global-set-key (kbd "C-*") 'mc/mark-all-like-this)
 (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
 (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-;; (global-set-key (kbd "C-Æ") 'mc/mark-more-like-this-extended)
+(global-set-key (kbd "C-M-m") 'mc/mark-more-like-this-extended)
 ;; (global-set-key (kbd "M-å") 'mc/mark-all-in-region)
 
 

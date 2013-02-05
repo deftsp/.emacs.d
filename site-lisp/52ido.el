@@ -76,7 +76,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;uses ido on the recently opened files
-(global-set-key (kbd "C-c r f") 'pl/ido-choose-from-recentf)
+(global-set-key (kbd "C-x C-r") 'pl/ido-choose-from-recentf)
 (defun pl/ido-choose-from-recentf ()
   "Use ido to select a recently opened file from the `recentf-list'"
   (interactive)

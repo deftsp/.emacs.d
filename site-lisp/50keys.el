@@ -269,9 +269,7 @@ it marks the next ARG lines after the ones already marked."
 (global-set-key (kbd "M-z") 'pl/zap-up-to-char)
 
 (defun pl/zap-up-to-char (arg char)
-  "Kill up to and including ARGth occurrence of CHAR.
-Case is ignored if `case-fold-search' is non-nil in the current buffer.
-Goes backward if ARG is negative; error if CHAR not found."
+  "Kill up to and including ARGth occurrence of CHAR. "
   (interactive (list (prefix-numeric-value current-prefix-arg)
                      (read-char "Zap to char: " t)))
   ;; Avoid "obsolete" warnings for translation-table-for-input.
@@ -291,10 +289,6 @@ Goes backward if ARG is negative; error if CHAR not found."
   (save-excursion
     (zap-to-char arg char)
     (yank)))
-
-;;; use yank menu
-;; (global-set-key "\C-\M-y"
-;;                 (lambda () (interactive ) (popup-menu 'yank-menu)))
 
 ;;; extral key map
 ;; (setq pl/extra-key-map (make-keymap))

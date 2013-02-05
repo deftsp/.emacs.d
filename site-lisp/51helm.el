@@ -13,18 +13,19 @@
 ;; (helm-mode 1) ; use ido everywhere instead
 
 ;;; helm-command-prefix-key (default to C-x c).
-(require 'helm-files)
-
 (setq helm-idle-delay 0.1)
 (setq helm-input-idle-delay 0.1)
 
-(when (eq system-type 'darwin)
-  (setq helm-c-locate-command "locate-with-mdfind %.0s %s")) ; helm-for-files;
+(eval-after-load "helm-files"
+'(progn
+   (when (eq system-type 'darwin)
+     (setq helm-c-locate-command "locate-with-mdfind %.0s %s")) ; helm-for-files;
 
-(loop for ext in '("\\.swf$" "\\.elc$" "\\.pyc$")
-      do (add-to-list 'helm-c-boring-file-regexp-list ext))
-
+   (loop for ext in '("\\.swf$" "\\.elc$" "\\.pyc$")
+         do (add-to-list 'helm-c-boring-file-regexp-list ext))))
 ;; (define-key global-map [(alt t)] 'helm-for-files))
+
+(define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
 
 ;;; ghc-mode
