@@ -24,8 +24,7 @@
    (loop for ext in '("\\.swf$" "\\.elc$" "\\.pyc$")
          do (add-to-list 'helm-c-boring-file-regexp-list ext))))
 ;; (define-key global-map [(alt t)] 'helm-for-files))
-
-(define-key global-map (kbd "M-y") 'helm-show-kill-ring)
+;; (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
 
 ;;; ghc-mode
