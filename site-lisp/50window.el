@@ -163,6 +163,65 @@
 ;;          (window (window--try-to-split-window target-window)))
 ;;     (set-window-buffer window buffer)))
 
+;;; recursive-edit
+;; Hitting C-c r e will put you in a "recursive editing mode", that is simply an embedded call to the editing loop. The
+;; point here is that you can exit this inner loop, which means that you return from the recursive-edit function. This
+;; way, the recursive editing can be guarded by some context-saving macros : here save-window-excursion and
+;; save-excursion. Once the user quits the recursive edit, the context is restored, which means here that the windows
+;; state, current buffer and position are restored : you're back in the state where your brain was preempted without
+;; even needing to remember it.
+
+;; Enter a recursive edit. C-M-c will bring back exactly there
+;; `C-M-c' default binding to exit-recursive-edit, it means returning to the
+;; unfinished command, which continues execution
+;; `C-]'   default binding to abort-recursive-edit, This is like exiting, but
+;; also quits the unfinished command immediately.
+
+(global-set-key (kbd "C-c r e") 'pl/recursive-edit-save-window-config)
+(defun pl/recursive-edit-save-window-config ()
+  (interactive)
+  (save-window-excursion
+    (save-excursion
+      (recursive-edit))))
+
+;; RecursiveEditPreservingWindowConfig
+;; One can change the window configuration temporarily using RecursiveEdit?.
+;; Inspired by a command posted by ErikNaggum in an Emacs Newsgroup, EmilioLopes
+;; wrote this macro:
+
+;; inspired by Erik Naggum's `recursive-edit-with-single-window'
+(defmacro recursive-edit-preserving-window-config (body)
+  "*Return a command that enters a recursive edit after executing BODY.
+ Upon exiting the recursive edit (with \\[exit-recursive-edit] (exit)
+ or \\[abort-recursive-edit] (abort)), restore window configuration
+ in current frame."
+  `(lambda ()
+     "See the documentation for `recursive-edit-preserving-window-config'."
+     (interactive)
+     (save-window-excursion
+       ,body
+       (recursive-edit))))
+
+;; Use it like this:
+
+(global-set-key (kbd "C-c 0") (recursive-edit-preserving-window-config (delete-window)))
+(global-set-key (kbd "C-c 2") (recursive-edit-preserving-window-config
+                               (split-window-vertically 20)))
+(global-set-key (kbd "C-c 3") (recursive-edit-preserving-window-config
+                               (split-window-horizontally -52)))
+(global-set-key (kbd "C-c 1") (recursive-edit-preserving-window-config
+                               (if (one-window-p 'ignore-minibuffer)
+                                   (message "Current window is the only window in its frame")
+                                 (delete-other-windows))))
+
+;; Now pressing "C-c 1" will delete all other windows in the current frame and put
+;; you into "recursive editing". You know you are in a recursive edit by noting the
+;; square brackets around the parentheses that always surround the major and minor
+;; mode names. After exiting recursive edit, e.g. by using "C-M-c"
+;; ('exit-recursive-edit'), the original window configuration is restored.
+
+;; recursive-edit end there ---------------------------------------------------------------
+
 
 
 ;;; switch window
