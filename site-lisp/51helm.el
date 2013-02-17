@@ -17,12 +17,12 @@
 (setq helm-input-idle-delay 0.1)
 
 (eval-after-load "helm-files"
-'(progn
-   (when (eq system-type 'darwin)
-     (setq helm-c-locate-command "locate-with-mdfind %.0s %s")) ; helm-for-files;
+  '(progn
+     (when (eq system-type 'darwin)
+       (setq helm-c-locate-command "locate-with-mdfind %.0s %s")) ; helm-for-files;
 
-   (loop for ext in '("\\.swf$" "\\.elc$" "\\.pyc$")
-         do (add-to-list 'helm-c-boring-file-regexp-list ext))))
+     (loop for ext in '("\\.swf$" "\\.elc$" "\\.pyc$")
+           do (add-to-list 'helm-c-boring-file-regexp-list ext))))
 ;; (define-key global-map [(alt t)] 'helm-for-files))
 ;; (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
