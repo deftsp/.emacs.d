@@ -1,5 +1,6 @@
+;;; 05misc.el ---
+;; Author: Shihpin Tsing <deftsp@gmail.com>
 
-;;--------------------------------------------------------------------------------
 ;;; Personal data
 (setq user-full-name "Shihpin Tseng"
       user-mail-address "deftsp@gmail.com"
@@ -56,7 +57,8 @@
       redisplay-dont-pause t
       mark-even-if-inactive t
       set-mark-command-repeat-pop t
-      x-select-enable-clipboard t ;;允许 emacs 和外部其他程序的粘贴
+      x-select-enable-clipboard t ; cutting and pasting uses the clipboard.
+      x-select-enable-primary t
       ;; default-directory "/"
       visible-bell nil                    ;no f* beep on error.
       ;;ftp-program "ncftp"       ; use ncftp for ftp transfers.
@@ -75,8 +77,7 @@
       auto-save-timeout 30
       ;; remove no-run-time function warnings
       byte-compile-warnings (quote (noruntime))
-      ;;在emacs读man文档时，使用当前buffer
-      Man-notify-method 'pushy
+      Man-notify-method 'pushy ; make the manpage the current buffer in the current window
       default-major-mode 'text-mode
       ;; means save bookmarks when Emacs is killed, 1 save bookmark every time you set bookmark, not only when you exit
       ;; emacs
@@ -116,12 +117,9 @@
 
 
 ;;; which func mode
-;; BUG: GNU Emacs 24.1.50.1, it will casue tons of error error.
 (which-function-mode 1)
 (eval-after-load "which-func"
   '(set-face-foreground 'which-func "Yellow"))
-
-
 
 
 (if (eq system-type 'gnu/linux)
@@ -491,12 +489,10 @@ vi style of % jumping to matching brace."
 
 ;; kills an entire line if the cursor is at the beginning of line. And try M-0 C-k.
 (setq-default kill-whole-line t)
-;;设定删除保存记录为200，可以方便以后无限恢复
-(setq kill-ring-max 200)
+(setq kill-ring-max 200) ; default 60
 
-;;增大使用查找函数和变量的寻找范围
-(setq apropos-do-all t)
-(setq apropos-sort-by-scores t)
+(setq apropos-do-all t) ; search more extensively
+(setq apropos-sort-by-scores t) ; sort matches by scores; best match is shown first.
 ;;------------------------------------------------------------------------------------------
 
 ;;; Spell check
