@@ -31,6 +31,8 @@
 (when (require 'session nil t)
   (setq session-save-file "~/.emacs.d/.session")
   (setq session-save-file-coding-system 'utf-8)
+  ;; https://github.com/emacs-helm/helm/issues/94
+  (setq session-save-print-spec '(t nil 40000))
   ;; exclude org-mark-ring which is a circular object. otherwise, emacs can not be closed if open org file.
   (add-to-list 'session-globals-exclude 'org-mark-ring)
   (add-hook 'after-init-hook 'session-initialize))
