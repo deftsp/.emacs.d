@@ -1,0 +1,14 @@
+* My emacs config
+** build emacs from source
+   #+BEGIN_EXAMPLE
+     $ mkdir ~/opt/emacs && cd ~/opt/emacs
+     $ bzr branch bzr://bzr.savannah.gnu.org/emacs/trunk trunk
+     $ cd trunk
+     $ ./autogen.sh && ./configure --with-ns && make -j 4 && make install
+   #+END_EXAMPLE
+
+** grab config
+   #+BEGIN_EXAMPLE
+     $ cd ~
+     $ git clone git://github.com/deftsp/.emacs.d.git
+   #+END_EXAMPLE
