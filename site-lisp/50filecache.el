@@ -36,4 +36,12 @@
      ;; works after 60 seconds and repeat every half hour
      (run-at-time (pl/future-time-string 60) (* 0.5 60 60) 'pl/filecache-add-files)))
 
+(defun pl/file-cache-add-this-file ()
+  (and buffer-file-name
+       (file-exists-p buffer-file-name)
+       (file-cache-add-file buffer-file-name)))
+
+(add-hook 'kill-buffer-hook 'pl/file-cache-add-this-file)
+
+
 (provide '50filecache)
