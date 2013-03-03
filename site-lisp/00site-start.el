@@ -6,6 +6,7 @@
 ;; Keywords:
 
 (require '01env)
+(require '02utils)
 (require '05cc-mode)
 (require '09cedet)
 (require '12el-get)

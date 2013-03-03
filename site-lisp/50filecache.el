@@ -21,15 +21,19 @@
 (defvar pl/file-cache-dirs '("~/" "/etc/" "~/.emacs.d/site-lisp/" "~/Downloads/"))
 (defvar pl/file-cache-recursive-dirs '("~/proj"))
 
+(defun pl/filecache-add-files ()
+  (ignore-errors (file-cache-add-directory-list pl/file-cache-dirs)
+   ;; (file-cache-add-directory-list load-path)
+   (let ((cache-dirs pl/file-cache-recursive-dirs))
+     (dolist (dir cache-dirs) (file-cache-add-directory-recursively dir)))))
+
 (eval-after-load "filecache"
   '(progn
      (setq file-cache-completion-ignore-case t
            file-cache-ignore-case t)
      (mapcar (lambda (str) (add-to-list 'file-cache-filter-regexps str))
              '("\\.svn-base$" "\\.svn" "\\.jar$" "\\.git$" "\\.gz$" "\\.tar$" "\\.rar$" "\\.exe$" "resolv.conf$"))
-     (file-cache-add-directory-list pl/file-cache-dirs)
-     ;; (file-cache-add-directory-list load-path)
-     (let ((cache-dirs pl/file-cache-recursive-dirs))
-       (dolist (dir cache-dirs) (file-cache-add-directory-recursively dir)))))
+     ;; works after 60 seconds and repeat every half hour
+     (run-at-time (pl/future-time-string 60) (* 0.5 60 60) 'pl/filecache-add-files)))
 
 (provide '50filecache)

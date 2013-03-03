@@ -927,10 +927,7 @@ This command is to be used interactively."
 ;; "09:30am". see more..  run-at-time.
 ;; (midnight-delay-set 'midnight-delay "09:30am")
 ;; set midnight-delay after 3 hours
-(midnight-delay-set 'midnight-delay
-                    (format-time-string "%H:%M"
-                                        (seconds-to-time (+ (time-to-seconds (current-time))
-                                                           (* 3 60 60)))))
+(midnight-delay-set 'midnight-delay (pl/future-time-string (* 3 60 60)))
 
 
 
