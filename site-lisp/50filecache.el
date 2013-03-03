@@ -26,7 +26,7 @@
      (setq file-cache-completion-ignore-case t
            file-cache-ignore-case t)
      (mapcar (lambda (str) (add-to-list 'file-cache-filter-regexps str))
-             '("\\.svn-base$" "\\.svn" "\\.jar$" "\\.git$" "\\.gz$" "\\.tar$" "\\.rar$" "\\.exe$"))
+             '("\\.svn-base$" "\\.svn" "\\.jar$" "\\.git$" "\\.gz$" "\\.tar$" "\\.rar$" "\\.exe$" "resolv.conf$"))
      (file-cache-add-directory-list pl/file-cache-dirs)
      ;; (file-cache-add-directory-list load-path)
      (let ((cache-dirs pl/file-cache-recursive-dirs))
