@@ -165,7 +165,7 @@
   ;; Dangerous!!! do not use `appt-add', this might remove entries added by `appt-add' manually.
   (org-agenda-to-appt t "TODO"))
 ;; update appt
-(run-at-time "24:01" nil 'pl/org-agenda-to-appt)
+(run-at-time "24:01" (* 0.5 60 60) 'pl/org-agenda-to-appt) ;; update every half hour
 
 
 
