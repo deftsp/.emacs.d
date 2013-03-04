@@ -78,7 +78,7 @@
 
 ;; (el-get-save-package-status "package-name-here" "removed")
 
-;; (el-get 'sync 'org-mode)                ; init org-mode first
+(el-get 'sync 'org-mode)                ; init org-mode first
 (el-get 'sync 'auto-complete)           ; auto-complete should init before ac-nrepl
 (el-get 'wait)                          ; 'sync 'wait
 
