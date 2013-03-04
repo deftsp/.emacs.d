@@ -29,7 +29,7 @@
 ;; List of recently changed files with their places and some buffer-local variables.
 
 (when (require 'session nil t)
-  (setq session-save-file "~/.emacs.d/.session")
+  (setq session-save-file (expand-file-name "~/.emacs.session"))
   (setq session-save-file-coding-system 'utf-8)
   ;; https://github.com/emacs-helm/helm/issues/94
   (setq session-save-print-spec '(t nil nil)) ; default '(t 2 1024)
@@ -55,7 +55,6 @@
            (semantic-idle-scheduler-mode nil))))
 
 (setq desktop-load-locked-desktop t) ; 'ask
-(setq desktop-path '("~/.emacs.d"))
 (setq desktop-missing-file-warning nil)
 
 (when (fboundp 'desktop-save-mode)

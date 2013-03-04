@@ -94,6 +94,9 @@
       enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
 
+;; hisotry save file
+(setq savehist-file "~/.emacs-history")
+
 
 (setq ring-bell-function 'ignore)
 ;; Emacs does not beep when you hit `C-g' in the minibuffer or during
