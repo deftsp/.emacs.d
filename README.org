@@ -14,9 +14,9 @@
    #+END_EXAMPLE
 ** Credits
    In general, this config is a combination of lots of sources, including:
-   [[http://www.emacswiki.org/][EmacsWiki]]
-   [[http://www.emacswiki.org][What the .emacs.d!?]]
-   [[http://ergoemacs.org/emacs/emacs.html][Xah Emacs Tutorial]]
-   [[http://sachachua.com/blog/][sacha chua]]
+   - [[http://www.emacswiki.org/][EmacsWiki]]
+   - [[http://www.emacswiki.org][What the .emacs.d!?]]
+   - [[http://ergoemacs.org/emacs/emacs.html][Xah Emacs Tutorial]]
+   - [[http://sachachua.com/blog/][sacha chua]]
 
    To be continued ...
