@@ -225,9 +225,9 @@
 
 ;; auto complete function an variables in minibuffer
 ;; * Incremental minibuffer completion *
-(icomplete-mode t)
-(eval-after-load "icomplete" '(progn (require 'icomplete+)))
-(setq icomplete-prospects-height 1)
+;; (icomplete-mode t)
+;; (eval-after-load "icomplete" '(progn (require 'icomplete+)))
+;; (setq icomplete-prospects-height 1)
 
 
 (provide '50completion)
