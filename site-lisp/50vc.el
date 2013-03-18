@@ -82,15 +82,16 @@
 ;;     (align-regexp pos (point) ": " 0 2)))
 
 ;;; git-gutter
-(require 'git-gutter-fringe nil t)
-(eval-after-load "git-gutter-fringe"
-  '(progn
-     (setq git-gutter-fr:side 'right-fringe)))
+;; it makes split window very slow, disable now
+;; (require 'git-gutter-fringe nil t)
+;; (eval-after-load "git-gutter-fringe"
+;;   '(progn
+;;      (setq git-gutter-fr:side 'right-fringe)))
 
-(eval-after-load "git-gutter"
-  '(progn
-     (setq git-gutter:lighter " GG")
-     (global-git-gutter-mode t)))
+;; (eval-after-load "git-gutter"
+;;   '(progn
+;;      (setq git-gutter:lighter " GG")
+;;      (global-git-gutter-mode t)))
 
 
 (provide '50vc)
