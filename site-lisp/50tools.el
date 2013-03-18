@@ -58,7 +58,6 @@
 
 (key-chord-define-global ";g" 'magit-status)
 (key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
-(key-chord-define-global "bl" 'switch-to-buffer);
 
 ;;; linkd
 (autoload 'linkd-mode "linkd" "Create or follow hypertext links." t)
