@@ -90,6 +90,19 @@
 ;;             (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
 ;;                 (flymake-mode t))))
 
+;;; Flymake
+
+(defun flymake-ruby-init ()
+  (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                     'flymake-create-temp-inplace))
+         (local-file (file-relative-name
+                      temp-file
+                      (file-name-directory buffer-file-name))))
+    ;; Invoke ruby with '-c' to get syntax checking
+    (list "ruby" (list "-c" local-file))))
+
+
+
 
 (provide '50flymake)
 ;; 50flymode mode ends here------------------------------------------------------------------------------

@@ -131,6 +131,7 @@
            "/usr/texbin"
            "/Applications/Gnuplot.app/Contents/Resources/bin"
            "/usr/local/bin"
+           "/usr/local/opt/ruby/bin"
            "/opt/bin"
            "/usr/X11R6/bin"))
 
