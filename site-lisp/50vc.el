@@ -35,9 +35,14 @@
 
 ;;; git-emacs
 ;; http://tsgates.cafe24.com/git/git-emacs.html
-(require 'git-emacs)
-(when window-system
-  (setq git-state-modeline-decoration 'git-state-decoration-small-dot))   ; git-state-decoration-colored-letter
+(require 'git-emacs nil t)
+(eval-after-load "git-emacs"
+  '(progn
+     (when window-system
+       ;; git-state-decoration-colored-letter
+       (setq git-state-modeline-decoration 'git-state-decoration-small-dot))))
+
+
 
 ;;; magit
 (global-set-key (kbd "C-x G") 'magit-status)

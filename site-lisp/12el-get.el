@@ -69,7 +69,11 @@
                :description "Emacs Interface to `docsetutil'"
                :pkgname "leoliu/docsetutil-el"
                :features docsetutil)
-
+        (:name git-emacs
+               :description "Yet another git emacs mode for newbies"
+               :type github
+               :pkgname "deftsp/git-emacs"
+               :features git-emacs)
         (:name glsl-mode
                :type github
                :description "major mode for Open GLSL shader files"
