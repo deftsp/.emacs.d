@@ -8,7 +8,9 @@
 ;; bzr revert
 ;; bzr clean-tree
 ;; bzr clean-tree --ignore
-;; touch `find . -name Makefile`
+;; make touch-makefiles
+;; make EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
+;; cd contrib
 ;; make EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
 
 ;; Load CEDET.
@@ -21,7 +23,7 @@
 
 (defvar pl/cedet-root-path (file-name-as-directory "~/.emacs.d/lisp/cedet/"))
 (load-file (concat pl/cedet-root-path "cedet-devel-load.el"))
-(add-to-list 'load-path (concat pl/cedet-root-path "contrib"))
+(load-file (concat pl/cedet-root-path "contrib/cedet-contrib-load.el"))
 
 ;; Add further minor-modes to be enabled by semantic-mode. See doc-string of `semantic-default-submodes' for other
 ;; things you can use here.
