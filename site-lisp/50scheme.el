@@ -23,6 +23,8 @@
 ;; (add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
 
 ;;; geiser
+;; (require 'geiser-install)
+(load-file "~/.emacs.d/lisp/geiser/elisp/geiser.el")
 ;; (setq geiser-mode-auto-p nil)
 (setq geiser-active-implementations '(racket))
 (setq geiser-racket-binary "/Applications/Racket/bin/racket")
@@ -33,6 +35,8 @@
 
 
 ;; http://alexott.net/en/writings/emacs-devenv/EmacsScheme.html
+(eval-after-load "geiser" '(require quack))
+
 (eval-after-load "quack"
   '(progn
     (setq quack-fontify-style nil    ;or 'plt 'emacs
