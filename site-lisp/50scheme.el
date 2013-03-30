@@ -35,7 +35,7 @@
 
 
 ;; http://alexott.net/en/writings/emacs-devenv/EmacsScheme.html
-(eval-after-load "geiser" '(require quack))
+(eval-after-load "geiser" '(require 'quack))
 
 (eval-after-load "quack"
   '(progn
