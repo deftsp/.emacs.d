@@ -13,15 +13,20 @@
 ;;; nrepl
 ;; (add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
 ;; (setq nrepl-popup-stacktraces nil) ; Stop the error buffer from popping up while working in the REPL buffer:
-;; (add-to-list 'same-window-buffer-names "*nrepl*")  ; Make C-c C-z switch to the *nrepl* buffer in the current window:
-;; (add-hook 'nrepl-interaction-mode 'enable-paredit-mode)
+
+;; (setq nrepl-popup-stacktraces-in-repl t) ; enable error buffer popping also in the REPL:
 
 (eval-after-load "clojure-mode"
   '(progn
-    (add-hook 'clojure-mode-hook 'enable-paredit-mode)))
+     (if (fboundp 'rainbow-delimiters-mode)
+         (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode))
+     (add-hook 'clojure-mode-hook 'subword-mode)
+     (add-hook 'clojure-mode-hook 'nrepl-turn-on-eldoc-mode)
+     (add-hook 'clojure-mode-hook 'enable-paredit-mode)))
 
 (eval-after-load "nrepl"
   '(progn
+     (add-hook 'nrepl-mode-hook 'subword-mode)
      (add-hook 'nrepl-mode-hook 'enable-paredit-mode)))
 
 
