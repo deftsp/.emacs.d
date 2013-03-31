@@ -21,7 +21,7 @@
   (setq imenu-generic-expression '(("type" "^type *\\([^ \t\n\r\f]*\\)" 1)
                                    ("func" "^func *\\(.*\\) {" 1)))
   (imenu-add-to-menubar "Index")
-  (setq show-trailing-whitespace t)
+  ;; (setq show-trailing-whitespace t)
   (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
   (local-set-key (kbd "C-c I") 'go-goto-imports))
 
