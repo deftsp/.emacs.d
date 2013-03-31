@@ -48,6 +48,7 @@
 (require '50flymake)
 (require '50ftp)
 (require '50gdb)
+(require '50go)
 (require '50haskell)
 (require '50hideshow)
 (require '50keys)

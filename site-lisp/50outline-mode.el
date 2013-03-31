@@ -216,7 +216,15 @@
 (defconst pl/haskell-mode-outline-regexp
   "^[^\t ].*\\|^.*[\t ]+\\(where\\|of\\|do\\|in\\|if\\|then\\|else\\|let\\|module\\|import\\|deriving\\|instance\\|class\\)[\t\n ]")
 
-(add-hook 'haskell-mode-hook (lambda () (pl/outline-local-set-regexp pl/haskell-mode-outline-regexp)))
+(eval-after-load "haskell-mode"
+  '(add-hook 'haskell-mode-hook (lambda () (pl/outline-local-set-regexp pl/haskell-mode-outline-regexp))))
+
+;;; Go
+(defconst pl/go-mode-outline-regexp
+  "//\\.\\|//[^\r\n\f][^\r\n\f]\\|pack\\|func\\|impo\\|cons\\|var.\\|type\\|\t\t*....")
+
+(eval-after-load "go-mode"
+  '(add-hook 'go-mode-hook (lambda () (pl/outline-local-set-regexp pl/go-mode-outline-regexp))))
 
 ;; (add-hook 'php-mode-user-hook
 ;;           '(lambda ()

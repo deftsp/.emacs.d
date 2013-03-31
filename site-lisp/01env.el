@@ -37,7 +37,7 @@
    (setq mac-option-modifier 'hyper) ; sets the Option key as Super
    (setq mac-command-modifier 'meta) ; sets the Command key as Meta
    (setq mac-control-modifier 'control))
-  (wndows-nt
+  (windows-nt
    ;; setting the PC keyboard's various keys to
    ;; Super or Hyper, for emacs running on Windows.
    (setq w32-pass-lwindow-to-system nil
@@ -59,67 +59,43 @@
 ;; are using a shell in a terminal.
 ;; The "exec-path" is used by emacs itself to find programs it needs for its features, such as spell
 ;; checking, file compression, compiling, grep, diff, etc.
-(defun pl/gentoo-prefix-path ()
-  (if (eq system-type 'darwin)
-      (let ((eprefix (expand-file-name "~/Library/Gentoo"))) ; Gentoo Prefix
-        (if (file-directory-p eprefix)
-            (concat eprefix "/bin:"
-                    eprefix "/usr/bin:")
-            ""))
-      ""))
+(defvar pl/path-list nil "PATH list for darwin only")
 
-(defun pl/xcode-bin-path ()
-  (if (eq system-type 'darwin)
-      (let ((p "/Applications/Xcode.app/Contents/Developer/usr/bin"))
-        (if (file-directory-p p) (concat p ":") ""))
-      ""))
+(defun pl/env-path-init ()
+  (case system-type
+    (darwin
+     (setq pl/path-list `("/Applications/Emacs.app/Contents/MacOS/bin"
+                          "/Applications/Emacs.app/Contents/MacOS/libexec"
+                          ,(expand-file-name "~/bin")
+                          "/usr/texbin"
+                          "/Applications/Gnuplot.app/Contents/Resources/bin"
+                          ,(expand-file-name "~/local/bin")
+                          ,(expand-file-name "~/.cabal/bin")
+                          ,(expand-file-name "~/opt/go-packages/bin")
+                          "/usr/local/bin"
+                          "/opt/bin"))
 
+     (let ((p "/Applications/Xcode.app/Contents/Developer/usr/bin"))
+       (when (file-directory-p p)
+         (add-to-list 'pl/path-list p))))
 
-(setenv "PATH"
-        (concat
-         "/Applications/Emacs.app/Contents/MacOS/bin:"  ; TODO: update for multi platform
-         "/Applications/Emacs.app/Contents/MacOS/libexec:"
-         (expand-file-name "~/bin:")
-         "/usr/texbin:"
-         "/Applications/Gnuplot.app/Contents/Resources/bin:"
-         (expand-file-name "~/local/bin:")
-         (expand-file-name "~/.cabal/bin:")
-         "/usr/local/bin:"
-         "/opt/bin:"
-         (pl/gentoo-prefix-path)
-         (pl/xcode-bin-path)
-         (getenv "PATH")))
+    (windows-nt
+     nil)
+    (gnu/linux
+     nil))
 
-(let ((gentoo-prefix-path (pl/gentoo-prefix-path))
-      (xcode-bin-path (pl/xcode-bin-path)))
-  (mapc (lambda (n) (add-to-list 'exec-path n))
-        `(,(expand-file-name  "~/bin")
-          ,(expand-file-name "~/.cabal/bin")
-           "/usr/texbin"
-           "/Applications/Gnuplot.app/Contents/Resources/bin"
-           "/usr/local/bin"
-           "/usr/local/opt/ruby/bin"
-           "/opt/bin"
-           "/usr/X11R6/bin"))
+  (setq pl/path-list (cl-remove-if-not #'file-directory-p pl/path-list))
 
-  (unless (string-equal gentoo-prefix-path "")
-    (add-to-list 'exec-path gentoo-prefix-path))
-  (unless (string-equal xcode-bin-path "")
-    (add-to-list 'exec-path xcode-bin-path)))
-
-
-
-
-;; EPREFIX="$HOME/Library/Gentoo""
-(when (eq system-type 'darwin)
- (let ((eprefix (expand-file-name "~/Library/Gentoo")))
-  (when (file-directory-p eprefix)
-    (add-to-list 'exec-path (concat eprefix "/bin"))
-    (add-to-list 'exec-path (concat eprefix "/usr/bin")))))
-
-
+  (setenv "PATH"
+          (concat (mapconcat #'identity pl/path-list ":")
+                  ":"
+                  (getenv "PATH")))
+  ;; set exec-path
+  (mapc (lambda (p) (add-to-list 'exec-path p))
+        pl/path-list))
 
 (when (eq system-type 'darwin)
+  (pl/env-path-init)
   (setenv "INFOPATH" (concat (expand-file-name "~/share/info:") (getenv "INFOPATH"))))
 
 
