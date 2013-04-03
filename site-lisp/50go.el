@@ -9,9 +9,9 @@
 ;; "C-c C-j" godef-jump
 ;; "C-c C-d" godef-describe
 
-(add-to-list 'load-path "~/.emacs.d/lisp/goflymake")
 (add-to-list 'load-path "~/.emacs.d/lisp/go-errcheck.el")
 (add-to-list 'load-path "~/opt/go-packages/src/github.com/nsf/gocode/emacs")
+(add-to-list 'load-path "~/opt/go-packages/src/github.com/dougm/goflymake")
 
 (when (eq system-type 'darwin)
  (setenv "GOPATH" (concat (expand-file-name "~/opt/go-packages") ":"
