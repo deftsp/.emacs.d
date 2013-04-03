@@ -19,6 +19,7 @@
 (eval-after-load "flymake"
   '(progn
      (require 'flymake-cursor)
+     (setq flymake-gui-warnings-enabled nil)
      (set-face-attribute 'flymake-warnline nil :foreground "#ccccff" :background "#333300")
      (set-face-attribute 'flymake-errline nil :foreground "#cceecc" :background "#402222")))
 
