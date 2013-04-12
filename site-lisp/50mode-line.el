@@ -53,7 +53,7 @@
        (standard-mode-line-modes
         (list
          " "
-         (propertize "%[" 'help-echo recursive-edit-help-echo)
+         (propertize "%[" 'help-echo recursive-edit-help-echo 'face 'warning)
          (propertize "(" 'help-echo help-echo)
          `(:propertize ("" mode-name)
                        help-echo "Major mode\nmouse-1: Display major mode menu\nmouse-2: Show help for major mode\n mouse-3: Toggle minor modes"
@@ -69,7 +69,7 @@
                      'local-map (make-mode-line-mouse-map
                                  'mouse-1 #'mode-line-widen))
          (propertize ")" 'help-echo help-echo)
-         (propertize "%]" 'help-echo recursive-edit-help-echo))))
+         (propertize "%]" 'help-echo recursive-edit-help-echo 'face 'warning))))
   (setq-default mode-line-modes standard-mode-line-modes)
   (setq-default mode-line-format
                 `("%e"  ;  When Emacs is nearly out of memory for Lisp objects, a brief message saying so.  Otherwise, this is empty.
