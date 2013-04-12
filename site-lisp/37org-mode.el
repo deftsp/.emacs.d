@@ -149,7 +149,7 @@
                       ("MAIL" . ?M)))
 
 ;;;; Capture
-(define-key global-map "\C-cc" 'org-capture)
+;; (define-key global-map "\C-cc" 'org-capture) ; instead of key chord ",c"
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/proj/org/GTD.org" "Tasks")
          "* TODO %?\n  %i%u")

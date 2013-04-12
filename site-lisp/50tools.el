@@ -60,7 +60,7 @@
 (key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
 
 (key-chord-define-global ",r" 'pl/recursive-edit-save-window-config)
-
+(key-chord-define-global ",c" 'org-capture)
 
 (eval-after-load "sgml-mode"
   '(progn
