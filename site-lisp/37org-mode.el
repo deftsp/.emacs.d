@@ -255,6 +255,33 @@
 ;; (org-defkey org-mode-map (kbd "H-o C-h") 'org-shiftcontrolleft)
 
 
+
+;;; jump to agenda buffer when idle
+;; get the idea from http://www.dbrunner.de/it/org-mode.html
+;; I give a little update. execute recursive edit before pop a new window
+(defun pl/jump-to-org-agenda ()
+  (interactive)
+  (let* ((buf (get-buffer "*Org Agenda*"))
+         (wind (get-buffer-window buf)))
+    (if (and buf wind)
+        (select-window wind)
+      (save-window-excursion
+        (if buf
+            (if (called-interactively-p)
+                (progn
+                  (select-window (display-buffer buf t t))
+                  ;; (org-agenda-redo)
+                  (org-fit-window-to-buffer))
+              (with-selected-window (display-buffer buf)
+                ;; (org-agenda-redo)
+                (org-fit-window-to-buffer)))
+          (call-interactively 'org-agenda-list))
+        (recursive-edit)))))
+
+;; every 5 minutes
+(run-with-idle-timer 300 t 'pl/jump-to-org-agenda)
+
+
 (provide '37org-mode)
 
 ;; Local Variables:
