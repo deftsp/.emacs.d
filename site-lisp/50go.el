@@ -22,7 +22,8 @@
                                    ("func" "^func *\\(.*\\) {" 1)))
   (imenu-add-to-menubar "Index")
   ;; (setq show-trailing-whitespace t)
-  (enable-paredit-mode)
+  (if (fboundp 'enable-paredit-mode)
+      (enable-paredit-mode))
   (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
   (local-set-key (kbd "C-c I") 'go-goto-imports))
 
