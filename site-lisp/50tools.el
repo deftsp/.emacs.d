@@ -62,7 +62,10 @@
 (key-chord-define-global ",r" 'pl/recursive-edit-save-window-config)
 
 
-(key-chord-define html-mode-map "{{"  "{{}}\C-b\C-b") ; for go lang template
+(eval-after-load "sgml-mode"
+  '(progn
+     ;; for go lang template
+     (key-chord-define html-mode-map "{{"  "{{}}\C-b\C-b")))
 
 
 
