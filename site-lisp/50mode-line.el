@@ -91,8 +91,8 @@
 
 (setq global-mode-string
       '(" "
-        appt-mode-string
-        working-mode-line-message
+        appt-mode-string " "
+        working-mode-line-message " "
         display-time-string " "
         ;; battery-mode-line-string " "
         ;; win:mode-string

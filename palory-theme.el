@@ -85,6 +85,7 @@
 
    ;; mode-line
    '(mode-line-buffer-id ((t (:foreground "#90377d"))))
+   '(mode-line-emphasis ((t (:foreground "Magenta"))))
    '(mode-line ((t (:foreground "SteelBlue2" :background "#000000" :box nil)))) ; #222222
    '(mode-line-inactive ((t (:foreground "PaleTurquoise3" :background "#222222" :box nil)))) ; #111111
    '(mode-line-highlight ((t (:box nil))))

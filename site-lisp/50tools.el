@@ -61,6 +61,7 @@
 
 (key-chord-define-global ",r" 'pl/recursive-edit-save-window-config)
 (key-chord-define-global ",c" 'org-capture)
+(key-chord-define-global ".c" 'calendar)
 
 (eval-after-load "sgml-mode"
   '(progn
