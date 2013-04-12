@@ -164,7 +164,7 @@
 ;;     (set-window-buffer window buffer)))
 
 ;;; recursive-edit
-;; Hitting C-c r e will put you in a "recursive editing mode", that is simply an embedded call to the editing loop. The
+;; Hitting key chord ",r" will put you in a "recursive editing mode", that is simply an embedded call to the editing loop. The
 ;; point here is that you can exit this inner loop, which means that you return from the recursive-edit function. This
 ;; way, the recursive editing can be guarded by some context-saving macros : here save-window-excursion and
 ;; save-excursion. Once the user quits the recursive edit, the context is restored, which means here that the windows
@@ -177,7 +177,7 @@
 ;; `C-]'   default binding to abort-recursive-edit, This is like exiting, but
 ;; also quits the unfinished command immediately.
 
-(global-set-key (kbd "C-c r e") 'pl/recursive-edit-save-window-config)
+;;; ",r" key-chord
 (defun pl/recursive-edit-save-window-config ()
   (interactive)
   (save-window-excursion

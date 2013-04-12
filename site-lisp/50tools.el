@@ -59,6 +59,14 @@
 (key-chord-define-global ";g" 'magit-status)
 (key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
 
+(key-chord-define-global ",r" 'pl/recursive-edit-save-window-config)
+
+
+(key-chord-define html-mode-map "{{"  "{{}}\C-b\C-b") ; for go lang template
+
+
+
+
 ;;; linkd
 (autoload 'linkd-mode "linkd" "Create or follow hypertext links." t)
 
