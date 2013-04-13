@@ -62,6 +62,8 @@
      (key-chord-define-global "jw" 'ace-jump-word-mode)
      (key-chord-define-global "jl" 'ace-jump-line-mode)
 
+     (key-chord-define-global "/s" 'save-buffer)
+
      (key-chord-define-global ";g" 'magit-status)
      (key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
 
