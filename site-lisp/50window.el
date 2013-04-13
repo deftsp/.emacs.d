@@ -46,10 +46,11 @@
 
 ;;; windmove
 (require 'windmove)
-(global-set-key (kbd "M-P") 'windmove-up)
-(global-set-key (kbd "M-N") 'windmove-down)
-(global-set-key (kbd "M-B") 'windmove-left)
-(global-set-key (kbd "M-F") 'windmove-right)
+;; use key chord "jn "jp" "fn" "fp" instead
+;; (global-set-key (kbd "M-P") 'windmove-up)
+;; (global-set-key (kbd "M-N") 'windmove-down)
+;; (global-set-key (kbd "M-B") 'windmove-left)
+;; (global-set-key (kbd "M-F") 'windmove-right)
 
 
 ;;; horizontal <==> vertical

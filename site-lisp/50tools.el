@@ -38,30 +38,38 @@
 ;; (global-beautify-symbol-mode 1)
 
 ;;; key-chord
-(require 'key-chord)
-(key-chord-mode 1)
-(setq key-chord-one-key-delay 0.16)    ; default 0.2
-(setq key-chord-two-keys-delay 0.06)    ; default 0.1
+(require 'key-chord nil t)
+(eval-after-load "key-chord"
+  '(progn
+     (key-chord-mode 1)
+     (setq key-chord-one-key-delay 0.16)   ; default 0.2
+     (setq key-chord-two-keys-delay 0.06)  ; default 0.1
+
+     (key-chord-define-global "jb" 'windmove-left)
+     (key-chord-define-global "jf" 'windmove-right)
+     (key-chord-define-global "fn" 'windmove-down)
+     (key-chord-define-global "fp" 'windmove-up)
+
+     (key-chord-define-global "''" "`'\C-b")
+     (key-chord-define-global "HH" 'woman)
+     (key-chord-define-global ";r" 'helm-resume)
+     (key-chord-define-global ";s" 'helm-occur)
+     (key-chord-define-global ";f" 'helm-for-files)
+
+     (key-chord-define-global "jk" 'auto-complete)
+
+     (key-chord-define-global "jc" 'ace-jump-char-mode)
+     (key-chord-define-global "jw" 'ace-jump-word-mode)
+     (key-chord-define-global "jl" 'ace-jump-line-mode)
+
+     (key-chord-define-global ";g" 'magit-status)
+     (key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
+
+     (key-chord-define-global ",r" 'pl/recursive-edit-save-window-config)
+     (key-chord-define-global ",c" 'org-capture)
+     (key-chord-define-global ".c" 'calendar)))
 
 
-(key-chord-define-global "''" "`'\C-b")
-(key-chord-define-global "HH" 'woman)
-(key-chord-define-global ";r" 'helm-resume)
-(key-chord-define-global ";s" 'helm-occur)
-(key-chord-define-global ";f" 'helm-for-files)
-
-(key-chord-define-global "jk" 'auto-complete)
-
-(key-chord-define-global "jc" 'ace-jump-char-mode)
-(key-chord-define-global "jw" 'ace-jump-word-mode)
-(key-chord-define-global "jl" 'ace-jump-line-mode)
-
-(key-chord-define-global ";g" 'magit-status)
-(key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
-
-(key-chord-define-global ",r" 'pl/recursive-edit-save-window-config)
-(key-chord-define-global ",c" 'org-capture)
-(key-chord-define-global ".c" 'calendar)
 
 (eval-after-load "sgml-mode"
   '(progn
