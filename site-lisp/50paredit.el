@@ -20,9 +20,6 @@
 
 ;;; Commentary:
 
-;;
-
-
 (autoload 'enable-paredit-mode "paredit"
   "Turn on pseudo-structural editing of Lisp code."
   t)
@@ -31,27 +28,14 @@
 (eval-after-load 'paredit
   '(progn
      ;; (define-key paredit-mode-map (kbd ";")   'self-insert-command)
-     ;; (define-key paredit-mode-map (kbd "<delete>") 'paredit-forward-maybe-delete-region)
-     ;; (define-key paredit-mode-map (kbd "DEL") 'paredit-backward-maybe-delete-region)
      ;; (define-key paredit-mode-map (kbd "RET") nil)
      ;; (define-key emacs-lisp-mode-map (kbd "RET") 'paredit-newline)
      ;; (define-key lisp-mode-shared-map (kbd "RET") 'paredit-newline)
-
-     (define-key paredit-mode-map (kbd "H-m l")  'paredit-splice-sexp-killing-backward)
-     (define-key paredit-mode-map (kbd "H-m h")  'paredit-splice-sexp-killing-forward)
-
-     (define-key paredit-mode-map (kbd "H-l")   'paredit-forward-slurp-sexp)
-     (define-key paredit-mode-map (kbd "H-M-l") 'paredit-forward-barf-sexp)
-
-     (define-key paredit-mode-map (kbd "H-h")   'paredit-backward-slurp-sexp)
-     (define-key paredit-mode-map (kbd "H-M-h") 'paredit-backward-barf-sexp)))
-
-
+     (define-key paredit-mode-map (kbd "<delete>") 'pl/paredit-forward-maybe-delete-region)
+     (define-key paredit-mode-map (kbd "DEL") 'pl/paredit-backward-maybe-delete-region)))
 
 (dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook inferior-lisp-mode-hook))
   (add-hook hook 'enable-paredit-mode))
-
-
 
 (eval-after-load 'scheme
   '(progn
@@ -63,10 +47,6 @@
      (define-key scheme-mode-map (kbd "C-.") 'paredit-forward-slurp-sexp)
      (define-key scheme-mode-map (kbd "C-<") 'paredit-backward-barf-sexp)
      (define-key scheme-mode-map (kbd "C->") 'paredit-forward-barf-sexp)))
-
-;; (eval-after-load 'slime
-;;   '(progn
-;;      (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)))
 
 
 (defun check-region-parens ()
@@ -85,7 +65,7 @@ scan-error if not."
               t)
           (scan-error (signal 'scan-error '("Region parentheses not balanced"))))))))
 
-(defun paredit-backward-maybe-delete-region ()
+(defun pl/paredit-backward-maybe-delete-region ()
   (interactive)
   (if mark-active
       (progn
@@ -93,7 +73,7 @@ scan-error if not."
         (cua-delete-region))
     (paredit-backward-delete)))
 
-(defun paredit-forward-maybe-delete-region ()
+(defun pl/paredit-forward-maybe-delete-region ()
   (interactive)
   (if mark-active
       (progn
@@ -117,8 +97,10 @@ scan-error if not."
 
 ;; (define-key paredit-mode-map (kbd "M-)") 'paredit-wrap-round-from-behind)
 
+
 (eval-after-load 'slime
   '(progn
+     ;; (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
      ;;(define-key slime-mode-map (kbd "C-<return>") 'paredit-newline)
      ;; (define-key slime-mode-map (kbd "[") 'insert-parentheses)
      ;;(define-key slime-mode-map (kbd "]") 'move-past-close-and-reindent)
