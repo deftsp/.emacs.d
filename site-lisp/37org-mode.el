@@ -121,7 +121,8 @@
 
 ;;; org-habit
 (setq org-habit-preceding-days 21
-      org-habit-following-days 7)
+      org-habit-following-days 7
+      org-habit-graph-column 60)
 (eval-after-load "org-habit"
   '(progn
     (set-face-attribute 'org-habit-alert-face nil :foreground "#228822" :background "gold")))
