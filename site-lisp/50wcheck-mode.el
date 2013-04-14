@@ -5,11 +5,22 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 
-(global-set-key (kbd "C-c w s") 'wcheck-mode)
-(global-set-key (kbd "C-c w l") 'wcheck-change-language)
-(global-set-key (kbd "C-c w c") 'wcheck-actions)
-(global-set-key (kbd "C-c w n") 'wcheck-jump-forward)
-(global-set-key (kbd "C-c w p") 'wcheck-jump-backward)
+;;; extral key map
+;; (setq pl/extra-key-map (make-keymap))
+;; (global-set-key [(super z)] pl/extra-key-map)
+;; (define-key pl/extra-key-map "b" 'bbdb)
+;; (define-key pl/extra-key-map "m" 'bbdb-and-mail-with-default-mailer)
+
+(defvar pl/wcheck-mode-map (make-keymap) "wcheck mode key map")
+(define-key pl/wcheck-mode-map "s" 'wcheck-mode)
+(define-key pl/wcheck-mode-map "l" 'wcheck-change-language)
+(define-key pl/wcheck-mode-map "c" 'wcheck-actions)
+(define-key pl/wcheck-mode-map "n" 'wcheck-jump-forward)
+(define-key pl/wcheck-mode-map "p" 'wcheck-jump-backward)
+
+
+(if (fboundp 'key-chord-define-global)
+    (key-chord-define-global ",w" pl/wcheck-mode-map))
 
 
 
