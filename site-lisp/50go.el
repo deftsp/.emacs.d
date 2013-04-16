@@ -18,8 +18,9 @@
                           (expand-file-name "~/Lab/gocode"))))
 
 (defun pl/go-mode-hook-func ()
-  (setq imenu-generic-expression '(("type" "^type *\\([^ \t\n\r\f]*\\)" 1)
-                                   ("func" "^func *\\(.*\\) {" 1)))
+  (setq imenu-generic-expression '(("variable" "^var *\\(.*\\) *" 1)
+                                   ("type" "^type *\\([^ \t\n\r\f]*\\)" 1)
+                                   ("func" "^func *\\(.*\\)" 1)))
   (imenu-add-to-menubar "Index")
   ;; (setq show-trailing-whitespace t)
   (local-set-key (kbd "C-c C-r") 'go-remove-unused-imports)
