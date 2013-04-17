@@ -252,4 +252,18 @@ i.e.,
 ;; (add-hook 'dictem-postprocess-show-info-hook
 ;;           'dictem-postprocess-definition-hyperlinks)
 
+;;; Emacs & Dictionary.app
+;; http://larkery.tumblr.com/post/465585528/emacs-dictionary-app
+(defun pl/mac-open-dictionary (the-word)
+  "Open Dictionary.app for the-word"
+  (interactive "sDictionary Lookup: ")
+  (shell-command (concat "open \"dict:///" (replace-regexp-in-string "\"" "\\\\\"" the-word) "\"")))
+(eval-after-load "key-chord"
+  '(key-chord-define-global ".d" '(lambda ()
+                                    (interactive)
+                                    (pl/mac-open-dictionary (current-word)))))
+
+
+
+
 (provide '50dictionary)
