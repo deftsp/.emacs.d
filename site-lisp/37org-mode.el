@@ -132,11 +132,11 @@
 ;; Set to the name of the file where new notes will be stored
 (setq org-mobile-inbox-for-pull "~/proj/org/from-mobile.org")
 ;; Set to <your Dropbox root directory>/MobileOrg.
-(setq org-mobile-directory "~/Dropbox/MobileOrg")
+(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
 ;; Enable encryption
-(setq org-mobile-use-encryption t)
+(setq org-mobile-use-encryption nil)
 ;; Set a password
-(setq org-mobile-encryption-password "op'et6m")
+(setq org-mobile-encryption-password "")
 
 ;; (setq org-stuck-projects '("+LEVEL=2/-DONE"
 ;;                            ("TODO" "NEXT" "NEXTACTION")
