@@ -1,37 +1,13 @@
 ;; -*- mode: Emacs-Lisp -*-
-;; Time-stamp: <2012-04-13 14:39:08 Shihpin Tseng>
 
-(setq gdb-many-windows t)
-(setq gdb-use-separate-io-buffer t)
 (setq gdb-show-main t)
 
-;; (add-hook 'gud-mode-hook
-;;           '(lambda ()
-;;             (local-set-key [home]       ; move to beginning of line, after prompt
-;;              'comint-bol)
-;;             (local-set-key [up]         ; cycle backward through command history
-;;              '(lambda () (interactive)
-;;                (if (comint-after-pmark-p)
-;;                    (comint-previous-input 1)
-;;                    (previous-line 1))))
-;;             (local-set-key [down]       ; cycle forward through command history
-;;              '(lambda () (interactive)
-;;                (if (comint-after-pmark-p)
-;;                    (comint-next-input 1)
-;;                    (forward-line 1))))
-;;             ))
+(defun pl/gdb-mode-init ()
+  (gud-tooltip-mode 1)
+    ;; (tool-bar-mode t)
+  (gdb-many-windows t))
 
-
-
-;; (defun select-gud-interaction-window ()
-;;   (interactive)
-;;   (if (and (boundp 'gud-comint-buffer)
-;;            gud-comint-buffer
-;;            (window-live-p (get-buffer-window gud-comint-buffer)))
-;;       (select-window (get-buffer-window gud-comint-buffer))
-;;       (message "GUD interaction window is inactive")))
-
-;; (define-key global-map [(f9)] 'select-gud-interaction-window)
+(add-hook 'gud-mode-hook 'pl/gdb-mode-init)
 
 
 (provide '50gdb)
