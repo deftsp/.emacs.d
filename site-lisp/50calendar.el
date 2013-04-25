@@ -1,8 +1,6 @@
 ;;;  Calendar
 ;; How about work with Google Calendars http://bc.tech.coop/blog/070306.html
 (require 'cal-china-x)
-;; cal-china-x can't display chinese date on mode-line correctly, someday I'll remove it.
-(add-hook 'calendar-initial-window-hook 'calendar-update-mode-line)
 
 ;;; face
 (when window-system
