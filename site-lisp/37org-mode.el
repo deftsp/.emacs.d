@@ -111,7 +111,8 @@
       org-agenda-todo-ignore-scheduled t
       org-agenda-skip-scheduled-if-done nil
       org-agenda-todo-list-sublevels t
-      org-agenda-include-diary t
+      ;; I use the diary only for sexp entries and holidays, and Ι have put them into org file.
+      org-agenda-include-diary nil
       ;; agenda view always starts out by showing me the next seven days.
       org-agenda-start-on-weekday nil
       org-fast-tag-selection-single-key (quote expert)
