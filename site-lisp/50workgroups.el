@@ -7,8 +7,8 @@
 (eval-after-load "workgroups"
   '(progn
     (setq wg-prefix-key (kbd "C-c w")
-          wg-mode-line-left-brace "◀"
-          wg-mode-line-right-brace "▶")
+          wg-mode-line-left-brace "♯"
+          wg-mode-line-right-brace "")
     (setq wg-morph-on nil)
     (if (fboundp 'key-chord-define-global)
         (key-chord-define-global ".w" wg-map))
