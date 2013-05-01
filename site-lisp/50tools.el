@@ -50,7 +50,7 @@
      (key-chord-define-global "fn" 'windmove-down)
      (key-chord-define-global "fp" 'windmove-up)
 
-     (key-chord-define-global "''" "`'\C-b")
+     (key-chord-define-global "''" 'pl/apostrophe-key-chord)
      (key-chord-define-global "HH" 'woman)
      (key-chord-define-global ";r" 'helm-resume)
      (key-chord-define-global ";s" 'helm-occur)
