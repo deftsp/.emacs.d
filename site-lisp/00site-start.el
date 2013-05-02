@@ -58,6 +58,7 @@
 (require '50mode-line)
 (require '50net-utils)
 ;; (require '50nethack)
+(require '50ocaml)
 (require '50outline-mode)
 (require '50paredit)
 (require '50patch)
