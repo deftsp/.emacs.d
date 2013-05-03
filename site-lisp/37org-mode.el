@@ -272,10 +272,10 @@
             (if (called-interactively-p)
                 (progn
                   (select-window (display-buffer buf t t))
-                  ;; (org-agenda-redo)
+                  (org-agenda-redo)
                   (org-fit-window-to-buffer))
               (with-selected-window (display-buffer buf)
-                ;; (org-agenda-redo)
+                (org-agenda-redo)
                 (org-fit-window-to-buffer)))
           (call-interactively 'org-agenda-list))
         (recursive-edit)))))
