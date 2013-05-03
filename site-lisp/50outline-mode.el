@@ -175,7 +175,7 @@
 
 ;; all text-based major modes run `text-mode-hook', and all programming language modes run
 ;; `prog-mode-hook', prior to running their own mode hooks
-(add-hook 'prog-mode-hook 'outline-minor-mode)
+(add-hook 'prog-mode-hook (lambda () (outline-minor-mode t)))
 
 ;;; c-mode
 ;; "[:blank:]*\\(.*{\\|.*}\\)"
@@ -228,20 +228,20 @@
 
 ;; (add-hook 'php-mode-user-hook
 ;;           '(lambda ()
-;;             (outline-minor-mode)
+;;             (outline-minor-mode t)
 ;;             (setq outline-regexp " *\\(private funct\\|public funct\\|funct\\|class\\|#head\\)")
 ;;             (hide-sublevels 1)))
 
 ;; (add-hook 'python-mode-hook
 ;;           '(lambda ()
-;;             (outline-minor-mode)
+;;             (outline-minor-mode t)
 ;;             (setq outline-regexp " *\\(def \\|clas\\|#hea\\)")
 ;;             (hide-sublevels 1)))
 
 ;; (add-hook 'change-log-mode-hook
 ;;           (lambda ()
 ;;             (outline-local-set-regexp "[[:digit:]]+")
-;;             (outline-minor-mode)))
+;;             (outline-minor-mode t)))
 
 ;; (add-hook 'emacs-lisp-mode-hook
 ;;           (function (lambda ()

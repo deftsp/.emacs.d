@@ -171,7 +171,7 @@
 
 (eval-after-load "highlight-symbol"
   '(progn
-     (add-hook 'prog-mode-hook 'highlight-symbol-mode)
+     (add-hook 'prog-mode-hook (lambda () (highlight-symbol-mode t)))
      ;; (add-hook 'lisp-mode-hook 'highlight-symbol-mode)
      ;; (add-hook 'emacs-lisp-mode-hook 'highlight-symbol-mode)
      ;; (add-hook 'scheme-mode-hook 'highlight-symbol-mode)
