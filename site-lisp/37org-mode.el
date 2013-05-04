@@ -265,20 +265,21 @@
   (interactive)
   (let* ((buf (get-buffer "*Org Agenda*"))
          (wind (get-buffer-window buf)))
-    (if (and buf wind)
-        (select-window wind)
-      (save-window-excursion
-        (if buf
-            (if (called-interactively-p)
-                (progn
-                  (select-window (display-buffer buf t t))
-                  (org-agenda-redo)
-                  (org-fit-window-to-buffer))
-              (with-selected-window (display-buffer buf)
-                (org-agenda-redo)
-                (org-fit-window-to-buffer)))
-          (call-interactively 'org-agenda-list))
-        (recursive-edit)))))
+    (unless (window-minibuffer-p wind)
+     (if (and buf wind)
+         (select-window wind)
+       (save-window-excursion
+         (if buf
+             (if (called-interactively-p)
+                 (progn
+                   (select-window (display-buffer buf t t))
+                   (org-agenda-redo)
+                   (org-fit-window-to-buffer))
+               (with-selected-window (display-buffer buf)
+                 (org-agenda-redo)
+                 (org-fit-window-to-buffer)))
+           (call-interactively 'org-agenda-list))
+         (recursive-edit))))))
 
 ;; every 5 minutes
 (run-with-idle-timer 300 t 'pl/jump-to-org-agenda)
