@@ -13,6 +13,7 @@
 (eval-after-load "haskell-mode"
   '(progn
      (require 'haskell-process)
+     (setq haskell-stylish-on-save nil) ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
      ;; (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)
      ;; (define-key haskell-mode-map (kbd "C-M-d") 'anything-ghc-browse-document)
      (define-key haskell-mode-map (kbd "C-c |") 'haskell-indent-insert-guard)
