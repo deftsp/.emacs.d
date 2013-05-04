@@ -96,7 +96,8 @@
    '(highlight ((t (:foreground unspecified :background "Lightblue4")))) ; use `unspecified' or `nil' both ok
 
    ;; link
-   '(link ((t (:foreground "#00cdcd" :background unspecified :underline t))))
+   '(link ((t (:foreground "#00cdcd" :background unspecified :underline t weight bold))))
+   '(link-visited ((t (:foreground "violet" :background unspecified :underline t :weight normal))))
 
    ;; info
    '(info-xref ((t (:foreground "DeepSkyBlue2" :weight bold :underline nil))))
