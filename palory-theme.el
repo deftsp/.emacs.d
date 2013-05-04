@@ -63,11 +63,40 @@
 
   (custom-theme-set-faces
    'palory
-
+   ;; basic coloring
    `(default ((t (:background ,palory-bg :foreground ,palory-fg))))
+   '(cursor ((t (:foreground unspecified :background "#cd0000"))))
+
+   ;; mode-line
+   '(mode-line-buffer-id ((t (:foreground "#90377d"))))
+   '(mode-line-emphasis ((t (:foreground "Magenta"))))
+   '(mode-line ((t (:foreground "SteelBlue2" :background "#000000" :box nil)))) ; #222222
+   '(mode-line-inactive ((t (:foreground "PaleTurquoise3" :background "#222222" :box nil)))) ; #111111
+   '(mode-line-highlight ((t (:box nil))))
+
+   ;; fringe
+   `(fringe ((t (:foreground "green" :background ,palory-bg))))
+
+   ;; region
+   '(region ((t (:foreground unspecified :background "#484c50"))))
+
+   ;; secondary-selection
+   '(secondary-selection ((t (:foreground unspecified :background "#485c60"))))
+
+   ;; tooltip
+   '(tooltip ((t (:foreground "#111111" :background "#bcc8dd"))))
+
+   ;; toolbar
+   '(tool-bar ((t (:background "DarkSlateGrey"))))
 
    ;; highlight-symbol
    `(highlight-symbol-face ((t (:background "dodgerblue3" :foreground ,palory-fg))))
+
+   ;; highlight
+   '(highlight ((t (:foreground unspecified :background "Lightblue4")))) ; use `unspecified' or `nil' both ok
+
+   ;; link
+   '(link ((t (:foreground "#00cdcd" :background unspecified :underline t))))
 
    ;; info
    '(info-xref ((t (:foreground "DeepSkyBlue2" :weight bold :underline nil))))
@@ -83,19 +112,6 @@
    '(info-menu-header ((t (:foreground "LawnGreen"))))
    '(info-header-node ((t (:weight normal))))
 
-   ;; mode-line
-   '(mode-line-buffer-id ((t (:foreground "#90377d"))))
-   '(mode-line-emphasis ((t (:foreground "Magenta"))))
-   '(mode-line ((t (:foreground "SteelBlue2" :background "#000000" :box nil)))) ; #222222
-   '(mode-line-inactive ((t (:foreground "PaleTurquoise3" :background "#222222" :box nil)))) ; #111111
-   '(mode-line-highlight ((t (:box nil))))
-
-   ;; fringe
-   `(fringe ((t (:foreground "green" :background ,palory-bg))))
-
-   ;; tooltip
-   '(tooltip ((t (:foreground "#111111" :background "#bcc8dd"))))
-
    ;; show-paren
    '(show-paren-match ((t (:foreground "SteelBlue3"))))
    '(show-paren-mismatch ((t (:foreground "white" :background "purple"))))
@@ -106,6 +122,50 @@
    ;; org-mode
    '(org-headline-done ((t (:strike-through t))))
    '(org-done ((t (:strike-through t))))
+   `(org-hide ((t (:foreground ,palory-bg))))
+   '(org-level-1 ((t (:foreground "lightcoral"))))
+   '(org-level-2 ((t (:foreground "dodgerblue2"))))
+   '(org-level-3 ((t (:foreground "darkolivegreen2"))))
+   '(org-level-4 ((t (:foreground "lightsteelblue"))))
+   '(org-level-5 ((t (:foreground "cyan4"))))
+   '(org-level-6 ((t (:foreground "Aquamarine"))))
+   '(org-level-7 ((t (:foreground "LightSteelBlue"))))
+   '(org-level-8 ((t (:foreground "LightSalmon"))))
+
+
+
+   ;; font lock
+   '(font-lock-builtin-face ((t (:foreground "LightSteelBlue"))))
+   '(font-lock-comment-face ((t (:foreground "#008888"))))
+   '(font-lock-constant-face ((t (:foreground "#22ccee"))))
+   ;; '(font-lock-doc-string-face ((t (:foreground "DarkOrange"))))
+   '(font-lock-function-name-face ((t (:foreground "LightCoral"))))
+   '(font-lock-keyword-face ((t (:foreground "DarkOliveGreen2"))))
+   '(font-lock-preprocessor-face ((t (:foreground "#79C96D"))))
+   ;; '(font-lock-reference-face ((t (:foreground "SlateBlue"))))
+   '(font-lock-string-face ((t (:foreground "#a800a8"))))
+   '(font-lock-type-face ((t (:foreground "#4492e1"))))
+   '(font-lock-variable-name-face ((t (:foreground "DodgerBlue2"))))
+   '(font-lock-warning-face ((t (:foreground "Pink"))))
+
+   ;; icompletep
+   '(icompletep-keys ((t (:foreground "LawnGreen"))))
+   '(icompletep-determined ((t (:foreground "DarkMagenta"))))
+   '(icompletep-choices ((t (:foreground "burlywood"))))
+
+   ;; ido
+   '(ido-subdir ((t (:foreground "DarkTurquoise" :weight bold))))
+   '(ido-first-match ((t (:foreground "DarkMagenta"))))
+
+
+   ;; anything
+   '(anything-ff-directory ((t (:background "222222"))))
+
+   ;; woman
+   '(woman-addition ((t (:foreground "DarkMagenta" :weight bold))))
+   '(woman-bold ((t (:foreground "cyan4" :weight bold))))
+   '(woman-italic ((t (:foreground "orange2" :underline nil))))
+   '(woman-unknown ((t (:foreground "LightSalmon2"))))
 
    ;; rainbow-delimiters
    '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))
@@ -120,6 +180,7 @@
    '(rainbow-delimiters-depth-10-face ((t (:foreground "#9fc59f"))))
    '(rainbow-delimiters-depth-11-face ((t (:foreground "#94bff3"))))
    '(rainbow-delimiters-depth-12-face ((t (:foreground "#8c5353")))))
+
 
   ;;; custom theme variables
   (custom-theme-set-variables
