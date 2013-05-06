@@ -168,6 +168,9 @@
    '(woman-italic ((t (:foreground "orange2" :underline nil))))
    '(woman-unknown ((t (:foreground "LightSalmon2"))))
 
+   ;; dictionary
+   '(dictionary-word-entry-face ((t (:foreground "magenta"))))
+
    ;; rainbow-delimiters
    '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))
    '(rainbow-delimiters-depth-2-face ((t (:foreground "#f0dfaf"))))
