@@ -281,8 +281,8 @@
            (call-interactively 'org-agenda-list))
          (recursive-edit))))))
 
-;; every 5 minutes
-(run-with-idle-timer 300 t 'pl/jump-to-org-agenda)
+;; every 30 minutes
+(run-with-idle-timer (* 30 60) t 'pl/jump-to-org-agenda)
 
 
 (provide '37org-mode)
