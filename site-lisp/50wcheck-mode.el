@@ -4,13 +4,6 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-
-;;; extral key map
-;; (setq pl/extra-key-map (make-keymap))
-;; (global-set-key [(super z)] pl/extra-key-map)
-;; (define-key pl/extra-key-map "b" 'bbdb)
-;; (define-key pl/extra-key-map "m" 'bbdb-and-mail-with-default-mailer)
-
 (defvar pl/wcheck-mode-map (make-keymap) "wcheck mode key map")
 (define-key pl/wcheck-mode-map "s" 'wcheck-mode)
 (define-key pl/wcheck-mode-map "l" 'wcheck-change-language)
