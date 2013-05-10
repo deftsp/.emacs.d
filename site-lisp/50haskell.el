@@ -10,14 +10,29 @@
 
 (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
 
+(defvar pl/haskell-mode-doc-map nil
+  "Keymap for documentation commands. Bound to a prefix key.")
+
 (eval-after-load "haskell-mode"
   '(progn
      (require 'haskell-process)
      (setq haskell-stylish-on-save nil) ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
-     ;; (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)
-     ;; (define-key haskell-mode-map (kbd "C-M-d") 'anything-ghc-browse-document)
+     ;; keymap for documentation
+     (setq pl/haskell-mode-doc-map (make-sparse-keymap))
+     (define-key pl/haskell-mode-doc-map (kbd "i") 'inferior-haskell-info)
+     (define-key pl/haskell-mode-doc-map (kbd "t") 'inferior-haskell-type)
+     (define-key pl/haskell-mode-doc-map (kbd "a") 'helm-ghc-browse-document)
+     (define-key pl/haskell-mode-doc-map (kbd "C-a") 'helm-ghc-browse-document)
+     (define-key pl/haskell-mode-doc-map (kbd "h") 'haskell-hoogle)
+     (define-key pl/haskell-mode-doc-map (kbd "d") 'inferior-haskell-find-haddock)
+     (define-key pl/haskell-mode-doc-map (kbd "C-d") 'inferior-haskell-find-haddock)
+
+     (define-key haskell-mode-map (kbd "C-c C-d") pl/haskell-mode-doc-map)
+     (define-key haskell-mode-map (kbd "C-M-x") 'inferior-haskell-send-decl)
+     (define-key haskell-mode-map (kbd "C-x C-e") 'inferior-haskell-send-decl)
      (define-key haskell-mode-map (kbd "C-c |") 'haskell-indent-insert-guard)
      (define-key haskell-mode-map (kbd "C-j") 'newline)
+     ;; (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)
      (define-key haskell-mode-map (kbd "C-c h") 'haskell-hoogle)))
 
 ;;; ghc-mod
@@ -35,7 +50,8 @@
   ;; initially hide all but the headers
   ;;(hide-body)
 
-  (flymake-mode)
+  (if (buffer-file-name (current-buffer))
+      (flymake-mode))
   (ghc-init))
 
 ;; this gets called by outline to determine the level. Just use the length of the whitespace
