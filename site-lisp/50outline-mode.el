@@ -56,8 +56,9 @@
 
 (eval-after-load 'outline
   '(progn
-     (require 'outline-magic)
-     (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle)))
+     (require 'outline-magic nil t)
+     (if (fboundp 'outline-cycle)
+         (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle))))
 
 
 ;;; change the characters outline mode uses for ellipsis (`…’ by default).

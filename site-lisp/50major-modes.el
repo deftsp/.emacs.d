@@ -145,7 +145,7 @@
 (autoload 'turn-on-eldoc-mode "eldoc" nil t)
 (eval-after-load "eldoc"
   '(progn
-    (require 'eldoc-extension)
+    (require 'eldoc-extension nil t)
     ;; make ElDoc aware of ParEdit's most used commands. Whenever the listed commands are used,
     ;; ElDoc will automatically refresh the minibuffer.
     (eldoc-add-command

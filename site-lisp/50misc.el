@@ -365,12 +365,11 @@
 ;;       show-paren-style 'parenthesis)    ;expression
 
 ;;; mic-paren
-(require 'mic-paren) ; loading
-(paren-activate)     ; activating
 (eval-after-load "mic-paren"
   '(progn
-    (setq paren-sexp-mode 'mismatch)
-    (set-face-attribute 'paren-face-match nil :foreground "#222222" :background "DeepSkyBlue3")))
+     (paren-activate)     ; activating
+     (setq paren-sexp-mode 'mismatch)
+     (set-face-attribute 'paren-face-match nil :foreground "#222222" :background "DeepSkyBlue3")))
 
 
 ;; rainbow-delimiters
