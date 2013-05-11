@@ -233,7 +233,7 @@
 (require 'golden-ratio nil t)
 (eval-after-load "golden-ratio"
   '(progn
-     (golden-ratio-enable)
+     (golden-ratio-mode t)
      (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
      (add-to-list 'golden-ratio-exclude-modes "w3m-select-buffer-mode")
      (add-to-list 'golden-ratio-exclude-modes "w3m-mode")
