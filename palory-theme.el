@@ -168,6 +168,11 @@
    '(woman-italic ((t (:foreground "orange2" :underline nil))))
    '(woman-unknown ((t (:foreground "LightSalmon2"))))
 
+   ;; hex mode
+   '(hexl-address-region ((t (:foreground "#aaffaa" :background "#0022ff"))))
+   '(hexl-ascii-region ((t (:foreground "#ee0000" :background "#ffff00"))))
+
+
    ;; dictionary
    '(dictionary-word-entry-face ((t (:foreground "magenta"))))
 
