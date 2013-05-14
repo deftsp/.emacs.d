@@ -365,9 +365,12 @@
 ;;       show-paren-style 'parenthesis)    ;expression
 
 ;;; mic-paren
+(require 'mic-paren nil t)
+
+(if (fboundp 'paren-activate)
+    (paren-activate))
 (eval-after-load "mic-paren"
   '(progn
-     (paren-activate)     ; activating
      (setq paren-sexp-mode 'mismatch)
      (set-face-attribute 'paren-face-match nil :foreground "#222222" :background "DeepSkyBlue3")))
 
