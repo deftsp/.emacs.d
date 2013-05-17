@@ -155,8 +155,9 @@
    '(icompletep-choices ((t (:foreground "burlywood"))))
 
    ;; ido
-   '(ido-subdir ((t (:foreground "DarkTurquoise" :weight bold))))
-   '(ido-first-match ((t (:foreground "DarkMagenta"))))
+   '(ido-subdir ((t (:foreground "#1e90ff" :weight bold))))
+   '(ido-first-match ((t (:foreground "DarkMagenta" :weight bold))))
+   '(ido-virtual ((t (:foreground "#638383"))))
 
 
    ;; anything
@@ -169,8 +170,8 @@
    '(woman-unknown ((t (:foreground "LightSalmon2"))))
 
    ;; hex mode
-   '(hexl-address-region ((t (:foreground "#aaffaa" :background "#0022ff"))))
-   '(hexl-ascii-region ((t (:foreground "#ee0000" :background "#ffff00"))))
+   '(hexl-address-region ((t (:foreground "#99bb99" :background "#002299"))))
+   '(hexl-ascii-region ((t (:foreground "#00cbcb" :background "#334444"))))
 
 
    ;; dictionary
