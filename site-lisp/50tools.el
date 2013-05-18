@@ -38,6 +38,7 @@
 ;; (global-beautify-symbol-mode 1)
 
 ;;; key-chord
+;; maybe try to bind a key chord to a key map is a good idea
 (require 'key-chord nil t)
 (eval-after-load "key-chord"
   '(progn
@@ -63,6 +64,7 @@
      (key-chord-define-global "jl" 'ace-jump-line-mode)
 
      (key-chord-define-global "/s" 'save-buffer)
+     (key-chord-define-global "##" 'server-edit)
 
      (key-chord-define-global ";g" 'magit-status)
      (key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
