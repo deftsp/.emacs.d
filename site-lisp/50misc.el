@@ -296,7 +296,7 @@
 ;; (follow-mode t)
 
 
-(mouse-avoidance-mode 'animate)
+;; (mouse-avoidance-mode 'animate) ;; disable it until fix the bug in `org-capture' buffer 'C-x C-q' error
 (setq auto-image-file-mode nil)
 ;;Automatically uncompress .gz files
 (auto-compression-mode 1)
