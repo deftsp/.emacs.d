@@ -1128,6 +1128,8 @@ such character is found, following options are shown:
     '(diminish 'paredit-mode " π"))
   (eval-after-load "eldoc"
     '(diminish 'eldoc-mode ""))
+  (eval-after-load "golden-ratio"
+    '(diminish 'golden-ratio-mode " φ"))
   (eval-after-load "highlight-symbol"
     '(diminish 'highlight-symbol-mode " H")))
 
