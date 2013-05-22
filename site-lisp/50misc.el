@@ -133,18 +133,6 @@
   (setq ns-pop-up-frames nil))
 
 
-;;; diminish
-;; Makes minor mode names in the modeline shorter.
-;; (require 'diminish)
-;; (diminish 'icicle-mode "")
-;; (eval-after-load "filladapt"
-;;   '(diminish 'filladapt-mode "Fill"))
-;; (eval-after-load "abbrev"
-;;   '(diminish 'abbrev-mode "Abv"))
-;; (eval-after-load "doxymacs"
-;;   '(diminish 'doxymacs-mode "dox"))
-
-
 (add-hook 'suspend-hook 'do-auto-save) ;; Auto-Save on ^Z
 
 (setq-default indicate-buffer-boundaries 'right)
