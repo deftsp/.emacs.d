@@ -237,6 +237,7 @@
      (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
      (add-to-list 'golden-ratio-exclude-modes "w3m-select-buffer-mode")
      (add-to-list 'golden-ratio-exclude-modes "w3m-mode")
+     (add-to-list 'golden-ratio-exclude-modes "org-mode")
      (add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p)
      (require 'ediff nil t)
      (if (boundp 'ediff-this-buffer-ediff-sessions)
