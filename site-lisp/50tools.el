@@ -987,6 +987,12 @@ such character is found, following options are shown:
 (eval-after-load "ace-jump-mode"
   '(progn
      (setq ace-jump-mode-case-fold nil)
+     (setq ace-jump-mode-move-keys
+           (nconc (loop for i from ?a to ?z collect i)
+                  (loop for i from ?A to ?Z collect i)
+                  (loop for i from ?\! to ?\@ collect i)
+                  (loop for i from ?\[ to ?\` collect i)
+                  (loop for i from ?\{ to ?\~ collect i)))
      ;; after enable ace jump mode mark sync, use `C-u C-SPC' is enough
      ;; (define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
      ;; (define-key global-map (kbd "M-g M-g") 'ace-jump-mode)
