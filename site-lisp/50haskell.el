@@ -80,4 +80,7 @@
 ;; You can now use M-. on a name in a Haskell buffer which will jump directly to its definition.
 (setq haskell-tags-on-save nil)
 
+;;; hamlet-mode
+(require 'hamlet-mode nil t)
+
 (provide '50haskell)

@@ -74,6 +74,11 @@
                :type github
                :pkgname "deftsp/git-emacs"
                :features git-emacs)
+        (:name hamlet-mode
+               :description "An emacs mode for editing files written in Hamlet, Yesod's HTML-like templating language."
+               :type github
+               :pkgname "lightquake/hamlet-mode"
+               :features hamlet-mode)
         (:name glsl-mode
                :type github
                :description "major mode for Open GLSL shader files"
