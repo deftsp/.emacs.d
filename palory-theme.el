@@ -173,6 +173,8 @@
    '(hexl-address-region ((t (:foreground "#99bb99" :background "#002299"))))
    '(hexl-ascii-region ((t (:foreground "#00cbcb" :background "#334444"))))
 
+   ;; haskell mode
+   '(haskell-interactive-face-prompt ((t (:foreground "#00b2ee"))))
 
    ;; dictionary
    '(dictionary-word-entry-face ((t (:foreground "magenta"))))
