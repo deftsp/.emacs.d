@@ -408,8 +408,9 @@ vi style of % jumping to matching brace."
 ;;; scroll
 (when window-system
   (mouse-wheel-mode t)
-  ;; scroll one line at a time (less "jumpy" than defaults)
-  (setq mouse-wheel-scroll-amount '(0.01  ; one line at a time
+  ;; scroll one line at a time (less "jumpy" than defaults).
+  ;; It can also be a floating point number, specifying the fraction of a full screen to scroll.
+  (setq mouse-wheel-scroll-amount '(1  ; one line at a time
                                     ((shift) . 1)
                                     ((control))))
   (setq mouse-wheel-progressive-speed nil) ;; don't accelerate scrolling
@@ -443,14 +444,11 @@ vi style of % jumping to matching brace."
 ;; (global-set-key [C-mouse-4] 'down-a-lot)
 ;; (global-set-key [C-mouse-5] 'up-a-lot)
 
-(setq scroll-step 1                     ; keyboard scroll one line at a time
+(setq scroll-step 1                     ; default 0, keyboard scroll one line at a time
       scroll-margin 3
       scroll-conservatively 10000)     ; Fix the whole huge-jumps-scrolling-between-windows nastiness
 (setq next-screen-context-lines 3)  ; how many from page up/down
-;; What it says. Keeps the cursor in the same relative row during pgups and dwns.
-(setq scroll-preserve-screen-position t)
-
-;; "Don't hscroll unless needed"- ? More voodoo lisp.
+(setq scroll-preserve-screen-position nil) ; notice: set this to `t' will casue scrool jump badly
 (setq hscroll-margin 1)
 
 ;;; Make cursor stay in the same column when scrolling using pgup/dn.
@@ -468,14 +466,36 @@ vi style of % jumping to matching brace."
 ;;     ad-do-it
 ;;     (move-to-column col)))
 
+(defun sfp-page-down (&optional arg)
+  (interactive "^P")
+  (setq this-command 'next-line)
+  (next-line
+   (- (window-text-height)
+      next-screen-context-lines)))
+(put 'sfp-page-down 'isearch-scroll t)
+(put 'sfp-page-down 'CUA 'move)
+
+(defun sfp-page-up (&optional arg)
+  (interactive "^P")
+  (setq this-command 'previous-line)
+  (previous-line
+   (- (window-text-height)
+      next-screen-context-lines)))
+(put 'sfp-page-up 'isearch-scroll t)
+(put 'sfp-page-up 'CUA 'move)
+
+(global-set-key (kbd "C-v") 'sfp-page-down)
+(global-set-key (kbd "M-v") 'sfp-page-up)
+;; ------- scroll end here -------------------------------------------------------------
+
 ;; Insert space/slash after completion
 (setq comint-completion-addsuffix t)
 
-;;Might as well limit how many messages fill up in the message buffer.
-;;Not that we'll ever get that many, but just in case!
+;; Might as well limit how many messages fill up in the message buffer.
+;; Not that we'll ever get that many, but just in case!
 (setq message-log-max 3000)
 
-;;"With argument t, set the random number seed from the current time and pid."
+;; "With argument t, set the random number seed from the current time and pid."
 (random t)
 
 (setq cursor-in-non-selected-windows t)

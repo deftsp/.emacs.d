@@ -175,31 +175,7 @@ Require `font-lock'."
 ;;    mapping))
 
 ;; (remap-keyboard *unshifted-special-chars-layout*)
-;;Unshifted special characters ends there--------------------------------------------------------------------------------
-
-
-;;; Scrolling ---------
-
-(defun sfp-page-down (&optional arg)
-  (interactive "^P")
-  (setq this-command 'next-line)
-  (next-line
-   (- (window-text-height)
-      next-screen-context-lines)))
-(put 'sfp-page-down 'isearch-scroll t)
-(put 'sfp-page-down 'CUA 'move)
-
-(defun sfp-page-up (&optional arg)
-  (interactive "^P")
-  (setq this-command 'previous-line)
-  (previous-line
-   (- (window-text-height)
-      next-screen-context-lines)))
-(put 'sfp-page-up 'isearch-scroll t)
-(put 'sfp-page-up 'CUA 'move)
-
-(global-set-key (kbd "C-v") 'sfp-page-down)
-(global-set-key (kbd "M-v") 'sfp-page-up)
+;; Unshifted special characters ends there--------------------------------------------------------------------------------
 
 ;;; repeat to mark multi-line
 (global-set-key (kbd "C-z") 'pl/mark-line)
