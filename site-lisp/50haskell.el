@@ -4,8 +4,8 @@
 
 ;; Keywords:
 
-;; (require 'haskell-mode nil t)
-;; (load "haskell-site-file") ; load by el-get
+;; (add-to-list 'load-path "~/.emacs.d/lisp/haskell-mode/")
+;; (require 'haskell-mode-autoloads)
 
 (defvar pl/haskell-mode-doc-map nil
   "Keymap for documentation commands. Bound to a prefix key.")
@@ -18,6 +18,7 @@
      (require 'haskell-process)
      (setq haskell-stylish-on-save nil) ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
      (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+     (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
      ;; keymap for documentation
      (setq pl/haskell-mode-doc-map (make-sparse-keymap))
      (define-key pl/haskell-mode-doc-map (kbd "i") 'haskell-process-do-info) ; inferior-haskell-info
@@ -70,6 +71,10 @@
 
   ;; Jump to the definition of the current symbol.
   (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-tag-find)
+
+  ;; Interactive block indentation
+  (define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
+  (define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)
 
   (define-key haskell-mode-map (kbd "C-c h") 'haskell-hoogle))
 
