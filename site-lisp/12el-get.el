@@ -79,12 +79,6 @@
                :type github
                :pkgname "lightquake/hamlet-mode"
                :features hamlet-mode)
-        (:name haskell-mode
-               :description "A Haskell editing mode"
-               :type github
-               :pkgname "haskell/haskell-mode"
-               :load "haskell-site-file.el"
-               :build (("make" "all")))
         (:name glsl-mode
                :type github
                :description "major mode for Open GLSL shader files"
