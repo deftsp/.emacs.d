@@ -1001,7 +1001,7 @@ This command is to be used interactively."
 ;; M-x autoarg-mode & autoarg-kp-mode
 
 ;;; rename-file-and-buffer
-(defun rename-file-and-buffer (new-name)
+(defun pl/rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
@@ -1016,9 +1016,9 @@ This command is to be used interactively."
               (set-visited-file-name new-name)
               (set-buffer-modified-p nil))))))
 
-(global-set-key (kbd "C-c f r")  'rename-file-and-buffer)
+(global-set-key (kbd "C-c f r")  'pl/rename-file-and-buffer)
 
-(defun move-buffer-and-file (dir)
+(defun pl/move-buffer-and-file (dir)
   "Moves both current buffer and file it's visiting to DIR."
   (interactive "DNew directory: ")
   (let* ((name (buffer-name))
@@ -1037,32 +1037,9 @@ This command is to be used interactively."
           (set-buffer-modified-p nil)
           t))))
 
-(global-set-key (kbd "C-c f R") 'move-buffer-and-file)
-;;------------------------------------------------------------------------------------------
-
-;;; auto-show
-;; This file has been obsolete since Emacs 21.1.because Emacs does hscrolling automatically, now.
-;; load auto-show (shows lines when cursor moves to right of long line).
-;; (require 'auto-show)
-;; (auto-show-mode 1)
-;; (setq-default auto-show-mode t)
-;; will position the cursor to end of output in shell mode.
-;; (auto-show-make-point-visible)
-
-;;----------------------------------------------------------------------------------------------------
-
-;;; buffer-move
-;; swap buffers without typing C-x b on each window
-(eval-after-load "buffer-move"
-  '(progn
-     (global-set-key (kbd "M-[ p") 'buf-move-up)
-     (global-set-key (kbd "M-[ n") 'buf-move-down)
-     (global-set-key (kbd "M-[ b") 'buf-move-left)
-     (global-set-key (kbd "M-[ f") 'buf-move-right)))
-
+(global-set-key (kbd "C-c f R") 'pl/move-buffer-and-file)
 
 ;;; info
-
 ;; (setq Info-dir-contents nil)
 (add-to-list 'Info-directory-list "~/share/info/")
 ;; (setq Info-additional-directory-list '("~/share/info"))

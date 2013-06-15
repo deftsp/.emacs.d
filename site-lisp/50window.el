@@ -54,6 +54,31 @@
 
 
 ;;; horizontal <==> vertical
+(defun pl/toggle-window-split ()
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+             (next-win-buffer (window-buffer (next-window)))
+             (this-win-edges (window-edges (selected-window)))
+             (next-win-edges (window-edges (next-window)))
+             (this-win-2nd (not (and (<= (car this-win-edges)
+                                         (car next-win-edges))
+                                     (<= (cadr this-win-edges)
+                                         (cadr next-win-edges)))))
+             (splitter
+              (if (= (car this-win-edges)
+                     (car (window-edges (next-window))))
+                  'split-window-horizontally
+                'split-window-vertically)))
+        (delete-other-windows)
+        (let ((first-win (selected-window)))
+          (funcall splitter)
+          (if this-win-2nd (other-window 1))
+          (set-window-buffer (selected-window) this-win-buffer)
+          (set-window-buffer (next-window) next-win-buffer)
+          (select-window first-win)
+          (if this-win-2nd (other-window 1))))))
+
 ;; horizontal-to-vertical
 (defun pl/window-horizontal-to-vertical ()
   "Switches from a horizontal split to a vertical split."
@@ -250,4 +275,23 @@
   (if (boundp 'helm-alive-p)
       (symbol-value 'helm-alive-p)))
 
+;;; buffer-move
+;; swap buffers without typing C-x b on each window
+(eval-after-load "buffer-move"
+  '(progn
+     (global-set-key (kbd "M-[ p") 'buf-move-up)
+     (global-set-key (kbd "M-[ n") 'buf-move-down)
+     (global-set-key (kbd "M-[ b") 'buf-move-left)
+     (global-set-key (kbd "M-[ f") 'buf-move-right)))
+
+;;; popwin
+;; https://github.com/m2ym/popwin-el
+(require 'popwin nil t)
+(eval-after-load "popwin"
+  ;; (global-set-key (kbd "C-z") popwin:keymap)
+  ;; (add-to-list 'popwin:special-display-config)
+  (popwin-mode 1))
+
+
+;;;
 (provide '50window)
