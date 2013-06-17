@@ -44,6 +44,14 @@
       ;;*Non-nil means that even a unique completion must be confirmed.
       ido-confirm-unique-completion t)
 
+;;; ido-better-flex
+;; it is a little slow when use with smex
+;; (require 'ido-better-flex nil t)
+;; (eval-after-load "ido-better-flex"
+;;   '(progn
+;;      (ido-better-flex/enable)))
+
+
 ;;;
 ;; C-f         fallback to non-ido `find-file' or switch to `ido-find-file' in ido-switch-buffer
 ;; C-j         If no buffer or file exactly matching the prompt exists, maybe create a new one.
