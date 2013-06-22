@@ -38,8 +38,8 @@
 ;;; haskell mode hook
 (add-hook 'haskell-mode-hook 'pl/haskell-mode-setup)
 (defun pl/haskell-mode-setup ()
-  (if (buffer-file-name (current-buffer))
-      (flymake-mode))
+  ;; (if (buffer-file-name (current-buffer))
+  ;;     (flymake-mode))
   (ghc-init)
   ;; enable our level computation
   (setq outline-level 'pl/outline-level)
