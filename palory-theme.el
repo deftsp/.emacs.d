@@ -190,10 +190,7 @@
    '(rainbow-delimiters-depth-6-face ((t (:foreground "#8cd0d3"))))
    '(rainbow-delimiters-depth-7-face ((t (:foreground "#dfaf8f"))))
    '(rainbow-delimiters-depth-8-face ((t (:foreground "#dc8cc3"))))
-   '(rainbow-delimiters-depth-9-face ((t (:foreground "#d0bf8f"))))
-   '(rainbow-delimiters-depth-10-face ((t (:foreground "#9fc59f"))))
-   '(rainbow-delimiters-depth-11-face ((t (:foreground "#94bff3"))))
-   '(rainbow-delimiters-depth-12-face ((t (:foreground "#8c5353")))))
+   '(rainbow-delimiters-depth-9-face ((t (:foreground "#d0bf8f")))))
 
 
   ;;; custom theme variables
