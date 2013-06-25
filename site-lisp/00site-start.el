@@ -71,7 +71,7 @@
 (require '50search)
 (require '50shell)
 (require '50slime-js)
-(require '50switching-buffers)
+(require '50buffer)
 (require '50tab-completion)
 (require '50tempo)
 (require '50tools)
