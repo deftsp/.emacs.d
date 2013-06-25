@@ -46,6 +46,7 @@
   (outline-minor-mode t)
   ;; initially hide all but the headers
   ;;(hide-body)
+  (subword-mode +1)
   (define-key haskell-mode-map (kbd "C-c C-d") pl/haskell-mode-doc-map)
   (define-key haskell-mode-map (kbd "C-M-x") 'inferior-haskell-send-decl)
   (define-key haskell-mode-map (kbd "C-x C-e") 'inferior-haskell-send-decl)
