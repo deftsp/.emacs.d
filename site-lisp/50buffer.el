@@ -151,4 +151,4 @@
           "\\`\\*ftp .*\\*\\`"))
 
 
-(provide '50switching-buffer)
+(provide '50buffer)
