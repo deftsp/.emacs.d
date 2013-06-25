@@ -45,6 +45,7 @@
 
 
 ;;; magit
+(autoload 'magit-grep "magit" "Command for `grep'." t) ; which is not a autload function at 2013.06.25 yet
 (global-set-key (kbd "C-x G") 'magit-status)
 (eval-after-load "magit"
   '(progn
