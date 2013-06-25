@@ -245,11 +245,11 @@
 
 ;;; popwin
 ;; https://github.com/m2ym/popwin-el
-(require 'popwin nil t)
-(eval-after-load "popwin"
-  ;; (global-set-key (kbd "C-z") popwin:keymap)
-  ;; (add-to-list 'popwin:special-display-config)
-  (popwin-mode 1))
+;; (require 'popwin nil t)
+;; (eval-after-load "popwin"
+;;   ;; (global-set-key (kbd "C-z") popwin:keymap)
+;;   ;; (add-to-list 'popwin:special-display-config)
+;;   (popwin-mode 1))
 
 
 ;;;
