@@ -1065,13 +1065,29 @@ such character is found, following options are shown:
     (pwp-mode 1))
 
 ;;; mutiple cursors
+(defvar pl/mutiple-cursors-key-chord-map nil
+  "Keymap for key chord prefix commands in haskell mode.")
+(eval-after-load "multiple-cursors"
+  '(progn
+     (setq pl/mutiple-cursors-key-chord-map (make-sparse-keymap))
+
+     (key-chord-define-global ";c" pl/mutiple-cursors-key-chord-map)
+     (define-key pl/mutiple-cursors-key-chord-map (kbd "l") 'mc/edit-lines)
+     (define-key pl/mutiple-cursors-key-chord-map (kbd "c") 'mc/edit-lines)
+     (define-key pl/mutiple-cursors-key-chord-map (kbd "C-e") 'mc/edit-ends-of-lines)
+     (define-key pl/mutiple-cursors-key-chord-map (kbd "e") 'mc/edit-ends-of-lines)
+     (define-key pl/mutiple-cursors-key-chord-map (kbd "C-a") 'mc/edit-beginnings-of-lines)
+     (define-key pl/mutiple-cursors-key-chord-map (kbd "a") 'mc/edit-beginnings-of-lines)
+     (define-key pl/mutiple-cursors-key-chord-map (kbd "SPC") 'set-rectangular-region-anchor)
+     (define-key pl/mutiple-cursors-key-chord-map (kbd "m") 'set-rectangular-region-anchor)))
+
 ;; From active region to multiple cursors:
 (global-set-key (kbd "ESC ESC c c") 'mc/edit-lines)
 (global-set-key (kbd "ESC ESC c C-e") 'mc/edit-ends-of-lines)
 (global-set-key (kbd "ESC ESC c C-a") 'mc/edit-beginnings-of-lines)
 
 ;; Rectangular region mode
-;; (global-set-key (kbd "H-SPC") 'set-rectangular-region-anchor)
+(global-set-key (kbd "H-SPC") 'set-rectangular-region-anchor)
 
 ;; Mark more like this
 (global-set-key (kbd "C-*") 'mc/mark-all-like-this)
