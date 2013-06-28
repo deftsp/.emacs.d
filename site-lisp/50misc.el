@@ -24,7 +24,7 @@
       read-quoted-char-radix 10         ; accept decimal input when using ^q, e.g.: ^q 13 [RET] -> ^M
       history-length 250
       ;; echo unfinished commands after this many seconds of pause.
-      echo-keystrokes 0                 ; 0.1
+      echo-keystrokes 0.3                 ; 0.1
       tooltip-hide-delay 20             ; defautl 10
       yank-excluded-properties t        ; do not paste any properties
       mouse-yank-at-point t
