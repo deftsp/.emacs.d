@@ -25,7 +25,9 @@
 
      (setq pl/haskell-mode-key-chord-map (make-sparse-keymap))
      (define-key pl/haskell-mode-key-chord-map (kbd "e") 'haskell-indent-insert-equal)
+     (define-key pl/haskell-mode-key-chord-map (kbd "=") 'haskell-indent-insert-equal)
      (define-key pl/haskell-mode-key-chord-map (kbd "g") 'haskell-indent-insert-guard)
+     (define-key pl/haskell-mode-key-chord-map (kbd "|") 'haskell-indent-insert-guard)
      (define-key pl/haskell-mode-key-chord-map (kbd "o") 'haskell-indent-insert-otherwise)
      (define-key pl/haskell-mode-key-chord-map (kbd "w") 'haskell-indent-insert-where)
      (define-key pl/haskell-mode-key-chord-map (kbd ".") 'haskell-indent-align-guards-and-rhs)
