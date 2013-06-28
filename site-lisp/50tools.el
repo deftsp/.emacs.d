@@ -39,7 +39,6 @@
 
 ;;; key-chord
 ;; maybe try to bind a key chord to a key map is a good idea
-(require 'key-chord nil t)
 (eval-after-load "key-chord"
   '(progn
      (key-chord-mode 1)

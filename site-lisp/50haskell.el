@@ -10,6 +10,9 @@
 (defvar pl/haskell-mode-doc-map nil
   "Keymap for documentation commands. Bound to a prefix key.")
 
+(defvar pl/haskell-mode-key-chord-map nil
+  "Keymap for key chord prefix commands in haskell mode.")
+
 (eval-after-load "haskell-mode"
   '(progn
      (setq haskell-font-lock-symbols t
@@ -19,6 +22,15 @@
      (setq haskell-stylish-on-save nil) ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
      (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
      (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
+
+     (setq pl/haskell-mode-key-chord-map (make-sparse-keymap))
+     (define-key pl/haskell-mode-key-chord-map (kbd "e") 'haskell-indent-insert-equal)
+     (define-key pl/haskell-mode-key-chord-map (kbd "g") 'haskell-indent-insert-guard)
+     (define-key pl/haskell-mode-key-chord-map (kbd "o") 'haskell-indent-insert-otherwise)
+     (define-key pl/haskell-mode-key-chord-map (kbd "w") 'haskell-indent-insert-where)
+     (define-key pl/haskell-mode-key-chord-map (kbd ".") 'haskell-indent-align-guards-and-rhs)
+     (define-key pl/haskell-mode-key-chord-map (kbd ">") 'haskell-indent-put-region-in-literate)
+
      ;; keymap for documentation
      (setq pl/haskell-mode-doc-map (make-sparse-keymap))
      (define-key pl/haskell-mode-doc-map (kbd "i") 'haskell-process-do-info) ; inferior-haskell-info
@@ -28,6 +40,9 @@
      (define-key pl/haskell-mode-doc-map (kbd "h") 'haskell-hoogle)
      (define-key pl/haskell-mode-doc-map (kbd "d") 'inferior-haskell-find-haddock)
      (define-key pl/haskell-mode-doc-map (kbd "C-d") 'inferior-haskell-find-haddock)))
+
+
+
 
 ;;; ghc-mod
 ;; install ghc-mod
@@ -47,6 +62,8 @@
   ;; initially hide all but the headers
   ;;(hide-body)
   (subword-mode +1)
+  (when (fboundp 'key-chord-define)
+    (key-chord-define haskell-mode-map ".x" pl/haskell-mode-key-chord-map))
   (define-key haskell-mode-map (kbd "C-c C-d") pl/haskell-mode-doc-map)
   (define-key haskell-mode-map (kbd "C-M-x") 'inferior-haskell-send-decl)
   (define-key haskell-mode-map (kbd "C-x C-e") 'inferior-haskell-send-decl)
@@ -94,6 +111,7 @@
 ;; Note that the three indentation modules are mutually exclusive - add at most one. In preference for the more advanced.
 (remove-hook 'haskell-mode-hook 'turn-on-haskell-indentation) ; el-get default install `turn-on-haskell-indentation'
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(setq haskell-indent-thenelse 2)
 ;; (setq haskell-indentation-layout-offset 4
 ;;       haskell-indentation-left-offset 4
 ;;       haskell-indentation-ifte-offset 4)
@@ -117,5 +135,25 @@
 
 ;;; hamlet-mode
 (require 'hamlet-mode nil t)
+
+
+;;; align regexp
+(add-to-list 'align-rules-list
+             '(haskell-types
+               (regexp . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
+               (modes quote (haskell-mode literate-haskell-mode))))
+(add-to-list 'align-rules-list
+             '(haskell-assignment
+               (regexp . "\\(\\s-+\\)=\\s-+")
+               (modes quote (haskell-mode literate-haskell-mode))))
+(add-to-list 'align-rules-list
+             '(haskell-arrows
+               (regexp . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
+               (modes quote (haskell-mode literate-haskell-mode))))
+(add-to-list 'align-rules-list
+             '(haskell-left-arrows
+               (regexp . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")
+               (modes quote (haskell-mode literate-haskell-mode))))
+
 
 (provide '50haskell)

@@ -4,6 +4,10 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
+
+;;; neat stuffs
+(require 'key-chord nil t)
+
 (defun pl/future-time-string (delay)
   (format-time-string "%H:%M"
                       (seconds-to-time (+ (time-to-seconds (current-time))
