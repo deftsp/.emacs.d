@@ -32,6 +32,7 @@
      (define-key pl/haskell-mode-key-chord-map (kbd "w") 'haskell-indent-insert-where)
      (define-key pl/haskell-mode-key-chord-map (kbd ".") 'haskell-indent-align-guards-and-rhs)
      (define-key pl/haskell-mode-key-chord-map (kbd ">") 'haskell-indent-put-region-in-literate)
+     (define-key pl/haskell-mode-key-chord-map (kbd "l") 'pl/pop-haskell-process-log-buffer)
 
      ;; keymap for documentation
      (setq pl/haskell-mode-doc-map (make-sparse-keymap))
@@ -104,6 +105,15 @@
     (save-excursion
       (skip-chars-forward "\t ")
       (current-column))))
+
+
+;;;
+(defun pl/pop-haskell-process-log-buffer ()
+  (interactive)
+  (let ((buf (get-buffer "*haskell-process-log*")))
+    (if buf
+        (pop-to-buffer buf)
+      (message "Can not find haskell process log buffer. Have you start inferior?"))))
 
 
 ;;; indent
