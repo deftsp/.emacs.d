@@ -125,8 +125,18 @@
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (setq haskell-indent-thenelse 2)
 (eval-after-load "haskell-indent"
-  '(progn
-     (setcdr (assoc "do" haskell-indent-after-keywords) (cons 4 ()))))
+  '(setq haskell-indent-after-keywords '(("where" 2 0)
+                                         ("of" 2)
+                                         ("do" 4 0)
+                                         ("mdo" 2)
+                                         ("rec" 2)
+                                         ("in" 2 0)
+                                         ("{" 2)
+                                         ("defaultLayout" 4)
+                                         "if"
+                                         "then"
+                                         "else"
+                                         "let")))
 
 
 ;; (setq haskell-indentation-layout-offset 4
