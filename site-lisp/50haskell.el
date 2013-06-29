@@ -124,6 +124,11 @@
 (remove-hook 'haskell-mode-hook 'turn-on-haskell-indentation) ; el-get default install `turn-on-haskell-indentation'
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 (setq haskell-indent-thenelse 2)
+(eval-after-load "haskell-indent"
+  '(progn
+     (setcdr (assoc "do" haskell-indent-after-keywords) (cons 4 ()))))
+
+
 ;; (setq haskell-indentation-layout-offset 4
 ;;       haskell-indentation-left-offset 4
 ;;       haskell-indentation-ifte-offset 4)
