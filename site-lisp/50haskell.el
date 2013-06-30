@@ -34,6 +34,7 @@
      (define-key pl/haskell-mode-key-chord-map (kbd ".") 'haskell-indent-align-guards-and-rhs)
      (define-key pl/haskell-mode-key-chord-map (kbd ">") 'haskell-indent-put-region-in-literate)
      (define-key pl/haskell-mode-key-chord-map (kbd "l") 'pl/pop-haskell-process-log-buffer)
+     (define-key pl/haskell-mode-key-chord-map (kbd "u") (lambda () (interactive) (insert "undefined")))
 
      ;; keymap for documentation
      (setq pl/haskell-mode-doc-map (make-sparse-keymap))
@@ -166,22 +167,23 @@
 
 
 ;;; align regexp
-(add-to-list 'align-rules-list
-             '(haskell-types
-               (regexp . "\\(\\s-+\\)\\(::\\|∷\\)\\s-+")
-               (modes quote (haskell-mode literate-haskell-mode))))
-(add-to-list 'align-rules-list
-             '(haskell-assignment
-               (regexp . "\\(\\s-+\\)=\\s-+")
-               (modes quote (haskell-mode literate-haskell-mode))))
-(add-to-list 'align-rules-list
-             '(haskell-arrows
-               (regexp . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
-               (modes quote (haskell-mode literate-haskell-mode))))
-(add-to-list 'align-rules-list
-             '(haskell-left-arrows
-               (regexp . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")
-               (modes quote (haskell-mode literate-haskell-mode))))
-
+(require 'align nil t)
+(eval-after-load "align"
+  '(progn (add-to-list 'align-rules-list
+                       '(haskell-types
+                         (regexp . "\\(\\s-+\\)\\(::\\|∷\\|=\\)\\s-+")
+                         (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))
+          (add-to-list 'align-rules-list
+                       '(haskell-assignment
+                         (regexp . "\\(\\s-+\\)=\\s-+")
+                         (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))
+          (add-to-list 'align-rules-list
+                       '(haskell-arrows
+                         (regexp . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
+                         (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))
+          (add-to-list 'align-rules-list
+                       '(haskell-left-arrows
+                         (regexp . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")
+                         (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))))
 
 (provide '50haskell)
