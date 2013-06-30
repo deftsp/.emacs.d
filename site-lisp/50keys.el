@@ -330,7 +330,8 @@ it marks the next ARG lines after the ones already marked."
 
 
 ;;;
-(global-set-key (kbd "C-x \\") 'align-regexp)
+(global-set-key (kbd "C-x \\") 'align)
+(global-set-key (kbd "C-x |") 'align-regexp)
 
 
 (provide '50keys)
