@@ -15,7 +15,8 @@
 
 (eval-after-load "haskell-mode"
   '(progn
-     (setq haskell-font-lock-symbols t
+     (setq haskell-process-log t
+           haskell-font-lock-symbols t
            haskell-process-type 'cabal-dev  ; 'cabal-dev
            haskell-notify-p t)
      (require 'haskell-process)
