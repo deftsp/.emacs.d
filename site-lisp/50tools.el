@@ -293,13 +293,17 @@
 
 
 ;;; Open new line
+(defun pl/haskell-modes-p ()
+  (memq major-mode '(haskell-mode haskell-c-mode literate-haskell-mode)))
+
 (defun pl/open-line-with-indent ()
   "open-line with indent without moving cursor."
   (interactive)
   (save-excursion
     (open-line 1)
     (next-line 1)
-    (indent-according-to-mode)
+    (unless (pl/haskell-modes-p)
+     (indent-according-to-mode))
     (next-line -1)))
 
 (global-set-key (kbd "C-o") 'pl/open-line-with-indent)
@@ -312,7 +316,8 @@
   (end-of-line)
   (open-line arg)
   (next-line 1)
-  (indent-according-to-mode))
+  (unless (pl/haskell-modes-p)
+    (indent-according-to-mode)))
 
 (global-set-key (kbd "C-M-o") 'pl/vi-open-next-line)  ; `C-M-o' default bind to split-line'
 
