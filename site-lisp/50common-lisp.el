@@ -504,4 +504,4 @@ currently under the cursor."
 ;;                                   (define-key slime-repl-mode-map (kbd "C-c D") 'slime-javadoc)))
 
 
-(provide '50cl)
+(provide '50common-lisp)

@@ -27,8 +27,8 @@
 (require '50calendar)
 
 
-(require '50cl)
 (require '50clojure)
+(require '50common-lisp)
 (require '50completion)
 (require '50css)
 (require '50dictionary)
