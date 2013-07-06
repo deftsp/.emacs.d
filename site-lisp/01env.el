@@ -64,16 +64,16 @@
 (defun pl/env-path-init ()
   (case system-type
     (darwin
-     (setq pl/path-list `("/Applications/Emacs.app/Contents/MacOS/bin"
-                          "/Applications/Emacs.app/Contents/MacOS/libexec"
-                          ,(expand-file-name "~/bin")
+     (setq pl/path-list `(,(expand-file-name "~/bin")
                           "/usr/texbin"
                           "/Applications/Gnuplot.app/Contents/Resources/bin"
                           ,(expand-file-name "~/local/bin")
                           ,(expand-file-name "~/.cabal/bin")
                           ,(expand-file-name "~/opt/go-packages/bin")
                           "/usr/local/bin"
-                          "/opt/bin"))
+                          "/opt/bin"
+                          "/Applications/Emacs.app/Contents/MacOS/bin"
+                          "/Applications/Emacs.app/Contents/MacOS/libexec"))
 
      (let ((p "/Applications/Xcode.app/Contents/Developer/usr/bin"))
        (when (file-directory-p p)

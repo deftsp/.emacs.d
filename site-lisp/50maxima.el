@@ -9,8 +9,8 @@
 
 (setenv "PATH"
         (concat
-         "/Applications/Maxima.app/Contents/Resources/maxima/bin:"
-         (getenv "PATH")))
+         (getenv "PATH")
+         "/Applications/Maxima.app/Contents/Resources/maxima/bin:"))
 
 (add-to-list 'exec-path "/Applications/Maxima.app/Contents/Resources/maxima/bin")
 
