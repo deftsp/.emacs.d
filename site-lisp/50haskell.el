@@ -17,7 +17,7 @@
   '(progn
      (setq haskell-process-log t
            haskell-font-lock-symbols t
-           haskell-process-type 'cabal-dev  ; 'cabal-dev
+           haskell-process-type 'ghci  ; 'cabal-dev
            haskell-notify-p t)
      (require 'haskell-process)
      (setq haskell-stylish-on-save nil) ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
