@@ -237,24 +237,33 @@
 ;; (org-defkey org-mode-map (kbd "H-.") 'org-shiftdown)
 
 ;;; Structure editing key bindind
-;; Cursor keys with modifiers
-;; (org-defkey org-mode-map (kbd "H-o H") 'org-metaleft)
-;; (org-defkey org-mode-map (kbd "H-o L") 'org-metaright)
-;; (org-defkey org-mode-map (kbd "H-o K") 'org-metaup)
-;; (org-defkey org-mode-map (kbd "H-o J") 'org-metadown)
+;; Ι have enabled `org-replace-disputed-keys'
+;; M-p <S-up>
+;; M-n <S-down>
+;; M-- <S-left>
+;; M-= <S-right>
+;; M-- <C-S-left>
+;; M-+ <C-s-right>
 
-;; (org-defkey org-mode-map (kbd "H-o M-h") 'org-shiftmetaleft)
-;; (org-defkey org-mode-map (kbd "H-o M-l") 'org-shiftmetaright)
-;; (org-defkey org-mode-map (kbd "H-o M-k") 'org-shiftmetaup)
-;; (org-defkey org-mode-map (kbd "H-o M-j") 'org-shiftmetadown)
+(eval-after-load ""
+  '(progn
+     (org-defkey org-mode-map (kbd "M-H") 'org-metaleft)
+     (org-defkey org-mode-map (kbd "M-L") 'org-metaright)
+     (org-defkey org-mode-map (kbd "M-K") 'org-metaup)
+     (org-defkey org-mode-map (kbd "M-J") 'org-metadown)
 
-;; (org-defkey org-mode-map (kbd "H-o k") 'org-shiftup)
-;; (org-defkey org-mode-map (kbd "H-o j") 'org-shiftdown)
-;; (org-defkey org-mode-map (kbd "H-o h") 'org-shiftleft)
-;; (org-defkey org-mode-map (kbd "H-o l") 'org-shiftright)
+     (org-defkey org-mode-map (kbd "H-M-h") 'org-shiftmetaleft)
+     (org-defkey org-mode-map (kbd "H-M-l") 'org-shiftmetaright)
+     (org-defkey org-mode-map (kbd "H-M-k") 'org-shiftmetaup)
+     (org-defkey org-mode-map (kbd "H-M-j") 'org-shiftmetadown)
 
-;; (org-defkey org-mode-map (kbd "H-o C-l") 'org-shiftcontrolright)
-;; (org-defkey org-mode-map (kbd "H-o C-h") 'org-shiftcontrolleft)
+     (org-defkey org-mode-map (kbd "H-K") 'org-shiftup)
+     (org-defkey org-mode-map (kbd "H-J") 'org-shiftdown)
+     (org-defkey org-mode-map (kbd "H-H") 'org-shiftleft)
+     (org-defkey org-mode-map (kbd "H-L") 'org-shiftright)
+
+     (org-defkey org-mode-map (kbd "C-{") 'org-shiftcontrolleft)
+     (org-defkey org-mode-map (kbd "C-}") 'org-shiftcontrolright)))
 
 
 
