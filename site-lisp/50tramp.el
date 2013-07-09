@@ -16,10 +16,10 @@
 (require 'ange-ftp)
 (require 'tramp)
 
-(setq tramp-default-user "deftsp"
+(setq tramp-default-user nil
       tramp-default-host "localhost"
       tramp-encoding-shell "/bin/sh"
-      ;; tramp-default-method "ssh"
+      tramp-default-method "ssh"
       tramp-auto-save-directory "~/.tmp")
 ;; Tramp `debugging' options
 (setq tramp-debug-buffer 1
@@ -32,6 +32,9 @@
              '(nil "\\`root\\'" "/ssh:%h:"))
 (add-to-list 'tramp-default-proxies-alist
              '((regexp-quote (system-name)) nil nil))
+(add-to-list 'tramp-default-proxies-alist
+             '("192.241.209.135" "\\`root\\'" "/ssh:%h:"))
+
 ;; (add-to-list 'tramp-default-method-alist
 ;;              '("10.13.122.225" "" "ssh"))
 ;; (add-to-list 'tramp-default-method-alist
