@@ -19,8 +19,8 @@
 ;; CEDET component (including EIEIO) gets activated by another
 ;; package (Gnus, auth-source, ...).
 
-;; note: don't add cedet directory recursive, it'll cause strange problem
-
+;;; Install bzr vesion
+;; Note: don't add cedet directory recursive, it'll cause strange problem
 (defvar pl/cedet-root-path (file-name-as-directory "~/.emacs.d/lisp/cedet/"))
 (load-file (concat pl/cedet-root-path "cedet-devel-load.el"))
 (load-file (concat pl/cedet-root-path "contrib/cedet-contrib-load.el"))
@@ -54,7 +54,8 @@
      t)
     (t nil)))
 
-(add-to-list 'semantic-inhibit-functions 'pl/semantic-inhibit-func)
+(when (fboundp 'semantic-inhibit-functions)
+  (add-to-list 'semantic-inhibit-functions 'pl/semantic-inhibit-func))
 
 
 ;; Activate semantic
@@ -64,10 +65,10 @@
 (require 'semantic/ia)
 (require 'semantic/bovine/c)
 (require 'semantic/bovine/gcc)
-(require 'semantic/bovine/clang)
+(require 'semantic/bovine/clang nil t)
 (require 'semantic/decorate/include)
 (require 'semantic/lex-spp)
-(require 'eassist) ; for eassist-lists-methods, and eassist-switch-h-cpp
+(require 'eassist nil t) ; for eassist-lists-methods, and eassist-switch-h-cpp
 
 
 ;;; Enable SRecode (Template management) minor-mode.
