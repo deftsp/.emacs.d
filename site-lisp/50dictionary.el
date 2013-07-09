@@ -66,12 +66,10 @@
 (eval-after-load "dictionary"
   '(add-hook 'dictionary-mode-hook 'pl/dictionary-mode-hook))
 
-
 ;;; wordnet
 (condition-case nil
     (require 'wordnet)
   (error nil))
-
 
 ;;; Emacs & Dictionary.app
 ;; http://larkery.tumblr.com/post/465585528/emacs-dictionary-app
@@ -80,15 +78,15 @@
   (interactive "sDictionary Lookup: ")
   (shell-command (concat "open \"dict:///" (replace-regexp-in-string "\"" "\\\\\"" the-word) "\"")))
 
+(defun pl/lookup-current-word ()
+  (interactive)
+  (let ((w (current-word)))
+    (if w
+        (pl/mac-open-dictionary w)
+      (call-interactively #'pl/mac-open-dictionary))))
+
 (eval-after-load "key-chord"
-  '(key-chord-define-global ".d" '(lambda ()
-                                   (interactive)
-                                   (let ((w (current-word)))
-                                     (if w
-                                         (pl/mac-open-dictionary w)
-                                       (call-interactively #'pl/mac-open-dictionary))))))
-
-
+  '(key-chord-define-global "/d" 'pl/lookup-current-word))
 
 
 (provide '50dictionary)
