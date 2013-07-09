@@ -12,9 +12,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes (quote ("eee83964a8cd4897a4527a570e8b1be5b0f6bc72c6f73a6c359d47f44baa6d51" "854e27e36c67c489c56c3144a6a26815fbd28f98314604a034ef652d5d334596" default)))
- '(quack-programs (quote ("gsi -:d-" "bigloo" "csi" "csi -hygienic" "gosh" "gracket" "gsi" "gsi ~~/syntax-case.scm -" "guile" "kawa" "mit-scheme" "racket" "racket -il typed/racket" "rs" "scheme" "scheme48" "scsh" "sisc" "stklos" "sxi")))
- '(session-use-package t nil (session)))
+ )
 
 
 

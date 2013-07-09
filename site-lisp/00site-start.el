@@ -74,6 +74,7 @@
 (require '50buffer)
 (require '50tab-completion)
 (require '50tempo)
+(require '50tex)
 (require '50tools)
 (require '50tramp)
 (require '50traverselisp)
@@ -88,17 +89,12 @@
 (require '51CommonLispTemplates)
 ;; (require '51anything)
 (require '51helm)
+;; (require '52emms) ; do not use it any more
 ;; (require '52icicles)
 (require '52ido)
 (require '60session)
 (require '62winring)
 (require '99face)
-
-
-(when (eq system-type 'gnu/linux)
-  (require '50tex)
-  (require '52emms))
-
 
 (load-file "~/.emacs.d/private-ede-projects.el")
 

@@ -149,7 +149,8 @@
 
 
 ;;; EDE (Project Management)
-(global-ede-mode 1)
+;; FIXME: enable it will issue require(ede/project-am), if enable desktop-mode.
+;; (global-ede-mode 1)
 
 ;; cpp-tests project definition
 ;; (ede-cpp-root-project "cpp-tests" :file "~/projects/lang-exp/cpp/CMakeLists.txt"
