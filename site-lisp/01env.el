@@ -65,13 +65,17 @@
   (case system-type
     (darwin
      (setq pl/path-list `(,(expand-file-name "~/bin")
+                          "/usr/bin"
+                          "/bin"
+                          "/user/sbin"
+                          "/sbin"
+                          "/usr/local/bin"
+                          "/opt/bin"
                           "/usr/texbin"
-                          "/Applications/Gnuplot.app/Contents/Resources/bin"
                           ,(expand-file-name "~/local/bin")
                           ,(expand-file-name "~/.cabal/bin")
                           ,(expand-file-name "~/opt/go-packages/bin")
-                          "/usr/local/bin"
-                          "/opt/bin"
+                          "/Applications/Gnuplot.app/Contents/Resources/bin"
                           "/Applications/Emacs.app/Contents/MacOS/bin"
                           "/Applications/Emacs.app/Contents/MacOS/libexec"))
 
@@ -86,10 +90,7 @@
 
   (setq pl/path-list (cl-remove-if-not #'file-directory-p pl/path-list))
 
-  (setenv "PATH"
-          (concat (mapconcat #'identity pl/path-list ":")
-                  ":"
-                  (getenv "PATH")))
+  (setenv "PATH" (mapconcat #'identity pl/path-list ":"))
   ;; set exec-path
   (mapc (lambda (p) (add-to-list 'exec-path p))
         pl/path-list))
@@ -103,7 +104,5 @@
 ;; `org-replace-disputed-keys' must be set before org.el is loaded, it seems some pacakge install by el-get will load
 ;; org.el, so just preset it.
 (setq org-replace-disputed-keys t)
-
-
 
 (provide '01env)
