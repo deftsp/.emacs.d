@@ -1,8 +1,9 @@
-;;; some auctex stuff
-;; (add-to-list 'load-path "~/.emacs.d/packages/auctex/style")
-;; (add-to-list 'load-path "~/.emacs.d/packages/auctex")
+;;; 52tex.el ---
+
+;;; auctex
 (load "auctex.el" nil t t)
 (load "preview-latex.el" nil t t)
+
 ;; (require 'tex-mik)
 ;; (eval-after-load "tex"
 ;;   '(progn
@@ -11,22 +12,29 @@
 ;;                                   ("^dvi$" "." "xdvi -1 %dS %d")
 ;;                                   ("^pdf$" "." "start \"\" %o")
 ;;                                   ("^html?$" "." "start \"\" %o")))))
-(setq TeX-auto-save t)
-(setq TeX-parse-self t)
-(setq-default TeX-master nil)
 (setq preview-scale-function 1.6)
-;; (setq TeX-auto-untabify t) ;; 不使用 TAB字符缩进
-;; (setq LaTeX-document-regexp "document\\|CJK\\*?")  ;; CJK 环境中不缩进
+;; (setq LaTeX-document-regexp "document\\|CJK\\*?")  ; don't indent in  CJK environment
 ;; (add-hook 'LaTeX-mode-hook #'LaTeX-install-toolbar)
-(add-hook 'LaTeX-mode-hook 'turn-on-reftex)   ; with AUCTeX LaTeX mode
-(add-hook 'latex-mode-hook 'turn-on-reftex)   ; with Emacs latex mode
+(eval-after-load "tex-mode"
+  '(progn
+     ;; with Emacs latex mode
+     (add-hook 'latex-mode-hook 'turn-on-reftex)))
 
-(add-hook 'LaTeX-mode-hook
-          (lambda()
-            (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
-            (setq TeX-command-default "XeLaTeX")
-            (setq TeX-save-query nil)
-            (setq TeX-show-compilation t)))
+(eval-after-load "latex"
+  '(progn
+     (add-hook 'LaTeX-mode-hook #'pl/init-Tex)     ; with AUCTeX LaTeX mode
+     (add-hook 'LaTeX-mode-hook 'turn-on-reftex)))
+
+(defun pl/init-Tex ()
+  (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
+  (setq-default TeX-master nil)
+  (setq TeX-auto-untabify t) ; do not use TAB char
+  (setq TqeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq TeX-command-default "XeLaTeX")
+  (setq TeX-save-query nil)
+  (setq TeX-show-compilation t))
+
 
 
 ;; All that was left was to add a command to convert the DVI files into PDF. AUCTex already ships with a DVI to PS
