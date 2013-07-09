@@ -107,15 +107,6 @@
   (setq desktop-save 'if-exists)
   (desktop-save-mode 1))
 
-;; Prepare Emacs desktop after loading Emacs
-(when (fboundp 'pl/jump-to-org-agenda)
-  (add-hook 'after-init-hook
-            #'pl/jump-to-org-agenda
-            ;; Note that 3-rd argument of this `add-hook' should be `t'
-            ;; to append the call of the `dired' after other hooked functions,
-            ;; most importantly after `desktop-read'.
-            t))
-
 ;;; Let desktop work with daemon
 ;; (command-line) starts the server process, but only "after loading the user's init file and after
 ;; processing all command line arguments".
@@ -129,5 +120,14 @@
     ad-do-it))
 (ad-activate 'desktop-restore-file-buffer)
 
+;; Prepare Emacs desktop after loading Emacs
+;; (when (fboundp 'pl/jump-to-org-agenda)
+;;   (add-hook 'after-init-hook
+;;             ;; delay 5 seconds
+;;             (run-at-time (pl/future-time-string 5) nil #'pl/jump-to-org-agenda)
+;;             ;; Note that 3-rd argument of this `add-hook' should be `t'
+;;             ;; to append the call of the `dired' after other hooked functions,
+;;             ;; most importantly after `desktop-read'.
+;;             t))
 
 (provide '60session)
