@@ -181,6 +181,13 @@
    ;; ace-jump-mode
    '(ace-jump-face-background ((t (:foreground "#007799"))))
 
+   ;; cedet
+   '(pulse-highlight-start-face ((t (:background "#222222"))))
+   '(semantic-tag-boundary-face ((t (:overline "#227777"))))
+   '(semantic-decoration-on-private-members-face ((t (:background "#333333"))))
+   '(semantic-decoration-on-unparsed-includes ((t (:background "#555555"))))
+
+
    ;; rainbow-delimiters
    '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))
    '(rainbow-delimiters-depth-2-face ((t (:foreground "#f0dfaf"))))

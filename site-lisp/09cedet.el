@@ -217,23 +217,6 @@
 ;; (add-hook 'semantic-init-hooks 'pl/imenu-add-to-menubar)
 ;; (setq semantic-imenu-auto-rebuild-directory-indexes nil)
 
-
-
-;;; face
-(eval-after-load "pulse"
-  '(progn
-    (set-face-attribute 'pulse-highlight-start-face nil :background "#222222")))
-
-
-(eval-after-load 'semantic/decorate/mode
-  '(progn
-     (set-face-attribute 'semantic-tag-boundary-face nil :overline "#227777")
-     (set-face-attribute 'semantic-decoration-on-private-members-face nil :background "#333333")))
-
-(eval-after-load 'semantic/decorate/include
-  '(progn
-     (set-face-attribute 'semantic-decoration-on-unparsed-includes nil :background "#555555")))
-
 ;;; info
 (defun cedet-settings-4-info ()
   "`cedet' settings for `info'."
