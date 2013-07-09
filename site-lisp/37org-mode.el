@@ -245,7 +245,7 @@
 ;; M-- <C-S-left>
 ;; M-+ <C-s-right>
 
-(eval-after-load ""
+(eval-after-load "org"
   '(progn
      (org-defkey org-mode-map (kbd "M-H") 'org-metaleft)
      (org-defkey org-mode-map (kbd "M-L") 'org-metaright)
