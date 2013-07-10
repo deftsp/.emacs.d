@@ -54,7 +54,7 @@
      t)
     (t nil)))
 
-(when (fboundp 'semantic-inhibit-functions)
+(when (boundp 'semantic-inhibit-functions)
   (add-to-list 'semantic-inhibit-functions 'pl/semantic-inhibit-func))
 
 
