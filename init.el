@@ -47,9 +47,10 @@
       (normal-top-level-add-subdirs-to-load-path)))
 
 
+;;;
 (setq custom-file "~/.emacs.d/custom.el")
-(load custom-file 'noerror)
-
+(when (file-exists-p custom-file)
+  (load custom-file 'noerror))
 
 (require '00site-start)
 ;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
