@@ -50,6 +50,7 @@
                (add-to-list 'desktop-modes-not-to-save major-mode))
            '(dired-by-name-mode
              fundamental-mode
+             org-mode
              ;; Info-mode
              ;; info-lookup-mode
              ;; tramp-cleanup-all-buffers
