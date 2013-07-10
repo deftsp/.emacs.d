@@ -54,7 +54,8 @@
                       (:startgroup . nil) ("Business" . ?B) ("Personal" . ?P) (:endgroup . nil)
                       ("PROJECT" . ?p)
                       ("READING" . ?R)
-                      ("MAIL" . ?M)))
+                      ("MAIL" . ?M)
+                      ("drill" . ?d)))
 
 
 (setq org-agenda-custom-commands
@@ -225,6 +226,13 @@
 (setq org-link-abbrev-alist
       '(("google"   . "http://www.google.com/search?q=")
         ("baidu"    . "http://www.baidu.com/s?wd=")))
+
+;;; org drill
+(setq org-drill-spaced-repetition-algorithm 'sm5)
+(setq org-drill-use-visible-cloze-face-p nil)
+(setq org-drill-maximum-items-per-session 40)
+(setq org-drill-maximum-duration 25)   ; 25 minutes
+(setq org-drill-scope 'directory)
 
 ;; keybinding conflicts with icicles keys
 ;; (org-defkey org-mode-map (kbd "C-c C-'") 'org-edit-special)
