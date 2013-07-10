@@ -9,8 +9,8 @@
 (require '02utils)
 (require '05cc-mode)
 (require '09cedet)
-(require '12el-get)
 (require '37org-mode)
+(require '12el-get)
 
 (require '39util)
 (when (eq system-type 'gnu/linux)

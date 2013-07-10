@@ -132,6 +132,7 @@
    '(org-level-6 ((t (:foreground "Aquamarine"))))
    '(org-level-7 ((t (:foreground "LightSteelBlue"))))
    '(org-level-8 ((t (:foreground "LightSalmon"))))
+   '(org-habit-alert-face ((t (:foreground "#228822" :background "gold"))))
 
 
 

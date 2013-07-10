@@ -5,35 +5,38 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-(require 'org-habit nil t)
-;; (require 'org-mtags nil t)
+;;; Install
+(add-to-list 'load-path "~/.emacs.d/lisp/org-mode/lisp")
+(add-to-list 'load-path "~/.emacs.d/lisp/org-mode/contrib/lisp" t)
+;; $ git pull
+;; $ make autoloads EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
+;; $ make EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
+;; $ make doc EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
 
-;; org-mode with GTD
-;; (require 'org-gtd)
-;; (require 'org-mouse)
-;; (require 'org-blog)
-;; (setq org-blog-directory "~/blog/")
+(require 'org-loaddefs)
 
+(eval-after-load "org"
+  '(progn
+     (add-to-list 'org-modules 'org-habit)
+     (add-to-list 'org-modules 'org-drill)))
+
+
+;;; global key binding
+(global-set-key "\C-cL" 'org-store-link)
+(global-set-key "\C-ca" 'org-agenda)
 ;; C-c C-o Open link at or after point.
 ;; if no appropriate application, it will use mailcap's config to set `org-file-apps'
-
-
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
 ;; (global-set-key "\C-c o" 'org-open-at-point-global)
 ;; (global-set-key "\C-cb" 'org-iswitchb)
 
 (setq org-todo-interpretation 'sequence ; or 'type
-      org-use-fast-todo-selection t)
-
-(setq org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "DELEGATED(l)" "APPT(a)" "|"
-                           "DONE(d)" "DEFERRED(f)" "CANCELLED(c@)")
+      org-use-fast-todo-selection t
+      org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "DELEGATED(l)" "APPT(a)" "|"
+                                    "DONE(d)" "DEFERRED(f)" "CANCELLED(c@)")
                           (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
                           (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
-                          (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")))
-
-
-(setq org-todo-keyword-faces (quote (("TODO" :foreground "red" :weight bold)
+                          (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))
+      org-todo-keyword-faces (quote (("TODO" :foreground "red" :weight bold)
                                      ("STARTED" :foreground "blue" :weight bold)
                                      ("DONE" :foreground "forest green" :weight bold :strike-through t)
                                      ("WAITING" :foreground "orange" :weight bold)
@@ -45,9 +48,13 @@
                                      ("EXPIRED" :foreground "forest green" :weight bold)
                                      ("REJECTED" :foreground "forest green" :weight bold)
                                      ("OPEN" :foreground "blue" :weight bold)
-                                     ("PROJECT" :foreground "red" :weight bold))))
-
-
+                                     ("PROJECT" :foreground "red" :weight bold)))
+      org-tag-alist '((:startgroup . nil) ("@work" . ?w) ("@home" . ?h) ("@tennisclub" . ?t) (:endgroup . nil)
+                      (:startgroup . nil) ("Online" . ?O) ("Offline" . ?F) (:endgroup . nil)
+                      (:startgroup . nil) ("Business" . ?B) ("Personal" . ?P) (:endgroup . nil)
+                      ("PROJECT" . ?p)
+                      ("READING" . ?R)
+                      ("MAIL" . ?M)))
 
 
 (setq org-agenda-custom-commands
@@ -115,6 +122,7 @@
       org-agenda-include-diary nil
       ;; agenda view always starts out by showing me the next seven days.
       org-agenda-start-on-weekday nil
+      org-adapt-indentation t
       org-fast-tag-selection-single-key (quote expert)
       org-reverse-note-order t
       org-deadline-warning-days 7
@@ -124,10 +132,6 @@
 (setq org-habit-preceding-days 21
       org-habit-following-days 7
       org-habit-graph-column 60)
-(eval-after-load "org-habit"
-  '(progn
-    (set-face-attribute 'org-habit-alert-face nil :foreground "#228822" :background "gold")))
-
 
 ;;; for MobileOrg
 ;; Set to the name of the file where new notes will be stored
@@ -143,12 +147,6 @@
 ;;                            ("TODO" "NEXT" "NEXTACTION")
 ;;                            nil))
 
-(setq org-tag-alist '((:startgroup . nil) ("@work" . ?w) ("@home" . ?h) ("@tennisclub" . ?t) (:endgroup . nil)
-                      (:startgroup . nil) ("Online" . ?O) ("Offline" . ?F) (:endgroup . nil)
-                      (:startgroup . nil) ("Business" . ?B) ("Personal" . ?P) (:endgroup . nil)
-                      ("PROJECT" . ?p)
-                      ("READING" . ?R)
-                      ("MAIL" . ?M)))
 
 ;;;; Capture
 ;; (define-key global-map "\C-cc" 'org-capture) ; instead of key chord ",c"
@@ -188,7 +186,6 @@
 (setq org-fontify-emphasized-text t
       org-fontify-done-headline t)
 
-(setq org-adapt-indentation t)
 
 ;;; org-publish
 (setq org-publish-project-alist
@@ -292,6 +289,9 @@
 
 ;; every 30 minutes
 (run-with-idle-timer (* 30 60) t 'pl/jump-to-org-agenda)
+
+;;; Info directory
+(add-to-list 'Info-directory-list "~/.emacs.d/lisp/org-mode/doc")
 
 
 (provide '37org-mode)
