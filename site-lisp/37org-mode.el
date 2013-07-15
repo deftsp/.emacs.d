@@ -299,7 +299,8 @@
 (run-with-idle-timer (* 30 60) t 'pl/jump-to-org-agenda)
 
 ;;; Info directory
-(add-to-list 'Info-directory-list "~/.emacs.d/lisp/org-mode/doc")
+(eval-after-load "info"
+  '(add-to-list 'Info-directory-list "~/.emacs.d/lisp/org-mode/doc"))
 
 
 (provide '37org-mode)
