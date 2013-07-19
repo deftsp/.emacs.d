@@ -39,7 +39,7 @@
 ;; (require '50eim)
 (require '50emacsclient)
 (require '50epg)
-;; (require '50erc)
+(require '50erc)
 (require '50eshell)
 (require '50etags)
 (require '50ffap)
