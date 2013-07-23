@@ -17,6 +17,8 @@
        (eval-print-last-sexp)))))
 
 (setq el-get-github-default-url-type 'git)
+(setq el-get-verbose t)
+
 
 ;; el-get-sources is another source location for recipes, adding to your el-get-recipe-path.
 (setq el-get-sources
@@ -89,7 +91,7 @@
 
 ;; (el-get 'sync 'org-mode)                ; init org-mode first
 (el-get 'sync 'auto-complete)           ; auto-complete should init before ac-nrepl
-(el-get 'wait)                          ; 'sync 'wait
+(el-get 'sync)                          ; 'sync 'wait
 
 
 (provide '12el-get)
