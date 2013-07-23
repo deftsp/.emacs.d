@@ -1160,6 +1160,10 @@ such character is found, following options are shown:
   (eval-after-load "highlight-symbol"
     '(diminish 'highlight-symbol-mode " H")))
 
+;;; goto last change
+(autoload 'goto-last-change "goto-last-change"
+  "Set point to the position of the last change." t)
+(global-set-key (kbd "C-x C-/") 'goto-last-change)
 
 
 
