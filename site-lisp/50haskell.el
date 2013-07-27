@@ -123,8 +123,7 @@
 ;; turn-on-haskell-indent
 ;; turn-on-haskell-simple-indent
 ;; Note that the three indentation modules are mutually exclusive - add at most one. In preference for the more advanced.
-(remove-hook 'haskell-mode-hook 'turn-on-haskell-indentation) ; el-get default install `turn-on-haskell-indentation'
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation) ; el-get default install `turn-on-haskell-indentation'
 (setq haskell-indent-thenelse 2)
 (eval-after-load "haskell-indent"
   '(setq haskell-indent-after-keywords '(("where" 2 0)
