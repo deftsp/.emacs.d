@@ -81,6 +81,11 @@
                :type github
                :pkgname "lightquake/hamlet-mode"
                :features hamlet-mode)
+        (:name wcheck-mode
+               :description "General interface for text checkers."
+               :type github
+               :pkgname "tlikonen/wcheck-mode"
+               :features wcheck-mode)
         (:name glsl-mode
                :type github
                :description "major mode for Open GLSL shader files"

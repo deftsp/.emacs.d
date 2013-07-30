@@ -16,21 +16,28 @@
     (key-chord-define-global ",w" pl/wcheck-mode-map))
 
 
-
-;; Ensure that the variable exists.
-(defvar wcheck-language-data nil)
-
-(pushnew '("Highlight Commentaires"
-           (program . pl/commentaires-keywords-detec)
-           (face . font-lock-warning-face)
-           (regexp-start . "\\<")
-           (regexp-body . "\\w*\\+?:?")
-           (regexp-end . "")
-           (read-or-skip-faces
-            ((emacs-lisp-mode c-mode c++-mode objc-mode)
-             read font-lock-comment-face font-lock-doc-face)
-            (nil)))
-         wcheck-language-data :test #'equal)
+(setq wcheck-language-data
+      '(("Highlight Commentaires"
+         (program . pl/commentaires-keywords-detec)
+         (face . font-lock-warning-face)
+         (regexp-start . "\\<")
+         (regexp-body . "\\w*\\+?:?")
+         (regexp-end . "")
+         (read-or-skip-faces
+          ((emacs-lisp-mode c-mode c++-mode objc-mode haskell-mode)
+           read font-lock-comment-face font-lock-doc-face)
+          (nil)))
+        ("Trailing whitespace"
+         (program . identity)
+         (action-program . (lambda (marked-text)
+                             (list (cons "Remove whitespace" ""))))
+         (face . highlight)
+         (regexp-start . "")
+         (regexp-body . "[ \t]+")
+         (regexp-end . "$")
+         (regexp-discard . "")
+         (read-or-skip-faces
+          (nil)))))
 
 (defvar pl/commentaires-keywords
   '("\\<\\(FIXME\\):"
