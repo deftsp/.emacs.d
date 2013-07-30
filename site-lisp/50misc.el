@@ -663,6 +663,7 @@ vi style of % jumping to matching brace."
          '("fonts.conf"        . xml-mode)
          '("\\.org$"           . org-mode)
          '("\\.markdown$"      . markdown-mode)
+         '("\\.asciidoc$"      . adoc-mode)
          '("\\.lrc$"           . emms-lyrics-mode)))
 
 ;;; Since emacs 22 we can use magic-mode-alist to set mode
