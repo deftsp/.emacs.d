@@ -185,4 +185,8 @@
                          (regexp . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")
                          (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))))
 
+;;; misc
+(require 'yesod-devel-mode nil t)
+
+
 (provide '50haskell)
