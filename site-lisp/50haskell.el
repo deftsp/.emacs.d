@@ -34,6 +34,7 @@
      (define-key pl/haskell-mode-key-chord-map (kbd ".") 'haskell-indent-align-guards-and-rhs)
      (define-key pl/haskell-mode-key-chord-map (kbd ">") 'haskell-indent-put-region-in-literate)
      (define-key pl/haskell-mode-key-chord-map (kbd "l") 'pl/pop-haskell-process-log-buffer)
+     (define-key pl/haskell-mode-key-chord-map (kbd "y") 'pl/pop-yesod-devel-buffer)
      (define-key pl/haskell-mode-key-chord-map (kbd "u") (lambda () (interactive) (insert "undefined")))
 
      ;; keymap for documentation
@@ -115,7 +116,7 @@
   (let ((buf (get-buffer "*haskell-process-log*")))
     (if buf
         (pop-to-buffer buf)
-      (message "Can not find haskell process log buffer. Have you start inferior?"))))
+      (message "Can not find haskell process log buffer. Have you started inferior?"))))
 
 
 ;;; indent
@@ -187,6 +188,13 @@
 
 ;;; misc
 (require 'yesod-devel-mode nil t)
+
+(defun pl/pop-yesod-devel-buffer ()
+  (interactive)
+  (let ((buf (get-buffer "*yesod-devel*")))
+    (if buf
+        (pop-to-buffer buf)
+      (message "Can not find yesod devel buffer. Have you started it?"))))
 
 
 (provide '50haskell)
