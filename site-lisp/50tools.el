@@ -1099,14 +1099,6 @@ such character is found, following options are shown:
 (global-set-key (kbd "C-M-m") 'mc/mark-more-like-this-extended)
 ;; (global-set-key (kbd "M-å") 'mc/mark-all-in-region)
 
-
-;; (require 'rename-sgml-tag)              ;
-;; (define-key sgml-mode-map (kbd "C-c C-r") 'rename-sgml-tag)
-
-;; (require 'js2-rename-var)
-;; (define-key js2-mode-map (kbd "C-c C-r") 'js2-rename-var)
-
-
 ;;; docsetutil
 (define-key help-map "D" 'docsetutil-search) ; C-h D
 

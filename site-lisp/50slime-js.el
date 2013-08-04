@@ -6,7 +6,7 @@
 ;; Keywords: abbrev, abbrev
 
 ;;; install
-;; npm install swank-js -g
+;; npm install swank-js
 ;; M-x el-get-install slime-js
 
 (require 'slime)

@@ -631,10 +631,6 @@ vi style of % jumping to matching brace."
 ;; (add-hook 'fvwm-mode-hook '(lambda () (fvwm-enable-indentation)))
 ;; (autoload 'xrdb-mode "xrdb-mode" "Mode for editing X resource files" t)
 
-;;; js2-mode
-;; (autoload 'js2-mode "js2-mode" nil t)
-;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
-
 ;;; auto mode alist
 (mapcar #'(lambda (lst)
             (if lst (add-to-list 'auto-mode-alist lst)))
