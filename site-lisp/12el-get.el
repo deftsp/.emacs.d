@@ -22,7 +22,8 @@
 
 ;; el-get-sources is another source location for recipes, adding to your el-get-recipe-path.
 (setq el-get-sources
-      '((:name org-mac-protocol
+      '((:name el-get :branch "shihpin/dev")
+        (:name org-mac-protocol
                :type git
                :url "git://github.com/claviclaws/org-mac-protocol.git"
                :features org-mac-protocol)
