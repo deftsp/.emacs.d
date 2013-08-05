@@ -52,9 +52,10 @@
 
 ;;; winner mode
 (winner-mode t)
-(global-set-key (kbd "H-r") 'winner-redo)
-(global-set-key (kbd "H-u") 'winner)
+(global-set-key (kbd "C-x 4 u") 'winner-undo)
+(global-set-key (kbd "C-x 4 r") 'winner-redo)
 (global-set-key (kbd "H-u") 'winner-undo)
+(global-set-key (kbd "H-r") 'winner-redo)
 
 ;;; windmove
 (require 'windmove)
