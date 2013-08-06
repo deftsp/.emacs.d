@@ -19,9 +19,13 @@
 (eval-after-load "flymake"
   '(progn
      (require 'flymake-cursor)
-     (setq flymake-gui-warnings-enabled nil)
-     (set-face-attribute 'flymake-warnline nil :foreground "#ccccff" :background "#333300")
-     (set-face-attribute 'flymake-errline nil :foreground "#cceecc" :background "#402222")))
+     (setq flymake-gui-warnings-enabled nil)))
+
+(eval-after-load "flycheck"
+  '(progn
+     (set-default 'flycheck-check-syntax-automatically nil)
+     (add-hook 'after-init-hook #'global-flycheck-mode)))
+
 
 ;; (define-key global-map (kbd "C-c d e") 'flymake-cursor-show-errors-at-point-now)
 ;; (add-hook 'find-file-hook 'flymake-find-file-hook)
@@ -31,33 +35,33 @@
 ;; flymake-allowed-file-name-masks
 
 ;;; elisp
-(defun flymake-elisp-init ()
-  (unless (string-match "^ " (buffer-name))
-    (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-                         'flymake-create-temp-inplace))
-           (local-file  (file-relative-name
-                         temp-file
-                         (file-name-directory buffer-file-name))))
-      (list
-       (expand-file-name invocation-name invocation-directory)
-       (list
-        "-Q" "--batch" "--eval"
-        (prin1-to-string
-         (quote
-          (dolist (file command-line-args-left)
-            (with-temp-buffer
-              (insert-file-contents file)
-              (emacs-lisp-mode)
-              (let ((parse-sexp-ignore-comments t))
-                (condition-case data
-                    (scan-sexps (point-min) (point-max))
-                  (scan-error
-                   (goto-char(nth 2 data))
-                   (princ (format "%s:%s: error: Unmatched bracket or quote\n"
-                                  file (line-number-at-pos))))))))))
-        local-file)))))
+;; (defun flymake-elisp-init ()
+;;   (unless (string-match "^ " (buffer-name))
+;;     (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+;;                          'flymake-create-temp-inplace))
+;;            (local-file  (file-relative-name
+;;                          temp-file
+;;                          (file-name-directory buffer-file-name))))
+;;       (list
+;;        (expand-file-name invocation-name invocation-directory)
+;;        (list
+;;         "-Q" "--batch" "--eval"
+;;         (prin1-to-string
+;;          (quote
+;;           (dolist (file command-line-args-left)
+;;             (with-temp-buffer
+;;               (insert-file-contents file)
+;;               (emacs-lisp-mode)
+;;               (let ((parse-sexp-ignore-comments t))
+;;                 (condition-case data
+;;                     (scan-sexps (point-min) (point-max))
+;;                   (scan-error
+;;                    (goto-char(nth 2 data))
+;;                    (princ (format "%s:%s: error: Unmatched bracket or quote\n"
+;;                                   file (line-number-at-pos))))))))))
+;;         local-file)))))
 
-(push '("\\.el$" flymake-elisp-init) flymake-allowed-file-name-masks)
+;; (push '("\\.el$" flymake-elisp-init) flymake-allowed-file-name-masks)
 
 ;; (add-hook 'emacs-lisp-mode-hook
 ;;           ;; workaround for (eq buffer-file-name nil)
@@ -93,14 +97,14 @@
 
 ;;; Flymake
 
-(defun flymake-ruby-init ()
-  (let* ((temp-file (flymake-init-create-temp-buffer-copy
-                     'flymake-create-temp-inplace))
-         (local-file (file-relative-name
-                      temp-file
-                      (file-name-directory buffer-file-name))))
-    ;; Invoke ruby with '-c' to get syntax checking
-    (list "ruby" (list "-c" local-file))))
+;; (defun flymake-ruby-init ()
+;;   (let* ((temp-file (flymake-init-create-temp-buffer-copy
+;;                      'flymake-create-temp-inplace))
+;;          (local-file (file-relative-name
+;;                       temp-file
+;;                       (file-name-directory buffer-file-name))))
+;;     ;; Invoke ruby with '-c' to get syntax checking
+;;     (list "ruby" (list "-c" local-file))))
 
 
 

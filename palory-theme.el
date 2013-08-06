@@ -193,6 +193,9 @@
    '(semantic-decoration-on-private-members-face ((t (:background "#333333"))))
    '(semantic-decoration-on-unparsed-includes ((t (:background "#555555"))))
 
+   ;; flymake
+   '(flymake-warnline ((t (:background "#333300" :foreground "#ccccff"))))
+   '(flymake-errline ((t (:background "#402222" :foreground "#cceecc"))))
 
    ;; rainbow-delimiters
    '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))
