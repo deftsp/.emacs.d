@@ -93,7 +93,7 @@
   (setenv "PATH" (mapconcat #'identity pl/path-list ":"))
   ;; set exec-path
   (mapc (lambda (p) (add-to-list 'exec-path p))
-        pl/path-list))
+        (reverse pl/path-list)))
 
 (when (eq system-type 'darwin)
   (pl/env-path-init)
