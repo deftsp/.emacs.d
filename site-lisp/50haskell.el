@@ -86,6 +86,8 @@
   ;; Interactively choose the Cabal command to run.
   (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
 
+  (define-key haskell-mode-map (kbd "C-c C-v") 'pl/haskell-check)
+
   ;; Contextually do clever things on the space key, in particular:
   ;;   1. Complete imports, letting you choose the module name.
   ;;   2. Show the type of the symbol after the space.
@@ -144,6 +146,17 @@
 ;; (setq haskell-indentation-layout-offset 4
 ;;       haskell-indentation-left-offset 4
 ;;       haskell-indentation-ifte-offset 4)
+
+;;; Check
+(defun pl/haskell-check (arg)
+  "Check a Haskell file (default current buffer's file).
+if arg is not equal to 1, ignore `haskell-saved-check-command'
+See also`haskell-check'."
+  (interactive "p")
+  (if (= arg 1)
+      (call-interactively 'haskell-check)
+    (let ((haskell-saved-check-command nil))
+      (call-interactively 'haskell-check))))
 
 ;;; navigation
 ;; $ cabal install hasktags
