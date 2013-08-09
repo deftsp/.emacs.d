@@ -27,6 +27,10 @@
                :type git
                :url "git://github.com/claviclaws/org-mac-protocol.git"
                :features org-mac-protocol)
+        (:name undo-tree
+               :type git
+               :url "http://www.dr-qubit.org/git/undo-tree.git"
+               :features undo-tree)
         (:name etags-select
                :type emacswiki
                :features etags-select)
