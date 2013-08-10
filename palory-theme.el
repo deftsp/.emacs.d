@@ -24,6 +24,8 @@
 
 ;;; base on https://github.com/bbatsov/zenburn-emacs/blob/master/zenburn-theme.el
 
+;; the easy way to get following vlaue is: `customize face' => Apply and save => copy and paste
+
 (deftheme palory
   "The palory theme.")
 
@@ -99,7 +101,7 @@
    '(highlight ((t (:foreground unspecified :background "Lightblue4")))) ; use `unspecified' or `nil' both ok
 
    ;; link
-   '(link ((t (:foreground "#00cdcd" :background unspecified :underline t weight bold))))
+   '(link ((t (:foreground "#33b2ef" :background unspecified :underline "#33b2ef" weight bold))))
    '(link-visited ((t (:foreground "violet" :background unspecified :underline t :weight normal))))
 
    ;; info
