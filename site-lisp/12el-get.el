@@ -94,7 +94,14 @@
                :type github
                :description "major mode for Open GLSL shader files"
                :pkgname "jimhourihan/glsl-mode"
-               :features glsl-mode)))
+               :features glsl-mode)
+        (:name haskell-mode
+               :description "A Haskell editing mode"
+               :type github
+               :pkgname "deftsp/haskell-mode"
+               :branch "shihpin/dev"
+               :build `(("make" ,(format "EMACS=%s" (shell-quote-argument el-get-emacs)) "all"))
+               :load "haskell-mode-autoloads.el")))
 
 ;; (el-get-save-package-status "package-name-here" "removed")
 
