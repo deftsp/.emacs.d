@@ -8,6 +8,8 @@
 
 ;;; Note: it's better to load w3m before el-get install/update helm
 
+;; make EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs -Q -batch " all
+
 (add-to-list 'load-path (file-name-as-directory "~/.emacs.d/lisp/helm/"))
 (require 'helm-config)
 ;; (helm-mode 1) ; use ido everywhere instead
