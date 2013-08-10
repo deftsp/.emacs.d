@@ -145,7 +145,8 @@
   '(progn
      (require 'auto-complete-config)
      (require 'auto-complete-clang)
-     (setq ac-comphist-file (expand-file-name "~/.emacs.ac-comphist.dat"))
+     (if (boundp 'pl/cache-directory)
+         (setq savehist-file (concat pl/cache-directory "ac-comphist.dat")))
      (pl/auto-complete-settings)
      (ac-config-default)))
 

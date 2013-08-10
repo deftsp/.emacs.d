@@ -95,7 +95,8 @@
 (minibuffer-depth-indicate-mode 1)
 
 ;; hisotry save file
-(setq savehist-file "~/.emacs-history")
+(if (boundp 'pl/cache-directory)
+    (setq savehist-file (concat pl/cache-directory "emacs-history")))
 
 
 (setq ring-bell-function 'ignore)
