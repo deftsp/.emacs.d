@@ -25,8 +25,7 @@
       '((:name el-get :branch "shihpin/dev")
         (:name org-mac-protocol
                :type git
-               :url "git://github.com/claviclaws/org-mac-protocol.git"
-               :features org-mac-protocol)
+               :url "git://github.com/claviclaws/org-mac-protocol.git")
         (:name undo-tree
                :type git
                :url "http://www.dr-qubit.org/git/undo-tree.git"

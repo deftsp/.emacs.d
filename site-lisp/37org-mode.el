@@ -302,6 +302,10 @@
 (eval-after-load "info"
   '(add-to-list 'Info-directory-list "~/.emacs.d/lisp/org-mode/doc"))
 
+;;; org-mac-protocol
+(when window-system
+  (require 'org-mac-protocol nil t))
+
 
 (provide '37org-mode)
 
