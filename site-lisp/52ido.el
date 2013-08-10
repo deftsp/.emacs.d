@@ -9,6 +9,18 @@
 ;; (ido-hacks-mode 1) ; use ido-ubiquitous-mode instead, it can work with info.
 (ido-ubiquitous-mode 1)
 
+;;; flx
+;; https://github.com/lewang/flx
+(require 'flx-ido nil t)
+(eval-after-load "flx-ido"
+  '(progn
+     ;; disable ido faces to see flx highlights.
+     (setq flx-ido-threshhold 7500 ; see also gc-cons-threshold.
+           ido-use-faces nil
+           flx-ido-use-faces t)
+     (flx-ido-mode 1)))
+
+
 ;; Fix ido-ubiquitous for newer packages
 ;; http://whattheemacsd.com//setup-ido.el-01.html
 (defmacro ido-ubiquitous-use-new-completing-read (cmd package)
@@ -67,7 +79,8 @@
 ;; C-c         toggle case
 ;; M-l         Toggle literal reading of this file.
 ;; C-a         toggle ignoring files specified with `ido-ignore-files'.
-
+;; // -        go to the root directory.
+;; ~/ -        go to the home directory.
 
 (mapcar (lambda (str) (add-to-list 'ido-ignore-buffers str))
         '("^\\ " "^\\*Completions*" "^\\*Article\\*" "^\\*Apropos*"  "^\\*Ibuffer*"
@@ -150,6 +163,20 @@
 
 
 ;; ---------------------------------------------------------------------------------
+
+;;; Find files in Tags File
+(defun pl/ido-find-file-in-tag-files ()
+  (interactive)
+  (save-excursion
+    (let ((enable-recursive-minibuffers t))
+      (visit-tags-table-buffer))
+    (find-file
+     (expand-file-name
+      (ido-completing-read
+       "Project file: " (tags-table-files) nil t)))))
+
+(global-set-key (kbd "C-x f") 'pl/ido-find-file-in-tag-files)
+
 
 ;; Invoking bookmarks from ido
 (define-key ido-file-dir-completion-map [(meta control ?b)] 'ido-goto-bookmark)
