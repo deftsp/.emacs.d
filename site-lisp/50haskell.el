@@ -96,7 +96,7 @@
   (define-key haskell-mode-map (kbd "C-c I") 'haskell-navigate-imports)
 
   ;; Jump to the definition of the current symbol.
-  (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-tag-find)
+  ;; (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-tag-find) ; the `find-tag' + `ido' is better enough
 
   ;; Interactive block indentation
   (define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
