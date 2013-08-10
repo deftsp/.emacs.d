@@ -325,7 +325,7 @@
 ;; Supposedly significantly speeds up startup time. (Seems to work
 ;; for me,  but my computer is pretty modern. Disable if you are on
 ;; anything less than 1GHZ).
-(setq gc-cons-threshold (max 6000000 gc-cons-threshold))
+(setq gc-cons-threshold (max 20000000 gc-cons-threshold)) ; 20MB
 
 ;; want to see how often GC happens
 ;; (setq garbage-collection-messages nil)
