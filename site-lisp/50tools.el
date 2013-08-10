@@ -1111,12 +1111,15 @@ such character is found, following options are shown:
 ;; Full text search:
 ;; C-u M-x docsetutil-search
 
-;;; find-file-in-project
-(global-set-key (kbd "C-x f") 'find-file-in-project)
-(eval-after-load "find-file-in-project"
+;;; Projectile
+;; https://github.com/bbatsov/projectile
+(eval-after-load "projectile"
   '(progn
-    (dolist (pattern '("*.cpp" "*.hpp" "*.scm"))
-      (add-to-list 'ffip-patterns pattern))))
+     (when (boundp 'pl/cache-directory)
+       (setq projectile-cache-file (concat pl/cache-directory "projectile.cache"))
+       (setq projectile-enable-caching t))
+     ;; (add-hook 'emacs-lisp-mode-hook 'projectile-on)
+     (projectile-global-mode)))
 
 ;;; xmsi-math-symbols-input.el
 (autoload 'xmsi-mode "xmsi-math-symbols-input" "Load xmsi minor mode for inputting math (Unicode) symbols." t)

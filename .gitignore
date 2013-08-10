@@ -9,7 +9,8 @@ private-ede-projects.el
 *customzation*
 bookmarks
 .bm-repository
-.emacs.desktop*
+*emacs.desktop*
+projectile-bookmarks.eld
 UnicodeData.txt
 unicode_template.txt
 ebx-history
@@ -35,7 +36,6 @@ server
 
 .org-id-locations
 .diary.cyclic-tasks
-emacs.desktop*
 .session
 .wmncach.el
 ac-comphist.dat
