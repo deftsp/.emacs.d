@@ -74,6 +74,9 @@
    '(mode-line-inactive ((t (:foreground "PaleTurquoise3" :background "#222222" :box nil)))) ; #111111
    '(mode-line-highlight ((t (:box nil))))
 
+   ;; minibuffer
+   '(minibuffer-prompt ((t (:foreground "#ff8c00" :weight bold))))
+
    ;; fringe
    `(fringe ((t (:foreground "green" :background ,palory-bg))))
 
