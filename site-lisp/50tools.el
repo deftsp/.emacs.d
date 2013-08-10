@@ -1118,17 +1118,9 @@ such character is found, following options are shown:
     (dolist (pattern '("*.cpp" "*.hpp" "*.scm"))
       (add-to-list 'ffip-patterns pattern))))
 
-;;; VolatileHighlights
-(eval-after-load "volatile-highlights"
-  '(progn
-    (set-face-background 'vhl/default-face "#332244")
-    (volatile-highlights-mode t)))
-
-
 ;;; xmsi-math-symbols-input.el
 (autoload 'xmsi-mode "xmsi-math-symbols-input" "Load xmsi minor mode for inputting math (Unicode) symbols." t)
 (xmsi-mode 1) ; activate the mode.
-
 
 ;;; info+
 ;; (eval-after-load "info+"
@@ -1145,6 +1137,8 @@ such character is found, following options are shown:
     '(diminish 'paredit-mode " π"))
   (eval-after-load "eldoc"
     '(diminish 'eldoc-mode ""))
+  (eval-after-load "xmsi-math-symbols-input"
+    '(diminish 'xmsi-mode ""))
   (eval-after-load "golden-ratio"
     '(diminish 'golden-ratio-mode " φ"))
   (eval-after-load "highlight-symbol"
