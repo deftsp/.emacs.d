@@ -9,10 +9,10 @@
 ;; (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
 
-(defun pl/js2-mode-hook ()
-  (moz-minor-mode 1))
+;; (defun pl/js2-mode-hook ()
+;;   (moz-minor-mode 1))
 
-(add-hook 'js2-mode-hook 'pl/js2-mode-hook)
+;; (add-hook 'js2-mode-hook 'pl/js2-mode-hook)
 
 
 (provide '50javascript)

@@ -129,5 +129,12 @@
   (diminish 'slime-js-minor-mode))
 
 
+;;; ac-slime
+;; https://github.com/purcell/ac-slime
+(when (fboundp 'set-up-slime-ac)
+  (add-hook 'slime-mode-hook 'set-up-slime-ac)
+  (add-hook 'slime-repl-mode-hook 'set-up-slime-ac))
+
+
 (provide '50slime-js)
 ;;; 50slime-js.el ends here

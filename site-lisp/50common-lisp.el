@@ -7,11 +7,15 @@
 
 (require 'slime)
 
-(slime-setup '(slime-fancy slime-asdf slime-tramp slime-js slime-repl slime-autodoc))
+;;;  contribs
+;; slime-js conflict with swank-fack see more https://github.com/swank-js/swank-js/issues/40
+;; (slime-setup '(slime-fancy slime-asdf slime-tramp slime-js slime-repl slime-autodoc))
+(slime-setup '(slime-asdf slime-tramp slime-js slime-repl slime-fuzzy))
 (eval-after-load "slime"
   '(setq inferior-lisp-program "~/opt/clbuild2/clbuild lisp"
          slime-protocol-version 'ignore ; remove annoying warning
-         slime-complete-symbol-function 'slime-fuzzy-complete-symbol
+         slime-complete-symbol*-fancy t
+         ;; slime-complete-symbol-function 'slime-fuzzy-complete-symbol
          slime-net-coding-system 'utf-8-unix
          slime-default-lisp 'clozure
          slime-enable-evaluate-in-emacs nil
@@ -174,9 +178,9 @@ currently under the cursor."
       (call-interactively 'lisp-indent-line)
       (call-interactively 'slime-indent-and-complete-symbol)))
 
-(eval-after-load "lisp-mode"
-  '(progn
-    (define-key lisp-mode-map [tab] 'lisp-indent-or-complete)))
+;; (eval-after-load "lisp-mode"
+;;   '(progn
+;;     (define-key lisp-mode-map [tab] 'lisp-indent-or-complete)))
 
 ;; (define-key slime-mode-map (kbd "C-c I") 'slime-inspect)
 (define-key slime-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)

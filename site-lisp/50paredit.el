@@ -100,7 +100,7 @@ scan-error if not."
 
 (eval-after-load 'slime
   '(progn
-     (add-hook 'slime-repl-mode-hook 'enable-paredit-mode)
+     ;; (add-hook 'slime-repl-mode-hook 'enable-paredit-mode) ; comment out because of slime-js
      ;;(define-key slime-mode-map (kbd "C-<return>") 'paredit-newline)
      ;; (define-key slime-mode-map (kbd "[") 'insert-parentheses)
      ;;(define-key slime-mode-map (kbd "]") 'move-past-close-and-reindent)
