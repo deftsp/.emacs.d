@@ -43,12 +43,7 @@
   '(progn
      (key-chord-mode 1)
      (setq key-chord-one-key-delay 0.16)   ; default 0.2
-     (setq key-chord-two-keys-delay 0.02)  ; default 0.1
-
-     (key-chord-define-global "jb" 'windmove-left)
-     (key-chord-define-global "jf" 'windmove-right)
-     (key-chord-define-global "fn" 'windmove-down)
-     (key-chord-define-global "fp" 'windmove-up)
+     (setq key-chord-two-keys-delay 0.035)  ; default 0.1
 
      (key-chord-define-global "''" 'pl/apostrophe-key-chord)
      (key-chord-define-global "HH" 'woman)
