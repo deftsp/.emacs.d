@@ -98,7 +98,7 @@
    `(highlight-symbol-face ((t (:background "dodgerblue3" :foreground ,palory-fg))))
 
    ;; highlight
-   '(highlight ((t (:foreground unspecified :background "Lightblue4")))) ; use `unspecified' or `nil' both ok
+   '(highlight ((t (:foreground unspecified :foreground "#66e2e2" :background "#454545")))) ; use `unspecified' or `nil' both ok
 
    ;; link
    '(link ((t (:foreground "#33b2ef" :background unspecified :underline "#33b2ef" weight bold))))
