@@ -70,6 +70,19 @@
   (subword-mode +1)
   (when (fboundp 'key-chord-define)
     (key-chord-define haskell-mode-map ".x" pl/haskell-mode-key-chord-map))
+
+  ;; smartparens-mode
+  (smartparens-mode 1)
+  (show-smartparens-mode 1)
+  (setq sp-pair-list
+        '(("\\\"" . "\\\"")
+          ("{-" . "-}")
+          ("\"" . "\"")
+          ("(" . ")")
+          ("[" . "]")
+          ("{" . "}")
+          ("`" . "`")))
+
   (define-key haskell-mode-map (kbd "C-c C-d") pl/haskell-mode-doc-map)
   (define-key haskell-mode-map (kbd "C-M-x") 'inferior-haskell-send-decl)
   (define-key haskell-mode-map (kbd "C-x C-e") 'inferior-haskell-send-decl)

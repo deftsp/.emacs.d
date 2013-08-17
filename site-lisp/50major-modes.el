@@ -2,7 +2,11 @@
 
 ;;; auto insert the matching closing delimiter
 ;; electric pair mode is a global minor mode
-(electric-pair-mode 1)
+;; (electric-pair-mode 1) ; use smartparens instead
+
+;;; smartparens
+;; el-get install smartparens
+(require 'smartparens-config)
 
 ;;; imenu
 ;; (require 'imenu)
