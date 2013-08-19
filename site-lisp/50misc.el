@@ -193,7 +193,7 @@
 ;;; display-time-string-forms
 (display-time-mode 1)
 
-(defface my-display-time-face '((((type x w32 mac))
+(defface pl/display-time-face '((((type x w32 mac))
                                  ;; #060525
                                  (:foreground "lawn green" :inherit bold))
                                 (((type tty))
@@ -208,10 +208,10 @@
     (setq display-time-mail-directory "~/Mail/inbox/new/"))
 
 (setq display-time-string-forms
-      '((substring year -2) "/" month "/" day "("dayname")"
+      '(year "/" month "/" day " " dayname
         (propertize (concat " " 24-hours ":" minutes)
 
-         'face 'my-display-time-face)
+         'face 'pl/display-time-face)
         (if time-zone " ") time-zone (if time-zone " ")
         load
         (if mail
