@@ -34,19 +34,19 @@
      (define-key paredit-mode-map (kbd "<delete>") 'pl/paredit-forward-maybe-delete-region)
      (define-key paredit-mode-map (kbd "DEL") 'pl/paredit-backward-maybe-delete-region)))
 
-(dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook inferior-lisp-mode-hook))
-  (add-hook hook 'enable-paredit-mode))
+;; (dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook inferior-lisp-mode-hook))
+;;   (add-hook hook 'enable-paredit-mode))
 
-(eval-after-load 'scheme
-  '(progn
-     (add-hook 'inferior-scheme-mode-hook 'enable-paredit-mode)
-     (add-hook 'scheme-mode-hook 'enable-paredit-mode)
+;; (eval-after-load 'scheme
+;;   '(progn
+;;      (add-hook 'inferior-scheme-mode-hook 'enable-paredit-mode)
+;;      (add-hook 'scheme-mode-hook 'enable-paredit-mode)
 
-     ;;(define-key scheme-mode-map (kbd "C-M-l") 'paredit-recentre-on-sexp)
-     (define-key scheme-mode-map (kbd "C-,") 'paredit-backward-slurp-sexp)
-     (define-key scheme-mode-map (kbd "C-.") 'paredit-forward-slurp-sexp)
-     (define-key scheme-mode-map (kbd "C-<") 'paredit-backward-barf-sexp)
-     (define-key scheme-mode-map (kbd "C->") 'paredit-forward-barf-sexp)))
+;;      ;;(define-key scheme-mode-map (kbd "C-M-l") 'paredit-recentre-on-sexp)
+;;      (define-key scheme-mode-map (kbd "C-,") 'paredit-backward-slurp-sexp)
+;;      (define-key scheme-mode-map (kbd "C-.") 'paredit-forward-slurp-sexp)
+;;      (define-key scheme-mode-map (kbd "C-<") 'paredit-backward-barf-sexp)
+;;      (define-key scheme-mode-map (kbd "C->") 'paredit-forward-barf-sexp)))
 
 
 (defun check-region-parens ()

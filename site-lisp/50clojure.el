@@ -21,13 +21,13 @@
      (if (fboundp 'rainbow-delimiters-mode)
          (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode))
      (add-hook 'clojure-mode-hook 'subword-mode)
-     (add-hook 'clojure-mode-hook 'nrepl-turn-on-eldoc-mode)
-     (add-hook 'clojure-mode-hook 'enable-paredit-mode)))
+     ;; (add-hook 'clojure-mode-hook 'enable-paredit-mode)
+     (add-hook 'clojure-mode-hook 'nrepl-turn-on-eldoc-mode)))
 
 (eval-after-load "nrepl"
   '(progn
-     (add-hook 'nrepl-mode-hook 'subword-mode)
-     (add-hook 'nrepl-mode-hook 'enable-paredit-mode)))
+     ;; (add-hook 'nrepl-mode-hook 'enable-paredit-mode)
+     (add-hook 'nrepl-mode-hook 'subword-mode)))
 
 
 (provide '50clojure)

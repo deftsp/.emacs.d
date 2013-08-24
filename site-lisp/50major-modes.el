@@ -4,10 +4,6 @@
 ;; electric pair mode is a global minor mode
 ;; (electric-pair-mode 1) ; use smartparens instead
 
-;;; smartparens
-;; el-get install smartparens
-(require 'smartparens-config)
-
 ;;; imenu
 ;; (require 'imenu)
 ;; (setq imenu-sort-function 'imenu--sort-by-name)
@@ -152,9 +148,10 @@
     (require 'eldoc-extension nil t)
     ;; make ElDoc aware of ParEdit's most used commands. Whenever the listed commands are used,
     ;; ElDoc will automatically refresh the minibuffer.
-    (eldoc-add-command
-     'paredit-backward-delete
-     'paredit-close-round)))
+    ;; (eldoc-add-command
+    ;;  'paredit-backward-delete
+    ;;  'paredit-close-round)
+    ))
 
 (add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)

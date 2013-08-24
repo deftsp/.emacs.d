@@ -73,6 +73,7 @@
 (require '50shell)
 (require '50slime-js)
 (require '50buffer)
+(require '50smartparens)
 (require '50tab-completion)
 (require '50tempo)
 (require '50tex)
