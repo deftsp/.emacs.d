@@ -5,15 +5,12 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-;;; AUTO FILL
-;;设置 sentence-end 可以识别中文标点。不用在 fill 时在句号后插入两个空格。
+;; 设置 sentence-end 可以识别中文标点。不用在 fill 时在句号后插入两个空格。
 (setq sentence-end "\\([。！？]\\|……\\|[.?!][]\"')}]*\\($\\|[ \t]\\)\\)[ \t\n]*")
 (setq sentence-end-double-space nil)
-;;(setq adaptive-fill-regexp "[ \t]+\\|[ \t]*\\([0-9]+\\.\\|\\*+\\)[ \t]*")
-;; 解决段首空格缩进的问题
-;; (setq adaptive-fill-mode nil)
-;; put two spaces after a colon when filling.
-(setq colon-double-space t)
+;; (setq adaptive-fill-regexp "[ \t]+\\|[ \t]*\\([0-9]+\\.\\|\\*+\\)[ \t]*")
+;; (setq adaptive-fill-mode nil) ; 解决段首空格缩进的问题
+(setq colon-double-space t) ; put two spaces after a colon when filling.
 
 ;;; longline mode
 ;; (longlines-mode t) ;; soft word wrap like the rest of the world
@@ -30,7 +27,7 @@
 ;; (global-visual-line-mode 1)
 
 
-;;don't use auto-fill inside minibuffer
+;; don't use auto-fill inside minibuffer
 ;; (add-hook 'minibuffer-setup-hook
 ;;           (lambda () (interactive) (auto-fill-mode -1)))
 
@@ -69,8 +66,6 @@
 ;; moves past the blank-line to the next unfilled paragraph and then executing that macro on the whole buffer, 'C-u 0
 ;; C-x e'
 
-
-
 ;; delete the hard-wrapped line endings in a paragraph
 (defun remove-hard-wrap-paragraph ()
   "Replace newline chars in current paragraph by single spaces."
@@ -92,7 +87,6 @@
 (put-charset-property 'chinese-cns11643-6 'nospace-between-words t)
 (put-charset-property 'chinese-cns11643-7 'nospace-between-words t)
 
-;;; 中英文之间自动加空格
 (defun add-blank-in-chinese-and-english (&optional start end)
   "automaticall add a blank between English and Chinese words."
   (interactive)
