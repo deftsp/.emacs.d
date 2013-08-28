@@ -230,16 +230,20 @@
 
 ;;; moving region/line
 ;; Many times you'll kill a line with the intention of pasting it back a couple of lines up/below.
-(global-set-key (kbd "H-p") 'pl/move-line-region-up)
-(global-set-key (kbd "H-n") 'pl/move-line-region-down)
+(global-set-key (kbd "H-p") 'pl/move-line-or-region-up)
+(global-set-key (kbd "H-n") 'pl/move-line-or-region-down)
 
-(defun pl/move-line-region-up (start end n)
-  (interactive "r\np")
-  (if (region-active-p) (pl/move-region-up start end n) (call-interactively #'pl/move-line-up)))
+(defun pl/move-line-or-region-up (n)
+  (interactive "p")
+  (if (region-active-p)
+      (pl/move-region-up (region-beginning) (region-end) n)
+      (call-interactively #'pl/move-line-up)))
 
-(defun pl/move-line-region-down (start end n)
-  (interactive "r\np")
-  (if (region-active-p) (pl/move-region-down start end n) (call-interactively #'pl/move-line-down)))
+(defun pl/move-line-or-region-down (n)
+  (interactive "p")
+  (if (region-active-p)
+      (pl/move-region-down (region-beginning) (region-end) n)
+      (call-interactively #'pl/move-line-down)))
 
 ;;
 (defun pl/move-region (start end n)
