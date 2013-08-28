@@ -61,7 +61,7 @@
 ;; (define-key sp-keymap (kbd "M-B") 'sp-backward-symbol)
 
 (define-key sp-keymap (kbd "H-t") 'sp-prefix-tag-object)
-(define-key sp-keymap (kbd "H-p") 'sp-prefix-pair-object)
+;; (define-key sp-keymap (kbd "H-p") 'sp-prefix-pair-object)
 (define-key sp-keymap (kbd "H-s c") 'sp-convolute-sexp)
 (define-key sp-keymap (kbd "H-s a") 'sp-absorb-sexp)
 (define-key sp-keymap (kbd "H-s e") 'sp-emit-sexp)
