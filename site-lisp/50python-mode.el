@@ -23,7 +23,7 @@
 (setq ropemacs-global-prefix "C-c C-p")
 (setq ropemacs-local-prefix "C-c C-p")
 
-(pymacs-load "ropemacs" "rope-")
+;; (pymacs-load "ropemacs" "rope-")
 (setq ropemacs-enable-autoimport t)
 
 (defun pl/init-python-mode ()
