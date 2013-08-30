@@ -178,7 +178,7 @@ Require `font-lock'."
 ;; Unshifted special characters ends there--------------------------------------------------------------------------------
 
 ;;; repeat to mark multi-line
-(global-set-key (kbd "C-z") 'pl/mark-line)
+;; (global-set-key (kbd "C-z") 'pl/mark-line)
 (defun pl/mark-line (&optional arg allow-extend)
   "Put point at beginning of this line, mark at end.
 The line marked is the one that contains point or follows point.

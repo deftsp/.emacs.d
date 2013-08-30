@@ -95,6 +95,19 @@
                :description "major mode for Open GLSL shader files"
                :pkgname "jimhourihan/glsl-mode"
                :features glsl-mode)
+        (:name evil
+               :website "http://gitorious.org/evil/pages/Home"
+               :description "Evil is an extensible vi layer for Emacs. It
+       emulates the main features of Vim, and provides facilities
+       for writing custom extensions."
+               :type git
+               :url "git://gitorious.org/evil/evil.git"
+               :features evil
+               :depends undo-tree
+               :build `(("make" ,(format "EMACS=%s" (shell-quote-argument el-get-emacs)) "all" "info"))
+               :build/berkeley-unix (("gmake" "all" "info"))
+               :info "doc")
+
         (:name haskell-mode
                :description "A Haskell editing mode"
                :type github

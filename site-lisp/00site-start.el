@@ -93,6 +93,7 @@
 (require '51helm)
 ;; (require '52emms) ; do not use it any more
 ;; (require '52icicles)
+(require '52evil-mode)
 (require '52ido)
 (require '60session)
 (require '62winring)
