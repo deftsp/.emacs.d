@@ -83,5 +83,5 @@
 (if (fboundp 'evil-mode)
     (evil-mode 1))
 
-(provide '50evil-mode)
+(provide '52evil-mode)
 ;;; 50evil-mode.el ends here
