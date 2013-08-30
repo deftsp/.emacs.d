@@ -1,8 +1,17 @@
 ;;; 52tex.el ---
 
 ;;; auctex
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
+
+;; install
+;; $ ./autogen.sh
+;; $ ./configure --with-emacs=/Applications/Emacs.app/Contents/MacOS/Emacs \
+;;  --with-lispdir=/Applications/Emacs.app/Contents/Resources/site-lisp \
+;;  --with-texmf-dir=/usr/local/texlive/texmf-local
+;; $ make
+(unless (load "auctex.el" t t t)
+  (message "Fail to load auctex.el. Have you installed auctex?"))
+(unless (load "preview-latex.el" t t t)
+  (message "Fail to laod preview-latex.el. Have you installed auctex?"))
 
 ;; (require 'tex-mik)
 ;; (eval-after-load "tex"
@@ -202,6 +211,9 @@
 ;; (when (require 'latex-doc nil t)
 ;;   (latex-doc-initialize))
 
-
+;;; info
+;; TODO: auctex doc directory have no dir file
+(eval-after-load "info"
+  '(add-to-list 'Info-directory-list "~/.emacs.d/lisp/auctex/doc"))
 
 (provide '50tex)
