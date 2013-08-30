@@ -7,7 +7,9 @@
 (ido-mode t)                  ;  Turn on ido buffer and file behavior.
 (ido-everywhere t)
 ;; (ido-hacks-mode 1) ; use ido-ubiquitous-mode instead, it can work with info.
-(ido-ubiquitous-mode 1)
+
+(if (fboundp 'ido-ubiquitous-mode)
+    (ido-ubiquitous-mode 1))
 
 ;;; flx
 ;; https://github.com/lewang/flx
@@ -16,8 +18,8 @@
   '(progn
      ;; disable ido faces to see flx highlights.
      (setq flx-ido-threshhold 7500 ; see also gc-cons-threshold.
-           ido-use-faces nil
-           flx-ido-use-faces t)
+           ido-use-faces t
+           flx-ido-use-faces nil)
      (flx-ido-mode 1)))
 
 
