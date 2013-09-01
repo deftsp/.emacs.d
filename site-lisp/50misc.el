@@ -301,6 +301,13 @@
 ;;   (when (file-exists-p x)
 ;;     (setq describe-char-unicodedata-file x)))
 
+;;; crosshair
+;; dependencies hl-line+ col-highlight vline
+;; (global-set-key [(control ?+)] 'crosshairs)
+;; (global-set-key [(control ?+)] 'crosshairs-mode)
+(global-set-key [(control ?+)] 'crosshairs-flash)
+
+
 
 (eval-after-load "man" '(require 'man-completion))
 ;; (defalias 'man 'woman)
