@@ -304,8 +304,8 @@
 ;;; crosshair
 ;; dependencies hl-line+ col-highlight vline
 ;; (global-set-key [(control ?+)] 'crosshairs)
-;; (global-set-key [(control ?+)] 'crosshairs-mode)
-(global-set-key [(control ?+)] 'crosshairs-flash)
+(global-set-key [(control ?+)] 'crosshairs-mode)
+;; (global-set-key [(control ?+)] 'crosshairs-flash)
 
 
 

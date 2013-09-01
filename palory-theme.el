@@ -201,6 +201,12 @@
    ;; volatile highlights
    '(vhl/default-face ((t (:background "#332244"))))
 
+   ;; hl-line
+   '(hl-line ((t (:background "#222222"))))
+
+   ;; col-highlight
+   '(col-highlight ((t (:background "#222222"))))
+
    ;; flymake
    '(flymake-warnline ((t (:background "#333300" :foreground "#ccccff"))))
    '(flymake-errline ((t (:background "#402222" :foreground "#cceecc"))))
