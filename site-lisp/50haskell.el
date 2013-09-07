@@ -23,6 +23,9 @@
      (setq haskell-stylish-on-save nil) ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
      (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
      (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
+     (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
+
+     (define-key haskell-mode-map (kbd "C-c v c") 'haskell-cabal-visit-file)
 
      (setq pl/haskell-mode-key-chord-map (make-sparse-keymap))
      (define-key pl/haskell-mode-key-chord-map (kbd "e") 'haskell-indent-insert-equal)
@@ -47,7 +50,8 @@
      (define-key pl/haskell-mode-doc-map (kbd "d") 'inferior-haskell-find-haddock)
      (define-key pl/haskell-mode-doc-map (kbd "C-d") 'inferior-haskell-find-haddock)))
 
-
+(eval-after-load "which-func"
+  '(add-to-list 'which-func-modes 'haskell-mode))
 
 
 ;;; ghc-mod
@@ -135,9 +139,9 @@
 
 
 ;;; indent
-;; turn-on-haskell-indentation
 ;; turn-on-haskell-indent
 ;; turn-on-haskell-simple-indent
+;; turn-on-haskell-indentation   ; Improved variation of turn-on-haskell-indent indentation mode.
 ;; Note that the three indentation modules are mutually exclusive - add at most one. In preference for the more advanced.
 (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation) ; el-get default install `turn-on-haskell-indentation'
 (setq haskell-indent-thenelse 2)
