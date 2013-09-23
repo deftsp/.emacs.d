@@ -1151,6 +1151,10 @@ such character is found, following options are shown:
   "Set point to the position of the last change." t)
 (global-set-key (kbd "C-x C-/") 'goto-last-change)
 
-
+;;;
+(require 'keyfreq nil t)
+(when (fboundp 'keyfreq-mode)
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1))
 
 (provide '50tools)

@@ -107,7 +107,11 @@
                :build `(("make" ,(format "EMACS=%s" (shell-quote-argument el-get-emacs)) "all" "info"))
                :build/berkeley-unix (("gmake" "all" "info"))
                :info "doc")
-
+        (:name keyfreq
+               :type github
+               :description "track command frequencies"
+               :pkgname "dacap/keyfreq"
+               :features keyfreq)
         (:name haskell-mode
                :description "A Haskell editing mode"
                :type github
