@@ -378,10 +378,4 @@
 ;; (define-key global-map [?\C-h ?\C-j] 'gtk-lookup-symbol)
 
 
-;;; Lua mode
-;; (eval-after-load "lua-mode"
-;;   '(progn
-;;      (setq lua-search-url-prefix
-;;            (concat "file://" (expand-file-name "~/") "share/doc/lua/5.1/manual.html#pdf-"))))
-
 (provide '50major-modes)

@@ -54,6 +54,7 @@
 (require '50javascript)
 (require '50keys)
 (require '50major-modes)
+(require '50lua)
 (require '50maxima)
 (require '50misc)
 (require '50mode-line)
