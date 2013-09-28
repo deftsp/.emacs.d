@@ -87,6 +87,9 @@
       ;; default-enable-multibyte-characters t
       enable-local-variables :safe)
 
+;;; comint do not echo input
+(setq-default comint-process-echoes t)
+
 
 ;;; minibuffer
 (setq minibuffer-electric-default-mode 1
