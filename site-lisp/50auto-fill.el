@@ -82,7 +82,7 @@
 (global-set-key (kbd "M-Q") 'remove-hard-wrap-paragraph)
 
 
-;; 解决中英文混排不能正确fill的问题
+;; 解决中英文混排不能正确 fill 的问题
 (put-charset-property 'chinese-cns11643-5 'nospace-between-words t)
 (put-charset-property 'chinese-cns11643-6 'nospace-between-words t)
 (put-charset-property 'chinese-cns11643-7 'nospace-between-words t)
