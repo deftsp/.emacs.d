@@ -75,6 +75,7 @@
   (when (fboundp 'key-chord-define)
     (key-chord-define haskell-mode-map ".x" pl/haskell-mode-key-chord-map))
 
+  (setq evil-auto-indent nil)
   ;; smartparens-mode
   (smartparens-mode 1)
   (show-smartparens-mode 1)
