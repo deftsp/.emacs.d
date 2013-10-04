@@ -304,6 +304,13 @@
      ;; Wrap around makes things easier
      (win-switch-set-wrap-around 1)))
 
+(defun pl/toggle-full-window()
+  "Toggle the full view of selected window"
+  (interactive)
+  ;; @see http://www.gnu.org/software/emacs/manual/html_node/elisp/Splitting-Windows.html
+  (if (window-parent)
+      (delete-other-windows)
+    (winner-undo)))
 
 ;;;
 (provide '50window)
