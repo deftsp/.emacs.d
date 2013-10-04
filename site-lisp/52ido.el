@@ -8,8 +8,9 @@
 (ido-everywhere t)
 ;; (ido-hacks-mode 1) ; use ido-ubiquitous-mode instead, it can work with info.
 
-(if (fboundp 'ido-ubiquitous-mode)
-    (ido-ubiquitous-mode 1))
+(when (fboundp 'ido-ubiquitous-mode)
+  (setq ido-ubiquitous-max-items 5000)
+  (ido-ubiquitous-mode 1))
 
 ;;; flx
 ;; https://github.com/lewang/flx
