@@ -13,7 +13,7 @@
   (setq initial-frame-alist `((tool-bar-lines . 0)
                               (menu-bar-lines . 0)
                               (width . 268)
-                              (height . 66)
+                              (height . 62)
                               (top . 22) ; (frame-parameter nil 'top)
                               (left . 0)
                               (alpha . (98 98)) ; first number is for the active window and the second for the inactive
