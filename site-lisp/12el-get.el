@@ -107,6 +107,10 @@
                :build `(("make" ,(format "EMACS=%s" (shell-quote-argument el-get-emacs)) "all" "info"))
                :build/berkeley-unix (("gmake" "all" "info"))
                :info "doc")
+        (:name evil-plugins
+               :type github
+               :description "Plugins for Emacs Evil."
+               :pkgname "tarao/evil-plugins")
         (:name linum-relative
                :type github
                :description "display relative line number in emacs."

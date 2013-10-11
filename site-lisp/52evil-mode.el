@@ -246,6 +246,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (define-key evil-normal-state-map "%" 'pl/evil-jump-item-enhanced-for-html)
 
+;;; evil-little-word.el
+(require 'evil-little-word nil t)
+
 ;;; org-mode
 (evil-define-key 'normal org-mode-map "T" 'org-todo)
 (evil-define-key 'normal org-mode-map "-" 'org-cycle-list-bullet)
