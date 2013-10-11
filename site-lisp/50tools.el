@@ -110,10 +110,10 @@
 ;;; line numbers
 (eval-after-load "linum"
   '(progn
-     (set-face-foreground 'linum "#5cb2b3")
+     (set-face-foreground 'linum "LightSkyBlue4")
      (set-face-background 'linum "#222222")
 
-     (setq linum-format 'pl/linum-format) ; dynamic
+     ;; (setq linum-format 'pl/linum-format) ; dynamic
      (defun pl/linum-format (line)
        (propertize (format (let ((w (length (number-to-string
                                              (count-lines
@@ -123,6 +123,16 @@
                            line)
                    'face 'linum))))
 
+;; linum-relative
+(require 'linum-relative nil t)
+(setq linum-relative-format "%3s|")
+
+(defun pl/turn-on-relative-linum ()
+  (linum-mode 1)
+  (if (fboundp 'linum-relative)
+      (setq linum-format 'linum-relative)))
+
+(add-hook 'prog-mode-hook 'pl/turn-on-relative-linum)
 
 ;;; highlight current line in buffer
 ;; (require 'hl-line)
@@ -1016,12 +1026,20 @@ such character is found, following options are shown:
 (defun pl/goto-line-with-feedback ()
   "Show line numbers temporarily, while prompting for the line number input"
   (interactive)
-  (unwind-protect
-      (progn
-        (linum-mode 1)
-        (goto-line (read-number "Goto line: ")))
-    (linum-mode -1)))
-
+  (let* ((is-linum-mode-load (boundp 'linum-mode))
+        (origin-linum-mode-state
+         (if is-linum-mode-load linum-mode nil))
+        (origin-linum-format
+         (if is-linum-mode-load linum-format nil)))
+      (unwind-protect
+          (progn
+            (setq linum-format 'dynamic)
+            (linum-mode 1)
+            (goto-line (read-number "Goto line: ")))
+        (progn
+          (setq linum-format origin-linum-format)
+          (linum-mode origin-linum-mode-state)
+          (linum-update-current)))))
 
 ;;; jump-char
 ;; <char> :: move to the next match in the current direction.

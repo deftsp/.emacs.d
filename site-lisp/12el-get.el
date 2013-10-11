@@ -107,6 +107,11 @@
                :build `(("make" ,(format "EMACS=%s" (shell-quote-argument el-get-emacs)) "all" "info"))
                :build/berkeley-unix (("gmake" "all" "info"))
                :info "doc")
+        (:name linum-relative
+               :type github
+               :description "display relative line number in emacs."
+               :pkgname "coldnew/linum-relative"
+               :features linum-relative)
         (:name keyfreq
                :type github
                :description "track command frequencies"
