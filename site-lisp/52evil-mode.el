@@ -121,18 +121,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "cc"  'evilnc-copy-and-comment-lines
   "cp"  'evilnc-comment-or-uncomment-paragraphs
   "cr"  'comment-or-uncomment-region
-  "w"   'save-buffer
-  "W"   'save-some-buffers
   "d"   'dired-jump
   "ff"  'pl/toggle-full-window
-  "xf"  'ido-find-file
-  "xb"  'ido-switch-buffer
-  "xc"  'save-buffers-kill-terminal
-  "xz"  'suspend-frame
-  "xvv" 'vc-next-action
-  "xv=" 'vc-diff
-  "xvl" 'vc-print-log
-  "xx"  'er/expand-region
   "pff" 'projectile-find-file
   "pft" 'projectile-find-test-file
   "ptt" 'projectile-toggle-between-implementation-and-test
@@ -149,7 +139,17 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "po"  'projectile-multi-occur
   "pa"  'projectile-ack
   "pg"  'projectile-grep
-  "ut"  'undo-tree-visualize)
+  "ut"  'undo-tree-visualize
+  "w"   'save-buffer
+  "W"   'save-some-buffers
+  "xf"  'ido-find-file
+  "xb"  'ido-switch-buffer
+  "xc"  'save-buffers-kill-terminal
+  "xz"  'suspend-frame
+  "xvv" 'vc-next-action
+  "xv=" 'vc-diff
+  "xvl" 'vc-print-log
+  "xx"  'er/expand-region)
 
 ;;; expand-region
 ;; http://blog.binchen.org/?p=782
