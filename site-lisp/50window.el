@@ -5,6 +5,8 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+(setq switch-to-buffer-preserve-window-point t)
+
 ;;; key binding
 (global-set-key (kbd"C-x x") 'delete-window)
 (when window-system

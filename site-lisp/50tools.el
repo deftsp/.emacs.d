@@ -1081,11 +1081,6 @@ such character is found, following options are shown:
 (autoload 'cclookup-update "cclookup"
   "Run cclookup-update and create the database at `cclookup-db-file'." t)
 
-;;; per-window-point
-(require 'per-window-point nil t)
-(if (fboundp 'pwp-mode)
-    (pwp-mode 1))
-
 ;;; mutiple cursors
 (require 'multiple-cursors nil t)
 (defvar pl/mutiple-cursors-keymap nil
