@@ -258,5 +258,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-define-key 'normal org-mode-map "-" 'org-cycle-list-bullet)
 (evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle)
 
+;;; smartparens
+(define-key evil-normal-state-map "M" 'evil-set-marker)
+;; my own evil movements. Some default bindings were moved here.
+(defvar pl/evil-move-map (make-sparse-keymap))
+(define-prefix-command 'pl/evil-move-map)
+(define-key evil-normal-state-map "m" pl/evil-move-map)
+(define-key pl/evil-move-map "d" 'sp-down-sexp)
+(define-key pl/evil-move-map "a" 'sp-backward-down-sexp)
+
 (provide '52evil-mode)
 ;;; 50evil-mode.el ends here
