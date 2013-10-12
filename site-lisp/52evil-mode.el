@@ -105,6 +105,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
 (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-char-mode)
 
+;;;
+(define-key evil-normal-state-map (kbd "C-o") 'pl/open-line-with-indent) ; default evil-jump-backward
+
+
 ;;; evil-leader
 ;; Note: You should enable global-evil-leader-mode before you enable evil-mode, otherwise evil-leader won't be enabled
 ;; in initial buffers (*scratch*, *Messages*, ...).
