@@ -76,28 +76,30 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
       (setq deactivate-mark t)
     (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
     (abort-recursive-edit)))
-(define-key evil-normal-state-map [escape] 'keyboard-quit)
-(define-key evil-visual-state-map [escape] 'keyboard-quit)
+
 (define-key minibuffer-local-map [escape] 'pl/minibuffer-keyboard-quit)
 (define-key minibuffer-local-ns-map [escape] 'pl/minibuffer-keyboard-quit)
 (define-key minibuffer-local-completion-map [escape] 'pl/minibuffer-keyboard-quit)
 (define-key minibuffer-local-must-match-map [escape] 'pl/minibuffer-keyboard-quit)
 (define-key minibuffer-local-isearch-map [escape] 'pl/minibuffer-keyboard-quit)
 
-;; 'imap jf <ESC>' equivalent
-;; (define-key evil-insert-state-map (kbd "j f") 'evil-normal-state)
-(key-chord-define evil-normal-state-map           "fd" 'evil-force-normal-state)
-(key-chord-define evil-insert-state-map           "fd" 'evil-normal-state)
-(key-chord-define evil-visual-state-map           "fd" 'evil-normal-state) ; 'evil-change-to-previous-state
-(key-chord-define evil-emacs-state-map            "fd" 'evil-normal-state)
-(key-chord-define evil-motion-state-map           "fd" 'evil-normal-state)
-(key-chord-define evil-replace-state-map          "fd" 'evil-normal-state)
 
-(key-chord-define minibuffer-local-map            "fd" 'pl/minibuffer-keyboard-quit)
-(key-chord-define minibuffer-local-ns-map         "fd" 'pl/minibuffer-keyboard-quit)
-(key-chord-define minibuffer-local-completion-map "fd" 'pl/minibuffer-keyboard-quit)
-(key-chord-define minibuffer-local-must-match-map "fd" 'pl/minibuffer-keyboard-quit)
-(key-chord-define minibuffer-local-isearch-map    "fd" 'pl/minibuffer-keyboard-quit)
+;; 'imap fd <ESC>' equivalent
+(key-chord-define-global "fd" [escape])
+
+;; (define-key evil-insert-state-map (kbd "j f") 'evil-normal-state)
+;; (key-chord-define evil-normal-state-map           "fd" 'evil-force-normal-state)
+;; (key-chord-define evil-insert-state-map           "fd" 'evil-normal-state)
+;; (key-chord-define evil-visual-state-map           "fd" 'evil-normal-state) ; 'evil-change-to-previous-state
+;; (key-chord-define evil-emacs-state-map            "fd" 'evil-normal-state)
+;; (key-chord-define evil-motion-state-map           "fd" 'evil-normal-state)
+;; (key-chord-define evil-replace-state-map          "fd" 'evil-normal-state)
+
+;; (key-chord-define minibuffer-local-map            "fd" 'pl/minibuffer-keyboard-quit)
+;; (key-chord-define minibuffer-local-ns-map         "fd" 'pl/minibuffer-keyboard-quit)
+;; (key-chord-define minibuffer-local-completion-map "fd" 'pl/minibuffer-keyboard-quit)
+;; (key-chord-define minibuffer-local-must-match-map "fd" 'pl/minibuffer-keyboard-quit)
+;; (key-chord-define minibuffer-local-isearch-map    "fd" 'pl/minibuffer-keyboard-quit)
 
 
 
@@ -107,7 +109,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;;;
 (define-key evil-normal-state-map (kbd "C-o") 'pl/open-line-with-indent) ; default evil-jump-backward
+(define-key evil-normal-state-map (kbd "TAB") 'indent-for-tab-command)
 
+(define-key evil-insert-state-map (kbd "C-n") 'next-line)
+(define-key evil-insert-state-map (kbd "C-p") 'previous-line)
+(define-key evil-insert-state-map (kbd "C-d") 'delete-char)
+(define-key evil-normal-state-map (kbd "C-e") 'evil-end-of-line)
+(define-key evil-insert-state-map (kbd "C-e") 'evil-end-of-line)
 
 ;;; evil-leader
 ;; Note: You should enable global-evil-leader-mode before you enable evil-mode, otherwise evil-leader won't be enabled
