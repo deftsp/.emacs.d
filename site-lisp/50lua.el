@@ -10,6 +10,7 @@
 ;;      (setq lua-search-url-prefix
 ;;            (concat "file://" (expand-file-name "~/") "share/doc/lua/5.1/manual.html#pdf-"))))
 
+(setq lua-indent-level 4)
 
 (provide '50lua)
 ;;; 50lua.el ends here
