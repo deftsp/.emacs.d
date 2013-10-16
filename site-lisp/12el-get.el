@@ -95,6 +95,12 @@
                :description "major mode for Open GLSL shader files"
                :pkgname "jimhourihan/glsl-mode"
                :features glsl-mode)
+        (:name bookmark+
+               :pkgname "deftsp/bookmark-plus"
+               :website "http://www.emacswiki.org/emacs/BookmarkPlus"
+               :type github
+               :description "Extensions to standard library `bookmark.el'"
+               :features bookmark+)
         (:name evil
                :website "http://gitorious.org/evil/pages/Home"
                :description "Evil is an extensible vi layer for Emacs. It
