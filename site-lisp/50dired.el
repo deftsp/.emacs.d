@@ -793,6 +793,9 @@ Works in Microsoft Windows, Mac OS X, Linux."
      (set-face-attribute 'diredp-flag-mark-line nil :foreground "white"
                          :background "Blue4")))
 
+(setq diredp-hide-details-initially-flag nil)
+(setq diredp-hide-details-propagate-flag nil)
+
 ;;; tips
 ;; mark mutiple files in dired mode with m, press B to compile them to *.el.
 ;; dired-compare-directories

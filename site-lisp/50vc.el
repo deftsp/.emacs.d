@@ -51,6 +51,9 @@
   '(progn
      (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
      (setq magit-completing-read-function 'magit-ido-completing-read)))
+
+(setq magit-stage-all-confirm nil
+      magit-unstage-all-confirm nil)
 ;; (defun magit-toggle-whitespace ()
 ;;   (interactive)
 ;;   (if (member "-w" magit-diff-options)
