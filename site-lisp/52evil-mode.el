@@ -145,6 +145,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "pk"  'projectile-kill-buffers
   "pd"  'projectile-dired
   "prf" 'projectile-recentf
+  "pe"  'projectile-recentf
   "pi"  'projectile-invalidate-cache
   "pc"  'projectile-cache-current-file
   "pb"  'projectile-switch-to-buffer
