@@ -4,8 +4,6 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-
-
 ;;; install
 ;; install yaml-mode, rinari with el-get
 ;; https://github.com/remvee/emacs-rails
@@ -24,8 +22,6 @@
 ;; cucumber.el
 ;; https://github.com/michaelklishin/cucumber.el
 
-
-
 ;;; pry
 ;; $ gem install pry
 ;; (add-to-list 'inf-ruby-implementations '("pry" . "pry -f"))
@@ -35,10 +31,10 @@
 
 ;;; init
 (defun pl/ruby-mode-init ()
-  (push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
-  (push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
-  (push '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns)
-  (add-hook 'ruby-mode-hook 'pl/flymake-ruby-enable)
+  ;; (push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
+  ;; (push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
+  ;; (push '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns)
+  ;; (add-hook 'ruby-mode-hook 'pl/flymake-ruby-enable)
   (define-key ruby-mode-map "\C-c\C-z" 'pl/ruby-switch-to-inf-dwim)
   (add-to-list 'ac-sources 'ac-source-rsense-method)
   (add-to-list 'ac-sources 'ac-source-rsense-constant))
@@ -73,7 +69,6 @@
   (unless inf-ruby-buffer
     (inf-ruby))
   (call-interactively 'ruby-switch-to-inf))
-
 
 
 (provide '50ruby)
