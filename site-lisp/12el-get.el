@@ -127,6 +127,12 @@
                :description "track command frequencies"
                :pkgname "dacap/keyfreq"
                :features keyfreq)
+        (:name lua2-mode
+               :website "http://www.enyo.de/fw/software/lua-emacs/lua2-mode.html"
+               :description "a semantic highlighting extension for lua-mode"
+               :type http
+               :depends lua-mode
+               :url "http://www.enyo.de/fw/software/lua-emacs/lua2-mode.el")
         (:name haskell-mode
                :description "A Haskell editing mode"
                :type github

@@ -12,5 +12,11 @@
 
 (setq lua-indent-level 4)
 
+;; lua2-mode
+(eval-after-load "lua-mode"
+  '(progn
+     (require 'lua2-mode nil t)))
+
+
 (provide '50lua)
 ;;; 50lua.el ends here
