@@ -15,7 +15,13 @@
 ;; lua2-mode
 (eval-after-load "lua-mode"
   '(progn
-     (require 'lua2-mode nil t)))
+     (require 'lua2-mode nil t)
+     (define-key lua-mode-map (kbd "C-c C-c") 'pl/relaunch-quick-cocos2d-x)))
+
+
+(defun pl/relaunch-quick-cocos2d-x ()
+  (interactive)
+  (shell-command "relaunch-quick-cocos2d-x"))
 
 
 (provide '50lua)
