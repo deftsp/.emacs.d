@@ -1046,7 +1046,7 @@ such character is found, following options are shown:
 ;; ; :: next match forward (towards end of buffer)
 ;; , :: next match backward (towards beginning of buffer)
 ;; C-c C-c :: invoke ace-jump-mode if available (also <M-/>)
-(require 'jump-char)
+(require 'jump-char nil t)
 (global-set-key (kbd "M-m") 'jump-char-forward)
 (global-set-key (kbd "M-M") 'jump-char-backward)
 

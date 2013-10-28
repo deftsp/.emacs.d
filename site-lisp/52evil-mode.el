@@ -209,8 +209,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         (magit-commit-mode . normal))
       do (evil-set-initial-state mode state))
 
-(define-key evil-motion-state-map "f" 'jump-char-forward)
-(define-key evil-motion-state-map "F" 'jump-char-backward)
+;; (define-key evil-motion-state-map "f" 'jump-char-forward)
+;; (define-key evil-motion-state-map "F" 'jump-char-backward)
 
 ;;; haskell mode
 (defun pl/newline-and-indent-relative ()
