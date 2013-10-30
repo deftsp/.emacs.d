@@ -176,7 +176,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
     (evil-mode 1))
 
 (setq evil-move-cursor-back nil)
-(setq-default evil-auto-indent nil)
+;; (setq-default evil-auto-indent nil)
 
 ;;; evil-surround
 (if (fboundp 'global-surround-mode)
