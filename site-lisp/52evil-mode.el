@@ -262,6 +262,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;;; evil-little-word.el
 (require 'evil-little-word nil t)
 
+;;; evil-textobj-between.el
+(require 'evil-textobj-between nil t)
+
 ;;; org-mode
 (evil-define-key 'normal org-mode-map "T" 'org-todo)
 (evil-define-key 'normal org-mode-map "-" 'org-cycle-list-bullet)
