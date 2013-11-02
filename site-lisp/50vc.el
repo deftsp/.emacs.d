@@ -93,16 +93,28 @@
 ;;     (align-regexp pos (point) ": " 0 2)))
 
 ;;; git-gutter
+;; https://github.com/syohex/emacs-git-gutter-fringe
 ;; it makes split window very slow, disable now
-;; (require 'git-gutter-fringe nil t)
-;; (eval-after-load "git-gutter-fringe"
-;;   '(progn
-;;      (setq git-gutter-fr:side 'right-fringe)))
+(require 'git-gutter-fringe nil t)
+(eval-after-load "git-gutter-fringe"
+  '(progn
+     (setq git-gutter-fr:side 'left-fringe)))
 
-;; (eval-after-load "git-gutter"
-;;   '(progn
-;;      (setq git-gutter:lighter " GG")
-;;      (global-git-gutter-mode t)))
+(eval-after-load "git-gutter"
+  '(progn
+     (setq git-gutter:lighter " GG")
+     ;; (global-set-key (kbd "C-x C-g") 'git-gutter:toggle)
+     ;; (global-set-key (kbd "C-x v =") 'git-gutter:popup-hunk)
+
+     ;; Jump to next/previous hunk
+     ;; (global-set-key (kbd "C-x p") 'git-gutter:previous-hunk)
+     ;; (global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
+
+     ;; Stage current hunk
+     ;; (global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
+     ;; Revert current hunk
+     ;; (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
+     (global-git-gutter-mode t)))
 
 
 (provide '50vc)

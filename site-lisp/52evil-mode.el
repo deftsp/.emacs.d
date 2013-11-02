@@ -135,6 +135,13 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "cr"  'comment-or-uncomment-region
   "d"   'dired-jump
   "ff"  'pl/toggle-full-window
+  "g="  'git-gutter:popup-hunk
+  "gj"  'git-gutter:next-hunk
+  "gk"  'git-gutter:previous-hunk
+  "gs"  'git-gutter:stage-hunk
+  "gr"  'git-gutter:revert-hunk
+  "gt"  'git-gutter:toggle
+  "ms"  'magit-status
   "pff" 'projectile-find-file
   "pft" 'projectile-find-test-file
   "ptt" 'projectile-toggle-between-implementation-and-test

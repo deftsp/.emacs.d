@@ -80,7 +80,7 @@
    '(minibuffer-prompt ((t (:foreground "#ff8c00" :weight bold))))
 
    ;; fringe
-   `(fringe ((t (:foreground "green" :background ,palory-bg))))
+   `(fringe ((t (:foreground "green" :background "#232235"))))
 
    ;; region
    '(region ((t (:foreground unspecified :background "#484c50"))))
@@ -210,6 +210,14 @@
    ;; flymake
    '(flymake-warnline ((t (:background "#333300" :foreground "#ccccff"))))
    '(flymake-errline ((t (:background "#402222" :foreground "#cceecc"))))
+
+   ;; git-gutter-fringe
+   '(git-gutter-fr:modified ((t (:foreground "Magenta"))))
+   '(git-gutter-fr:added ((t (:foreground "cyan"))))
+   '(git-gutter-fr:deleted ((t (:foreground "white"))))
+
+   ;; linum
+   '(linum ((t (:background "#082235" :foreground "#607b8b"))))
 
    ;; popup
    '(popup-tip-face ((t (:background "#a2cd5a"))))

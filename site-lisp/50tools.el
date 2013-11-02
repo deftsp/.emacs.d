@@ -110,9 +110,6 @@
 ;;; line numbers
 (eval-after-load "linum"
   '(progn
-     (set-face-foreground 'linum "LightSkyBlue4")
-     (set-face-background 'linum "#222222")
-
      ;; (setq linum-format 'pl/linum-format) ; dynamic
      (defun pl/linum-format (line)
        (propertize (format (let ((w (length (number-to-string
