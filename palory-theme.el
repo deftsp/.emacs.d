@@ -211,6 +211,9 @@
    '(flymake-warnline ((t (:background "#333300" :foreground "#ccccff"))))
    '(flymake-errline ((t (:background "#402222" :foreground "#cceecc"))))
 
+   ;; popup
+   '(popup-tip-face ((t (:background "#a2cd5a"))))
+
    ;; rainbow-delimiters
    '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))
    '(rainbow-delimiters-depth-2-face ((t (:foreground "#f0dfaf"))))
