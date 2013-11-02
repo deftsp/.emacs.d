@@ -1102,7 +1102,9 @@ such character is found, following options are shown:
      (define-key pl/mutiple-cursors-keymap (kbd "m") 'set-rectangular-region-anchor)))
 
 (add-to-list 'mc/unsupported-minor-modes 'autopair-mode)
-;; (add-to-list 'mc/unsupported-minor-modes 'evil-mode)
+(add-to-list 'mc/unsupported-minor-modes 'smartparens-mode)
+(add-to-list 'mc/unsupported-minor-modes 'smartparens-strict-mode)
+(add-to-list 'mc/unsupported-minor-modes 'evil-mode)
 
 ;; Rectangular region mode
 (global-set-key (kbd "H-SPC") 'set-rectangular-region-anchor)
