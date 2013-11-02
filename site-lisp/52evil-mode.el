@@ -142,9 +142,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "gr"  'git-gutter:revert-hunk
   "gt"  'git-gutter:toggle
   "ms"  'magit-status
-  "pff" 'projectile-find-file
-  "pft" 'projectile-find-test-file
-  "ptt" 'projectile-toggle-between-implementation-and-test
+  "pf"  'projectile-find-file
+  "ptf" 'projectile-find-test-file
+  "pts" 'projectile-toggle-between-implementation-and-test
   "pT"  'projectile-regenerate-tags
   "pp"  'projectile-test-project
   "ps"  'projectile-switch-project
