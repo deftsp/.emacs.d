@@ -242,6 +242,14 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 ;; ^ to move point back to previous match,
 ;; E to edit the replacement string
 
+;;; anzu -- a minor mode which displays current match and total matches information in the mode-line in various search mode.
+(eval-after-load "anzu"
+  '(progn
+     (setq anzu-search-threshold 1000)
+     (global-anzu-mode +1)
+     (global-set-key (kbd "M-%") 'anzu-query-replace)
+     (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)))
+
 (provide '50search)
 
 
