@@ -95,6 +95,7 @@
 ;;; git-gutter
 ;; https://github.com/syohex/emacs-git-gutter-fringe
 ;; it makes split window very slow, disable now
+;; see also https://github.com/nonsequitur/git-gutter-plus
 (require 'git-gutter-fringe nil t)
 (eval-after-load "git-gutter-fringe"
   '(progn
