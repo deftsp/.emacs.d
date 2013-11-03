@@ -11,6 +11,7 @@ bookmarks
 .bm-repository
 *emacs.desktop*
 projectile-bookmarks.eld
+projectile.cache
 UnicodeData.txt
 unicode_template.txt
 ebx-history

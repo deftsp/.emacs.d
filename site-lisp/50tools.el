@@ -1129,9 +1129,10 @@ such character is found, following options are shown:
 ;; https://github.com/bbatsov/projectile
 (eval-after-load "projectile"
   '(progn
-     (when (boundp 'pl/cache-directory)
-       (setq projectile-cache-file (concat pl/cache-directory "projectile.cache"))
-       (setq projectile-enable-caching t))
+     ;; bug: change cache file path will cause cache file be cleared after access any pojectile file.
+     ;; (when (boundp 'pl/cache-directory)
+     ;;   (setq projectile-cache-file (concat pl/cache-directory "projectile.cache")))
+     (setq projectile-enable-caching t)
      ;; (add-hook 'emacs-lisp-mode-hook 'projectile-on)
      (projectile-global-mode)))
 
