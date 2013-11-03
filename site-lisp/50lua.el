@@ -15,7 +15,7 @@
 ;; lua2-mode
 (eval-after-load "lua-mode"
   '(progn
-     (require 'lua2-mode nil t)
+     ;; (require 'lua2-mode nil t) ; Note: it will cause lua mode very slow.
      (add-hook 'lua-mode-hook 'pl/lua-mode-setup)
      (define-key lua-mode-map (kbd "C-c C-c") 'pl/relaunch-quick-cocos2d-x)))
 
