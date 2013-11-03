@@ -133,6 +133,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "cc"  'evilnc-copy-and-comment-lines
   "cp"  'evilnc-comment-or-uncomment-paragraphs
   "cr"  'comment-or-uncomment-region
+  "cs"  'pl/evil-change-symbol-in-defun
   "d"   'dired-jump
   "ff"  'pl/toggle-full-window
   "g="  'git-gutter:popup-hunk
@@ -276,6 +277,17 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
 (define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt)
 
+;;; refactor/rename a variable name in a function efficiently
+;; http://blog.binchen.org/?p=583
+(defun pl/evil-change-symbol-in-defun ()
+  "mark the region in defun (definition of function) and use string replacing UI in evil-mode
+to replace the symbol under cursor"
+  (interactive)
+  (let ((old (thing-at-point 'symbol)))
+    (mark-defun)
+    (unless (evil-visual-state-p)
+      (evil-visual-state))
+    (evil-ex (concat "'<,'>s/" (if (= 0 (length old)) "" "\\<\\(") old (if (= 0 (length old)) "" "\\)\\>/")))))
 
 ;;; org-mode
 (evil-declare-key 'normal org-mode-map
