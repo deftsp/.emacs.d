@@ -142,6 +142,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "gs"  'git-gutter:stage-hunk
   "gr"  'git-gutter:revert-hunk
   "gt"  'git-gutter:toggle
+  "s"   'helm-swoop
+  "S"   'helm-swoop-back-to-last-point
   "ms"  'magit-status
   "pf"  'projectile-find-file
   "ptf" 'projectile-find-test-file

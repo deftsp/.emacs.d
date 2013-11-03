@@ -60,6 +60,12 @@
         (ghc-display-document pkg it nil)
       (message "No document found"))))
 
+;;; helm-swoop
+(global-set-key (kbd "H-i") 'helm-swoop)
+(global-set-key (kbd "H-I") 'helm-swoop-back-to-last-point)
+;; When doing isearch, hand the word over to helm-swoop
+(define-key isearch-mode-map (kbd "H-i") 'helm-swoop-from-isearch)
+(define-key isearch-mode-map (kbd "C-S-i") 'helm-swoop-from-isearch)
 
 (provide '51helm)
 ;;; 51helm.el ends here
