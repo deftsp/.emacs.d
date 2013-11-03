@@ -1148,6 +1148,8 @@ such character is found, following options are shown:
 (when (require 'diminish nil 'noerror)
   (eval-after-load "abbrev"
     '(diminish 'abbrev-mode "Abv"))
+  (eval-after-load "subword"
+    '(diminish 'subword-mode " sw"))
   (eval-after-load "yasnippet"
     '(diminish 'yas-minor-mode " Y"))
   (eval-after-load "paredit"
