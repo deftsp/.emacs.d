@@ -16,8 +16,12 @@
 (eval-after-load "lua-mode"
   '(progn
      (require 'lua2-mode nil t)
+     (add-hook 'lua-mode-hook 'pl/lua-mode-setup)
      (define-key lua-mode-map (kbd "C-c C-c") 'pl/relaunch-quick-cocos2d-x)))
 
+
+(defun pl/lua-mode-setup ()
+  (subword-mode +1))
 
 (defun pl/relaunch-quick-cocos2d-x ()
   (interactive)
