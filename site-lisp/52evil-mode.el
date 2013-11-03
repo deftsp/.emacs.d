@@ -272,10 +272,24 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;;; evil-textobj-between.el
 (require 'evil-textobj-between nil t)
 
+;;; evil-numbers
+(define-key evil-normal-state-map (kbd "C-c +") 'evil-numbers/inc-at-pt)
+(define-key evil-normal-state-map (kbd "C-c -") 'evil-numbers/dec-at-pt)
+
+
 ;;; org-mode
-(evil-define-key 'normal org-mode-map "T" 'org-todo)
-(evil-define-key 'normal org-mode-map "-" 'org-cycle-list-bullet)
-(evil-define-key 'normal org-mode-map (kbd "TAB") 'org-cycle)
+(evil-declare-key 'normal org-mode-map
+  "T" 'org-todo
+  "H" 'org-beginning-of-line ; smarter behaviour on headlines etc.
+  "L" 'org-end-of-line ; smarter behaviour on headlines etc.
+  "$" 'org-end-of-line ; smarter behaviour on headlines etc.
+  "^" 'org-beginning-of-line ; ditto
+  ;; (kbd "TAB") 'org-cycle
+  "-" 'org-ctrl-c-minus ; change bullet style
+  "<" 'org-metaleft ; out-dent
+  ">" 'org-metaright ; indent
+  "gu" 'outline-up-heading
+  "gn" 'outline-next-visible-heading)
 
 ;;; smartparens
 (define-key evil-normal-state-map "M" 'evil-set-marker)
