@@ -13,7 +13,7 @@
 ;; global
 (require 'smartparens-config)
 (smartparens-global-mode t)
-(smartparens-global-strict-mode t)
+;; (smartparens-global-strict-mode t) ; ; strict mode can not workd with subword
 
 ;; highlights matching pairs
 (show-smartparens-global-mode t)
