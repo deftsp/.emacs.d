@@ -227,6 +227,14 @@
 (eval-after-load "go-mode"
   '(add-hook 'go-mode-hook (lambda () (pl/outline-local-set-regexp pl/go-mode-outline-regexp))))
 
+
+;; Lua
+(defconst pl/lua-mode-outline-regexp
+  "function \\|local \\|-- \\|--\\[\\[ \\|if \\|while \\|repeat$\\|for ")
+
+(eval-after-load "lua-mode"
+  '(add-hook 'lua-mode-hook (lambda () (pl/outline-local-set-regexp pl/lua-mode-outline-regexp))))
+
 ;; (add-hook 'php-mode-user-hook
 ;;           '(lambda ()
 ;;             (outline-minor-mode t)
