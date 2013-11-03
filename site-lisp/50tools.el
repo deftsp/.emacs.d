@@ -240,6 +240,9 @@
 (global-set-key (kbd "H-p") 'pl/move-line-or-region-up)
 (global-set-key (kbd "H-n") 'pl/move-line-or-region-down)
 
+(global-set-key (kbd "H-k") 'pl/move-line-or-region-up)
+(global-set-key (kbd "H-j") 'pl/move-line-or-region-down)
+
 (defun pl/move-line-or-region-up (n)
   (interactive "p")
   (if (region-active-p)
