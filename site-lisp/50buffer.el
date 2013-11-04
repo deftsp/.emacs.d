@@ -39,6 +39,8 @@
          ("CC Mode" (or (mode . c-mode)
                         (mode . c++-mode)
                         (mode . objc-mode)))
+         ("Lua" (or (mode . lua-mode)
+                    (name . "^\\*lua\\*$")))
          ("Emacs" (or (name . "^\\*scratch\\*$")
                       (name . "^\\*Messages\\*$")
                       (name . "^\\*Help\\*$")
