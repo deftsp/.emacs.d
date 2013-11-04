@@ -128,6 +128,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 (evil-leader/set-key
   ","   'evilnc-comment-operator
+  "a"   'org-agenda
   "ci"  'evilnc-comment-or-uncomment-lines
   "cl"  'evilnc-comment-or-uncomment-to-the-line
   "cc"  'evilnc-copy-and-comment-lines
@@ -143,6 +144,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "gr"  'git-gutter:revert-hunk
   "gt"  'git-gutter:toggle
   "s"   'helm-swoop
+  "k"   'kill-this-buffer
   "S"   'helm-swoop-back-to-last-point
   "ms"  'magit-status
   "pf"  'projectile-find-file
@@ -304,6 +306,10 @@ to replace the symbol under cursor"
   ">" 'org-metaright ; indent
   "gu" 'outline-up-heading
   "gn" 'outline-next-visible-heading)
+
+;;; org agenda -- leave in emacs mode but add j & k
+(define-key org-agenda-mode-map "j" 'evil-next-line) ; overide org-agenda-goto-date
+(define-key org-agenda-mode-map "k" 'evil-previous-line) ; org-agenda-capture
 
 ;;; smartparens
 (define-key evil-normal-state-map "M" 'evil-set-marker)
