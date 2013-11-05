@@ -308,8 +308,12 @@ to replace the symbol under cursor"
   "gn" 'outline-next-visible-heading)
 
 ;;; org agenda -- leave in emacs mode but add j & k
-(define-key org-agenda-mode-map "j" 'evil-next-line) ; overide org-agenda-goto-date
-(define-key org-agenda-mode-map "k" 'evil-previous-line) ; org-agenda-capture
+(eval-after-load "org-agenda"
+  '(progn
+     ;; overide org-agenda-goto-date
+     (define-key org-agenda-mode-map "j" 'evil-next-line)
+     ;; org-agenda-capture
+     (define-key org-agenda-mode-map "k" 'evil-previous-line)))
 
 ;;; smartparens
 (define-key evil-normal-state-map "M" 'evil-set-marker)
