@@ -61,6 +61,8 @@
       (message "No document found"))))
 
 ;;; helm-swoop
+(eval-after-load "helm-swoop"
+  '(require 'helm-utils nil t))
 (global-set-key (kbd "H-i") 'helm-swoop)
 (global-set-key (kbd "H-I") 'helm-swoop-back-to-last-point)
 ;; When doing isearch, hand the word over to helm-swoop
