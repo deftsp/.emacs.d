@@ -220,7 +220,7 @@
    '(linum ((t (:background "#082235" :foreground "#607b8b"))))
 
    ;; popup
-   '(popup-tip-face ((t (:background "#a2cd5a"))))
+   '(popup-tip-face ((t (:background "#a2cd5a" :foreground "#232323"))))
 
    ;; rainbow-delimiters
    '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))
