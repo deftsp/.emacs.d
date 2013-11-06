@@ -133,7 +133,7 @@
                :type http
                :depends lua-mode
                :url "http://www.enyo.de/fw/software/lua-emacs/lua2-mode.el")
-        (:name :helm-swoop
+        (:name helm-swoop
                :type github
                :description "Efficiently hopping squeezed lines powered by helm interface"
                :pkgname "ShingoFukuyama/helm-swoop")
