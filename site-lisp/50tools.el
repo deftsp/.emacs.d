@@ -123,6 +123,7 @@
 ;; linum-relative
 (require 'linum-relative nil t)
 (setq linum-relative-format "%3s|")
+(setq linum-relative-current-symbol "->")
 
 (defun pl/turn-on-relative-linum ()
   (linum-mode 1)
