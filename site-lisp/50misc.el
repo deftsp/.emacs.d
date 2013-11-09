@@ -139,7 +139,7 @@
 
 (add-hook 'suspend-hook 'do-auto-save) ;; Auto-Save on ^Z
 
-(setq-default indicate-buffer-boundaries 'right)
+(setq-default indicate-buffer-boundaries 'left)
 ;; If you often look at files that are updated (perhaps a log file for a running process), or perhaps ClearCase files
 ;; (that change when you update the config spec), you'll want to make sure you're looking at the most recent version of
 ;; the file.
