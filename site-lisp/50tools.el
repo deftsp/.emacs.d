@@ -108,17 +108,20 @@
 (autoload 'ascii-table-show "ascii-table-show" "Create a buffer and print the ascii table" t)
 
 ;;; line numbers
-(eval-after-load "linum"
-  '(progn
-     ;; (setq linum-format 'pl/linum-format) ; dynamic
-     (defun pl/linum-format (line)
-       (propertize (format (let ((w (length (number-to-string
-                                             (count-lines
-                                              (point-min)
-                                              (point-max))))))
-                             (concat "%" (number-to-string w) "d|"))
-                           line)
-                   'face 'linum))))
+;; (eval-after-load "linum"
+;;   '(progn
+;;      (setq linum-format 'pl/linum-format)))
+
+(defun pl/linum-format (line)
+  (propertize
+   (format
+    (let ((w (length (number-to-string
+                      (count-lines
+                       (point-min)
+                       (point-max))))))
+      (concat "%" (number-to-string w) "d|"))
+    line)
+   'face 'linum))
 
 ;; linum-relative
 (require 'linum-relative nil t)
@@ -131,6 +134,14 @@
       (setq linum-format 'linum-relative)))
 
 (add-hook 'prog-mode-hook 'pl/turn-on-relative-linum)
+
+(defun pl/linum-relative-toggle ()
+  "Toggle between linum-relative and linum."
+  (interactive)
+  (if (or (eq linum-format 'dynamic)
+          (eq linum-format 'pl/linum-format))
+      (setq linum-format 'linum-relative)
+      (setq linum-format 'pl/linum-format)))
 
 ;;; highlight current line in buffer
 ;; (require 'hl-line)

@@ -147,6 +147,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "s"   'helm-swoop
   "k"   'kill-this-buffer
   "S"   'helm-swoop-back-to-last-point
+  "lr"  'pl/linum-relative-toggle
   "ms"  'magit-status
   "pf"  'projectile-find-file
   "ptf" 'projectile-find-test-file
