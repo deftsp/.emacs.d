@@ -135,6 +135,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "cp"  'evilnc-comment-or-uncomment-paragraphs
   "cr"  'comment-or-uncomment-region
   "cs"  'pl/evil-change-symbol-in-defun
+  "ch"  'crosshairs-mode
   "d"   'dired-jump
   "ff"  'pl/toggle-full-window
   "g="  'git-gutter:popup-hunk
