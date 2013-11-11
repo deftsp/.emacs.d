@@ -21,6 +21,7 @@
 
 
 (defun pl/lua-mode-setup ()
+  (flycheck-mode +1)
   (subword-mode +1))
 
 (defun pl/relaunch-quick-cocos2d-x ()

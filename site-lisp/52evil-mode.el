@@ -138,6 +138,19 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "ch"  'crosshairs-mode
   "d"   'dired-jump
   "ff"  'pl/toggle-full-window
+  "fc"  'flycheck-buffer
+  "fC"  'flycheck-clear
+  "fi"  'flycheck-info
+  "fl"  'flycheck-list-errors
+  "fn"  'flycheck-next-error
+  "fp"  'flycheck-previous-error
+  "fs"  'flycheck-select-checker
+  "f/"  'flycheck-google-messages
+  "fy"  'flycheck-copy-messages-as-kill
+  "fb"  'flycheck-compile
+  "fV"  'flycheck-version
+  "f?"  'flycheck-describe-checker
+  "ft"  'flycheck-mode
   "g="  'git-gutter:popup-hunk
   "gj"  'git-gutter:next-hunk
   "gk"  'git-gutter:previous-hunk
