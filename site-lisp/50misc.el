@@ -987,11 +987,26 @@ This command is to be used interactively."
 (global-set-key (kbd "C-c f R") 'pl/move-buffer-and-file)
 
 ;;; info
-;; (setq Info-dir-contents nil)
-(add-to-list 'Info-directory-list "~/share/info/")
-;; (setq Info-additional-directory-list '("~/share/info"))
-;; (setq Info-directory-list Info-default-directory-list)
-;; (setq Info-directory-list nil)
+;; make sure info dir in `Info-directory-list' add to `Info-directory-list'
+(mapc (lambda (p) (add-to-list 'Info-directory-list p t)) Info-default-directory-list)
+(add-to-list 'Info-additional-directory-list "~/share/info")
+
+;; (defun find-subdirs-containing (dir pattern)
+;;   "Return a list of all deep subdirectories of DIR that contain
+;; files that match PATTERN."
+;;   (let* ((ret nil)
+;;          (files (directory-files dir))
+;;          (max-lisp-eval-depth 3000))
+;;     (while files
+;;       (let* ((file (car files))
+;;              (path (expand-file-name file dir)))
+;;         (if (and (file-directory-p path)
+;;                  (not (string-match "^\\.+" file)))
+;;             (setq ret (append ret (find-subdirs-containing path pattern)))
+;;           (if (string-match pattern file)
+;;               (add-to-list 'ret dir))))
+;;       (setq files (cdr files)))
+;;     ret))
 
 ;; (defun add-init-path-to-info-path ()
 ;;   "Add the subdirectories of init-path that contain info directory
@@ -1000,9 +1015,6 @@ This command is to be used interactively."
 ;; new directories are prepended to emacs's initial Info path."
 ;;   (interactive)
 ;;   (setq Info-directory-list (append (find-subdirs-containing init-path "^dir$") initial-info-path)))
-
-;; Make sure we have /sbin in the path - SUSE puts install-info there
-;; (add-to-list 'exec-path "/sbin")
 
 ;; (defun add-info-dir-files-to-path (tree)
 ;;   "Add all the info files under TREE to info \"dir\" files"
@@ -1015,7 +1027,7 @@ This command is to be used interactively."
 ;;                               (format "--info-file=%s" file))))
 ;;             info-dirs)))
 
-;; ;;; Create dir files for any info files in the init-path
+;;; Create dir files for any info files in the init-path
 ;; (add-info-dir-files-to-path init-path)
 
 ;; Add the init-path tree to the Info path
