@@ -21,6 +21,7 @@ docsetutil
 
 caches/
 .emms/
+emms/
 games/
 image-dired/
 url/
@@ -40,6 +41,7 @@ server
 .session
 .wmncach.el
 ac-comphist.dat
+ac-dict/
 
 packages/emacs-w3m/
 packages/emms/
