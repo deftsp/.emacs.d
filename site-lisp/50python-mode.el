@@ -5,6 +5,10 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+;;; Elpy, the Emacs Lisp Python Environment
+;; https://github.com/jorgenschaefer/elpy/
+
+
 ;;; init for ipython
 (eval-after-load "python.el"
   (setq python-shell-interpreter "ipython"
