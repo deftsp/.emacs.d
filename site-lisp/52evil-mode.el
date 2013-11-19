@@ -322,6 +322,10 @@ to replace the symbol under cursor"
   "gu" 'outline-up-heading
   "gn" 'outline-next-visible-heading)
 
+;;; Lua mode
+(evil-declare-key 'normal lua-mode-map
+  ",md" 'mobdebug-minor-mode)
+
 ;;; org agenda -- leave in emacs mode but add j & k
 (eval-after-load "org-agenda"
   '(progn

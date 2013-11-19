@@ -31,7 +31,7 @@
  "<f6>"    'first-error
  "<S-f6>"  'last-error
 
- "<f9>"    'door-gnus
+ ;; "<f9>"    'door-gnus
  "<S-f9>"  'ascii-table-show
  "<C-f9>"  'shell
  "<M-f9>"  'pl/ansi-term

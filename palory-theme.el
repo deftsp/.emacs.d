@@ -207,6 +207,10 @@
    ;; col-highlight
    '(col-highlight ((t (:background "#222222"))))
 
+   ;; comint
+   '(comint-highlight-prompt ((t (:foreground "#eedd82" :weight bold))))
+
+
    ;; flymake
    '(flymake-warnline ((t (:background "#333300" :foreground "#ccccff"))))
    '(flymake-errline ((t (:background "#402222" :foreground "#cceecc"))))
