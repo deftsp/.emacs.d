@@ -49,13 +49,14 @@
                                      ("REJECTED" :foreground "forest green" :weight bold)
                                      ("OPEN" :foreground "blue" :weight bold)
                                      ("PROJECT" :foreground "red" :weight bold)))
-      org-tag-alist '((:startgroup . nil) ("@work" . ?w) ("@home" . ?h) ("@tennisclub" . ?t) (:endgroup . nil)
+      org-tag-alist '((:startgroup . nil) ("@office" . ?o) ("@home" . ?h) ("@shopping" . ?s) ("@tennisclub" . ?t) (:endgroup . nil)
                       (:startgroup . nil) ("Online" . ?O) ("Offline" . ?F) (:endgroup . nil)
                       (:startgroup . nil) ("Business" . ?B) ("Personal" . ?P) (:endgroup . nil)
                       ("PROJECT" . ?p)
                       ("READING" . ?R)
                       ("MAIL" . ?M)
-                      ("drill" . ?d)))
+                      ("WORK" . ?w)
+                      ("DRILL" . ?d)))
 
 
 (setq org-agenda-custom-commands
@@ -107,8 +108,8 @@
       org-archive-location "%s_archive::"
       org-hide-leading-stars t
       org-log-done 'time
-      ;; org-default-notes-files is used by remember.el in certain situations
-      ;; where it needs a path to store simple notes in.
+      ;; Default target for storing notes. Used as a fall back file for org-capture.el, for templates that do not
+      ;; specify a target file.
       org-default-notes-file (concat org-directory "/notes.org")
       org-agenda-files (directory-files org-directory t ".*\\.org$")
       org-agenda-show-all-dates t
@@ -127,12 +128,21 @@
       org-fast-tag-selection-single-key (quote expert)
       org-reverse-note-order t
       org-deadline-warning-days 7
+      org-return-follows-link t
+      org-startup-folded t
+      org-startup-truncated t
       org-display-internal-link-with-indirect-buffer nil)
 
 ;;; org-habit
 (setq org-habit-preceding-days 21
       org-habit-following-days 7
       org-habit-graph-column 60)
+
+;;; refile
+;; (setq org-refile-allow-creating-parent-nodes t)
+;; (setq org-refile-use-outline-path 'file)
+;; (setq org-refile-targets
+;;       '((org-agenda-files :maxlevel . 1)))
 
 ;;; for MobileOrg
 ;; Set to the name of the file where new notes will be stored
@@ -153,11 +163,19 @@
 ;; (define-key global-map "\C-cc" 'org-capture) ; instead of key chord ",c"
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/proj/org/GTD.org" "Tasks")
-         "* TODO %?\n  %i%u")
+         "* TODO %?\n  %i%u"
+         :kill-buffer t)
         ("j" "Journal" entry (file+datetree "~/proj/org/journal.org")
-         "* %?\n  %U\n")
+         "* %?\n  %U\n"
+         :kill-buffer t)
         ("J" "Journal with Annotation" entry (file+datetree "~/proj/org/journal.org")
-         "* %?\n  %U\n  %i\n  %a")))
+         "* %?\n  %U\n  %i\n  %a"
+         :kill-buffer t)
+        ("m" "Memo" plain (file (concat org-directory (format-time-string "%Y%m%d-%H%M%S.org")))
+         "* MEMO <%<%Y-%m-%d>> %?\n   %i\n  %a\n\n"
+         :prepend t
+         :unnarrowed t
+         :kill-buffer t)))
 
 
 ;;; work with appt
