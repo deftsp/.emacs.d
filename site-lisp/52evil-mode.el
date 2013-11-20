@@ -65,7 +65,6 @@
 ;;                 grep-mode pylookup-mode))
 ;;   (add-to-list 'evil-insert-state-modes mode))
 
-
 ;;; esc quits
 (defun pl/minibuffer-keyboard-quit ()
   "Abort recursive edit.
@@ -101,7 +100,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (key-chord-define minibuffer-local-must-match-map "fd" 'pl/minibuffer-keyboard-quit)
 ;; (key-chord-define minibuffer-local-isearch-map    "fd" 'pl/minibuffer-keyboard-quit)
 
-
+;;;
+;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
 
 ;;; ace jump mode
 (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
@@ -110,6 +110,20 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;;;
 (define-key evil-normal-state-map (kbd "C-o") 'pl/open-line-with-indent) ; default evil-jump-backward
 (define-key evil-normal-state-map (kbd "TAB") 'indent-for-tab-command)
+;; (define-key evil-normal-state-map "b" 'backward-word)
+;; (define-key evil-normal-state-map "w" 'forward-word)
+(define-key evil-visual-state-map "Q" "gq")
+(define-key evil-normal-state-map "Q" "gqap")
+;; (define-key evil-normal-state-map "S" "vabsba")
+;; (define-key evil-normal-state-map "s" "gv")
+
+;; (evil-define-key 'visual surround-mode-map "S" "sba")
+(define-key evil-normal-state-map "+" 'evil-numbers/inc-at-pt) ; default `evil-next-line-first-non-blank'
+(define-key evil-normal-state-map "-" 'evil-numbers/dec-at-pt) ; default `evil-previous-line-first-non-blank'
+
+;; (define-key evil-motion-state-map "v" 'evil-visual-block)
+;; make it easy to switch to visual-char mode from visual-block mode
+;; (define-key evil-visual-state-map "v" 'evil-visual-char)
 
 (define-key evil-insert-state-map (kbd "C-n") 'next-line)
 (define-key evil-insert-state-map (kbd "C-p") 'previous-line)
@@ -212,28 +226,37 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;;; default mode
 (setq evil-default-state 'normal)
 (loop for (mode . state) in
-      '((Info-mode . emacs)
-        (term-mode . emacs)
-        (log-edit-mode . emacs)
-        (inf-ruby-mode . emacs)
-        (yari-mode . emacs)
-        (erc-mode . emacs)
-        (gud-mode . emacs)
-        (help-mode . emacs)
-        (eshell-mode . emacs)
-        (shell-mode . emacs)
-        ;;(message-mode . emacs)
-        (magit-log-edit-mode . emacs)
-        (fundamental-mode . emacs)
-        (gtags-select-mode . emacs)
-        (weibo-timeline-mode . emacs)
-        (weibo-post-mode . emacs)
-        (diff-mode . emacs)
-        (sr-mode . emacs)
-        (dired-mode . emacs)
-        (compilation-mode . emacs)
-        (speedbar-mode . emacs)
-        (magit-commit-mode . normal))
+      '((comint-mode               . insert)
+        (compilation-mode          . emacs)
+        (dired-mode                . emacs)
+        (diff-mode                 . emacs)
+        (eshell-mode               . emacs)
+        (help-mode                 . emacs)
+        (helm-grep-mode            . emacs)
+        (inferior-emacs-lisp-mode  . emacs)
+        (inf-ruby-mode             . emacs)
+        (Info-mode                 . emacs)
+        (log-edit-mode             . emacs)
+        (fundamental-mode          . emacs)
+        (erc-mode                  . emacs)
+        (git-commit-mode           . insert)
+        (git-rebase-mode           . emacs)
+        (git-rebase-mode           . emacs)
+        (gtags-select-mode         . emacs)
+        (gud-mode                  . emacs)
+        (grep-mode                 . emacs)
+        (message-mode              . emacs)
+        (magit-commit-mode         . normal)
+        (magit-log-edit-mode       . emacs)
+        (magit-branch-manager-mode . emacs)
+        (nrepl-mode                . insert)
+        (weibo-timeline-mode       . emacs)
+        (weibo-post-mode           . emacs)
+        (sr-mode                   . emacs)
+        (shell-mode                . emacs)
+        (term-mode                 . emacs)
+        (speedbar-mode             . emacs)
+        (yari-mode                 . emacs))
       do (evil-set-initial-state mode state))
 
 ;; (define-key evil-motion-state-map "f" 'jump-char-forward)
@@ -326,13 +349,33 @@ to replace the symbol under cursor"
 (evil-declare-key 'normal lua-mode-map
   ",md" 'mobdebug-minor-mode)
 
+;;; magit mode
+;; (evil-add-hjkl-bindings magit-mode-map 'emacs)
+;; (evil-add-hjkl-bindings magit-diff-mode-map 'emacs)
+;; (evil-add-hjkl-bindings git-rebase-mode-map 'emacs
+;;   "K" 'git-rebase-mode-kill-line
+;;   "h" 'describe-mode)
+;; (evil-add-hjkl-bindings magit-log-mode-map 'emacs
+;;   "l" 'magit-key-mode-popup-logging)
+(evil-add-hjkl-bindings magit-status-mode-map 'emacs
+  "K" 'magit-discard-item
+  "l" 'magit-key-mode-popup-logging
+  "h" 'magit-toggle-diff-refine-hunk
+  "J" 'magit-section-jump-map ; `J  default bind to `magit-key-mode-popup-apply-mailbox'
+  "j" 'magit-goto-next-section ; default bind to `magit-section-jump-map'
+  "k" 'magit-goto-previous-section)
+
+;;;
+;; (evil-add-hjkl-bindings grep-mode-map 'emacs)
+;; (evil-add-hjkl-bindings helm-grep-mode-map 'emacs)
+(evil-add-hjkl-bindings help-mode-map 'emacs) ; both `h' and `? default binding to describe-mode
+
+
 ;;; org agenda -- leave in emacs mode but add j & k
 (eval-after-load "org-agenda"
   '(progn
-     ;; overide org-agenda-goto-date
-     (define-key org-agenda-mode-map "j" 'evil-next-line)
-     ;; org-agenda-capture
-     (define-key org-agenda-mode-map "k" 'evil-previous-line)))
+     (define-key org-agenda-mode-map "j" 'evil-next-line) ; overide org-agenda-goto-date
+     (define-key org-agenda-mode-map "k" 'evil-previous-line))) ; org-agenda-capture
 
 ;;; smartparens
 (define-key evil-normal-state-map "M" 'evil-set-marker)
