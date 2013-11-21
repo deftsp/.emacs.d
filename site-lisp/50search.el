@@ -252,6 +252,21 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 ;;      (global-set-key (kbd "M-%") 'anzu-query-replace)
 ;;      (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)))
 
+
+;;; The Silver Searcher (ag)
+;; http://thetrafficstat.net/
+;; run `wgrep-change-to-wgrep-mode' and edit the *ag* buffer. Press C-x C-s when you're done to make the changes to
+;; buffers.
+(setq ag-highlight-search t)
+(setq ag-reuse-window 't)
+
+
+;;; wgrep https://github.com/mhayashi1120/Emacs-wgrep
+(setq wgrep-auto-save-buffer t) ; save buffer automatically when `wgrep-finish-edit'
+(setq wgrep-enable-key "r")
+(setq wgrep-change-readonly-file t) ; To apply all changes wheather or not buffer is read-only.
+
+
 (provide '50search)
 
 
