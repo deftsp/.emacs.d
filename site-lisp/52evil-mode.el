@@ -205,6 +205,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "xvl" 'vc-print-log
   "xx"  'er/expand-region)
 
+;; (evil-leader/set-key-for-mode 'emacs-lisp-mode "b" 'byte-compile-file)
 ;;; expand-region
 ;; http://blog.binchen.org/?p=782
 ;; ",xx" to select initial region. Keep press "x" to expand. "z" to contract region.
@@ -216,8 +217,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (if (fboundp 'evil-mode)
     (evil-mode 1))
 
-(setq evil-move-cursor-back nil)
-;; (setq-default evil-auto-indent nil)
+(setq evil-move-cursor-back nil
+      evil-magic 'very-magic)
+
 
 ;;; evil-surround
 (if (fboundp 'global-surround-mode)
@@ -296,18 +298,16 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; (global-set-key (kbd "C-c c") 'evilnc-copy-and-comment-lines)
 ;; (global-set-key (kbd "C-c p") 'evilnc-comment-or-uncomment-paragraphs)
 
-;;; evil-matchit
-(defun pl/evil-jump-item-enhanced-for-html ()
-  (interactive)
-  (if (or (eq major-mode 'html-mode)
-          (eq major-mode 'xml-mode)
-          (eq major-mode 'nxml-mode))
-      (progn
-        (if (not (sp-select-next-thing 1)) (exchange-point-and-mark))
-        (deactivate-mark))
-    (evil-jump-item)))
+;;;
+(require 'evil-indent-textobject nil t)
+;; ii - Inner Indentation: the surrounding textblock with the same indentation
+;; ai - Above and Indentation: ii + the line above with a different indentation
+;; aI - Above and Indentation+: ai + the line below with a different indentation
 
-(define-key evil-normal-state-map "%" 'pl/evil-jump-item-enhanced-for-html)
+;;; evil-matchit
+(require 'evil-matchit nil t)
+(when (fboundp 'global-evil-matchit-mode)
+  (global-evil-matchit-mode +1))
 
 ;;; evil-little-word.el
 (require 'evil-little-word nil t)

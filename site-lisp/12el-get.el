@@ -117,6 +117,14 @@
                :type github
                :description "Plugins for Emacs Evil."
                :pkgname "tarao/evil-plugins")
+        (:name evil-indent-textobject
+               :type github
+               :description "evil textobjects based on indentation"
+               :pkgname "cofi/evil-indent-textobject")
+        (:name evil-matchit
+               :type github
+               :description "Vim matchit ported to Evil"
+               :pkgname "redguardtoo/evil-matchit")
         (:name linum-relative
                :type github
                :description "display relative line number in emacs."
