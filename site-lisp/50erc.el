@@ -1,7 +1,5 @@
 ;;;; 50erc.el
 
-(require 'erc)
-(load "~/.emacs.d/.erc-pass")
 
 ;;; modules
 (eval-after-load "erc"
@@ -10,6 +8,8 @@
            '(services))
      (erc-update-modules)
      (erc-services-mode 1)))
+
+(load "~/.emacs.d/.erc-pass")
 
 ;;; Variables
 (setq erc-nick "deftsp"
