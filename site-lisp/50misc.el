@@ -211,24 +211,21 @@
     (setq display-time-mail-directory "~/Mail/inbox/new/"))
 
 (setq display-time-string-forms
-      '(year "/" month "/" day " " dayname
+      '((format-time-string "%Y/%m/%d " now)
         (propertize (concat " " 24-hours ":" minutes)
-
-         'face 'pl/display-time-face)
+                    'face 'pl/display-time-face)
         (if time-zone " ") time-zone (if time-zone " ")
         load
         (if mail
             (concat " "
                     (propertize
                      display-time-mail-string
-                     'display
-                     (and display-time-use-mail-icon (display-graphic-p)
-                          display-time-mail-icon)
+                     'display (and display-time-use-mail-icon (display-graphic-p)
+                                   display-time-mail-icon)
                      'help-echo "You have new mail; mouse-2: Read mail"
                      'mouse-face 'mode-line-highlight
-                     'local-map
-                     (make-mode-line-mouse-map 'mouse-2 read-mail-command)))
-            "")))
+                     'local-map (make-mode-line-mouse-map 'mouse-2 read-mail-command)))
+          "")))
 
 ;;; physical line move
 ;; (autoload 'physical-line-mode "physical-line" "" t)
