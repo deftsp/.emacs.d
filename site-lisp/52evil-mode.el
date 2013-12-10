@@ -176,23 +176,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "S"   'helm-swoop-back-to-last-point
   "lr"  'pl/linum-relative-toggle
   "ms"  'magit-status
-  "pf"  'projectile-find-file
-  "ptf" 'projectile-find-test-file
-  "pts" 'projectile-toggle-between-implementation-and-test
-  "pT"  'projectile-regenerate-tags
-  "pp"  'projectile-test-project
-  "ps"  'projectile-switch-project
-  "pR"  'projectile-replace
-  "pk"  'projectile-kill-buffers
-  "pd"  'projectile-dired
-  "prf" 'projectile-recentf
-  "pe"  'projectile-recentf
-  "pi"  'projectile-invalidate-cache
-  "pc"  'projectile-cache-current-file
-  "pb"  'projectile-switch-to-buffer
-  "po"  'projectile-multi-occur
-  "pa"  'projectile-ack
-  "pg"  'projectile-grep
+  "p"  'projectile-commander
   "ut"  'undo-tree-visualize
   "w"   'save-buffer
   "W"   'save-some-buffers
