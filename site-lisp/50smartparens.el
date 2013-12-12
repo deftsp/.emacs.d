@@ -13,10 +13,10 @@
 ;; global
 (require 'smartparens-config)
 (smartparens-global-mode t)
-;; (smartparens-global-strict-mode t) ; ; strict mode can not workd with subword
+;; (smartparens-global-strict-mode t) ; strict mode can not workd with subword
 
 ;; highlights matching pairs
-(show-smartparens-global-mode t)
+(show-smartparens-global-mode -1) ; very slow on lua-mode 2000+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;
 ;; keybinding management
