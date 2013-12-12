@@ -15,11 +15,15 @@
 
 (require 'org-loaddefs)
 
+(eval-after-load "evil"
+  '(progn
+     (require 'evil-org-mode)
+     (add-hook 'org-mode-hook 'evil-org-mode)))
+
 (eval-after-load "org"
   '(progn
      (add-to-list 'org-modules 'org-habit)
      (add-to-list 'org-modules 'org-drill)))
-
 
 ;;; global key binding
 (global-set-key "\C-cL" 'org-store-link)

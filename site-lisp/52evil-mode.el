@@ -238,6 +238,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         (nrepl-mode                . insert)
         (weibo-timeline-mode       . emacs)
         (weibo-post-mode           . emacs)
+        (org-mode                  . normal)
         (sr-mode                   . emacs)
         (shell-mode                . emacs)
         (term-mode                 . emacs)
@@ -314,20 +315,6 @@ to replace the symbol under cursor"
     (unless (evil-visual-state-p)
       (evil-visual-state))
     (evil-ex (concat "'<,'>s/" (if (= 0 (length old)) "" "\\<\\(") old (if (= 0 (length old)) "" "\\)\\>/")))))
-
-;;; org-mode
-(evil-declare-key 'normal org-mode-map
-  "T" 'org-todo
-  "H" 'org-beginning-of-line ; smarter behaviour on headlines etc.
-  "L" 'org-end-of-line ; smarter behaviour on headlines etc.
-  "$" 'org-end-of-line ; smarter behaviour on headlines etc.
-  "^" 'org-beginning-of-line ; ditto
-  ;; (kbd "TAB") 'org-cycle
-  "-" 'org-ctrl-c-minus ; change bullet style
-  "<" 'org-metaleft ; out-dent
-  ">" 'org-metaright ; indent
-  "gu" 'outline-up-heading
-  "gn" 'outline-next-visible-heading)
 
 ;;; Lua mode
 (evil-declare-key 'normal lua-mode-map
