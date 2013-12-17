@@ -72,8 +72,8 @@
    ;; mode-line
    '(mode-line-buffer-id ((t (:foreground "#90377d"))))
    '(mode-line-emphasis ((t (:foreground "Magenta"))))
-   '(mode-line ((t (:foreground "SteelBlue2" :background "#000000" :box nil)))) ; #222222
-   '(mode-line-inactive ((t (:foreground "PaleTurquoise3" :background "#222222" :box nil)))) ; #111111
+   '(mode-line ((t (:foreground "SteelBlue2" :background "#000000" :box nil))))
+   '(mode-line-inactive ((t (:foreground "PaleTurquoise3" :background "#202020" :box nil)))) ; #222222
    '(mode-line-highlight ((t (:box nil))))
 
    ;; minibuffer
@@ -221,7 +221,7 @@
    '(git-gutter-fr:deleted ((t (:foreground "white"))))
 
    ;; linum
-   '(linum ((t (:background "#082235" :foreground "#607b8b"))))
+   '(linum ((t (:background "#102235" :foreground "#607b8b"))))
 
    ;; popup
    '(popup-tip-face ((t (:background "#a2cd5a" :foreground "#232323"))))
