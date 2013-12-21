@@ -1142,6 +1142,7 @@ such character is found, following options are shown:
 ;; Full text search:
 ;; C-u M-x docsetutil-search
 
+
 ;;; Projectile
 ;; https://github.com/bbatsov/projectile
 (eval-after-load "projectile"
@@ -1149,6 +1150,8 @@ such character is found, following options are shown:
      ;; bug: change cache file path will cause cache file be cleared after access any pojectile file.
      ;; (when (boundp 'pl/cache-directory)
      ;;   (setq projectile-cache-file (concat pl/cache-directory "projectile.cache")))
+     (when (eq system-type 'darwin)
+       (setq projectile-tags-command "/usr/local/bin/ctags -Re %s"))
      (setq projectile-enable-caching t)
      ;; (add-hook 'emacs-lisp-mode-hook 'projectile-on)
      (projectile-global-mode)))
