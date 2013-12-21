@@ -6,12 +6,6 @@
 
 
 (add-to-list 'load-path "/Applications/Maxima.app/Contents/Resources/maxima/share/maxima/5.28.0/emacs")
-
-(setenv "PATH"
-        (concat
-         (getenv "PATH")
-         "/Applications/Maxima.app/Contents/Resources/maxima/bin:"))
-
 (add-to-list 'exec-path "/Applications/Maxima.app/Contents/Resources/maxima/bin")
 
 
