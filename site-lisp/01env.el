@@ -55,54 +55,19 @@
 
 
 ;;; Difference between "exec-path" and "PATH"
-;; The value of “ PATH ” is used by emacs when you are running a shell in emacs, similar to when you
+;; The value of "PATH" is used by emacs when you are running a shell in emacs, similar to when you
 ;; are using a shell in a terminal.
 ;; The "exec-path" is used by emacs itself to find programs it needs for its features, such as spell
 ;; checking, file compression, compiling, grep, diff, etc.
-(defvar pl/path-list nil "PATH list for darwin only")
-
-(defun pl/env-path-init ()
-  (case system-type
-    (darwin
-     (setq pl/path-list `(,(expand-file-name "~/bin")
-                          "/usr/bin"
-                          "/bin"
-                          "/user/sbin"
-                          "/sbin"
-                          "/usr/local/bin"
-                          "/opt/bin"
-                          "/usr/texbin"
-                          ,(expand-file-name "~/local/bin")
-                          ,(expand-file-name "~/.cabal/bin")
-                          ,(expand-file-name "~/opt/go-packages/bin")
-                          "/Applications/Gnuplot.app/Contents/Resources/bin"
-                          "/Applications/Emacs.app/Contents/MacOS/bin"
-                          "/Applications/Emacs.app/Contents/MacOS/libexec"))
-
-     (let ((p "/Applications/Xcode.app/Contents/Developer/usr/bin"))
-       (when (file-directory-p p)
-         (add-to-list 'pl/path-list p))))
-
-    (windows-nt
-     nil)
-    (gnu/linux
-     nil))
-
-  (setq pl/path-list (cl-remove-if-not #'file-directory-p pl/path-list))
-
-  (setenv "PATH" (mapconcat #'identity pl/path-list ":"))
-  ;; set exec-path
-  (mapc (lambda (p) (add-to-list 'exec-path p))
-        (reverse pl/path-list)))
+(eval-after-load "exec-path-from-shell"
+  '(when (memq window-system '(mac ns))
+     (exec-path-from-shell-initialize)))
 
 (when (eq system-type 'darwin)
-  (pl/env-path-init)
   (setenv "INFOPATH" (concat (expand-file-name "~/share/info:") (getenv "INFOPATH"))))
-
 
 (defconst pl/cache-directory (concat user-emacs-directory "caches/")
   "cache files directory")
-
 
 ;;; preset variables
 ;; `org-replace-disputed-keys' must be set before org.el is loaded, it seems some pacakge install by el-get will load

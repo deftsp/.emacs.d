@@ -156,6 +156,8 @@
 ;; (el-get-save-package-status "package-name-here" "removed")
 
 ;; (el-get 'sync 'org-mode)                ; init org-mode first
+(el-get 'sync 'exec-path-from-shell)
+(require 'exec-path-from-shell nil t) ; https://github.com/purcell/exec-path-from-shell
 (el-get 'sync 'auto-complete)           ; auto-complete should init before ac-nrepl
 (el-get 'sync 'clojure-mode)
 (el-get 'sync 'evil)
