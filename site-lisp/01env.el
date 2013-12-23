@@ -1,5 +1,9 @@
 ;;; 01env.el ---
 
+;;; use sRGB colorspace on OS X
+(when (eq system-type 'darwin)
+  (setq ns-use-srgb-colorspace t))
+
 (when (display-graphic-p)
   (load-theme 'palory t))
 
@@ -52,10 +56,6 @@
   (gnu/linux
    ;; do nothing. You should set Super and Hyper from your OS
    nil))
-
-;;; use sRGB colorspace on OS X
-(when (eq system-type 'darwin)
-  (setq ns-use-srgb-colorspace t))
 
 ;;; Difference between "exec-path" and "PATH"
 ;; The value of "PATH" is used by emacs when you are running a shell in emacs, similar to when you
