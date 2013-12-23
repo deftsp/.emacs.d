@@ -1,4 +1,4 @@
-;;; evil-org-mode.el ---                    
+;;; evil-org-mode.el ---
 
 ;; Copyright (C) 2013  Shihpin Tseng
 
@@ -6,6 +6,16 @@
 
 (require 'evil)
 (require 'org)
+
+(defun always-insert-item ()
+  (if (not (org-in-item-p))
+      (insert "\n- ")
+    (org-insert-item)))
+
+(defun evil-org-eol-call (fun)
+  (end-of-line)
+  (funcall fun)
+  (evil-append nil))
 
 (define-minor-mode evil-org-mode
   "minor mode to add evil keymappings to Org-mode."
