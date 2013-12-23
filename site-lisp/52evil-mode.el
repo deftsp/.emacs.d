@@ -357,5 +357,12 @@ to replace the symbol under cursor"
 (define-key pl/evil-move-map "d" 'sp-down-sexp)
 (define-key pl/evil-move-map "a" 'sp-backward-down-sexp)
 
+;;; evil-exchange
+;; `gx': evil-exchange-key, `gX': evil-exchange-cancel-key
+(require 'evil-exchange nil t)
+(if (fboundp 'evil-exchange-install)
+    (evil-exchange-install)
+
+
 (provide '52evil-mode)
 ;;; 50evil-mode.el ends here

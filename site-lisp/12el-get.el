@@ -125,6 +125,10 @@
                :type github
                :description "Vim matchit ported to Evil"
                :pkgname "redguardtoo/evil-matchit")
+        (:name evil-exchange
+               :type github
+               :description "Exchange text more easily within Evil"
+               :pkgname "Dewdrops/evil-exchange")
         (:name linum-relative
                :type github
                :description "display relative line number in emacs."
