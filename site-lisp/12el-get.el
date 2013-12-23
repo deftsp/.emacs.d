@@ -128,7 +128,9 @@
         (:name evil-exchange
                :type github
                :description "Exchange text more easily within Evil"
-               :pkgname "Dewdrops/evil-exchange")
+               :pkgname "Dewdrops/evil-exchange"
+               :features evil-exchange
+               :depends evil)
         (:name linum-relative
                :type github
                :description "display relative line number in emacs."

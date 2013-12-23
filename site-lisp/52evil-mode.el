@@ -359,9 +359,10 @@ to replace the symbol under cursor"
 
 ;;; evil-exchange
 ;; `gx': evil-exchange-key, `gX': evil-exchange-cancel-key
+(add-to-list 'load-path "~/.emacs.d/lisp/evil-exchange")
 (require 'evil-exchange nil t)
 (if (fboundp 'evil-exchange-install)
-    (evil-exchange-install)
+    (evil-exchange-install))
 
 
 (provide '52evil-mode)
