@@ -1195,4 +1195,26 @@ such character is found, following options are shown:
     (keyfreq-mode 1)
     (keyfreq-autosave-mode 1))
 
+;;; guide-key
+(require 'guide-key nil t)
+(eval-after-load "guide-key"
+  '(progn
+     ;; This hack may be dangerous because it advices primitive functions, this-command-keys and
+     ;; this-command-keys-vector
+     (guide-key/key-chord-hack-on)
+     (setq guide-key/recursive-key-sequence-flag t
+           guide-key/popup-window-position 'right
+           guide-key/highlight-command-regexp "rectangle\\|register"
+           guide-key/idle-delay 0.3)
+
+     (setq guide-key/guide-key-sequence
+           '("C-x"
+             "M-o"
+             "<key-chord>"
+             (org-mode "C-c")
+             (outline-minor-mode "C-c @")
+             (evil-mode ",")))
+
+     (guide-key-mode 1)))
+
 (provide '50tools)

@@ -151,6 +151,11 @@
                :type github
                :description "Efficiently hopping squeezed lines powered by helm interface"
                :pkgname "ShingoFukuyama/helm-swoop")
+        (:name guide-key
+               :type github
+               :description "Guide the following key bindings automatically and dynamically"
+               :pkgname "kbkbkbkb1/guide-key"
+               :depends popwin)
         (:name haskell-mode
                :description "A Haskell editing mode"
                :type github
