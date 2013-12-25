@@ -150,7 +150,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "cr"  'comment-or-uncomment-region
   "cs"  'pl/evil-change-symbol-in-defun
   "ch"  'crosshairs-mode
-  "d"   'dired-jump
+  "D"   'dired-jump
   "ff"  'pl/toggle-full-window
   "fc"  'flycheck-buffer
   "fC"  'flycheck-clear
@@ -171,9 +171,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "gs"  'git-gutter:stage-hunk
   "gr"  'git-gutter:revert-hunk
   "gt"  'git-gutter:toggle
-  "s"   'helm-swoop
+  "hs"   'helm-swoop
+  "hS"   'helm-swoop-back-to-last-point
   "k"   'kill-this-buffer
-  "S"   'helm-swoop-back-to-last-point
   "lr"  'pl/linum-relative-toggle
   "ms"  'magit-status
   "p"  'projectile-commander
