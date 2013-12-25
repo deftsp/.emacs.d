@@ -1209,6 +1209,7 @@ such character is found, following options are shown:
 
      (setq guide-key/guide-key-sequence
            '("C-x"
+             "C-c"
              "M-o"
              "<key-chord>"
              (org-mode "C-c")
