@@ -22,6 +22,38 @@
 ;;; expand-region
 (global-set-key (kbd "C-=") 'er/expand-region)
 
+(defun pl/mark-next-symbol ()
+  "Presumes that current symbol is already marked, skips over one
+space and marks next symbol."
+  (interactive)
+  (when (use-region-p)
+    (when (< (point) (mark))
+      (exchange-point-and-mark))
+    (let ((symbol-regexp "\\s_\\|\\sw"))
+      (when (looking-at "\\ ")
+        (forward-char 1)
+        (skip-syntax-forward "_w")
+        (exchange-point-and-mark)))))
+
+(defun pl/lua-mode-expand-list-init ()
+  (make-variable-buffer-local 'er/try-expand-list)
+  (setq er/try-expand-list '(er/mark-word
+                             er/mark-symbol
+                             er/mark-symbol-with-prefix
+                             pl/mark-next-symbol
+                             er/mark-next-accessor
+                             er/mark-inside-quotes
+                             er/mark-outside-quotes
+                             er/mark-inside-pairs
+                             er/mark-outside-pairs
+                             er/mark-method-call
+                             er/mark-comment
+                             er/mark-defun
+                             er/mark-url
+                             er/mark-email)))
+
+(eval-after-load "lua-mode"
+  '(add-hook 'lua-mode-hook 'pl/lua-mode-expand-list-init))
 
 
 ;;; let ^L looks beautiful
