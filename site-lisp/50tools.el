@@ -35,6 +35,20 @@ space and marks next symbol."
         (skip-syntax-forward "_w")
         (exchange-point-and-mark)))))
 
+(defun pl/mark-lua-method-call ()
+  "Mark the current symbol (including dots) and then paren to closing paren."
+  (interactive)
+  (let ((symbol-regexp "\\s_\\|\\sw\\|\\:"))
+    (when (or (looking-at symbol-regexp)
+              (er/looking-back-on-line symbol-regexp))
+      (skip-syntax-backward "_w:")
+      (set-mark (point))
+      (while (looking-at symbol-regexp)
+        (forward-char))
+      (if (looking-at "(")
+          (forward-list))
+      (exchange-point-and-mark))))
+
 (defun pl/lua-mode-expand-list-init ()
   (make-variable-buffer-local 'er/try-expand-list)
   (setq er/try-expand-list '(er/mark-word
@@ -42,11 +56,12 @@ space and marks next symbol."
                              er/mark-symbol-with-prefix
                              pl/mark-next-symbol
                              er/mark-next-accessor
-                             er/mark-inside-quotes
+                             pl/mark-lua-method-call
+                             er/mark-method-call
                              er/mark-outside-quotes
+                             er/mark-inside-quotes
                              er/mark-inside-pairs
                              er/mark-outside-pairs
-                             er/mark-method-call
                              er/mark-comment
                              er/mark-defun
                              er/mark-url
