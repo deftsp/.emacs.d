@@ -143,6 +143,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (evil-leader/set-key
   ","   'evilnc-comment-operator
   "a"   'org-agenda
+  "b"   'bookmark-map
   "ci"  'evilnc-comment-or-uncomment-lines
   "cl"  'evilnc-comment-or-uncomment-to-the-line
   "cc"  'evilnc-copy-and-comment-lines
