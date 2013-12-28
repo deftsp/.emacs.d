@@ -1,9 +1,5 @@
 ;;; 01env.el ---
 
-;;; use sRGB colorspace on OS X
-(when (eq system-type 'darwin)
-  (setq ns-use-srgb-colorspace t))
-
 (when (display-graphic-p)
   (load-theme 'palory t))
 
