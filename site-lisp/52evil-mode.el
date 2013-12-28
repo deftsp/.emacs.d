@@ -60,7 +60,7 @@
 ;; Modes that should be insert state by default
 ;; (dolist (mode '(sql-interactive-mode
 ;;                 magit-log-edit-mode erlang-shell-mode
-;;                 dired-mode inferior-moz-mode inferior-octave-mode
+;;                 inferior-moz-mode inferior-octave-mode
 ;;                 inferior-ess-mode
 ;;                 grep-mode pylookup-mode))
 ;;   (add-to-list 'evil-insert-state-modes mode))
@@ -187,16 +187,14 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "xz"  'suspend-frame
   "xvv" 'vc-next-action
   "xv=" 'vc-diff
-  "xvl" 'vc-print-log
-  "xx"  'er/expand-region)
+  "xvl" 'vc-print-log)
 
 ;; (evil-leader/set-key-for-mode 'emacs-lisp-mode "b" 'byte-compile-file)
-;;; expand-region
-;; http://blog.binchen.org/?p=782
-;; ",xx" to select initial region. Keep press "x" to expand. "z" to contract region.
-(eval-after-load "evil"
-  '(setq expand-region-contract-fast-key "z")) ; default "-"
 
+;;; expand-region
+(key-chord-define evil-normal-state-map "er" 'er/expand-region)
+(eval-after-load "evil"
+  '(setq expand-region-contract-fast-key "r")) ; default "-"
 
 ;;; enable evil mode
 (if (fboundp 'evil-mode)
@@ -215,7 +213,6 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (loop for (mode . state) in
       '((comint-mode               . insert)
         (compilation-mode          . emacs)
-        (dired-mode                . emacs)
         (diff-mode                 . emacs)
         (eshell-mode               . emacs)
         (help-mode                 . emacs)
@@ -341,6 +338,12 @@ to replace the symbol under cursor"
 ;; (evil-add-hjkl-bindings grep-mode-map 'emacs)
 ;; (evil-add-hjkl-bindings helm-grep-mode-map 'emacs)
 (evil-add-hjkl-bindings help-mode-map 'emacs) ; both `h' and `? default binding to describe-mode
+
+;;; dired
+(eval-after-load "dired"
+  '(progn
+     (evil-define-key 'normal dired-mode-map "M-r" 'dired-do-redisplay)
+     (evil-define-key 'normal dired-mode-map "r" 'wdired-change-to-wdired-mode)))
 
 
 ;;; org agenda -- leave in emacs mode but add j & k
