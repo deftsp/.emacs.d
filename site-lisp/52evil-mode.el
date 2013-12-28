@@ -217,6 +217,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         (eshell-mode               . emacs)
         (help-mode                 . emacs)
         (helm-grep-mode            . emacs)
+        (ibuffer-mode              . normal)
         (inferior-emacs-lisp-mode  . emacs)
         (inf-ruby-mode             . emacs)
         (Info-mode                 . emacs)
@@ -345,6 +346,12 @@ to replace the symbol under cursor"
      (evil-define-key 'normal dired-mode-map "M-r" 'dired-do-redisplay)
      (evil-define-key 'normal dired-mode-map "r" 'wdired-change-to-wdired-mode)))
 
+;;; ibuffer
+(eval-after-load "ibuffer"
+  '(progn
+     (evil-define-key 'normal ibuffer-mode-map "J" 'ibuffer-jump-to-buffer)
+     (evil-define-key 'normal ibuffer-mode-map "M-r" 'ibuffer-redisplay) ; default `l'
+     (evil-define-key 'normal ibuffer-mode-map "K" 'ibuffer-do-kill-lines)))
 
 ;;; org agenda -- leave in emacs mode but add j & k
 (eval-after-load "org-agenda"
