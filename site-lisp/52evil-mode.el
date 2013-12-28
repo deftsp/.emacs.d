@@ -82,23 +82,21 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key minibuffer-local-must-match-map [escape] 'pl/minibuffer-keyboard-quit)
 (define-key minibuffer-local-isearch-map [escape] 'pl/minibuffer-keyboard-quit)
 
+;;; 'imap fd <ESC>' equivalent
+;; (key-chord-define-global "fd" [escape])
+(define-key evil-insert-state-map (kbd "j f") 'evil-normal-state)
+(key-chord-define evil-normal-state-map           "fd" 'evil-force-normal-state)
+(key-chord-define evil-insert-state-map           "fd" 'evil-normal-state)
+(key-chord-define evil-visual-state-map           "fd" 'evil-change-to-previous-state)
+(key-chord-define evil-emacs-state-map            "fd" 'evil-normal-state)
+(key-chord-define evil-motion-state-map           "fd" 'evil-normal-state)
+(key-chord-define evil-replace-state-map          "fd" 'evil-normal-state)
 
-;; 'imap fd <ESC>' equivalent
-(key-chord-define-global "fd" [escape])
-
-;; (define-key evil-insert-state-map (kbd "j f") 'evil-normal-state)
-;; (key-chord-define evil-normal-state-map           "fd" 'evil-force-normal-state)
-;; (key-chord-define evil-insert-state-map           "fd" 'evil-normal-state)
-;; (key-chord-define evil-visual-state-map           "fd" 'evil-normal-state) ; 'evil-change-to-previous-state
-;; (key-chord-define evil-emacs-state-map            "fd" 'evil-normal-state)
-;; (key-chord-define evil-motion-state-map           "fd" 'evil-normal-state)
-;; (key-chord-define evil-replace-state-map          "fd" 'evil-normal-state)
-
-;; (key-chord-define minibuffer-local-map            "fd" 'pl/minibuffer-keyboard-quit)
-;; (key-chord-define minibuffer-local-ns-map         "fd" 'pl/minibuffer-keyboard-quit)
-;; (key-chord-define minibuffer-local-completion-map "fd" 'pl/minibuffer-keyboard-quit)
-;; (key-chord-define minibuffer-local-must-match-map "fd" 'pl/minibuffer-keyboard-quit)
-;; (key-chord-define minibuffer-local-isearch-map    "fd" 'pl/minibuffer-keyboard-quit)
+(key-chord-define minibuffer-local-map            "fd" 'pl/minibuffer-keyboard-quit)
+(key-chord-define minibuffer-local-ns-map         "fd" 'pl/minibuffer-keyboard-quit)
+(key-chord-define minibuffer-local-completion-map "fd" 'pl/minibuffer-keyboard-quit)
+(key-chord-define minibuffer-local-must-match-map "fd" 'pl/minibuffer-keyboard-quit)
+(key-chord-define minibuffer-local-isearch-map    "fd" 'pl/minibuffer-keyboard-quit)
 
 ;;;
 ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
