@@ -170,8 +170,9 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "gs"  'git-gutter:stage-hunk
   "gr"  'git-gutter:revert-hunk
   "gt"  'git-gutter:toggle
-  "hs"   'helm-swoop
-  "hS"   'helm-swoop-back-to-last-point
+  "hs"  'helm-swoop
+  "hS"  'helm-swoop-back-to-last-point
+  "j"   'helm-etags-select
   "k"   'kill-this-buffer
   "lr"  'pl/linum-relative-toggle
   "ms"  'magit-status
