@@ -1232,8 +1232,6 @@ such character is found, following options are shown:
     '(diminish 'highlight-symbol-mode " H")))
 
 ;;; goto last change
-(autoload 'goto-last-change "goto-last-change"
-  "Set point to the position of the last change." t)
 (global-set-key (kbd "C-x C-/") 'goto-last-change)
 
 ;;;
@@ -1255,9 +1253,11 @@ such character is found, following options are shown:
            guide-key/idle-delay 0.6)
 
      (setq guide-key/guide-key-sequence
-           '("C-x"
-             "C-c"
+           '("C-c"
+             "C-h"
+             "C-x"
              "M-o"
+             "M-s"
              "<key-chord>"
              (org-mode "C-c")
              (outline-minor-mode "C-c @")
