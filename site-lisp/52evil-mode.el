@@ -84,7 +84,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 
 ;;; 'imap fd <ESC>' equivalent
 ;; (key-chord-define-global "fd" [escape])
-(define-key evil-insert-state-map (kbd "j f") 'evil-normal-state)
+;; (define-key evil-insert-state-map (kbd "f d") 'evil-normal-state)
 (key-chord-define evil-normal-state-map           "fd" 'evil-force-normal-state)
 (key-chord-define evil-insert-state-map           "fd" 'evil-normal-state)
 (key-chord-define evil-visual-state-map           "fd" 'evil-change-to-previous-state)
