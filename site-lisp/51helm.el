@@ -69,5 +69,10 @@
 (define-key isearch-mode-map (kbd "H-i") 'helm-swoop-from-isearch)
 (define-key isearch-mode-map (kbd "C-S-i") 'helm-swoop-from-isearch)
 
+(eval-after-load "helm"
+  '(progn
+     (define-key helm-map (kbd "M-j") 'helm-next-line)
+     (define-key helm-map (kbd "M-k") 'helm-previous-line)))
+
 (provide '51helm)
 ;;; 51helm.el ends here
