@@ -3,6 +3,8 @@
 (when (display-graphic-p)
   (load-theme 'palory t))
 
+;; always load the newer one between .el and .elc
+(setq load-prefer-newer t)
 ;; (setenv "LANG" "C")
 ;; (setenv "SBCL_HOME" "/usr/lib/sbcl")
 
