@@ -351,7 +351,24 @@
 (when (fboundp 'file-name-shadow-mode)
   (file-name-shadow-mode t))
 
+;;; Popup Help
+;; http://blog.jenkster.com/2013/12/popup-help-in-emacs-lisp.html
+(defun pl/describe-thing-in-popup ()
+  (interactive)
+  (let* ((thing (symbol-at-point))
+         (help-xref-following t)
+         (description (with-temp-buffer
+                        (help-mode)
+                        (help-xref-interned thing)
+                        (buffer-string))))
+    (popup-tip description
+               :point (point)
+               :around t
+               :height 30
+               :scroll-bar t
+               :margin t)))
 
+(global-set-key (kbd "C-h SPC") 'pl/describe-thing-in-popup)
 
 ;;; paren
 ;;----------------------------------------------------------------------------------------------------

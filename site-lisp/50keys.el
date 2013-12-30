@@ -217,10 +217,6 @@ it marks the next ARG lines after the ones already marked."
   (message "Current point is: %d" (point)))
 ;;----------------------------------------------------------------------------------------------------
 
-;; Ctrl-x +:  balance-windows -- makes all visible windows approximately equal height. This is useful if you've just
-;; done Ctrl-x 2 twice in a row, because you'll have two 1/4-height windows and one 1/2-height window. Ctrl-x + makes
-;; them all the same height.
-
 ;;; zap to char
 ;; Emacs provides a zap-to-char command that kills from the current point to a character. It is
 ;; bound to `M-z'. Examples of its usage, include:
@@ -295,8 +291,6 @@ it marks the next ARG lines after the ones already marked."
                       (when (/= bot cur)
                         (scroll-down 1))))))
 
-;;----------------------------------------------------------------------------------------------------
-
 ;;; _/-/SPACE
 (global-set-key (kbd "H--") 'pl/_-SPC)
 (defun pl/_-SPC ()
@@ -314,7 +308,8 @@ it marks the next ARG lines after the ones already marked."
                     (backward-char 1)))
       (t (message "Current is not '_ '- or SPC!")))))
 
-
+;;; cycle-spacing, since 24.4
+(global-set-key (kbd "M-SPC") 'cycle-spacing)
 
 ;;; Find the definition of the FUNCTION near point. That's very useful!
 (require 'find-func)

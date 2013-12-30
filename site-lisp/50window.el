@@ -139,7 +139,9 @@
 
 ;; (setq display-buffer-function 'display-buffer-function-according-to-window-width)
 
-
+;;; Ctrl-x +:  balance-windows -- makes all visible windows approximately equal height. This is useful if you've just
+;; done Ctrl-x 2 twice in a row, because you'll have two 1/4-height windows and one 1/2-height window. Ctrl-x + makes
+;; them all the same height.
 
 ;;;;;;;;;;;;;;;;;
 
