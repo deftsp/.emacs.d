@@ -188,6 +188,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "xv=" 'vc-diff
   "xvl" 'vc-print-log)
 
+(eval-after-load "helm-config"
+  '(progn
+     (evil-leader/set-key "4" helm-command-map)))
+
 ;; (evil-leader/set-key-for-mode 'emacs-lisp-mode "b" 'byte-compile-file)
 
 ;;; expand-region
