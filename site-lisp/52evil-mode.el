@@ -218,6 +218,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         (compilation-mode          . emacs)
         (diff-mode                 . emacs)
         (eshell-mode               . emacs)
+        (eww-mode                  . emacs)
         (help-mode                 . emacs)
         (helm-grep-mode            . emacs)
         (ibuffer-mode              . normal)
@@ -342,6 +343,10 @@ to replace the symbol under cursor"
 ;; (evil-add-hjkl-bindings grep-mode-map 'emacs)
 ;; (evil-add-hjkl-bindings helm-grep-mode-map 'emacs)
 (evil-add-hjkl-bindings help-mode-map 'emacs) ; both `h' and `? default binding to describe-mode
+
+;;; eww
+(evil-add-hjkl-bindings eww-mode-map 'emacs
+  "L" 'eww-back-url) ; defaut "l"
 
 ;;; dired
 (eval-after-load "dired"
