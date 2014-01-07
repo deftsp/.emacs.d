@@ -1250,7 +1250,7 @@ such character is found, following options are shown:
      (setq guide-key/recursive-key-sequence-flag t
            guide-key/popup-window-position 'right
            guide-key/highlight-command-regexp "rectangle\\|register"
-           guide-key/idle-delay 0.6)
+           guide-key/idle-delay 1.2)
 
      (setq guide-key/guide-key-sequence
            '("C-c"
