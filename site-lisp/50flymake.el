@@ -23,7 +23,7 @@
 
 (eval-after-load "flycheck"
   '(progn
-     (set-default 'flycheck-check-syntax-automatically nil)
+     ;; (set-default 'flycheck-check-syntax-automatically nil)
      (add-hook 'after-init-hook #'global-flycheck-mode)))
 
 
