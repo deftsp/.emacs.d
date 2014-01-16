@@ -220,6 +220,10 @@
    '(git-gutter-fr:added ((t (:foreground "cyan"))))
    '(git-gutter-fr:deleted ((t (:foreground "white"))))
 
+   ;; structured-haskell-mode
+   '(shm-current-face ((t (:background "#222222"))))
+   '(shm-quarantine-face ((t (:background "#9e4f75"))))
+
    ;; linum
    '(linum ((t (:background "#102235" :foreground "#607b8b"))))
 

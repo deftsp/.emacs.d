@@ -198,12 +198,14 @@ See also`haskell-check'."
 
 ;;; structured-haskell-mode
 ;; https://github.com/chrisdone/structured-haskell-mode
-;; git clone https://github.com/chrisdone/structured-haskell-mode.git
+;; git clone git@github.com:chrisdone/structured-haskell-mode.git
 ;; $ cd structured-haskell-mode
 ;; $ cabal install
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/structured-haskell-mode/elisp"))
-;; (require 'shm nil t)
-;; (add-hook 'haskell-mode-hook 'structured-haskell-mode)
+(require 'shm nil t)
+(if (fboundp 'structured-haskell-mode)
+    (add-hook 'haskell-mode-hook 'structured-haskell-mode))
+
 
 ;;; align regexp
 (require 'align nil t)
