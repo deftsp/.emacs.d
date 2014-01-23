@@ -234,6 +234,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         (gtags-select-mode         . emacs)
         (gud-mode                  . emacs)
         (grep-mode                 . emacs)
+        (haskell-interactive-mode  . insert)
         (message-mode              . emacs)
         (magit-commit-mode         . normal)
         (magit-log-edit-mode       . emacs)

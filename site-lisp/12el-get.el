@@ -151,6 +151,16 @@
                :type github
                :description "Efficiently hopping squeezed lines powered by helm interface"
                :pkgname "ShingoFukuyama/helm-swoop")
+        (:name helm-dash
+               :type github
+               :description "Helm extension to search dash docsets"
+               :pkgname "areina/helm-dash"
+               :depends esqlite)
+        (:name esqlite
+               :type github
+               :description "Manipulate sqlite file from Emacs"
+               :pkgname "mhayashi1120/Emacs-esqlite"
+               :load-path ("." "./Emacs-pcsv"))
         (:name guide-key
                :type github
                :description "Guide the following key bindings automatically and dynamically"

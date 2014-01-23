@@ -107,6 +107,8 @@ space and marks next symbol."
      (key-chord-define-global "/s" 'save-buffer)
      (key-chord-define-global "##" 'server-edit)
 
+     (key-chord-define-global "hd" 'helm-dash)
+
      (key-chord-define-global ";g" 'magit-status)
      (key-chord-define-global "mg" 'magit-grep)
      (key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
