@@ -1049,8 +1049,9 @@ such character is found, following options are shown:
 ;;; smex
 (eval-after-load "smex"
   '(progn
-     ;; (smex-initialize)                  ; el-get has do it
-     ;; (global-set-key (kbd "M-X") 'smex-major-mode-commands) ;
+     (unless smex-initialized-p
+       (smex-initialize))
+     (global-set-key (kbd "M-X") 'smex-major-mode-commands)
      ;; This is your old M-x.
      ;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
      (global-set-key (kbd "M-x") 'smex)))
