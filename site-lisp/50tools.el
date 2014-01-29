@@ -93,10 +93,11 @@ space and marks next symbol."
      (setq key-chord-two-keys-delay 0.035)  ; default 0.1
 
      (key-chord-define-global "''" 'pl/apostrophe-key-chord)
-     (key-chord-define-global "HH" 'woman)
+     (key-chord-define-global ";b" 'switch-to-buffer)
      (key-chord-define-global ";r" 'helm-resume)
      (key-chord-define-global ";s" 'helm-occur)
      (key-chord-define-global ";f" 'helm-for-files)
+     (key-chord-define-global ";d" 'dired-jump-other-window)
 
      (key-chord-define-global "jk" 'auto-complete)
 
@@ -115,7 +116,9 @@ space and marks next symbol."
 
      (key-chord-define-global ",r" 'pl/recursive-edit-save-window-config)
      (key-chord-define-global ",c" 'org-capture)
-     (key-chord-define-global ".c" 'calendar)))
+     (key-chord-define-global ".c" 'calendar)
+     (key-chord-define-global "VV" 'other-window)
+     (key-chord-define-global "HH" 'woman)))
 
 
 
