@@ -180,9 +180,10 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "ut"  'undo-tree-visualize
   "w"   'save-buffer
   "W"   'save-some-buffers
-  "xf"  'ido-find-file
-  "xb"  'ido-switch-buffer
+  "xb"  'switch-to-buffer
   "xc"  'save-buffers-kill-terminal
+  "xf"  'ido-find-file
+  "xk"  'kill-buffer
   "xz"  'suspend-frame
   "xvv" 'vc-next-action
   "xv=" 'vc-diff
