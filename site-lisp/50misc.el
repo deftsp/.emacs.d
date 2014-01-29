@@ -93,7 +93,7 @@
 
 ;;; minibuffer
 (setq minibuffer-electric-default-mode 1
-      resize-mini-windows nil ; don't allow minibuffer free resize
+      resize-mini-windows 'grow-only
       enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
 

@@ -37,7 +37,11 @@
 ;; (ido-ubiquitous-use-new-completing-read yas/expand 'yasnippet)
 ;; (ido-ubiquitous-use-new-completing-read yas/visit-snippet-file 'yasnippet)
 
-
+;;; ido-vertical-mode
+;; https://github.com/gempesaw/ido-vertical-mode.el
+(when (fboundp 'ido-vertical-mode)
+  (setq ido-vertical-define-keys 'C-n-C-p-up-down)
+  (ido-vertical-mode +1))
 
 
 (setq ido-enable-prefix nil
@@ -45,7 +49,7 @@
       ido-case-fold  t                  ; be case-insensitive
       ido-create-new-buffer 'always
       ido-max-dir-file-cache 200        ; default 100
-      ido-max-prospects 6               ; don't spam my minibuffer
+      ido-max-prospects 6               ; default 12
       ido-auto-merge-delay-time -1      ; default 0.7
       ido-auto-merge-work-directories-length 0
       ido-show-dot-for-dired nil
@@ -228,34 +232,16 @@
 
 (defun pl/ido-keys ()
   "Add my keybindings for ido."
+  (when ido-vertical-mode
+    (define-key ido-completion-map (kbd "M-j") 'ido-next-match)
+    (define-key ido-completion-map (kbd "M-k") 'ido-prev-match))
   (define-key ido-completion-map (kbd "C-.") 'ido-delete-backward-updir)
-  ;; (define-key ido-completion-map (kbd "C-k") 'ido-erase-minibuffer-or-dwim)
+  ;; (define-key ido-completion-map (kbd "C-k") 'pl/ido-erase-minibuffer-or-dwim)
   (define-key ido-completion-map (kbd "ESC ESC k") 'ido-delete-file-at-head))
-
-
-;; (add-hook 'ido-make-file-list-hook 'ido-sort-mtime)
-;; (add-hook 'ido-make-dir-list-hook 'ido-sort-mtime)
-
-;; (defun ido-sort-mtime ()
-;;   "Sort ido item by modified time."
-;;   (let (ido-temp-list)
-;;     (setq ido-temp-list
-;;           (sort ido-temp-list
-;;                 (lambda (a b)
-;;                   (let ((ta (nth 5 (file-attributes (concat ido-current-directory a))))
-;;                         (tb (nth 5 (file-attributes (concat ido-current-directory b)))))
-;;                     (if (= (nth 0 ta) (nth 0 tb))
-;;                         (> (nth 1 ta) (nth 1 tb))
-;;                         (> (nth 0 ta) (nth 0 tb)))))))
-;;     (ido-to-end ;; move . files to end (again)
-;;      (delq nil (mapcar
-;;                 (lambda (x) (if (string-equal (substring x 0 1) ".") x))
-;;                 ido-temp-list)))))
-
 
 ;;; // - go to the root directory.
 ;;; ~/ - go to the home directory.
-;; (defun ido-erase-minibuffer-or-dwim ()
+;; (defun pl/ido-erase-minibuffer-or-dwim ()
 ;;   "If cursor the EOL erases whole minibuffer and insert  `~/'.
 ;; If cursor at the EOL and the whole minibuffer is `~/', erase whole minibuffer.
 ;; Or else erases whole minibuffer. "
@@ -270,21 +256,10 @@
 ;;             (ido-chdir-1))
 ;;         (ido-chdir-1 ))))
 
-
-;; (defun my-ido-ignore-buffers (name)
-;;  "Ignore all c mode buffers -- example function for ido."
-;;  (with-current-buffer name
-;;    (cond ((or (derived-mode-p 'cvs-mode) (derived-mode-p 'sql-interactive-mode))
-;;           nil)
-;;          (t
-;;           (string-match "^ ?\\*" name)))))
-
-;; (setq-default ido-ignore-buffers '(my-ido-ignore-buffers)
-;;                             ido-auto-merge-work-directories-length -1)
-
+;;; imenu goto symbol
 ;;; http://emacswiki.org/emacs/ImenuMode
-(global-set-key (kbd "C-c j") 'ido-goto-symbol)
-(defun ido-goto-symbol (&optional symbol-list)
+(global-set-key (kbd "C-c j") 'pl/ido-goto-symbol)
+(defun pl/ido-goto-symbol (&optional symbol-list)
   "Refresh imenu and jump to a place in the buffer using Ido."
   (interactive)
   (unless (featurep 'imenu)
@@ -302,7 +277,7 @@
       (while (progn
                (imenu--cleanup)
                (setq imenu--index-alist nil)
-               (ido-goto-symbol (imenu--make-index-alist))
+               (pl/ido-goto-symbol (imenu--make-index-alist))
                (setq selected-symbol
                      (ido-completing-read "Symbol: " symbol-names))
                (string= (car imenu--rescan-item) selected-symbol)))
@@ -319,7 +294,7 @@
       (let (name position)
         (cond
          ((and (listp symbol) (imenu--subalist-p symbol))
-          (ido-goto-symbol symbol))
+          (pl/ido-goto-symbol symbol))
          ((listp symbol)
           (setq name (car symbol))
           (setq position (cdr symbol)))
@@ -331,50 +306,6 @@
                     (string= (car imenu--rescan-item) name))
           (add-to-list 'symbol-names name)
           (add-to-list 'name-and-pos (cons name position))))))))
-
-;;; Make Ido complete almost anything (except the stuff where it shouldn't)
-;; Problem using advice to reset to completing-read
-;; 1. Incompatible Libraries
-;; kill-ring-search
-;; Fix: Use a patched version: http://pastie.org/paste/1017562 (builds upon v1.1). Diff: http://pastie.org/paste/1017592
-
-;; 2. I like using ido for (almost) everything a lot but it gets slow for a long list of possible completions (e.g. for
-;; describe-function).
-;; Using the defadvice as described does not work for me? Is it just me or is this a bug? TIA – sebhofer
-;; Fixed. It seems in version >=23, ido-cur-list is always bound and you need to check it as well. – LeWang
-
-;; (defvar ido-enable-replace-completing-read nil
-;;   "If t, use ido-completing-read instead of completing-read if possible.
-
-;;     Set it to nil using let in around-advice for functions where the
-;;     original completing-read is required.  For example, if a function
-;;     foo absolutely must use the original completing-read, define some
-;;     advice like this:
-
-;;     (defadvice foo (around original-completing-read-only activate)
-;;       (let (ido-enable-replace-completing-read) ad-do-it))")
-;; (set-default 'ido-enable-replace-completing-read t)
-;; ;; Replace completing-read wherever possible, unless directed otherwise
-;; (defadvice completing-read
-;;   (around use-ido-when-possible activate)
-;;   (if (or (not ido-enable-replace-completing-read) ; Manual override disable ido
-;;           (and (boundp 'ido-cur-list)
-;;                ido-cur-list)) ; Avoid infinite loop from ido calling this
-;;       ad-do-it
-;;     (let ((allcomp (all-completions "" collection predicate)))
-;;       (if allcomp
-;;           (setq ad-return-value
-;;                 (ido-completing-read prompt
-;;                                      allcomp
-;;                                      nil require-match initial-input hist def))
-;;         ad-do-it))))
-
-;; ido-completing-read to interfere when using dired mode buffers (e.g., renaming files). To turn it off:
-;; in dired buffer, use original completing-read
-;; TODO: find a better way to solve this conflict
-;; (add-hook 'dired-mode-hook
-;;           '(lambda ()
-;;              (set (make-local-variable 'ido-enable-replace-completing-read) nil)))
 
 ;;; find file with ido and open it with sudo
 (defun pl/ido-sudo-edit (&optional arg)
