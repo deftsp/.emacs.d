@@ -95,8 +95,8 @@
   (define-key haskell-mode-map (kbd "C-j") 'newline)
   ;; (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)
   (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
-  ;; Load the current file (and make a session if not already made).
-  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-file)
+  ;; Load the current file (and make a session if not already made). with C-u reload the file
+  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
   ;; “Bring” the REPL, hiding all other windows apart from the source and the REPL.
   (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
   ;; Build the Cabal project.
