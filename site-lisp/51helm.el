@@ -87,5 +87,12 @@
 (eval-after-load "lua-mode"
   '(add-hook 'lua-mode-hook 'pl/helm-dash-lua-mode-init))
 
+(defun pl/helm-dash-haskell-mode-init ()
+  (interactive)
+  (setq-local helm-dash-docsets '("Haskell")))
+
+(eval-after-load "haskell-mode"
+  '(add-hook 'haskell-mode-hook 'pl/helm-dash-haskell-mode-init))
+
 (provide '51helm)
 ;;; 51helm.el ends here
