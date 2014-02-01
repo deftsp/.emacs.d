@@ -33,7 +33,7 @@
 ;;   (define-coding-system-alias 'x-gbk 'gbk))
 
 ;;; modifier
-(case system-type
+(cl-case system-type
   (darwin
    (setq mac-function-modifier 'super) ; 'none, super
    (setq mac-option-modifier 'hyper) ; sets the Option key as Super

@@ -3,7 +3,7 @@
 
 
 ;; I use the Common Lisp stuff all the time
-(require 'cl)
+(require 'cl-lib)
 
 ;; First, avoid the evil:
 (when (featurep 'xemacs)

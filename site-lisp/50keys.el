@@ -296,7 +296,7 @@ it marks the next ARG lines after the ones already marked."
 (defun pl/_-SPC ()
   (interactive)
   (let ((char (following-char)))
-    (case char
+    (cl-case char
       ((?\_) (progn (delete-char 1)
                     (insert ?\-)
                     (backward-char 1)))
