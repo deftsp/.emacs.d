@@ -62,6 +62,7 @@
 ;; checking, file compression, compiling, grep, diff, etc.
 (eval-after-load "exec-path-from-shell"
   '(when (memq window-system '(mac ns))
+     (add-to-list 'exec-path-from-shell-variables "GOROOT")
      (exec-path-from-shell-initialize)))
 
 (when (eq system-type 'darwin)
