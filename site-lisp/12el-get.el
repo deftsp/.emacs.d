@@ -166,13 +166,20 @@
                :description "Guide the following key bindings automatically and dynamically"
                :pkgname "kbkbkbkb1/guide-key"
                :depends popwin)
+        (:name flycheck-haskell
+               :type github
+               :description "Improved Haskell support for Flycheck"
+               :pkgname "flycheck/flycheck-haskell"
+               :depends (f dash haskell-mode flycheck))
         (:name haskell-mode
                :description "A Haskell editing mode"
                :type github
                :pkgname "deftsp/haskell-mode"
-               :branch "shihpin/dev"
+               :info "."
+               :branch "develop"
                :build `(("make" ,(format "EMACS=%s" (shell-quote-argument el-get-emacs)) "all"))
-               :load "haskell-mode-autoloads.el")))
+               :post-init (progn
+                            (require 'haskell-mode-autoloads)))))
 
 ;; (el-get-save-package-status "package-name-here" "removed")
 

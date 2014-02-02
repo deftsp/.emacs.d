@@ -168,7 +168,23 @@
 ;;   > " **********************************************/"
 ;;   )
 
-;;--------------------------------------------------------------------------------------
+(define-skeleton pl/haskell-module-skeleton
+  "Haskell hs file header"
+  "Brief description: "
+  "{- \|\n"
+  '(setq module-name (haskell-guess-module-name))
+  "   Module      : " module-name "\n"
+  "   Description : " str | (concat "The \"" module-name "\" module") "\n"
+  "   Copyright   : (c) Shihpin Tseng\n"
+  "   License     : 3-Clause BSD-style\n"
+  "   Maintainer  : deftsp@gmail.com\n"
+  "\n"
+  "   " _ "\n"
+  "\n"
+  " -}\n"
+  "module " module-name " where\n\n")
+
+(add-to-list 'auto-insert-alist '("\\.hs\\'" . pl/haskell-module-skeleton))
 
 ;;--------------------------------------------------------------------------------
 ;;;Pair Insertion

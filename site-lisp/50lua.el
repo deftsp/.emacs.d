@@ -23,7 +23,8 @@
                                     "share/doc/lua/5.1/manual.html#pdf-"))
 
 (defun pl/lua-mode-setup ()
-  (flycheck-mode +1)
+  (if (fboundp 'flycheck-mode)
+      (flycheck-mode +1))
   (subword-mode +1))
 
 (defun pl/relaunch-quick-cocos2d-x ()

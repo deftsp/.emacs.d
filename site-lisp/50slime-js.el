@@ -20,8 +20,7 @@
 ;; (set-default 'slime-js-browser-command "open -a \"Google Chrome\"")
 ;; (set-default 'slime-js-browser-jacked-in-p nil)
 
-(global-set-key [f5] 'slime-js-reload)
-
+(define-key slime-js-minor-mode-map [f5] 'slime-js-reload)
 
 (defun pl/slime-js-run-swank ()
   "Runs the swank side of the equation."

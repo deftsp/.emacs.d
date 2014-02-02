@@ -21,10 +21,11 @@
      (require 'flymake-cursor)
      (setq flymake-gui-warnings-enabled nil)))
 
-(eval-after-load "flycheck"
-  '(progn
-     ;; (set-default 'flycheck-check-syntax-automatically nil)
-     (add-hook 'after-init-hook #'global-flycheck-mode)))
+
+(require 'flycheck nil t)
+;; (set-default 'flycheck-check-syntax-automatically nil)
+(when (fboundp 'global-flycheck-mode)
+  (add-hook 'after-init-hook #'global-flycheck-mode))
 
 
 ;; (define-key global-map (kbd "C-c d e") 'flymake-cursor-show-errors-at-point-now)

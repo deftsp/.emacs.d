@@ -4,7 +4,9 @@
 
 ;; Keywords:
 
+;;; Code:
 ;; (add-to-list 'load-path "~/.emacs.d/lisp/haskell-mode/")
+;; (add-to-list 'Info-default-directory-list "~/.emacs.d/lisp/haskell-mode/")
 ;; (require 'haskell-mode-autoloads)
 
 (defvar pl/haskell-mode-doc-map nil
@@ -13,13 +15,17 @@
 (defvar pl/haskell-mode-key-chord-map nil
   "Keymap for key chord prefix commands in haskell mode.")
 
+;; TODO: remove it after bug: https://github.com/haskell/haskell-mode/issues/233 be fixed
+(require 'haskell-process nil t)
+(load "~/.emacs.d/el-get/haskell-mode/haskell-process.el" t)
+
 (eval-after-load "haskell-mode"
   '(progn
      (setq haskell-process-log t
            haskell-font-lock-symbols t
-           haskell-process-type 'ghci  ; 'cabal-dev
+           haskell-process-path-cabal (expand-file-name "~/.cabal/bin/cabal")
+           haskell-process-type 'cabal-repl  ; 'cabal-dev
            haskell-notify-p t)
-     (require 'haskell-process)
      (setq haskell-stylish-on-save nil) ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
      (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
      (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
@@ -53,6 +59,10 @@
 (eval-after-load "which-func"
   '(add-to-list 'which-func-modes 'haskell-mode))
 
+(eval-after-load 'flycheck
+  '(progn
+     ;; (require 'flycheck-hdevtools nil t) ; not works with cabal sandbox for now
+     (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup)))
 
 ;;; ghc-mod
 ;; install ghc-mod
@@ -72,9 +82,10 @@
   ;; initially hide all but the headers
   ;;(hide-body)
   (subword-mode +1)
+  ;; (capitalized-words-mode +1)
   (when (fboundp 'key-chord-define)
     (key-chord-define haskell-mode-map ".x" pl/haskell-mode-key-chord-map))
-
+  (flyspell-prog-mode)
   (setq evil-auto-indent nil)
   ;; smartparens-mode
   (smartparens-mode 1)
@@ -95,12 +106,13 @@
   (define-key haskell-mode-map (kbd "C-j") 'newline)
   ;; (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)
   (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
-  ;; Load the current file (and make a session if not already made). with C-u reload the file
-  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
+  ;; Load the current file (and make a session if not already made).
+  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-file)
+  (define-key haskell-mode-map (kbd "C-c C-r") 'haskell-process-reload-file)
+  (define-key haskell-mode-map [f5] 'haskell-process-load-or-reload)
   ;; “Bring” the REPL, hiding all other windows apart from the source and the REPL.
   (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
-  ;; Build the Cabal project.
-  (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+  (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-compile)
   ;; Interactively choose the Cabal command to run.
   (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
 
@@ -185,7 +197,7 @@ See also`haskell-check'."
 ;;; cabal
 ;; Useful to have these keybindings for .cabal files, too.
 (defun pl/haskell-cabal-hook ()
-  (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-process-cabal-build)
+  (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-compile)
   (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)
   (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
   (define-key haskell-cabal-mode-map [?\C-c ?\C-z] 'haskell-interactive-switch))
@@ -207,6 +219,28 @@ See also`haskell-check'."
     (add-hook 'haskell-mode-hook 'structured-haskell-mode))
 
 
+;;;
+;; https://github.com/chrisdone/chrisdone-emacs/blob/master/config/haskell.el
+(defun pl/haskell-who-calls (&optional prompt)
+  "Grep the codebase to see who uses the symbol at point."
+  (interactive "P")
+  (let ((sym (if prompt
+                 (read-from-minibuffer "Look for: ")
+               (haskell-ident-at-point))))
+    (let ((existing (get-buffer "*who-calls*")))
+      (when existing
+        (kill-buffer existing)))
+    (cond
+     ;; Use grep
+     (nil (let ((buffer
+                 (grep-find (format "cd %s && find . -name '*.hs' -exec grep -inH -e %s {} +"
+                                    (haskell-session-current-dir (haskell-session))
+                                    sym))))
+            (with-current-buffer buffer
+              (rename-buffer "*who-calls*")
+              (switch-to-buffer-other-window buffer))))
+     (t (ag sym (haskell-session-current-dir (haskell-session)))))))
+
 ;;; align regexp
 (require 'align nil t)
 (eval-after-load "align"
@@ -227,6 +261,50 @@ See also`haskell-check'."
                          (regexp . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")
                          (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))))
 
+;;;
+;; http://hub.darcs.net/ivanm/emacs-d/raw-file/site-lisp/haskell-settings.el
+;; Based upon http://www.serpentine.com/blog/2007/10/09/using-emacs-to-insert-scc-annotations-in-haskell-code/
+;; SCC: set cost centre
+(defun toggle-scc-at-point (&optional arg)
+  "Insert or kill (with universal-argument) an SCC annotation at
+point."
+  (interactive "P")
+  (if (equal arg nil)
+      (insert-scc-at-point)
+    (kill-scc-at-point)))
+
+(defun insert-scc-at-point ()
+  "Insert an SCC annotation at point."
+  (interactive)
+  (if (or (looking-at "\\b\\|[ \t]\\|$") (and (not (bolp))
+                                              (save-excursion
+                                                (forward-char -1)
+                                                (looking-at "\\b\\|[ \t]"))))
+      (let ((space-at-point (looking-at "[ \t]")))
+        (unless (and (not (bolp)) (save-excursion
+                                    (forward-char -1)
+                                    (looking-at "[ \t]")))
+          (insert " "))
+        (insert "{-# SCC \"\" #-}")
+        (unless space-at-point
+          (insert " "))
+        (forward-char (if space-at-point -5 -6)))
+    (error "Not over an area of whitespace")))
+
+(defun kill-scc-at-point ()
+  "Kill the SCC annotation at point."
+  (interactive)
+  (save-excursion
+    (let ((old-point (point))
+          (scc "\\({-#[ \t]*SCC \"[^\"]*\"[ \t]*#-}\\)[ \t]*"))
+      (while (not (or (looking-at scc) (bolp)))
+        (forward-char -1))
+      (if (and (looking-at scc)
+               (<= (match-beginning 1) old-point)
+               (> (match-end 1) old-point))
+          (kill-region (match-beginning 0) (match-end 0))
+        (error "No SCC at point")))))
+
 ;;; misc
 (require 'yesod-devel-mode nil t)
 
@@ -239,3 +317,4 @@ See also`haskell-check'."
 
 
 (provide '50haskell)
+;;; 50haskell.el ends here
