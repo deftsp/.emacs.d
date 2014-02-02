@@ -17,7 +17,7 @@
 (require 'flx-ido nil t)
 (eval-after-load "flx-ido"
   '(progn
-     (setq flx-ido-threshhold 7500 ; see also gc-cons-threshold.
+     (setq flx-ido-threshhold 12000 ; see also gc-cons-threshold.
            ;; disable ido faces to see flx highlights.
            ido-use-faces t
            flx-ido-use-faces nil)
