@@ -10,12 +10,13 @@
 ;;; browser
 (setq browse-url-browser-function '(("file:.*/usr/local/share/gtk-doc/html" . w3m-goto-url-new-session)
                                     ("file:.*/usr/share/gtk-doc/html" . w3m-goto-url-new-session)
-                                    ;; I prefer external browser now
                                     ;; ("file:///usr/local/.*html" . w3m-goto-url-new-session)
-                                    ("." . browse-url-default-browser)))
-
-(setq browse-url-firefox-new-window-is-tab t
+                                    ;; for OS X: can't open urls with # https://github.com/areina/helm-dash/issues/36
+                                    ("file:.*\.docset/Contents/Resources/Documents/" . eww)
+                                    ("." . browse-url-default-browser))
+      browse-url-firefox-new-window-is-tab t
       browse-url-new-window-flag nil)
+
 
 (global-set-key (kbd "C-c C-o") 'browse-url-at-point)
 (global-set-key (kbd "C-c O") 'browse-url)
