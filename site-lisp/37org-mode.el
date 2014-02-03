@@ -299,26 +299,22 @@
 ;; I give a little update. execute recursive edit before pop a new window
 (defun pl/jump-to-org-agenda ()
   (interactive)
-  (let* ((buf (get-buffer "*Org Agenda*"))
-         (wind (get-buffer-window buf)))
-    (unless (window-minibuffer-p wind)
-     (if (and buf wind)
-         (select-window wind)
-       (save-window-excursion
-         (if buf
-             (if (called-interactively-p)
-                 (progn
-                   (select-window (display-buffer buf t t))
-                   (org-agenda-redo)
-                   (org-fit-window-to-buffer))
-               (with-selected-window (display-buffer buf)
-                 (org-agenda-redo)
-                 (org-fit-window-to-buffer)))
-           (call-interactively 'org-agenda-list))
-         (recursive-edit))))))
+  (let* ((buf-name (if (boundp 'org-agenda-buffer-name)
+                       org-agenda-buffer-name
+                     "*Org Agenda*"))
+         (buf (get-buffer buf-name))
+         (wind (and buf (get-buffer-window buf))))
+    (if wind
+        (with-selected-window wind
+          (org-agenda-redo)
+          (org-fit-window-to-buffer))
+      (if (called-interactively-p 'interactive)
+          (call-interactively 'org-agenda-list)
+        (save-window-excursion
+          (call-interactively 'org-agenda-list) (recursive-edit))))))
 
-;; every 30 minutes
-(run-with-idle-timer (* 30 60) t 'pl/jump-to-org-agenda)
+;; every 20 minutes
+(run-with-idle-timer (* 20 60) t 'pl/jump-to-org-agenda)
 
 ;;; Info directory
 (eval-after-load "info"
