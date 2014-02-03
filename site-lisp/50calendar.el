@@ -29,11 +29,35 @@
 ;;; Appointments
 (setq appt-display-diary t
       appt-display-duration 10
-      appt-display-format 'echo  ; use a separate window to remind appointments
+      appt-display-format 'window  ; use a separate window to remind appointments
       appt-message-warning-time 15 ; warn 15 min in advance
+      appt-display-interval 5
       appt-audible t ; beep to indicate appointment
       appt-display-mode-line t)
 (appt-activate 1)
+
+;; appointments notification
+;; http://article.gmane.org/gmane.emacs.orgmode/66151
+(defvar pl/terminal-notifier-bin "terminal-notifier")
+
+(defun pl/terminal-notification (title msg)
+  (if (executable-find pl/terminal-notifier-bin)
+      (shell-command (concat pl/terminal-notifier-bin " -message " msg " -title " title))
+    (message (format "unable to find: %s" pl/terminal-notifier-bin))))
+
+;; designate the window function for pl/appt-send-notification
+(defun pl/appt-display (min-to-app new-time msg)
+  (pl/terminal-notification
+    (format "'Appointment in %s minutes'" min-to-app)    ;; passed to -title in terminal-notifier call
+    (format "'%s'" msg)))                                ;; passed to -message in terminal-notifier call
+
+(if (eq system-type 'darwin)
+    (setq appt-disp-window-function #'pl/appt-display)
+  (setq appt-disp-window-function #'appt-disp-window))
+
+;; use grow to notification
+;; (defun pl/grow-appt-display (min-to-app new-time msg)
+;;   (growl (format "Appointment in %s minute(s)" min-to-app) msg t))
 
 
 (setq diary-date-forms '((year "/" month "/" day "[^/0-9]"))

@@ -183,27 +183,15 @@
 
 
 ;;; work with appt
-;; (org-agenda-to-appt)
 (defun pl/org-agenda-to-appt ()
+  (setq appt-time-msg-list nil)
   ;; Dangerous!!! do not use `appt-add', this might remove entries added by `appt-add' manually.
   (org-agenda-to-appt t "TODO"))
 ;; update appt
-(run-at-time "24:01" (* 0.5 60 60) 'pl/org-agenda-to-appt) ;; update every half hour
-
-
+(run-at-time "24:01" (* 0.5 60 60) 'pl/org-agenda-to-appt) ;; update every half an hour
 
 ;; update appt each time agenda opened
-(add-hook 'org-agenda-finalize-hook 'org-agenda-to-appt)
-
-;; use grow to notification
-(defun pl/grow-appt-display (min-to-app new-time msg)
-  (growl (format "Appointment in %s minute(s)" min-to-app) msg t))
-
-(if (eq system-type 'darwin)
-    (setq appt-disp-window-function (function pl/grow-appt-display))
-    (setq appt-disp-window-function (function appt-disp-window)))
-
-
+(add-hook 'org-agenda-finalize-hook 'pl/org-agenda-to-appt)
 
 ;;;
 (setq org-fontify-emphasized-text t
