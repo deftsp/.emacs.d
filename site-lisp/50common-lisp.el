@@ -2,15 +2,19 @@
 
 ;;; http://common-lisp.net/project/clbuild/
 ;; $ clbuild slime-configuration
-(add-to-list 'load-path "~/opt/clbuild2/source/slime/")
-(add-to-list 'load-path "~/opt/clbuild2/source/slime/contrib")
-
-(require 'slime)
+;; (add-to-list 'load-path "~/opt/clbuild2/source/slime/")
+;; (add-to-list 'load-path "~/opt/clbuild2/source/slime/contrib")
+(add-to-list 'load-path "~/.emacs.d/lisp/slime")
+(add-to-list 'load-path "~/.emacs.d/lisp/slime/contrib")
+(require 'slime-autoloads)
 
 ;;;  contribs
 ;; slime-js conflict with swank-fack see more https://github.com/swank-js/swank-js/issues/40
 ;; (slime-setup '(slime-fancy slime-asdf slime-tramp slime-js slime-repl slime-autodoc))
-(slime-setup '(slime-asdf slime-tramp slime-js slime-repl slime-fuzzy))
+;; (slime-setup '(slime-asdf slime-tramp slime-js slime-repl slime-fuzzy))
+;; When SLIME is loaded it loads the contribs you set up before in slime-contribs. You can use the command slime-setup
+;; to reload contribs.
+(setq slime-contribs '(slime-asdf slime-tramp slime-js slime-repl slime-fuzzy))
 (eval-after-load "slime"
   '(setq inferior-lisp-program "~/opt/clbuild2/clbuild lisp"
          slime-protocol-version 'ignore ; remove annoying warning
@@ -47,22 +51,22 @@
 ;; You can switch the "active" REPL using the command C-c C-x c. For more info, see the Slime
 ;; Documentation on controlling multiple connections
 ;; (http://common-lisp.net/project/slime/doc/html/Multiple-connections.html#Multiple-connections).
-(mapcar (lambda (lst) (add-to-list 'slime-lisp-implementations lst))
-        '((sbcl ("~/opt/clbuild2/clbuild" "--implementation" "sbcl" "lisp") :coding-system utf-8-unix)
-          (sbcl.core ("sbcl" "--core" "sbcl.core-with-swank")
-                     :init (lambda (port-file _)
-                             (format
-                              "(swank:start-server %S :coding-system \"utf-8-unix\")\n"
-                              port-file))
-                     :coding-system utf-8-unix)
-          (cmucl ("lisp"))
-          (clozure ("~/opt/clbuild2/clbuild" "--implementation" "ccl" "lisp")) ; "/usr/local/bin/ccl64 -K utf-8"
-          (ecl ("ecl"))
-          (allegro ("/usr/local/stow/AllegroCL/alisp"))
-          (clisp ("clisp") :coding-system utf-8-unix)
-          (lispworks (""))
-          (openmcl ("dx86cl64"))))
-
+(eval-after-load "slime"
+  '(mapcar (lambda (lst) (add-to-list 'slime-lisp-implementations lst))
+           '((sbcl ("~/opt/clbuild2/clbuild" "--implementation" "sbcl" "lisp") :coding-system utf-8-unix)
+             (sbcl.core ("sbcl" "--core" "sbcl.core-with-swank")
+                        :init (lambda (port-file _)
+                                (format
+                                 "(swank:start-server %S :coding-system \"utf-8-unix\")\n"
+                                 port-file))
+                        :coding-system utf-8-unix)
+             (cmucl ("lisp"))
+             (clozure ("/usr/local/bin/ccl")) ; "/usr/local/bin/ccl64 -K utf-8"
+             (ecl ("ecl"))
+             (allegro ("/usr/local/stow/AllegroCL/alisp"))
+             (clisp ("clisp") :coding-system utf-8-unix)
+             (lispworks (""))
+             (openmcl ("dx86cl64")))))
 
 (defmacro defslime-start (name mapping)
   `(defun ,name ()
@@ -183,8 +187,13 @@ currently under the cursor."
 ;;     (define-key lisp-mode-map [tab] 'lisp-indent-or-complete)))
 
 ;; (define-key slime-mode-map (kbd "C-c I") 'slime-inspect)
-(define-key slime-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)
-(define-key slime-repl-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)
+
+(eval-after-load "slime"
+'(progn
+   (define-key slime-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)))
+
+(eval-after-load "slime-repl"
+  '(define-key slime-repl-mode-map (kbd "C-c h") 'slime-hyperspec-lookup))
 
 ;;; stumpwm
 (defun stumpwm ()
@@ -218,3 +227,4 @@ currently under the cursor."
 
 
 (provide '50common-lisp)
+;;; 50common-lisp.el ends here

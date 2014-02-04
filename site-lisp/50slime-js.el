@@ -7,11 +7,11 @@
 
 ;;; install
 ;; npm install swank-js
-;; M-x el-get-install slime-js
+;; M-x el-get-install swank-js
 
-(require 'slime)
-(require 'slime-js)
-(require 'js2-refactor)
+;; (require 'slime)
+;; (require 'slime-js)
+;; (require 'js2-refactor)
 
 ;; (set-default 'slime-js-connect-url "http://localhost:8009")
 ;; (set-default 'slime-js-starting-url "/")
@@ -20,7 +20,11 @@
 ;; (set-default 'slime-js-browser-command "open -a \"Google Chrome\"")
 ;; (set-default 'slime-js-browser-jacked-in-p nil)
 
-(define-key slime-js-minor-mode-map [f5] 'slime-js-reload)
+(eval-after-load "slime-js"
+  '(progn
+     (define-key slime-js-minor-mode-map (kbd "C-x C-e") 'slime-js-eval-current)
+     (define-key slime-js-minor-mode-map (kbd "C-c C-e") 'slime-js-eval-and-replace-current)
+     (define-key slime-js-minor-mode-map [f5] 'slime-js-reload)))
 
 (defun pl/slime-js-run-swank ()
   "Runs the swank side of the equation."
@@ -101,9 +105,6 @@
       (slime-js-eval-region (point) (mark) 'slime-js--replace-with-result)
       (slime-js-eval-statement 'slime-js--replace-with-result)))
 
-(define-key slime-js-minor-mode-map (kbd "C-x C-e") 'slime-js-eval-current)
-(define-key slime-js-minor-mode-map (kbd "C-c C-e") 'slime-js-eval-and-replace-current)
-
 
 ;;; work with js2-mode
 (defun pl/enable-slime-js-minor-mode ()
@@ -122,18 +123,16 @@
   '(progn
     (add-hook 'css-mode-hook 'pl/slime-js-css-setup)))
 
-
 ;; Remove slime-minor-mode from mode line if diminish.el is installed
 (when (boundp 'diminish)
   (diminish 'slime-js-minor-mode))
 
-
 ;;; ac-slime
 ;; https://github.com/purcell/ac-slime
-(when (fboundp 'set-up-slime-ac)
-  (add-hook 'slime-mode-hook 'set-up-slime-ac)
-  (add-hook 'slime-repl-mode-hook 'set-up-slime-ac))
-
+(eval-after-load "slime"
+'(when (fboundp 'set-up-slime-ac)
+   (add-hook 'slime-mode-hook 'set-up-slime-ac)
+   (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)))
 
 (provide '50slime-js)
 ;;; 50slime-js.el ends here
