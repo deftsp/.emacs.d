@@ -150,6 +150,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
   "cs"  'pl/evil-change-symbol-in-defun
   "ch"  'crosshairs-mode
   "D"   'dired-jump
+  "dp"  'dash-at-point
+  "dP"  'dash-at-point-with-docset
   "ff"  'pl/toggle-full-window
   "fc"  'flycheck-buffer
   "fC"  'flycheck-clear
