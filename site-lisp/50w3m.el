@@ -12,7 +12,7 @@
                                     ("file:.*/usr/share/gtk-doc/html" . w3m-goto-url-new-session)
                                     ;; ("file:///usr/local/.*html" . w3m-goto-url-new-session)
                                     ;; for OS X: can't open urls with # https://github.com/areina/helm-dash/issues/36
-                                    ("file:.*\.docset/Contents/Resources/Documents/" . eww)
+                                    ("file:.*\.docset/Contents/Resources/Documents/" . w3m-goto-url-new-session)
                                     ("." . browse-url-default-browser))
       browse-url-firefox-new-window-is-tab t
       browse-url-new-window-flag nil)
