@@ -51,21 +51,21 @@
   (blink-cursor-mode -1))
 
 ;;; update cursor color according to mode
-(defvar pl/lastest-cursor-color "")
-(defvar pl/lastest-update-cursor-color-buffer "")
-(defun pl/update-cursor-color-according-to-mode ()
-  "change cursor color according to some minor modes."
-  ;; set-cursor-color is somewhat costly, so we only call it when needed:
-  (let ((color
-         (if buffer-read-only "DodgerBlue"
-           (if overwrite-mode
-               "yellow" "#cd0000"))))
-    (unless (and
-             (string= color pl/lastest-cursor-color)
-             (string= (buffer-name) pl/lastest-update-cursor-color-buffer))
-      (set-cursor-color (setq pl/lastest-cursor-color color))
-      (setq pl/lastest-update-cursor-color-buffer (buffer-name)))))
-(add-hook 'post-command-hook 'pl/update-cursor-color-according-to-mode)
-
+;; alternative http://www.emacswiki.org/emacs/cursor-chg.el
+;; (defvar pl/lastest-cursor-color "")
+;; (defvar pl/lastest-update-cursor-color-buffer "")
+;; (defun pl/update-cursor-color-according-to-mode ()
+;;   "change cursor color according to some minor modes."
+;;   ;; set-cursor-color is somewhat costly, so we only call it when needed:
+;;   (let ((color
+;;          (if buffer-read-only "DodgerBlue"
+;;            (if overwrite-mode
+;;                "yellow" "#cd0000"))))
+;;     (unless (and
+;;              (string= color pl/lastest-cursor-color)
+;;              (string= (buffer-name) pl/lastest-update-cursor-color-buffer))
+;;       (set-cursor-color (setq pl/lastest-cursor-color color))
+;;       (setq pl/lastest-update-cursor-color-buffer (buffer-name)))))
+;; (add-hook 'post-command-hook 'pl/update-cursor-color-according-to-mode)
 
 (provide '99face)
