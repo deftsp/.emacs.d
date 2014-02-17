@@ -35,33 +35,33 @@
 
 (setq org-todo-interpretation 'sequence ; or 'type
       org-use-fast-todo-selection t
-      org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "DELEGATED(l)" "APPT(a)" "|"
-                                    "DONE(d)" "DEFERRED(f)" "CANCELLED(c@)")
+      org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "DELEGATED(l)" "APPT(a)" "|" "DONE(d)" "DEFERRED(f)" "CANCELLED(c@)")
                           (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
                           (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
                           (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))
-      org-todo-keyword-faces (quote (("TODO" :foreground "red" :weight bold)
-                                     ("STARTED" :foreground "blue" :weight bold)
-                                     ("DONE" :foreground "forest green" :weight bold :strike-through t)
-                                     ("WAITING" :foreground "orange" :weight bold)
-                                     ("SOMEDAY" :foreground "magenta" :weight bold)
+      org-todo-keyword-faces (quote (("TODO"      :foreground "red"          :weight bold)
+                                     ("STARTED"   :foreground "blue"         :weight bold)
+                                     ("DONE"      :foreground "forest green" :weight bold :strike-through t)
+                                     ("WAITING"   :foreground "orange"       :weight bold)
+                                     ("SOMEDAY"   :foreground "magenta"      :weight bold)
                                      ("CANCELLED" :foreground "forest green" :weight bold)
-                                     ("QUOTE" :foreground "red" :weight bold)
-                                     ("QUOTED" :foreground "magenta" :weight bold)
-                                     ("APPROVED" :foreground "forest green" :weight bold)
-                                     ("EXPIRED" :foreground "forest green" :weight bold)
-                                     ("REJECTED" :foreground "forest green" :weight bold)
-                                     ("OPEN" :foreground "blue" :weight bold)
-                                     ("PROJECT" :foreground "red" :weight bold)))
-      org-tag-alist '((:startgroup . nil) ("@office" . ?o) ("@home" . ?h) ("@shopping" . ?s) ("@tennisclub" . ?t) (:endgroup . nil)
-                      (:startgroup . nil) ("Online" . ?O) ("Offline" . ?F) (:endgroup . nil)
-                      (:startgroup . nil) ("Business" . ?B) ("Personal" . ?P) (:endgroup . nil)
-                      ("PROJECT" . ?p)
-                      ("READING" . ?R)
-                      ("MAIL" . ?M)
-                      ("WORK" . ?w)
-                      ("DRILL" . ?d)))
-
+                                     ("QUOTE"     :foreground "red"          :weight bold)
+                                     ("QUOTED"    :foreground "magenta"      :weight bold)
+                                     ("APPROVED"  :foreground "forest green" :weight bold)
+                                     ("EXPIRED"   :foreground "forest green" :weight bold)
+                                     ("REJECTED"  :foreground "forest green" :weight bold)
+                                     ("OPEN"      :foreground "blue"         :weight bold)
+                                     ("PROJECT"   :foreground "red"          :weight bold)))
+      org-tag-persistent-alist '((:startgroup . nil) ("@OFFICE" . ?o) ("@HOME" . ?h) ("@SHOPPING" . ?s) ("@TENNISCLUB" . ?t) (:endgroup . nil)
+                                 (:startgroup . nil) ("ONLINE" . ?O) ("OFFLINE" . ?F) (:endgroup . nil)
+                                 (:startgroup . nil) ("BUSINESS" . ?B) ("PERSONAL" . ?P) (:endgroup . nil)
+                                 ("DRILL"   . ?d)
+                                 ("HACKING" . ?H)
+                                 ("MAIL"    . ?M)
+                                 ("MOVIE"   . nil)
+                                 ("MISC"    . ?m)
+                                 ("READING" . ?r))
+      org-tag-alist '(("PROJECT" . ?p)))
 
 (setq org-agenda-custom-commands
       '(("A" agenda "Today's Priority #A tasks"
@@ -166,7 +166,7 @@
 ;;;; Capture
 ;; (define-key global-map "\C-cc" 'org-capture) ; instead of key chord ",c"
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/proj/org/GTD.org" "Tasks")
+      '(("t" "Todo" entry (file+headline "~/proj/org/GTD.org" "Inbox")
          "* TODO %?\n  %i%u"
          :kill-buffer t)
         ("j" "Journal" entry (file+datetree "~/proj/org/journal.org")
@@ -197,6 +197,12 @@
 (setq org-fontify-emphasized-text t
       org-fontify-done-headline t)
 
+;;; clock
+;; To save the clock history across Emacs sessions
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+
+(setq org-clock-into-drawer t)
 
 ;;; org-publish
 (setq org-publish-project-alist
@@ -243,6 +249,7 @@
 (setq org-drill-maximum-items-per-session 40)
 (setq org-drill-maximum-duration 25)   ; 25 minutes
 (setq org-drill-scope 'directory)
+(setq org-drill-question-tag "DRILL")
 
 ;; keybinding conflicts with icicles keys
 ;; (org-defkey org-mode-map (kbd "C-c C-'") 'org-edit-special)
