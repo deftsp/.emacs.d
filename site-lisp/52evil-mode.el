@@ -17,6 +17,10 @@
   `((t (:weight bold :foreground "OliveDrab1")))
   "Evil insert mode indicator face")
 
+(defface pl/evil-replace-tag
+  `((t (:weight bold :foreground "orchid")))
+  "Evil replace mode indicator face")
+
 (defface pl/evil-emacs-tag
   `((t (:weight bold :foreground "#7cfa42")))
   "Evil emacs mode indicator face")
@@ -30,7 +34,7 @@
   "Evil motion mode indicator face")
 
 (defface pl/evil-operator-tag
-  `((t (:weight bold :foreground "PaleTurquoise")))
+  `((t (:weight bold :foreground "maroon")))
   "Evil operator mode indicator face")
 
 
@@ -43,15 +47,15 @@
       evil-motion-state-tag   (propertize "« M »" 'face 'pl/evil-motion-tag)
       evil-visual-state-tag   (propertize "« ∞ »" 'face 'pl/evil-visual-tag)
       evil-operator-state-tag (propertize "« O »" 'face 'pl/evil-operator-tag)
+      evil-replace-state-tag  (propertize "« R »" 'face 'pl/evil-replace-tag)
 
-      evil-emacs-state-cursor    nil
+      evil-emacs-state-cursor    `(box    ,(face-attribute 'pl/evil-emacs-tag    :foreground))
       evil-normal-state-cursor   `(box    ,(face-attribute 'pl/evil-normal-tag   :foreground))
       evil-insert-state-cursor   `(box    ,(face-attribute 'pl/evil-insert-tag   :foreground))
       evil-motion-state-cursor   `(box    ,(face-attribute 'pl/evil-motion-tag   :foreground))
       evil-visual-state-cursor   `(hollow ,(face-attribute 'pl/evil-visual-tag   :foreground))
-      evil-replace-state-cursor  '(hbar "red")
+      evil-replace-state-cursor  `(hbar   ,(face-attribute 'pl/evil-replace-tag  :foreground))
       evil-operator-state-cursor `(hollow ,(face-attribute 'pl/evil-operator-tag :foreground)))
-
 
 ;; Getting :n[ew] to work
 ;; As of this writing, Evil does not allow you to shorten ':new' to ':n', but you can define a command that does.
