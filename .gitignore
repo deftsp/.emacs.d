@@ -84,3 +84,4 @@ workgroups
 /orgcard.txt
 /custom.el
 /.erc-pass
+/org-clock-save.el
