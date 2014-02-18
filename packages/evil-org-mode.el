@@ -1,16 +1,17 @@
 ;;; evil-org-mode.el ---
 
-;; Copyright (C) 2013  Shihpin Tseng
+;; Copyright (C) 2014  Shihpin Tseng
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
+;;; Code:
 (require 'evil)
 (require 'org)
 
 (defun always-insert-item ()
-  (if (not (org-in-item-p))
-      (insert "\n- ")
-    (org-insert-item)))
+  (if (org-insert-item)
+      (org-insert-item)
+    (insert "\n- ")))
 
 (defun evil-org-eol-call (fun)
   (end-of-line)
@@ -43,11 +44,11 @@
            'org-backward-same-level
          'org-backward-heading-same-level)
   "gl" 'outline-next-visible-heading
+  ;; "o" '(lambda () (interactive) (evil-org-eol-call 'always-insert-item))
+  ;; "O" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading))
   "t" 'org-todo
   "T" '(lambda () (interactive) (evil-org-eol-call '(org-insert-todo-heading nil)))
-  ",t" 'org-show-todo-tree
-  "o" '(lambda () (interactive) (evil-org-eol-call 'always-insert-item))
-  "O" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading)))
+  ",t" 'org-show-todo-tree)
 
 
 ;; normal & insert state shortcuts.
@@ -61,11 +62,11 @@
             (kbd "M-H") 'org-shiftmetaleft
             (kbd "M-K") 'org-shiftmetaup
             (kbd "M-J") 'org-shiftmetadown
-            (kbd "M-o") '(lambda () (interactive)
-                           (evil-org-eol-call
-                            '(lambda()
-                               (org-insert-heading)
-                               (org-metaright))))
+            ;; (kbd "M-o") '(lambda () (interactive)
+            ;;                (evil-org-eol-call
+            ;;                 '(lambda()
+            ;;                    (org-insert-heading)
+            ;;                    (org-metaright))))
             (kbd "M-t") '(lambda () (interactive)
                            (evil-org-eol-call
                             '(lambda()
