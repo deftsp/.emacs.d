@@ -2,12 +2,12 @@
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
 
 ;; FIXME: if not use build in cc-mode, `TAB' will be bound to `c-indent-command', not `c-indent-line-or-region'
-;; (let ((cc-mode-dir (expand-file-name "~/.emacs.d/lisp/cc-mode")))
+;; (let ((cc-mode-dir (expand-file-name "~/.emacs.d/site-lisp/cc-mode")))
 ;;   (when (file-directory-p cc-mode-dir)
 ;;     (add-to-list 'load-path cc-mode-dir)))
 
 ;; (eval-after-load "info"
-;;   '(pushnew (expand-file-name "~/.emacs.d/lisp/cc-mode") Info-default-directory-list :test #'equal))
+;;   '(pushnew (expand-file-name "~/.emacs.d/site-lisp/cc-mode") Info-default-directory-list :test #'equal))
 
 (eval-after-load "cc-mode"
   '(progn

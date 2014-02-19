@@ -10,7 +10,7 @@
 
 ;; make EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs -Q -batch " all
 
-(add-to-list 'load-path (file-name-as-directory "~/.emacs.d/lisp/helm/"))
+(add-to-list 'load-path (file-name-as-directory "~/.emacs.d/site-lisp/helm/"))
 (require 'helm-config)
 ;; (helm-mode 1) ; use ido everywhere instead
 

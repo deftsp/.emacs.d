@@ -5,8 +5,8 @@
 ;; Keywords:
 
 ;;; Code:
-;; (add-to-list 'load-path "~/.emacs.d/lisp/haskell-mode/")
-;; (add-to-list 'Info-default-directory-list "~/.emacs.d/lisp/haskell-mode/")
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/haskell-mode/")
+;; (add-to-list 'Info-default-directory-list "~/.emacs.d/site-lisp/haskell-mode/")
 ;; (require 'haskell-mode-autoloads)
 
 (defvar pl/haskell-mode-doc-map nil
@@ -213,7 +213,7 @@ See also`haskell-check'."
 ;; git clone git@github.com:chrisdone/structured-haskell-mode.git
 ;; $ cd structured-haskell-mode
 ;; $ cabal install
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/structured-haskell-mode/elisp"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/structured-haskell-mode/elisp"))
 (require 'shm nil t)
 (if (fboundp 'structured-haskell-mode)
     (add-hook 'haskell-mode-hook 'structured-haskell-mode))

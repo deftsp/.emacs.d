@@ -6,7 +6,7 @@
 
 ;;; Lua mode
 
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/lisp/mobdebug-mode"))
+(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/mobdebug-mode"))
 
 (eval-after-load "lua-mode"
   '(progn

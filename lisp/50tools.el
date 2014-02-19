@@ -1131,7 +1131,7 @@ such character is found, following options are shown:
 
 ;;; cclookup
 ;; add cclookup to your loadpath, ex) ~/.emacs.d/cclookup
-(setq cclookup-dir "~/.emacs.d/lisp/cclookup")
+(setq cclookup-dir "~/.emacs.d/site-lisp/cclookup")
 (add-to-list 'load-path cclookup-dir)
 
 ;; load cclookup when compile time

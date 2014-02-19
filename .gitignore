@@ -1,6 +1,6 @@
 *~
 *.elc
-lisp/
+site-lisp/
 elpa/
 ede-projects.el
 private-ede-projects.el

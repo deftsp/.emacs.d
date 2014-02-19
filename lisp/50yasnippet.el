@@ -9,7 +9,7 @@
 (eval-after-load "yasnippet"
   '(progn
      (setq yas/snippet-dirs `(,(expand-file-name "~/.emacs.d/snippets")
-                              ,(expand-file-name "~/.emacs.d/lisp/yasnippet-go")))
+                              ,(expand-file-name "~/.emacs.d/site-lisp/yasnippet-go")))
      ;; Initialize Yasnippet
      ;; Don't map TAB to yasnippet
      ;; In fact, set it to something we'll never use because

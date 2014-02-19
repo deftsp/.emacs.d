@@ -6,8 +6,8 @@
 ;; Keywords:
 
 ;;; Install
-(add-to-list 'load-path "~/.emacs.d/lisp/org-mode/lisp")
-(add-to-list 'load-path "~/.emacs.d/lisp/org-mode/contrib/lisp" t)
+(add-to-list 'load-path "~/.emacs.d/site-lisp/org-mode/lisp")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/org-mode/contrib/lisp" t)
 ;; $ git pull
 ;; $ make autoloads EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
 ;; $ make EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
@@ -321,7 +321,7 @@
 
 ;;; Info directory
 (eval-after-load "info"
-  '(add-to-list 'Info-directory-list "~/.emacs.d/lisp/org-mode/doc"))
+  '(add-to-list 'Info-directory-list "~/.emacs.d/site-lisp/org-mode/doc"))
 
 ;;; org-mac-protocol
 (when window-system

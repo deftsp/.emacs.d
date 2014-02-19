@@ -214,6 +214,6 @@
 ;;; info
 ;; TODO: auctex doc directory have no dir file
 (eval-after-load "info"
-  '(add-to-list 'Info-directory-list "~/.emacs.d/lisp/auctex/doc"))
+  '(add-to-list 'Info-directory-list "~/.emacs.d/site-lisp/auctex/doc"))
 
 (provide '50tex)

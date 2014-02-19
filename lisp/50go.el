@@ -9,7 +9,7 @@
 ;; "C-c C-j" godef-jump
 ;; "C-c C-d" godef-describe
 
-(add-to-list 'load-path "~/.emacs.d/lisp/go-errcheck.el")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/go-errcheck.el")
 (add-to-list 'load-path "~/opt/go-packages/src/github.com/nsf/gocode/emacs")
 (add-to-list 'load-path "~/opt/go-packages/src/github.com/dougm/goflymake")
 

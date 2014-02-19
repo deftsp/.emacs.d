@@ -21,7 +21,7 @@
 
 ;;; Install bzr vesion
 ;; Note: don't add cedet directory recursive, it'll cause strange problem
-(defvar pl/cedet-root-path (file-name-as-directory "~/.emacs.d/lisp/cedet/"))
+(defvar pl/cedet-root-path (file-name-as-directory "~/.emacs.d/site-lisp/cedet/"))
 (load-file (concat pl/cedet-root-path "cedet-devel-load.el"))
 (load-file (concat pl/cedet-root-path "contrib/cedet-contrib-load.el"))
 
@@ -224,7 +224,7 @@
   "`cedet' settings for `info'."
   (info-initialize)
   (dolist (package `("cogre" "common" "ede" "eieio" "semantic/doc" "speedbar" "srecode"))
-    (add-to-list 'Info-default-directory-list (concat "~/.emacs.d/lisp/cedet/" package "/"))))
+    (add-to-list 'Info-default-directory-list (concat "~/.emacs.d/site-lisp/cedet/" package "/"))))
 
 (eval-after-load "info"
   `(cedet-settings-4-info))

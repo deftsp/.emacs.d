@@ -37,7 +37,7 @@
 (defvar user-package-directory (concat user-emacs-directory "packages/"))
 
 (add-to-list 'load-path user-package-directory)
-(add-to-list 'load-path "~/.emacs.d/site-lisp/")
+(add-to-list 'load-path "~/.emacs.d/lisp/")
 
 
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)

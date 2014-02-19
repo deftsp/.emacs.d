@@ -5,7 +5,7 @@
 ;; ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 
-(add-to-list 'load-path "~/.emacs.d/lisp/icicles/")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/icicles/")
 (require 'icicles)
 
 (setq icicle-show-Completions-initially-flag nil

@@ -4,8 +4,8 @@
 ;; $ clbuild slime-configuration
 ;; (add-to-list 'load-path "~/opt/clbuild2/source/slime/")
 ;; (add-to-list 'load-path "~/opt/clbuild2/source/slime/contrib")
-(add-to-list 'load-path "~/.emacs.d/lisp/slime")
-(add-to-list 'load-path "~/.emacs.d/lisp/slime/contrib")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/slime")
+(add-to-list 'load-path "~/.emacs.d/site-lisp/slime/contrib")
 (require 'slime-autoloads)
 
 ;;;  contribs
