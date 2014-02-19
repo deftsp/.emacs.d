@@ -85,3 +85,4 @@ workgroups
 /custom.el
 /.erc-pass
 /org-clock-save.el
+flycheck_*.el

@@ -40,7 +40,7 @@
                           (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
                           (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))
       org-todo-keyword-faces (quote (("TODO"      :foreground "red"          :weight bold)
-                                     ("STARTED"   :foreground "blue"         :weight bold)
+                                     ("STARTED"   :foreground "hot pink"   :weight bold)
                                      ("DONE"      :foreground "forest green" :weight bold :strike-through t)
                                      ("WAITING"   :foreground "orange"       :weight bold)
                                      ("SOMEDAY"   :foreground "magenta"      :weight bold)
@@ -50,7 +50,7 @@
                                      ("APPROVED"  :foreground "forest green" :weight bold)
                                      ("EXPIRED"   :foreground "forest green" :weight bold)
                                      ("REJECTED"  :foreground "forest green" :weight bold)
-                                     ("OPEN"      :foreground "blue"         :weight bold)
+                                     ("OPEN"      :foreground "deep pink"  :weight bold)
                                      ("PROJECT"   :foreground "red"          :weight bold)))
       org-tag-persistent-alist '((:startgroup . nil) ("@OFFICE" . ?o) ("@HOME" . ?h) ("@SHOPPING" . ?s) ("@TENNISCLUB" . ?t) (:endgroup . nil)
                                  (:startgroup . nil) ("ONLINE" . ?O) ("OFFLINE" . ?F) (:endgroup . nil)
@@ -63,52 +63,61 @@
                                  ("READING" . ?r))
       org-tag-alist '(("PROJECT" . ?p)))
 
-(setq org-agenda-custom-commands
-      '(("A" agenda "Today's Priority #A tasks"
+(eval-after-load "org"
+  '(setq org-agenda-custom-commands
+      `(("A" agenda "Today's Priority #A tasks"
          ((org-agenda-skip-function
-           (lambda nil
-             (org-agenda-skip-entry-if (quote notregexp) "\\=.*\\[#A\\]")))
-          (org-agenda-span 'week)
+           '(org-agenda-skip-entry-if 'notregexp "\\=.*\\[#A\\]"))
+          (org-agenda-span 'day)
           (org-agenda-overriding-header "Today's Priority #A tasks: ")))
-        ("c" todo "DONE|DEFERRED|CANCELLED" nil)
-        ("d" todo "DELEGATED" nil)
+
+        ("B" agenda "Today's Priority #B tasks"
+         ((org-agenda-skip-function
+           '(org-agenda-skip-entry-if 'notregexp "\\=.*\\[#B\\]"))
+          (org-agenda-span 'day)
+          (org-agenda-overriding-header "Today's Priority #B tasks: ")))
+
+        ("C" agenda "Today's Priority #C tasks"
+         ((org-agenda-skip-function
+           '(org-agenda-skip-entry-if 'notregexp "\\=.*\\[#C\\]"))
+          (org-agenda-span 'day)
+          (org-agenda-overriding-header "Today's Priority #B tasks: ")))
+
+        ("c" todo "DONE|DEFERRED|CANCELLED") ; not include scheduled TODO entiries
+
+        ("d" todo "DELEGATED")
+
         ;; to create a sparse tree (again: current buffer only) with all entries containing the word `FIXME'.
         ("f" occur-tree "\\<FIXME\\>")
+
         ("g" "GeekTool Agenda" ((agenda ""))
          ((org-agenda-todo-keyword-format "%-11s")
           (org-agenda-prefix-format "  %-10T%?-16t% s")
           (org-agenda-show-inherited-tags nil)
           (org-agenda-remove-tags 'prefix)
           (org-agenda-tags-column 70))
-         ("~/proj/org/Agenda.txt"))
+         (,(concat org-directory  "/Agenda.txt")))
+
         ("h" "Daily habits"
          ((agenda ""))
          ((org-agenda-show-log t)
           (org-agenda-span 'week)
           (org-agenda-log-mode-items '(state))
           (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":DAILY:"))))
-        ("m" tags "PROJECT&MAYBE" nil)
-        ("p" tags "PROJECT-MAYBE-DONE" nil)
-        ("P" todo "PROJECT-MAYBE-DONE" nil)
+
+        ("p" tags "PROJECT-DONE")
+
         ("u" alltodo "Unscheduled TODO entries"
          ((org-agenda-skip-function
-           (lambda nil
-             (org-agenda-skip-entry-if (quote scheduled) (quote deadline)
-                                       (quote regexp) "<[^>\n]+>")))
+           '(org-agenda-skip-entry-if 'scheduled 'deadline 'regexp "<[^>\n]+>"))
           (org-agenda-overriding-header "Unscheduled TODO entries: ")))
-        ("w" todo "WAITING" nil)
-        ;; ("W" todo-tree "WAITING")
-        ("W" agenda "agenda for 21 days" ((org-agenda-span 21)))
-        ;; ("G" "Geektool agenda" ((agenda "") (alltodo))
-        ;;  ((org-agenda-span 'day) (org-deadline-warning-days 7))
-        ;;  ("~/proj/org/Agenda.txt"))
-
-        ))
+        ("w" todo "WAITING" )
+        ("W" todo-tree "WAITING"))))
 
 (setq org-special-ctrl-a/e t
       org-cycle-separator-lines 2
       org-cycle-include-plain-lists t
-      org-directory "~/proj/org"
+      org-directory "~/org"
       org-archive-location "%s_archive::"
       org-hide-leading-stars t
       org-log-done 'time
@@ -150,13 +159,12 @@
 
 ;;; for MobileOrg
 ;; Set to the name of the file where new notes will be stored
-(setq org-mobile-inbox-for-pull "~/proj/org/from-mobile.org")
-;; Set to <your Dropbox root directory>/MobileOrg.
-(setq org-mobile-directory "~/Dropbox/Apps/MobileOrg")
-;; Enable encryption
-(setq org-mobile-use-encryption nil)
-;; Set a password
-(setq org-mobile-encryption-password "")
+(eval-after-load "org"
+  '(progn
+     (setq org-mobile-inbox-for-pull (concat org-directory  "/from-mobile.org")
+           org-mobile-directory "~/Dropbox/Apps/MobileOrg" ; Set to <your Dropbox root directory>/MobileOrg.
+           org-mobile-use-encryption nil
+           org-mobile-encryption-password "")))
 
 ;; (setq org-stuck-projects '("+LEVEL=2/-DONE"
 ;;                            ("TODO" "NEXT" "NEXTACTION")
@@ -166,13 +174,13 @@
 ;;;; Capture
 ;; (define-key global-map "\C-cc" 'org-capture) ; instead of key chord ",c"
 (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/proj/org/GTD.org" "Inbox")
+      '(("t" "Todo" entry (file+headline "~/org/GTD.org" "Inbox")
          "* TODO %?\n  %i%u"
          :kill-buffer t)
-        ("j" "Journal" entry (file+datetree "~/proj/org/journal.org")
+        ("j" "Journal" entry (file+datetree "~/org/journal.org")
          "* %?\n  %U\n"
          :kill-buffer t)
-        ("J" "Journal with Annotation" entry (file+datetree "~/proj/org/journal.org")
+        ("J" "Journal with Annotation" entry (file+datetree "~/org/journal.org")
          "* %?\n  %U\n  %i\n  %a"
          :kill-buffer t)
         ("m" "Memo" plain (file (concat org-directory (format-time-string "%Y%m%d-%H%M%S.org")))
@@ -229,7 +237,7 @@
          :auto-preamble t)
 
         ("other"
-         :base-directory "~/proj/org/notebook/"
+         :base-directory "~/Lab/notebook/"
          :base-extension "css\\|el"
          :publishing-directory "/ssh:user@host:~/html/other/")
         ("homepage" :components ("orgfiles"))))
