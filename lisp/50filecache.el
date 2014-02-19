@@ -18,8 +18,8 @@
 ;; define dirs for cacheing file dirs
 ;; see http://www.emacswiki.org/cgi-bin/wiki/FileNameCache for more tricks with this...
 
-(defvar pl/file-cache-dirs '("~/" "/etc/" "~/.emacs.d/site-lisp/" "~/Downloads/"))
-(defvar pl/file-cache-recursive-dirs '("~/proj"))
+(defvar pl/file-cache-dirs '("~/" "/etc/" "~/.emacs.d/lisp/" "~/Downloads/"))
+(defvar pl/file-cache-recursive-dirs '("~/Lab/notebook"))
 
 (defun pl/filecache-add-files ()
   (ignore-errors (file-cache-add-directory-list pl/file-cache-dirs)
