@@ -49,6 +49,7 @@
 (global-set-key (kbd "C-x G") 'magit-status)
 (eval-after-load "magit"
   '(progn
+     (add-to-list 'magit-repo-dirs "~/.emacs.d") ; C-u C-u M-x magit-status will ignore it
      (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
      (setq magit-completing-read-function 'magit-ido-completing-read)))
 
