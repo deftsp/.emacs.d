@@ -108,6 +108,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;;; ace jump mode
 (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
 (define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-char-mode)
+(define-key evil-visual-state-map (kbd "SPC") 'ace-jump-mode)
+(define-key evil-visual-state-map (kbd "S-SPC") 'ace-jump-char-mode)
 
 ;;;
 (define-key evil-normal-state-map (kbd "C-o") 'pl/open-line-with-indent) ; default evil-jump-backward
