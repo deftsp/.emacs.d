@@ -135,6 +135,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-normal-state-map (kbd "C-e") 'evil-end-of-line)
 (define-key evil-insert-state-map (kbd "C-e") 'evil-end-of-line)
 
+(define-key evil-insert-state-map (kbd "C-k") nil)
+
 ;;; evil-leader
 ;; Note: You should enable global-evil-leader-mode before you enable evil-mode, otherwise evil-leader won't be enabled
 ;; in initial buffers (*scratch*, *Messages*, ...).
