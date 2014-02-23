@@ -125,17 +125,24 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-normal-state-map "+" 'evil-numbers/inc-at-pt) ; default `evil-next-line-first-non-blank'
 (define-key evil-normal-state-map "-" 'evil-numbers/dec-at-pt) ; default `evil-previous-line-first-non-blank'
 
+(define-key evil-normal-state-map (kbd "C-e") 'evil-end-of-line)
+
 ;; (define-key evil-motion-state-map "v" 'evil-visual-block)
 ;; make it easy to switch to visual-char mode from visual-block mode
 ;; (define-key evil-visual-state-map "v" 'evil-visual-char)
 
-(define-key evil-insert-state-map (kbd "C-n") 'next-line)
-(define-key evil-insert-state-map (kbd "C-p") 'previous-line)
-(define-key evil-insert-state-map (kbd "C-d") 'delete-char)
-(define-key evil-normal-state-map (kbd "C-e") 'evil-end-of-line)
-(define-key evil-insert-state-map (kbd "C-e") 'evil-end-of-line)
-
-(define-key evil-insert-state-map (kbd "C-k") nil)
+(define-key evil-insert-state-map "\C-k" nil)
+(define-key evil-insert-state-map "\C-o" nil)
+(define-key evil-insert-state-map "\C-r" nil)
+(define-key evil-insert-state-map "\C-y" nil)
+(define-key evil-insert-state-map "\C-e" nil)
+(define-key evil-insert-state-map "\C-n" nil)
+(define-key evil-insert-state-map "\C-p" nil)
+(define-key evil-insert-state-map "\C-x\C-n" nil)
+(define-key evil-insert-state-map "\C-x\C-p" nil)
+(define-key evil-insert-state-map "\C-t" nil)
+(define-key evil-insert-state-map "\C-d" nil)
+(define-key evil-insert-state-map "\C-w" nil)
 
 ;;; evil-leader
 ;; Note: You should enable global-evil-leader-mode before you enable evil-mode, otherwise evil-leader won't be enabled
