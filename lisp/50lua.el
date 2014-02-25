@@ -8,6 +8,8 @@
 
 (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/mobdebug-mode"))
 
+(setq lua-default-application "luajit")
+
 (eval-after-load "lua-mode"
   '(progn
      (setq )
@@ -15,6 +17,7 @@
      (require 'mobdebug-mode nil t)
      (setq mobdebug-use-evil-binding t)
      (add-hook 'lua-mode-hook 'pl/lua-mode-setup)
+     (define-key lua-mode-map (kbd "C-c C-z") 'lua-show-process-buffer)
      (define-key lua-mode-map (kbd "C-c C-c") 'pl/relaunch-quick-cocos2d-x)))
 
 (setq lua-indent-level 4
