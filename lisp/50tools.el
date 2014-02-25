@@ -1206,6 +1206,8 @@ such character is found, following options are shown:
      (when (eq system-type 'darwin)
        (setq projectile-tags-command "/usr/local/bin/ctags -Re %s"))
      (setq projectile-enable-caching t)
+     (add-to-list 'projectile-project-root-files ".cabal-sandbox")
+     (add-to-list 'projectile-project-root-files "Setup.hs")
      ;; (add-hook 'emacs-lisp-mode-hook 'projectile-on)
      (projectile-global-mode)))
 
