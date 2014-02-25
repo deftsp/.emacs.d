@@ -260,7 +260,7 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
         (nrepl-mode                . insert)
         (weibo-timeline-mode       . emacs)
         (weibo-post-mode           . emacs)
-        (org-mode                  . normal)
+        (org-mode                  . insert)
         (sr-mode                   . emacs)
         (shell-mode                . emacs)
         (term-mode                 . emacs)
