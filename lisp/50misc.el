@@ -389,13 +389,14 @@
 
 
 ;; rainbow-delimiters
-(defun pl/turn-on-rainbow-delimiters-mode ()
-  (rainbow-delimiters-mode 1))
+;; (defun pl/turn-on-rainbow-delimiters-mode ()
+;;   (rainbow-delimiters-mode 1))
 
-(eval-after-load "lua-mode"
-  '(add-hook 'lua-mode-hook 'pl/turn-on-rainbow-delimiters-mode))
+;; (eval-after-load "lua-mode"
+;;   '(add-hook 'lua-mode-hook 'pl/turn-on-rainbow-delimiters-mode))
 
-(eval-after-load "rainbow-delimiters.el"
+(require 'rainbow-delimiters nil t)
+(eval-after-load "rainbow-delimiters"
   '(progn
      ;; To enable in all programming-related modes (Emacs 24+):
      (global-rainbow-delimiters-mode 1)))
