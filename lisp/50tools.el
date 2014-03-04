@@ -112,6 +112,7 @@ space and marks next symbol."
 
      (key-chord-define-global ";g" 'magit-status)
      (key-chord-define-global "mg" 'magit-grep)
+     (key-chord-define-global "ms" 'mark-sexp)
      (key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
 
      (key-chord-define-global ",r" 'pl/recursive-edit-save-window-config)
