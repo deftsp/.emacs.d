@@ -1177,7 +1177,17 @@ such character is found, following options are shown:
 ;; (add-to-list 'mc/unsupported-minor-modes 'evil-mode)
 
 ;; Rectangular region mode
-(global-set-key (kbd "H-SPC") 'set-rectangular-region-anchor)
+(defun pl/evil-switch-to-insert-maybe ()
+  (when (and (fboundp 'evil-mode) evil-mode)
+    (if (not (memq evil-state '(insert emacs)))
+        (evil-insert 1))))
+
+(defun pl/set-rectangular-region-anchor ()
+  (interactive)
+  (pl/evil-switch-to-insert-maybe)
+  (set-rectangular-region-anchor))
+
+(global-set-key (kbd "H-SPC") 'pl/set-rectangular-region-anchor)
 
 ;; Mark more like this
 (global-set-key (kbd "C-*") 'mc/mark-all-like-this)

@@ -143,6 +143,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 (define-key evil-insert-state-map "\C-t" nil)
 (define-key evil-insert-state-map "\C-d" nil)
 (define-key evil-insert-state-map "\C-w" nil)
+(define-key evil-insert-state-map [remap newline] nil)
+(define-key evil-insert-state-map [remap newline-and-indent] nil)
 
 ;;; evil-leader
 ;; Note: You should enable global-evil-leader-mode before you enable evil-mode, otherwise evil-leader won't be enabled
@@ -402,6 +404,9 @@ to replace the symbol under cursor"
 (if (fboundp 'evil-exchange-install)
     (evil-exchange-install))
 
+;;; work with mutiple cursors
+(add-hook 'multiple-cursors-mode-enabled-hook
+          'pl/evil-switch-to-insert-maybe)
 
 (provide '52evil-mode)
 ;;; 50evil-mode.el ends here
