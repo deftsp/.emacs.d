@@ -95,6 +95,13 @@
                :description "major mode for Open GLSL shader files"
                :pkgname "jimhourihan/glsl-mode"
                :features glsl-mode)
+        (:name vimrc-mode
+               :description "Enables syntax highlighting for .vimrc/_vimrc files"
+               :type github
+               :pkgname "mcandre/vimrc-mode"
+               :prepare (progn
+                          (add-to-list 'auto-mode-alist
+                                       '(".vim\\(rc\\|peratorrc\\)?$" . vimrc-mode))))
         (:name bookmark+
                :pkgname "deftsp/bookmark-plus"
                :website "http://www.emacswiki.org/emacs/BookmarkPlus"
