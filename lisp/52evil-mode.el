@@ -69,41 +69,49 @@
 ;;                 grep-mode pylookup-mode))
 ;;   (add-to-list 'evil-insert-state-modes mode))
 
-;;; esc quits
-(defun pl/minibuffer-keyboard-quit ()
-  "Abort recursive edit.
-In Delete Selection mode, if the mark is active, just deactivate it;
-then it takes a second \\[keyboard-quit] to abort the minibuffer."
+;;; escape
+(defun pl/escape-dwim ()
   (interactive)
   (if (and delete-selection-mode transient-mark-mode mark-active)
-      (setq deactivate-mark t)
-    (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
-    (abort-recursive-edit)))
+      (setq deactivate-mark t))
+  (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+  (cond ((minibuffer-window-active-p (selected-window))
+         (abort-recursive-edit))
+        ((and (fboundp 'evil-mode) evil-mode)
+         (cond ((eq evil-state 'emacs) (evil-exit-emacs-state))
+               (t (let ((binding (key-binding [escape])))
+                    (if binding (call-interactively binding)
+                      (keyboard-quit))))))
+        (t (keyboard-quit))))
 
-(define-key minibuffer-local-map [escape] 'pl/minibuffer-keyboard-quit)
-(define-key minibuffer-local-ns-map [escape] 'pl/minibuffer-keyboard-quit)
-(define-key minibuffer-local-completion-map [escape] 'pl/minibuffer-keyboard-quit)
-(define-key minibuffer-local-must-match-map [escape] 'pl/minibuffer-keyboard-quit)
-(define-key minibuffer-local-isearch-map [escape] 'pl/minibuffer-keyboard-quit)
+(key-chord-define-global "fd" 'pl/escape-dwim)
 
 ;;; 'imap fd <ESC>' equivalent
 ;; (key-chord-define-global "fd" [escape])
-;; (define-key evil-insert-state-map (kbd "f d") 'evil-normal-state)
-(key-chord-define evil-normal-state-map           "fd" 'evil-force-normal-state)
-(key-chord-define evil-insert-state-map           "fd" 'evil-normal-state)
-(key-chord-define evil-visual-state-map           "fd" 'evil-change-to-previous-state)
-(key-chord-define evil-emacs-state-map            "fd" 'evil-normal-state)
-(key-chord-define evil-motion-state-map           "fd" 'evil-normal-state)
-(key-chord-define evil-replace-state-map          "fd" 'evil-normal-state)
+;; (key-chord-define evil-normal-state-map       "fd" 'pl/escape-dwim)
+;; (key-chord-define evil-insert-state-map       "fd" 'pl/escape-dwim)
+;; (key-chord-define evil-visual-state-map       "fd" 'pl/escape-dwim)
+;; (key-chord-define evil-emacs-state-map        "fd" 'pl/escape-dwim)
+;; (key-chord-define evil-motion-state-map       "fd" 'pl/escape-dwim)
+;; (key-chord-define evil-replace-state-map      "fd" 'pl/escape-dwim)
+;; (key-chord-define evil-operator-state-map     "fd" 'pl/escape-dwim)
+;; (key-chord-define evil-operator-shortcut-map  "fd" 'keyboard-quit)
+;; (key-chord-define evil-read-key-map           "fd" 'pl/escape-dwim)
+;; (key-chord-define evil-outer-text-objects-map "fd" 'pl/escape-dwim)
+;; (key-chord-define evil-inner-text-objects-map "fd" 'pl/escape-dwim)
+;; (key-chord-define evil-ex-completion-map      "fd" 'pl/escape-dwim)
 
-(key-chord-define minibuffer-local-map            "fd" 'pl/minibuffer-keyboard-quit)
-(key-chord-define minibuffer-local-ns-map         "fd" 'pl/minibuffer-keyboard-quit)
-(key-chord-define minibuffer-local-completion-map "fd" 'pl/minibuffer-keyboard-quit)
-(key-chord-define minibuffer-local-must-match-map "fd" 'pl/minibuffer-keyboard-quit)
-(key-chord-define minibuffer-local-isearch-map    "fd" 'pl/minibuffer-keyboard-quit)
+;; (key-chord-define minibuffer-local-map            "fd" 'pl/minibuffer-keyboard-quit)
+;; (key-chord-define minibuffer-local-ns-map         "fd" 'pl/minibuffer-keyboard-quit)
+;; (key-chord-define minibuffer-local-completion-map "fd" 'pl/minibuffer-keyboard-quit)
+;; (key-chord-define minibuffer-local-must-match-map "fd" 'pl/minibuffer-keyboard-quit)
+;; (key-chord-define minibuffer-local-isearch-map    "fd" 'pl/minibuffer-keyboard-quit)
 
-;;;
-;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
+;; (define-key minibuffer-local-map [escape] 'pl/minibuffer-keyboard-quit)
+;; (define-key minibuffer-local-ns-map [escape] 'pl/minibuffer-keyboard-quit)
+;; (define-key minibuffer-local-completion-map [escape] 'pl/minibuffer-keyboard-quit)
+;; (define-key minibuffer-local-must-match-map [escape] 'pl/minibuffer-keyboard-quit)
+;; (define-key minibuffer-local-isearch-map [escape] 'pl/minibuffer-keyboard-quit)
 
 ;;; ace jump mode
 (define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
@@ -131,6 +139,8 @@ then it takes a second \\[keyboard-quit] to abort the minibuffer."
 ;; make it easy to switch to visual-char mode from visual-block mode
 ;; (define-key evil-visual-state-map "v" 'evil-visual-char)
 
+;;;
+;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
 (define-key evil-insert-state-map "\C-k" nil)
 (define-key evil-insert-state-map "\C-o" nil)
 (define-key evil-insert-state-map "\C-r" nil)
