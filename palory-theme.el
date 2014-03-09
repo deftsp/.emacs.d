@@ -222,7 +222,7 @@
 
    ;; structured-haskell-mode
    '(shm-current-face ((t (:background "#222222"))))
-   '(shm-quarantine-face ((t (:background "#9e4f75"))))
+   '(shm-quarantine-face ((t (:background "#262230"))))
 
    ;; linum
    '(linum ((t (:background "#102235" :foreground "#607b8b"))))
