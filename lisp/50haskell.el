@@ -85,7 +85,7 @@
   ;; (capitalized-words-mode +1)
   (when (fboundp 'key-chord-define)
     (key-chord-define haskell-mode-map ".x" pl/haskell-mode-key-chord-map))
-  (flyspell-prog-mode)
+  ;; (flyspell-prog-mode) ; can not work with key-chord
   (setq evil-auto-indent nil)
   ;; smartparens-mode
   (smartparens-mode 1)
