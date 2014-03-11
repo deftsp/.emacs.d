@@ -6,7 +6,7 @@
 (require 'dired-aux)
 (require 'wdired)
 (require 'dired-x nil t)
-(require 'dired-view)
+(require 'dired-view nil t)
 (require 'dired+ nil t)
 
 ;;; MailcapView
@@ -22,9 +22,6 @@ and blocks emacs.  The default for ASYNC is t." t)
 
 ;; FIXME: some of the file extension will not be treat as txt file,such as .js
 ;; (add-hook 'find-file-hook 'mailcap-view-find-file-hook)
-
-;;some useful variable
-;;dired-omit-extensions
 
 ;; How to open several files at once?
 ;; `C-u F' in Dired.
@@ -58,65 +55,66 @@ and blocks emacs.  The default for ASYNC is t." t)
 
 
 (setq dired-kept-versions 1)
-;; (add-hook 'dired-load-hook
-;;           (function (lambda ()
-;;                       (load "dired-x"))))
+
+;;; omit mode
+;; C-x M-o
+(eval-after-load "dired-x"
+  '(progn
+     (add-hook 'dired-load-hook
+               (lambda ()
+                 (setq dired-guess-shell-gnutar "tar")))
+
+     (add-hook 'dired-mode-hook
+               (lambda ()
+                 ;; Set buffer-local variables here.  For example:
+                 (setq dired-omit-mode t)))
+
+     (setq dired-omit-extensions
+           '(".svn/" "CVS/" ".o" "~" ".bin" ".bak" ".obj" ".map" ".ico"
+             ".pif" ".lnk" ".a" ".ln" ".blg" ".bbl" ".dll" ".drv" ".vxd"
+             ".386" ".elc" ".lof" ".glo" ".idx" ".lot" ".fmt" ".tfm"
+             ".class" ".lib" ".mem" ".x86f" ".sparcf" ".fasl"
+             ".ufsl" ".fsl" ".dxl" ".pfsl" ".dfsl" ".lo" ".la" ".gmo"
+             ".mo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr"
+             ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo"
+             ".idx" ".lof" ".lot" ".glo" ".blg" ".bbl" ".cps" ".fn"
+             ".fns" ".ky" ".kys" ".pg" ".pgs" ".tp" ".tps" ".vr" ".vrs"
+             ".pdb" ".ilk" ".lrc"))
 
 
-
-(when (featurep 'dired-x)
-  (add-hook 'dired-load-hook
-            (function (lambda ()
-              (load "dired-x")
-              (setq dired-guess-shell-gnutar "tar"))))
-  (add-hook 'dired-mode-hook
-            (function (lambda ()
-              ;; Set buffer-local variables here.  For example:
-              (setq dired-omit-mode t))))
-  (setq dired-omit-extensions
-        '(".svn/" "CVS/" ".o" "~" ".bin" ".bak" ".obj" ".map" ".ico"
-          ".pif" ".lnk" ".a" ".ln" ".blg" ".bbl" ".dll" ".drv" ".vxd"
-          ".386" ".elc" ".lof" ".glo" ".idx" ".lot" ".fmt" ".tfm"
-          ".class" ".lib" ".mem" ".x86f" ".sparcf" ".fasl"
-          ".ufsl" ".fsl" ".dxl" ".pfsl" ".dfsl" ".lo" ".la" ".gmo"
-          ".mo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr"
-          ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo"
-          ".idx" ".lof" ".lot" ".glo" ".blg" ".bbl" ".cps" ".fn"
-          ".fns" ".ky" ".kys" ".pg" ".pgs" ".tp" ".tps" ".vr" ".vrs"
-          ".pdb" ".ilk" ".lrc"))
-
-  (setq dired-omit-size-limit 150000)
-  (setq dired-guess-shell-alist-user    ; use ! to call guess command
-        `((,(regexp-opt '(".gif" ".png" ".bmp" ".jpg" ".tif" ".jpeg"))
-            '("qiv"                     ; feh, "xloadimage -onroot"
-              ))
-          ("\\.htm[l]?$" "firefox")
-          ("\\.dvi$"    "xdvi")
-          ("\\.rar$"    "unrar x")
-          ("\\.pdf$"    ,(if (eq system-type 'gnu/linux)
-                             "xpdf * &"
-                             "open -a Preview"))
-          ("\\.pdf.gz$" "zxpdf")
-          ("\\.chm$"    "xchm")
-          ("\\.djvu$"   "djview")
-          ("\\.jar$"    "unzip")
-          ("\\.tar.bz2$" "tar jxf")
-          ;; (".doc" (xwl-dired-wvHtml))
-          (,(regexp-opt '(".doc" ".ppt" ".xls" ".doc")) "soffice")
-          ;; default
-          ,@dired-guess-shell-alist-default
-          ;; match any files
-          (".*" `(,(format "tar zcf %s.tar.gz"
-                           (file-name-nondirectory (dired-get-filename)))
+     (setq dired-omit-size-limit 150000)
+     (setq dired-guess-shell-alist-user    ; use ! to call guess command
+           `((,(regexp-opt '(".gif" ".png" ".bmp" ".jpg" ".tif" ".jpeg"))
+              '("qiv"                     ; feh, "xloadimage -onroot"
+                ))
+             ("\\.htm[l]?$" "firefox")
+             ("\\.dvi$"    "xdvi")
+             ("\\.rar$"    "unrar x")
+             ("\\.pdf$"    ,(if (eq system-type 'gnu/linux)
+                                "xpdf * &"
+                              "open -a Preview"))
+             ("\\.pdf.gz$" "zxpdf")
+             ("\\.chm$"    "xchm")
+             ("\\.djvu$"   "djview")
+             ("\\.jar$"    "unzip")
+             ("\\.tar.bz2$" "tar jxf")
+             ;; (".doc" (xwl-dired-wvHtml))
+             (,(regexp-opt '(".doc" ".ppt" ".xls" ".doc")) "soffice")
+             ;; default
+             ,@dired-guess-shell-alist-default
+             ;; match any files
+             (".*" `(,(format "tar zcf %s.tar.gz"
+                              (file-name-nondirectory (dired-get-filename)))
                    ,(format "zip -r %s.jar"
                             (file-name-nondirectory (dired-get-filename)))
-                   "qiv")))))
+                   "qiv"))))
+     (setq dired-omit-files
+           (concat "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^~\\|^\\.\\|^#.*#$\\|^nohup.out$\\|\\.jlc$"
+                   "\\|"
+                   (regexp-opt '("TAGS" "cscope.out"))))))
 
-;; (setq dired-omit-files
-;;       (concat "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^#.*#$\\|^nohup.out$\\|\\.jlc$"
-;;               "\\|"
-;;               (regexp-opt '("TAGS" "cscope.out"))))
-(setq dired-omit-files "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\.\\|^~")
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
