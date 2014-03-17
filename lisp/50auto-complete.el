@@ -36,22 +36,6 @@
   ;; after editing and adding dictionary, you should do M-x ac-clear-dictionary-cache to apply changes
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 
-  (set-face-background 'ac-selection-face "steelblue")
-  (set-face-foreground 'ac-selection-face "white")
-  (set-face-underline  'ac-candidate-face "lightgray")
-  (set-face-background 'ac-candidate-face "lightgray")
-  (set-face-foreground 'ac-candidate-face "black")
-  (set-face-background 'ac-completion-face "darkblue")
-  (set-face-foreground 'ac-completion-face "white")
-
-
-  (set-face-background 'popup-scroll-bar-foreground-face "#222222")
-  (set-face-foreground 'popup-scroll-bar-background-face "lightgray")
-  (set-face-foreground 'popup-menu-selection-face "white")
-  (set-face-background 'popup-menu-selection-face "#0000ff")
-  (set-face-foreground 'ac-completion-face "black")
-  (set-face-background 'ac-completion-face "violet")
-
   ;; start completion when entered 2 characters
   (setq ac-auto-start nil)         ; do not start automatically
   (setq ac-dwim t)

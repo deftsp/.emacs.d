@@ -13,11 +13,10 @@
   (setq initial-frame-alist `((tool-bar-lines . 0)
                               (menu-bar-lines . 0)
                               (width . 268)
-                              (height . 62)
+                              (height . 61)
                               (top . 22) ; (frame-parameter nil 'top)
                               (left . 0)
-                              (alpha . (98 98)) ; first number is for the active window and the second for the inactive
-                                        ; window
+                              (alpha . (96 96)) ; first number is for the active window and the second for the inactive
                               (mouse-color . "gray80")
                               (right-fringe . 0) ; do not show right fringe
                               ;; (scroll-bar-width . 12)
@@ -30,8 +29,6 @@
   (setq tooltip-frame-parameters  '((name . "tooltip")
                                     (internal-border-width . 1)
                                     (border-width . 0))))
-
-
 
 ;;; font lock
 (global-font-lock-mode t)

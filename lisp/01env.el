@@ -1,5 +1,6 @@
 ;;; 01env.el ---
 
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (when (display-graphic-p)
   (load-theme 'palory t))
 

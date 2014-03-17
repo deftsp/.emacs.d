@@ -5,7 +5,9 @@
 ;; %* – read-only, but modified
 ;; %% – read-only, not modifed
 
-
+;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/powerline"))
+;; (require 'powerline nil t)
+;; (powerline-default-theme)
 
 (defface mode-line-position-normal-face
   '((((type x w32 ns))

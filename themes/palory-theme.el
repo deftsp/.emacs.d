@@ -22,71 +22,51 @@
 
 ;;; Code:
 
-;;; base on https://github.com/bbatsov/zenburn-emacs/blob/master/zenburn-theme.el
+;;; base on zenburn and solarized
+;; https://github.com/bbatsov/zenburn-emacs/blob/master/zenburn-theme.el and
+;; https://github.com/sellout/emacs-color-theme-solarized
 
 ;; the easy way to get following vlaue is: `customize face' => Apply and save => copy and paste
 
-(deftheme palory
-  "The palory theme.")
 
-(let ((palory-fg "#b6d3d6")
-      (palory-fg-1 "#656555")
-      (palory-bg-1 "#2b2b2b")
-      (palory-bg-05 "#383838")
-      (palory-bg "#282c30")
-      (palory-bg+1 "#4f4f4f")
-      (palory-bg+2 "#5f5f5f")
-      (palory-bg+3 "#6f6f6f")
-      (palory-red+1 "#dca3a3")
-      (palory-red "#cc9393")
-      (palory-red-1 "#bc8383")
-      (palory-red-2 "#ac7373")
-      (palory-red-3 "#9c6363")
-      (palory-red-4 "#8c5353")
-      (palory-orange "#dfaf8f")
-      (palory-yellow "#f0dfaf")
-      (palory-yellow-1 "#e0cf9f")
-      (palory-yellow-2 "#d0bf8f")
-      (palory-green-1 "#5f7f5f")
-      (palory-green "#7f9f7f")
-      (palory-green+1 "#8fb28f")
-      (palory-green+2 "#9fc59f")
-      (palory-green+3 "#afd8af")
-      (palory-green+4 "#bfebbf")
-      (palory-cyan "#93e0e3")
-      (palory-blue+1 "#94bff3")
-      (palory-blue "#8cd0d3")
-      (palory-blue-1 "#7cb8bb")
-      (palory-blue-2 "#6ca0a3")
-      (palory-blue-3 "#5c888b")
-      (palory-blue-4 "#4c7073")
-      (palory-blue-5 "#366060")
-      (palory-magenta "#dc8cc3"))
+(deftheme palory "The Palory color theme. Base on zenburn and solarized")
+
+(let ((base03  "#002b36")
+      (base02  "#073642")
+      (base01  "#586e75")
+      (base00  "#657b83")
+      (base0   "#839496")
+      (base1   "#93a1a1")
+      (base2   "#eee8d5")
+      (base3   "#fdf6e3")
+      (yellow  "#b58900")
+      (orange  "#cb4b16")
+      (red     "#dc322f")
+      (magenta "#d33682")
+      (violet  "#6c71c4")
+      (blue    "#268bd2")
+      (cyan    "#2aa198")
+      (green   "#859900"))
 
   (custom-theme-set-faces
    'palory
    ;; basic coloring
-   `(default ((t (:background ,palory-bg :foreground ,palory-fg))))
+   `(default ((t (:background ,base03 :foreground ,base0))))
    '(cursor ((t (:foreground unspecified :background "#cd0000"))))
 
    ;; mode-line
    '(mode-line-buffer-id ((t (:foreground "#90377d"))))
    '(mode-line-emphasis ((t (:foreground "Magenta"))))
-   '(mode-line ((t (:foreground "SteelBlue2" :background "#000000" :box nil))))
-   '(mode-line-inactive ((t (:foreground "PaleTurquoise3" :background "#202020" :box nil)))) ; #222222
+   `(mode-line ((t (:foreground ,base1 :background ,base02 :box nil))))
+   `(mode-line-inactive ((t (:foreground ,base0  :background ,base03 :box nil))))
    '(mode-line-highlight ((t (:box nil))))
 
-   ;; minibuffer
    '(minibuffer-prompt ((t (:foreground "#ff8c00" :weight bold))))
-
-   ;; fringe
-   `(fringe ((t (:foreground "green" :background "#232235"))))
-
-   ;; region
-   '(region ((t (:foreground unspecified :background "#484c50"))))
-
-   ;; secondary-selection
+   `(fringe ((t (:foreground "green" :background ,base02))))
+   `(region ((t (:foreground unspecified :background ,base02))))
    '(secondary-selection ((t (:foreground unspecified :background "#485c60"))))
+
+   ;; `(vertical-border ((t (:foreground ,base2))))
 
    ;; tooltip
    '(tooltip ((t (:foreground "#111111" :background "#bcc8dd"))))
@@ -94,8 +74,10 @@
    ;; toolbar
    '(tool-bar ((t (:background "DarkSlateGrey"))))
 
+   ;; `(header-line ((t (:foreground ,base2 :background ,base02))))
+
    ;; highlight-symbol
-   `(highlight-symbol-face ((t (:background "dodgerblue3" :foreground ,palory-fg))))
+   `(highlight-symbol-face ((t (:background "dodgerblue3" :foreground ,base0))))
 
    ;; highlight
    '(highlight ((t (:foreground unspecified :foreground "#66e2e2" :background "#454545")))) ; use `unspecified' or `nil' both ok
@@ -133,7 +115,7 @@
    ;; org-mode
    '(org-headline-done ((t (:strike-through t))))
    '(org-done ((t (:strike-through t))))
-   `(org-hide ((t (:foreground ,palory-bg))))
+   `(org-hide ((t (:foreground ,base03))))
    '(org-level-1 ((t (:foreground "lightcoral"))))
    '(org-level-2 ((t (:foreground "dodgerblue2"))))
    '(org-level-3 ((t (:foreground "darkolivegreen2"))))
@@ -147,17 +129,23 @@
 
 
    ;; font lock
-   '(font-lock-builtin-face ((t (:foreground "LightSteelBlue"))))
-   '(font-lock-comment-face ((t (:foreground "#008888"))))
+   '(font-lock-builtin-face ((t (:foreground "chartreuse3"))))
+   `(font-lock-comment-face ((t (:foreground ,base01))))
+   `(font-lock-comment-delimiter-face ((t (:foreground ,base1))))
    '(font-lock-constant-face ((t (:foreground "#22ccee"))))
    '(font-lock-doc-face ((t (:foreground "turquoise4"))))
    '(font-lock-function-name-face ((t (:foreground "LightCoral"))))
    '(font-lock-keyword-face ((t (:foreground "DarkOliveGreen2"))))
+   `(font-lock-negation-char-face ((t (:foreground ,yellow :weight bold))))
    '(font-lock-preprocessor-face ((t (:foreground "#79C96D"))))
+   `(font-lock-regexp-grouping-construct ((t (:foreground ,yellow :weight bold))))
+   `(font-lock-regexp-grouping-backslash ((t (:foreground ,green :weight bold))))
    '(font-lock-string-face ((t (:foreground "#a800a8"))))
    '(font-lock-type-face ((t (:foreground "#4492e1"))))
    '(font-lock-variable-name-face ((t (:foreground "DodgerBlue2"))))
    '(font-lock-warning-face ((t (:foreground "Pink"))))
+
+   `(c-annotation-face ((t (:inherit font-lock-constant-face))))
 
    ;; icompletep
    '(icompletep-keys ((t (:foreground "LawnGreen"))))
@@ -168,7 +156,6 @@
    '(ido-subdir ((t (:foreground "#1e90ff" :weight bold))))
    '(ido-first-match ((t (:foreground "DarkMagenta" :weight bold))))
    '(ido-virtual ((t (:foreground "#638383"))))
-
 
    ;; anything
    '(anything-ff-directory ((t (:background "222222"))))
@@ -190,7 +177,19 @@
    '(dictionary-word-entry-face ((t (:foreground "magenta"))))
 
    ;; ace-jump-mode
-   '(ace-jump-face-background ((t (:foreground "#007799"))))
+   `(ace-jump-face-background
+     ((t (:foreground ,base01 :background ,base03 :inverse-video nil))))
+   `(ace-jump-face-foreground
+     ((t (:foreground ,magenta :background ,base03 :inverse-video nil))))
+
+   `(ac-candidate-face ((t (:background "#dbdbdb" :foreground "black" :underline nil))))
+   `(ac-selection-face ((t (:background "SteelBlue" :foreground "white"))))
+   `(ac-completion-face ((t (:background "violet" :foreground "black"))))
+   `(popup-tip-face ((t (:background ,yellow :foreground "base1"))))
+   `(popup-scroll-bar-foreground-face ((t (:background "#909090"))))
+   `(popup-scroll-bar-background-face ((t (:background "#d0d0d0"))))
+   `(popup-isearch-match ((t (:background ,base03 :foreground ,base03))))
+   `(popup-menu-selection-face ((t (:background "#0000ff" :foreground ,base03))))
 
    ;; cedet
    '(pulse-highlight-start-face ((t (:background "#222222"))))
@@ -202,14 +201,13 @@
    '(vhl/default-face ((t (:background "#332244"))))
 
    ;; hl-line
-   '(hl-line ((t (:background "#222222"))))
+   `(hl-line ((t (:background ,base02))))
 
    ;; col-highlight
-   '(col-highlight ((t (:background "#222222"))))
+   `(col-highlight ((t (:background ,base02))))
 
    ;; comint
    '(comint-highlight-prompt ((t (:foreground "#eedd82" :weight bold))))
-
 
    ;; flymake
    '(flymake-warnline ((t (:background "#333300" :foreground "#ccccff"))))
@@ -249,15 +247,12 @@
   ;;; custom theme variables
   (custom-theme-set-variables
    'palory
-   `(ansi-color-names-vector ['palory-bg ,palory-red ,palory-green ,palory-yellow
-                                         ,palory-blue ,palory-magenta ,palory-cyan ,palory-fg])
+   `(ansi-color-names-vector ['bg ,red ,green ,yellow ,blue ,magenta ,cyan ,base0])
    ;; fill-column-indicator
-   `(fci-rule-color ,palory-bg-05)))
+  `(fci-rule-color ,base01)))
 
 
-
-
-   ;;;###autoload
+;;;###autoload
 (and load-file-name
      (boundp 'custom-theme-load-path)
      (add-to-list 'custom-theme-load-path
@@ -268,10 +263,17 @@
 
 (provide-theme 'palory)
 
+;;;###autoload
+(add-to-list 'safe-local-eval-forms
+             '(when (require 'rainbow-mode nil t) (rainbow-mode 1)))
+
+(add-to-list 'safe-local-eval-forms
+             '(when (require 'hexcolor-mode nil t) (hexcolor-mode 1)))
+
 ;; Local Variables:
 ;; no-byte-compile: t
 ;; indent-tabs-mode: nil
-;; eval: (when (fboundp 'rainbow-mode) (rainbow-mode +1))
+;; eval: (when (require 'rainbow-mode nil t) (rainbow-mode 1))
+;; eval: (when (require 'hexcolor-mode nil t) (hexcolor-mode 1))
 ;; End:
-
 ;;; palory-theme.el ends here.
