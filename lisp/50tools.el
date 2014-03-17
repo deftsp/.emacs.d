@@ -1286,4 +1286,8 @@ such character is found, following options are shown:
 
      (guide-key-mode 1)))
 
+;;; hexcolour
+(autoload 'hexcolor-mode "hexcolor" nil t nil)
+
+
 (provide '50tools)
