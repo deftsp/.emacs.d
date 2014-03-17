@@ -124,7 +124,8 @@
       ;; Default target for storing notes. Used as a fall back file for org-capture.el, for templates that do not
       ;; specify a target file.
       org-default-notes-file (concat org-directory "/notes.org")
-      org-agenda-files (directory-files org-directory t ".*\\.org$")
+      org-agenda-files (list (concat org-directory "/GTD.org")
+                             (concat org-directory "/from-mobile.org"))  ; (directory-files org-directory t ".*\\.org$")
       org-agenda-show-all-dates t
       org-agenda-span 'week
       org-agenda-skip-deadline-if-done t

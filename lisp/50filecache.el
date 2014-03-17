@@ -19,7 +19,7 @@
 ;; see http://www.emacswiki.org/cgi-bin/wiki/FileNameCache for more tricks with this...
 
 (defvar pl/file-cache-dirs '("~/" "/etc/" "~/.emacs.d/lisp/" "~/Downloads/"))
-(defvar pl/file-cache-recursive-dirs '("~/Lab/notebook"))
+(defvar pl/file-cache-recursive-dirs '("~/org"))
 
 (defun pl/filecache-add-files ()
   (ignore-errors (file-cache-add-directory-list pl/file-cache-dirs)
