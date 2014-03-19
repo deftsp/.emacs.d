@@ -90,7 +90,7 @@ space and marks next symbol."
   '(progn
      (key-chord-mode 1)
      (setq key-chord-one-key-delay 0.16)   ; default 0.2
-     (setq key-chord-two-keys-delay 0.035)  ; default 0.1
+     (setq key-chord-two-keys-delay 0.032)  ; default 0.1
 
      (key-chord-define-global "''" 'pl/apostrophe-key-chord)
      (key-chord-define-global ";b" 'switch-to-buffer)
@@ -99,6 +99,7 @@ space and marks next symbol."
      (key-chord-define-global ";f" 'helm-for-files)
      (key-chord-define-global ";d" 'dired-jump-other-window)
 
+     (key-chord-define-global "bl" 'ibuffer)
      (key-chord-define-global "cx" ctl-x-map)
 
      (key-chord-define-global "jk" 'auto-complete)
