@@ -37,6 +37,7 @@
   "gu" 'outline-up-heading
   "gn" 'outline-next-visible-heading
   "gh" 'outline-up-heading
+  ;; "gj" 'org-goto
   "gj" (if (fboundp 'org-forward-same-level) ;to be backward compatible with older org version
            'org-forward-same-level
          'org-forward-heading-same-level)
