@@ -1197,6 +1197,12 @@ such character is found, following options are shown:
 (global-set-key (kbd "C-M-m") 'mc/mark-more-like-this-extended)
 ;; (global-set-key (kbd "M-å") 'mc/mark-all-in-region)
 
+;;; visual-regexp
+;; (define-key global-map (kbd "C-c r") 'vr/replace)
+;; (define-key global-map (kbd "C-c q") 'vr/query-replace)
+;; if you use multiple-cursors, this is for you:
+;; (define-key global-map (kbd "C-c m") 'vr/mc-mark)
+
 ;;; docsetutil
 (define-key help-map "D" 'docsetutil-search) ; C-h D
 

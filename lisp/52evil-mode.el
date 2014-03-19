@@ -121,7 +121,15 @@
 
 ;;;
 (define-key evil-normal-state-map (kbd "C-o") 'pl/open-line-with-indent) ; default evil-jump-backward
+
+;; (defun pl/evil-undefine ()
+;;   (interactive)
+;;   (let (evil-mode-map-alist)
+;;     (call-interactively (key-binding (this-command-keys)))))
+;; make sure that Evil's normal state never touches TAB, just wire this fall-through binding
+;; (define-key evil-normal-state-map (kbd "TAB") 'pl/evil-undefine)
 (define-key evil-normal-state-map (kbd "TAB") 'indent-for-tab-command)
+
 ;; (define-key evil-normal-state-map "b" 'backward-word)
 ;; (define-key evil-normal-state-map "w" 'forward-word)
 (define-key evil-visual-state-map "Q" "gq")
@@ -205,8 +213,11 @@
   "k"   'kill-this-buffer
   "lr"  'pl/linum-relative-toggle
   "ms"  'magit-status
-  "p"  'projectile-commander
+  "p"   'projectile-commander
   "ut"  'undo-tree-visualize
+  "vr"  'vr/replace
+  "vq"  'vr/query-replace
+  "vm"  'vr/mc-mark
   "w"   'save-buffer
   "W"   'save-some-buffers
   "xb"  'switch-to-buffer
@@ -234,6 +245,8 @@
     (evil-mode 1))
 
 (setq evil-move-cursor-back nil
+      evil-want-visual-char-semi-exclusive t
+      ;; evil-highlight-closing-paren-at-point-states nil
       evil-magic 'very-magic)
 
 
@@ -417,6 +430,15 @@ to replace the symbol under cursor"
 ;;; work with mutiple cursors
 (add-hook 'multiple-cursors-mode-enabled-hook
           'pl/evil-switch-to-insert-maybe)
+
+;;; misc
+;; using both the RET and <return> forms to make sure the key works both in terminal and under X.
+(evil-define-key 'motion completion-list-mode-map (kbd "<return>") 'choose-completion)
+(evil-define-key 'motion completion-list-mode-map (kbd "RET") 'choose-completion)
+(evil-define-key 'motion browse-kill-ring-mode-map (kbd "<return>") 'browse-kill-ring-insert-and-quit)
+(evil-define-key 'motion browse-kill-ring-mode-map (kbd "RET") 'browse-kill-ring-insert-and-quit)
+(evil-define-key 'motion occur-mode-map (kbd "<return>") 'occur-mode-goto-occurrence)
+(evil-define-key 'motion occur-mode-map (kbd "RET") 'occur-mode-goto-occurrence)
 
 (provide '52evil-mode)
 ;;; 50evil-mode.el ends here
