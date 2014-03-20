@@ -99,7 +99,7 @@ space and marks next symbol."
      (key-chord-define-global ";f" 'helm-for-files)
      (key-chord-define-global ";d" 'dired-jump-other-window)
 
-     (key-chord-define-global "bl" 'ibuffer)
+     (key-chord-define-global "bf" 'ibuffer)
      (key-chord-define-global "cx" ctl-x-map)
 
      (key-chord-define-global "jk" 'auto-complete)
