@@ -1187,7 +1187,7 @@ such character is found, following options are shown:
   (pl/evil-switch-to-insert-maybe)
   (set-rectangular-region-anchor))
 
-(global-set-key (kbd "H-SPC") 'pl/set-rectangular-region-anchor)
+(global-set-key (kbd "C-S-SPC") 'pl/set-rectangular-region-anchor)
 
 ;; Mark more like this
 (global-set-key (kbd "C-*") 'mc/mark-all-like-this)
