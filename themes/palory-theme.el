@@ -125,9 +125,8 @@
    '(org-level-7 ((t (:foreground "LightSteelBlue"))))
    '(org-level-8 ((t (:foreground "LightSalmon"))))
    '(org-habit-alert-face ((t (:foreground "#228822" :background "gold"))))
-   `(org-agenda-structure ((t (:foreground "LawnGreen" :background ,base02))))
-   `(org-agenda-date ((t (:foreground "violet" :background ,base02))))
-   '(org-scheduled ((t (:foreground "PaleGoldenrod"))))
+   `(org-agenda-structure ((t (:foreground "LightGoldenrod" :background ,base02))))
+   '(org-scheduled ((t (:foreground "CadetBlue"))))
    '(org-scheduled-today ((t (:foreground "turquoise2"))))
    '(org-agenda-calendar-sexp ((t (:foreground "MistyRose3"))))
 
@@ -189,7 +188,7 @@
    `(ac-candidate-face ((t (:background "#dbdbdb" :foreground "black" :underline nil))))
    `(ac-selection-face ((t (:background "SteelBlue" :foreground "white"))))
    `(ac-completion-face ((t (:background "violet" :foreground "black"))))
-   `(popup-tip-face ((t (:background ,yellow :foreground "base1"))))
+   '(popup-tip-face ((t (:background "#f9f69d" :foreground "#232323"))))
    `(popup-scroll-bar-foreground-face ((t (:background "#909090"))))
    `(popup-scroll-bar-background-face ((t (:background "#d0d0d0"))))
    `(popup-isearch-match ((t (:background ,base03 :foreground ,base03))))
@@ -228,9 +227,6 @@
 
    ;; linum
    '(linum ((t (:background "#102235" :foreground "#607b8b"))))
-
-   ;; popup
-   '(popup-tip-face ((t (:background "#a2cd5a" :foreground "#232323"))))
 
    ;; guide-key
    '(guide-key/key-face ((t (:foreground "violet"))))

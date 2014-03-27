@@ -37,7 +37,7 @@
   (add-to-list 'ac-dictionary-directories "~/.emacs.d/ac-dict")
 
   ;; start completion when entered 2 characters
-  (setq ac-auto-start nil)         ; do not start automatically
+  (setq ac-auto-start 2)         ; nil will not start automatically
   (setq ac-dwim t)
   (setq ac-use-quick-help t)
 
@@ -66,6 +66,8 @@
   (ac-set-trigger-key "C-M-/") ; "TAB"
   (define-key ac-mode-map (kbd "C-M-/") 'auto-complete)
   (define-key ac-completing-map  (kbd "<backtab>") 'ac-previous)
+  (define-key ac-completing-map "\M-j" 'ac-next)
+  (define-key ac-completing-map "\M-k" 'ac-previous)
   (define-key ac-completing-map "\C-n" 'ac-next)
   (define-key ac-completing-map "\C-p" 'ac-previous))
 
@@ -118,12 +120,6 @@
 (defun pl/ac-python-mode-setup ()
   (add-to-list 'ac-sources 'ac-source-ropemacs))
 (add-hook 'python-mode-hook 'pl/ac-python-mode-setup)
-
-(eval-after-load "popup"
-  '(progn
-    (set-face-attribute 'popup-scroll-bar-foreground-face nil :foreground "white" :background "#bbbbbb")
-    (set-face-attribute 'popup-scroll-bar-background-face nil :foreground "yellow" :background "#dddddd")))
-
 
 (eval-after-load "auto-complete"
   '(progn
