@@ -168,6 +168,11 @@
                :description "Manipulate sqlite file from Emacs"
                :pkgname "mhayashi1120/Emacs-esqlite"
                :load-path ("." "./Emacs-pcsv"))
+        (:name ace-link
+               :type github
+               :description "Quickly follow links using `ace-jump-mode'"
+               :pkgname "abo-abo/ace-link"
+               :depends ace-jump-mode)
         (:name guide-key
                :type github
                :description "Guide the following key bindings automatically and dynamically"

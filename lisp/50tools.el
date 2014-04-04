@@ -1087,7 +1087,10 @@ such character is found, following options are shown:
 
 ;; (defun pl/ace-jump-mode ()
 ;;   (ace-jump-mode 8))
-
+;;; ace-link
+;; bind ace-link-info and ace-link-help to o in their respective modes.
+(when (fboundp 'ace-link-setup-default)
+  (ace-link-setup-default))
 
 ;;; goto line with feedback
 ;; http://whattheemacsd.com//key-bindings.el-01.html
