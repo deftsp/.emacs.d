@@ -74,7 +74,7 @@
    ;; toolbar
    '(tool-bar ((t (:background "DarkSlateGrey"))))
 
-   ;; `(header-line ((t (:foreground ,base2 :background ,base02))))
+   `(header-line ((t (:foreground ,base2 :background ,base02))))
 
    ;; highlight-symbol
    `(highlight-symbol-face ((t (:background "dodgerblue3" :foreground ,base0))))
@@ -103,6 +103,10 @@
    ;; show-paren
    '(show-paren-match ((t (:foreground "SteelBlue3"))))
    '(show-paren-mismatch ((t (:foreground "white" :background "purple"))))
+
+   ;; which-fun
+   '(which-func ((t (:foreground "Yellow"))))
+
 
    ;; term
    '(term-color-blue ((t (:foreground "DeepSkyBlue4"))))

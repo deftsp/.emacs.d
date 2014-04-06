@@ -124,10 +124,11 @@
 
 
 ;;; which func mode
-(which-function-mode 1)
-(eval-after-load "which-func"
-  '(set-face-foreground 'which-func "Yellow"))
-
+(which-function-mode +1)
+(setq which-func-modes t) ; enabled in any major mode that supports it.
+(setq-default header-line-format '((which-func-mode ("" which-func-format " "))))
+;; We remove Which Function Mode from the mode line, because it's mostly invisible here anyway.
+;; (setq mode-line-misc-info (assq-delete-all 'which-func-mode mode-line-misc-info))
 
 (if (eq system-type 'gnu/linux)
     (display-battery-mode t))

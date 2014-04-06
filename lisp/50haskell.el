@@ -56,9 +56,6 @@
      (define-key pl/haskell-mode-doc-map (kbd "d") 'inferior-haskell-find-haddock)
      (define-key pl/haskell-mode-doc-map (kbd "C-d") 'inferior-haskell-find-haddock)))
 
-(eval-after-load "which-func"
-  '(add-to-list 'which-func-modes 'haskell-mode))
-
 (eval-after-load 'flycheck
   '(progn
      ;; (require 'flycheck-hdevtools nil t) ; not works with cabal sandbox for now
