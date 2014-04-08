@@ -633,16 +633,25 @@ vi style of % jumping to matching brace."
 (put 'narrow-to-region 'disabled nil)     ; C-x n n
 (put 'narrow-to-page   'disabled nil)     ; C-x n p
 (put 'narrow-to-defun  'disabled nil)     ; C-x n d
+
 ;; http://demonastery.org/2013/04/emacs-narrow-to-region-indirect/
 (global-set-key(kbd "C-x n i") 'pl/narrow-to-region-indirect)
 (defun pl/narrow-to-region-indirect (start end)
   "Restrict editing in this buffer to the current region, indirectly."
   (interactive "r")
   (deactivate-mark)
-  (let ((buf (clone-indirect-buffer nil t)))
+  (let* ((buf-name (generate-new-buffer-name
+                    (concat (buffer-name) "/INDIRECT["
+                            (number-to-string start) ", "
+                            (number-to-string end) "]")))
+         (buf (clone-indirect-buffer buf-name t)))
     (with-current-buffer buf
-      (narrow-to-region start end))
-      (switch-to-buffer buf)))
+      (narrow-to-region start end)
+      (goto-char (point-min))
+      (switch-to-buffer buf))))
+
+(when (boundp 'ido-ignore-buffers)
+  (add-to-list 'ido-ignore-buffers "^.*/INDIRECT\\[.*\\]$"))
 
 ;; (eval-after-load "evil"
 ;;   '(progn
