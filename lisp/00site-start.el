@@ -97,7 +97,7 @@
 (require '52evil-mode)
 (require '52ido)
 (require '60session)
-(require '62winring)
+;; (require '62winring)
 (require '99face)
 
 (load-file "~/.emacs.d/private-ede-projects.el")

@@ -98,9 +98,9 @@
         display-time-string " "
         ;; battery-mode-line-string " "
         ;; win:mode-string
-        "["
-        (:propertize winring-name  face font-lock-constant-face)
-        "]"
+        ;; "["
+        ;; (:propertize winring-name  face font-lock-constant-face)
+        ;; "]"
         emms-mode-line-string " "
         emms-mode-line-icon-function
         emms-lyrics-mode-line-string " "

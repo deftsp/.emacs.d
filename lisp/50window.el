@@ -229,18 +229,18 @@
   '(setq switch-window-shortcut-style 'alphabet))
 
 ;;; golden-ratio.el
-(require 'golden-ratio nil t)
-(eval-after-load "golden-ratio"
-  '(progn
-     (golden-ratio-mode -1)
-     (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
-     (add-to-list 'golden-ratio-exclude-modes "w3m-select-buffer-mode")
-     (add-to-list 'golden-ratio-exclude-modes "w3m-mode")
-     (add-to-list 'golden-ratio-exclude-modes "org-mode")
-     (add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p)
-     (require 'ediff nil t)
-     (if (boundp 'ediff-this-buffer-ediff-sessions)
-         (add-to-list 'golden-ratio-inhibit-functions 'pl/ediff-comparison-buffer-p))))
+;; (require 'golden-ratio nil t)
+;; (eval-after-load "golden-ratio"
+;;   '(progn
+;;      (golden-ratio-mode -1)
+;;      (add-to-list 'golden-ratio-exclude-modes "ediff-mode")
+;;      (add-to-list 'golden-ratio-exclude-modes "w3m-select-buffer-mode")
+;;      (add-to-list 'golden-ratio-exclude-modes "w3m-mode")
+;;      (add-to-list 'golden-ratio-exclude-modes "org-mode")
+;;      (add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p)
+;;      (require 'ediff nil t)
+;;      (if (boundp 'ediff-this-buffer-ediff-sessions)
+;;          (add-to-list 'golden-ratio-inhibit-functions 'pl/ediff-comparison-buffer-p))))
 
 (defun pl/ediff-comparison-buffer-p ()
   ediff-this-buffer-ediff-sessions)
