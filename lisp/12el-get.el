@@ -178,6 +178,10 @@
                :description "Guide the following key bindings automatically and dynamically"
                :pkgname "kbkbkbkb1/guide-key"
                :depends popwin)
+        (:name minimap
+               :type github
+               :description "Sidebar showing a "mini-map" of a buffer"
+               :pkgname "dengste/minimap")
         (:name flycheck-haskell
                :type github
                :description "Improved Haskell support for Flycheck"

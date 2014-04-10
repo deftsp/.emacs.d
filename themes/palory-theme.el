@@ -183,6 +183,9 @@
    ;; dictionary
    '(dictionary-word-entry-face ((t (:foreground "magenta"))))
 
+   ;; minimap
+   `(minimap-active-region-background ((t (:background ,base02))))
+
    ;; ace-jump-mode
    `(ace-jump-face-background
      ((t (:foreground ,base01 :background ,base03 :inverse-video nil))))
