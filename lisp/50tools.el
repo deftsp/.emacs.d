@@ -1299,9 +1299,10 @@ such character is found, following options are shown:
 (autoload 'hexcolor-mode "hexcolor" nil t nil)
 
 ;;; minimap
-(setq minimap-window-location 'right
-      minimap-hide-scroll-bar t)
-(when (fboundp 'minimap-mode)
-  (minimap-mode +1))
+;; TODO: use with narrow-to-region in indirect buffer will freeze
+;; (setq minimap-window-location 'right
+;;       minimap-hide-scroll-bar t)
+;; (when (fboundp 'minimap-mode)
+;;   (minimap-mode +1))
 
 (provide '50tools)
