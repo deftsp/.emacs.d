@@ -123,20 +123,28 @@
         (:name evil-plugins
                :type github
                :description "Plugins for Emacs Evil."
-               :pkgname "tarao/evil-plugins")
+               :pkgname "tarao/evil-plugins"
+               :depends evil)
         (:name evil-indent-textobject
                :type github
                :description "evil textobjects based on indentation"
-               :pkgname "cofi/evil-indent-textobject")
+               :pkgname "cofi/evil-indent-textobject"
+               :depends evil)
         (:name evil-matchit
                :type github
                :description "Vim matchit ported to Evil"
-               :pkgname "redguardtoo/evil-matchit")
+               :pkgname "redguardtoo/evil-matchit"
+               :depends evil)
         (:name evil-exchange
                :type github
                :description "Exchange text more easily within Evil"
                :pkgname "Dewdrops/evil-exchange"
                :features evil-exchange
+               :depends evil)
+        (:name evil-args
+               :type github
+               :description "Motions and text objects for delimited arguments in Evil."
+               :pkgname "wcsmith/evil-args"
                :depends evil)
         (:name linum-relative
                :type github

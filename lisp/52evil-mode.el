@@ -430,6 +430,26 @@ to replace the symbol under cursor"
 ;;; work with mutiple cursors
 (add-hook 'multiple-cursors-mode-enabled-hook
           'pl/evil-switch-to-insert-maybe)
+;;; evil-args
+(require 'evil-args nil t)
+(eval-after-load "evil-args"
+  '(progn
+     ;; evil-args-openers
+     ;; evil-args-closers
+     ;; evil-args-delimiters
+     ;; bind evil-args text objects
+     (define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
+     (define-key evil-outer-text-objects-map "a" 'evil-outer-arg)
+
+     ;; bind evil-forward/backward-args
+     (define-key evil-normal-state-map "L" 'evil-forward-arg)
+     (define-key evil-normal-state-map "H" 'evil-backward-arg)
+     (define-key evil-motion-state-map "L" 'evil-forward-arg)
+     (define-key evil-motion-state-map "H" 'evil-backward-arg)
+
+     ;; bind evil-jump-out-args
+     ;; (define-key evil-normal-state-map "K" 'evil-jump-out-args)
+     (key-chord-define evil-normal-state-map "hl" 'evil-jump-out-args)))
 
 ;;; misc
 ;; using both the RET and <return> forms to make sure the key works both in terminal and under X.
