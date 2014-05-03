@@ -181,6 +181,10 @@
                :description "Quickly follow links using `ace-jump-mode'"
                :pkgname "abo-abo/ace-link"
                :depends ace-jump-mode)
+        (:name ace-window
+               :type github
+               :description "Quickly switch windows using `ace-jump-mode'"
+               :pkgname "abo-abo/ace-window")
         (:name guide-key
                :type github
                :description "Guide the following key bindings automatically and dynamically"

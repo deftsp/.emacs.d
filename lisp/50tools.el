@@ -113,6 +113,8 @@ space and marks next symbol."
 
      (key-chord-define-global "hd" 'helm-dash)
 
+     (key-chord-define-global "ui" 'ace-window)
+
      (key-chord-define-global ";g" 'magit-status)
      (key-chord-define-global "mg" 'magit-grep)
      (key-chord-define-global "ms" 'mark-sexp)
@@ -1296,6 +1298,9 @@ such character is found, following options are shown:
 
 ;;; hexcolour
 (autoload 'hexcolor-mode "hexcolor" nil t nil)
+
+;;; ace-window
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 
 ;;; minimap
 ;; TODO: use with narrow-to-region in indirect buffer will freeze
