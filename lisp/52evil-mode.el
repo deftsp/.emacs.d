@@ -277,6 +277,7 @@
         (gtags-select-mode         . emacs)
         (gud-mode                  . emacs)
         (grep-mode                 . emacs)
+        (haskell-error-mode        . emacs)
         (haskell-interactive-mode  . insert)
         (message-mode              . emacs)
         (magit-commit-mode         . normal)
