@@ -29,6 +29,9 @@
 (setq geiser-active-implementations '(racket))
 (setq geiser-racket-binary "/Applications/Racket/bin/racket")
 ;; (setq geiser-racket-collects nil) ; it seems gesier can auto find racket collects
+;; cd "~/.emacs.d/site-lisp/geiser" && ./autogen.sh && ./configure && make info
+(eval-after-load "info"
+  '(add-to-list 'Info-directory-list "~/.emacs.d/site-lisp/geiser/doc"))
 
 ;; scsh
 ;; (add-to-list 'interpreter-mode-alist '("scsh" . scheme-mode))
