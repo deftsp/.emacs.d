@@ -15,10 +15,6 @@
 (defvar pl/haskell-mode-key-chord-map nil
   "Keymap for key chord prefix commands in haskell mode.")
 
-;; TODO: remove it after bug: https://github.com/haskell/haskell-mode/issues/233 be fixed
-(require 'haskell-process nil t)
-(load "~/.emacs.d/el-get/haskell-mode/haskell-process.el" t)
-
 (eval-after-load "haskell-mode"
   '(progn
      (setq haskell-process-log t
