@@ -628,42 +628,6 @@ vi style of % jumping to matching brace."
 ;;(put 'overwrite-mode 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 
-;;; Narrowing
-;; Undo these with C-x n w
-(put 'narrow-to-region 'disabled nil)     ; C-x n n
-(put 'narrow-to-page   'disabled nil)     ; C-x n p
-(put 'narrow-to-defun  'disabled nil)     ; C-x n d
-
-;; http://demonastery.org/2013/04/emacs-narrow-to-region-indirect/
-(global-set-key(kbd "C-x n i") 'pl/narrow-to-region-indirect)
-(defun pl/narrow-to-region-indirect (start end)
-  "Restrict editing in this buffer to the current region, indirectly."
-  (interactive "r")
-  (deactivate-mark)
-  (let* ((buf-name (generate-new-buffer-name
-                    (concat (buffer-name) "/INDIRECT["
-                            (number-to-string start) ", "
-                            (number-to-string end) "]")))
-         (buf (clone-indirect-buffer buf-name t)))
-    (with-current-buffer buf
-      (narrow-to-region start end)
-      (goto-char (point-min))
-      (switch-to-buffer buf))))
-
-(when (boundp 'ido-ignore-buffers)
-  (add-to-list 'ido-ignore-buffers "^.*/INDIRECT\\[.*\\]$"))
-
-;; (eval-after-load "evil"
-;;   '(progn
-;;      ;; (define-key evil-normal-state-map "m" 'evil-narrow-indirect)
-;;      ;; (define-key evil-visual-state-map "m" 'evil-narrow-indirect)
-
-;;      (evil-define-operator evil-narrow-indirect (beg end type)
-;;        "Indirectly narrow the region from BEG to END."
-;;        (interactive "<R>")
-;;        (evil-normal-state)
-;;        (pl/narrow-to-region-indirect beg end))))
-
 (put 'upcase-region    'disabled nil)
 (put 'downcase-region  'disabled nil)
 (put 'LaTeX-hide-environment 'disabled nil)

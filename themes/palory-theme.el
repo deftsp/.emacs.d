@@ -239,6 +239,9 @@
    '(guide-key/key-face ((t (:foreground "violet"))))
    '(guide-key/highlight-command-face ((t (:foreground "#f9f69d"))))
 
+   ;; narrow-indirect
+   `(ni-mode-line-buffer-id ((t (:foreground "RosyBrown" :box nil))))
+
    ;; rainbow-delimiters
    '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))
    '(rainbow-delimiters-depth-2-face ((t (:foreground "#f0dfaf"))))
