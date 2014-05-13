@@ -323,7 +323,8 @@
 (evil-declare-key 'normal haskell-mode-map "O" 'pl/haskell-evil-open-above)
 
 ;;; evil-nerd-commenter
-(add-to-list 'load-path "~/.emacs.d/site-lisp/evil-nerd-commenter")
+;; installed with el-get
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/evil-nerd-commenter")
 (require 'evil-nerd-commenter nil t)
 (setq evilnc-hotkey-comment-operator ",,")
 (global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
@@ -423,7 +424,8 @@ to replace the symbol under cursor"
 
 ;;; evil-exchange
 ;; `gx': evil-exchange-key, `gX': evil-exchange-cancel-key
-(add-to-list 'load-path "~/.emacs.d/site-lisp/evil-exchange")
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/evil-exchange")
+;; installed with el-get
 (require 'evil-exchange nil t)
 (if (fboundp 'evil-exchange-install)
     (evil-exchange-install))
