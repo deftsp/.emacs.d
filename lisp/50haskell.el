@@ -206,7 +206,9 @@ See also`haskell-check'."
 ;; git clone git@github.com:chrisdone/structured-haskell-mode.git
 ;; $ cd structured-haskell-mode
 ;; $ cabal install
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/structured-haskell-mode/elisp"))
+;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/structured-haskell-mode/elisp"))
+
+;; el-get install structured-haskell-mode
 (require 'shm nil t)
 (if (fboundp 'structured-haskell-mode)
     (add-hook 'haskell-mode-hook 'structured-haskell-mode))
