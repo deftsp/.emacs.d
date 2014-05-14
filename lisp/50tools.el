@@ -139,6 +139,9 @@ space and marks next symbol."
 ;;; linkd
 (autoload 'linkd-mode "linkd" "Create or follow hypertext links." t)
 
+;;; sensitive-mode
+(autoload 'sensitive-mode "sensitive-mode" "Disables backup creation and auto saving." t)
+
 ;;; uptime
 (require 'uptimes nil t)
 
