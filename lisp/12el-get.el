@@ -22,8 +22,7 @@
 
 ;; el-get-sources is another source location for recipes, adding to your el-get-recipe-path.
 (setq el-get-sources
-      '((:name el-get :branch "shihpin/dev")
-        (:name org-mac-protocol
+      '((:name org-mac-protocol
                :type git
                :url "git://github.com/claviclaws/org-mac-protocol.git")
         (:name undo-tree
@@ -39,16 +38,46 @@
                :type emacswiki
                :features cursor-chg)
 
+        (:name col-highlight
+               :description "Highlight the current column."
+               :type emacswiki
+               :depends vline)
+
+        (:name crosshairs
+               :description "Highlight the current line and column."
+               :type emacswiki
+               :depends col-highlight)
+
+        (:name eldoc-extension
+               :description "Some extension for eldoc."
+               :type emacswiki)
+
+        (:name etags-table
+               :description "Set tags table(s) based on current file"
+               :type emacswiki)
+
+        (:name fvwm-mode
+               :description "major mode for editing Fvwm configuration files."
+               :type github
+               :pkgname "theBlackDragon/fvwm-mode")
+
+        (:name highlight
+               :description "Highlighting commands."
+               :type emacswiki)
+
         (:name window-extension
                :description "Some extension functions manipulate window."
                :type emacswiki
                :features window-extension)
 
-
         (:name hide-comnt
                :description "Hide/show comments in code."
                :type emacswiki
                :features hide-comnt)
+
+        (:name hl-line+
+               :description "Extensions to hl-line.el."
+               :type emacswiki)
 
         (:name thing-cmds
                :description "Commands that use things, as defined by `thingatpt.el'."
@@ -85,6 +114,10 @@
                :type github
                :pkgname "lightquake/hamlet-mode"
                :features hamlet-mode)
+        (:name info+
+               :description "Extensions to `info.el'."
+               :type emacswiki)
+
         (:name wcheck-mode
                :description "General interface for text checkers."
                :type github
@@ -184,7 +217,8 @@
         (:name ace-window
                :type github
                :description "Quickly switch windows using `ace-jump-mode'"
-               :pkgname "abo-abo/ace-window")
+               :pkgname "abo-abo/ace-window"
+               :depends ace-jump-mode)
         (:name guide-key
                :type github
                :description "Guide the following key bindings automatically and dynamically"

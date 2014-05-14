@@ -324,13 +324,9 @@
 
 ;;; evil-nerd-commenter
 ;; installed with el-get
-;; (add-to-list 'load-path "~/.emacs.d/site-lisp/evil-nerd-commenter")
-(require 'evil-nerd-commenter nil t)
+(add-to-list 'load-path "~/.emacs.d/site-lisp/evil-nerd-commenter")
 (setq evilnc-hotkey-comment-operator ",,")
-(global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
-;; (global-set-key (kbd "C-c l") 'evilnc-comment-or-uncomment-to-the-line)
-;; (global-set-key (kbd "C-c c") 'evilnc-copy-and-comment-lines)
-;; (global-set-key (kbd "C-c p") 'evilnc-comment-or-uncomment-paragraphs)
+(require 'evil-nerd-commenter nil t)
 
 ;;;
 (require 'evil-indent-textobject nil t)
