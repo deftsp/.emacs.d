@@ -596,25 +596,23 @@ vi style of % jumping to matching brace."
     (set-face-attribute 'whitespace-space nil :background "#aabbbb" :foreground "#226622")))
 
 ;;; auto delete trailing whitespace
-(add-hook 'before-save-hook 'delete-trailing-whitespace) ; see also `whitespace-cleanup'
+;; add to `local-write-file-hooks' is better than `before-save-hook'
+;; see also `whitespace-space'
+(add-hook 'local-write-file-hooks 'delete-trailing-whitespace)
 (setq line-number-display-limit 10000000)
 
 ;;; set frame title
 (setq frame-title-format
-      (list "GNU Emacs " emacs-version "@" system-name ": " '(:eval
-                                                              (if buffer-file-name
-                                                                  (replace-regexp-in-string
-                                                                   (getenv "HOME") "~"
-                                                                   (file-name-directory buffer-file-name))
-                                                                  (buffer-name)))))
+      (list "GNU Emacs "
+            emacs-version
+            "@" system-name ": "
+            '(:eval
+              (if buffer-file-name
+                  (replace-regexp-in-string
+                   (getenv "HOME") "~"
+                   (file-name-directory buffer-file-name))
+                (buffer-name)))))
 (setq icon-title-format frame-title-format)
-
-;; (setq-default frame-title-format
-;;               (list '((buffer-file-name " %f" (dired-directory
-;;                                                dired-directory
-;;                                                (revert-buffer-function " %b"
-;;                                                                        ("%b - Dir:  " default-directory)))))))
-
 
 ;; M-x apropos  apropos works better but slower
 (setq apropos-do-all t)
