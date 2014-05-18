@@ -127,6 +127,7 @@
 (which-function-mode +1)
 (setq which-func-modes t) ; enabled in any major mode that supports it.
 (setq-default header-line-format '((which-func-mode ("" which-func-format " "))))
+(setq which-func-unknown "⊤")
 ;; We remove Which Function Mode from the mode line, because it's mostly invisible here anyway.
 ;; (setq mode-line-misc-info (assq-delete-all 'which-func-mode mode-line-misc-info))
 
