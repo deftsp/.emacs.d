@@ -170,9 +170,12 @@
 ;; (eval-after-load 'elisp-slime-nav '(diminish 'elisp-slime-nav-mode))
 
 
+;;; highlight-symbol
+(when (fboundp 'highlight-symbol-mode)
+  (add-hook 'prog-mode-hook (lambda () (highlight-symbol-mode t))))
+
 (eval-after-load "highlight-symbol"
   '(progn
-     (add-hook 'prog-mode-hook (lambda () (highlight-symbol-mode t)))
      ;; (add-hook 'lisp-mode-hook 'highlight-symbol-mode)
      ;; (add-hook 'emacs-lisp-mode-hook 'highlight-symbol-mode)
      ;; (add-hook 'scheme-mode-hook 'highlight-symbol-mode)
