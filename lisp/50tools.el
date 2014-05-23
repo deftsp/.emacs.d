@@ -1302,9 +1302,6 @@ such character is found, following options are shown:
 ;;; hexcolour
 (autoload 'hexcolor-mode "hexcolor" nil t nil)
 
-;;; ace-window
-(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-
 ;;; minimap
 ;; TODO: use with narrow-to-region in indirect buffer will freeze
 ;; (setq minimap-window-location 'right

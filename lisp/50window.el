@@ -228,6 +228,9 @@
 (eval-after-load "switch-window"
   '(setq switch-window-shortcut-style 'alphabet))
 
+;;; ace-window
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+
 ;;; golden-ratio.el
 ;; (require 'golden-ratio nil t)
 ;; (eval-after-load "golden-ratio"
