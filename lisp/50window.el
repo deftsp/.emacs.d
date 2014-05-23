@@ -230,6 +230,7 @@
 
 ;;; ace-window
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
+;; (global-set-key [remap other-window] 'ace-window)
 
 ;;; golden-ratio.el
 ;; (require 'golden-ratio nil t)
