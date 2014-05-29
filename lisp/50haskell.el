@@ -199,7 +199,8 @@ See also`haskell-check'."
 
 
 ;;; hamlet-mode
-(require 'hamlet-mode nil t)
+;; installed with el-get
+;; (require 'hamlet-mode nil t)
 
 ;;; structured-haskell-mode
 ;; https://github.com/chrisdone/structured-haskell-mode
@@ -209,10 +210,9 @@ See also`haskell-check'."
 ;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/structured-haskell-mode/elisp"))
 
 ;; el-get install structured-haskell-mode
-(require 'shm nil t)
+;; (require 'shm nil t)
 (if (fboundp 'structured-haskell-mode)
     (add-hook 'haskell-mode-hook 'structured-haskell-mode))
-
 
 ;;;
 ;; https://github.com/chrisdone/chrisdone-emacs/blob/master/config/haskell.el
@@ -237,7 +237,7 @@ See also`haskell-check'."
      (t (ag sym (haskell-session-current-dir (haskell-session)))))))
 
 ;;; align regexp
-(require 'align nil t)
+;; (require 'align nil t)
 (eval-after-load "align"
   '(progn (add-to-list 'align-rules-list
                        '(haskell-types
@@ -301,7 +301,8 @@ point."
         (error "No SCC at point")))))
 
 ;;; misc
-(require 'yesod-devel-mode nil t)
+;; (require 'yesod-devel-mode nil t)
+(autoload 'yesod-devel-mode "yesod-devel-mode" "Yesod devel mode." t)
 
 (defun pl/pop-yesod-devel-buffer ()
   (interactive)

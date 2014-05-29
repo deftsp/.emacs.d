@@ -81,7 +81,7 @@ space and marks next symbol."
 ;; (require 'misc-fns)
 
 ;;; beautify symbol mode will cause symbol indent incorrect
-(require 'beautify-symbol nil t)
+;; (require 'beautify-symbol nil t)
 ;; (global-beautify-symbol-mode 1)
 
 ;;; key-chord
@@ -146,7 +146,6 @@ space and marks next symbol."
 (require 'uptimes nil t)
 
 ;;; recentf
-(require 'recentf)
 (recentf-mode 1)
 (setq recentf-max-saved-items 500)
 (setq recentf-max-menu-items 10)
@@ -185,7 +184,6 @@ space and marks next symbol."
    'face 'linum))
 
 ;; linum-relative
-(require 'linum-relative nil t)
 (setq linum-relative-format "%3s|")
 ;; if linum-relative-current-symbol is empty string,
 ;; linum-relative will show the real line number at current line.
@@ -578,7 +576,8 @@ space and marks next symbol."
   (while (search-forward "\n" nil t) (replace-match "\r\n")))
 
 ;;; gse number
-(require 'gse-number-rect)
+(autoload 'gse-number-rectangle "gse-number-rect"
+  "Insert rising numbers on each line of the region-rectangle, shifting text right." t)
 (global-set-key "\C-xru" 'gse-number-rectangle)
 
 ;;; yank secondary
@@ -859,7 +858,8 @@ that, the deleted contents won't be inserted to the `kill-ring'."
 ;; (define-key minibuffer-local-completion-map (kbd "C-r") 'resolve-sym-link)
 
 ;;;_. boxquote
-(require 'boxquote nil t)
+;; (require 'boxquote nil t)
+;; installed with el-get
 (global-set-key (kbd "C-c b y")   'boxquote-yank)
 (global-set-key (kbd "C-c b r")   'boxquote-region)
 (global-set-key (kbd "C-c b u")   'boxquote-unbox-region)
@@ -878,8 +878,8 @@ that, the deleted contents won't be inserted to the `kill-ring'."
 (global-set-key (kbd "C-c b d v") 'boxquote-describe-variable)
 
 ;;; fuzz-match.el
-(require 'fuzzy-match)
-
+;; (require 'fuzzy-match)
+;; installed with el-get
 (autoload 'lisp-spell-symbol "fuzzy-match"
   "Perform spell checking on Lisp symbol preceding point." t)
 ;; This will define the key M-# (ESC #) to call `lisp-spell-symbol'.
