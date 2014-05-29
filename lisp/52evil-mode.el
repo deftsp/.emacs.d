@@ -269,6 +269,7 @@
         (inf-ruby-mode             . emacs)
         (Info-mode                 . emacs)
         (log-edit-mode             . emacs)
+        (flycheck-error-list-mode  . emacs)
         (fundamental-mode          . emacs)
         (erc-mode                  . emacs)
         (git-commit-mode           . insert)
@@ -385,6 +386,12 @@ to replace the symbol under cursor"
 ;; (evil-add-hjkl-bindings grep-mode-map 'emacs)
 ;; (evil-add-hjkl-bindings helm-grep-mode-map 'emacs)
 (evil-add-hjkl-bindings help-mode-map 'emacs) ; both `h' and `? default binding to describe-mode
+
+;;; flycheck
+(eval-after-load "flycheck"
+  '(progn
+     (define-key flycheck-error-list-mode-map "j" 'evil-next-line)
+     (define-key flycheck-error-list-mode-map "k" 'evil-previous-line)))
 
 ;;; eww
 (evil-add-hjkl-bindings eww-mode-map 'emacs
