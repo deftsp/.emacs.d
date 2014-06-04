@@ -291,6 +291,7 @@
         (sr-mode                   . emacs)
         (shell-mode                . emacs)
         (term-mode                 . emacs)
+        (tuareg-interactive-mode   . insert)
         (speedbar-mode             . emacs)
         (yari-mode                 . emacs))
       do (evil-set-initial-state mode state))

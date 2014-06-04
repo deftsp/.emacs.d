@@ -241,7 +241,19 @@
                :branch "develop"
                :build `(("make" ,(format "EMACS=%s" (shell-quote-argument el-get-emacs)) "all"))
                :post-init (progn
-                            (require 'haskell-mode-autoloads)))))
+                            (require 'haskell-mode-autoloads)))
+        (:name tuareg-mode
+               :type github
+               :description "an Emacs OCaml mode"
+               :load-path (".")
+               :pkgname "ocaml/tuareg"
+               :prepare
+               (progn
+                 (autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
+                 (autoload 'camldebug "camldebug" "Run the Caml debugger" t)
+                 (dolist (ext '(".cmo" ".cmx" ".cma" ".cmxa" ".cmi"))
+                   (add-to-list 'completion-ignored-extensions ext))
+                 (add-to-list 'auto-mode-alist '("\\.ml[iylp]?" . tuareg-mode))))))
 
 ;; (el-get-save-package-status "package-name-here" "removed")
 
@@ -255,3 +267,4 @@
 
 
 (provide '12el-get)
+;;; 12el-get.el ends here
