@@ -311,7 +311,13 @@ it marks the next ARG lines after the ones already marked."
 ;;; cycle-spacing, since 24.4
 (global-set-key (kbd "M-SPC") 'cycle-spacing)
 
-;;; Find the definition of the FUNCTION near point. That's very useful!
+
+;;; Quickly Find Emacs Lisp Sources
+(define-key 'help-command (kbd "C-l") 'find-library)
+(define-key 'help-command (kbd "C-k") 'find-function-on-key)
+(define-key 'help-command (kbd "C-v") 'find-variable)
+
+;; Find the definition of the FUNCTION near point. That's very useful!
 (require 'find-func)
 ;; Define some key bindings for the find-function family of functions.
 (find-function-setup-keys)
