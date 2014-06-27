@@ -147,6 +147,10 @@
 ;; make it easy to switch to visual-char mode from visual-block mode
 ;; (define-key evil-visual-state-map "v" 'evil-visual-char)
 
+;; q is being used at many places to close things, and sometimes it so happens that evil mode is turned on in that
+;; window at the same time, which results in recording a macro instead of closing the window.
+(define-key evil-normal-state-map (kbd "q") nil) ; `q' is binded to `evil-record-macro'
+
 ;;;
 ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
 (define-key evil-insert-state-map "\C-k" nil)
