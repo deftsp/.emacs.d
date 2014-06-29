@@ -228,11 +228,6 @@
                :type github
                :description "Sidebar showing a "mini-map" of a buffer"
                :pkgname "dengste/minimap")
-        (:name flycheck-haskell
-               :type github
-               :description "Improved Haskell support for Flycheck"
-               :pkgname "flycheck/flycheck-haskell"
-               :depends (f dash haskell-mode flycheck))
         (:name haskell-mode
                :description "A Haskell editing mode"
                :type github
