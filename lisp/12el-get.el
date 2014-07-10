@@ -219,6 +219,11 @@
                :description "Quickly switch windows using `ace-jump-mode'"
                :pkgname "abo-abo/ace-window"
                :depends ace-jump-mode)
+        (:name ace-jump-buffer
+               :type github
+               :description "fast buffer switching extension to `ace-jump-mode'"
+               :pkgname "waymondo/ace-jump-buffer"
+               :depends (ace-jump-mode dash))
         (:name guide-key
                :type github
                :description "Guide the following key bindings automatically and dynamically"

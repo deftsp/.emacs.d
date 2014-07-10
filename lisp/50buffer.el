@@ -92,6 +92,10 @@
                                                  activate)
   (setq ad-return-value (nreverse ad-return-value)))
 
+;;; ace-jump-buffer
+(setq ajb-max-window-height 37
+      ajb-reuse-windows t)
+
 ;;; clean buffer list
 ;;; midnight
 ;; What would life be like if there were only saving, and never killing? These two settings tell Emacs to, every

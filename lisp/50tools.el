@@ -93,6 +93,8 @@ space and marks next symbol."
      (setq key-chord-two-keys-delay 0.032)  ; default 0.1
 
      (key-chord-define-global "''" 'pl/apostrophe-key-chord)
+     (key-chord-define-global ";a" 'ace-jump-buffer)
+     (key-chord-define-global ",a" 'ace-jump-buffer-other-window)
      (key-chord-define-global ";b" 'switch-to-buffer)
      (key-chord-define-global ";r" 'helm-resume)
      (key-chord-define-global ";s" 'helm-occur)
