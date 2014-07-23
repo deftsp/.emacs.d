@@ -462,6 +462,24 @@ to replace the symbol under cursor"
      ;; (define-key evil-normal-state-map "K" 'evil-jump-out-args)
      (key-chord-define evil-normal-state-map "hl" 'evil-jump-out-args)))
 
+;;; git-timemachine
+(defvar pl/evil-state-before-git-timemachine nil)
+(defun pl/evil-state-revert ()
+  (when evil-mode
+    ;; when `pl/evil-state-before-git-timemachine' is non-nil means leave git-timemachine or else enter
+    (if pl/evil-state-before-git-timemachine
+        (progn
+          (unless (eq pl/evil-state-before-git-timemachine evil-state)
+            (evil-change-state pl/evil-state-before-git-timemachine))
+          (setq pl/evil-state-before-git-timemachine nil))
+      (progn
+        (setq pl/evil-state-before-git-timemachine evil-state)
+        (unless (eq evil-state 'emacs)
+          (evil-change-state 'emacs))))))
+
+(eval-after-load "git-timemachine"
+  '(add-hook 'git-timemachine-mode-hook 'pl/evil-state-revert))
+
 ;;; misc
 ;; using both the RET and <return> forms to make sure the key works both in terminal and under X.
 (evil-define-key 'motion completion-list-mode-map (kbd "<return>") 'choose-completion)
