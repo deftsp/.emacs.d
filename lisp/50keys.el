@@ -334,5 +334,20 @@ it marks the next ARG lines after the ones already marked."
 (global-set-key (kbd "C-x \\") 'align)
 (global-set-key (kbd "C-x |") 'align-regexp)
 
+;;; toggle-map
+;; http://endlessparentheses.com/the-toggle-map-and-wizardry.html
+(define-prefix-command 'pl/toggle-map)
+(define-key ctl-x-map "t" 'pl/toggle-map)
+(define-key pl/toggle-map "c" 'column-number-mode)
+(define-key pl/toggle-map "d" 'toggle-debug-on-error)
+(define-key pl/toggle-map "e" 'toggle-debug-on-error)
+(define-key pl/toggle-map "f" 'auto-fill-mode)
+(define-key pl/toggle-map "l" 'toggle-truncate-lines)
+(define-key pl/toggle-map "q" 'toggle-debug-on-quit)
+(define-key pl/toggle-map "n" 'pl/narrow-or-widen-dwim)
+(define-key pl/toggle-map "o" 'pl/replace-charset-to-oem)
+;;; Generalized version of `read-only-mode'.
+(define-key pl/toggle-map "r" 'dired-toggle-read-only)
+(autoload 'dired-toggle-read-only "dired" nil t)
 
 (provide '50keys)

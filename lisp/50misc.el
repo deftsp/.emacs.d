@@ -863,8 +863,6 @@ if it is displayed there."
                             nil
                             start
                             end)))
-(global-set-key (kbd "C-c t o") 'pl/replace-charset-to-oem)
-
 
 ;;; kill/yank
 ;; Change cutting behaviour:
