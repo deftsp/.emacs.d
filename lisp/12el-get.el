@@ -263,6 +263,8 @@
 (el-get 'sync 'auto-complete)           ; auto-complete should init before ac-nrepl
 (el-get 'sync 'clojure-mode)
 (el-get 'sync 'evil)
+(el-get 'sync 'ace-jump-mode)
+(el-get 'sync 'ace-window)
 (el-get 'sync)                          ; 'sync 'wait
 
 
