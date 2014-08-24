@@ -247,9 +247,10 @@ space and marks next symbol."
 
 ;;; uniquify
 ;; add parent directory name to the buffers of the same name
-(setq uniquify-buffer-name-style 'reverse)
-(setq uniquify-after-kill-buffer-p t)
-(setq uniquify-ignore-buffers-re "\\`\\*")
+(setq uniquify-buffer-name-style 'post-forward
+      uniquify-separator ":"
+      uniquify-after-kill-buffer-p t
+      uniquify-ignore-buffers-re "\\`\\*")
 ;; (toggle-uniquify-buffer-names)
 
 ;;; header2
