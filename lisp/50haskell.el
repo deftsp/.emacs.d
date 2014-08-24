@@ -124,7 +124,7 @@
   ;; Interactive block indentation
   (define-key haskell-mode-map (kbd "C-,") 'haskell-move-nested-left)
   (define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)
-
+  (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)
   (define-key haskell-mode-map (kbd "C-c h") 'haskell-hoogle))
 
 ;; this gets called by outline to determine the level. Just use the length of the whitespace
