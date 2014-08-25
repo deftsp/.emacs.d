@@ -20,9 +20,11 @@
      (key-chord-define-global ".w" wg-prefixed-map)))
 
 ;; put this one at the bottom of .emacs
-(when (fboundp 'workgroups-mode)
-  (add-hook 'after-init-hook (lambda () (workgroups-mode 1))))
+(defun pl/turn-on-workgroups-mode ()
+  (when (fboundp 'workgroups-mode)
+    (workgroups-mode 1)))
 
+(add-hook 'after-init-hook #'pl/turn-on-workgroups-mode)
 
 (provide '50workgroups2)
 ;;; 50workgroups.el ends here
