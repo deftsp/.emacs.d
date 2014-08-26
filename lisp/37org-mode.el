@@ -321,7 +321,7 @@
 (run-with-idle-timer (* 20 60) t 'pl/jump-to-org-agenda)
 
 (defun pl/delay-jump-to-org-agenda ()
-  (run-at-time 15 nil #'pl/jump-to-org-agenda))
+  (run-at-time 3 nil #'pl/jump-to-org-agenda))
 
 (add-hook 'after-init-hook
           #'pl/delay-jump-to-org-agenda

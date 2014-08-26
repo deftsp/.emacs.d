@@ -92,12 +92,11 @@
 
 (setq desktop-load-locked-desktop t
       desktop-missing-file-warning nil
+      desktop-save 'if-exists
       desktop-restore-frames nil)
 
 ;; Use M-x desktop-save once to save the desktop.When it exists, Emacs updates it on every exit.
-(when (fboundp 'desktop-save-mode)
-  (setq desktop-save 'if-exists)
-  (desktop-save-mode 1))
+(desktop-save-mode 1)
 
 ;;; Let desktop work with daemon
 ;; (command-line) starts the server process, but only "after loading the user's init file and after
