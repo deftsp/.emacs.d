@@ -320,6 +320,16 @@
 ;; every 20 minutes
 (run-with-idle-timer (* 20 60) t 'pl/jump-to-org-agenda)
 
+(defun pl/delay-jump-to-org-agenda ()
+  (run-at-time 15 nil #'pl/jump-to-org-agenda))
+
+(add-hook 'after-init-hook
+          #'pl/delay-jump-to-org-agenda
+          ;; Note that 3-rd argument of this `add-hook' should be `t'
+          ;; to append the call of the `dired' after other hooked functions,
+          ;; most importantly after `desktop-read'.
+          t)
+
 ;;; Info directory
 (eval-after-load "info"
   '(add-to-list 'Info-directory-list "~/.emacs.d/site-lisp/org-mode/doc"))

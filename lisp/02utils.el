@@ -9,7 +9,7 @@
 (require 'key-chord nil t)
 
 (defun pl/future-time-string (delay)
-  (format-time-string "%H:%M"
+  (format-time-string "%H:%M:%S"
                       (seconds-to-time (+ (time-to-seconds (current-time))
                                           delay))))
 

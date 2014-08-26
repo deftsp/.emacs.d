@@ -88,7 +88,6 @@
 (require '50wcheck-mode)
 (require '50web-mode)
 (require '50window)
-(require '50workgroups2)
 (require '50xcode)
 (require '50yasnippet)
 (require '51CommonLispTemplates)

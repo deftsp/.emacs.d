@@ -13,16 +13,6 @@
 
 ;;; automatic saving of minibuffer history.
 (savehist-mode 1)
-;; (add-hook 'savehist-save-hook
-;;           (lambda ()
-;;             (setq savehist-minibuffer-history-variables
-;;                   '(regexp-history
-;;                     search-ring
-;;                     file-name-history
-;;                     shell-command-history
-;;                     minibuffer-history
-;;                     extended-command-history
-;;                     query-replace-history))))
 
 ;;; Desktop
 (eval-after-load "desktop"
@@ -100,8 +90,9 @@
         tags-file-name
         locate-history-list))))
 
-(setq desktop-load-locked-desktop t) ; 'ask
-(setq desktop-missing-file-warning nil)
+(setq desktop-load-locked-desktop t
+      desktop-missing-file-warning nil
+      desktop-restore-frames nil)
 
 ;; Use M-x desktop-save once to save the desktop.When it exists, Emacs updates it on every exit.
 (when (fboundp 'desktop-save-mode)
@@ -121,14 +112,25 @@
     ad-do-it))
 (ad-activate 'desktop-restore-file-buffer)
 
-;; Prepare Emacs desktop after loading Emacs
-;; (when (fboundp 'pl/jump-to-org-agenda)
-;;   (add-hook 'after-init-hook
-;;             ;; delay 5 seconds
-;;             (run-at-time (pl/future-time-string 5) nil #'pl/jump-to-org-agenda)
-;;             ;; Note that 3-rd argument of this `add-hook' should be `t'
-;;             ;; to append the call of the `dired' after other hooked functions,
-;;             ;; most importantly after `desktop-read'.
-;;             t))
+;;; workgroups2
+(require 'workgroups2 nil t)
+;; autoload/autosave:
+(setq wg-default-session-file "~/.emacs.d/workgroups"
+      wg-use-default-session-file t  ; set to nil, if you emacs started as daemon
+      wg-prefix-key (kbd "C-c w")
+      wg-mode-line-decor-left-brace "♯"
+      wg-mode-line-decor-right-brace "")
+
+(eval-after-load "workgroups2"
+  '(when (fboundp 'key-chord-define-global)
+     (key-chord-define-global ".w" wg-prefixed-map)))
+
+;; put this one at the bottom of .emacs
+(defun pl/turn-on-workgroups-mode ()
+  (when (fboundp 'workgroups-mode)
+    (workgroups-mode 1)))
+
+;; make sure workgroups2 runs bofore desktop
+(add-hook 'after-init-hook #'pl/turn-on-workgroups-mode)
 
 (provide '60session)
