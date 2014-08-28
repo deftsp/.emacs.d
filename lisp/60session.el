@@ -55,6 +55,7 @@
              (autoinfo-mode nil)
              (ecb-minor-mode nil)
              ;; (key-chord-mode nil)
+             (structured-haskell-mode nil)
              (senator-minor-mode nil)
              (semantic-show-unmatched-syntax-mode nil)
              (semantic-stickyfunc-mode nil)
@@ -63,32 +64,32 @@
              (semantic-idle-scheduler-mode nil)))
 
      ;; save a bunch of variables to the desktop file for lists specify the len of the maximal saved data also.
-     (mapcar
-      (lambda (symbol)
-        (add-to-list 'desktop-globals-to-save symbol))
-      '((extended-command-history       . 30)
-        (file-name-history              . 100)
-        (kill-ring                      . 60)
-        (grep-history                   . 30)
-        (compile-history                . 30)
-        (minibuffer-history             . 50)
-        (query-replace-history          . 60)
-        (read-expression-history        . 60)
-        (regexp-history                 . 60)
-        (regexp-search-ring             . 20)
-        (search-ring                    . 20)
-        ;; Feature: Saving `kill-ring' implies saving `kill-ring-yank-pointer'.
-        (delq 'register-alist desktop-globals-to-save)
-        (buffer-name-history            . 60)
-        (Info-search-history            . 60)
-        (command-history                . 60)
-        (dired-shell-command-history    . 60) ;; TODO: join with shell-command-history
-        (dired-regexp-history           . 20)
-        (shell-command-history          . 50)
-
-        find-args-history
-        tags-file-name
-        locate-history-list))))
+     ;; (delq 'register-alist desktop-globals-to-save)
+     (setq desktop-globals-to-save
+           '((extended-command-history       . 30)
+             (file-name-history              . 100)
+             (kill-ring                      . 60)
+             (grep-history                   . 30)
+             (compile-history                . 30)
+             (minibuffer-history             . 50)
+             (query-replace-history          . 60)
+             (read-expression-history        . 60)
+             (regexp-history                 . 60)
+             (regexp-search-ring             . 20)
+             (search-ring                    . 20)
+             ;; Feature: Saving `kill-ring' implies saving `kill-ring-yank-pointer'.
+             (buffer-name-history            . 60)
+             (Info-search-history            . 60)
+             (command-history                . 60)
+             (dired-shell-command-history    . 60) ; TODO: join with shell-command-history
+             (dired-regexp-history           . 20)
+             (shell-command-history          . 50)
+             ;; desktop-missing-file-warning
+             tags-table-list
+             ;; register-alist 
+             find-args-history
+             tags-file-name
+             locate-history-list))))
 
 (setq desktop-load-locked-desktop t
       desktop-missing-file-warning nil
