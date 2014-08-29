@@ -134,3 +134,7 @@
 (add-hook 'after-init-hook #'pl/turn-on-workgroups-mode)
 
 (provide '60session)
+
+;; Local Variables:
+;; coding: utf-8-unix
+;; End:
