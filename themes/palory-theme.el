@@ -135,6 +135,9 @@
    '(org-agenda-calendar-sexp ((t (:foreground "MistyRose3"))))
 
 
+   '(warning ((t (:foreground "VioletRed" :weight bold))))
+   
+   
    ;; font lock
    '(font-lock-builtin-face ((t (:foreground "chartreuse3"))))
    `(font-lock-comment-face ((t (:foreground ,base01))))
