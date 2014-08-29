@@ -23,8 +23,7 @@
 
 
 (setq emacs-load-start-time (current-time))
-;; (setq debug-on-error t)                 ;will be cleared at end of buffer
-(setq stack-trace-on-error t)
+(setq debug-on-error t)                 ;will be cleared at end of buffer
 
 
 ;;;  Load Path stuff
@@ -32,7 +31,7 @@
   (defvar user-emacs-directory "~/.emacs.d/"
     "Directory beneath which additional per-user Emacs-specificfiles are placed. Various programs in
   Emacs store information in this directory. Note that this should end with a directory separator.
-  See also â€˜ `locate-user-emacs-file'."))
+  See also †¡ `locate-user-emacs-file'."))
 
 (defvar user-package-directory (concat user-emacs-directory "packages/"))
 
@@ -65,8 +64,7 @@
 
 (add-hook 'after-init-hook 'emacs-reloaded)
 
-;; (setq debug-on-error nil)                 ; was set t at top of buffer
-(setq stack-trace-on-error nil)
+(setq debug-on-error nil)                 ; was set to t at top of buffer
 
 (when (require 'time-date nil t)
   (message "Emacs startup time: %d seconds." (time-to-seconds (time-since emacs-load-start-time))))
