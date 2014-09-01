@@ -330,6 +330,15 @@
           ;; most importantly after `desktop-read'.
           t)
 
+;;; give us some hint we are running
+(defadvice org-babel-execute-src-block (around progress nil activate)
+  (set-face-attribute
+   'org-block-background nil :background "LightSteelBlue")
+  (message "Running your code block")
+  ad-do-it
+  (set-face-attribute 'org-block-background nil :background "gray")
+  (message "Done with code block"))
+
 ;;; Info directory
 (eval-after-load "info"
   '(add-to-list 'Info-directory-list "~/.emacs.d/site-lisp/org-mode/doc"))
