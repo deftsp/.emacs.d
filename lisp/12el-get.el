@@ -32,7 +32,10 @@
         (:name etags-select
                :type emacswiki
                :features etags-select)
-
+        (:name anaphora
+               :type github
+               :description "Anaphoric expressions for Emacs Lisp, providing implicit temporary variables."
+               :pkgname "rolandwalker/anaphora")
         (:name cursor-chg
                :description "Change cursor dynamically, depending on the context."
                :type emacswiki
@@ -229,6 +232,10 @@
                :description "Guide the following key bindings automatically and dynamically"
                :pkgname "kbkbkbkb1/guide-key"
                :depends popwin)
+        (:name ido-ubiquitous
+               :type github
+               :description "Fancy completion all over Emacs, not just for buffers and files."
+               :pkgname "DarwinAwardWinner/ido-ubiquitous")
         (:name minimap
                :type github
                :description "Sidebar showing a "mini-map" of a buffer"
