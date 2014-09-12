@@ -188,7 +188,17 @@
 
    ;; minimap
    `(minimap-active-region-background ((t (:background ,base02))))
-
+   
+   ;; driedp
+   '(diredp-dir-heading ((t (:background "#555555" :foreground "magenta"))))
+   '(diredp-file-name ((t (:foreground "dodger blue"))))
+   '(diredp-dir-priv ((t (:foreground "steel blue" :background unspecified :weight bold))))
+   '(diredp-no-priv ((t (:foreground unspecified :background unspecified))))
+   '(diredp-read-priv ((t (:foreground "deep sky blue" :background unspecified))))
+   '(diredp-write-priv ((t (:foreground "yellow" :background unspecified))))
+   '(diredp-exec-priv ((t (:foreground "red" :background unspecified))))
+   '(diredp-flag-mark-line ((t (:foreground "white" :background "blue4"))))
+   
    ;; ace-jump-mode
    `(ace-jump-face-background
      ((t (:foreground ,base01 :background ,base03 :inverse-video nil))))
@@ -244,7 +254,7 @@
 
    ;; narrow-indirect
    `(ni-mode-line-buffer-id ((t (:foreground "RosyBrown" :box nil))))
-
+   
    ;; rainbow-delimiters
    '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))
    '(rainbow-delimiters-depth-2-face ((t (:foreground "#f0dfaf"))))

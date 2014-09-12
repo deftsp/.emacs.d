@@ -781,7 +781,6 @@ Works in Microsoft Windows, Mac OS X, Linux."
 (eval-after-load "dired+"
   '(progn
      (set-face-attribute 'diredp-dir-heading nil :foreground "magenta" :background "#555555")
-     (set-face-attribute 'diredp-display-msg nil :foreground "chartreuse")
      (set-face-attribute 'diredp-file-name nil :foreground "dodger blue")
      (set-face-attribute 'diredp-dir-priv nil :foreground "steel blue" :background nil :weight 'bold)
      (set-face-attribute 'diredp-no-priv nil :foreground nil :background nil)
