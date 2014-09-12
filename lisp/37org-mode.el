@@ -308,7 +308,7 @@
                      "*Org Agenda*"))
          (buf (get-buffer buf-name))
          (wind (and buf (get-buffer-window buf))))
-    (if wind
+    (if (and wind (window-minibuffer-p wind))
         (with-selected-window wind
           (org-agenda-redo)
           (org-fit-window-to-buffer))
