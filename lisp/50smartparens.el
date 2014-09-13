@@ -12,6 +12,8 @@
 ;;;;;;;;;
 ;; global
 (require 'smartparens-config)
+
+(add-to-list 'sp-ignore-modes-list 'haskell-mode)
 (smartparens-global-mode t)
 ;; (smartparens-global-strict-mode t) ; strict mode can not workedd with subword
 
@@ -84,11 +86,15 @@
 
 ;;; tex-mode latex-mode
 (sp-with-modes '(tex-mode plain-tex-mode latex-mode)
-  (sp-local-tag "i" "1d5f8e69396c521f645375107197ea4dfbc7b792quot;<" "1d5f8e69396c521f645375107197ea4dfbc7b792quot;>"))
+  (sp-local-tag "i" "\"<" "\">"))
 
 ;;; html-mode
 (sp-with-modes '(html-mode sgml-mode)
   (sp-local-pair "<" ">"))
+
+;;; haskell-mode
+(sp-with-modes '(haskell-mode inferior-haskell-mode)
+  (sp-local-pair "\\{-" "-\\}"))
 
 ;;; lisp modes
 (sp-with-modes sp--lisp-modes

@@ -81,16 +81,16 @@
   ;; (flyspell-prog-mode) ; can not work with key-chord
   (setq evil-auto-indent nil)
   ;; smartparens-mode
-  (smartparens-mode 1)
-  (show-smartparens-mode 1)
-  (setq sp-pair-list
-        '(("\\\"" . "\\\"")
-          ("{-" . "-}")
-          ("\"" . "\"")
-          ("(" . ")")
-          ("[" . "]")
-          ("{" . "}")
-          ("`" . "`")))
+  ;; (smartparens-mode 1)
+  ;; (show-smartparens-mode 1)
+  ;; (setq sp-pair-list
+  ;;       '(("\\\"" . "\\\"")
+  ;;         ("{-" . "-}")
+  ;;         ("\"" . "\"")
+  ;;         ("(" . ")")
+  ;;         ("[" . "]")
+  ;;         ("{" . "}")
+  ;;         ("`" . "`")))
 
   (define-key haskell-mode-map (kbd "C-c C-d") pl/haskell-mode-doc-map)
   (define-key haskell-mode-map (kbd "C-M-x") 'inferior-haskell-send-decl)
