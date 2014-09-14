@@ -1,4 +1,4 @@
-;;; 50flymake.el ---
+;;; 50syntax-checker.el ---
 
 ;; Copyright (C) 2008  Shihpin Tseng
 
@@ -110,5 +110,5 @@
 
 
 
-(provide '50flymake)
-;; 50flymode mode ends here------------------------------------------------------------------------------
+(provide '50syntax-checker)
+;;; 50syntax-checker ends here
