@@ -44,6 +44,7 @@
              ;; Info-mode
              ;; info-lookup-mode
              ;; tramp-cleanup-all-buffers
+             haskell-mode ; very slow
              erc-mode
              tags-table-mode))
 
