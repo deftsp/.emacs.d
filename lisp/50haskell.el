@@ -18,17 +18,19 @@
 (eval-after-load "haskell-mode"
   '(progn
      (setq haskell-process-log t
-           haskell-font-lock-symbols t
+           haskell-font-lock-symbols nil ; disabled because it will casue alignment problem
            haskell-process-path-cabal (expand-file-name "~/.cabal/bin/cabal")
            haskell-process-type 'cabal-repl  ; 'cabal-dev
+           haskell-stylish-on-save nil ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
            haskell-notify-p t)
-     (setq haskell-stylish-on-save nil) ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
+     
      (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
      (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
      (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
-
+      
+     
      (define-key haskell-mode-map (kbd "C-c v c") 'haskell-cabal-visit-file)
-
+     
      (setq pl/haskell-mode-key-chord-map (make-sparse-keymap))
      (define-key pl/haskell-mode-key-chord-map (kbd "e") 'haskell-indent-insert-equal)
      (define-key pl/haskell-mode-key-chord-map (kbd "=") 'haskell-indent-insert-equal)
@@ -45,7 +47,9 @@
      ;; keymap for documentation
      (setq pl/haskell-mode-doc-map (make-sparse-keymap))
      (define-key pl/haskell-mode-doc-map (kbd "i") 'haskell-process-do-info) ; inferior-haskell-info
+     (define-key pl/haskell-mode-doc-map (kbd "C-i") 'haskell-process-do-info) 
      (define-key pl/haskell-mode-doc-map (kbd "t") 'haskell-process-do-type) ; inferior-haskell-type
+     (define-key pl/haskell-mode-doc-map (kbd "C-t") 'haskell-process-do-type) 
      (define-key pl/haskell-mode-doc-map (kbd "a") 'helm-ghc-browse-document)
      (define-key pl/haskell-mode-doc-map (kbd "C-a") 'helm-ghc-browse-document)
      (define-key pl/haskell-mode-doc-map (kbd "h") 'haskell-hoogle)
@@ -54,7 +58,13 @@
 
 (eval-after-load 'flycheck
   '(progn
+     (setq flycheck-ghc-language-extensions '("DeriveFunctor"
+                                              "DeriveDataTypeable"
+                                              "DeriveFoldable"
+                                              "DeriveTraversable"
+                                              "TemplateHaskell"))
      ;; (require 'flycheck-hdevtools nil t) ; not works with cabal sandbox for now
+     ;; flycheck-haskell: Improved Haskell support for Flycheck
      (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup)))
 
 ;;; ghc-mod
@@ -63,19 +73,46 @@
 ;; % cabal install ghc-mod
 (autoload 'ghc-init "ghc" nil t)
 
+;; initial syntax check with hlint not ghc use `ghc-toggle-check-command' switch them.
+(setq ghc-check-command t) 
+
+;; http://www.haskell.org/ghc/docs/latest/html/users_guide/options-sanity.html
+;; note: it will not take effect until ghc-modi process restart
+(setq ghc-ghc-options '("-fno-warn-unused-binds"
+                        "-fno-warn-unused-matches"
+                        "-fno-warn-warnings-deprecations"
+                        "-fno-warn-missing-signatures"
+                        "-fno-warn-unused-imports"))
+(setq ghc-hlint-options '("--ignore=Use camelCase" "--ignore=Unused LANGUAGE pragma"))
+
 ;;; haskell mode hook
 (add-hook 'haskell-mode-hook 'pl/haskell-mode-setup)
 (defun pl/haskell-mode-setup ()
-  ;; (if (buffer-file-name (current-buffer))
-  ;;     (flymake-mode))
-  (ghc-init)
+  (ghc-init) ; ghc-mod
+  ;; (when (buffer-file-name (current-buffer)) (flymake-mode))
+  ; do not use flycheck to do syntax check
+  (add-to-list 'flycheck-disabled-checkers 'haskell-ghc)
+  (add-to-list 'flycheck-disabled-checkers 'haskell-hlint)
+
   ;; enable our level computation
   (setq outline-level 'pl/outline-level)
   (outline-minor-mode t)
   ;; initially hide all but the headers
-  ;;(hide-body)
+  ;; (hide-body)
   (subword-mode +1)
   ;; (capitalized-words-mode +1)
+
+  (when (fboundp 'structured-haskell-mode)
+    (structured-haskell-mode t))
+  
+  (smartparens-mode -1)
+  (smartparens-strict-mode -1)
+
+  ;; lambda symbol can safely replace '\' because they are the same length and it wont screw up indentation
+  (and (fboundp 'decode-char) ; prefer single-width Unicode font for lambda                                           
+       (push (cons "\\" (decode-char 'ucs 955)) prettify-symbols-alist))
+  (prettify-symbols-mode +1)
+  
   (when (fboundp 'key-chord-define)
     (key-chord-define haskell-mode-map ".x" pl/haskell-mode-key-chord-map))
   ;; (flyspell-prog-mode) ; can not work with key-chord
@@ -91,7 +128,7 @@
   ;;         ("[" . "]")
   ;;         ("{" . "}")
   ;;         ("`" . "`")))
-
+  
   (define-key haskell-mode-map (kbd "C-c C-d") pl/haskell-mode-doc-map)
   (define-key haskell-mode-map (kbd "C-M-x") 'inferior-haskell-send-decl)
   (define-key haskell-mode-map (kbd "C-x C-e") 'inferior-haskell-send-decl)
@@ -100,8 +137,7 @@
   ;; (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)
   (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
   ;; Load the current file (and make a session if not already made).
-  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-file)
-  (define-key haskell-mode-map (kbd "C-c C-r") 'haskell-process-reload-file)
+  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
   (define-key haskell-mode-map [f5] 'haskell-process-load-or-reload)
   ;; “Bring” the REPL, hiding all other windows apart from the source and the REPL.
   (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
@@ -126,6 +162,18 @@
   (define-key haskell-mode-map (kbd "C-.") 'haskell-move-nested-right)
   (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)
   (define-key haskell-mode-map (kbd "C-c h") 'haskell-hoogle))
+
+(add-hook 'haskell-interactive-mode-hook 'pl/haskell-interactive-mode-setup)
+(defun pl/haskell-interactive-mode-setup ()
+  ;; (modify-syntax-entry ?_ "w")
+  (define-key haskell-interactive-mode-map (kbd "C-u") 'haskell-interactive-mode-kill-whole-line)
+  ;; (define-key haskell-interactive-mode-map (kbd "C-w") 'backward-kill-word)
+  ;; (define-key haskell-interactive-mode-map (kbd "TAB") 'haskell-interactive-mode-tab)
+  (define-key haskell-interactive-mode-map (kbd "C-c C-l") 'haskell-interactive-mode-clear)
+  ;; (define-key haskell-interactive-mode-map (kbd "C-j") nil)
+  (define-key haskell-interactive-mode-map (kbd "C-p") 'helm-for-files)
+  (define-key haskell-interactive-mode-map (kbd "C-n") nil))
+
 
 ;; this gets called by outline to determine the level. Just use the length of the whitespace
 (defun pl/outline-level ()
@@ -211,8 +259,14 @@ See also`haskell-check'."
 
 ;; el-get install structured-haskell-mode
 ;; (require 'shm nil t)
-(if (fboundp 'structured-haskell-mode)
-    (add-hook 'haskell-mode-hook 'structured-haskell-mode))
+
+
+(autoload 'shm/case-split "shm-case-split" "Prompt for a type then do a case split based on it" t)
+(eval-after-load "shm"
+  '(progn
+     (define-key shm-map (kbd "C-c C-s") 'shm/case-split)
+     (define-key shm-map (kbd "M-a") 'shm/goto-parent)
+     (define-key shm-map (kbd "M-e") 'shm/goto-parent-end)))
 
 ;;;
 ;; https://github.com/chrisdone/chrisdone-emacs/blob/master/config/haskell.el

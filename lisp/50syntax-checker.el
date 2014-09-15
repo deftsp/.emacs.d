@@ -24,6 +24,7 @@
 
 (require 'flycheck nil t)
 ;; (set-default 'flycheck-check-syntax-automatically nil)
+
 (when (fboundp 'global-flycheck-mode)
   (add-hook 'after-init-hook #'global-flycheck-mode))
 
