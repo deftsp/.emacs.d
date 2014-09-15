@@ -130,6 +130,9 @@
 ;; (define-key evil-normal-state-map (kbd "TAB") 'pl/evil-undefine)
 (define-key evil-normal-state-map (kbd "TAB") 'indent-for-tab-command)
 
+(define-key evil-normal-state-map "gb" 'switch-to-buffer)
+
+
 ;; (define-key evil-normal-state-map "b" 'backward-word)
 ;; (define-key evil-normal-state-map "w" 'forward-word)
 (define-key evil-visual-state-map "Q" "gq")
@@ -179,6 +182,7 @@
 
 (evil-leader/set-key
   ","   'evilnc-comment-operator
+  "1"   'delete-other-windows
   "a"   'org-agenda
   "b"   'bookmark-map
   "ci"  'evilnc-comment-or-uncomment-lines
@@ -526,7 +530,8 @@ to replace the symbol under cursor"
 
      ;; bind evil-jump-out-args
      ;; (define-key evil-normal-state-map "K" 'evil-jump-out-args)
-     (key-chord-define evil-normal-state-map "hl" 'evil-jump-out-args)))
+     ;; (key-chord-define evil-normal-state-map "hl" 'evil-jump-out-args)
+     (define-key evil-normal-state-map "gk" 'evil-jump-out-args)))
 
 ;;; git-timemachine
 (defvar pl/evil-state-before-git-timemachine nil)
