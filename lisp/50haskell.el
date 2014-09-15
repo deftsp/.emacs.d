@@ -197,7 +197,11 @@
 ;; turn-on-haskell-simple-indent
 ;; turn-on-haskell-indentation   ; Improved variation of turn-on-haskell-indent indentation mode.
 ;; Note that the three indentation modules are mutually exclusive - add at most one. In preference for the more advanced.
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation) ; el-get default install `turn-on-haskell-indentation'
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation) ; el-get default install `turn-on-haskell-indentation'
+
+;; Turn off haskell-indentation-modes. They are incompatible with structured-haskell-mode, which  has its own
+;; indentation functionality.
+(remove-hook 'haskell-mode-hook 'turn-on-haskell-indentation) ; 
 (setq haskell-indent-thenelse 2)
 (eval-after-load "haskell-indent"
   '(setq haskell-indent-after-keywords '(("where" 2 0)
@@ -213,10 +217,10 @@
                                          "else"
                                          "let")))
 
-
 ;; (setq haskell-indentation-layout-offset 4
 ;;       haskell-indentation-left-offset 4
 ;;       haskell-indentation-ifte-offset 4)
+
 
 ;;; Check
 (defun pl/haskell-check (arg)
