@@ -343,6 +343,8 @@
 (evil-define-key 'normal shm-map (kbd "D") 'shm/kill-line)
 (evil-define-key 'normal shm-map (kbd "R") 'shm/raise)
 (evil-define-key 'normal shm-map (kbd "P") 'shm/yank)
+(evil-define-key 'normal shm-map (kbd "TAB") 'shm/tab)
+(evil-define-key 'normal shm-map (kbd "<backtab>") 'shm/backtab)
 
 (evil-define-key 'insert shm-map (kbd "RET") 'shm/ret-proxy)
 (evil-define-key 'normal shm-map (kbd "RET") 'shm/ret-proxy)
