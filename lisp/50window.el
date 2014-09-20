@@ -222,15 +222,11 @@
 
 ;; recursive-edit end there ---------------------------------------------------------------
 
-
-
-;;; switch window
-(eval-after-load "switch-window"
-  '(setq switch-window-shortcut-style 'alphabet))
-
 ;;; ace-window
-(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
-;; (global-set-key [remap other-window] 'ace-window)
+;; swap windows by calling ace-window with a prefix argument C-u.
+;; delete the selected window by calling ace-window with a double prefix argument, i.e. C-u C-u.
+;; not use switch-window anymore, ace-window is faster
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))  
 
 ;;; golden-ratio.el
 ;; (require 'golden-ratio nil t)
