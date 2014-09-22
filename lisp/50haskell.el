@@ -79,6 +79,7 @@
 ;; http://www.haskell.org/ghc/docs/latest/html/users_guide/options-sanity.html
 ;; note: it will not take effect until ghc-modi process restart
 (setq ghc-ghc-options '("-fno-warn-unused-binds"
+                        "-fno-warn-unused-do-bind"
                         "-fno-warn-unused-matches"
                         "-fno-warn-warnings-deprecations"
                         "-fno-warn-missing-signatures"
