@@ -61,7 +61,7 @@
    `(mode-line-inactive ((t (:foreground ,base0  :background ,base03 :box nil))))
    '(mode-line-highlight ((t (:box nil))))
 
-   '(minibuffer-prompt ((t (:foreground "#ff8c00" :weight bold))))
+   '(minibuffer-prompt ((t (:foreground "chartreuse2" :weight bold))))
    `(fringe ((t (:foreground "green" :background ,base02))))
    `(region ((t (:foreground unspecified :background ,base02))))
    '(secondary-selection ((t (:foreground unspecified :background "#485c60"))))
@@ -166,7 +166,10 @@
    '(ido-subdir ((t (:foreground "#1e90ff" :weight bold))))
    '(ido-first-match ((t (:foreground "DarkMagenta" :weight bold))))
    '(ido-virtual ((t (:foreground "#638383"))))
-
+   
+   ;; flx
+   `(flx-highlight-face ((t (:foreground "#f1ed22" :background ,base02 :weight bold :underline nil))))
+   
    ;; anything
    '(anything-ff-directory ((t (:background "222222"))))
 
