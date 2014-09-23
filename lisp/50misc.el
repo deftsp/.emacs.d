@@ -1168,15 +1168,10 @@ This command is to be used interactively."
 ;;----------------------------------------------------------------------------------------------------
 ;;;
 ;; Anchored transpose
+;; https://github.com/emacsmirror/nxhtml/blob/master/util/anchored-transpose.el
 (global-set-key [?\C-x ?t] 'anchored-transpose)
 (autoload 'anchored-transpose "anchored-transpose" nil t)
 ;;----------------------------------------------------------------------------------------------------
-
-;; (defun sincronizar()
-;;   (interactive)
-;;   (shell-command "rsync -u a013775@serdis.dis.ulpgc.es:~diary ~/diary")
-;;   (shell-command "rsync -u ~/diary a013775@serdis.dis.ulpgc.es:~/diary"))
-
 
 ;; (defun pl/shell-command ()
 ;;   "Launch a shell command."

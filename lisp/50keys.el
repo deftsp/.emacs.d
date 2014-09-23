@@ -336,8 +336,8 @@ it marks the next ARG lines after the ones already marked."
 
 ;;; toggle-map
 ;; http://endlessparentheses.com/the-toggle-map-and-wizardry.html
-(define-prefix-command 'pl/toggle-map)
-(define-key ctl-x-map "t" 'pl/toggle-map)
+(define-prefix-command 'pl/toggle-map) ; bind to "gt" in evil mode
+;; (define-key ctl-x-map "t" 'pl/toggle-map) ; "C-x t" is binded to `anchored-transpose'
 (define-key pl/toggle-map "c" 'column-number-mode)
 (define-key pl/toggle-map "d" 'toggle-debug-on-error)
 (define-key pl/toggle-map "e" 'toggle-debug-on-error)

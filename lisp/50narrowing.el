@@ -68,13 +68,32 @@ end the new clone buffer name to serve as a reminder for its
      (define-key ctl-x-4-map "nn" 'ni-narrow-to-region-other-window)
      (define-key ctl-x-4-map "np" 'ni-narrow-to-page-other-window)))
 
-(defun pl/narrow-or-widen-dwim ()
-  "If the buffer is narrowed, it widens. Otherwise, it narrows to region, or Org subtree."
-  (interactive)
-  (cond ((buffer-narrowed-p) (widen))
-        ((region-active-p) (narrow-to-region (region-beginning) (region-end)))
-        ((equal major-mode 'org-mode) (org-narrow-to-subtree))
-        (t (error "Please select a region to narrow to"))))
+
+;; http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
+(defun pl/narrow-or-widen-dwim (p)
+  "If the buffer is narrowed, it widens. Otherwise, it narrows intelligently.
+Intelligently means: region, org-src-block, org-subtree, or defun,
+whichever applies first.
+Narrowing to org-src-block actually calls `org-edit-src-code'.
+
+With prefix P, don't widen, just narrow even if buffer is already
+narrowed."
+  (interactive "P")
+  (declare (interactive-only))
+  (cond ((and (buffer-narrowed-p) (not p)) (widen))
+        ((region-active-p)
+         (narrow-to-region (region-beginning) (region-end)))
+        ((derived-mode-p 'org-mode)
+         ;; `org-edit-src-code' is not a real narrowing command.
+         ;; Remove this first conditional if you don't want it.
+         (cond ((org-in-src-block-p)
+                (org-edit-src-code)
+                (delete-other-windows))
+               ((org-at-block-p)
+                (org-narrow-to-block))
+               (t (org-narrow-to-subtree))))
+        (t (narrow-to-defun))))
+
 
 (provide '50narrowing)
 ;;; 50narrowing.el ends here
