@@ -27,7 +27,7 @@
 
 ;; 1) Put anchored-transpose.el on your load path.
 ;; 2) Put the following 2 lines in your .emacs
-;;    (global-set-key [?\C-x ?t] 'anchored-transpose)
+;;    (global-set-key [?\C-x ?t] 'anchored-transpose) ;; Just a suggestion...
 ;;    (autoload 'anchored-transpose "anchored-transpose" nil t)
 
 ;;; History:
@@ -40,7 +40,15 @@
 ;;                Added support for A  C B  D and C  A D  B selection.
 ;;                Fixed bug affecting multi line selections.
 ;; 2005-09-28 RGB Allow swapping regions with no anchor text between.
-;; 2005-10-17 RGB Fix bug in fuzzy logic which turned off fuzziness.
+
+;; Changes by Lennart Borgman
+;; 2009-11-25 LB  Set and clear secondary selection from keyboard.
+;;                Always use secondary selection.
+;;                Keep selections right after swapping.
+;;                Clear them if not used again.
+;;                Swap between buffers.
+;;                Check for read-only.
+;;                Probably broke something... ;-)
 
 ;;; Code:
 
@@ -48,7 +56,7 @@
   "begin/end when `anchored-transpose' is in progress else nil")
 
 ;;;###autoload
-(defun anchored-transpose (beg1 end1 flg1 &optional beg2 end2 flg2)
+(defun anchored-transpose (beg1 end1 flg1 &optional beg2 end2 flg2 win2)
   "Transpose portions of the region around an anchor phrase.
 
 `this phrase but not that word'    can be transposed into
@@ -58,82 +66,144 @@ I want this phrase but not that word.
        |----------------------------|. .This is the entire phrase.
                   |-------|. . . . . . .This is the anchor phrase.
 
-First select the entire phrase and type \\[anchored-transpose].  Then select
-the anchor phrase and type \\[anchored-transpose] again.  By default the
-anchor phrase will automatically include any surrounding whitespace even if
-you don't explicitly select it.  Also, it won't include certain trailing
-punctuation.  See `anchored-transpose-do-fuzzy' for details.  A prefix arg
-prior to either selection means `no fuzzy logic, use selections literally'.
+First select the entire phrase and type \\[anchored-transpose].
+This set the secondary selection.
 
-You can select the anchor phrase first followed by the entire phrase if more
-convenient.  Typing \\[anchored-transpose] with nothing selected clears any
-prior selection.  If both primary and secondary selections are active this
-command swaps the 2 selections immediately.
+Then select the anchor phrase and type \\[anchored-transpose]
+again.  Alternatively you can do the selections like this:
 
 I want this phrase but not that word.
        |----------|       |---------|   Separate phrase selection.
 
-You can also select the phrases to be swapped separately in any order.
-"
+By default the anchor phrase will automatically include
+any surrounding whitespace even if you don't explicitly select
+it.  Also, it won't include certain trailing punctuation.  See
+`anchored-transpose-do-fuzzy' for details.  A prefix arg prior to
+either selection means `no fuzzy logic, use selections
+literally'.
+
+You can select the regions to be swapped separately in any
+order.
+
+After swapping both primary and secondary selection are still
+active.  They will be canceled after second next command if you
+do not swap regions again.  \(Second because this allow you to
+adjust the regions and try again.)
+
+You can also swap text between different buffers this way.
+
+Typing \\[anchored-transpose] with nothing selected clears any
+prior selection, ie secondary selection."
   (interactive `(,(region-beginning) ,(region-end)
                  ,current-prefix-arg
                  ,@anchored-transpose-anchor))
-  (setq anchored-transpose-anchor nil deactivate-mark t)
+  (setq anchored-transpose-anchor nil)
   (when (and mouse-secondary-overlay
              mark-active
-             (eq (overlay-buffer mouse-secondary-overlay)
-                 (current-buffer)
-             )
+             (overlay-buffer mouse-secondary-overlay)
              (/= (overlay-start mouse-secondary-overlay)
-                 (overlay-end mouse-secondary-overlay)
-             )
-        )
-    (setq beg2 (overlay-start mouse-secondary-overlay))
-    (setq end2 (overlay-end mouse-secondary-overlay))
-    (setq flg2 flg1)
-    (delete-overlay mouse-secondary-overlay)
-  )
+                 (overlay-end mouse-secondary-overlay)))
+    (if (eq (overlay-buffer mouse-secondary-overlay) (current-buffer))
+        (progn
+          (setq beg2 (overlay-start mouse-secondary-overlay))
+          (setq end2 (overlay-end mouse-secondary-overlay))
+          (setq flg2 flg1)
+          (delete-overlay mouse-secondary-overlay))
+      (let* ((sec-buf (overlay-buffer mouse-secondary-overlay))
+             (sec-win (get-buffer-window sec-buf))
+             (sec-new nil))
+        (unless sec-win
+          (setq sec-new t)
+          (setq sec-win (split-window)))
+        (with-selected-window sec-win
+          (set-window-buffer (selected-window) sec-buf)
+          (goto-char (overlay-start mouse-secondary-overlay)))
+        (if (not (y-or-n-p "Swap between buffers? "))
+            (when sec-new (delete-window sec-win))
+          (setq beg2 (overlay-start mouse-secondary-overlay))
+          (setq end2 (overlay-end mouse-secondary-overlay))
+          (setq flg2 flg1)
+          (setq win2 sec-win)))))
+  (setq win2 (or win2 (selected-window)))
   (if mark-active
       (if end2                     ; then both regions are marked.  swap them.
-          (if (and (< beg1 beg2)        ;A  C B  D
-                   (< end1 end2)
-                   (> end1 beg2))
-              (apply 'anchored-transpose-swap
-                     (anchored-transpose-do-fuzzy
-                      beg1 beg2 end1 end2 flg1 flg2 flg1 flg2))
-            (if (and (> beg1 beg2)      ;C  A D  B
-                     (> end1 end2)
-                     (> end2 beg1))
+          (if (not (eq win2 (selected-window)))
+              (anchored-transpose-swap beg1 end1 beg2 end2 win2)
+            (if (and (< beg1 beg2)        ;A  C B  D
+                     (< end1 end2)
+                     (> end1 beg2))
                 (apply 'anchored-transpose-swap
                        (anchored-transpose-do-fuzzy
-                        beg2 beg1 end2 end1 flg2 flg1 flg2 flg1))
-              (if (and (< beg1 beg2)    ;A  C D  B
-                       (> end1 end2))
+                        beg1 beg2 end1 end2 flg1 flg2 flg1 flg2))
+              (if (and (> beg1 beg2)      ;C  A D  B
+                       (> end1 end2)
+                       (> end2 beg1))
                   (apply 'anchored-transpose-swap
                          (anchored-transpose-do-fuzzy
-                          beg1 beg2 end2 end1 flg1 flg2 flg2 flg1))
-                (if (and (> beg1 beg2)  ;C  A B  D
-                         (< end1 end2))
+                          beg2 beg1 end2 end1 flg2 flg1 flg2 flg1))
+                (if (and (< beg1 beg2)    ;A  C D  B
+                         (> end1 end2))
                     (apply 'anchored-transpose-swap
                            (anchored-transpose-do-fuzzy
-                            beg2 beg1 end1 end2 flg2 flg1 flg1 flg2))
-                  (if (<= end1 beg2)    ;A B  C D
+                            beg1 beg2 end2 end1 flg1 flg2 flg2 flg1))
+                  (if (and (> beg1 beg2)  ;C  A B  D
+                           (< end1 end2))
                       (apply 'anchored-transpose-swap
                              (anchored-transpose-do-fuzzy
-                              beg1 end1 beg2 end2 flg1 flg1 flg2 flg2))
-                    (if (<= end2 beg1)  ;C D A B
+                              beg2 beg1 end1 end2 flg2 flg1 flg1 flg2))
+                    (if (<= end1 beg2)    ;A B  C D
                         (apply 'anchored-transpose-swap
                                (anchored-transpose-do-fuzzy
-                                beg2 end2 beg1 end1 flg2 flg2 flg1 flg1))
-                      (error "Regions have invalid overlap")))))))
+                                beg1 end1 beg2 end2 flg1 flg1 flg2 flg2))
+                      (if (<= end2 beg1)  ;C D A B
+                          (apply 'anchored-transpose-swap
+                                 (anchored-transpose-do-fuzzy
+                                  beg2 end2 beg1 end1 flg2 flg2 flg1 flg1))
+                        (error "Regions have invalid overlap"))))))))
         ;; 1st of 2 regions.  Save it and wait for the other.
-        (setq anchored-transpose-anchor (list beg1 end1 flg1))
-        (message "Select other part (anchor or region)"))
-    (error "Command requires a marked region")))
+        ;;(setq anchored-transpose-anchor (list beg1 end1 flg1))
+        (if (or buffer-read-only
+                (get-char-property beg1 'read-only)
+                (get-char-property end1 'read-only))
+            ;; Fix-me: move test, clean up a bit.
+            (message "Buffer text is readonly")
+          (set-secondary-selection beg1 end1)
+          (setq deactivate-mark t)
+          (message "%s" (this-command-keys))
+          (message (propertize "Transpose: Select second region and call again - (without selection to cancel)"
+                               'face 'secondary-selection))))
+    (if (and mouse-secondary-overlay
+             (overlay-buffer mouse-secondary-overlay))
+        (progn
+          (cancel-secondary-selection)
+          (message (propertize "Canceled secondary selection" 'face
+                               'highlight)))
+      (message (propertize "Command requires a marked region" 'face
+                           'highlight)))))
+
+;;;###autoload
+(defun set-secondary-selection (beg end)
+  "Set the secondary selection to the current region.
+This must be bound to a mouse drag event."
+  (interactive "r")
+  (move-overlay mouse-secondary-overlay beg end (current-buffer))
+  (when (called-interactively-p 'interactive)
+    ;;(deactivate-mark)
+    )
+  (x-set-selection
+   'SECONDARY
+   (buffer-substring (overlay-start mouse-secondary-overlay)
+                     (overlay-end mouse-secondary-overlay))))
+
+;;;###autoload
+(defun cancel-secondary-selection ()
+  (interactive)
+  (delete-overlay mouse-secondary-overlay)
+  (x-set-selection 'SECONDARY nil))
 
 (defun anchored-transpose-do-fuzzy (r1beg r1end r2beg r2end
                                           lit1 lit2 lit3 lit4)
-"Returns the first 4 arguments after adjusting their value if necessary.
+  "Returns the first 4 arguments after adjusting their value if necessary.
 
 I want this phrase but not that word.
        |----------------------------|. .This is the entire phrase.
@@ -157,7 +227,8 @@ specifics on what adjustments these routines will make when LITx is nil."
    (if lit3 r2beg
      (anchored-transpose-fuzzy-begin r2beg r2end "[\t ]+"))
    (if lit4 r2end
-     (anchored-transpose-fuzzy-end   r2beg r2end "\\s *[.!?]"))))
+     (anchored-transpose-fuzzy-end   r2beg r2end "\\s *[.!?]"))
+   nil))
 
 (defun anchored-transpose-fuzzy-end (beg end what)
   "Returns END or new value for END based on the regexp WHAT.
@@ -170,10 +241,10 @@ Example: if (buffer-string beg end) contains `1234' the regexp `432' matches
 it, not `234' as `looking-back' would.  Also, your regexp never sees the char
 at BEG so the match will always leave at least 1 character to transpose.
 The reason for not using looking-back is that it's not greedy enough.
-(looking-back \" +\") will only match one space no matter how many exist."
+\(looking-back \" +\") will only match one space no matter how many exist."
   (let ((str (concat
               (reverse (append (buffer-substring (1+ beg) end) nil)))))
-    (if (string-match (concat "\\`" what) str)
+    (if (string-match (concat "`" what) str)
         (- end (length (match-string 0 str)))
       end)))
 
@@ -185,27 +256,50 @@ with WHAT then BEG is adjusted to exclude the matching text.
 NOTE: Your regexp never sees the last char defined by beg/end.  This insures
 at least 1 char is always left to transpose."
   (let ((str (buffer-substring beg (1- end))))
-    (if (string-match (concat "\\`" what) str)
+    (if (string-match (concat "`" what) str)
         (+ beg (length (match-string 0 str)))
       beg)))
 
-(defun anchored-transpose-swap (r1beg r1end r2beg r2end)
+(defun anchored-transpose-swap (r1beg r1end r2beg r2end win2)
   "Swaps region r1beg/r1end with r2beg/r2end. Flags are currently ignored.
 Point is left at r1end."
   (let ((reg1 (buffer-substring r1beg r1end))
-        (reg2 (delete-and-extract-region r2beg r2end)))
+        (reg2 nil)
+        (old-buffer (current-buffer)))
+    (when win2
+      (unless (eq (selected-window) win2)
+        (select-window win2)
+        (set-buffer (window-buffer (selected-window)))))
+    (setq reg2 (delete-and-extract-region r2beg r2end))
     (goto-char r2beg)
-    (insert reg1)
-    (save-excursion  ;; I want to leave point at the end of phrase 2.
-      (goto-char r1beg)
-      (delete-region r1beg r1end)
-      (insert reg2))))
+    (let ((new-mark (point)))
+      (insert reg1)
+      (push-mark new-mark))
+    ;; I want to leave point at the end of phrase 2 in current buffer.
+    (save-excursion
+      (with-current-buffer old-buffer
+        (goto-char r1beg)
+        (delete-region r1beg r1end)
+        (let ((here (point)))
+          (insert reg2)
+          (set-secondary-selection here (point)))))
+    (setq deactivate-mark nil)
+    (when (eq old-buffer (current-buffer))
+      (add-hook 'post-command-hook 'anchored-swap-post-command t t))))
+
+(defun anchored-swap-post-command ()
+  (condition-case err
+      (unless mark-active
+        (cancel-secondary-selection)
+        (remove-hook 'post-command-hook 'anchored-swap-post-command t))
+    (error (message "anchored-swap-post-command: %s" err))))
 
 (provide 'anchored-transpose)
 
 ;; Because I like it this way.  So there!
-;;; Local Variables: ***
 ;;; fill-column:78 ***
 ;;; emacs-lisp-docstring-fill-column:78 ***
+;;;
+;;; Local Variables: ***
 ;;; End: ***
 ;;; anchored-transpose.el ends here.
