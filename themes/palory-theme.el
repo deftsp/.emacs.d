@@ -134,8 +134,10 @@
    '(org-scheduled-today ((t (:foreground "turquoise2"))))
    '(org-agenda-calendar-sexp ((t (:foreground "MistyRose3"))))
 
-
    '(warning ((t (:foreground "VioletRed" :weight bold))))
+   
+   ;; whitespace
+   `(whitespace-space ((t (:foreground "#ff6622" :background ,base02))))
    
    
    ;; font lock

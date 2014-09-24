@@ -346,6 +346,7 @@ it marks the next ARG lines after the ones already marked."
 (define-key pl/toggle-map "q" 'toggle-debug-on-quit)
 (define-key pl/toggle-map "n" 'pl/narrow-or-widen-dwim)
 (define-key pl/toggle-map "o" 'pl/replace-charset-to-oem)
+(define-key pl/toggle-map "w" 'whitespace-mode)
 ;;; Generalized version of `read-only-mode'.
 (define-key pl/toggle-map "r" 'dired-toggle-read-only)
 (autoload 'dired-toggle-read-only "dired" nil t)

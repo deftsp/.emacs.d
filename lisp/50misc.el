@@ -17,7 +17,6 @@
       size-indication-mode t            ; show file size (emacs 22+)
       view-read-only nil
       ;; system-name "xxxxxx"
-      ;; indicate-empty-lines 'right
 
       ;; pop-up-windows nil ; don't change my windowconfiguration assure my window-configuration is kept
       ;; x-use-underline-position-properties nil
@@ -87,9 +86,23 @@
       ;; default-enable-multibyte-characters t
       enable-local-variables :safe)
 
+;;; visually indicate empty line
+(when (fboundp 'define-fringe-bitmap)
+  ;; (define-fringe-bitmap 'empty-line
+  ;;   [#b00000000
+  ;;    #b00000000
+  ;;    #b00111100
+  ;;    #b00111100
+  ;;    #b00111100
+  ;;    #b00111100
+  ;;    #b00000000
+  ;;    #b00000000])
+  (define-fringe-bitmap 'empty-line [0 0 #x3c #x3c #x3c #x3c 0 0])
+  (set-fringe-bitmap-face 'empty-line 'font-lock-doc-face)
+  (setq-default indicate-empty-lines t))
+
 ;;; comint do not echo input
 (setq-default comint-process-echoes t)
-
 
 ;;; minibuffer
 (setq minibuffer-electric-default-mode 1
@@ -579,11 +592,9 @@ vi style of % jumping to matching brace."
 
 ;; (if (>= emacs-major-version 21)
 ;;     (setq-default show-trailing-whitespace t))
-;; (setq whitespace-style '(face trailing  lines-tail tabs))
 ;; make whitespace-mode use just basic coloring
-(setq whitespace-style (quote (spaces tabs newline space-mark tab-mark newline-mark)))
+(setq whitespace-style (quote (face spaces lines-tail tabs trailing newline space-mark tab-mark newline-mark)))
 (setq whitespace-line-column nil) ; use `fill-column' variable value
-
 (setq whitespace-display-mappings
       ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
       '((space-mark 32 [183] [46])     ; 32   SPACE 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
@@ -592,14 +603,10 @@ vi style of % jumping to matching brace."
         (tab-mark 9 [9655 9] [92 9])   ; 9 TAB, 9655 WHITE RIGHT-POINTING TRIANGLE 「▷」
         ))
 
-(eval-after-load "whitespace"
-  '(progn
-    (set-face-attribute 'whitespace-space nil :background "#aabbbb" :foreground "#226622")))
+;; auto delete trailing whitespace
+ (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
-;;; auto delete trailing whitespace
-;; add to `local-write-file-hooks' is better than `before-save-hook'
-;; see also `whitespace-space'
-(add-hook 'local-write-file-hooks 'delete-trailing-whitespace)
+
 (setq line-number-display-limit 10000000)
 
 ;;; set frame title
