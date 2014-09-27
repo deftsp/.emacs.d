@@ -83,6 +83,14 @@
     font-lock-function-name-face)
    ("\\<\\(nil\\|\\t\\)\\_>" . font-lock-constant-face)))
 
+;;; color-identifiers-mode
+;; Emacs minor mode to highlight each source code identifier uniquely based on its name
+;; https://github.com/ankurdave/color-identifiers-mode
+;; add support for your favorite mode by modifying color-identifiers:modes-alist
+;; (add-hook 'after-init-hook 'global-color-identifiers-mode)
+(when (fboundp 'color-identifiers-mode)
+  (add-hook 'emacs-lisp-mode-hook 'color-identifiers-mode))
+
 ;;; auto close *compilation* buffer, if no compile error
 ;; (setq compilation-finish-functions 'compile-autoclose)
 ;; (defun compile-autoclose (buf str)
