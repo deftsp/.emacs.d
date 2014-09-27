@@ -51,6 +51,7 @@
 (require '50haskell)
 (require '50hideshow)
 (require '50javascript)
+(require '50key-chord)
 (require '50keys)
 (require '50major-modes)
 (require '50lua)

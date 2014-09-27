@@ -84,52 +84,6 @@ space and marks next symbol."
 ;; (require 'beautify-symbol nil t)
 ;; (global-beautify-symbol-mode 1)
 
-;;; key-chord
-;; maybe try to bind a key chord to a key map is a good idea
-(eval-after-load "key-chord"
-  '(progn
-     (key-chord-mode 1)
-     (setq key-chord-one-key-delay 0.16)   ; default 0.2
-     (setq key-chord-two-keys-delay 0.032)  ; default 0.1
-
-     (key-chord-define-global "''" 'pl/apostrophe-key-chord)
-     (key-chord-define-global ";a" 'ace-jump-buffer)
-     (key-chord-define-global ",a" 'ace-jump-buffer-other-window)
-     (key-chord-define-global ";b" 'switch-to-buffer)
-     (key-chord-define-global ";r" 'helm-resume)
-     (key-chord-define-global ";s" 'helm-occur)
-     (key-chord-define-global ";f" 'helm-for-files)
-     (key-chord-define-global ";d" 'dired-jump-other-window)
-
-     (key-chord-define-global "bf" 'ibuffer)
-     (key-chord-define-global "cx" ctl-x-map)
-
-     (key-chord-define-global "jk" 'auto-complete)
-
-     (key-chord-define-global "jc" 'ace-jump-char-mode)
-     (key-chord-define-global "jw" 'ace-jump-word-mode)
-     (key-chord-define-global "jl" 'ace-jump-line-mode)
-
-     (key-chord-define-global "/s" 'save-buffer)
-     (key-chord-define-global "##" 'server-edit)
-
-     (key-chord-define-global "hd" 'helm-dash)
-
-     (key-chord-define-global "ui" 'ace-window)
-
-     (key-chord-define-global ";g" 'magit-status)
-     (key-chord-define-global "mg" 'magit-grep)
-     (key-chord-define-global "ms" 'mark-sexp)
-     (key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
-
-     (key-chord-define-global ",r" 'pl/recursive-edit-save-window-config)
-     (key-chord-define-global ",c" 'org-capture)
-     (key-chord-define-global ".c" 'calendar)
-     (key-chord-define-global "VV" 'other-window)
-     (key-chord-define-global "HH" 'woman)))
-
-
-
 (eval-after-load "sgml-mode"
   '(progn
      ;; for go lang template
