@@ -1219,6 +1219,14 @@ such character is found, following options are shown:
     '(diminish 'eldoc-mode ""))
   (eval-after-load "xmsi-math-symbols-input"
     '(diminish 'xmsi-mode ""))
+  (eval-after-load "color-identifiers-mode"
+    '(diminish 'color-identifiers-mode))
+  (eval-after-load "elisp-slime-nav"
+    '(diminish 'elisp-slime-nav-mode))
+  (eval-after-load "guide-key"
+    '(diminish 'guide-key-mode))
+  (eval-after-load "auto-complete"
+    '(diminish 'auto-complete-mode))
   (eval-after-load "golden-ratio"
     '(diminish 'golden-ratio-mode " φ"))
   (eval-after-load "highlight-symbol"
