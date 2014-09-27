@@ -1032,7 +1032,8 @@ such character is found, following options are shown:
 ;; both 'M-j' and 'C-M-j' are bind to `indent-new-comment-line'
 (eval-after-load "ace-jump-mode"
   '(progn
-     (setq ace-jump-mode-case-fold nil)
+     (setq ace-jump-mode-case-fold nil
+           ace-jump-word-mode-use-query-char nil)
      (setq ace-jump-mode-move-keys
            (nconc (loop for i from ?a to ?z collect i)
                   (loop for i from ?A to ?Z collect i)
@@ -1049,6 +1050,7 @@ such character is found, following options are shown:
 
 ;; (defun pl/ace-jump-mode ()
 ;;   (ace-jump-mode 8))
+
 ;;; ace-link
 ;; bind ace-link-info and ace-link-help to o in their respective modes.
 (when (fboundp 'ace-link-setup-default)
