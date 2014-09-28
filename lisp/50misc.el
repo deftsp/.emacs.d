@@ -414,7 +414,7 @@
 (eval-after-load "rainbow-delimiters"
   '(progn
      ;; To enable in all programming-related modes (Emacs 24+):
-     (global-rainbow-delimiters-mode 1)))
+     (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
 
 
 (eval-after-load "cc-mode"
