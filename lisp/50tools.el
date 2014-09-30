@@ -1276,4 +1276,9 @@ such character is found, following options are shown:
 ;; (when (fboundp 'minimap-mode)
 ;;   (minimap-mode +1))
 
+;;; reveal-in-finder
+;; https://github.com/kaz-yos/elisp
+(when (eq system-type 'darwin)
+  (global-set-key (kbd "C-c R") 'reveal-in-finder))
+
 (provide '50tools)

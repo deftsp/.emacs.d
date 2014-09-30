@@ -1,13 +1,12 @@
 ;;; 50dired.el ---
-;; by Shihpin Tseng
 
-(require 'dired)
-(require 'ansi-color)
-(require 'dired-aux)
-(require 'wdired)
-(require 'dired-x nil t)
-(require 'dired-view nil t)
-(require 'dired+ nil t)
+;; (require 'dired)
+;; (require 'ansi-color)
+;; (require 'dired-aux)
+;; (require 'wdired)
+;; (require 'dired-x nil t)
+;; (require 'dired-view nil t)
+;; (require 'dired+ nil t)
 
 ;;; MailcapView
 ;; http://www.emacswiki.org/emacs/MailcapView
@@ -21,30 +20,26 @@ Shell Command*' buffer.  Otherwise the viewer is run in the foreground
 and blocks emacs.  The default for ASYNC is t." t)
 
 ;; FIXME: some of the file extension will not be treat as txt file,such as .js
-;; (add-hook 'find-file-hook 'mailcap-view-find-file-hook)
+(when (eq system-type 'gnu/linux)
+  (add-hook 'find-file-hook 'mailcap-view-find-file-hook))
 
 ;; How to open several files at once?
-;; `C-u F' in Dired.
-;; (dired-do-find-marked-files) has an optional `noselect' option.
-;; (defun pl/dired-do-find-marked-files ()
-;;     "Visit all marked files at once."
-;;     (interactive)
-;;     (let ((file-list (dired-get-marked-files)))
-;;       (mapcar 'find-file file-list)))
+;; `F' `dired-do-find-marked-files'
 
-
-(setq dired-isearch-filenames 'dwim)
-
-(setq dired-recursive-copies 'always)
-(setq dired-recursive-deletes 'top)
-;; If non-nil, Dired tries to guess a default target directory.
-;; This means: if there is a dired buffer displayed in the next window,
-;; use its current subdir, instead of the current subdir of this dired buffer.
-(setq dired-dwim-target t)
+(setq dired-isearch-filenames 'dwim
+      dired-recursive-copies 'always
+      dired-recursive-deletes 'top
+      ;; If non-nil, Dired tries to guess a default target directory.
+      ;; This means: if there is a dired buffer displayed in the next window,
+      ;; use its current subdir, instead of the current subdir of this dired buffer.
+      dired-dwim-target t
+      dired-guess-shell-gnutar "tar"
+      dired-kept-versions 1)
 
 ;; Enable `a' in dired-mode, to open files/dirs in the same buffer.
 (put 'dired-find-alternate-file 'disabled nil)
 
+;;; darwin only
 (when (eq system-type 'darwin)
   (let ((ls (executable-find "gls")))   ;; brew insall coreutils
     (cond (ls (setq dired-use-ls-dired t)
@@ -52,23 +47,10 @@ and blocks emacs.  The default for ASYNC is t." t)
           (t (require 'ls-lisp)
              (setq ls-lisp-use-insert-directory-program nil)))))
 
-
-
-(setq dired-kept-versions 1)
-
 ;;; omit mode
 ;; C-x M-o
 (eval-after-load "dired-x"
   '(progn
-     (add-hook 'dired-load-hook
-               (lambda ()
-                 (setq dired-guess-shell-gnutar "tar")))
-
-     (add-hook 'dired-mode-hook
-               (lambda ()
-                 ;; Set buffer-local variables here.  For example:
-                 (setq dired-omit-mode t)))
-
      (setq dired-omit-extensions
            '(".svn/" "CVS/" ".o" "~" ".bin" ".bak" ".obj" ".map" ".ico"
              ".pif" ".lnk" ".a" ".ln" ".blg" ".bbl" ".dll" ".drv" ".vxd"
@@ -80,7 +62,6 @@ and blocks emacs.  The default for ASYNC is t." t)
              ".idx" ".lof" ".lot" ".glo" ".blg" ".bbl" ".cps" ".fn"
              ".fns" ".ky" ".kys" ".pg" ".pgs" ".tp" ".tps" ".vr" ".vrs"
              ".pdb" ".ilk" ".lrc"))
-
 
      (setq dired-omit-size-limit 150000)
      (setq dired-guess-shell-alist-user    ; use ! to call guess command
@@ -113,42 +94,13 @@ and blocks emacs.  The default for ASYNC is t." t)
                    "\\|"
                    (regexp-opt '("TAGS" "cscope.out"))))))
 
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-(setq dired-listing-switches "-alh")
-
+;;; wdired
 ;; press `r' to modify the filename in the dired buffer, `C-c C-c' to commit
-(require 'wdired nil t)
-(when (featurep 'wdired)
-  (autoload 'wdired-change-to-wdired-mode "wdired")
-  (define-key dired-mode-map "r" 'wdired-change-to-wdired-mode))
+(autoload 'wdired-change-to-wdired-mode "wdired")
+(define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
 
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; List directories first in dired(seems to not work)
-;;(require 'ls-lisp)
-
-;; list directories first
-(defun sof/dired-sort ()
-  "Dired sort hook to list directories first."
-  (save-excursion
-    (let (buffer-read-only)
-      (forward-line 2) ;; beyond dir. header
-      (sort-regexp-fields t "^.*$" "[ ]*." (point) (point-max))))
-  (and (featurep 'xemacs)
-       (fboundp 'dired-insert-set-properties)
-       (dired-insert-set-properties (point-min) (point-max)))
-  (set-buffer-modified-p nil))
-(add-hook 'dired-after-readin-hook 'sof/dired-sort)
-
-
-;;;;
-;; Ask for confirm when opening some binary alike(.avi, .dvi, etc) files
-;; by accident.
+;;;
+;; Ask for confirm when opening some binary alike(.avi, .dvi, etc) files by accident.
 (defadvice dired-find-file (around ask-confirm-open-binary-file)
   (let ((f (file-name-nondirectory (dired-filename-at-point))))
     (if (or (string-match
@@ -163,15 +115,7 @@ and blocks emacs.  The default for ASYNC is t." t)
         ad-do-it)))
 (ad-activate 'dired-find-file)
 
-;; (define-key dired-mode-map (kbd "w") (lambda ()
-;;                                        (interactive)
-;;                                        (dired-copy-filename-as-kill 0)))
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Reuse dired buffer when jump to other directories
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; reuse dired buffer when jump to other directories
 ;; (defadvice dired-find-file (around dired-find-file-single-buffer activate)
 ;;   "Replace current buffer if file is a directory."
 ;;   (interactive)
@@ -182,7 +126,6 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;;              (not (eq (current-buffer) orig)))
 ;;       (kill-buffer orig))))
 
-;;----------------------------------------------------------------------------------------------------
 ;; (defun dired-up-directory-after-kill ()
 ;;   "Call 'dired-up-directory' after calling '(kill-buffer (current-buffer))'."
 ;;   (interactive)
@@ -198,7 +141,6 @@ and blocks emacs.  The default for ASYNC is t." t)
     (kill-buffer orig)))
 
 
-
 ;; dired-advertised-find-file is an alias for dired-find-file
 (defun dired-advertised-find-file-after-kill ()
   "Call 'dired-advertised-find-file' after calling '(kill-buffer (current-buffer))'."
@@ -207,144 +149,75 @@ and blocks emacs.  The default for ASYNC is t." t)
     (dired-advertised-find-file)
     (kill-buffer buf)))
 
-;; (defun pl/dired-mode-hook-fun ()
-;; (setq dired-bind-jump nil
-;;       dired-bind-man nil
-;;       dired-bind-info nil)
-;; (set-face-foreground 'dired-marked "GreenYellow")
-;; (define-key dired-mode-map "\M-o" nil)
-;; (define-key dired-mode-map "^" 'dired-up-directory-after-kill)
-;; (define-key dired-mode-map "\M-\C-m" 'dired-advertised-find-file-after-kill)
-;; (define-key dired-mode-map "\C-co" 'dired-omit-mode)
-;; (if (pl/locate-file ".tex" (pwd))
-;;     (add-to-list 'dired-omit-extensions ".log")
-;;     (setq dired-omit-extensions (remove ".log" dired-omit-extensions))))
-;; (defun pl/locate-file (suffix dir)
-;;   ;; return non-nil or nil
-;;   (with-temp-buffer
-;;     (goto-char (point-min))
-;;     (call-process "ls" nil t t (expand-file-name dir))
-;;     (goto-char (point-min))
-;;     (search-forward-regexp (concat "^.*" suffix "$") (point-max) t)))
+(add-hook 'dired-mode-hook 'pl/dired-mode-hook-init)
+(defun pl/dired-mode-hook-init ()
+  (setq dired-bind-jump nil
+        dired-bind-man nil
+        dired-bind-info nil)
+  ;; (define-key dired-mode-map "\M-o" nil)
+  ;; (define-key dired-mode-map "^" 'dired-up-directory-after-kill)
+  ;; (define-key dired-mode-map "\M-\C-m" 'dired-advertised-find-file-after-kill)
+  ;; (define-key dired-mode-map "\C-co" 'dired-omit-mode)
+  (define-key dired-mode-map (kbd "W") 'pl/dired-w3m-find-file)
+  (define-key dired-mode-map (kbd ";") 'dired-view-minor-mode-toggle)
+  (define-key dired-mode-map (kbd ":") 'dired-view-minor-mode-dired-toggle)
 
-;; (add-hook 'dired-mode-hook 'pl/dired-mode-hook-fun)
+  ;; dired use `s' to switch sort by name/time, we undefine it so that
+  ;; it can be used as prefix
+  (define-key dired-mode-map (kbd "s") nil)
+  (pl/dired-define-sort "RET" "")   ; default
+  (pl/dired-define-sort "X" "X")    ; sort alphabetically by entry extension
+  (pl/dired-define-sort "t" "t")    ; sort by modification time, newest first
+  (pl/dired-define-sort "S" "S")    ; sort by file size
+  (pl/dired-define-sort "U" "U")    ; do not sort; list entries in directory order
+  (pl/dired-define-sort "u" "ut")   ; sort by access time
+  (pl/dired-define-sort "c" "ct")   ; sort by ctime
+  (pl/dired-define-sort "n" "n")    ; sort by like -l, but list numeric user and group ID
+  (pl/dired-define-sort "." "d .*") ; sort by invisible only
+  (pl/dired-define-toggle "r" pl/dired-sort-reverse)
+  (pl/dired-define-toggle "R" pl/dired-sort-recursive)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+  (dired-omit-mode +1))
 
+(defun pl/dired-w3m-find-file ()
+  (interactive)
+  (let ((file (dired-get-filename)))
+    (when (y-or-n-p (format "Open 'w3m' %s " (file-name-nondirectory file)))
+      (w3m-find-file file))))
 
-;;;
+;;; sorting
+;; http://lifegoo.pluskid.org/wiki/EnhanceDired.html
+(defconst pl/default-listing-switches "-alh")
+(defvar pl/dired-sort-reverse nil "sort reversely")
+(defvar pl/dired-sort-recursive nil "sort recursively")
 
-(define-key dired-mode-map (kbd ";") 'dired-view-minor-mode-toggle)
-;; (define-key dired-mode-map (kbd ":") 'dired-view-minor-mode-dired-toggle)
+(setq dired-listing-switches pl/default-listing-switches)
 
-
-;; (defun pl/dired-wvHtml ()
-;;   (concat "wvHtml --charset=gb2312 * "
-;;    (pl/dired-get-filename-no-extention) ".html"))
-
-;; (define-key dired-mode-map (kbd "v") 'pl/dired-w3m-find-file)
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Sorting
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; "s" Toggle between sort by date/name and refresh the dired buffer.
-;; (defmacro pl/dired-define-sort (key switch)
-;;   "redefine the key `s KEY' to sort use switch to ls."
-;;   `(define-key dired-mode-map ,(concat "s" key)
-;;      (lambda ()
-;;        (interactive)
-;;        (dired-sort-other (concat dired-listing-switches
-;;                                  ,switch
-;;                                  (if pl/dired-sort-reverse
-;;                                      "r"
-;;                                      "")
-;;                                  (if pl/dired-sort-recursive
-;;                                      "R"
-;;                                      ""))))))
-;; (defmacro pl/dired-define-toggle (key var)
-;;   `(define-key dired-mode-map ,(concat "s" key)
-;;      (lambda ()
-;;        (interactive)
-;;        (setq ,var (not ,var))
-;;        (message "%s %s."
-;;                 (get ',var 'variable-documentation)
-;;                 (if ,var
-;;                     "enabled"
-;;                     "disabled")))))
-;; (add-hook 'dired-mode-hook
-;;           (lambda ()
-;;             ;; dired use `s' to switch sort by name/time, we undefine it so
-;;             ;; that it can be used as prefix
-;;             (define-key dired-mode-map
-;;                 (kbd "s")
-;;               nil)
-;;             (defvar pl/dired-sort-reverse nil
-;;               "sort reversely")
-;;             (defvar pl/dired-sort-recursive nil
-;;               "sort recursively")
-;;             (pl/dired-define-sort "X" "X")
-;;             (pl/dired-define-sort "t" "t")
-;;             (pl/dired-define-sort "S" "S")
-;;             (pl/dired-define-sort "U" "U")
-;;             (pl/dired-define-sort "u" "ut") ; sort by access time
-;;             (pl/dired-define-sort "c" "ct") ; sort by ctime
-;;             (pl/dired-define-sort "n" "")   ; sort by name :)
-;;             (pl/dired-define-toggle "r" pl/dired-sort-reverse)
-;;             (pl/dired-define-toggle "R" pl/dired-sort-recursive)))
+(defmacro pl/dired-define-sort (key switches)
+  "redefine the key `s KEY' to sort use switches to ls."
+  ;; `(define-key dired-mode-map ,(concat "s" key)
+  `(define-key dired-mode-map (kbd ,(concat "s " key))
+     (lambda ()
+       (interactive)
+       (let ((new-switches
+              (concat pl/default-listing-switches
+                      ,switches
+                      (if pl/dired-sort-reverse "r" "")
+                      (if pl/dired-sort-recursive "R" ""))))
+         (setq dired-listing-switches new-switches)
+         (dired-sort-other new-switches)))))
 
+(defmacro pl/dired-define-toggle (key var)
+  `(define-key dired-mode-map ,(concat "s" key)
+     (lambda ()
+       (interactive)
+       (setq ,var (not ,var))
+       (message "%s %s."
+                (get ',var 'variable-documentation)
+                (if ,var "enabled" "disabled")))))
 
-;; Sort methods that affect future sessions
-(defun pl/dired-sort-by-default ()
-  (interactive)
-  (setq dired-listing-switches "-lh")
-  (dired-sort-other dired-listing-switches))
-
-(defun pl/dired-sort-by-show-all ()
-  (interactive)
-  (setq dired-listing-switches "-lhA")
-  (dired-sort-other dired-listing-switches))
-
-(defun pl/dired-sort-by-for-solaris ()
-  "Solaris `ls' doesn't support `-h' option, stupid!"
-  (interactive)
-  (setq dired-listing-switches "-lA")
-  (dired-sort-other dired-listing-switches))
-
-;; Sort methods that affect current session only
-(defun pl/dired-sort-by-date ()
-  (interactive)
-  (dired-sort-other
-   (concat dired-listing-switches "tr")))
-
-(defun pl/dired-sort-by-extenstion ()
-  (interactive)
-  (dired-sort-other
-   (concat dired-listing-switches "X")))
-
-(defun pl/dired-sort-by-invisible-only ()
-  (interactive)
-  (dired-sort-other
-   (concat dired-listing-switches "d .*")))
-
-(defun pl/dired-sort-by-size ()
-  (interactive)
-  (dired-sort-other
-   (concat dired-listing-switches "S")))
-
-(define-key dired-mode-map (kbd "s") nil)
-(define-key dired-mode-map (kbd "s RET") 'pl/dired-sort-by-default)
-(define-key dired-mode-map (kbd "s a") 'pl/dired-sort-by-show-all)
-(define-key dired-mode-map (kbd "s t") 'pl/dired-sort-by-date)
-(define-key dired-mode-map (kbd "s X") 'pl/dired-sort-by-extenstion)
-(define-key dired-mode-map (kbd "s s") 'pl/dired-sort-by-for-solaris)
-(define-key dired-mode-map (kbd "s .") 'pl/dired-sort-by-invisible-only)
-(define-key dired-mode-map (kbd "s z") 'pl/dired-sort-by-size)
-
-;; Sorting ends there-------------------------------------------------------------------------------------
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Shell command guess
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; Shell command guess
 ;; (defadvice dired-run-shell-command (around pl/dired-run-shell-command (command))
 ;;   "run a shell command COMMAND .
 ;; If the COMMAND ends with `&' then run it in background and *discard* the
@@ -625,7 +498,6 @@ e.g., (pl/dircolors-get-escape-seq \"*.gz\") => \"01;31\""
                              (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file))))
 
 
-
 ;; (,(regexp-opt
 ;;              '(".mp3" ".ogg" ".wav" ".avi" ".mpg" ".mpeg" ".wmv" ".mkv" ".mp4" ".flac"
 ;;                ".dat" ".wma" ".ape" ".asf" ".rmvb" ".rm" ".mkv" ".VOB" ".vob" ".flv" ".mov"))
@@ -639,64 +511,14 @@ e.g., (pl/dircolors-get-escape-seq \"*.gz\") => \"01;31\""
 ;;                          (keyboard-quit))
 ;;                   (emms-add-file (dired-mode-map)))))
 
+;;; emms
 (define-key dired-mode-map (kbd "M-RET") 'emms-add-dired)
-
-
 
 ;;; gnus-dired-mode
 ;; C-c C-m C-a
 ;; "Send dired's marked files as an attachment (`gnus-dired-attach'). You
 ;; will be prompted for a message buffer."
 ;; (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
-
-
-;;; Omitting Git-ignored files in Emacs dired
-;; -----------------------------------------------------------------------
-;; (add-hook 'dired-load-hook #'(lambda nil (load "dired-x" t)))
-
-;; (eval-after-load "dired-x"
-;;   '(progn
-;;      (defvar dired-omit-regexp-orig (symbol-function 'dired-omit-regexp))
-
-;;      (defun dired-omit-regexp ()
-;;        (let ((file (expand-file-name ".git"))
-;;              parent-dir)
-;;          (while (and (not (file-exists-p file))
-;;                      (progn
-;;                        (setq parent-dir
-;;                              (file-name-directory
-;;                               (directory-file-name
-;;                                (file-name-directory file))))
-;;                        ;; Give up if we are already at the root dir.
-;;                        (not (string= (file-name-directory file)
-;;                                      parent-dir))))
-;;            ;; Move up to the parent dir and try again.
-;;            (setq file (expand-file-name ".git" parent-dir)))
-;;          ;; If we found a change log in a parent, use that.
-;;          (if (file-exists-p file)
-;;              (let ((regexp (funcall dired-omit-regexp-orig)))
-;;                (assert (stringp regexp))
-;;                (concat
-;;                 regexp
-;;                 (if (> (length regexp) 0)
-;;                     "\\|" "")
-;;                 "\\("
-;;                 (mapconcat
-;;                  #'(lambda (str)
-;;                      (concat "^"
-;;                              (regexp-quote
-;;                               (substring str 13
-;;                                          (if (= ?/ (aref str (1- (length str))))
-;;                                              (1- (length str))
-;;                                            nil)))
-;;                              "$"))
-;;                  (split-string (shell-command-to-string
-;;                                 "git clean -d -x -n")
-;;                                "\n" t)
-;;                  "\\|")
-;;                 "\\)"))
-;;            (funcall dired-omit-regexp-orig))))))
-;; -----------------------------------------------------------------------------------------
 
 ;;; tumme - Dired's image browser
 ;; "tumme" means thumb in Swedish. You need ImageMagick installed for tumme to work.
@@ -744,7 +566,7 @@ Require unix zip commandline tool."
   (let ((file-name (elt (dired-get-marked-files) 0)))
     (shell-command (format "zip -r '%s.zip' '%s'" (file-relative-name file-name) (file-relative-name file-name)))))
 
-;;;
+;;; open in external application
 (define-key dired-mode-map (kbd "M-O") 'pl/open-in-external-application)
 (defun pl/open-in-external-application ()
   "Open the current file or dired marked files in external app.
@@ -775,27 +597,13 @@ Works in Microsoft Windows, Mac OS X, Linux."
                ξfile-list))
         (t (message "unsupported system!"))))))
 
-
-
-;;; color
-(eval-after-load "dired+"
-  '(progn
-     (set-face-attribute 'diredp-dir-heading nil :foreground "magenta" :background "#555555")
-     (set-face-attribute 'diredp-file-name nil :foreground "dodger blue")
-     (set-face-attribute 'diredp-dir-priv nil :foreground "steel blue" :background nil :weight 'bold)
-     (set-face-attribute 'diredp-no-priv nil :foreground nil :background nil)
-     (set-face-attribute 'diredp-read-priv nil :foreground "deep sky blue" :background 'unspecified)
-     (set-face-attribute 'diredp-write-priv nil :foreground "yellow" :background 'unspecified)
-     (set-face-attribute 'diredp-exec-priv nil :foreground "red" :background 'unspecified)
-     (set-face-attribute 'diredp-flag-mark-line nil :foreground "white"
-                         :background "Blue4")))
-
 (setq diredp-hide-details-initially-flag nil)
 (setq diredp-hide-details-propagate-flag nil)
 
 ;;; tips
 ;; mark mutiple files in dired mode with m, press B to compile them to *.el.
 ;; dired-compare-directories
+;; w     dired-copy-filename-as-kill. `C-u 0' prefix copy absolute file name
 ;; i     insert sub-directory
 ;; C-u i insert sub-directory with specify arguments of ls
 ;; C-u l change the arguments of ls of sub-directory

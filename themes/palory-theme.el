@@ -135,11 +135,11 @@
    '(org-agenda-calendar-sexp ((t (:foreground "MistyRose3"))))
 
    '(warning ((t (:foreground "VioletRed" :weight bold))))
-   
+
    ;; whitespace
    `(whitespace-space ((t (:foreground "#ff6622" :background ,base02))))
-   
-   
+
+
    ;; font lock
    '(font-lock-builtin-face ((t (:foreground "chartreuse3"))))
    `(font-lock-comment-face ((t (:foreground ,base01))))
@@ -168,10 +168,10 @@
    '(ido-subdir ((t (:foreground "#1e90ff" :weight bold))))
    '(ido-first-match ((t (:foreground "DarkMagenta" :weight bold))))
    '(ido-virtual ((t (:foreground "#638383"))))
-   
+
    ;; flx
    `(flx-highlight-face ((t (:foreground "#f1ed22" :background ,base02 :weight bold :underline nil))))
-   
+
    ;; anything
    '(anything-ff-directory ((t (:background "222222"))))
 
@@ -193,8 +193,10 @@
 
    ;; minimap
    `(minimap-active-region-background ((t (:background ,base02))))
-   
-   ;; driedp
+
+   ;; dried & diredp
+   '(dired-marked ((t (:background "#555555" :foreground "Pink"))))
+
    '(diredp-dir-heading ((t (:background "#555555" :foreground "magenta"))))
    '(diredp-file-name ((t (:foreground "dodger blue"))))
    '(diredp-dir-priv ((t (:foreground "steel blue" :background unspecified :weight bold))))
@@ -203,7 +205,7 @@
    '(diredp-write-priv ((t (:foreground "yellow" :background unspecified))))
    '(diredp-exec-priv ((t (:foreground "red" :background unspecified))))
    '(diredp-flag-mark-line ((t (:foreground "white" :background "blue4"))))
-   
+
    ;; ace-jump-mode
    `(ace-jump-face-background
      ((t (:foreground ,base01 :background ,base03 :inverse-video nil))))
@@ -259,7 +261,7 @@
 
    ;; narrow-indirect
    `(ni-mode-line-buffer-id ((t (:foreground "RosyBrown" :box nil))))
-   
+
    ;; rainbow-delimiters
    '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))
    '(rainbow-delimiters-depth-2-face ((t (:foreground "#f0dfaf"))))

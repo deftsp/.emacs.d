@@ -198,6 +198,11 @@
                :type http
                :depends lua-mode
                :url "http://www.enyo.de/fw/software/lua-emacs/lua2-mode.el")
+        (:name reveal-in-finder
+               :website "https://github.com/kaz-yos/elisp"
+               :description "Reveal file associated with buffer in OS X Finder"
+               :type http
+               :url "https://github.com/kaz-yos/elisp/raw/master/reveal-in-finder.el")
         (:name helm-swoop
                :type github
                :description "Efficiently hopping squeezed lines powered by helm interface"

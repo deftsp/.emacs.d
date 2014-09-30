@@ -82,20 +82,6 @@
 
 (setq w3m-no-proxy-domains '("google.com" "google.cn"))
 
-
-;;; work with dired
-(add-hook 'dired-mode-hook
-          (lambda ()
-            (define-key dired-mode-map (kbd "C-c f w") 'pl/dired-w3m-find-file)))
-
-(defun pl/dired-w3m-find-file ()
-  (interactive)
-  (let ((file (dired-get-filename)))
-    (if (y-or-n-p (format "Open 'w3m' %s " (file-name-nondirectory file)))
-        (w3m-find-file file))))
-
-
-
 ;;; Downloading Files Asynchronously
 ;; Since w3m-el downloads everything synchronously it can sometimes interfere with productivity. If you use w3m-el to
 ;; download and save large files here are two solutions to do so asynchronously. One uses wget and the other uses cURL.
