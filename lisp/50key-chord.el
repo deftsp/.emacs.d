@@ -23,7 +23,7 @@
 ;;
 
 ;;; Code:
-
+(require 'key-chord nil t)
 
 ;;; banish the shift key
 ;; http://endlessparentheses.com/banishing-the-shift-key-with-key-chord-in-emacs.html
