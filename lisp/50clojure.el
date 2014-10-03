@@ -22,17 +22,17 @@
        (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode))
      ;; (add-hook 'clojure-mode-hook 'enable-paredit-mode)
      ;; (add-hook 'clojure-mode-hook 'nrepl-turn-on-eldoc-mode)
+     ;; indentation
+     ;; http://jbm.io/2013/11/custom-indentation-in-clojure-mode/
+     (put-clojure-indent 'match 1) ; equal to (put 'match 'clojure-indent-function 1)
+     (put 'macrolet 'clojure-backtracking-indent '((2) 2))
+
      (add-hook 'clojure-mode-hook 'subword-mode)))
 
 (eval-after-load "cider"
   '(progn
      ;; (add-hook 'cider-mode-hook 'enable-paredit-mode)
      (add-hook 'cider-mode-hook 'subword-mode)))
-
-;;; Custom indentation
-;; http://jbm.io/2013/11/custom-indentation-in-clojure-mode/
-(put-clojure-indent 'match 1) ; equal to (put 'match 'clojure-indent-function 1)
-(put 'macrolet 'clojure-backtracking-indent '((2) 2))
 
 
 (provide '50clojure)

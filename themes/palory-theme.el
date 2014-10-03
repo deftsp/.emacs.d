@@ -221,6 +221,17 @@
    `(popup-isearch-match ((t (:background ,base03 :foreground ,base03))))
    `(popup-menu-selection-face ((t (:background "#0000ff" :foreground ,base03))))
 
+   ;; company-mode
+   `(company-tooltip ((t (:background ,base01 :foreground "#dfdfdf"))))
+   `(company-tooltip-common ((t (:background ,base1 :foreground "#aa3333"))))
+   ;; '(company-tooltip-common-selection ((t (:background "#73c5bb" :foreground "White"))))
+   `(company-tooltip-common-selection ((t (:background ,base1 :foreground "#ccff66"))))
+   `(company-tooltip-selection ((t (:background ,base1 :foreground "#ccff66"))))
+   `(company-scrollbar-bg ((t (:background ,base0))))
+   `(company-scrollbar-fg ((t (:background ,base2))))
+   '(company-tooltip-search ((t (:background "#aa3333" :foreground "#eeeeee"))))
+
+
    ;; cedet
    '(pulse-highlight-start-face ((t (:background "#222222"))))
    '(semantic-tag-boundary-face ((t (:overline "#227777"))))

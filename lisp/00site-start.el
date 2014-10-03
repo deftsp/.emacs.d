@@ -20,7 +20,7 @@
 (require '50alias)
 (require '50android)
 (require '50asm-mode)
-(require '50auto-complete)
+;; (require '50auto-complete)
 (require '50auto-fill)
 (require '50auto-insert)
 ;; (require '50bbdb)
@@ -29,6 +29,7 @@
 
 (require '50clojure)
 (require '50common-lisp)
+(require '50company-mode)
 (require '50completion)
 (require '50css)
 (require '50dictionary)

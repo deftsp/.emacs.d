@@ -35,9 +35,7 @@
   ;; (push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
   ;; (push '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns)
   ;; (add-hook 'ruby-mode-hook 'pl/flymake-ruby-enable)
-  (define-key ruby-mode-map "\C-c\C-z" 'pl/ruby-switch-to-inf-dwim)
-  (add-to-list 'ac-sources 'ac-source-rsense-method)
-  (add-to-list 'ac-sources 'ac-source-rsense-constant))
+  (define-key ruby-mode-map "\C-c\C-z" 'pl/ruby-switch-to-inf-dwim))
 
 (add-hook 'ruby-mode-hook 'pl/ruby-mode-init)
 

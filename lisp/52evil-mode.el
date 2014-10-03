@@ -555,6 +555,15 @@ to replace the symbol under cursor"
 (eval-after-load "git-timemachine"
   '(add-hook 'git-timemachine-mode-hook 'pl/evil-state-revert))
 
+;;; company-mode
+(when (fboundp 'evil-declare-change-repeat)
+  (mapc #'evil-declare-change-repeat
+        '(company-complete-common
+          company-select-next
+          company-select-previous
+          company-complete-selection
+          company-complete-number)))
+
 ;;; misc
 ;; using both the RET and <return> forms to make sure the key works both in terminal and under X.
 (evil-define-key 'motion completion-list-mode-map (kbd "<return>") 'choose-completion)

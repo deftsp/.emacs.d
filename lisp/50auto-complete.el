@@ -103,6 +103,7 @@
   (if (fboundp 'scheme-current-env)
       (add-to-list 'ac-sources 'ac-source-scheme))
   (add-to-list 'ac-sources 'ac-source-yasnippet))
+
 (add-hook 'scheme-mode-hook 'pl/ac-scheme-mode-setup)
 
 ;;; Clojure
@@ -115,6 +116,13 @@
   (add-to-list 'ac-sources 'ac-source-nrepl-static-methods))
 (add-hook 'clojure-mode-hook 'pl/ac-clojure-mode-setup)
 (add-hook 'nrepl-mode-hook 'pl/ac-clojure-mode-setup)
+
+;;; Ruby
+(defun pl/ac-ruby-mode-setup ()
+  (add-to-list 'ac-sources 'ac-source-rsense-method)
+  (add-to-list 'ac-sources 'ac-source-rsense-constant))
+
+(add-hook 'ruby-mode-hook 'pl/ac-ruby-mode-setup)
 
 ;;; Python
 (defun pl/ac-python-mode-setup ()

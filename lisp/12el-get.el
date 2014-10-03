@@ -225,7 +225,8 @@
         (:name ace-window
                :type github
                :description "Quickly switch windows using `ace-jump-mode'"
-               :pkgname "abo-abo/ace-window")
+               :pkgname "abo-abo/ace-window"
+               :depends ace-jump-mode)
         (:name ace-jump-buffer
                :type github
                :description "fast buffer switching extension to `ace-jump-mode'"
@@ -253,6 +254,13 @@
                :build `(("make" ,(format "EMACS=%s" (shell-quote-argument el-get-emacs)) "all"))
                :post-init (progn
                             (require 'haskell-mode-autoloads)))
+        (:name company-cabal
+               :description "Company-mode completion back-end for haskell-cabal-mode "
+               :type github
+               :pkgname "iquiw/company-cabal"
+               :depends (company-mode cl-lib)
+               :post-init (eval-after-load 'company
+                            '(add-to-list 'company-backends 'company-cabal)))
         (:name tuareg-mode
                :type github
                :description "an Emacs OCaml mode"
@@ -271,11 +279,11 @@
 ;; (el-get 'sync 'org-mode)                ; init org-mode first
 (el-get 'sync 'exec-path-from-shell)
 (require 'exec-path-from-shell nil t) ; https://github.com/purcell/exec-path-from-shell
-(el-get 'sync 'auto-complete)           ; auto-complete should init before ac-nrepl
+;; (el-get 'sync 'auto-complete)           ; auto-complete should init before ac-nrepl
 (el-get 'sync 'clojure-mode)
 (el-get 'sync 'evil)
-(el-get 'sync 'ace-jump-mode)
 (el-get 'sync 'ace-window)
+(el-get 'sync 'ace-jump-mode)
 (el-get 'sync)                          ; 'sync 'wait
 
 
