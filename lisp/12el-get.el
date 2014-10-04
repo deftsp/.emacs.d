@@ -226,7 +226,8 @@
                :type github
                :description "Quickly switch windows using `ace-jump-mode'"
                :pkgname "abo-abo/ace-window"
-               :depends ace-jump-mode)
+               :depends ace-jump-mode
+               :features ace-window)
         (:name ace-jump-buffer
                :type github
                :description "fast buffer switching extension to `ace-jump-mode'"
@@ -282,8 +283,8 @@
 ;; (el-get 'sync 'auto-complete)           ; auto-complete should init before ac-nrepl
 (el-get 'sync 'clojure-mode)
 (el-get 'sync 'evil)
-(el-get 'sync 'ace-window)
 (el-get 'sync 'ace-jump-mode)
+(el-get 'sync 'ace-window)
 (el-get 'sync)                          ; 'sync 'wait
 
 

@@ -247,6 +247,10 @@
    ;; col-highlight
    `(col-highlight ((t (:background ,base02))))
 
+   ;; highlight-indentation
+   '(highlight-indentation-face ((t (:background "#003b46"))))
+   `(highlight-indentation-current-column-face ((t (:background "#196873"))))
+
    ;; comint
    '(comint-highlight-prompt ((t (:foreground "#eedd82" :weight bold))))
 

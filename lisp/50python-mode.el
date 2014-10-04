@@ -5,43 +5,34 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-;;; Elpy, the Emacs Lisp Python Environment
-;; https://github.com/jorgenschaefer/elpy/
+;;; elpy
+(elpy-enable)
+(elpy-use-ipython)
 
 
-;;; init for ipython
-(eval-after-load "python.el"
-  (setq python-shell-interpreter "ipython"
-        python-shell-interpreter-args ""
-        python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-        python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-        python-shell-completion-setup-code
-        "from IPython.core.completerlib import module_completion"
-        python-shell-completion-module-string-code
-        "';'.join(module_completion('''%s'''))\n"
-        python-shell-completion-string-code
-        "';'.join(get_ipython().Completer.all_completions('''%s'''))\n"))
+;;; ropemacs
+(setq ropemacs-enable-shortcuts nil
+      ropemacs-global-prefix "C-c C-p"
+      ropemacs-local-prefix "C-c C-p"
+      ropemacs-enable-autoimport t)
 
-
-(setq ropemacs-enable-shortcuts nil)
-(setq ropemacs-global-prefix "C-c C-p")
-(setq ropemacs-local-prefix "C-c C-p")
-
+;; pymacs
 ;; (pymacs-load "ropemacs" "rope-")
-(setq ropemacs-enable-autoimport t)
 
-(defun pl/init-python-mode ()
+(defun pl/python-mode-init ()
+  (subword-mode +1)
   ;; (virtualenv-minor-mode 1)
   ;; (ropemacs-mode)
-  )
+  (setq imenu-create-index-function 'py--imenu-create-index-new))
 
-(add-hook 'python-mode-hook 'pl/init-python-mode)
+;; python-mode set imenu-create-index-function too, make sure init function orverride it  by append it
+(add-hook 'python-mode-hook 'pl/python-mode-init t)
 
+(add-hook 'inferior-python-mode-hook 'pl/init-inferior-python-mode)
 (defun pl/init-inferior-python-mode ()
   ;; do not echo input
   ;; http://stackoverflow.com/questions/8060609/python-interpreter-in-emacs-repeats-lines
   (setq comint-process-echoes t))
-(add-hook 'inferior-python-mode-hook 'pl/init-inferior-python-mode)
 
 
 (provide '50python-mode)
