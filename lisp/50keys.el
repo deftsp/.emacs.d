@@ -352,18 +352,45 @@ it marks the next ARG lines after the ones already marked."
 (autoload 'dired-toggle-read-only "dired" nil t)
 
 ;; Launcher Keymap
-;; (define-prefix-command 'launcher-map)
+(define-prefix-command 'launcher-map)
 ;; C-x l is `count-lines-page' by default. If you
 ;; use that, you can try s-l or <C-return>.
-;; (define-key ctl-x-map "l" 'launcher-map)
+(define-key ctl-x-map "l" 'launcher-map) ; `C-x l ' default bind to count-lines-page
 ;; (global-set-key (kbd "s-l") 'launcher-map)
-;; (define-key launcher-map "c" #'calc)
+(define-key launcher-map "c" #'calc)
 ;; (define-key launcher-map "d" #'ediff-buffers)
 ;; (define-key launcher-map "f" #'find-dired)
 ;; (define-key launcher-map "g" #'lgrep)
 ;; (define-key launcher-map "G" #'rgrep)
-;; (define-key launcher-map "h" #'man) ; Help
-;; (define-key launcher-map "i" #'package-install-from-buffer)
-;; (define-key launcher-map "s" #'shell)
+(define-key launcher-map "h" #'man) ; Help
+(define-key launcher-map "s" #'shell)
+
+;;; Launching External Applications and Websites
+;; http://endlessparentheses.com/keymap-for-launching-external-applications-and-websites.html
+(defmacro pl/def-run (exec)
+  "Return a function that runs the executable EXEC."
+  (let ((func-name (intern (concat "pl/run-" exec))))
+    `(progn
+       (defun ,func-name ()
+         ,(format "Run the %s executable." exec)
+         (interactive)
+         (start-process "" nil ,exec))
+       ',func-name)))
+
+(define-key launcher-map "m" (pl/def-run "Mathematica"))
+
+(defmacro pl/def-browse (url)
+  "Return a function that calls `browse-url' on URL."
+  (let ((func-name (intern (concat "pl/browse-" url))))
+    `(progn
+       (defun ,func-name ()
+         ,(format "Browse to the url %s." url)
+         (interactive)
+         (browse-url ,url))
+       ',func-name)))
+
+(define-key launcher-map "r" (pl/def-browse "http://www.reddit.com/r/emacs/"))
+(define-key launcher-map "w" (pl/def-browse "http://www.emacswiki.org/"))
+
 
 (provide '50keys)
