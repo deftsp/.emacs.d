@@ -190,12 +190,5 @@
 ;;                                                 (list (cons 'font orig-font)))
 ;;                        nil)
 
-(eval-after-load "icicles"
-  '(progn
-     (set-face-attribute 'icicle-current-candidate-highlight nil :background "orchid4")
-     (set-face-attribute 'icicle-mustmatch-completion nil :box nil)
-     (set-face-attribute 'icicle-multi-command-completion nil :background 'unspecified :foreground "sandybrown")))
-
-
 
 (provide '52icicles)

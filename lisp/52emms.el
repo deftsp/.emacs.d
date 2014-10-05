@@ -56,10 +56,6 @@
 (setq emms-mode-line-mode-line-function 'emms-mode-line-icon-function)
 (setq emms-mode-line-titlebar-function nil)
 
-;; faces
-(set-face-foreground 'emms-playlist-selected-face "magenta")
-(set-face-foreground 'emms-playlist-track-face  "SteelBlue2")
-
 (when (eq system-type 'gnu/linux)
   (setq emms-source-file-gnu-find "/usr/bin/find"))
 

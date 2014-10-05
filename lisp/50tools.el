@@ -164,8 +164,7 @@ space and marks next symbol."
 ;; (require 'hl-line)
 ;; (eval-after-load "hl-line"
 ;;   '(progn
-;;      (global-hl-line-mode t)
-;;      (set-face-background 'hl-line "#222222")))
+;;      (global-hl-line-mode t)))
 
 ;;; buffer action
 ;; http://xwl.appspot.com/ref/buffer-action.el
@@ -409,10 +408,7 @@ space and marks next symbol."
       (define-fringe-bitmap 'pl/marker-left   [#x00 #x00 #xFC #xFE #x0F #xFE #xFC #x00])
       (define-fringe-bitmap 'pl/marker-right  [#x00 #x00 #x3F #x7F #xF0 #x7F #x3F #x00])
       (setq bmkp-light-left-fringe-bitmap 'pl/marker-left)
-      (setq bmkp-light-right-fringe-bitmap 'pl/marker-right))
-
-    (set-face-attribute 'bmkp-light-fringe-autonamed nil :foreground "#222222" :background "#778899")
-    (set-face-attribute 'bmkp-light-fringe-non-autonamed nil :foreground "Black":background "DarkOrange1")))
+      (setq bmkp-light-right-fringe-bitmap 'pl/marker-right))))
 
 ;;; bookmark history stack
 ;; Use the following to maintain a stack of buffer locations which you can use as a simple bookmarking system.

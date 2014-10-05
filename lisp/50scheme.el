@@ -15,10 +15,6 @@
       (scheme-interactively-start-process))
     (pop-to-buffer-same-window (get-buffer "*scheme*"))))
 
-(eval-after-load "gambit"
-  '(progn
-    (set-face-attribute  gambit-highlight-face nil :foreground "#000000")))
-
 ;; (add-hook 'scheme-mode-hook (function gambit-mode))
 ;; (add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
 
@@ -44,16 +40,7 @@
   '(progn
     (setq quack-fontify-style nil    ;or 'plt 'emacs
           quack-default-program "gsi -:d-"
-          quack-newline-behavior 'indent-newline-indent)
-
-    (set-face-attribute quack-pltish-paren-face nil :foreground "#ccffcc" :weight 'normal)
-    (set-face-attribute quack-pltish-comment-face nil :foreground "#008888" :weight 'normal)
-    (set-face-attribute quack-pltish-keyword-face nil :foreground "#bbbb99" :weight 'bold)
-    (set-face-attribute quack-pltish-selfeval-face nil :foreground "#a800a8")
-    (set-face-attribute quack-pltish-defn-face nil :foreground "#ff7f00")
-    (set-face-attribute quack-threesemi-semi-face nil :background 'unspecified)
-    (set-face-attribute quack-threesemi-text-face nil :background 'unspecified)))
-
+          quack-newline-behavior 'indent-newline-indent)))
 
 ;;; Tell emacs about the indentation of some not-so-well-known procedures.
 ;; (put 'with-error-handler 'scheme-indent-function 1)     ; 'defun)

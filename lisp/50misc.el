@@ -397,10 +397,10 @@
 
 (if (fboundp 'paren-activate)
     (paren-activate))
+
 (eval-after-load "mic-paren"
   '(progn
-     (setq paren-sexp-mode 'mismatch)
-     (set-face-attribute 'paren-face-match nil :foreground "#222222" :background "DeepSkyBlue3")))
+     (setq paren-sexp-mode 'mismatch)))
 
 
 ;; rainbow-delimiters
@@ -1347,7 +1347,6 @@ This command is to be used interactively."
 
 ;; (add-site-lisp-load-path "mmm-mode/")
 ;; (when (require 'mmm-auto nil t)
-;;   (set-face-background 'mmm-default-submode-face "gray97")
 ;;   (setq mmm-global-mode 'maybe)
 
 ;;example use of the universal mmm mode
@@ -1371,7 +1370,6 @@ This command is to be used interactively."
 ;;(mmm-add-mode-ext-class 'latex-mode "\.tex$" 'embedded-c) ;does not work well
 
 ;;mmm-mode example:
-;;(set-face-background 'mmm-default-submode-face nil)
 ;;(mmm-add-classes
 ;; '((embedded-sql
 ;;    :submode sql-mode

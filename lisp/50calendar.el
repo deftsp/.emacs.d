@@ -2,16 +2,7 @@
 ;; How about work with Google Calendars http://bc.tech.coop/blog/070306.html
 (require 'cal-china-x)
 
-;;; face
-(when window-system
-  (set-face-foreground 'holiday-face "#d01ce2")
-  (set-face-foreground 'diary-face "dodger blue")
-  (set-face-background 'holiday-face "#282c30")
-  (set-face-foreground 'calendar-today-face "blue"))
-
-;;=============About diary================================================
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
+;;; diary
 (setq diary-list-include-blanks nil
       calendar-view-diary-initially-flag nil
       ;; number-of-diary-entries '[7 7 7 7 7 9 8]

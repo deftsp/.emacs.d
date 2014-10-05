@@ -20,8 +20,7 @@
      ecb-tip-of-the-day nil
      ;; ecb-layout-name 'left8          ; defautl 'left8
      ecb-tree-incremental-search 'substring ; 'prefix
-     ecb-use-speedbar-for-directories nil)
-    (set-face-background 'ecb-default-highlight-face "#666666")))
+     ecb-use-speedbar-for-directories nil)))
 ;; (setq ecb-other-window-jump-behavior 'edit-and-compile)
 
 (eval-after-load "ecb"
@@ -88,12 +87,6 @@
       (winring+-new-configuration "ECB")))
 
 (global-set-key (kbd "C-x E") 'winring-jump-to-ecb)
-
-;;; color
-(eval-after-load "ecb"
-  '(progn
-    (set-face-foreground 'ecb-tag-header-face "gray10")
-    (set-face-background 'ecb-tag-header-face "rosy brown")))
 
 ;; (defun set-winring-name-and-activate-ecb ()
 ;;   (cond ((string= "ECB" winring-name) (ecb-activate))

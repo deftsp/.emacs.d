@@ -104,12 +104,22 @@
    '(show-paren-match ((t (:foreground "SteelBlue3"))))
    '(show-paren-mismatch ((t (:foreground "white" :background "purple"))))
 
+   ;; mic-paren
+   '(paren-face-match ((t (:foreground "#222222" :background "DeepSkyBlue3"))))
+
    ;; which-fun
    '(which-func ((t (:foreground "Yellow"))))
 
+   ;; calendar
+   '(holiday-face ((t (:foreground "#d01ce2" :background "#282c30"))))
+   '(diary-face ((t (:foreground "dodger blue"))))
+   '(calendar-today-face ((t (:foreground "blue"))))
 
    ;; term
    '(term-color-blue ((t (:foreground "DeepSkyBlue4"))))
+
+   ;;; mmm-mode
+   '(mmm-default-submode-face ((t (:background "gray97"))))
 
    ;; adoc-mode
    '(markup-meta-face ((t (:height 120 :foreground "#999999"))))
@@ -194,6 +204,15 @@
    ;; minimap
    `(minimap-active-region-background ((t (:background ,base02))))
 
+   ;; bookmark+
+   '(bmkp-light-fringe-autonamed ((t (:background "#778899" :foreground "#222222"))))
+   '(bmkp-light-non-fringe-autonamed ((t (:background "DarkOrange1" :foreground "Black"))))
+
+   ;; icicle
+   '(icicle-current-candidate-highlight ((t (:background "orchid4"))))
+   '(icicle-mustmatch-completion ((t (:box nil))))
+   '(icicle-multi-command-completion ((t (:background unspecified :foreground "sandybrown"))))
+
    ;; dried & diredp
    '(dired-marked ((t (:background "#555555" :foreground "Pink"))))
 
@@ -238,6 +257,14 @@
    '(semantic-decoration-on-private-members-face ((t (:background "#333333"))))
    '(semantic-decoration-on-unparsed-includes ((t (:background "#555555"))))
 
+   ;; ecb
+   '(ecb-default-highlight-face ((t (:foreground "#666666"))))
+   '(ecb-tag-header-face ((t (:foreground "gray10" :background "rosy brown"))))
+
+   ;; emms
+   '(emms-playlist-selected-face ((t (:foreground "magenta"))))
+   '(emms-playlist-track-face ((t (:foreground "SteelBlue2"))))
+
    ;; volatile highlights
    '(vhl/default-face ((t (:background "#332244"))))
 
@@ -273,6 +300,19 @@
    ;; guide-key
    '(guide-key/key-face ((t (:foreground "violet"))))
    '(guide-key/highlight-command-face ((t (:foreground "#f9f69d"))))
+
+   ;; gambit
+   '(gambit-highlight-face ((t (:foreground "#000000"))))
+
+   ;; quack
+   '(quack-pltish-paren-face ((t (:foreground "#ccffcc" :weight normal))))
+   '(quack-pltish-comment-face ((t (:foreground "#008888" :weight normal))))
+   '(quack-pltish-keyword-face ((t (:foreground "#bbbb99" :weight bold))))
+   '(quack-pltish-selfeval-face ((t (:foreground "#a800a8"))))
+   '(quack-pltish-defn-face ((t (:foreground "#ff7f00"))))
+   '(quack-threesemi-semi-face ((t (:background unspecified))))
+   '(quack-threesemi-text-face ((t (:background unspecified))))
+
 
    ;; narrow-indirect
    `(ni-mode-line-buffer-id ((t (:foreground "RosyBrown" :box nil))))
