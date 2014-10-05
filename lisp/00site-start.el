@@ -45,7 +45,6 @@
 (require '50etags)
 (require '50ffap)
 (require '50filecache)
-(require '50flashcard)
 (require '50ftp)
 (require '50gdb)
 (require '50go)
