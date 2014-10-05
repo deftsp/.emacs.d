@@ -85,14 +85,13 @@
 (require '50traverselisp)
 (require '50unicode-input)
 (require '50vc)
-(require '50w3m)  ; anything-config will defvar w3m-command, require it before that
+(require '50w3m)  ; helm-config will defvar w3m-command, require it before that
 (require '50wcheck-mode)
 (require '50web-mode)
 (require '50window)
 (require '50xcode)
 (require '50yasnippet)
 (require '51CommonLispTemplates)
-;; (require '51anything)
 (require '51helm)
 ;; (require '52emms) ; do not use it any more
 ;; (require '52icicles)
