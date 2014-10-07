@@ -262,6 +262,11 @@
                :depends (company-mode cl-lib)
                :post-init (eval-after-load 'company
                             '(add-to-list 'company-backends 'company-cabal)))
+        (:name emacs-moz-controller
+               :description "Control Firefox from Emacs"
+               :type github
+               :pkgname "RenWenshan/emacs-moz-controller"
+               :depends moz-repl)
         (:name tuareg-mode
                :type github
                :description "an Emacs OCaml mode"

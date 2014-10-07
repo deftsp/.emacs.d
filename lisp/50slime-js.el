@@ -108,7 +108,8 @@
 
 ;;; work with js2-mode
 (defun pl/enable-slime-js-minor-mode ()
-  (slime-js-minor-mode 1))
+  (when (fboundp 'slime-js-minor-mode)
+    (slime-js-minor-mode +1)))
 
 (eval-after-load "js2-mode"
   '(progn

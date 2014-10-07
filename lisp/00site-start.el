@@ -58,6 +58,7 @@
 (require '50maxima)
 (require '50misc)
 (require '50mode-line)
+(require '50moz-controller)
 (require '50narrowing)
 (require '50net-utils)
 ;; (require '50nethack)
