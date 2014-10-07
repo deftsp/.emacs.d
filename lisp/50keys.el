@@ -309,8 +309,10 @@ it marks the next ARG lines after the ones already marked."
       (t (message "Current is not '_ '- or SPC!")))))
 
 ;;; cycle-spacing, since 24.4
-(global-set-key (kbd "M-SPC") 'cycle-spacing)
-
+;; both `M-SPC' and `M-S-SPC' are binded to `just-one-space'
+;; "M-\" is used to switch input source on OS X. The behavior of
+;; double call `cycle-spacing' as same as `delete-horizontal-space'
+(global-set-key (kbd "M-S-SPC") 'cycle-spacing)
 
 ;;; Quickly Find Emacs Lisp Sources
 (define-key 'help-command (kbd "C-l") 'find-library)
