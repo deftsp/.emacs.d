@@ -131,6 +131,7 @@
 ;; make sure that Evil's normal state never touches TAB, just wire this fall-through binding
 ;; (define-key evil-normal-state-map (kbd "TAB") 'pl/evil-undefine)
 (define-key evil-normal-state-map (kbd "TAB") 'indent-for-tab-command)
+(define-key evil-motion-state-map (kbd "TAB") 'indent-for-tab-command)
 
 (define-key evil-normal-state-map "gb" 'switch-to-buffer)
 (define-key evil-normal-state-map "gt" 'pl/toggle-map)
@@ -256,6 +257,7 @@
 
 (setq evil-move-cursor-back nil
       evil-want-visual-char-semi-exclusive t
+      evil-want-C-i-jump nil
       ;; evil-highlight-closing-paren-at-point-states nil
       evil-magic 'very-magic)
 
