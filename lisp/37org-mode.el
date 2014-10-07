@@ -142,11 +142,11 @@
                              (concat org-directory "/from-mobile.org"))  ; (directory-files org-directory t ".*\\.org$")
       org-agenda-show-all-dates t
       org-agenda-span 'week
-      org-agenda-skip-deadline-if-done t
       org-agenda-include-all-todo nil
       ;; exclude scheduled items from the global TODO list.
       org-agenda-todo-ignore-scheduled t
-      org-agenda-skip-scheduled-if-done nil
+      org-agenda-skip-scheduled-if-done t
+      org-agenda-skip-deadline-if-done t
       org-agenda-todo-list-sublevels t
       ;; I use the diary only for sexp entries and holidays, and Ι have put them into org file.
       org-agenda-include-diary nil
@@ -170,10 +170,11 @@
 (setq org-expiry-inactive-timestamps t)
 
 ;;; refile
-;; (setq org-refile-allow-creating-parent-nodes t)
-;; (setq org-refile-use-outline-path 'file)
-;; (setq org-refile-targets
-;;       '((org-agenda-files :maxlevel . 1)))
+(setq org-refile-use-outline-path nil
+      org-refile-allow-creating-parent-nodes 'confirm
+      ;; org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
+      org-blank-before-new-entry nil
+      org-refile-use-cache nil)
 
 ;;; for MobileOrg
 ;; Set to the name of the file where new notes will be stored
