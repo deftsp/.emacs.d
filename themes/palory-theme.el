@@ -143,6 +143,10 @@
    '(org-scheduled ((t (:foreground "CadetBlue"))))
    '(org-scheduled-today ((t (:foreground "turquoise2"))))
    '(org-agenda-calendar-sexp ((t (:foreground "MistyRose3"))))
+   '(org-drill-hidden-cloze-face ((t (:foreground "#eeeeee" :background "violet red"))))
+
+
+
 
    '(warning ((t (:foreground "VioletRed" :weight bold))))
 

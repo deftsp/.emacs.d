@@ -52,16 +52,16 @@
                                      ("REJECTED"  . (:foreground "forest green" :weight bold))
                                      ("OPEN"      . (:foreground "deep pink"    :weight bold))
                                      ("PROJECT"   . (:foreground "red"          :weight bold))))
-      org-tag-persistent-alist '((:startgroup . nil) ("@OFFICE" . ?o) ("@HOME" . ?h) ("@SHOPPING" . ?s) ("@TENNISCLUB" . ?t) (:endgroup . nil)
-                                 (:startgroup . nil) ("ONLINE" . ?O) ("OFFLINE" . ?F) (:endgroup . nil)
-                                 (:startgroup . nil) ("BUSINESS" . ?B) ("PERSONAL" . ?P) (:endgroup . nil)
-                                 ("DRILL"   . ?d)
-                                 ("HACKING" . ?H)
-                                 ("MAIL"    . ?M)
-                                 ("MOVIE"   . nil)
-                                 ("MISC"    . ?m)
-                                 ("READING" . ?r))
-      org-tag-alist '(("PROJECT" . ?p)))
+      org-tag-persistent-alist '((:startgroup . nil) ("@office" . ?o) ("@home" . ?h) ("@shopping" . ?s) ("@tennisclub" . ?t) (:endgroup . nil)
+                                 (:startgroup . nil) ("online" . ?O) ("offline" . ?F) (:endgroup . nil)
+                                 (:startgroup . nil) ("business" . ?B) ("personal" . ?P) (:endgroup . nil)
+                                 ("drill"   . ?d)
+                                 ("hacking" . ?H)
+                                 ("mail"    . ?M)
+                                 ("movie"   . nil)
+                                 ("misc"    . ?m)
+                                 ("reading" . ?r))
+      org-tag-alist '(("project" . ?p)))
 
 (eval-after-load "org"
   '(setq org-agenda-custom-commands
@@ -103,9 +103,9 @@
          ((org-agenda-show-log t)
           (org-agenda-span 'week)
           (org-agenda-log-mode-items '(state))
-          (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":DAILY:"))))
+          (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":daily:"))))
 
-        ("p" tags "PROJECT-DONE")
+        ("p" tags "+project-TODO=\"DONE\"-TODO=\"CANCELLED\"")
 
         ("u" alltodo "Unscheduled TODO entries"
          ((org-agenda-skip-function
@@ -252,14 +252,6 @@
       '(("google"   . "http://www.google.com/search?q=")
         ("baidu"    . "http://www.baidu.com/s?wd=")))
 
-;;; org drill
-(setq org-drill-spaced-repetition-algorithm 'sm5)
-(setq org-drill-use-visible-cloze-face-p nil)
-(setq org-drill-maximum-items-per-session 40)
-(setq org-drill-maximum-duration 25)   ; 25 minutes
-(setq org-drill-scope 'directory)
-(setq org-drill-question-tag "DRILL")
-
 ;; keybinding conflicts with icicles keys
 ;; (org-defkey org-mode-map (kbd "C-c C-'") 'org-edit-special)
 ;; (define-key org-exit-edit-mode-map (kbd "C-c C-'") 'org-edit-src-exit)
@@ -346,6 +338,16 @@
 ;;; org-mac-protocol
 (when window-system
   (require 'org-mac-protocol nil t))
+
+;;; org-drill
+(setq org-drill-spaced-repetition-algorithm 'sm5
+      org-drill-use-visible-cloze-face-p nil
+      org-drill-maximum-items-per-session 40
+      org-drill-maximum-duration 30   ; 30 minutes
+      org-drill-scope 'file ; 'directory
+      org-drill-leech-method 'warn
+      ;; org-drill-adjust-intervals-for-early-and-late-repetitions-p t
+      org-drill-add-random-noise-to-intervals-p t)
 
 
 (provide '37org-mode)
