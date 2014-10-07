@@ -53,6 +53,11 @@
 (defalias 'ssm 'shell-script-mode)
 (defalias 'cm  'c++-mode)
 
+(defalias 'od 'org-drill)
+(defalias 'odr 'org-drill-resume)
+(defalias 'oda 'org-drill-again)
+(defalias 'odc 'org-drill-cram)
+
 ;; minor modes
 (defalias 'wsm 'whitespace-mode)
 (defalias 'gwsm 'global-whitespace-mode)
@@ -78,5 +83,11 @@
 
 ;; traverselisp
 (defalias 'tdr 'traverse-deep-rfind)
+
+;; el-get
+(defalias 'egi 'el-get-install)
+(defalias 'egu 'el-get-update)
+(defalias 'egr 'el-get-remove)
+(defalias 'egfr 'el-get-find-recipe-file)
 
 (provide '50alias)
