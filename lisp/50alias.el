@@ -71,6 +71,7 @@
 
 ;; dev
 (defalias 'grr 'pl/gambit-remote-repl)
+(defalias 'hpc 'haskell-process-cabal)
 
 ;; bm
 (defalias 'bt  'bm-toggle)

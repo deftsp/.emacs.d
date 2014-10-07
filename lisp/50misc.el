@@ -21,7 +21,6 @@
       ;; pop-up-windows nil ; don't change my windowconfiguration assure my window-configuration is kept
       ;; x-use-underline-position-properties nil
       read-quoted-char-radix 10         ; accept decimal input when using ^q, e.g.: ^q 13 [RET] -> ^M
-      history-length 250
       ;; echo unfinished commands after this many seconds of pause.
       echo-keystrokes 1                 ; 0.1
       tooltip-hide-delay 20             ; defautl 10
@@ -109,11 +108,6 @@
       resize-mini-windows t
       enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
-
-;; hisotry save file
-(if (boundp 'pl/cache-directory)
-    (setq savehist-file (concat pl/cache-directory "emacs-history")))
-
 
 (setq ring-bell-function 'ignore)
 ;; Emacs does not beep when you hit `C-g' in the minibuffer or during
@@ -354,12 +348,13 @@
 ;; (setq garbage-collection-messages nil)
 
 ;;; Initial register values
-;; `C-x r j e' to open DotEmacs,
-(cond ((file-exists-p (expand-file-name "~/.emacs"))
-       (set-register ?e '(file . "~/.emacs")))
-      ((file-exists-p (expand-file-name "~/proj/org"))
-       (set-register ?t '(file . "~/proj/org/ToDo.org"))))
-
+;; `C-x r j i' to open init.el,
+(mapc #'(lambda (r)
+          (let ((file-path (cdr r)))
+            (when (file-exists-p file-path)
+              (set-register (car r) (cons 'file file-path)))))
+      '((?i . "~/.emacs.d/init.el")
+        (?g . "~/org/GTD.org")))
 
 ;;; file-name-shadow-mode
 ;; be smart about filenames understand ~/ etc
@@ -1171,13 +1166,18 @@ This command is to be used interactively."
 
 ;; (callfunc-random-interval 'color-theme-random (* 60 5) (* 60 60))
 
-;;----------------------------------------------------------------------------------------------------
-;;;
+;;; Transpose
+(global-unset-key (kbd "M-t"))
+(global-set-key (kbd "M-t t") 'transpose-words)
+(global-set-key (kbd "M-t w") 'transpose-words)
+(global-set-key (kbd "M-t M-t") 'transpose-words)
+(global-set-key (kbd "M-t l") 'transpose-lines)
+(global-set-key (kbd "M-t s") 'transpose-sexps)
+(global-set-key (kbd "M-t a") 'anchored-transpose)
+
 ;; Anchored transpose
 ;; https://github.com/emacsmirror/nxhtml/blob/master/util/anchored-transpose.el
-(global-set-key [?\C-x ?t] 'anchored-transpose)
 (autoload 'anchored-transpose "anchored-transpose" nil t)
-;;----------------------------------------------------------------------------------------------------
 
 ;; (defun pl/shell-command ()
 ;;   "Launch a shell command."
@@ -1267,13 +1267,14 @@ This command is to be used interactively."
 
 
 ;;; browse-kill-ring
+;; bind to key-chord "YY"
 (when (require 'browse-kill-ring "browse-kill-ring" t)
   (browse-kill-ring-default-keybindings)
   (setq browse-kill-ring-highlight-current-entry t)
-  (setq browse-kill-ring-quit-action 'bury-and-delete-window)
+  (setq browse-kill-ring-quit-action 'save-and-restore)  ; 'bury-and-delete-window
   (define-key browse-kill-ring-mode-map [down] 'browse-kill-ring-forward)
   (define-key browse-kill-ring-mode-map [up] 'browse-kill-ring-previous))
-(global-set-key (kbd "C-c k r") 'browse-kill-ring)
+
 
 ;;; kill-ring-search
 

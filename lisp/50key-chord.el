@@ -87,6 +87,9 @@
      (key-chord-define-global "ms" 'mark-sexp)
      (key-chord-define-global ";w" 'pl/w3m-switch-to-buffer)
 
+     (key-chord-define-global "YY" 'browse-kill-ring)
+
+
      (key-chord-define-global ",r" 'pl/recursive-edit-save-window-config)
      (key-chord-define-global ",c" 'org-capture)
      (key-chord-define-global ".c" 'calendar)

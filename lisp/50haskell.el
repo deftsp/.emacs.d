@@ -23,14 +23,14 @@
            haskell-process-type 'cabal-repl  ; 'cabal-dev
            haskell-stylish-on-save nil ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
            haskell-notify-p t)
-     
+
      (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
      (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
      (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
-      
-     
+
+
      (define-key haskell-mode-map (kbd "C-c v c") 'haskell-cabal-visit-file)
-     
+
      (setq pl/haskell-mode-key-chord-map (make-sparse-keymap))
      (define-key pl/haskell-mode-key-chord-map (kbd "e") 'haskell-indent-insert-equal)
      (define-key pl/haskell-mode-key-chord-map (kbd "=") 'haskell-indent-insert-equal)
@@ -47,9 +47,9 @@
      ;; keymap for documentation
      (setq pl/haskell-mode-doc-map (make-sparse-keymap))
      (define-key pl/haskell-mode-doc-map (kbd "i") 'haskell-process-do-info) ; inferior-haskell-info
-     (define-key pl/haskell-mode-doc-map (kbd "C-i") 'haskell-process-do-info) 
+     (define-key pl/haskell-mode-doc-map (kbd "C-i") 'haskell-process-do-info)
      (define-key pl/haskell-mode-doc-map (kbd "t") 'haskell-process-do-type) ; inferior-haskell-type
-     (define-key pl/haskell-mode-doc-map (kbd "C-t") 'haskell-process-do-type) 
+     (define-key pl/haskell-mode-doc-map (kbd "C-t") 'haskell-process-do-type)
      (define-key pl/haskell-mode-doc-map (kbd "a") 'helm-ghc-browse-document)
      (define-key pl/haskell-mode-doc-map (kbd "C-a") 'helm-ghc-browse-document)
      (define-key pl/haskell-mode-doc-map (kbd "h") 'haskell-hoogle)
@@ -74,7 +74,7 @@
 (autoload 'ghc-init "ghc" nil t)
 
 ;; initial syntax check with hlint not ghc use `ghc-toggle-check-command' switch them.
-(setq ghc-check-command t) 
+(setq ghc-check-command t)
 
 ;; http://www.haskell.org/ghc/docs/latest/html/users_guide/options-sanity.html
 ;; note: it will not take effect until ghc-modi process restart
@@ -105,15 +105,15 @@
 
   (when (fboundp 'structured-haskell-mode)
     (structured-haskell-mode t))
-  
+
   (smartparens-mode -1)
   (smartparens-strict-mode -1)
 
   ;; lambda symbol can safely replace '\' because they are the same length and it wont screw up indentation
-  (and (fboundp 'decode-char) ; prefer single-width Unicode font for lambda                                           
+  (and (fboundp 'decode-char) ; prefer single-width Unicode font for lambda
        (push (cons "\\" (decode-char 'ucs 955)) prettify-symbols-alist))
   (prettify-symbols-mode +1)
-  
+
   (when (fboundp 'key-chord-define)
     (key-chord-define haskell-mode-map ".x" pl/haskell-mode-key-chord-map))
   ;; (flyspell-prog-mode) ; can not work with key-chord
@@ -129,7 +129,7 @@
   ;;         ("[" . "]")
   ;;         ("{" . "}")
   ;;         ("`" . "`")))
-  
+
   (define-key haskell-mode-map (kbd "C-c C-d") pl/haskell-mode-doc-map)
   (define-key haskell-mode-map (kbd "C-M-x") 'inferior-haskell-send-decl)
   (define-key haskell-mode-map (kbd "C-x C-e") 'inferior-haskell-send-decl)
@@ -144,7 +144,7 @@
   (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
   (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-compile)
   ;; Interactively choose the Cabal command to run.
-  (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal)
+  ;; (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal) ; M-x hpc
 
   (define-key haskell-mode-map (kbd "C-c C-v") 'pl/haskell-check)
 
@@ -202,7 +202,7 @@
 
 ;; Turn off haskell-indentation-modes. They are incompatible with structured-haskell-mode, which  has its own
 ;; indentation functionality.
-(remove-hook 'haskell-mode-hook 'turn-on-haskell-indentation) ; 
+(remove-hook 'haskell-mode-hook 'turn-on-haskell-indentation) ;
 (setq haskell-indent-thenelse 2)
 (eval-after-load "haskell-indent"
   '(setq haskell-indent-after-keywords '(("where" 2 0)
@@ -244,7 +244,7 @@ See also`haskell-check'."
 ;; Useful to have these keybindings for .cabal files, too.
 (defun pl/haskell-cabal-hook ()
   (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-compile)
-  (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal)
+  ;; (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal) ; ; M-x hpc
   (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
   (define-key haskell-cabal-mode-map [?\C-c ?\C-z] 'haskell-interactive-switch))
 

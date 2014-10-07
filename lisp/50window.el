@@ -96,6 +96,26 @@
              (select-window first-win)
              (if this-win-2nd (other-window 1)))))))
 
+(defun pl/vsplit-last-buffer (prefix)
+  "Split the window vertically and display the previous buffer."
+  (interactive "p")
+  (split-window-vertically)
+  (other-window 1 nil)
+  (print prefix)
+  (when (= prefix 1)
+    (switch-to-next-buffer)))
+
+(defun pl/hsplit-last-buffer (prefix)
+  "Split the window horizontally and display the previous buffer."
+  (interactive "p")
+  (split-window-horizontally)
+  (other-window 1 nil)
+  (when (= prefix 1) (switch-to-next-buffer)))
+
+(global-set-key (kbd "C-x 2") 'pl/vsplit-last-buffer)
+(global-set-key (kbd "C-x 3") 'pl/hsplit-last-buffer)
+
+
 ;;; for wide-screen display
 ;; http://emacswiki.org/emacs/display-buffer-for-wide-screen.el
 ;; minimum width of window to be split horizontally for `display-buffer'
@@ -226,7 +246,7 @@
 ;; swap windows by calling ace-window with a prefix argument C-u.
 ;; delete the selected window by calling ace-window with a double prefix argument, i.e. C-u C-u.
 ;; not use switch-window anymore, ace-window is faster
-(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))  
+(setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 
 ;;; golden-ratio.el
 ;; (require 'golden-ratio nil t)

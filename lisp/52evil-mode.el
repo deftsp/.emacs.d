@@ -221,6 +221,8 @@
   "gt"  'git-gutter:toggle
   "hs"  'helm-swoop
   "hS"  'helm-swoop-back-to-last-point
+  "Hs"  'helm-multi-swoop
+  "HS"  'helm-multi-swoop-all
   "j"   'helm-etags-select
   "k"   'kill-this-buffer
   "lr"  'pl/linum-relative-toggle
@@ -564,6 +566,11 @@ to replace the symbol under cursor"
           company-complete-selection
           company-complete-number)))
 
+(eval-after-load "helm-swoop"
+  '(progn
+     ;; When doing evil-search, hand the word over to helm-swoop
+     (define-key evil-motion-state-map (kbd "H-i") 'helm-swoop-from-evil-search)))
+
 ;;; misc
 ;; using both the RET and <return> forms to make sure the key works both in terminal and under X.
 (evil-define-key 'motion completion-list-mode-map (kbd "<return>") 'choose-completion)
@@ -572,6 +579,11 @@ to replace the symbol under cursor"
 (evil-define-key 'motion browse-kill-ring-mode-map (kbd "RET") 'browse-kill-ring-insert-and-quit)
 (evil-define-key 'motion occur-mode-map (kbd "<return>") 'occur-mode-goto-occurrence)
 (evil-define-key 'motion occur-mode-map (kbd "RET") 'occur-mode-goto-occurrence)
+
+(eval-after-load 'edebug
+  '(progn
+     (defvar edebug-mode-map)
+     (evil-make-overriding-map edebug-mode-map 'normal)))
 
 (provide '52evil-mode)
 ;;; 50evil-mode.el ends here

@@ -20,6 +20,15 @@
      (when (eq system-type 'darwin)
        (add-to-list 'org-modules 'org-mac-link))
      (add-to-list 'org-modules 'org-habit)
+     (add-to-list 'org-modules 'org-expiry)
+     (add-to-list 'org-modules 'org-mouse)
+     (add-to-list 'org-modules 'org-annotate-file)
+     (add-to-list 'org-modules 'org-interactive-query)
+     (add-to-list 'org-modules 'org-info)
+     (add-to-list 'org-modules 'org-man)
+     (add-to-list 'org-modules 'org-eval)
+     (add-to-list 'org-modules 'org-panel)
+     (add-to-list 'org-modules 'org-toc)
      (add-to-list 'org-modules 'org-drill)))
 
 
@@ -29,8 +38,9 @@
      (add-hook 'org-mode-hook 'evil-org-mode)))
 
 ;;; global key binding
-(global-set-key "\C-cL" 'org-store-link)
-(global-set-key "\C-ca" 'org-agenda)
+(global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key (kbd "C-c a") 'org-agenda)
+(global-set-key (kbd "C-c L") 'org-insert-link-global)
 ;; (define-key org-mode-map (kbd "C-c g") 'org-mac-grab-link)
 ;; C-c C-o Open link at or after point.
 ;; if no appropriate application, it will use mailcap's config to set `org-file-apps'
@@ -156,6 +166,9 @@
       org-habit-following-days 7
       org-habit-graph-column 60)
 
+;;; org-expiry
+(setq org-expiry-inactive-timestamps t)
+
 ;;; refile
 ;; (setq org-refile-allow-creating-parent-nodes t)
 ;; (setq org-refile-use-outline-path 'file)
@@ -177,7 +190,7 @@
 
 
 ;;;; Capture
-;; (define-key global-map "\C-cc" 'org-capture) ; instead of key chord ",c"
+(define-key global-map (kbd "C-c c") 'org-capture)
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/org/GTD.org" "Inbox")
          "* TODO %?\n  %i%u"
@@ -212,6 +225,7 @@
 
 ;;; clock
 ;; To save the clock history across Emacs sessions
+(global-set-key (kbd "C-S-g") 'org-clock-goto) ; jump to current task from anywhere
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 

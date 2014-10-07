@@ -75,6 +75,7 @@
   (setq-default mode-line-modes standard-mode-line-modes)
   (setq-default mode-line-format
                 `("%e"  ;  When Emacs is nearly out of memory for Lisp objects, a brief message saying so.  Otherwise, this is empty.
+                  mode-line-front-space
                   mode-line-mule-info
                   mode-line-client
                   mode-line-modified
@@ -84,12 +85,9 @@
                   ,(propertize "    " 'help-echo help-echo)
                   mode-line-position
                   (vc-mode vc-mode)
-                  " " mode-line-modes
-                  (which-func-mode ("--" which-func-format "--"))
-                  (global-mode-string ("" global-mode-string))
-                  (working-mode-line-message (" " working-mode-line-message))
-                  ,(propertize "-%-" 'help-echo help-echo))))
-
+                  "  " mode-line-modes
+                  mode-line-misc-info ; contain which-func-mode, global-mode-string ...
+                  mode-line-end-spaces)))
 
 (setq global-mode-string
       '(" "

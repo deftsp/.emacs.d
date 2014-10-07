@@ -24,7 +24,10 @@
 
 (setq emacs-load-start-time (current-time))
 (setq debug-on-error t)                 ;will be cleared at end of buffer
-
+;; http://pages.sachachua.com/.emacs.d/Sacha.html
+;; While edebugging, use T to view a trace buffer (*edebug-trace*). Emacs will quickly execute the rest of your code,
+;; printing out the arguments and return values for each expression it evaluates.
+(setq edebug-trace t)
 
 ;;;  Load Path stuff
 (unless (boundp 'user-emacs-directory)

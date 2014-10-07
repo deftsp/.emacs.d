@@ -11,8 +11,19 @@
 (setq-default save-place t)
 (require 'saveplace)
 
+
+;; hisotry save file
+(setq history-length 250
+      history-delete-duplicates t
+      savehist-save-minibuffer-history t
+      savehist-additional-variables '(kill-ring
+                                      search-ring
+                                      regexp-search-ring))
+
+(when (boundp 'pl/cache-directory)
+  (setq savehist-file (concat pl/cache-directory "history")))
 ;;; automatic saving of minibuffer history.
-(savehist-mode 1)
+(savehist-mode +1)
 
 ;;; Desktop
 (eval-after-load "desktop"
@@ -87,7 +98,7 @@
              (shell-command-history          . 50)
              ;; desktop-missing-file-warning
              tags-table-list
-             ;; register-alist 
+             ;; register-alist
              find-args-history
              tags-file-name
              locate-history-list))))
@@ -98,7 +109,7 @@
       desktop-restore-frames nil)
 
 ;; Use M-x desktop-save once to save the desktop.When it exists, Emacs updates it on every exit.
-(desktop-save-mode 1)
+;; (desktop-save-mode 1)
 
 ;;; Let desktop work with daemon
 ;; (command-line) starts the server process, but only "after loading the user's init file and after

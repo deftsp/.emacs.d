@@ -49,37 +49,42 @@
       (fill-paragraph nil))))
 
 
-;;------------------------------------------------------------------------------------------------------------------
-;; UnfillParagraph
-;;------------------------------------------------------------------------------------------------------------------
+;; unfill paragraph
 ;; It works where a line ends with a newline character ("\n") and paragraphs are separated by blank lines. To make a
 ;; paragraph end in a single newline then use the function below:
 
 ;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph Takes a multi-line paragraph and makes it into
 ;; a single line of text.
-(defun pl/unfill-paragraph ()
-  (interactive)
-  (let ((fill-column (point-max)))
-    (fill-paragraph nil)))
+;; http://pages.sachachua.com/.emacs.d/Sacha.html
+(defun pl/fill-or-unfill-paragraph (&optional unfill region)
+  "Fill paragraph (or REGION).
+  With the prefix argument UNFILL, unfill it instead."
+  (interactive (progn
+                 (barf-if-buffer-read-only)
+                 (list (if current-prefix-arg 'unfill) t)))
+  (let ((fill-column (if unfill (point-max) fill-column)))
+    (fill-paragraph nil region)))
+
+(global-set-key (kbd "M-q") 'pl/fill-or-unfill-paragraph)
 
 ;; You can convert an entire buffer from paragraphs to lines by recording a macro that calls 'pl/unfill-paragraph' and
 ;; moves past the blank-line to the next unfilled paragraph and then executing that macro on the whole buffer, 'C-u 0
 ;; C-x e'
 
 ;; delete the hard-wrapped line endings in a paragraph
-(defun remove-hard-wrap-paragraph ()
+(defun pl/remove-hard-wrap-paragraph ()
   "Replace newline chars in current paragraph by single spaces."
   (interactive)
   (let ((fill-column 90002000))
     (fill-paragraph nil)))
 
-(defun remove-hard-wrap-region (start end)
+(defun pl/remove-hard-wrap-region (start end)
   "Replace newline chars in region by single spaces."
   (interactive "r")
   (let ((fill-column 90002000))
     (fill-region start end)))
 
-(global-set-key (kbd "M-Q") 'remove-hard-wrap-paragraph)
+(global-set-key (kbd "M-Q") 'pl/remove-hard-wrap-paragraph)
 
 
 ;; 解决中英文混排不能正确 fill 的问题

@@ -15,8 +15,14 @@
 ;; (helm-mode 1) ; use ido everywhere instead
 
 ;;; helm-command-prefix-key (default to C-x c).
-(setq helm-idle-delay 0.1)
-(setq helm-input-idle-delay 0.1)
+(setq helm-idle-delay 0.1
+      helm-input-idle-delay 0.1
+      ;; helm-candidate-number-limit 10
+      helm-quick-update t
+      helm-ff-skip-boring-files t)
+
+(eval-after-load "helm-mode"
+  '(add-to-list 'helm-completing-read-handlers-alist '(switch-to-buffer . ido)))
 
 (eval-after-load "helm-files"
   '(progn
@@ -62,9 +68,20 @@
 
 ;;; helm-swoop
 (eval-after-load "helm-swoop"
-  '(require 'helm-utils nil t))
+  '(progn
+     (require 'helm-utils nil t)
+     ;; Save buffer when helm-multi-swoop-edit complete
+     (setq helm-multi-swoop-edit-save t)
+     ;; If this value is t, split window inside the current window
+     (setq helm-swoop-split-with-multiple-windows nil)
+     ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
+     (setq helm-swoop-split-direction 'split-window-vertically)
+     ;; If nil, you can slightly boost invoke speed in exchange for text color
+     (setq helm-swoop-speed-or-color t)))
 (global-set-key (kbd "H-i") 'helm-swoop)
 (global-set-key (kbd "H-I") 'helm-swoop-back-to-last-point)
+(global-set-key (kbd "C-c H-i") 'helm-multi-swoop)
+(global-set-key (kbd "C-x H-i") 'helm-multi-swoop-all)
 ;; When doing isearch, hand the word over to helm-swoop
 (define-key isearch-mode-map (kbd "H-i") 'helm-swoop-from-isearch)
 (define-key isearch-mode-map (kbd "C-S-i") 'helm-swoop-from-isearch)

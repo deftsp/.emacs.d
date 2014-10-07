@@ -189,6 +189,10 @@
    ;; anything
    '(anything-ff-directory ((t (:background "222222"))))
 
+   ;; helm
+   `(helm-selection ((t (:background ,base01 :foreground unspecified))))
+   '(helm-visible-mark ((t (:background "turquoise4" :foreground unspecified))))
+
    ;; woman
    '(woman-addition ((t (:foreground "DarkMagenta" :weight bold))))
    '(woman-bold ((t (:foreground "cyan4" :weight bold))))
