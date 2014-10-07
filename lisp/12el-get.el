@@ -267,6 +267,11 @@
                :type github
                :pkgname "RenWenshan/emacs-moz-controller"
                :depends moz-repl)
+        (:name cal-china-x
+               :description "Chinese calendar extras"
+               :type github
+               :pkgname "xwl/cal-china-x"
+               :features cal-china-x)
         (:name tuareg-mode
                :type github
                :description "an Emacs OCaml mode"

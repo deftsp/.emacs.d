@@ -111,9 +111,9 @@
    '(which-func ((t (:foreground "Yellow"))))
 
    ;; calendar
-   '(holiday-face ((t (:foreground "#d01ce2" :background "#282c30"))))
-   '(diary-face ((t (:foreground "dodger blue"))))
-   '(calendar-today-face ((t (:foreground "blue"))))
+   '(holiday ((t (:background "#d01ce2" :foreground "#d2d2d2"))))
+   '(diary ((t (:background "cyan2" :foreground "#222222"))))
+   '(calendar-today ((t (:background "LightGoldenrod" :foreground "#000064"))))
 
    ;; term
    '(term-color-blue ((t (:foreground "DeepSkyBlue4"))))

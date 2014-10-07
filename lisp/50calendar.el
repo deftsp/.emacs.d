@@ -1,6 +1,6 @@
 ;;;  Calendar
 ;; How about work with Google Calendars http://bc.tech.coop/blog/070306.html
-(require 'cal-china-x)
+(require 'cal-china-x nil t)
 
 ;;; diary
 (setq diary-list-include-blanks nil
