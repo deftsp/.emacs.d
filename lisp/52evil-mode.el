@@ -133,6 +133,7 @@
 (define-key evil-normal-state-map (kbd "TAB") 'indent-for-tab-command)
 (define-key evil-motion-state-map (kbd "TAB") 'indent-for-tab-command)
 
+(define-key evil-normal-state-map "gl" 'org-mac-grab-link)
 (define-key evil-normal-state-map "gb" 'switch-to-buffer)
 (define-key evil-normal-state-map "gt" 'pl/toggle-map)
 
@@ -420,9 +421,6 @@
 (require 'evil-matchit nil t)
 (when (fboundp 'global-evil-matchit-mode)
   (global-evil-matchit-mode +1))
-
-;;; evil-little-word.el
-(require 'evil-little-word nil t)
 
 ;;; evil-textobj-between.el
 (require 'evil-textobj-between nil t)

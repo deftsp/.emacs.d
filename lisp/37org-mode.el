@@ -15,19 +15,23 @@
 
 (require 'org-loaddefs)
 
+(eval-after-load "org"
+  '(progn
+     (when (eq system-type 'darwin)
+       (add-to-list 'org-modules 'org-mac-link))
+     (add-to-list 'org-modules 'org-habit)
+     (add-to-list 'org-modules 'org-drill)))
+
+
 (eval-after-load "evil"
   '(progn
      (require 'evil-org-mode)
      (add-hook 'org-mode-hook 'evil-org-mode)))
 
-(eval-after-load "org"
-  '(progn
-     (add-to-list 'org-modules 'org-habit)
-     (add-to-list 'org-modules 'org-drill)))
-
 ;;; global key binding
 (global-set-key "\C-cL" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
+;; (define-key org-mode-map (kbd "C-c g") 'org-mac-grab-link)
 ;; C-c C-o Open link at or after point.
 ;; if no appropriate application, it will use mailcap's config to set `org-file-apps'
 ;; (global-set-key "\C-c o" 'org-open-at-point-global)
@@ -251,6 +255,9 @@
 (setq org-link-abbrev-alist
       '(("google"   . "http://www.google.com/search?q=")
         ("baidu"    . "http://www.baidu.com/s?wd=")))
+
+;;; org-mac-link
+
 
 ;; keybinding conflicts with icicles keys
 ;; (org-defkey org-mode-map (kbd "C-c C-'") 'org-edit-special)
