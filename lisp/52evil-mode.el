@@ -77,7 +77,7 @@
   (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
   (cond ((minibuffer-window-active-p (selected-window))
          (abort-recursive-edit))
-        ((memq major-mode '(Info-mode))
+        ((memq major-mode '(Info-mode org-agenda-mode))
          (keyboard-quit))
         ((and (fboundp 'evil-mode) evil-mode)
          (cond ((eq evil-state 'emacs) (evil-exit-emacs-state))
