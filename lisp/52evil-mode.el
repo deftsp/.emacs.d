@@ -261,6 +261,7 @@
 (setq evil-move-cursor-back nil
       evil-want-visual-char-semi-exclusive t
       evil-want-C-i-jump nil
+      evil-cross-lines t
       ;; evil-highlight-closing-paren-at-point-states nil
       evil-magic 'very-magic)
 
@@ -570,6 +571,19 @@ to replace the symbol under cursor"
   '(progn
      ;; When doing evil-search, hand the word over to helm-swoop
      (define-key evil-motion-state-map (kbd "H-i") 'helm-swoop-from-evil-search)))
+
+;;; visual-line-mode
+;; from https://github.com/tarleb/evil-rebellion
+;; switch bindings for visual line and logical line movements.
+(evil-define-key 'normal visual-line-mode-map
+  "$" 'evil-end-of-visual-line
+  "^" 'evil-beginning-of-visual-line
+  "g$" 'evil-end-of-line
+  "g^" 'evil-beginning-of-line
+  "gj" 'evil-next-line
+  "gk" 'evil-previous-line
+  "j" 'evil-next-visual-line
+  "k" 'evil-previous-visual-line)
 
 ;;; misc
 ;; using both the RET and <return> forms to make sure the key works both in terminal and under X.
