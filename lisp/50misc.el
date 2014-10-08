@@ -69,10 +69,6 @@
       ;; sql-user "root"
       highlight-nonselected-windows nil
       develock-auto-enable nil
-      ;; save every 20 characters typed (this is the minimum)
-      auto-save-interval 1200           ; set autosaving from 300 keystrokes to 1200
-      ;; save after 1 second of idle time (default is 30)
-      auto-save-timeout 30
       ;; remove no-run-time function warnings
       byte-compile-warnings (quote (noruntime))
       Man-notify-method 'pushy ; make the manpage the current buffer in the current window
@@ -145,9 +141,6 @@
 (when (eq window-system 'ns)
   (setq ns-pop-up-frames nil))
 
-
-(add-hook 'suspend-hook 'do-auto-save) ;; Auto-Save on ^Z
-
 (setq-default indicate-buffer-boundaries 'left)
 ;; If you often look at files that are updated (perhaps a log file for a running process), or perhaps ClearCase files
 ;; (that change when you update the config spec), you'll want to make sure you're looking at the most recent version of
@@ -180,11 +173,6 @@
 ;;   (interactive)
 ;;   (if (buffer-file-name)
 ;;       (save-buffer args)))
-
-;; This causes files that I'm editing to be saved automatically by the
-;; emacs auto-save functionality.  I'm hoping to break myself of the
-;; c-x c-s twitch.
-;; (add-hook 'auto-save-hook 'save-buffer-if-visiting-file)
 
 ;;; turncate
 ;; (set-default 'truncate-lines t) ; This is a BufferLocalVariable don't recommend.
@@ -299,10 +287,7 @@
 ;;Automatically uncompress .gz files
 (auto-compression-mode 1)
 
-;; Save all tempfile in ~/.tmp
-;;(setq auto-save-file-name-transforms (quote ((".*/\\(.*\\)" "~/.tmp/\\1" t))))
-
-;; kill customize buffers on exit ---------------------------------------------
+;; kill customize buffers on exit
 (setq custom-buffer-done-kill t)
 
 ;; set unicode data file location. (used by what-cursor-position)

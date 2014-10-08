@@ -1,15 +1,20 @@
+;;; 50vc.el ---
+
+(defvar temporary-file-directory "~/.backup/temp/")
+
 ;;; backup
 (setq make-backup-files t)
-(setq backup-directory-alist (quote ((".*" . "~/.backup/temp/"))) ; don't litter my fs tree)
+(setq backup-directory-alist `((".*" . ,temporary-file-directory)) ; don't litter my fs tree)
       version-control t                                          ; Use version numbers for backups
       kept-new-versions 16                                       ; Number of newest versions to keep
       kept-old-versions 2                                        ; Number of oldest versions to keep
       delete-old-versions t                                      ; Ask to delete excess backup versions?
-      ;; Preserve the owner and group of the file you’re editing (this is especially important if you edit files as root).
+      ;; preserve the owner and group of the file you’re editing (this is especially important if you edit files as root).
       backup-by-copying-when-mismatch t
       backup-by-copying t               ; don't clobber symlinks
-      ;; Copy linked files, don't rename.
+      ;; copy linked files, don't rename.
       backup-by-copying-when-linked t)
+
 ;;;; VC
 ;; While we are thinking about symlinks, I don't like being asked whether I want to follow a symlink; I do, already!
 (setq vc-follow-symlinks t
@@ -18,14 +23,19 @@
       ;; vc-cvs-stay-local nil
       vc-diff-switches diff-switches)
 
+;;; auto-save
+(add-hook 'suspend-hook 'do-auto-save) ;; Auto-Save on ^Z
+(setq auto-save-interval 1200           ; set autosaving from 300 keystrokes to 1200
+      ;; save after 1 second of idle time (default is 30)
+      auto-save-timeout 30)
+
+;; This causes files that I'm editing to be saved automatically by the emacs auto-save functionality. I'm hoping to
+;; break myself of the c-x c-s twitch.
+;; (add-hook 'auto-save-hook 'save-buffer-if-visiting-file)
+
+;; (setq auto-save-file-name-transforms '((".*/\\(.*\\)" "~/.tmp/\\1" t)))
+
 ;;; Git
-;; ls /usr/share/doc/git-core/contrib/emacs git-blame.el  ==> git.el  Makefile  vc-git.el
-(require 'vc-git) ;vc-git.el a VersionControl backend (This is part of Emacs since version 22.2
-(when (featurep 'vc-git)
-  (add-to-list 'vc-handled-backends 'git))
-
-;; ----------------------------------------------------------------
-
 ;;; gitsum: do interactive partial commits with Emacs in the style of darcs record.
 (autoload 'gitsum "gitsum" "Entry point into gitsum-diff-mode." t)
 
@@ -41,8 +51,6 @@
      (when window-system
        ;; git-state-decoration-colored-letter
        (setq git-state-modeline-decoration 'git-state-decoration-small-dot))))
-
-
 
 ;;; magit
 (autoload 'magit-grep "magit" "Command for `grep'." t) ; which is not a autload function at 2013.06.25 yet
