@@ -54,6 +54,7 @@
 (defalias 'cm  'c++-mode)
 
 (defalias 'od 'org-drill)
+(defalias 'odd 'org-drill-directory)
 (defalias 'odr 'org-drill-resume)
 (defalias 'oda 'org-drill-again)
 (defalias 'odc 'org-drill-cram)
