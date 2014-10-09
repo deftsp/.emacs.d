@@ -1,6 +1,7 @@
+;; -*- mode: emacs-lisp; coding: utf-8 -*-
+
 ;;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
-
 
 ;; I use the Common Lisp stuff all the time
 (require 'cl-lib)
@@ -34,7 +35,7 @@
   (defvar user-emacs-directory "~/.emacs.d/"
     "Directory beneath which additional per-user Emacs-specificfiles are placed. Various programs in
   Emacs store information in this directory. Note that this should end with a directory separator.
-  See also †¡ `locate-user-emacs-file'."))
+  See also `locate-user-emacs-file'."))
 
 (defvar user-package-directory (concat user-emacs-directory "packages/"))
 
@@ -49,10 +50,20 @@
       (normal-top-level-add-subdirs-to-load-path)))
 
 
-;;;
+;;; load custom file
 (setq custom-file "~/.emacs.d/custom.el")
 (when (file-exists-p custom-file)
   (load custom-file 'noerror))
+
+
+;;; temporary fix bug
+;; Symbol's function definition is void: gui-selection-exists-p
+(defalias 'gui-selection-exists-p 'x-selection-exists-p)
+
+;; when el-get initialize ace-window, it'll compain can not find ace-jump-mode
+(let ((p (expand-file-name"~/.emacs.d/el-get/ace-jump-mode")))
+  (when (file-exists-p p)
+    (add-to-list 'load-path p)))
 
 (require '00site-start)
 ;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
@@ -72,4 +83,4 @@
 (when (require 'time-date nil t)
   (message "Emacs startup time: %d seconds." (time-to-seconds (time-since emacs-load-start-time))))
 
-;;; init end there ----------------------------------------------------------------
+;;; init end there
