@@ -7,36 +7,12 @@
 ;;  M-x list-colors-display RET
 ;;  M-x list-faces-display RET
 
-
-;;; frame parameters
-(when (eq window-system 'ns)
-  (setq initial-frame-alist `((tool-bar-lines . 0)
-                              (menu-bar-lines . 0)
-                              (width . 268)
-                              (height . 61)
-                              (top . 22) ; (frame-parameter nil 'top)
-                              (left . 0)
-                              (alpha . (96 96)) ; first number is for the active window and the second for the inactive
-                              (mouse-color . "gray80")
-                              (right-fringe . 0) ; do not show right fringe
-                              ;; (scroll-bar-width . 12)
-                              (vertical-scroll-bars . right))
-
-        ;; default-frame-alist is defined in terms of initial-frame-alist.  Don't
-        ;; use copy-sequence here -- it doesn't copy the list elements, just the
-        ;; list's cons cells.  Use copy-alist instead.
-        default-frame-alist (copy-alist initial-frame-alist))
-  (setq tooltip-frame-parameters  '((name . "tooltip")
-                                    (internal-border-width . 1)
-                                    (border-width . 0))))
-
 ;;; font lock
 (global-font-lock-mode t)
 (setq font-lock-maximum-decoration t
       font-lock-global-modes '(not text-mode)
       font-lock-verbose nil
       font-lock-maximum-size '((t . 1048576) (vm-mode . 5250000)))
-
 
 ;;; cursor
 (setq cursor-type t) ; use the cursor specified for the frame

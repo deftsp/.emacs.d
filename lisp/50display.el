@@ -5,10 +5,33 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-;; ----------------------------------------------------------------------------------------------------
-;;; StandardDisplay
-;; ----------------------------------------------------------------------------------------------------
+;;; frame parameters
+(setq frame-resize-pixelwise t
+      window-resize-pixelwise t)
 
+(when (eq window-system 'ns)
+  (setq initial-frame-alist `((tool-bar-lines . 0)
+                              (menu-bar-lines . 0)
+                              (width . 268)
+                              (height . 61)
+                              (top . 22) ; (frame-parameter nil 'top)
+                              (left . 0)
+                              (alpha . (96 96)) ; first number is for the active window and the second for the inactive
+                              (mouse-color . "gray80")
+                              (right-fringe . 0) ; do not show right fringe
+                              ;; (scroll-bar-width . 12)
+                              (vertical-scroll-bars . right))
+
+        ;; default-frame-alist is defined in terms of initial-frame-alist.  Don't
+        ;; use copy-sequence here -- it doesn't copy the list elements, just the
+        ;; list's cons cells.  Use copy-alist instead.
+        default-frame-alist (copy-alist initial-frame-alist))
+  (setq tooltip-frame-parameters  '((name . "tooltip")
+                                    (internal-border-width . 1)
+                                    (border-width . 0))))
+
+
+;;; standard display
 ;; the 0x2500 page, which is where all the graphics characters live. Feel free to chose other characters if you want,
 ;; perhaps to support rounded corners, for example.
 
@@ -164,7 +187,6 @@
 
 (when window-system
   (pl/set-font))
-
 
 
 (provide '50display)
