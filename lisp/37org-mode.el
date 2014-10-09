@@ -164,7 +164,7 @@
 ;;; org-habit
 (setq org-habit-preceding-days 21
       org-habit-following-days 7
-      org-habit-graph-column 60)
+      org-habit-graph-column 72)
 
 ;;; org-expiry
 (setq org-expiry-inactive-timestamps t)
