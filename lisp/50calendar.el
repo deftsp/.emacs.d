@@ -127,6 +127,8 @@
 
 (setq calendar-holidays holiday-other-holidays)
 
+;; TODO: replacing `pl/diary-lunar-anniversary' with
+;; `diary-chinese-anniversary' which is buggy for now(10.09.2014).
 ;; To be called from diary-sexp-entry, where DATE, ENTRY are bound.
 (defun pl/diary-lunar-anniversary (month-lunar day-lunar &optional year-lunar mark)
   (let* ((current-chinese-date (calendar-chinese-from-absolute
