@@ -127,43 +127,21 @@
 
 (setq calendar-holidays holiday-other-holidays)
 
-;; TODO: replacing `pl/diary-lunar-anniversary' with
-;; `diary-chinese-anniversary' which is buggy for now(10.09.2014).
-;; To be called from diary-sexp-entry, where DATE, ENTRY are bound.
-(defun pl/diary-lunar-anniversary (month-lunar day-lunar &optional year-lunar mark)
-  (let* ((current-chinese-date (calendar-chinese-from-absolute
-                                (calendar-absolute-from-gregorian date)))
-         (ncycle (car current-chinese-date))
-         (nyear  (cadr current-chinese-date))
-         (ndate-chinese (list ncycle nyear month-lunar day-lunar))
-         (ddate (calendar-gregorian-from-absolute
-                 (calendar-chinese-to-absolute
-                  ndate-chinese)))
-
-         (cycle (if year-lunar
-                    (+ (floor year-lunar 60) 45)
-                  ncycle))
-         (year (if year-lunar
-                   (mod (- year-lunar 3) 60)
-                 nyear))
-         (date-chinese (list cycle year month-lunar day-lunar))
-         (gregorian-of-date-chinese (calendar-gregorian-from-absolute
-                                     (calendar-chinese-to-absolute date-chinese)))
-
-         (dd (calendar-extract-day ddate))
-         (mm (calendar-extract-month ddate))
-         (yy (calendar-extract-year ddate))
-         (diff (if year-lunar (- yy
-                                 (calendar-extract-year
-                                  gregorian-of-date-chinese)) 100)))
-
-    (and (= mm 2) (= dd 29) (not (calendar-leap-year-p yy))
-       (setq mm 3 dd 1))
-    (and (> diff 0) (equal  (list month-lunar day-lunar)
-                            (list (nth 2 current-chinese-date)
-                                  (nth 3 current-chinese-date)))
+;; `diary-chinese-anniversary' use cycles
+;; https://github.com/leoliu/cal-china-plus/pull/2
+(defun pl/diary-lunar-anniversary (month day &optional year mark)
+  (pcase-let* ((`(,cc ,cy ,cm ,cd)
+                (calendar-chinese-from-absolute
+                 (calendar-absolute-from-gregorian date)))
+               (dc (and year (+ (floor year 60) 45)))
+               (dy (and year (mod (- year 3) 60)))
+               (dm month)
+               (dd day)
+               (diff (if (and dc dy)
+                         (+ (* 60 (- cc dc)) (- cy dy))
+                       100)))
+    (and (> diff 0) (= dm cm) (= dd cd)
          (cons mark (format entry diff (diary-ordinal-suffix diff))))))
-
 
 ;; Calendar 模式支持各种方式来更改当前日期
 ;;（这里的"前"是指还没有到来的那一天，"后"是指已经过去的日子）
