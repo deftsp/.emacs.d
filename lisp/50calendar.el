@@ -1,5 +1,6 @@
 ;;;  Calendar
 ;; How about work with Google Calendars http://bc.tech.coop/blog/070306.html
+
 (require 'cal-china-x nil t)
 
 ;;; diary
@@ -77,7 +78,6 @@
 ;; i a   为当前日期创建一个周年纪念日
 ;; i c   创建一个循环的事件
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq calendar-mark-holidays-flag t
       calendar-view-holidays-initially-flag nil
       calendar-week-start-day 1 ; a week in the calendar begins from Monday
@@ -94,9 +94,7 @@
       holiday-solar-holidays nil
       holiday-bahai-holidays nil)
 
-;;----------------------------------------------------------------------------------------------------
 ;;; lunar
-;;----------------------------------------------------------------------------------------------------
 ;; (setq calendar-chinese-celestial-stem
 ;;       ["甲" "乙" "丙" "丁" "戊" "己" "庚" "辛" "壬" "癸"])
 ;; (setq  calendar-chinese-terrestrial-branch
@@ -129,14 +127,10 @@
 
 (setq calendar-holidays holiday-other-holidays)
 
-
-
-
 ;; To be called from diary-sexp-entry, where DATE, ENTRY are bound.
-(defun diary-anniversary-lunar (month-lunar day-lunar &optional year-lunar mark)
+(defun pl/diary-lunar-anniversary (month-lunar day-lunar &optional year-lunar mark)
   (let* ((current-chinese-date (calendar-chinese-from-absolute
-                                (calendar-absolute-from-gregorian
-                                 date)))
+                                (calendar-absolute-from-gregorian date)))
          (ncycle (car current-chinese-date))
          (nyear  (cadr current-chinese-date))
          (ndate-chinese (list ncycle nyear month-lunar day-lunar))
@@ -146,10 +140,10 @@
 
          (cycle (if year-lunar
                     (+ (floor year-lunar 60) 45)
-                    ncycle))
+                  ncycle))
          (year (if year-lunar
                    (mod (- year-lunar 3) 60)
-                   nyear))
+                 nyear))
          (date-chinese (list cycle year month-lunar day-lunar))
          (gregorian-of-date-chinese (calendar-gregorian-from-absolute
                                      (calendar-chinese-to-absolute date-chinese)))
@@ -158,14 +152,15 @@
          (mm (calendar-extract-month ddate))
          (yy (calendar-extract-year ddate))
          (diff (if year-lunar (- yy
-                                 (calendar-extract-year gregorian-of-date-chinese)) 100)))
+                                 (calendar-extract-year
+                                  gregorian-of-date-chinese)) 100)))
 
     (and (= mm 2) (= dd 29) (not (calendar-leap-year-p yy))
        (setq mm 3 dd 1))
-    (and (> diff 0) (equal  (list month-lunar day-lunar) (list (nth 2 current-chinese-date)
-                                                             (nth 3 current-chinese-date)))
-       (cons mark (format entry diff (diary-ordinal-suffix diff))))))
-
+    (and (> diff 0) (equal  (list month-lunar day-lunar)
+                            (list (nth 2 current-chinese-date)
+                                  (nth 3 current-chinese-date)))
+         (cons mark (format entry diff (diary-ordinal-suffix diff))))))
 
 
 ;; Calendar 模式支持各种方式来更改当前日期
