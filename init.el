@@ -57,9 +57,6 @@
 
 
 ;;; temporary fix bug
-;; Symbol's function definition is void: gui-selection-exists-p
-(defalias 'gui-selection-exists-p 'x-selection-exists-p)
-
 ;; when el-get initialize ace-window, it'll compain can not find ace-jump-mode
 (let ((p (expand-file-name"~/.emacs.d/el-get/ace-jump-mode")))
   (when (file-exists-p p)
