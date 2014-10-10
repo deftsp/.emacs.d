@@ -269,9 +269,12 @@
 
 
 ;;; evil-surround
-(if (fboundp 'global-surround-mode)
-    (global-surround-mode 1))
-
+(when (fboundp 'global-evil-surround-mode)
+    (global-evil-surround-mode 1)
+    ;; evil-surround-pairs-alist is a buffer local variable
+    (setq-default evil-surround-pairs-alist (cl-adjoin
+                                             '(?~ . ("``" . "``"))
+                                             evil-surround-pairs-alist)))
 ;;; default mode
 (setq evil-default-state 'normal)
 (loop for (mode . state) in
