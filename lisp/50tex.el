@@ -8,10 +8,8 @@
 ;;  --with-lispdir=/Applications/Emacs.app/Contents/Resources/site-lisp \
 ;;  --with-texmf-dir=/usr/local/texlive/texmf-local
 ;; $ make
-(unless (load "auctex.el" t t t)
-  (message "Fail to load auctex.el. Have you installed auctex?"))
-(unless (load "preview-latex.el" t t t)
-  (message "Fail to laod preview-latex.el. Have you installed auctex?"))
+
+
 
 ;; (require 'tex-mik)
 ;; (eval-after-load "tex"
@@ -210,10 +208,5 @@
 ;; (add-site-lisp-load-path "latex-doc/")
 ;; (when (require 'latex-doc nil t)
 ;;   (latex-doc-initialize))
-
-;;; info
-;; TODO: auctex doc directory have no dir file
-(eval-after-load "info"
-  '(add-to-list 'Info-directory-list "~/.emacs.d/site-lisp/auctex/doc"))
 
 (provide '50tex)

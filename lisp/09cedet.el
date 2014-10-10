@@ -229,9 +229,6 @@
 (eval-after-load "info"
   `(cedet-settings-4-info))
 
-
-
-
 (provide '09cedet)
 
 ;; Local Variables:
