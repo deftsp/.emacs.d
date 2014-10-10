@@ -187,6 +187,8 @@
 (evil-leader/set-key
   "\\"  'evilnc-comment-operator
   "1"   'delete-other-windows
+  "2"   (kbd "C-x 2")
+  "3"   "\C-x3"
   "a"   'org-agenda
   "b"   'bookmark-map
   "ci"  'evilnc-comment-or-uncomment-lines
