@@ -185,15 +185,16 @@
     (global-evil-leader-mode))
 
 (evil-leader/set-key
-  ","   'evilnc-comment-operator
+  "\\"  'evilnc-comment-operator
   "1"   'delete-other-windows
   "a"   'org-agenda
   "b"   'bookmark-map
   "ci"  'evilnc-comment-or-uncomment-lines
-  "cl"  'evilnc-comment-or-uncomment-to-the-line
+  "cl"  'evilnc-quick-comment-or-uncomment-to-the-line
   "cc"  'evilnc-copy-and-comment-lines
   "cp"  'evilnc-comment-or-uncomment-paragraphs
   "cr"  'comment-or-uncomment-region
+  "cv"  'evilnc-toggle-invert-comment-line-by-line
   "cs"  'pl/evil-change-symbol-in-defun
   "ch"  'crosshairs-mode
   "D"   'dired-jump
@@ -225,6 +226,7 @@
   "HS"  'helm-multi-swoop-all
   "j"   'helm-etags-select
   "k"   'kill-this-buffer
+  "ll"  'evilnc-quick-comment-or-uncomment-to-the-line
   "lr"  'pl/linum-relative-toggle
   "ms"  'magit-status
   "p"   'projectile-commander
@@ -410,7 +412,6 @@
 
 ;;; evil-nerd-commenter
 ;; installed with el-get
-(add-to-list 'load-path "~/.emacs.d/site-lisp/evil-nerd-commenter")
 (setq evilnc-hotkey-comment-operator ",,")
 (require 'evil-nerd-commenter nil t)
 

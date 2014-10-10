@@ -40,59 +40,47 @@
                :description "Change cursor dynamically, depending on the context."
                :type emacswiki
                :features cursor-chg)
-
         (:name col-highlight
                :description "Highlight the current column."
                :type emacswiki
                :depends vline)
-
         (:name crosshairs
                :description "Highlight the current line and column."
                :type emacswiki
                :depends col-highlight)
-
         (:name eldoc-extension
                :description "Some extension for eldoc."
                :type emacswiki)
-
         (:name etags-table
                :description "Set tags table(s) based on current file"
                :type emacswiki)
-
         (:name fvwm-mode
                :description "major mode for editing Fvwm configuration files."
                :type github
                :pkgname "theBlackDragon/fvwm-mode")
-
         (:name highlight
                :description "Highlighting commands."
                :type emacswiki)
-
         (:name window-extension
                :description "Some extension functions manipulate window."
                :type emacswiki
                :features window-extension)
-
         (:name hide-comnt
                :description "Hide/show comments in code."
                :type emacswiki
                :features hide-comnt)
-
         (:name hl-line+
                :description "Extensions to hl-line.el."
                :type emacswiki)
-
         (:name thing-cmds
                :description "Commands that use things, as defined by `thingatpt.el'."
                :type emacswiki
                :depends hide-comnt
                :features thing-cmds)
-
         (:name thingatpt+
                :description "Extensions to `thingatpt.el'."
                :type emacswiki
                :features thingatpt+)
-
         (:name emacs-xcode-document-viewer
                :type git
                :url "git://github.com/sakito/emacs-xcode-document-viewer.git"
@@ -120,7 +108,6 @@
         (:name info+
                :description "Extensions to `info.el'."
                :type emacswiki)
-
         (:name wcheck-mode
                :description "General interface for text checkers."
                :type github
@@ -170,6 +157,13 @@
                :type github
                :description "Vim matchit ported to Evil"
                :pkgname "redguardtoo/evil-matchit"
+               :depends evil)
+        (:name evil-nerd-commenter
+               :website "http://github.com/redguardtoo/evil-nerd-commenter"
+               :description "Comment/uncomment lines efficiently. Like Nerd Commenter in Vim"
+               :type github
+               :pkgname "redguardtoo/evil-nerd-commenter"
+               :compile nil
                :depends evil)
         (:name evil-exchange
                :type github
