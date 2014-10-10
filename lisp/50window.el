@@ -101,9 +101,7 @@
   (interactive "p")
   (split-window-vertically)
   (other-window 1 nil)
-  (print prefix)
-  (when (= prefix 1)
-    (switch-to-next-buffer)))
+  (when (= prefix 1) (switch-to-next-buffer)))
 
 (defun pl/hsplit-last-buffer (prefix)
   "Split the window horizontally and display the previous buffer."
