@@ -81,6 +81,17 @@
       ;; default-enable-multibyte-characters t
       enable-local-variables :safe)
 
+;;; display world time
+;; For other cities, please refer to this http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+;;  M-x display-time-world or helm-world-time
+(setq display-time-world-list
+      '(("America/Los_Angeles" "Seattle")
+        ("America/New_York" "New York")
+        ("Asia/Chongqing" "China")
+        ("Asia/Tokyo" "Tokyo")
+        ("Europe/London" "London")
+        ("Europe/Paris" "Paris")))
+
 ;;; visually indicate empty line
 (when (fboundp 'define-fringe-bitmap)
   ;; (define-fringe-bitmap 'empty-line
