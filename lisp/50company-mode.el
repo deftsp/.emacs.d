@@ -102,6 +102,12 @@
   (let ((backends pl/company-prog-common-backends))
     (set (make-local-variable 'company-backends) backends)))
 
+(add-hook 'org-mode-hook 'pl/company-org-mode-setup)
+(defun pl/company-org-mode-setup ()
+  (let ((backends pl/company-common-backends))
+    (set (make-local-variable 'company-backends) backends)))
+
+
 
 (provide '50company-mode)
 ;;; 50company-mode.el ends here
