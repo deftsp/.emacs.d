@@ -23,7 +23,6 @@
 (setq tags-add-tables t) ; always add a new tags table to the current list instead of start a new one
 ;; (setq tags-table-list '("." ".." "../.."))
 
-(require 'etags-table nil t)
 (eval-after-load "etags-table"
   '(progn
      (add-to-list  'etags-table-alist `(".*\\.[mh]$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS")))
@@ -32,7 +31,6 @@
                                         ,(expand-file-name "~/.emacs.d/share/tags/persistent.TAGS")))
      (setq etags-table-search-up-depth 10)))
 
-(require 'etags-select nil t)
 ;; (global-set-key "\M-?" 'etags-select-find-tag-at-point)
 (global-set-key (kbd "M-.") 'etags-select-find-tag)
 
