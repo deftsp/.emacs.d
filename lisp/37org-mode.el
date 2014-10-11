@@ -132,7 +132,6 @@
       org-cycle-separator-lines 2
       org-cycle-include-plain-lists t
       org-directory "~/org"
-      org-archive-location "%s_archive::"
       org-hide-leading-stars t
       org-log-done 'time
       ;; Default target for storing notes. Used as a fall back file for org-capture.el, for templates that do not
@@ -160,6 +159,21 @@
       org-startup-folded t
       org-startup-truncated t
       org-display-internal-link-with-indirect-buffer nil)
+
+;;; archive
+;; Tip: find all 'DONE' items older than 2 months and archive
+;; Here's how to find all 'DONE' items older than 60 days in org-mode so they can be archived:
+;; C-c a m
+;; This brings up the agenda dialogue. Then at the 'Match:' prompt type:
+;; CLOSED<"<-60d>"
+;; Then, in the agenda window, to archive them all:
+;; Press 'm' to mark current items
+;; Press '%' to mark regexp.
+;; Press '.' to select all.
+;; Press 'B' for 'bulk action'.
+;; Press '$' for archive.
+(setq org-archive-location "%s_archive::")
+
 
 ;;; org-habit
 (setq org-habit-preceding-days 21
