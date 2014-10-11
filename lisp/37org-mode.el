@@ -383,7 +383,8 @@
       org-drill-maximum-duration 30   ; 30 minutes
       org-drill-scope 'file ; use `org-drill-directory' to drill whole directory
       org-drill-leech-method 'warn
-      ;; org-drill-adjust-intervals-for-early-and-late-repetitions-p t
+      org-drill-sm5-initial-interval 4.0
+      org-drill-adjust-intervals-for-early-and-late-repetitions-p t
       org-drill-add-random-noise-to-intervals-p t)
 
 
