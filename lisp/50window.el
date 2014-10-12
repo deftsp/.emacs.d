@@ -46,7 +46,7 @@
              (if dedicated "no longer " "")
              (buffer-name))))
 
-(global-set-key (kbd "M-D") 'pl/toggle-current-window-dedication)
+(define-key ctl-x-4-map (kbd "C-d") 'pl/toggle-current-window-dedication)
 
 ;;; window extension
 ;; http://www.emacswiki.org/emacs/window-extension.el
