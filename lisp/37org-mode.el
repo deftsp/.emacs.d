@@ -172,6 +172,7 @@
 ;; Press '.' to select all.
 ;; Press 'B' for 'bulk action'.
 ;; Press '$' for archive.
+;; find all 'CANCELLED' items. C-c < t then N r
 (setq org-archive-location "%s_archive::")
 
 
