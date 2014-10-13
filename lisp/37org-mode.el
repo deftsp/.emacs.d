@@ -152,6 +152,7 @@
       ;; agenda view always starts out by showing me the next seven days.
       org-agenda-start-on-weekday nil
       org-adapt-indentation t
+      org-agenda-restore-windows-after-quit t
       org-fast-tag-selection-single-key (quote expert)
       org-reverse-note-order t
       org-deadline-warning-days 7
@@ -330,6 +331,7 @@
 ;;; jump to agenda buffer when idle
 ;; get the idea from http://www.dbrunner.de/it/org-mode.html
 ;; I give a little update. execute recursive edit before pop a new window
+;; see also `org-agenda-restore-windows-after-quit'
 (defun pl/jump-to-org-agenda ()
   (interactive)
   (let* ((buf-name (if (boundp 'org-agenda-buffer-name)
@@ -342,10 +344,7 @@
           (with-selected-window wind
             (org-agenda-redo)
             (org-fit-window-to-buffer))
-        (if (called-interactively-p 'interactive)
-            (call-interactively 'org-agenda-list)
-          (save-window-excursion
-            (call-interactively 'org-agenda-list) (recursive-edit)))))))
+        (call-interactively 'org-agenda-list)))))
 
 ;; every 20 minutes
 (run-with-idle-timer (* 20 60) t 'pl/jump-to-org-agenda)
