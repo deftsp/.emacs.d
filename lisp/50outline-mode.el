@@ -178,6 +178,14 @@
 ;; `prog-mode-hook', prior to running their own mode hooks
 (add-hook 'prog-mode-hook (lambda () (outline-minor-mode t)))
 
+;;; outshine
+(with-eval-after-load "outline"
+  (require 'outshine nil t)
+  (setq outshine-use-speed-commands t)
+  (when (fboundp 'outshine-hook-function)
+    (add-hook 'outline-minor-mode-hook 'outshine-hook-function)))
+
+
 ;;; c-mode
 ;; "[:blank:]*\\(.*{\\|.*}\\)"
 ;; "[^ #\t\n]\\|[:blank:]*\\([{}]\\|[^* \t\n\^M\^L]\\|\\*+[a-zA-Z_0-9=(]\\)"
