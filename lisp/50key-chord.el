@@ -93,9 +93,7 @@
      (key-chord-define-global ",r" 'pl/recursive-edit-save-window-config)
      (key-chord-define-global ",c" 'org-capture)
      (key-chord-define-global ".c" 'calendar)
-     (key-chord-define-global "VV" 'other-window)
-     (key-chord-define-global "HH" 'woman)))
-
+     (key-chord-define-global "VV" 'other-window)))
 
 
 (provide '50key-chord)

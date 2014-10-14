@@ -6,8 +6,8 @@
 
 
 ;;Change outline commands prefix to `M-o'
-(global-unset-key (kbd "M-o"))
-(setq outline-minor-mode-prefix (kbd "M-o")) ; "\C-c\C-o"
+(global-unset-key (kbd "M-S-o"))
+(setq outline-minor-mode-prefix "\M-\S-o") ; default "\C-c\C-o"
 
 (eval-after-load "outline"
   '(require 'foldout))

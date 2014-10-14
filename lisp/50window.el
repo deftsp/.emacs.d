@@ -284,47 +284,75 @@
 ;;   ;; (add-to-list 'popwin:special-display-config)
 ;;   (popwin-mode 1))
 
+;;; win-switch
 (require 'win-switch nil t)
 
-(defun pl/win-switch-setup-keys (&rest dispatch-keys)
-  (interactive)
-  (win-switch-set-keys '("p") 'up)
-  (win-switch-set-keys '("n") 'down)
-  (win-switch-set-keys '("b") 'left)
-  (win-switch-set-keys '("f") 'right)
+(global-set-key "\M-o" 'win-switch-dispatch)
+
+(defface pl/win-switch-face-background
+  '((t (:foreground "#586e75")))
+  "Face for background of win-switch")
+
+(defvar pl/win-switch-face-overlay nil)
+
+(defun pl/win-switch-on-feedback-func ()
+  (let ((ol (make-overlay (point-min) (point-max)
+                          (current-buffer) nil t)))
+    (overlay-put ol 'face 'pl/win-switch-face-background)
+    (setq pl/win-switch-face-overlay ol)))
+
+(defun pl/win-switch-off-feedback-func ()
+  (delete-overlay pl/win-switch-face-overlay))
+
+(defun pl/win-switch-setup-keys ()
+  (win-switch-define-key "F" 'pl/toggle-full-window)
+  (win-switch-define-key "1" 'delete-other-windows)
+
+  (win-switch-define-key "u" 'winner-undo)
+  (win-switch-define-key "r" 'winner-redo)
+
+  (win-switch-define-key "p" 'buf-move-up)
+  (win-switch-define-key "n" 'buf-move-down)
+  (win-switch-define-key "b" 'buf-move-left)
+  (win-switch-define-key "f" 'buf-move-right)
+
+  (win-switch-set-keys '("k") 'up)
+  (win-switch-set-keys '("j") 'down)
+  (win-switch-set-keys '("h") 'left)
+  (win-switch-set-keys '("l") 'right)
+
   (win-switch-set-keys '("o") 'next-window)
   (win-switch-set-keys '("p") 'previous-window)
-  (win-switch-set-keys '("j") 'enlarge-vertically)
-  (win-switch-set-keys '("k") 'shrink-vertically)
-  (win-switch-set-keys '("h") 'enlarge-horizontally)
-  (win-switch-set-keys '("l") 'shrink-horizontally)
+  (win-switch-set-keys '("J") 'enlarge-vertically)
+  (win-switch-set-keys '("K") 'shrink-vertically)
+  (win-switch-set-keys '("H") 'enlarge-horizontally)
+  (win-switch-set-keys '("L") 'shrink-horizontally)
   (win-switch-set-keys '(" ") 'other-frame)
-  (win-switch-set-keys '("u" [return]) 'exit)
-  (win-switch-set-keys '(";") 'split-horizontally)
-  (win-switch-set-keys '("-") 'split-horizontally)
-  (win-switch-set-keys '("v") 'split-vertically)
-  (win-switch-set-keys '("|") 'split-vertically)
+  (win-switch-set-keys '("q" [return]) 'exit)
+  (win-switch-set-keys '("2") 'split-vertically)
+  (win-switch-set-keys '("3") 'split-horizontally)
   (win-switch-set-keys '("0") 'delete-window)
-  (win-switch-set-keys '("x") 'delete-window)
-  (dolist (key dispatch-keys)
-    (global-set-key key 'win-switch-dispatch)))
+  (win-switch-set-keys '("x") 'delete-window))
+
 
 (eval-after-load "win-switch"
   '(progn
-     (setq win-switch-idle-time 0.75)
-     (pl/win-switch-setup-keys (kbd "M-o M-o"))
-     (setq win-switch-window-threshold 1)
-     (setq win-switch-other-window-first (lambda () (null (nthcdr 3 (window-list)))))
-     (setq win-switch-provide-visual-feedback t)
-     (setq win-switch-feedback-background-color "#4a708b")
-     (setq win-switch-feedback-foreground-color "#eeeeee")
-     ;; No special functions, though icicles remaps other-window
-     ;; which gets used here and whose argument is respected
-     (setq win-switch-on-feedback-function nil)
-     (setq win-switch-off-feedback-function nil)
-     (setq win-switch-other-window-function nil)
+     (pl/win-switch-setup-keys)
+     (setq win-switch-window-threshold 0
+           win-switch-idle-time 0.5
+           ;; win-switch-other-window-first (lambda () (null (nthcdr 3 (window-list))))
+           win-switch-other-window-first nil
+           win-switch-provide-visual-feedback t
+           win-switch-feedback-background-color "#073642"
+           win-switch-feedback-foreground-color "#eeeeee"
+           win-switch-other-window-function nil
+           win-switch-on-feedback-function nil
+           win-switch-off-feedback-function nil
+           win-switch-on-feedback-function 'pl/win-switch-on-feedback-func
+           win-switch-off-feedback-function 'pl/win-switch-off-feedback-func)
+
      ;; Wrap around makes things easier
-     (win-switch-set-wrap-around 1)))
+     (win-switch-set-wrap-around +1)))
 
 (defun pl/toggle-full-window()
   "Toggle the full view of selected window"

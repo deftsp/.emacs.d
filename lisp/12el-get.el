@@ -260,6 +260,10 @@
                :type github
                :pkgname "xwl/cal-china-x"
                :features cal-china-x)
+        (:name win-switch
+               :description "utility for quickly navigating Emacs windows"
+               :type github
+               :pkgname "genovese/win-switch")
         (:name tuareg-mode
                :type github
                :description "an Emacs OCaml mode"
