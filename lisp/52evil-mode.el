@@ -70,6 +70,22 @@
 ;;   (add-to-list 'evil-insert-state-modes mode))
 
 ;;; escape
+;;; cycle emacs state
+(defvar pl/evil-saved-state nil "saved evil state for later use.")
+(make-variable-buffer-local 'pl/evil-saved-state)
+
+(defun pl/evil-emacs-state-cycle ()
+  (when evil-mode
+    (cond (pl/evil-saved-state
+           (unless (eq evil-state pl/evil-saved-state)
+             (evil-change-state pl/evil-saved-state))
+           (setq pl/evil-saved-state nil))
+          (t
+           (unless (eq evil-state 'emacs)
+             (setq pl/evil-saved-state evil-state)
+             (evil-change-state 'emacs))))))
+
+;;; escape dwim
 (defun pl/escape-dwim ()
   (interactive)
   (if (and delete-selection-mode transient-mark-mode mark-active)
@@ -77,7 +93,8 @@
   (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
   (cond ((minibuffer-window-active-p (selected-window))
          (abort-recursive-edit))
-        ((memq major-mode '(Info-mode org-agenda-mode help-mode))
+        ((or (memq major-mode '(Info-mode org-agenda-mode help-mode))
+             pl/evil-saved-state)
          (keyboard-quit))
         ((and (fboundp 'evil-mode) evil-mode)
          (cond ((eq evil-state 'emacs) (evil-exit-emacs-state))
@@ -547,22 +564,8 @@ to replace the symbol under cursor"
      (define-key evil-normal-state-map "gk" 'evil-jump-out-args)))
 
 ;;; git-timemachine
-(defvar pl/evil-state-before-git-timemachine nil)
-(defun pl/evil-state-revert ()
-  (when evil-mode
-    ;; when `pl/evil-state-before-git-timemachine' is non-nil means leave git-timemachine or else enter
-    (if pl/evil-state-before-git-timemachine
-        (progn
-          (unless (eq pl/evil-state-before-git-timemachine evil-state)
-            (evil-change-state pl/evil-state-before-git-timemachine))
-          (setq pl/evil-state-before-git-timemachine nil))
-      (progn
-        (setq pl/evil-state-before-git-timemachine evil-state)
-        (unless (eq evil-state 'emacs)
-          (evil-change-state 'emacs))))))
-
 (eval-after-load "git-timemachine"
-  '(add-hook 'git-timemachine-mode-hook 'pl/evil-state-revert))
+  '(add-hook 'git-timemachine-mode-hook 'pl/evil-emacs-state-cycle))
 
 ;;; company-mode
 (when (fboundp 'evil-declare-change-repeat)
@@ -600,10 +603,11 @@ to replace the symbol under cursor"
 (evil-define-key 'motion occur-mode-map (kbd "<return>") 'occur-mode-goto-occurrence)
 (evil-define-key 'motion occur-mode-map (kbd "RET") 'occur-mode-goto-occurrence)
 
-(eval-after-load 'edebug
-  '(progn
-     (defvar edebug-mode-map)
-     (evil-make-overriding-map edebug-mode-map 'normal)))
+
+;;; bugfix
+;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
+(with-eval-after-load 'edebug
+  (add-hook 'edebug-mode-hook 'pl/evil-emacs-state-cycle))
 
 (provide '52evil-mode)
 ;;; 50evil-mode.el ends here
