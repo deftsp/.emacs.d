@@ -4,35 +4,44 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
+;; install clojure-mode and cider with el-get
 
-;;; clojure mode
-;; install clojure-mode with el-get
-;; (require 'clojure-mode)
-;; (require 'clojure-test-mode) ; Load test support for Clojure
+(defun pl/clojure-mode-init ()
+  (when (fboundp 'rainbow-delimiters-mode)
+    (rainbow-delimiters-mode +1))
+  ;; indentation
+  ;; http://jbm.io/2013/11/custom-indentation-in-clojure-mode/
+  (put-clojure-indent 'match 1) ; equal to (put 'match 'clojure-indent-function 1)
+  (put 'macrolet 'clojure-backtracking-indent '((2) 2))
+  (subword-mode +1)
+  (smartparens-strict-mode +1))
 
-;;; CIDER - a Clojure IDE and REPL for Emacs
-;; (add-hook 'nrepl-interaction-mode-hook 'nrepl-turn-on-eldoc-mode)
-;; (setq nrepl-popup-stacktraces nil) ; Stop the error buffer from popping up while working in the REPL buffer:
+(with-eval-after-load "clojure-mode"
+  (add-hook 'clojure-mode-hook 'pl/clojure-mode-init))
 
-;; (setq nrepl-popup-stacktraces-in-repl t) ; enable error buffer popping also in the REPL:
 
-(eval-after-load "clojure-mode"
-  '(progn
-     (when (fboundp 'rainbow-delimiters-mode)
-       (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode))
-     ;; (add-hook 'clojure-mode-hook 'enable-paredit-mode)
-     ;; (add-hook 'clojure-mode-hook 'nrepl-turn-on-eldoc-mode)
-     ;; indentation
-     ;; http://jbm.io/2013/11/custom-indentation-in-clojure-mode/
-     (put-clojure-indent 'match 1) ; equal to (put 'match 'clojure-indent-function 1)
-     (put 'macrolet 'clojure-backtracking-indent '((2) 2))
+(defun pl/cider-mode-init ()
+  (setq nrepl-log-messages t
+        ;; hide the *nrepl-connection* and *nrepl-server* buffers from appearing
+        ;; in some buffer switching commands like switch-to-buffer
+        nrepl-hide-special-buffers t
+        nrepl-buffer-name-separator "-"
+        nrepl-buffer-name-show-port t
+        ;; nrepl-popup-stacktraces-in-repl t ; enable error buffer popping also in the REPL:
+        cider-repl-tab-command 'cider-repl-indent-and-complete-symbol ; 'indent-for-tab-command
+        cider-prefer-local-resources t
+        cider-repl-pop-to-buffer-on-connect t
+        cider-show-error-buffer t
+        cider-repl-display-in-current-window nil
 
-     (add-hook 'clojure-mode-hook 'subword-mode)))
+        ;; cider-repl-use-clojure-font-lock t
+        ;; cider-known-endpoints '(("host-a" "10.10.10.1" "7888") ("host-b" "7888"))
+        cider-repl-result-prefix ";; => "
+        cider-interactive-eval-result-prefix ";; => ")
+  (cider-turn-on-eldoc-mode +1))
 
-(eval-after-load "cider"
-  '(progn
-     ;; (add-hook 'cider-mode-hook 'enable-paredit-mode)
-     (add-hook 'cider-mode-hook 'subword-mode)))
+(with-eval-after-load "cider"
+  (add-hook 'cider-mode-hook 'pl/cider-mode-init))
 
 
 (provide '50clojure)
