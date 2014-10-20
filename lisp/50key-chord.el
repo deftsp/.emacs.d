@@ -80,7 +80,7 @@
 
      (key-chord-define-global "hd" 'helm-dash)
 
-     (key-chord-define-global "jj" 'ace-window)
+     (key-chord-define-global "JJ" 'ace-window)
 
      (key-chord-define-global ";g" 'magit-status)
      (key-chord-define-global "mg" 'magit-grep)
