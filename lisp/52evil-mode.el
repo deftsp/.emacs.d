@@ -606,6 +606,7 @@ to replace the symbol under cursor"
 
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
+;; (add-hook 'edebug-mode-hook 'evil-normalize-keymaps) ; recreate `evil-mode-map-alist'
 (with-eval-after-load 'edebug
   (add-hook 'edebug-mode-hook 'pl/evil-emacs-state-cycle))
 
