@@ -52,7 +52,7 @@
   '(progn
      (key-chord-mode 1)
      (setq key-chord-one-key-delay 0.16)   ; default 0.2
-     (setq key-chord-two-keys-delay 0.03)  ; default 0.1
+     (setq key-chord-two-keys-delay 0.032) ; default 0.1
 
      (dolist (combo banish-shift-key-combo)
        (key-chord-define-global (car combo) (cdr combo)))
