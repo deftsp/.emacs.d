@@ -169,6 +169,12 @@
 ;; (add-hook 'emacs-lisp-mode-hook (lambda () (elisp-slime-nav-mode t)))
 ;; (eval-after-load 'elisp-slime-nav '(diminish 'elisp-slime-nav-mode))
 
+;;; aggressive-indent-mode
+(when (fboundp 'global-aggressive-indent-mode )
+  ;; (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+  (global-aggressive-indent-mode 1)
+  (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
 
 ;;; highlight-symbol
 (when (fboundp 'highlight-symbol-mode)
@@ -375,8 +381,7 @@
   nil
   "Simple mode for xmodmap files.")
 
-
-
+;;; gtk-look
 ;; (autoload 'gtk-lookup-symbol "gtk-look" nil t)
 ;; (define-key global-map [?\C-h ?\C-j] 'gtk-lookup-symbol)
 
