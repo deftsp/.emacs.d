@@ -168,8 +168,8 @@
 ;;; Run 'save-buffers-kill-emacs' without process-killing query
 (eval-after-load "cl"
   '(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
-    "Prevent annoying \"Active processes exist\" query when you quit Emacs."
-    (flet ((process-list () nil)) ad-do-it)))
+     "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+     (flet ((process-list () nil)) ad-do-it)))
 
 ;; (modify-syntax-entry ?_ "w")            ; now '_' is not considered a word-delimiter
 ;; (modify-syntax-entry ?- "w")            ; now '-' is not considered a word-delimiter
@@ -187,11 +187,10 @@
 
 ;;; turncate
 ;; (set-default 'truncate-lines t) ; This is a BufferLocalVariable don't recommend.
-(add-hook 'emacs-lisp-mode-hook (lambda () (setq truncate-lines t)))
 (setq truncate-partial-width-windows t) ;; truncate lines in all windows less than full frame wide.
 
-(global-set-key (kbd "C-c T") 'toggle-truncate-partial-width-windows)
-(defun toggle-truncate-partial-width-windows ()
+(global-set-key (kbd "C-c T") 'pl/toggle-truncate-partial-width-windows)
+(defun pl/toggle-truncate-partial-width-windows ()
   (interactive)
   (set-default 'truncate-partial-width-windows
                (not truncate-partial-width-windows))
