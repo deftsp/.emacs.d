@@ -174,10 +174,8 @@
   (aggressive-indent-mode +1))
 
 (when (fboundp 'global-aggressive-indent-mode )
-  (global-aggressive-indent-mode 1)
-  (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode)
-  (dolist (l '(c-mode-common-hook ; c-mode-common-hook
+  (dolist (l '(c-mode-common-hook ; all CC Mode modes for common initializations
+               scheme-mode-hook
                emacs-lisp-mode-hook))
     (add-to-list l #'pl/turn-on-aggressive-indent-mode)))
 
