@@ -170,11 +170,16 @@
 ;; (eval-after-load 'elisp-slime-nav '(diminish 'elisp-slime-nav-mode))
 
 ;;; aggressive-indent-mode
+(defun pl/turn-on-aggressive-indent-mode ()
+  (aggressive-indent-mode +1))
+
 (when (fboundp 'global-aggressive-indent-mode )
-  ;; (add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
   (global-aggressive-indent-mode 1)
   (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
+  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode)
+  (dolist (l '(c-mode-common-hook ; c-mode-common-hook
+               emacs-lisp-mode-hook))
+    (add-to-list l #'pl/turn-on-aggressive-indent-mode)))
 
 ;;; highlight-symbol
 (when (fboundp 'highlight-symbol-mode)
