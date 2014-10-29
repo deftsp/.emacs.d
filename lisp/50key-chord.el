@@ -23,6 +23,7 @@
 ;;
 
 ;;; Code:
+;; notice: toggle input method will cause key-chord work abnormally
 (require 'key-chord nil t)
 
 ;;; banish the shift key
