@@ -304,6 +304,11 @@
 (defun pl/win-switch-off-feedback-func ()
   (delete-overlay pl/win-switch-face-overlay))
 
+(defun pl/win-switch-exit-do-ace-window ()
+  (interactive)
+  (win-switch-exit)
+  (call-interactively 'ace-window))
+
 (defun pl/win-switch-setup-keys ()
   (win-switch-define-key "F" 'pl/toggle-full-window)
   (win-switch-define-key "1" 'delete-other-windows)
@@ -315,6 +320,7 @@
   (win-switch-define-key "n" 'buf-move-down)
   (win-switch-define-key "b" 'buf-move-left)
   (win-switch-define-key "f" 'buf-move-right)
+  (win-switch-define-key "\M-o" 'pl/win-switch-exit-do-ace-window)
 
   (win-switch-set-keys '("k") 'up)
   (win-switch-set-keys '("j") 'down)
