@@ -27,7 +27,6 @@
 
      (define-key company-active-map (kbd "M-j") 'company-select-next)
      (define-key company-active-map (kbd "M-k") 'company-select-previous)
-     (key-chord-define company-active-map "df" 'company-abort)
      (add-to-list 'company-backends 'company-cmake)))
 
 (defvar pl/company-common-backends
