@@ -146,6 +146,7 @@
       org-agenda-todo-ignore-scheduled t
       org-agenda-skip-scheduled-if-done t
       org-agenda-skip-deadline-if-done t
+      org-agenda-skip-timestamp-if-done t
       org-agenda-todo-list-sublevels t
       ;; I use the diary only for sexp entries and holidays, and Ι have put them into org file.
       org-agenda-include-diary nil
@@ -379,6 +380,7 @@
 ;;; org-drill
 (setq org-drill-spaced-repetition-algorithm 'sm5
       org-drill-use-visible-cloze-face-p nil
+      org-drill-learn-fraction 0.45
       org-drill-maximum-items-per-session 40
       org-drill-maximum-duration 30   ; 30 minutes
       org-drill-scope 'file ; use `org-drill-directory' to drill whole directory
@@ -386,6 +388,13 @@
       org-drill-sm5-initial-interval 4.0
       org-drill-adjust-intervals-for-early-and-late-repetitions-p t
       org-drill-add-random-noise-to-intervals-p t)
+
+
+;;; agenda mode
+(defun pl/org-agenda-mode-init ()
+  (define-key org-agenda-mode-map " " 'org-agenda-cycle-show))
+
+(add-hook 'org-agenda-mode-hook 'pl/org-agenda-mode-init)
 
 
 (provide '37org-mode)
