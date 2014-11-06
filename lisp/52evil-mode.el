@@ -281,7 +281,7 @@
 ;;; expand-region
 (with-eval-after-load 'key-chord
   (setq expand-region-contract-fast-key "r") ; default "-"
-  (key-chord-define-global "er" 'er/expand-region))
+  (key-chord-define evil-normal-state-map "er" 'er/expand-region))
 
 ;;; enable evil mode
 (if (fboundp 'evil-mode)
