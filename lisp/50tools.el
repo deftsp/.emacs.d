@@ -18,9 +18,15 @@
 ;; (global-set-key (kbd "C-M-?") 'mark-thing) ; vs `mark-sexp', how to press?
 ;; (global-set-key (kbd "M-@") 'cycle-thing-region) ; vs `mark-word'
 
-
 ;;; expand-region
 (global-set-key (kbd "C-=") 'er/expand-region)
+
+(defun pl/mark-sexp-forward ()
+  "Mark the sexp from the point to end of the sexp."
+  (interactive)
+  (set-mark (point))
+  (forward-sexp 1)
+  (exchange-point-and-mark))
 
 (defun pl/mark-next-symbol ()
   "Presumes that current symbol is already marked, skips over one
@@ -48,6 +54,10 @@ space and marks next symbol."
       (if (looking-at "(")
           (forward-list))
       (exchange-point-and-mark))))
+
+;; general expand list
+(with-eval-after-load 'expand-region
+  (add-to-list 'er/try-expand-list 'pl/mark-sexp-forward))
 
 (defun pl/lua-mode-expand-list-init ()
   (make-variable-buffer-local 'er/try-expand-list)

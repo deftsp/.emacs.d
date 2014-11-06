@@ -279,9 +279,9 @@
 ;; (evil-leader/set-key-for-mode 'emacs-lisp-mode "b" 'byte-compile-file)
 
 ;;; expand-region
-(key-chord-define evil-normal-state-map "er" 'er/expand-region)
-(eval-after-load "evil"
-  '(setq expand-region-contract-fast-key "r")) ; default "-"
+(with-eval-after-load 'key-chord
+  (setq expand-region-contract-fast-key "r") ; default "-"
+  (key-chord-define-global "er" 'er/expand-region))
 
 ;;; enable evil mode
 (if (fboundp 'evil-mode)

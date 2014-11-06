@@ -126,16 +126,7 @@
         (:name minimap
                :type github
                :description "Sidebar showing a "mini-map" of a buffer"
-               :pkgname "dengste/minimap")
-        (:name haskell-mode
-               :description "A Haskell editing mode"
-               :type github
-               :pkgname "deftsp/haskell-mode"
-               :info "."
-               :branch "develop"
-               :build `(("make" ,(format "EMACS=%s" (shell-quote-argument el-get-emacs)) "all"))
-               :post-init (progn
-                            (require 'haskell-mode-autoloads)))))
+               :pkgname "dengste/minimap")))
 
 ;; (el-get-save-package-status "package-name-here" "removed")
 
