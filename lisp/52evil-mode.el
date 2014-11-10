@@ -495,6 +495,14 @@ to replace the symbol under cursor"
   "j" 'magit-goto-next-section ; default bind to `magit-section-jump-map'
   "k" 'magit-goto-previous-section)
 
+(evil-define-key 'normal magit-log-mode-map
+  "j" 'magit-goto-next-section
+  "k" 'magit-goto-previous-section)
+
+(evil-define-key 'normal magit-diff-mode-map
+  "j" 'magit-goto-next-section
+  "k" 'magit-goto-previous-section)
+
 ;;;
 ;; (evil-add-hjkl-bindings grep-mode-map 'emacs)
 ;; (evil-add-hjkl-bindings helm-grep-mode-map 'emacs)
