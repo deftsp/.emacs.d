@@ -57,14 +57,31 @@
    ;; mode-line
    '(mode-line-buffer-id ((t (:foreground "#90377d"))))
    '(mode-line-emphasis ((t (:foreground "Magenta"))))
-   `(mode-line ((t (:foreground ,base1 :background ,base02 :box nil))))
-   `(mode-line-inactive ((t (:foreground ,base0  :background ,base03 :box nil))))
+   `(mode-line ((t (:foreground ,base1 :background ,base02 :box nil :font "DejaVu Sans Mono for Powerline-12"))))
+   `(mode-line-inactive ((t (:foreground ,base0  :background ,base03 :box nil :font "DejaVu Sans Mono for Powerline-12"))))
    '(mode-line-highlight ((t (:box nil))))
 
    '(minibuffer-prompt ((t (:foreground "chartreuse2" :weight bold))))
    `(fringe ((t (:foreground "green" :background ,base02))))
    `(region ((t (:foreground unspecified :background ,base02))))
    '(secondary-selection ((t (:foreground unspecified :background "#485c60"))))
+
+   ;; powerline
+   `(powerline-active1 ((t (:background "#6b6b6b" :foreground "#fefefe" :inherit mode-line))))
+   ;; `(powerline-active2 ((t (:background "#585858" :foreground "#adadad" :inherit mode-line))))
+   `(powerline-active2 ((t (:background "#182e3f" :foreground "#adadad" :inherit mode-line))))
+   `(powerline-inactive1 ((t (:background "#839496" :foreground "#6b6b6b" :inherit mode-line-inactive))))
+   `(powerline-inactive2 ((t (:background "#383838" :foreground "#9b9b9b" :inherit mode-line-inactive))))
+   '(powerline-evil-insert-face ((t (:foreground "#383838" :background "OliveDrab1" :weight bold :inherit mode-line))))
+   '(powerline-evil-normal-face ((t (:foreground "#383838" :background "orchid" :weight bold :inherit mode-line))))
+   '(powerline-evil-visual-face ((t (:foreground "#383838" :background "Purple" :weight bold :inherit mode-line))))
+   '(powerline-evil-motion-face ((t (:foreground "#383838" :background "Cyan" :weight bold :inherit mode-line))))
+   '(powerline-evil-emacs-face ((t (:foreground "#383838" :background "#7cfa42" :weight bold :inherit mode-line))))
+   '(powerline-evil-replace-face ((t (:foreground "#383838" :background "orchid" :weight bold :inherit mode-line))))
+   '(powerline-evil-operator-face ((t (:foreground "#383838" :background "maroon" :weight bold :inherit mode-line))))
+
+   ;; vc
+   `(vc-state-base-face ((t (:background unspecified :foreground ,base0))))
 
    ;; `(vertical-border ((t (:foreground ,base2))))
 
@@ -248,6 +265,9 @@
    `(popup-isearch-match ((t (:background ,base03 :foreground ,base03))))
    `(popup-menu-selection-face ((t (:background "#0000ff" :foreground ,base03))))
 
+   ;; ace-window-mode-line
+   '(aw-mode-line-face ((t (:foreground "##00cbcb"))))
+
    ;; company-mode
    `(company-tooltip ((t (:background ,base01 :foreground "#dfdfdf"))))
    `(company-tooltip-common ((t (:background ,base1 :foreground "#aa3333"))))
@@ -342,7 +362,7 @@
    'palory
    `(ansi-color-names-vector ['bg ,red ,green ,yellow ,blue ,magenta ,cyan ,base0])
    ;; fill-column-indicator
-  `(fci-rule-color ,base01)))
+   `(fci-rule-color ,base01)))
 
 
 ;;;###autoload
