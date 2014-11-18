@@ -11,8 +11,6 @@
 ;; (require '09cedet)
 (require '37org-mode)
 (require '12el-get)
-
-(require '39util)
 (when (eq system-type 'gnu/linux)
   (require '42ecb.el))
 
@@ -67,6 +65,7 @@
 (require '50paredit)
 (require '50patch)
 (require '50perl)
+;; (require '50powerline)
 (require '50printing)
 (require '50python-mode)
 (require '50ruby)
@@ -94,10 +93,12 @@
 (require '50yasnippet)
 (require '51CommonLispTemplates)
 (require '51helm)
+
 ;; (require '52emms) ; do not use it any more
 ;; (require '52icicles)
 (require '52evil-mode)
 (require '52ido)
+
 (require '60session)
 ;; (require '62winring)
 (require '99face)
