@@ -11,7 +11,7 @@
 ;; make EMACS="/Applications/Emacs.app/Contents/MacOS/Emacs -Q -batch " all
 
 (add-to-list 'load-path (file-name-as-directory "~/.emacs.d/site-lisp/helm/"))
-(require 'helm-config)
+(require 'helm-config nil t)
 ;; (helm-mode 1) ; use ido everywhere instead
 
 ;;; helm-command-prefix-key (default to C-x c).

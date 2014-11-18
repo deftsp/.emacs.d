@@ -126,9 +126,9 @@
 
 ;;; workgroups2
 (require 'workgroups2 nil t)
-;; autoload/autosave:
-(setq wg-default-session-file "~/.emacs.d/workgroups"
-      wg-use-default-session-file t  ; set to nil, if you emacs started as daemon
+
+(setq wg-session-load-on-start t  ; set to nil, if you emacs started as daemon
+      wg-session-file "~/.emacs.d/workgroups"
       wg-prefix-key (kbd "C-c w")
       wg-mode-line-decor-left-brace "♯"
       wg-mode-line-decor-right-brace "")
@@ -137,13 +137,13 @@
   '(when (fboundp 'key-chord-define-global)
      (key-chord-define-global ".w" wg-prefixed-map)))
 
-;; put this one at the bottom of .emacs
 (defun pl/turn-on-workgroups-mode ()
+  (interactive)
   (when (fboundp 'workgroups-mode)
     (workgroups-mode 1)))
 
 ;; make sure workgroups2 runs bofore desktop
-(add-hook 'after-init-hook #'pl/turn-on-workgroups-mode)
+(add-hook 'after-init-hook 'pl/turn-on-workgroups-mode)
 
 (provide '60session)
 
