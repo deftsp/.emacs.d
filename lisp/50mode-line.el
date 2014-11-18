@@ -5,10 +5,6 @@
 ;; %* – read-only, but modified
 ;; %% – read-only, not modifed
 
-;; (add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/powerline"))
-;; (require 'powerline nil t)
-;; (powerline-default-theme)
-
 (defface mode-line-position-normal-face
   '((((type x w32 ns))
      (:foreground "CornflowerBlue" :inherit bold))
@@ -23,7 +19,6 @@
     (((type tty))
      (:foreground "blue")))
   "Face used to display the position of over 80 column in the mode line.")
-
 
 
 ;;;
