@@ -52,12 +52,36 @@
        ;; git-state-decoration-colored-letter
        (setq git-state-modeline-decoration 'git-state-decoration-small-dot))))
 
+(defadvice git--install-state-mark-modeline (around insert-after-ace-window-key activate)
+  "Add git state mark modeline after ace window key"
+  (if (assq 'aw-mode-line-key-display-on mode-line-format)
+      (let* ((left)
+             (right mode-line-format)
+             (next (car right)))
+        (catch 'break
+          (while t
+            (when (eq (if (consp next) (car next))
+                      'aw-mode-line-key-display-on)
+              (setq mode-line-format
+                    (append left
+                            (list next)
+                            (list `(git--state-mark-modeline
+                                    ,(git--state-decoration-dispatch
+                                      stat)))
+                            (cdr right)))
+              (throw 'break nil))
+            (setq left (append left (list next))
+                  right (cdr right)
+                  next (car right)))))
+    ad-do-it))
+
 ;;; magit
 (autoload 'magit-grep "magit" "Command for `grep'." t) ; which is not a autload function at 2013.06.25 yet
 (global-set-key (kbd "C-x G") 'magit-status)
 (eval-after-load "magit"
   '(progn
      (add-to-list 'magit-repo-dirs "~/.emacs.d") ; C-u C-u M-x magit-status will ignore it
+     (add-to-list 'magit-repo-dirs "~/opt/emacs")
      (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
      (setq magit-completing-read-function 'magit-ido-completing-read)))
 

@@ -246,6 +246,16 @@
 ;; not use switch-window anymore, ace-window is faster
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 
+(require 'ace-window-mode-line nil t)
+(setq ace-window-mode-line-format "⌗%c"
+      ace-window-mode-line-position 1)
+
+(defun pl/turn-on-ace-window-show-key ()
+  (when (fboundp 'ace-window-mode-line-show-key)
+    (ace-window-mode-line-show-key +1)))
+;; make sure ace window key to the right position
+(add-to-list 'after-init-hook 'pl/turn-on-ace-window-show-key)
+
 ;;; golden-ratio.el
 ;; (require 'golden-ratio nil t)
 ;; (eval-after-load "golden-ratio"
