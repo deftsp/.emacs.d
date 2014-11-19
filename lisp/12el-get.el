@@ -4,10 +4,12 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
+;;; manually download and install
+;; clone the package and place it to ~/.emacs.d/el-get, then execute
+;; (el-get-save-package-status 'helm "required")
+;; (el-get-post-install 'helm)
 
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
-
-
 (unless (require 'el-get nil t)
   (url-retrieve
    "https://raw.github.com/dimitri/el-get/master/el-get-install.el"
