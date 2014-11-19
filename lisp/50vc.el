@@ -70,9 +70,12 @@
                                       stat)))
                             (cdr right)))
               (throw 'break nil))
+
             (setq left (append left (list next))
                   right (cdr right)
-                  next (car right)))))
+                  next (car right))
+            (when (null next)
+              (throw 'break nil)))))
     ad-do-it))
 
 ;;; magit
