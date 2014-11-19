@@ -1,4 +1,4 @@
-;;; 50powerline.el ---                               -*- lexical-binding: t; -*-
+;;; 23powerline.el ---                               -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014  Shihpin Tseng
 
@@ -207,5 +207,5 @@ mouse-1: Display Line and Column Mode Menu")
 (global-set-key (kbd "<f5>") 'pl/force-update-mode-line)
 
 
-(provide '50powerline)
-;;; 50powerline.el ends here
+(provide '23powerline)
+;;; 23powerline.el ends here
