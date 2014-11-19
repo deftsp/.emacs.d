@@ -11,7 +11,7 @@
 (require '07org-mode)
 ;; (require '09cedet)
 (require '12el-get)
-(require '23powerline)
+;; (require '23powerline)
 (when (eq system-type 'gnu/linux)
   (require '42ecb.el))
 

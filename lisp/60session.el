@@ -130,8 +130,16 @@
 (setq wg-session-load-on-start t  ; set to nil, if you emacs started as daemon
       wg-session-file "~/.emacs.d/workgroups"
       wg-prefix-key (kbd "C-c w")
-      wg-mode-line-decor-left-brace "♯"
-      wg-mode-line-decor-right-brace "")
+      wg-emacs-exit-save-behavior 'save
+      wg-workgroups-mode-exit-save-behavior 'save)
+
+;; workgroup mode-line
+;; use '(wg-workgroup-name (wg-current-workgroup))' to get workgroup name
+(setq wg-mode-line-display-on (not (featurep 'powerline)))
+(setq wg-flag-modified t)                 ; Display modified flags as well
+(setq wg-mode-line-decor-left-brace "♯"
+      wg-mode-line-decor-right-brace ""
+      wg-mode-line-decor-divider ":")
 
 (eval-after-load "workgroups2"
   '(when (fboundp 'key-chord-define-global)

@@ -44,45 +44,50 @@
                                      ""))))
 
 
-(let* ((help-echo
-        "mouse-1: Select (drag to resize)\nmouse-2: Make current window occupy the whole frame\n mouse-3: Remove current window from display")
-       (recursive-edit-help-echo "Recursive edit, type C-M-c to get out")
-       (standard-mode-line-modes
-        (list
-         " "
-         (propertize "%[" 'help-echo recursive-edit-help-echo 'face 'warning)
-         (propertize "(" 'help-echo help-echo)
-         `(:propertize ("" mode-name)
-                       help-echo "Major mode\nmouse-1: Display major mode menu\nmouse-2: Show help for major mode\n mouse-3: Toggle minor modes"
-                       mouse-face mode-line-highlight
-                       local-map ,mode-line-major-mode-keymap)
-         '("" mode-line-process)
-         `(:propertize ("" minor-mode-alist)
-                       mouse-face mode-line-highlight
-                       help-echo "Minor mode\nmouse-1: Display minor mode menu\nmouse-2: Show help for minor mode\nmouse-3: Toggle minor modes"
-                       local-map ,mode-line-minor-mode-keymap)
-         (propertize "%n" 'help-echo "mouse-2: Remove narrowing from the current buffer"
-                     'mouse-face 'mode-line-highlight
-                     'local-map (make-mode-line-mouse-map
-                                 'mouse-1 #'mode-line-widen))
-         (propertize ")" 'help-echo help-echo)
-         (propertize "%]" 'help-echo recursive-edit-help-echo 'face 'warning))))
-  (setq-default mode-line-modes standard-mode-line-modes)
-  (setq-default mode-line-format
-                `("%e"  ;  When Emacs is nearly out of memory for Lisp objects, a brief message saying so.  Otherwise, this is empty.
-                  mode-line-front-space
-                  mode-line-mule-info
-                  mode-line-client
-                  mode-line-modified
-                  mode-line-remote
-                  mode-line-frame-identification
-                  mode-line-buffer-identification
-                  ,(propertize "    " 'help-echo help-echo)
-                  mode-line-position
-                  (vc-mode vc-mode)
-                  "  " mode-line-modes
-                  mode-line-misc-info ; contain which-func-mode, global-mode-string ...
-                  mode-line-end-spaces)))
+(defun pl/init-mode-line ()
+  (let* ((help-echo
+          "mouse-1: Select (drag to resize)\nmouse-2: Make current window occupy the whole frame\n mouse-3: Remove current window from display")
+         (recursive-edit-help-echo "Recursive edit, type C-M-c to get out")
+         (standard-mode-line-modes
+          (list
+           " "
+           (propertize "%[" 'help-echo recursive-edit-help-echo 'face 'warning)
+           (propertize "(" 'help-echo help-echo)
+           `(:propertize ("" mode-name)
+                         help-echo "Major mode\nmouse-1: Display major mode menu\nmouse-2: Show help for major mode\n mouse-3: Toggle minor modes"
+                         mouse-face mode-line-highlight
+                         local-map ,mode-line-major-mode-keymap)
+           '("" mode-line-process)
+           `(:propertize ("" minor-mode-alist)
+                         mouse-face mode-line-highlight
+                         help-echo "Minor mode\nmouse-1: Display minor mode menu\nmouse-2: Show help for minor mode\nmouse-3: Toggle minor modes"
+                         local-map ,mode-line-minor-mode-keymap)
+           (propertize "%n" 'help-echo "mouse-2: Remove narrowing from the current buffer"
+                       'mouse-face 'mode-line-highlight
+                       'local-map (make-mode-line-mouse-map
+                                   'mouse-1 #'mode-line-widen))
+           (propertize ")" 'help-echo help-echo)
+           (propertize "%]" 'help-echo recursive-edit-help-echo 'face 'warning))))
+    (setq-default mode-line-modes standard-mode-line-modes)
+    (setq-default mode-line-format
+                  `("%e"  ;  When Emacs is nearly out of memory for Lisp objects, a brief message saying so.  Otherwise, this is empty.
+                    mode-line-front-space
+                    mode-line-mule-info
+                    mode-line-client
+                    mode-line-modified
+                    mode-line-remote
+                    mode-line-frame-identification
+                    mode-line-buffer-identification
+                    ,(propertize "    " 'help-echo help-echo)
+                    mode-line-position
+                    (vc-mode vc-mode)
+                    "  " mode-line-modes
+                    mode-line-misc-info ; contain which-func-mode, global-mode-string ...
+                    mode-line-end-spaces))))
+
+
+(unless (featurep 'powerline)
+  (pl/init-mode-line))
 
 (setq global-mode-string
       '(" "
