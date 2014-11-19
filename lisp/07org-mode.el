@@ -1,4 +1,4 @@
-;;; 37org-mode.el ---
+;;; 07org-mode.el ---
 
 ;; Copyright (C) 2007  Shihpin Tseng
 
@@ -398,7 +398,7 @@
 (add-hook 'org-agenda-mode-hook 'pl/org-agenda-mode-init)
 
 
-(provide '37org-mode)
+(provide '07org-mode)
 
 ;; Local Variables:
 ;; outline-regexp: ";;; "
