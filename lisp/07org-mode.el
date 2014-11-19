@@ -215,7 +215,7 @@
          "* TODO %?\n  %i%u"
          :kill-buffer t)
         ("j" "Journal" entry (file+datetree "~/org/journal.org")
-         "* %?\n  %U\n"
+         "* %?\n  %i\n  %U\n"
          :kill-buffer t)
         ("J" "Journal with Annotation" entry (file+datetree "~/org/journal.org")
          "* %?\n  %U\n  %i\n  %a"
@@ -225,7 +225,6 @@
          :prepend t
          :unnarrowed t
          :kill-buffer t)))
-
 
 ;;; work with appt
 (defun pl/org-agenda-to-appt ()
