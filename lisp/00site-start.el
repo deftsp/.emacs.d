@@ -36,6 +36,7 @@
 (require '50display)
 (require '50door-gnus)
 (require '50ediff)
+(require '50emacs-lisp-mode)
 (require '50emacsclient)
 (require '50epg)
 (require '50erc)

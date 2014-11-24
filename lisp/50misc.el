@@ -28,23 +28,7 @@
       mouse-yank-at-point t
       ;; directory-sep-char ?\\
       confirm-kill-emacs 'yes-or-no-p ; 'y-or-n-p
-      use-dialog-box nil                  ; mouse commands don't use dialog boxes to ask questions.
-      comint-completion-autolist t
-      comint-input-ignoredups t
-      comint-prompt-read-only t
-      max-lisp-eval-depth 1500
-      max-specpdl-size 3000
-      comment-multi-line nil
-      ;; comment-column 60
-      completion-ignore-case t        ;Do case-insensitive completion.
-      ;; don't automatically add new lines when scrolling down at the bottom of a buffer
-      next-line-add-newlines nil
-      ;; require-final-newline nil        ; let major modes to set it
-      track-eol nil
-      read-mail-command 'gnus
-      ;; temporary-file-directory "~/tmp/"
-      read-file-name-completion-ignore-case t
-      ;; ispell-dictionary "english"
+      use-dialog-box nil                  ; mouse commands don't use dialog boxes to ask quesary "english"
       ;; ps-multibyte-buffer 'non-latin-printer
       display-time-24hr-format t
       display-time-day-and-date t
@@ -355,25 +339,6 @@
 ;; be smart about filenames understand ~/ etc
 (when (fboundp 'file-name-shadow-mode)
   (file-name-shadow-mode t))
-
-;;; Popup Help
-;; http://blog.jenkster.com/2013/12/popup-help-in-emacs-lisp.html
-(defun pl/describe-thing-in-popup ()
-  (interactive)
-  (let* ((thing (symbol-at-point))
-         (help-xref-following t)
-         (description (with-temp-buffer
-                        (help-mode)
-                        (help-xref-interned thing)
-                        (buffer-string))))
-    (popup-tip description
-               :point (point)
-               :around t
-               :height 30
-               :scroll-bar t
-               :margin t)))
-
-(global-set-key (kbd "C-h SPC") 'pl/describe-thing-in-popup)
 
 ;;; paren
 ;;----------------------------------------------------------------------------------------------------

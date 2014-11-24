@@ -8,7 +8,7 @@
 ;; electric pair mode is a global minor mode
 ;; (electric-pair-mode 1) ; use smartparens instead
 
-;;; indent
+;;; indentation
 ;; use space to indent instead of TAB character to indent, but for makefile-mode.
 (setq-default indent-tabs-mode nil) ; Prevent Extraneous Tabs
 ;; you can use "M-x untabify" to change tab to space of a region
@@ -17,7 +17,7 @@
 ;; (setq standard-indent 2) ; default 4
 
 
-;;; font-lock
+;;; add commentaires keywords
 ;; use wcheck-mode insead now
 ;; (defun pl/font-lock-add-commentaires-keywords (m)
 ;;   (font-lock-add-keywords m '(("\\<\\(FIXME\\):" 1 font-lock-warning-face prepend)
@@ -43,16 +43,10 @@
 
 (eval-after-load "cc-mode"
   '(progn
-    ;; (dolist (m '(c-mode objc-mode c++-mode))        ; Colorisation : C/C++/Object-C : Commentaires
-    ;; (pl/font-lock-add-commentaires-keywords m))
+     ;; (dolist (m '(c-mode objc-mode c++-mode))        ; Colorisation : C/C++/Object-C : Commentaires
+     ;; (pl/font-lock-add-commentaires-keywords m))
      (dolist (type (list "UCHAR" "USHORT" "ULONG" "BOOL" "BOOLEAN" "LPCTSTR" "C[A-Z]\\sw+" "\\sw+_t"))
-      (add-to-list 'c-font-lock-extra-types type))))
-
-(font-lock-add-keywords
- 'emacs-lisp-mode
- '(("\\<\\(set\\|setq\\|require-soft\\|quote\\|when-available\\|add-hook\\)\\>" .
-    font-lock-function-name-face)
-   ("\\<\\(nil\\|\\t\\)\\_>" . font-lock-constant-face)))
+       (add-to-list 'c-font-lock-extra-types type))))
 
 ;;; Auto close *compilation* buffer, if no compile error
 ;; (setq compilation-finish-functions 'compile-autoclose)
@@ -89,38 +83,6 @@
       (comment-or-uncomment-region (line-beginning-position) (line-end-position))
     (comment-dwim arg)))
 
-;;; do not considered '-' as word-delimiter
-;; (add-hook 'emacs-lisp-mode-hook '(lambda () (modify-syntax-entry ?- "w")))
-;; (modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table)
-
-;;;;; eldoc
-;; mini-buffer 中显示 point 处 eLisp 函数的定义格式。
-(autoload 'turn-on-eldoc-mode "eldoc" nil t)
-(eval-after-load "eldoc"
-  '(progn
-    (require 'eldoc-extension nil t)
-    ;; make ElDoc aware of ParEdit's most used commands. Whenever the listed commands are used,
-    ;; ElDoc will automatically refresh the minibuffer.
-    ;; (eldoc-add-command
-    ;;  'paredit-backward-delete
-    ;;  'paredit-close-round)
-    ))
-
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
-(add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
-
-;; (add-hook 'rcirc-mode-hook 'turn-on-eldoc-mode)
-;;;;; symbol highlight mode
-
-;; (require 'tooltip-help)
-;; (define-key emacs-lisp-mode-map (kbd "<f1>") 'th-show-help)
-
-;;; elisp-slime-nav
-;; install with el-get
-;; Elisp go-to-definition with M-. and back again with M-,
-(add-hook 'emacs-lisp-mode-hook 'turn-on-elisp-slime-nav-mode)
-(eval-after-load 'elisp-slime-nav '(diminish 'elisp-slime-nav-mode))
 
 ;;; aggressive-indent-mode
 (defun pl/turn-on-aggressive-indent-mode ()
@@ -150,9 +112,8 @@
      (setq highlight-symbol-idle-delay 1.2)))
 
 
-;;----------------------------------------------------------------------------------------------------
+;;; inset file variable
 ;; insert -*- MODENAME -*- tag
-
 (defun pl/insert-file-variable ()
   "Insert file variable string \"-*- Major-Mode-Name -*-\" with
   comment char"
@@ -164,7 +125,7 @@
            " -*- " comment-end)))
 ;;----------------------------------------------------------------------------------------------------
 
-;;;;; Let's make Haskell and Lisp look more like the math they should!
+;;; Let's make Haskell and Lisp look more like the math they should!
 ;; <http://www.emacswiki.org/cgi-bin/wiki/PrettyLambda>
 ;; (defun pretty-greek ()
 ;;   (let ((greek '("alpha" "beta" "gamma" "delta" "epsilon" "zeta" "eta" "theta" "iota" "kappa" "lambda" "mu"
@@ -183,19 +144,6 @@
 ;;                                                    nil)))))))))
 ;; (add-hook 'lisp-mode-hook 'pretty-greek)
 ;; (add-hook 'emacs-lisp-mode-hook 'pretty-greek)
-
-;;----------------------------------------------------------------------------------------------------
-
-;;; auto compile el file
-;; (defun byte-compile-visited-file ()
-;;   (let ((byte-compile-verbose t))
-;;     (unless (eq major-mode 'sawfish-mode)
-;;       (byte-compile-file buffer-file-name))))
-
-;; (add-hook 'emacs-lisp-mode-hook
-;;           (lambda ()
-;;             (when buffer-file-name
-;;               (add-hook 'after-save-hook 'byte-compile-visited-file nil t))))
 
 ;;----------------------------------------------------------------------------------------------------
 ;; (defun unicode-symbol (name)
