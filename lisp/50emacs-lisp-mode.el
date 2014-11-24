@@ -58,6 +58,26 @@
     font-lock-function-name-face)
    ("\\<\\(nil\\|\\t\\)\\_>" . font-lock-constant-face)))
 
+;;; imenu
+(setq pl/emacs-lisp-imenu-generic-expression
+      '((nil "^\\s-*(def\\(un\\|subst\\|macro\\|advice\\)\
+\\s-+\\([-A-Za-z0-9+/]+\\)" 2)
+        ("*Vars*" "^\\s-*(def\\(var\\|const\\)\
+\\s-+\\([-A-Za-z0-9+/]+\\)" 2)
+        ("*Types*"
+         "^\\s-*\
+ (def\\(type\\|struct\\|class\\|ine-condition\\)\
+\\s-+\\([-A-Za-z0-9+/]+\\)" 2)
+        (nil ";;[;]\\{1,8\\} \\(.*$\\)" 1) ; the default one
+        ("Sections" "^;;;; \\(.+\\)$" 1)))
+
+
+(defun pl/imenu-elisp-init ()
+  (setq imenu-prev-index-position-function nil)
+  (setq imenu-generic-expression pl/emacs-lisp-imenu-generic-expression))
+
+
+(add-hook 'emacs-lisp-mode-hook 'pl/imenu-elisp-init)
 
 (provide '50emacs-lisp-mode)
 ;;; 50emacs-lisp-mode.el ends here
