@@ -210,18 +210,13 @@
     (global-evil-leader-mode))
 
 (evil-leader/set-key
-  "\\"  'evilnc-comment-operator
+  ","  'evilnc-comment-operator
   "1"   'delete-other-windows
   "2"   (kbd "C-x 2")
   "3"   "\C-x3"
   "a"   'org-agenda
   "b"   'bookmark-map
-  "ci"  'evilnc-comment-or-uncomment-lines
-  "cl"  'evilnc-quick-comment-or-uncomment-to-the-line
-  "cc"  'evilnc-copy-and-comment-lines
-  "cp"  'evilnc-comment-or-uncomment-paragraphs
-  "cr"  'comment-or-uncomment-region
-  "cv"  'evilnc-toggle-invert-comment-line-by-line
+  ;; "ci", "cl", "cc", "cp", cr" and "cv" are used by evil-nerd-commenter
   "cs"  'pl/evil-change-symbol-in-defun
   "ch"  'crosshairs-mode
   "D"   'dired-jump
@@ -253,7 +248,7 @@
   "HS"  'helm-multi-swoop-all
   "j"   'helm-etags-select
   "k"   'kill-this-buffer
-  "ll"  'evilnc-quick-comment-or-uncomment-to-the-line
+  ;; "ll" are used by evil-nerd-commenter
   "lr"  'pl/linum-relative-toggle
   "ms"  'magit-status
   "p"   'projectile-commander
@@ -444,6 +439,20 @@
 ;; installed with el-get
 (setq evilnc-hotkey-comment-operator ",,")
 (require 'evil-nerd-commenter nil t)
+
+(global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
+;; (global-set-key (kbd "C-c l") 'evilnc-comment-or-uncomment-to-the-line)
+;; (global-set-key (kbd "C-c c") 'evilnc-copy-and-comment-lines)
+;; (global-set-key (kbd "C-c p") 'evilnc-comment-or-uncomment-paragraphs)
+
+(with-eval-after-load 'evil
+  (define-key evil-normal-state-map ",ci" 'evilnc-comment-or-uncomment-lines)
+  (define-key evil-normal-state-map ",cl" 'evilnc-comment-or-uncomment-to-the-line)
+  (define-key evil-normal-state-map ",cc" 'evilnc-copy-and-comment-lines)
+  (define-key evil-normal-state-map ",cp" 'evilnc-comment-or-uncomment-paragraphs)
+  (define-key evil-normal-state-map ",cr" 'comment-or-uncomment-region)
+  (define-key evil-normal-state-map ",cv" 'evilnc-toggle-invert-comment-line-by-line)
+  (define-key evil-normal-state-map ",ll" 'evilnc-quick-comment-or-uncomment-to-the-line))
 
 ;;;
 (require 'evil-indent-textobject nil t)
