@@ -188,6 +188,37 @@
 (when window-system
   (pl/set-font))
 
+;;; visually indicate empty line
+;; https://www.reddit.com/r/emacs/comments/2kdztw/emacs_in_evil_mode_show_tildes_for_blank_lines/
+;; https://github.com/syl20bnr/vi-tilde-fringe
+(when (fboundp 'define-fringe-bitmap)
+  (define-fringe-bitmap 'tilde
+    [#b00000000
+     #b00000000
+     #b00000000
+     #b01110001
+     #b11011011
+     #b10001110
+     #b00000000
+     #b00000000]
+    nil nil 'center)
+
+  ;; (define-fringe-bitmap 'solid-block [0 0 #x3c #x3c #x3c #x3c 0 0])
+  (define-fringe-bitmap 'solid-block
+    [#b00000000
+     #b00000000
+     #b00111100
+     #b00111100
+     #b00111100
+     #b00111100
+     #b00000000
+     #b00000000]
+    nil nil 'center)
+  (set-fringe-bitmap-face 'tilde font-lock-doc-face)
+  (set-fringe-bitmap-face 'solid-block font-lock-doc-face)
+  (setcdr (assq 'empty-line fringe-indicator-alist) 'solid-block)
+  (setq-default indicate-empty-lines t))
+
 
 (provide '50display)
 

@@ -76,21 +76,6 @@
         ("Europe/London" "London")
         ("Europe/Paris" "Paris")))
 
-;;; visually indicate empty line
-(when (fboundp 'define-fringe-bitmap)
-  ;; (define-fringe-bitmap 'empty-line
-  ;;   [#b00000000
-  ;;    #b00000000
-  ;;    #b00111100
-  ;;    #b00111100
-  ;;    #b00111100
-  ;;    #b00111100
-  ;;    #b00000000
-  ;;    #b00000000])
-  (define-fringe-bitmap 'empty-line [0 0 #x3c #x3c #x3c #x3c 0 0])
-  (set-fringe-bitmap-face 'empty-line 'font-lock-doc-face)
-  (setq-default indicate-empty-lines t))
-
 ;;; comint do not echo input
 (setq-default comint-process-echoes t)
 
