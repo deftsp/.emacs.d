@@ -264,14 +264,88 @@ See also`haskell-check'."
 
 ;; el-get install structured-haskell-mode
 ;; (require 'shm nil t)
-
-
 (autoload 'shm/case-split "shm-case-split" "Prompt for a type then do a case split based on it" t)
 (eval-after-load "shm"
   '(progn
-     (define-key shm-map (kbd "C-c C-s") 'shm/case-split)
+     (define-key shm-map (kbd "C-c S") 'shm/case-split) ; "C-c C-s"
      (define-key shm-map (kbd "M-a") 'shm/goto-parent)
      (define-key shm-map (kbd "M-e") 'shm/goto-parent-end)))
+
+(defun pl/shm-evil-join ()
+  "send the node of the next line up one line."
+  (interactive)
+  (evil-next-line 1)
+  (evil-first-non-blank)
+  (evil-backward-char 1 nil t)
+  (shm/delete-indentation))
+
+;; see also https://github.com/phenguin/dotfiles/blob/master/emacs.d.linkme/config/lang/haskell-config.el
+(with-eval-after-load 'shm
+  (with-eval-after-load 'evil
+    (define-key shm-map (kbd "C-k") nil)
+    (define-key shm-map (kbd "C-j") nil)
+
+    (evil-define-key 'normal shm-map (kbd "R") 'shm/raise)
+    (evil-define-key 'normal shm-map (kbd "P") 'shm/yank)
+    (evil-define-key 'insert shm-map (kbd "RET") 'shm/newline-indent)
+    (evil-define-key 'normal shm-map (kbd "RET") 'shm/newline-indent)
+    (evil-define-key 'insert shm-map (kbd "M-RET") 'evil-ret)
+
+    (evil-define-key 'normal shm-map
+      (kbd "J") 'pl/shm-evil-join
+      (kbd "D") 'shm/kill-line
+      (kbd "DEL") 'shm/del
+      ;; (kbd "M-k") 'sp-splice-sexp-killing-backward
+      ;; (kbd "M-j") 'sp-splice-sexp-killing-forward
+      ;; (kbd "M-l") 'sp-forward-slurp-sexp
+      ;; (kbd "M-h") 'sp-forward-barf-sexp
+      ;; (kbd "M-H") 'sp-backward-slurp-sexp
+      ;; (kbd "M-L") 'sp-backward-barf-sexp
+      ;; (kbd "s") 'sp-splice-sexp
+      ;; (kbd "S") 'shm/split-list
+      ;; (kbd "M-R") 'sp-raise-sexp
+      ;; (kbd "J") 'sp-join-sexp
+      ;; (kbd ")") 'shm/forward-node
+      ;; (kbd "(") 'shm/backward-node
+      ;; (kbd "M-(") 'sp-backward-up-sexp
+      ;; (kbd "M-)") 'sp-down-sexp
+      ;; (kbd "C-(") 'sp-backward-down-sexp
+      ;; (kbd "C-)") 'sp-up-sexp
+      )
+
+    ;; (evil-define-key 'insert shm-map
+    ;;   (kbd "M-k") 'sp-splice-sexp-killing-backward
+    ;;   (kbd "M-j") 'sp-splice-sexp-killing-forward
+    ;;   (kbd "M-l") 'sp-forward-slurp-sexp
+    ;;   (kbd "M-h") 'sp-forward-barf-sexp
+    ;;   (kbd "M-H") 'sp-backward-slurp-sexp
+    ;;   (kbd "M-L") 'sp-backward-barf-sexp)
+
+    ;; (evil-define-key 'operator shm-map
+    ;;   (kbd ")") 'shm/forward-node
+    ;;   (kbd "(") 'shm/backward-node
+    ;;   (kbd "M-(") 'sp-backward-up-sexp
+    ;;   (kbd "M-)") 'sp-down-sexp
+    ;;   (kbd "C-(") 'sp-backward-down-sexp
+    ;;   (kbd "C-)") 'sp-up-sexp)
+
+    ;; (evil-define-key 'motion shm-map
+    ;;   (kbd ")") 'shm/forward-node
+    ;;   (kbd "(") 'shm/backward-node
+    ;;   (kbd "M-(") 'sp-backward-up-sexp
+    ;;   (kbd "M-)") 'sp-down-sexp
+    ;;   (kbd "C-(") 'sp-backward-down-sexp
+    ;;   (kbd "C-)") 'sp-up-sexp)
+
+
+    ;; (evil-define-key 'emacs shm-map
+    ;;   (kbd "M-k") 'sp-splice-sexp-killing-backward
+    ;;   (kbd "M-j") 'sp-splice-sexp-killing-forward
+    ;;   (kbd "M-l") 'sp-forward-slurp-sexp
+    ;;   (kbd "M-h") 'sp-forward-barf-sexp
+    ;;   (kbd "M-H") 'sp-backward-slurp-sexp
+    ;;   (kbd "M-L") 'sp-backward-barf-sexp)
+    ))
 
 ;;;
 ;; https://github.com/chrisdone/chrisdone-emacs/blob/master/config/haskell.el
