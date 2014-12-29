@@ -86,8 +86,19 @@
 (define-key isearch-mode-map (kbd "H-i") 'helm-swoop-from-isearch)
 (define-key isearch-mode-map (kbd "C-S-i") 'helm-swoop-from-isearch)
 
+;; http://oremacs.com/2014/12/21/helm-backspace/
+(defun pl/helm-backspace ()
+  "Forward to `backward-delete-char'.
+On error (read-only), quit without selecting."
+  (interactive)
+  (condition-case nil
+      (backward-delete-char 1)
+    (error
+     (helm-keyboard-quit))))
+
 (eval-after-load "helm"
   '(progn
+     (define-key helm-map (kbd "DEL") 'pl/helm-backspace)
      (define-key helm-map (kbd "M-j") 'helm-next-line)
      (define-key helm-map (kbd "M-k") 'helm-previous-line)))
 
