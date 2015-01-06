@@ -627,6 +627,7 @@ vi style of % jumping to matching brace."
           ("\\.tpl\\.php\\'"                    . web-mode)
           ("\\.[gj]sp\\'"                       . web-mode)
           ("\\.as[cp]x\\'"                      . web-mode)
+          ("\\.asp$"                            . web-mode)
           ("\\.erb\\'"                          . web-mode)
           ("\\.mustache\\'"                     . web-mode)
           ("\\.djhtml\\'"                       . web-mode)
