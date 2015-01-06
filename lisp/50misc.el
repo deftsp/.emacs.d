@@ -1365,9 +1365,9 @@ This command is to be used interactively."
 
 (defadvice yank-pop (after indent-region activate)
   (if (member major-mode
-          '(emacs-lisp-mode lisp-interaction-mode lisp-mode
-            c-mode c++-mode objc-mode
-            latex-mode plain-tex-mode))
+              '(emacs-lisp-mode lisp-interaction-mode lisp-mode
+                                c-mode c++-mode objc-mode
+                                latex-mode plain-tex-mode))
       (let ((mark-even-if-inactive t))
         (indent-region (region-beginning) (region-end) nil))))
 
@@ -1387,6 +1387,10 @@ This command is to be used interactively."
 
 ;; (global-set-key (kbd "C-k") 'kill-and-join-forward)
 
+;;; Coding
+(defun pl/revert-to-gbk-dos ()
+  (interactive)
+  (revert-buffer-with-coding-system 'gbk-dos))
 
 ;;----------------------------------------------------------------------------------------------------
 ;;; stumpwm
