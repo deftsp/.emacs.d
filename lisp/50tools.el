@@ -1058,6 +1058,22 @@ such character is found, following options are shown:
 ;; (defun pl/ace-jump-mode ()
 ;;   (ace-jump-mode 8))
 
+;;; ace-isearch
+;; https://github.com/tam17aki/ace-isearch
+(require 'ace-isearch nil t)
+(with-eval-after-load "ace-isearch"
+  (global-ace-isearch-mode +1)
+  (setq ace-isearch-input-length 5
+        ace-isearch-input-idle-delay 0.3
+        ace-isearch-submode 'ace-jump-char-mode
+        ace-isearch-use-ace-jump 'printing-char)
+
+  (ace-isearch-set-ace-jump-after-isearch-exit t)
+  (with-eval-after-load "helm-swoop"
+    (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+    (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)))
+
+
 ;;; ace-link
 ;; bind ace-link-info and ace-link-help to o in their respective modes.
 (when (fboundp 'ace-link-setup-default)
@@ -1245,11 +1261,11 @@ such character is found, following options are shown:
 ;;;
 (require 'keyfreq nil t)
 (when (fboundp 'keyfreq-mode)
-    (keyfreq-mode 1)
-    (keyfreq-autosave-mode 1))
+  (keyfreq-mode 1)
+  (keyfreq-autosave-mode 1))
 
 ;;; guide-key
-(require 'guide-key nil t)
+;; (require 'guide-key nil t)
 (eval-after-load "guide-key"
   '(progn
      ;; This hack may be dangerous because it advices primitive functions, this-command-keys and
