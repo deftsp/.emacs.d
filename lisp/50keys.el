@@ -238,29 +238,31 @@ it marks the next ARG lines after the ones already marked."
 ;; "' and kill upto and including the final ", allowing you to change the output. In this case you'd
 ;; better use 'C-M-k' at the starting "
 
-(global-set-key (kbd "M-z") 'pl/zap-up-to-char)
+;; (global-set-key (kbd "M-z") 'pl/zap-up-to-char)
+;; (defun pl/zap-up-to-char (arg char)
+;;   "Kill up to and including ARGth occurrence of CHAR. "
+;;   (interactive (list (prefix-numeric-value current-prefix-arg)
+;;                      (read-char "Zap to char: " t)))
+;;   ;; Avoid "obsolete" warnings for translation-table-for-input.
+;;   (with-no-warnings
+;;     (if (char-table-p translation-table-for-input)
+;;         (setq char (or (aref translation-table-for-input char) char))))
+;;   (kill-region (point) (1- (progn
+;;                              (let ((case-fold-search nil))
+;;                                (search-forward (char-to-string char) nil nil arg))
+;;                              (point))))
+;;   (backward-char))
 
-(defun pl/zap-up-to-char (arg char)
-  "Kill up to and including ARGth occurrence of CHAR. "
-  (interactive (list (prefix-numeric-value current-prefix-arg)
-                     (read-char "Zap to char: " t)))
-  ;; Avoid "obsolete" warnings for translation-table-for-input.
-  (with-no-warnings
-    (if (char-table-p translation-table-for-input)
-        (setq char (or (aref translation-table-for-input char) char))))
-  (kill-region (point) (1- (progn
-                             (let ((case-fold-search nil))
-                               (search-forward (char-to-string char) nil nil arg))
-                             (point))))
-  (backward-char))
+;; (global-set-key (kbd "M-Z") 'pl/zap-to-char-save)
+;; (defun pl/zap-to-char-save (arg char)
+;;   "Zap to a character, but save instead of kill."
+;;   (interactive "p\ncZap to char: ")
+;;   (save-excursion
+;;     (zap-to-char arg char)
+;;     (yank)))
 
-(global-set-key (kbd "M-Z") 'pl/zap-to-char-save)
-(defun pl/zap-to-char-save (arg char)
-  "Zap to a character, but save instead of kill."
-  (interactive "p\ncZap to char: ")
-  (save-excursion
-    (zap-to-char arg char)
-    (yank)))
+(global-set-key (kbd "M-z") 'ace-jump-zap-up-to-char-dwim)
+(global-set-key (kbd "M-Z") 'ace-jump-zap-to-char-dwim)
 
 ;;; extral key map
 ;; (setq pl/extra-key-map (make-keymap))
