@@ -633,6 +633,10 @@ to replace the symbol under cursor"
 (evil-define-key 'motion occur-mode-map (kbd "<return>") 'occur-mode-goto-occurrence)
 (evil-define-key 'motion occur-mode-map (kbd "RET") 'occur-mode-goto-occurrence)
 
+;;; evil-escape
+;; (setq-default evil-escape-key-sequence "fd") 'must be set before requiring evil-escape.
+;; (setq-default evil-escape-delay 0.1)
+;; (evil-escape-mode +1)
 
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
