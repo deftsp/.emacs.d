@@ -12,8 +12,8 @@
 (when (eq window-system 'ns)
   (setq initial-frame-alist `((tool-bar-lines . 0)
                               (menu-bar-lines . 0)
-                              (width . 268)
-                              (height . 61)
+                              (width . 202)
+                              (height . 51)
                               (top . 22) ; (frame-parameter nil 'top)
                               (left . 0)
                               (alpha . (96 96)) ; first number is for the active window and the second for the inactive
