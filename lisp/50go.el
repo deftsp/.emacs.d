@@ -9,10 +9,6 @@
 ;; "C-c C-j" godef-jump
 ;; "C-c C-d" godef-describe
 
-(add-to-list 'load-path "~/.emacs.d/site-lisp/go-errcheck.el")
-(add-to-list 'load-path "~/opt/go-packages/src/github.com/nsf/gocode/emacs")
-(add-to-list 'load-path "~/opt/go-packages/src/github.com/dougm/goflymake")
-
 (when (eq system-type 'darwin)
  (setenv "GOPATH" (concat (expand-file-name "~/opt/go-packages") ":"
                           (expand-file-name "~/Lab/gocode"))))
@@ -28,9 +24,6 @@
 
 (eval-after-load "go-mode"
   '(progn
-     (require 'go-flymake) ; use go-errcheck instead
-     ;; (require 'go-errcheck nil t)
-     (require 'go-autocomplete nil t)
      (add-hook 'go-mode-hook 'pl/go-mode-hook-func)
      (add-hook 'before-save-hook 'gofmt-before-save)))
 
@@ -46,8 +39,6 @@
   (interactive)
   (show-all)
   (shell-command-on-region (point-min) (point-max) "go tool fix -diff"))
-
-
 
 (provide '50go)
 ;;; 50go.el ends here
