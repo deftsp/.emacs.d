@@ -379,5 +379,38 @@
       (delete-other-windows)
     (winner-undo)))
 
+;;; window operating with hydra
+;; http://oremacs.com/2015/01/29/more-hydra-goodness/
+(defun pl/hydra-universal-argument (arg)
+  (interactive "P")
+  (setq prefix-arg (if (consp arg)
+                       (list (* 4 (car arg)))
+                     (if (eq arg '-)
+                         (list -4)
+                       '(4)))))
+
+(defun pl/ace-window-delete ()
+  (interactive)
+  (ace-window 16))
+
+(require 'hydra nil t)
+(with-eval-after-load "hydra"
+  (defhydra pl/hydra-window (global-map "C-S-o")
+    "window"
+    ("h" windmove-left "left")
+    ("j" windmove-down "down")
+    ("k" windmove-up "up")
+    ("l" windmove-right "right")
+    ("a" ace-window "ace")
+    ("u" pl/hydra-universal-argument "universal")
+    ("s" (lambda () (interactive) (ace-window 4)) "swap")
+    ("d" pl/ace-window-delete "delete")
+    ("x" pl/ace-window-delete "delete")
+    ;; o and "RET" will dismiss the Hydra without doing anything.
+    ("RET")
+    ("o"))
+
+  (key-chord-define-global "jh" 'pl/hydra-window/body))
+
 ;;;
 (provide '50window)
