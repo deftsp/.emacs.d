@@ -42,11 +42,6 @@
  "<f12>"   'list-bookmarks
  "<M-f12>" 'recentf-open-files)
 
-
-
-(global-set-key (kbd "C-c g f") 'grep-find)
-(global-set-key (kbd "C-c r g") 'rgrep)
-
 ;; (global-set-key "\C-cw" 'compare-windows)
 
 
@@ -364,12 +359,12 @@ it marks the next ARG lines after the ones already marked."
 (define-key launcher-map "c" #'calc)
 ;; (define-key launcher-map "d" #'ediff-buffers)
 ;; (define-key launcher-map "f" #'find-dired)
-;; (define-key launcher-map "g" #'lgrep)
-;; (define-key launcher-map "G" #'rgrep)
+(define-key launcher-map "g" #'lgrep)
+(define-key launcher-map "G" #'rgrep) ; 'grep-find
 (define-key launcher-map "h" #'man) ; Help
 (define-key launcher-map "s" #'shell)
 
-;;; Launching External Applications and Websites
+;; Launching External Applications and Websites
 ;; http://endlessparentheses.com/keymap-for-launching-external-applications-and-websites.html
 (defmacro pl/def-run (exec)
   "Return a function that runs the executable EXEC."

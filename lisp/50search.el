@@ -1,8 +1,11 @@
-;;------------------------------------------------------------
-;; searches
-;;------------------------------------------------------------
-;; enable the use of vertical scrolling during incremental, but I bind C-v M-v to other command.
+;;; 50search.el ---
+
+;; enable the use of vertical scrolling during incremental, but I bind C-v M-v
+;; to other command.
 (setq isearch-allow-scroll t)
+
+;; ignore case searches
+(setq-default case-fold-search t)
 
 ;;; tips
 ;; C-s ...
@@ -10,124 +13,61 @@
 ;;     C-y / Backspace:  appends / deletee the current kill to the search string.
 ;;     C-M-y / C-M-w  Pull / delete next character from buffer into search string.
 
-
 ;;; Start `query-replace' with string to replace from last search string.
 ;; C-s SOMETHING M-% SOMEOTHERS
 
 (setq grep-find-use-xargs 'exec) ; invoke find and grep with `find -exec {} ;'
 
-;;; M-x grep-find
+;;; M-x rgrep or grep-find
 ;; location resulte with `C-x `M-g n' `M-g p' `M-g'  `C-c C-c'.
 
-;;ignore case searches
-(setq-default case-fold-search t)
-;;--------------------------------------------------------------------------------
+;;; search at point
+;; Many times you'll want to search for the word or expression at the point.
+;; Here is a feature stolen from vi:
+(global-set-key (kbd "<f7>")  'pl/isearch-forward-current-symbol-keep-offset)
+(global-set-key (kbd "<f8>") 'pl/isearch-backward-current-symbol-keep-offset)
 
-;; search-word-at-mouseclick
-
-;; (defun search-word-at-mouseclick (event)
-;;   "Performs a nonincremental-search-forward starting from the beginning of the
-;;    buffer or narrowed region.  The word clicked on is the word to search for.  If
-;;    the click is in another window the search still occurs in the current window."
-;;   (interactive "e")
-;;   (let (searchword)
-;;     (save-excursion
-;;       (set-buffer (window-buffer (posn-window (event-end event))))
-;;       (save-excursion
-;;         (goto-char (posn-point (event-end event)))
-;;         (setq searchword (current-word))))
-;;     (if searchword
-;;         (let ((cpt (point)))
-;;           (goto-char (point-min))
-;;           (setq menu-bar-last-search-type 'string)
-;;           (isearch-update-ring searchword nil)
-;;           (if (string= searchword (car (symbol-value minibuffer-history-variable)))
-;;               ()
-;;               (set minibuffer-history-variable
-;;                    (cons searchword (symbol-value minibuffer-history-variable))))
-;;           (unless (search-forward searchword nil t)
-;;             (goto-char cpt)
-;;             (error "Search Failed: \"%s\"" searchword)))
-;;         (ding))))
-
-;; (global-set-key [mouse-2]  'search-word-at-mouseclick)
-
-;;;----------------------------------------------------------------------------------------------------
-;; Move to beginning of word before yanking word in isearch-mode.
-;; Make C-s C-w and C-r C-w act like Vim's g* and g#, keeping Emacs'
-;; C-s C-w [C-w] [C-w]... behaviour.
-
-;; (require 'thingatpt)
-;; (defun pl/isearch-yank-word-or-char-from-beginning ()
-;;   "Move to beginning of word before yanking word in isearch-mode."
-;;   (interactive)
-;;   (if (= 0 (length isearch-string))
-;;       (beginning-of-thing 'word))
-;;   (isearch-yank-word-or-char)
-;;   ;; Revert to 'isearch-yank-word-or-char for subsequent calls
-;;   (substitute-key-definition 'pl/isearch-yank-word-or-char-from-beginning
-;;                              'isearch-yank-word-or-char
-;;                              isearch-mode-map))
-
-;; (add-hook 'isearch-mode-hook
-;;           (lambda ()
-;;             "Activate tsp customized Isearch word yank command."
-;;             (substitute-key-definition 'isearch-yank-word-or-char
-;;                                        'pl/isearch-yank-word-or-char-from-beginning
-;;                                        isearch-mode-map)))
-;;----------------------------------------------------------------------------------------------------
-
-
-
-;;----------------------------------------------------------------------------------------------------
-;;; Search at point
-;;----------------------------------------------------------------------------------------------------
-;; Many times you'll want to search for the word or expression at the point. Here is a feature stolen from vi:
-(global-set-key (kbd "<f7>")  'isearch-forward-current-symbol-keep-offset)
-(global-set-key (kbd "<f8>") 'isearch-backward-current-symbol-keep-offset)
-
-(defun isearch-forward-current-symbol-keep-offset ()
+(defun pl/isearch-forward-current-symbol-keep-offset ()
   (interactive)
   (let* ((curword (thing-at-point 'symbol))
          (opoint (point))
          (offset (- (end-of-thing 'symbol) opoint))
          (re-curword (if (and (equal (substring curword 0 1) "*") (equal (substring curword -1) "*"))
                          (replace-regexp-in-string "\\*" "\\\\*" curword)
-                         (setq offset (1+ offset))
-                         (concat "[^*]" curword "[^*]")))
+                       (setq offset (1+ offset))
+                       (concat "[^*]" curword "[^*]")))
          (case-fold-search))
     (if (re-search-forward re-curword nil t)
         (progn (backward-char offset)
                (message "Searching `%s' done." curword))
-        (progn
-          (goto-char (point-min))
-          (if (re-search-forward re-curword nil t)
-              (progn (message "Searching `%s' from top. `%s' done" curword (what-line))
-                     (backward-char offset))
-              (goto-char opoint)
-              (message "Searching from top: Not found"))))))
+      (progn
+        (goto-char (point-min))
+        (if (re-search-forward re-curword nil t)
+            (progn (message "Searching `%s' from top. `%s' done" curword (what-line))
+                   (backward-char offset))
+          (goto-char opoint)
+          (message "Searching from top: Not found"))))))
 
-(defun isearch-backward-current-symbol-keep-offset ()
+(defun pl/isearch-backward-current-symbol-keep-offset ()
   (interactive)
   (let* ((curword (thing-at-point 'symbol))
          (opoint (point))
          (offset (- opoint (beginning-of-thing 'symbol)))
          (re-curword (if (and (equal (substring curword 0 1) "*") (equal (substring curword -1) "*"))
                          (replace-regexp-in-string "\\*" "\\\\*" curword)
-                         (setq offset (1+ offset))
-                         (concat "[^*]" curword "[^*]")))
+                       (setq offset (1+ offset))
+                       (concat "[^*]" curword "[^*]")))
          (case-fold-search))
     (if (re-search-backward re-curword nil t)
         (progn (forward-char offset)
                (message "Searching `%s' done." curword))
-        (progn
-          (goto-char (point-max))
-          (if (re-search-backward re-curword nil t)
-              (progn (message "Searching from bottom done.`%s'" (what-line))
-                     (forward-char offset))
-              (goto-char opoint)
-              (message "Searching from bottom: Not found"))))))
-;; Search at point ends there--------------------------------------------------------------------------------
+      (progn
+        (goto-char (point-max))
+        (if (re-search-backward re-curword nil t)
+            (progn (message "Searching from bottom done.`%s'" (what-line))
+                   (forward-char offset))
+          (goto-char opoint)
+          (message "Searching from bottom: Not found"))))))
 
 ;;; Moving around
 ;; Use the largest monitor you can afford and try to maximize the number of lines of code your system can display. The
@@ -137,14 +77,12 @@
 ;; for:
 
 ;; Always end searches at the beginning of the matching expression.
-(add-hook 'isearch-mode-end-hook 'custom-goto-match-beginning)
+(add-hook 'isearch-mode-end-hook 'pl/custom-goto-match-beginning)
 
-(defun custom-goto-match-beginning ()
+(defun pl/custom-goto-match-beginning ()
   "Use with isearch hook to end search at first char of match."
   (if isearch-other-end
       (when isearch-forward (goto-char isearch-other-end))))
-
-;;------------------------------------------------------------------------------------------------------------------------------
 
 ;;; edit occurances from grep output
 ;; (autoload 'global-replace-lines "globrep" "Put back grepped lines" t)
@@ -260,11 +198,19 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 (setq ag-highlight-search t)
 (setq ag-reuse-window 't)
 
-
 ;;; wgrep https://github.com/mhayashi1120/Emacs-wgrep
 (setq wgrep-auto-save-buffer t) ; save buffer automatically when `wgrep-finish-edit'
 (setq wgrep-enable-key "r")
 (setq wgrep-change-readonly-file t) ; To apply all changes wheather or not buffer is read-only.
+
+;; bind the keys like wdired
+(eval-after-load 'grep
+  '(define-key grep-mode-map
+     (kbd "C-x C-q") 'wgrep-change-to-wgrep-mode))
+
+(eval-after-load 'wgrep
+  '(define-key grep-mode-map
+     (kbd "C-c C-c") 'wgrep-finish-edit))
 
 
 (provide '50search)
