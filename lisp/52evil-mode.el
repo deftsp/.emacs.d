@@ -371,6 +371,12 @@
 
 (evil-define-key 'normal haskell-mode-map (kbd "gT") 'haskell-process-do-type)
 (evil-define-key 'normal haskell-mode-map (kbd "gI") 'haskell-process-do-info)
+(evil-define-key 'normal haskell-mode-map (kbd "gz") 'haskell-interactive-switch)
+(evil-define-key 'normal haskell-interactive-mode (kbd "gz") 'haskell-interactive-switch-back)
+(evil-define-key 'normal haskell-cabal-mode-map (kbd "gz") 'haskell-interactive-switch)
+
+(evil-define-key 'normal haskell-mode-map (kbd "gl") 'haskell-process-load-or-reload)
+
 (evil-define-key 'normal haskell-interactive-mode-map (kbd "RET") #'haskell-interactive-mode-return)
 (evil-define-key 'insert haskell-interactive-mode-map (kbd "C-u") 'haskell-interactive-mode-kill-whole-line)
 (evil-define-key 'normal haskell-interactive-mode-map (kbd "G") 'end-of-buffer)
