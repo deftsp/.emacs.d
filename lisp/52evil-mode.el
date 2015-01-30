@@ -91,6 +91,8 @@
   (if (and delete-selection-mode transient-mark-mode mark-active)
       (setq deactivate-mark t))
   (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
+  (when multiple-cursors-mode
+    (multiple-cursors-mode -1))
   (cond ((minibuffer-window-active-p (selected-window))
          (abort-recursive-edit))
         ((or (memq major-mode '(Info-mode org-agenda-mode help-mode))
