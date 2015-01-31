@@ -78,6 +78,7 @@ packages/cedet/
 el-get/
 share/
 packages/lunar-mode-line/
+cfs-profiles.d/
 workgroups
 /.mc-lists.el
 /geiser-history.racket
