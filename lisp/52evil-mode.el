@@ -646,6 +646,16 @@ to replace the symbol under cursor"
 ;; (setq-default evil-escape-delay 0.1)
 ;; (evil-escape-mode +1)
 
+;;; evil-snipe
+;; https://github.com/hlissner/evil-snipe
+(require 'evil-snipe nil t)
+(with-eval-after-load "evil-snipe"
+  (global-evil-snipe-mode +1)
+  ;; (evil-snipe-enable-nN)
+  ;; replaces evil-mode's f/F/t/T/;/, with snipe
+  (evil-snipe-replace-evil))
+
+
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
 ;; (add-hook 'edebug-mode-hook 'evil-normalize-keymaps) ; recreate `evil-mode-map-alist'
