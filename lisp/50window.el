@@ -280,6 +280,7 @@
 
 ;;; buffer-move
 ;; swap buffers without typing C-x b on each window
+;; it can be replaced by ace window
 (eval-after-load "buffer-move"
   '(progn
      (global-set-key (kbd "M-[ p") 'buf-move-up)
@@ -295,82 +296,7 @@
 ;;   ;; (add-to-list 'popwin:special-display-config)
 ;;   (popwin-mode 1))
 
-;;; win-switch
-(require 'win-switch nil t)
-
-(global-set-key "\M-o" 'win-switch-dispatch)
-
-(defface pl/win-switch-face-background
-  '((t (:foreground "#586e75")))
-  "Face for background of win-switch")
-
-(defvar pl/win-switch-face-overlay nil)
-
-(defun pl/win-switch-on-feedback-func ()
-  (let ((ol (make-overlay (point-min) (point-max)
-                          (current-buffer) nil t)))
-    (overlay-put ol 'face 'pl/win-switch-face-background)
-    (setq pl/win-switch-face-overlay ol)))
-
-(defun pl/win-switch-off-feedback-func ()
-  (delete-overlay pl/win-switch-face-overlay))
-
-(defun pl/win-switch-exit-do-ace-window ()
-  (interactive)
-  (win-switch-exit)
-  (call-interactively 'ace-window))
-
-(defun pl/win-switch-setup-keys ()
-  (win-switch-define-key "F" 'pl/toggle-full-window)
-  (win-switch-define-key "1" 'delete-other-windows)
-
-  (win-switch-define-key "u" 'winner-undo)
-  (win-switch-define-key "r" 'winner-redo)
-
-  (win-switch-define-key "p" 'buf-move-up)
-  (win-switch-define-key "n" 'buf-move-down)
-  (win-switch-define-key "b" 'buf-move-left)
-  (win-switch-define-key "f" 'buf-move-right)
-  (win-switch-define-key "\M-o" 'pl/win-switch-exit-do-ace-window)
-
-  (win-switch-set-keys '("k") 'up)
-  (win-switch-set-keys '("j") 'down)
-  (win-switch-set-keys '("h") 'left)
-  (win-switch-set-keys '("l") 'right)
-
-  (win-switch-set-keys '("o") 'next-window)
-  (win-switch-set-keys '("p") 'previous-window)
-  (win-switch-set-keys '("J") 'enlarge-vertically)
-  (win-switch-set-keys '("K") 'shrink-vertically)
-  (win-switch-set-keys '("H") 'enlarge-horizontally)
-  (win-switch-set-keys '("L") 'shrink-horizontally)
-  (win-switch-set-keys '(" ") 'other-frame)
-  (win-switch-set-keys '("q" [return]) 'exit)
-  (win-switch-set-keys '("2") 'split-vertically)
-  (win-switch-set-keys '("3") 'split-horizontally)
-  (win-switch-set-keys '("0") 'delete-window)
-  (win-switch-set-keys '("x") 'delete-window))
-
-
-(eval-after-load "win-switch"
-  '(progn
-     (pl/win-switch-setup-keys)
-     (setq win-switch-window-threshold 0
-           win-switch-idle-time 0.5
-           ;; win-switch-other-window-first (lambda () (null (nthcdr 3 (window-list))))
-           win-switch-other-window-first nil
-           win-switch-provide-visual-feedback t
-           win-switch-feedback-background-color "#073642"
-           win-switch-feedback-foreground-color "#eeeeee"
-           win-switch-other-window-function nil
-           win-switch-on-feedback-function nil
-           win-switch-off-feedback-function nil
-           win-switch-on-feedback-function 'pl/win-switch-on-feedback-func
-           win-switch-off-feedback-function 'pl/win-switch-off-feedback-func)
-
-     ;; Wrap around makes things easier
-     (win-switch-set-wrap-around +1)))
-
+;;; toggle full window
 (defun pl/toggle-full-window()
   "Toggle the full view of selected window"
   (interactive)
@@ -380,37 +306,51 @@
     (winner-undo)))
 
 ;;; window operating with hydra
-;; http://oremacs.com/2015/01/29/more-hydra-goodness/
-(defun pl/hydra-universal-argument (arg)
-  (interactive "P")
-  (setq prefix-arg (if (consp arg)
-                       (list (* 4 (car arg)))
-                     (if (eq arg '-)
-                         (list -4)
-                       '(4)))))
-
-(defun pl/ace-window-delete ()
-  (interactive)
-  (ace-window 16))
-
 (require 'hydra nil t)
 (with-eval-after-load "hydra"
-  (defhydra pl/hydra-window (global-map "C-S-o")
-    "window"
-    ("h" windmove-left "left")
-    ("j" windmove-down "down")
-    ("k" windmove-up "up")
-    ("l" windmove-right "right")
-    ("a" ace-window "ace")
-    ("u" pl/hydra-universal-argument "universal")
-    ("s" (lambda () (interactive) (ace-window 4)) "swap")
-    ("d" pl/ace-window-delete "delete")
-    ("x" pl/ace-window-delete "delete")
-    ;; o and "RET" will dismiss the Hydra without doing anything.
-    ("RET")
-    ("o"))
+  (global-set-key
+   (kbd "M-o")
+   (defhydra hydra-window (:color blue)
+     "window"
+     ("h" windmove-left :color amaranth)
+     ("j" windmove-down :color amaranth)
+     ("k" windmove-up :color amaranth)
+     ("l" windmove-right :color amaranth)
 
-  (key-chord-define-global "jh" 'pl/hydra-window/body))
+     ("+" enlarge-window :color amaranth)
+     ("-" shrink-window :color amaranth)
+     ("<" shrink-window-horizontally :color amaranth)
+     (">" enlarge-window-horizontally :color amaranth)
+     ("=" balance-windows "balance")
+
+     ("3" (lambda ()
+            (interactive)
+            (split-window-right)
+            (windmove-right))
+      "vert")
+     ("2" (lambda ()
+            (interactive)
+            (split-window-below)
+            (windmove-down))
+      "horz")
+     ("t" transpose-frame "'")
+     ("`" other-frame "`")
+
+     ("o" delete-other-windows "one")
+     ("1" delete-other-windows "one")
+
+     ("u" winner-undo "undo-win")
+     ("r" winner-redo "redo-win")
+
+     ("a" ace-window "ace")
+     ("s" ace-swap-window "swap")
+     ("d" ace-delete-window "del")
+     ("x" delete-window)
+     ("i" ace-maximize-window "ace-one")
+     ("b" ido-switch-buffer "buf")
+     ("m" bookmark-jump "bmk")
+     ("F" pl/toggle-full-window "full-window")
+     ("q" nil "cancel"))))
 
 ;;;
 (provide '50window)
