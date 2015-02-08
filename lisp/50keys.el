@@ -333,63 +333,77 @@ it marks the next ARG lines after the ones already marked."
 (global-set-key (kbd "C-x \\") 'align)
 (global-set-key (kbd "C-x |") 'align-regexp)
 
-;;; toggle-map
-;; http://endlessparentheses.com/the-toggle-map-and-wizardry.html
-(define-prefix-command 'pl/toggle-map) ; bind to "gt" in evil mode
-;; (define-key ctl-x-map "t" 'pl/toggle-map) ; "C-x t" is binded to `anchored-transpose'
-(define-key pl/toggle-map "c" 'column-number-mode)
-(define-key pl/toggle-map "d" 'toggle-debug-on-error)
-(define-key pl/toggle-map "e" 'toggle-debug-on-error)
-(define-key pl/toggle-map "f" 'auto-fill-mode)
-(define-key pl/toggle-map "l" 'toggle-truncate-lines)
-(define-key pl/toggle-map "q" 'toggle-debug-on-quit)
-(define-key pl/toggle-map "n" 'pl/narrow-or-widen-dwim)
-(define-key pl/toggle-map "o" 'pl/replace-charset-to-oem)
-(define-key pl/toggle-map "w" 'whitespace-mode)
-;;; Generalized version of `read-only-mode'.
-(define-key pl/toggle-map "r" 'dired-toggle-read-only)
+;;; miscellaneous toggle-map
 (autoload 'dired-toggle-read-only "dired" nil t)
 
+;; bind to "gt" as prefix key in evil normal mode
+(with-eval-after-load "hydra"
+  (defhydra pl/hydra-toggle (:color blue)
+    "toggle"
+    ("a" abbrev-mode "abbrev")
+    ("c" column-number-mode "column")
+    ("d" toggle-debug-on-error "debug")
+    ("e" toggle-debug-on-error "debug")
+    ("f" auto-fill-mode "fill")
+    ("l" toggle-truncate-lines "truncate")
+    ("n" pl/narrow-or-widen-dwim "narrow<->widen")
+    ("g" toggle-debug-on-quit "debug-quit")
+    ("o" pl/replace-charset-to-oem "char->oem")
+    ("r" dired-toggle-read-only "read only") ; generalized version of `read-only-mode'.
+    ("t" toggle-truncate-lines "truncate")
+    ("w" whitespace-mode "whitespace")
+    ("q" nil "cancel")))
+
 ;; Launcher Keymap
-(define-prefix-command 'launcher-map)
+;; (define-prefix-command 'launcher-map)
 ;; C-x l is `count-lines-page' by default. If you
 ;; use that, you can try s-l or <C-return>.
-(define-key ctl-x-map "l" 'launcher-map) ; `C-x l ' default bind to count-lines-page
+;; (define-key ctl-x-map "l" 'launcher-map) ; `C-x l ' default bind to count-lines-page
 ;; (global-set-key (kbd "s-l") 'launcher-map)
-(define-key launcher-map "c" #'calc)
-;; (define-key launcher-map "d" #'ediff-buffers)
-;; (define-key launcher-map "f" #'find-dired)
-(define-key launcher-map "g" #'lgrep)
-(define-key launcher-map "G" #'rgrep) ; 'grep-find
-(define-key launcher-map "h" #'man) ; Help
-(define-key launcher-map "s" #'shell)
+;; (define-key launcher-map "c" #'calc)
 
 ;; Launching External Applications and Websites
 ;; http://endlessparentheses.com/keymap-for-launching-external-applications-and-websites.html
-(defmacro pl/def-run (exec)
-  "Return a function that runs the executable EXEC."
-  (let ((func-name (intern (concat "pl/run-" exec))))
-    `(progn
-       (defun ,func-name ()
-         ,(format "Run the %s executable." exec)
-         (interactive)
-         (start-process "" nil ,exec))
-       ',func-name)))
+;; (defmacro pl/def-run (exec)
+;;   "Return a function that runs the executable EXEC."
+;;   (let ((func-name (intern (concat "pl/run-" exec))))
+;;     `(progn
+;;        (defun ,func-name ()
+;;          ,(format "Run the %s executable." exec)
+;;          (interactive)
+;;          (start-process "" nil ,exec))
+;;        ',func-name)))
 
-(define-key launcher-map "m" (pl/def-run "Mathematica"))
+;; (define-key launcher-map "m" (pl/def-run "Mathematica"))
 
-(defmacro pl/def-browse (url)
-  "Return a function that calls `browse-url' on URL."
-  (let ((func-name (intern (concat "pl/browse-" url))))
-    `(progn
-       (defun ,func-name ()
-         ,(format "Browse to the url %s." url)
-         (interactive)
-         (browse-url ,url))
-       ',func-name)))
+;; (defmacro pl/def-browse (url)
+;;   "Return a function that calls `browse-url' on URL."
+;;   (let ((func-name (intern (concat "pl/browse-" url))))
+;;     `(progn
+;;        (defun ,func-name ()
+;;          ,(format "Browse to the url %s." url)
+;;          (interactive)
+;;          (browse-url ,url))
+;;        ',func-name)))
 
-(define-key launcher-map "r" (pl/def-browse "http://www.reddit.com/r/emacs/"))
-(define-key launcher-map "w" (pl/def-browse "http://www.emacswiki.org/"))
+;; (define-key launcher-map "r" (pl/def-browse "http://www.reddit.com/r/emacs/"))
+;; (define-key launcher-map "w" (pl/def-browse "http://www.emacswiki.org/"))
 
+;;; Launcher
+;; C-x l is `count-lines-page' by default. If you use that, you can try s-l or <C-return>.
+(global-set-key
+ (kbd "C-x l")
+ (defhydra pl/hydra-launcher (:color blue)
+   "Launch"
+   ("c" calc "calc")
+   ("d" ediff-buffers "ediff buffers")
+   ("f" find-dired "find dired")
+   ("g" lgrep "lgrep")
+   ("G" rgrep "rgrep")
+   ("h" man "man")
+   ("r" (browse-url "http://www.reddit.com/r/emacs/") "reddit")
+   ("w" (browse-url "http://www.emacswiki.org/") "emacswiki")
+   ("s" shell "shell")
+   ("q" nil "cancel")))
 
 (provide '50keys)

@@ -162,7 +162,7 @@
 
 (define-key evil-normal-state-map "gL" 'org-mac-grab-link)
 (define-key evil-normal-state-map "gb" 'switch-to-buffer)
-(define-key evil-normal-state-map "gt" 'pl/toggle-map)
+(define-key evil-normal-state-map "gt" 'pl/hydra-toggle/body)
 
 ;; (define-key evil-normal-state-map "b" 'backward-word)
 ;; (define-key evil-normal-state-map "w" 'forward-word)
