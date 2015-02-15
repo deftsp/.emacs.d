@@ -49,13 +49,23 @@
       evil-operator-state-tag (propertize "« O »" 'face 'pl/evil-operator-tag)
       evil-replace-state-tag  (propertize "« R »" 'face 'pl/evil-replace-tag)
 
-      evil-emacs-state-cursor    `(box    ,(face-attribute 'pl/evil-emacs-tag    :foreground))
-      evil-normal-state-cursor   `(box    ,(face-attribute 'pl/evil-normal-tag   :foreground))
-      evil-insert-state-cursor   `(box    ,(face-attribute 'pl/evil-insert-tag   :foreground))
-      evil-motion-state-cursor   `(box    ,(face-attribute 'pl/evil-motion-tag   :foreground))
-      evil-visual-state-cursor   `(hollow ,(face-attribute 'pl/evil-visual-tag   :foreground))
-      evil-replace-state-cursor  `(hbar   ,(face-attribute 'pl/evil-replace-tag  :foreground))
-      evil-operator-state-cursor `(hollow ,(face-attribute 'pl/evil-operator-tag :foreground)))
+      ;; TODO: when multile windows (> 4), C-h evil-mode `q' then quit the help window will be very slow
+      ;; evil-emacs-state-cursor    `(box    ,(face-attribute 'pl/evil-emacs-tag    :foreground))
+      ;; evil-normal-state-cursor   `(box    ,(face-attribute 'pl/evil-normal-tag   :foreground))
+      ;; evil-insert-state-cursor   `(box    ,(face-attribute 'pl/evil-insert-tag   :foreground))
+      ;; evil-motion-state-cursor   `(box    ,(face-attribute 'pl/evil-motion-tag   :foreground))
+      ;; evil-visual-state-cursor   `(hollow ,(face-attribute 'pl/evil-visual-tag   :foreground))
+      ;; evil-replace-state-cursor  `(hbar   ,(face-attribute 'pl/evil-replace-tag  :foreground))
+      ;; evil-operator-state-cursor `(hollow ,(face-attribute 'pl/evil-operator-tag :foreground))
+
+      evil-default-cursor '(box "#cd0000")
+      evil-emacs-state-cursor    'box
+      evil-normal-state-cursor   'box
+      evil-insert-state-cursor   '(hbar . 2)
+      evil-motion-state-cursor   'box
+      evil-visual-state-cursor   'hollow
+      evil-replace-state-cursor  'hbar
+      evil-operator-state-cursor 'hollow)
 
 ;; Getting :n[ew] to work
 ;; As of this writing, Evil does not allow you to shorten ':new' to ':n', but you can define a command that does.
