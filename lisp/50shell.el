@@ -7,7 +7,7 @@
 (setq shell-command-switch "-cf")
 (setq shell-command-completion-mode t)  ; Allow completion for some shell-command functions.
 
-(defun pl/shell-mode-hook-func  ()
+(defun pl/shell-mode-init  ()
   (toggle-truncate-lines 1)
   (ansi-color-for-comint-mode-on)
   (local-set-key [home] 'comint-bol)      ; move to beginning of line, after prompt
@@ -20,11 +20,18 @@
                                (comint-next-input 1)
                              (forward-line 1))))
   ;; (set (make-local-variable 'scroll-margin) 0)
+
+  ;; truncate shell buffer to comint-buffer-maximum-size.
+  (add-hook 'comint-output-filter-functions 'comint-truncate-buffer nil t)
+  ;; disalllow passwords to be shown in clear text (this is useful, for example,
+  ;; if you use the shell and then, don't echo passwords when communicating with
+  ;; interactive programs login/telnet/ftp/scp etc. to other machines).
+  (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt nil t)
+
   (set-process-sentinel (get-buffer-process (current-buffer))
                         #'pl/shell-mode-kill-buffer-on-exit))
 
-(add-hook 'shell-mode-hook 'pl/shell-mode-hook-func)
-
+(add-hook 'shell-mode-hook 'pl/shell-mode-init)
 
 ;; auto close shell buffer, after execute `exit' exit shell
 (defun pl/shell-mode-kill-buffer-on-exit (process state)
@@ -33,24 +40,6 @@
        (string-match "exited abnormally with code.*" state)
        (string-match "finished" state))
       (kill-buffer (current-buffer))))
-
-;;; comint
-;; set maximum-buffer size for shell-mode (useful if some program that you're debugging spews out large amounts of output).
-(setq comint-buffer-maximum-size 10240
-      comint-scroll-to-bottom-on-input t  ; always insert at the bottom
-      comint-scroll-to-bottom-on-output t ; always add output at the bottom
-      comint-scroll-show-maximum-output t ; scroll to show max possible output
-      comint-completion-autolist t        ; show completion list when ambiguous
-      ;; no duplicates in command history
-      comint-input-ignoredups t)
-
-;; will truncate shell buffer to comint-buffer-maximum-size.
-(add-hook 'comint-output-filter-functions 'comint-truncate-buffer)
-;; will disalllow passwords to be shown in clear text (this is useful, for example, if you use the shell and then, don't
-;; echo passwords when communicating with interactive programs login/telnet/ftp/scp etc. to other machines).
-(add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt)
-
-
 
 ;;; ansi-term
 (defun pl/ansi-term ()

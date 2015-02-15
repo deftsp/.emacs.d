@@ -76,8 +76,27 @@
         ("Europe/London" "London")
         ("Europe/Paris" "Paris")))
 
-;;; comint do not echo input
-(setq-default comint-process-echoes t)
+;;; comint
+(setq-default comint-process-echoes t) ; comint do not echo input
+;; set maximum-buffer size for shell-mode (useful if some program that you're debugging spews out large amounts of output).
+(setq comint-completion-addsuffix t       ; Insert space/slash after completion
+      comint-buffer-maximum-size 10240
+      comint-scroll-to-bottom-on-input t  ; always insert at the bottom
+      comint-scroll-to-bottom-on-output t ; always add output at the bottom
+      comint-scroll-show-maximum-output t ; scroll to show max possible output
+      comint-completion-autolist t        ; show completion list when ambiguous
+      ;; no duplicates in command history
+      comint-input-ignoredups t)
+
+;; clean comint buffer
+;; http://emacsredux.com/blog/2015/01/18/clear-comint-buffers/
+(defun pl/comint-clear-buffer ()
+  (interactive)
+  (let ((comint-buffer-maximum-size 0))
+    (comint-truncate-buffer)))
+
+(define-key comint-mode-map "\C-c\M-o" #'pl/comint-clear-buffer)
+
 
 ;;; minibuffer
 (setq minibuffer-electric-default-mode 1
@@ -463,9 +482,6 @@ vi style of % jumping to matching brace."
 (global-set-key (kbd "C-v") 'sfp-page-down)
 (global-set-key (kbd "M-v") 'sfp-page-up)
 ;; ------- scroll end here -------------------------------------------------------------
-
-;; Insert space/slash after completion
-(setq comint-completion-addsuffix t)
 
 ;; Might as well limit how many messages fill up in the message buffer.
 ;; Not that we'll ever get that many, but just in case!
