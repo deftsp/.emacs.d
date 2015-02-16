@@ -61,7 +61,7 @@
       evil-default-cursor '(box "#cd0000")
       evil-emacs-state-cursor    'box
       evil-normal-state-cursor   'box
-      evil-insert-state-cursor   '(hbar . 2)
+      evil-insert-state-cursor   'box
       evil-motion-state-cursor   'box
       evil-visual-state-cursor   'hollow
       evil-replace-state-cursor  'hbar
