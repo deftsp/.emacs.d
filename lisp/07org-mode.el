@@ -214,13 +214,20 @@
       '(("t" "Todo" entry (file+headline "~/org/GTD.org" "Inbox")
          "* TODO %?\n  %i%u"
          :kill-buffer t)
+        ("T" "Trading Journal" plain (file (concat org-directory
+                                                   (format-time-string
+                                                    "/trading-journal/%Y%m%d-%H%M%S.org")))
+         "* TRADING JOURNAL\n  %?\n\n  %i%u "
+         :prepend t
+         :unnarrowed t
+         :kill-buffer t)
         ("j" "Journal" entry (file+datetree "~/org/journal.org")
          "* %?\n  %i\n  %U\n"
          :kill-buffer t)
         ("J" "Journal with Annotation" entry (file+datetree "~/org/journal.org")
          "* %?\n  %U\n  %i\n  %a"
          :kill-buffer t)
-        ("m" "Memo" plain (file (concat org-directory (format-time-string "%Y%m%d-%H%M%S.org")))
+        ("m" "Memo" plain (file (concat org-directory (format-time-string "/%Y%m%d-%H%M%S.org")))
          "* MEMO <%<%Y-%m-%d>> %?\n   %i\n  %a\n\n"
          :prepend t
          :unnarrowed t
