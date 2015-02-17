@@ -50,6 +50,7 @@
   "t" 'org-todo
   "T" '(lambda () (interactive) (evil-org-eol-call '(org-insert-todo-heading nil)))
   ",i" 'pl/org-insert-image
+  ",I" 'org-toggle-inline-images
   ",t" 'org-show-todo-tree)
 
 
