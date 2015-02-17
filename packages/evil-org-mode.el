@@ -49,6 +49,7 @@
   ;; "O" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading))
   "t" 'org-todo
   "T" '(lambda () (interactive) (evil-org-eol-call '(org-insert-todo-heading nil)))
+  ",i" 'pl/org-insert-image
   ",t" 'org-show-todo-tree)
 
 

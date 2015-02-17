@@ -396,6 +396,33 @@
 
 (add-hook 'org-agenda-mode-hook 'pl/org-agenda-mode-init)
 
+(defun pl/org-insert-image ()
+  "Insert a image link, when C-u take a screenshot."
+  (interactive)
+  (let* ((buf-file-name (buffer-file-name))
+         (current-directory (and buf-file-name
+                                 (file-name-directory buf-file-name)))
+         (image-file-name))
+    (cond ((and current-prefix-arg current-directory)
+           (let* ((screenshot-directory (concat current-directory "images/"))
+                  (screenshot-file-name
+                   (concat (make-temp-name (format-time-string
+                                            "%Y-%m-%d-" (current-time))) ".png"))
+                  (screenshot-full-name
+                   (concat screenshot-directory screenshot-file-name)))
+             (unless (file-accessible-directory-p screenshot-directory)
+               (make-directory "images/" t))
+             (call-process-shell-command "screencapture" nil nil nil nil "-i"
+                                         screenshot-full-name)
+             (setq image-file-name (concat "./images/" screenshot-file-name))))
+          ((not current-prefix-arg)
+           (setq image-file-name (read-file-name "Image: ")))
+          (t
+           (message "Unable to guess where to save screenshot.")))
+    (when image-file-name
+      (insert (concat "[[" image-file-name "]]"))
+      (org-display-inline-images))))
+
 
 (provide '07org-mode)
 
