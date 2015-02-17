@@ -201,7 +201,7 @@
     (ido-set-current-directory
      (if (file-directory-p filename)
          filename
-         (file-name-directory filename)))
+       (file-name-directory filename)))
     (setq ido-exit        'refresh
           ido-text-init   ido-text
           ido-rotate-temp t)
@@ -312,6 +312,43 @@
   (interactive "p")
   (if (or arg (not buffer-file-name))
       (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
-      (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+    (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
+;;; Occasionally ido
+;; http://oremacs.com/2015/02/12/ido-occasional/
+;; The only thing that ido-occasional-completing-read does is to pre-filter
+;; collection with predicate and pass it on to ido-completing-read.
+(defun ido-occasional-completing-read
+    (prompt collection
+            &optional predicate require-match initial-input
+            hist def inherit-input-method)
+  "Use `ido-completing-read' if the collection isn't too large.
+Fall back to `completing-read' otherwise."
+  (let ((filtered-collection
+         (all-completions "" collection predicate)))
+    (if (<= (length filtered-collection) 30000)
+        (ido-completing-read
+         prompt filtered-collection nil
+         require-match initial-input hist
+         def nil)
+      (completing-read
+       prompt collection predicate
+       require-match initial-input hist
+       def inherit-input-method))))
+
+;;;###autoload
+(defmacro with-ido-completion (fun)
+  "Wrap FUN in another interactive function with ido completion."
+  `(defun ,(intern (concat (symbol-name fun) "/with-ido")) ()
+     ,(format "Forward to `%S' with ido completion." fun)
+     (interactive)
+     (let ((completing-read-function
+            'ido-occasional-completing-read))
+       (call-interactively #',fun))))
+
+(global-set-key (kbd "C-h f") (with-ido-completion describe-function))
+(global-set-key (kbd "C-h v") (with-ido-completion describe-variable))
+;; (global-set-key (kbd "C-h i") (with-ido-completion info-lookup-symbol))
+
 
 (provide '52ido)
