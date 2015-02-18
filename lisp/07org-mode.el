@@ -179,6 +179,15 @@
 ;; find all 'CANCELLED' items. C-c < t then N r
 (setq org-archive-location "%s_archive::")
 
+;;; Priority
+;; Note: `org-priority-faces' default to `nil' and if it is `nil' when mouse
+;; over the agenda item, it cause tons of Invalid face reference: nil in
+;; *Message* buffer. see also `org-agenda-fontify-priorities'
+(setq org-priority-faces
+      '((?A . (:foreground "#ff40ff" :weight bold))
+        (?B . (:foreground "#00f900" :weight bold))
+        (?C . (:foreground "#fefb00" :weight bold))))
+
 
 ;;; org-habit
 (setq org-habit-preceding-days 21
