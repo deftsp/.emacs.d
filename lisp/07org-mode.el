@@ -17,6 +17,7 @@
 
 (eval-after-load "org"
   '(progn
+     (require '50calendar)
      (when (eq system-type 'darwin)
        (add-to-list 'org-modules 'org-mac-link))
      (add-to-list 'org-modules 'org-habit)

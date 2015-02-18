@@ -1,7 +1,8 @@
-;;;  Calendar
+;;; 50calendar.el ---
+
 ;; How about work with Google Calendars http://bc.tech.coop/blog/070306.html
 
-(require 'cal-china-x nil t)
+;; (require 'cal-china-x nil t)
 
 ;;; diary
 (setq diary-list-include-blanks nil
@@ -103,29 +104,30 @@
 ;;       ["正月" "二月" "三月" "四月" "五月" "六月" "七月" "八月" "九月" "十月"
 ;;               "十一月" "腊月"])
 
-(setq holiday-other-holidays
-      '((holiday-fixed 1 1 "元旦")
-        (holiday-fixed 3  8  "妇女节")
-        (holiday-fixed 3  12 "植树节")
-        (holiday-fixed 4 1 "愚人节")
-        (holiday-fixed 5 1 "劳动节")
-        (holiday-fixed 5  4  "青年节")
-        (holiday-float 5 0 2 "母亲节")
-        (holiday-fixed 6  1  "儿童节")
-        (holiday-float 6 0 3 "父亲节")
-        (holiday-fixed 9  10 "教师节")
-        (holiday-fixed 10 1 "国庆节")
-        (holiday-fixed 12 25 "圣诞节")
-        (holiday-solar-term "清明" "清明节")
+(with-eval-after-load "cal-china-x"
+  (setq holiday-other-holidays
+        '((holiday-fixed 1 1 "元旦")
+          (holiday-fixed 3  8  "妇女节")
+          (holiday-fixed 3  12 "植树节")
+          (holiday-fixed 4 1 "愚人节")
+          (holiday-fixed 5 1 "劳动节")
+          (holiday-fixed 5  4  "青年节")
+          (holiday-float 5 0 2 "母亲节")
+          (holiday-fixed 6  1  "儿童节")
+          (holiday-float 6 0 3 "父亲节")
+          (holiday-fixed 9  10 "教师节")
+          (holiday-fixed 10 1 "国庆节")
+          (holiday-fixed 12 25 "圣诞节")
+          (holiday-solar-term "清明" "清明节")
 
-        (holiday-lunar 1 15 "元宵节")
-        (holiday-lunar 5 5 "端午节" 0)
-        (holiday-lunar 8 15 "中秋节" 0)
-        (holiday-lunar 7 7  "七夕节")
-        (holiday-lunar 9 9  "重阳节")
-        (holiday-lunar 12 30 "春节" 0)))
+          (holiday-lunar 1 15 "元宵节")
+          (holiday-lunar 5 5 "端午节" 0)
+          (holiday-lunar 8 15 "中秋节" 0)
+          (holiday-lunar 7 7  "七夕节")
+          (holiday-lunar 9 9  "重阳节")
+          (holiday-lunar 12 30 "春节" 0)))
+  (setq calendar-holidays holiday-other-holidays))
 
-(setq calendar-holidays holiday-other-holidays)
 
 ;; `diary-chinese-anniversary' use cycles
 ;; https://github.com/leoliu/cal-china-plus/pull/2
