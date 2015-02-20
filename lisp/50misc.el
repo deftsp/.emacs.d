@@ -137,7 +137,7 @@
     (display-battery-mode t))
 
 ;; do not create new frame with `open' in Mac OS X
-(when (eq window-system 'ns)
+(when (memq window-system '(mac ns))
   (setq ns-pop-up-frames nil))
 
 (setq-default indicate-buffer-boundaries 'left)

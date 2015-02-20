@@ -9,7 +9,7 @@
 (setq frame-resize-pixelwise t
       window-resize-pixelwise t)
 
-(when (eq window-system 'ns)
+(when (memq window-system '(x w32 mac ns))
   (setq initial-frame-alist `((tool-bar-lines . 0)
                               (menu-bar-lines . 0)
                               (width . 202)

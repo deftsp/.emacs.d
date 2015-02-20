@@ -38,34 +38,35 @@
   "Evil operator mode indicator face")
 
 
-;;; Visual indicators
+;;; visual indicators
 (setq evil-mode-line-format 'before
-
       evil-emacs-state-tag    (propertize "« E »" 'face 'pl/evil-emacs-tag)
       evil-normal-state-tag   (propertize "« ☢ »" 'face 'pl/evil-normal-tag)
       evil-insert-state-tag   (propertize "« I »" 'face 'pl/evil-insert-tag)
       evil-motion-state-tag   (propertize "« M »" 'face 'pl/evil-motion-tag)
       evil-visual-state-tag   (propertize "« ∞ »" 'face 'pl/evil-visual-tag)
       evil-operator-state-tag (propertize "« O »" 'face 'pl/evil-operator-tag)
-      evil-replace-state-tag  (propertize "« R »" 'face 'pl/evil-replace-tag)
+      evil-replace-state-tag  (propertize "« R »" 'face 'pl/evil-replace-tag))
 
-      ;; TODO: when multile windows (> 4), C-h evil-mode `q' then quit the help window will be very slow
-      ;; evil-emacs-state-cursor    `(box    ,(face-attribute 'pl/evil-emacs-tag    :foreground))
-      ;; evil-normal-state-cursor   `(box    ,(face-attribute 'pl/evil-normal-tag   :foreground))
-      ;; evil-insert-state-cursor   `(box    ,(face-attribute 'pl/evil-insert-tag   :foreground))
-      ;; evil-motion-state-cursor   `(box    ,(face-attribute 'pl/evil-motion-tag   :foreground))
-      ;; evil-visual-state-cursor   `(hollow ,(face-attribute 'pl/evil-visual-tag   :foreground))
-      ;; evil-replace-state-cursor  `(hbar   ,(face-attribute 'pl/evil-replace-tag  :foreground))
-      ;; evil-operator-state-cursor `(hollow ,(face-attribute 'pl/evil-operator-tag :foreground))
-
-      evil-default-cursor '(box "#cd0000")
-      evil-emacs-state-cursor    'box
-      evil-normal-state-cursor   'box
-      evil-insert-state-cursor   'box
-      evil-motion-state-cursor   'box
-      evil-visual-state-cursor   'hollow
-      evil-replace-state-cursor  'hbar
-      evil-operator-state-cursor 'hollow)
+;; FIXME: as Official Emacs 24.4, if set color color,  when multile
+;; windows (> 6), C-h evil-mode `q' then quit the help window will be very slow
+;; see more https://bitbucket.org/lyro/evil/issue/487/after-set-colors-for-different-state-by
+(if (eq window-system 'mac) ; emacs-mac-port (https://github.com/railwaycat/emacs-mac-port)
+    (setq evil-emacs-state-cursor    `(box    ,(face-attribute 'pl/evil-emacs-tag    :foreground))
+          evil-normal-state-cursor   `(box    ,(face-attribute 'pl/evil-normal-tag   :foreground))
+          evil-insert-state-cursor   `(box    ,(face-attribute 'pl/evil-insert-tag   :foreground))
+          evil-motion-state-cursor   `(box    ,(face-attribute 'pl/evil-motion-tag   :foreground))
+          evil-visual-state-cursor   `(hollow ,(face-attribute 'pl/evil-visual-tag   :foreground))
+          evil-replace-state-cursor  `(hbar   ,(face-attribute 'pl/evil-replace-tag  :foreground))
+          evil-operator-state-cursor `(hollow ,(face-attribute 'pl/evil-operator-tag :foreground)))
+  (setq evil-default-cursor '(box "#cd0000") ; emacs official
+        evil-emacs-state-cursor    'box
+        evil-normal-state-cursor   'box
+        evil-insert-state-cursor   'box
+        evil-motion-state-cursor   'box
+        evil-visual-state-cursor   'hollow
+        evil-replace-state-cursor  'hbar
+        evil-operator-state-cursor 'hollow))
 
 ;; Getting :n[ew] to work
 ;; As of this writing, Evil does not allow you to shorten ':new' to ':n', but you can define a command that does.
