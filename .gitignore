@@ -80,6 +80,7 @@ share/
 packages/lunar-mode-line/
 cfs-profiles.d/
 workgroups
+test/
 /.mc-lists.el
 /geiser-history.racket
 /orgcard.txt
