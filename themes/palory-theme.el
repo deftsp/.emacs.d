@@ -332,6 +332,9 @@
    ;; gambit
    '(gambit-highlight-face ((t (:foreground "#000000"))))
 
+   ;; hydra
+   '(hydra-face-blue ((t (:foreground "#00bfee"))))
+
    ;; quack
    '(quack-pltish-paren-face ((t (:foreground "#ccffcc" :weight normal))))
    '(quack-pltish-comment-face ((t (:foreground "#008888" :weight normal))))
