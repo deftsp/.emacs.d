@@ -339,15 +339,24 @@ it marks the next ARG lines after the ones already marked."
 ;; bind to "gt" as prefix key in evil normal mode
 (with-eval-after-load "hydra"
   (defhydra pl/hydra-toggle (:color blue)
-    "toggle"
+    "
+_a_ abbrev-mode:           %`abbrev-mode
+_d_ debug-on-error:        %`debug-on-error
+_f_ auto-fill-mode:        %`auto-fill-function
+_n_ narrow-or-widen-dwim:  %(buffer-narrowed-p)
+_g_ golden-ratio-mode:     %`golden-ratio-mode
+_G_ debug-on-quit:         %`debug-on-quit
+_r_ read-only-mode:        %`view-read-only
+_t_ truncate-lines:        %`truncate-lines
+_w_ whitespace-mode:       %(and (boundp whitespace-mode) whitespace-mode)
+
+"
     ("a" abbrev-mode "abbrev")
-    ("c" column-number-mode "column")
     ("d" toggle-debug-on-error "debug")
-    ("e" toggle-debug-on-error "debug")
     ("f" auto-fill-mode "fill")
-    ("l" toggle-truncate-lines "truncate")
     ("n" pl/narrow-or-widen-dwim "narrow<->widen")
-    ("g" toggle-debug-on-quit "debug-quit")
+    ("g" golden-ratio-mode "golden-ratio")
+    ("G" toggle-debug-on-quit "debug-quit")
     ("o" pl/replace-charset-to-oem "char->oem")
     ("r" dired-toggle-read-only "read only") ; generalized version of `read-only-mode'.
     ("t" toggle-truncate-lines "truncate")
