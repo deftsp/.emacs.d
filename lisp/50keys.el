@@ -348,7 +348,7 @@ _g_ golden-ratio-mode:     %`golden-ratio-mode
 _G_ debug-on-quit:         %`debug-on-quit
 _r_ read-only-mode:        %`view-read-only
 _t_ truncate-lines:        %`truncate-lines
-_w_ whitespace-mode:       %(and (boundp whitespace-mode) whitespace-mode)
+_w_ whitespace-mode:       %(and (boundp 'whitespace-mode) whitespace-mode)
 
 "
     ("a" abbrev-mode "abbrev")
