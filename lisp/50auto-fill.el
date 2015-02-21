@@ -92,7 +92,7 @@
 (put-charset-property 'chinese-cns11643-6 'nospace-between-words t)
 (put-charset-property 'chinese-cns11643-7 'nospace-between-words t)
 
-(defun add-blank-in-chinese-and-english (&optional start end)
+(defun pl/add-blank-between-chinese-and-english (&optional start end)
   "automaticall add a blank between English and Chinese words."
   (interactive)
   (save-excursion
@@ -110,11 +110,15 @@
                   (<= (match-end 0) end ))
         (replace-match "\\1 \\2" nil nil)))))
 
-;; Function called (if non-nil) to perform auto-fill. It is called after self-inserting any character specified in the
-;; `auto-fill-chars' table. NOTE: This variable is not a hook; its value may not be a list of functions.
-(setq-default auto-fill-function (lambda ()
-                                   (add-blank-in-chinese-and-english (point-at-bol)
-                                                                     (point-at-eol))
-                                   (do-auto-fill)))
+;; Function called (if non-nil) to perform auto-fill. It is called after
+;; self-inserting any character specified in the `auto-fill-chars' table. NOTE:
+;; This variable is not a hook; its value may not be a list of functions.
+(defun pl/add-blank-between-chinese-and-english-whole-buffer ()
+  (interactive)
+  (pl/add-blank-between-chinese-and-english (point-at-bol) (point-at-eol))
+  (do-auto-fill))
+
+(setq-default auto-fill-function
+              #'pl/add-blank-between-chinese-and-english-whole-buffer)
 
 (provide '50auto-fill)
