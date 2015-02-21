@@ -19,6 +19,7 @@
       helm-input-idle-delay 0.1
       ;; helm-candidate-number-limit 10
       helm-quick-update t
+      helm-ff-file-name-history-use-recentf t
       helm-ff-skip-boring-files t)
 
 (eval-after-load "helm-mode"

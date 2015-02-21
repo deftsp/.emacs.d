@@ -553,7 +553,7 @@ vi style of % jumping to matching brace."
         ))
 
 ;; auto delete trailing whitespace
- (add-hook 'before-save-hook 'delete-trailing-whitespace)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 
 (setq line-number-display-limit 10000000)
