@@ -77,6 +77,7 @@
                                  (:startgroup . nil) ("business" . ?B) ("personal" . ?P) (:endgroup . nil)
                                  ("drill"   . ?d)
                                  ("hacking" . ?H)
+                                 ("exercise". ?e)
                                  ("mail"    . ?M)
                                  ("movie"   . nil)
                                  ("misc"    . ?m)
@@ -170,6 +171,7 @@
       org-display-internal-link-with-indirect-buffer nil)
 
 (with-eval-after-load "org"
+  (org-defkey org-mode-map (kbd "C-c C-x t") 'pl/org-clock-summary-today-by-tags)
   ;; Undefine C-c [ and C-c ] since this breaks my
   ;; org-agenda files when directories are include It
   ;; expands the files in the directories individually
@@ -394,13 +396,36 @@
           ;; most importantly after `desktop-read'.
           t)
 
-;;; give us some hint we are running
+;;; babel
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (java . t)
+   (dot . t)
+   (ditaa . t)
+   (R . t)
+   (python . t)
+   (ruby . t)
+   (gnuplot . t)
+   (clojure . t)
+   (sh . t)
+   (org . t)
+   (plantuml . t)
+   (latex . t)))
+
+
+(defun pl/org-confirm-babel-evaluate (lang body)
+  (cond ((string= lang "ditaa") nil) ; don't ask for ditaa
+        ((string= lang "emacs-lisp") nil)))
+(setq org-confirm-babel-evaluate 'pl/org-confirm-babel-evaluate)
+
+;; give us some hint we are running
 (defadvice org-babel-execute-src-block (around progress nil activate)
   (set-face-attribute
-   'org-block-background nil :background "LightSteelBlue")
+   'org-block nil :background "LightSteelBlue")
   (message "Running your code block")
   ad-do-it
-  (set-face-attribute 'org-block-background nil :background "gray")
+  (set-face-attribute 'org-block nil :background "gray")
   (message "Done with code block"))
 
 ;;; Info directory
@@ -464,6 +489,54 @@
       (insert (concat "[[" image-file-name "]]"))
       (org-display-inline-images))))
 
+
+;;; get the summary of a today by tags
+;; called by C-u sum last day
+;; called by C-u sum specify date
+(defun pl/org-clock-summary-today-by-tags (timerange &optional tstart tend noinsert)
+  (interactive "P")
+  (let* ((timerange-numeric-value (prefix-numeric-value timerange))
+         (files (org-add-archive-files (org-agenda-files)))
+         (include-tags '("academic" "english" "learning" "other" "exercise"))
+         (tags-time-alist (mapcar (lambda (tag) `(,tag . 0)) include-tags))
+         (output-string "")
+         (seconds-of-day 86400)
+         (tstart (or tstart
+                     (and timerange
+                          (equal timerange-numeric-value 4)
+                          (- (org-time-today) seconds-of-day))
+                     (and timerange
+                          (equal timerange-numeric-value 16)
+                          (org-read-date nil nil nil "Start Date/Time:"))
+                     (org-time-today)))
+         (tend (or tend
+                   (and timerange
+                        (equal timerange-numeric-value 16)
+                        (org-read-date nil nil nil "End Date/Time:"))
+                   (+ tstart seconds-of-day)))
+         h m file item prompt done-something)
+    (dolist (file files)
+      (let ((org-agenda-buffer (if (file-exists-p file)
+                                   (org-get-agenda-file-buffer file)
+                                 (error "No such file %s" file))))
+        (with-current-buffer org-agenda-buffer
+          (dolist (current-tag include-tags)
+            (org-clock-sum tstart tend #'(lambda ()
+                                           (let ((head-tags (org-get-tags-at)))
+                                             (member current-tag head-tags))))
+            (setcdr (assoc current-tag tags-time-alist)
+                    (+ org-clock-file-total-minutes (cdr (assoc current-tag tags-time-alist))))))))
+    (dolist (item tags-time-alist)
+      (unless (equal (cdr item) 0)
+        (setq done-something t)
+        (setq h (/ (cdr item) 60)
+              m (- (cdr item) (* 60 h)))
+        (setq output-string (concat output-string (format "[-%s-] %.2d:%.2d\n" (car item) h m)))))
+    (unless done-something
+      (setq output-string (concat output-string "[-Nothing-] Done nothing!!!\n")))
+    (unless noinsert
+      (insert output-string))
+    output-string))
 
 (provide '07org-mode)
 
