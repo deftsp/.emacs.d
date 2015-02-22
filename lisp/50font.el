@@ -19,6 +19,11 @@
 
 (with-eval-after-load "chinese-fonts-setup"
   (when window-system
+    ;; https://github.com/railwaycat/emacs-mac-port
+    (when (fboundp 'mac-magnify-text-scale)
+      ;; instead of emacs-mac-port's mac-magnify-text-scale
+      (global-set-key [magnify-up] 'cfs-increase-fontsize)
+      (global-set-key [magnify-down] 'cfs-decrease-fontsize))
     (global-set-key (kbd "<M-wheel-up>") 'cfs-decrease-fontsize)
     (global-set-key (kbd "<M-wheel-down>") 'cfs-increase-fontsize)))
 
