@@ -51,15 +51,20 @@
 (setq org-todo-interpretation 'sequence ; or 'type
       org-use-fast-todo-selection t
       org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "DELEGATED(l)" "APPT(a)" "|" "DONE(d)" "DEFERRED(f)" "CANCELLED(c@)")
-                          (sequence "WAITING(w@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
+                          (sequence "WAITING(w@/!)" "HOLD(h@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
                           (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
                           (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))
       org-todo-keyword-faces (quote (("TODO"      . (:foreground "red"          :weight bold))
                                      ("STARTED"   . (:foreground "hot pink"     :weight bold))
-                                     ("DONE"      . (:foreground "forest green" :weight bold :strike-through t))
                                      ("WAITING"   . (:foreground "orange"       :weight bold))
                                      ("SOMEDAY"   . (:foreground "magenta"      :weight bold))
-                                     ("CANCELLED" . (:foreground "forest green" :weight bold))
+                                     ("DONE"      . (:foreground "forest green" :weight bold :strike-through t))
+                                     ("CANCELLED" . (:foreground "forest green" :weight bold :strike-through t))
+                                     ("DEFERRED"  . (:foreground "forest green" :weight bold :strike-through t))
+                                     ("FIXED"     . (:foreground "forest green" :weight bold :strike-through t))
+                                     ("APPROVED"  . (:foreground "forest green" :weight bold :strike-through t))
+                                     ("EXPIRED"   . (:foreground "forest green" :weight bold :strike-through t))
+                                     ("REJECTED"  . (:foreground "forest green" :weight bold :strike-through t))
                                      ("QUOTE"     . (:foreground "red"          :weight bold))
                                      ("QUOTED"    . (:foreground "magenta"      :weight bold))
                                      ("APPROVED"  . (:foreground "forest green" :weight bold))
@@ -164,6 +169,14 @@
       org-startup-truncated t
       org-display-internal-link-with-indirect-buffer nil)
 
+(with-eval-after-load "org"
+  ;; Undefine C-c [ and C-c ] since this breaks my
+  ;; org-agenda files when directories are include It
+  ;; expands the files in the directories individually
+  (org-defkey org-mode-map (kbd "C-c [") 'undefined)
+  (org-defkey org-mode-map (kbd "C-c ]") 'undefined))
+
+
 ;;; archive
 ;; Tip: find all 'DONE' items older than 2 months and archive
 ;; Here's how to find all 'DONE' items older than 60 days in org-mode so they can be archived:
@@ -241,7 +254,11 @@
          "* MEMO <%<%Y-%m-%d>> %?\n   %i\n  %a\n\n"
          :prepend t
          :unnarrowed t
-         :kill-buffer t)))
+         :kill-buffer t)
+        ("p" "Phone call" entry (file+headline "~/org/GTD.org" "Inbox")
+         "* PHONE %? :PHONE:\n  %U" :clock-in t :clock-resume t)
+        ("h" "Habit" entry (file "~/org/GTD.org" "Inbox")
+         "* %?\n\n  %U\n\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n  :STYLE: habit \n  :REPEAT_TO_STATE: NEXT\n  :END:\n")))
 
 ;;; work with appt
 (defun pl/org-agenda-to-appt ()
