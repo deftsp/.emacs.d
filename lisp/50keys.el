@@ -338,7 +338,7 @@ it marks the next ARG lines after the ones already marked."
 
 ;; bind to "gt" as prefix key in evil normal mode
 (with-eval-after-load "hydra"
-  (defhydra pl/hydra-toggle (:color blue)
+  (defhydra hydra-toggle (:color blue)
     "
 _a_ abbrev-mode:           %`abbrev-mode
 _d_ debug-on-error:        %`debug-on-error
@@ -402,7 +402,7 @@ _w_ whitespace-mode:       %(and (boundp 'whitespace-mode) whitespace-mode)
 ;; C-x l is `count-lines-page' by default. If you use that, you can try s-l or <C-return>.
 (global-set-key
  (kbd "C-x l")
- (defhydra pl/hydra-launcher (:color blue)
+ (defhydra hydra-launcher (:color blue)
    "Launch"
    ("c" calc "calc")
    ("d" ediff-buffers "ediff buffers")

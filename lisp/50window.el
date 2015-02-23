@@ -306,22 +306,58 @@
     (winner-undo)))
 
 ;;; window operating with hydra
+(defun hydra-move-splitter-left (arg)
+  "Move window splitter left."
+  (interactive "p")
+  (if (let ((windmove-wrap-around))
+        (windmove-find-other-window 'right))
+      (shrink-window-horizontally arg)
+    (enlarge-window-horizontally arg)))
+
+(defun hydra-move-splitter-right (arg)
+  "Move window splitter right."
+  (interactive "p")
+  (if (let ((windmove-wrap-around))
+        (windmove-find-other-window 'right))
+      (enlarge-window-horizontally arg)
+    (shrink-window-horizontally arg)))
+
+(defun hydra-move-splitter-up (arg)
+  "Move window splitter up."
+  (interactive "p")
+  (if (let ((windmove-wrap-around))
+        (windmove-find-other-window 'up))
+      (enlarge-window arg)
+    (shrink-window arg)))
+
+(defun hydra-move-splitter-down (arg)
+  "Move window splitter down."
+  (interactive "p")
+  (if (let ((windmove-wrap-around))
+        (windmove-find-other-window 'up))
+      (shrink-window arg)
+    (enlarge-window arg)))
+
 (require 'hydra nil t)
 (with-eval-after-load "hydra"
+  (require 'windmove) ; for hydra-move-splitter-*
   (global-set-key
    (kbd "M-o")
-   (defhydra hydra-window (:color blue)
+   (defhydra hydra-window (:color teal)
      "window"
-     ("h" windmove-left :color amaranth)
-     ("j" windmove-down :color amaranth)
-     ("k" windmove-up :color amaranth)
-     ("l" windmove-right :color amaranth)
+     ("h" windmove-left)
+     ("j" windmove-down)
+     ("k" windmove-up)
+     ("l" windmove-right)
 
-     ("+" enlarge-window :color amaranth)
-     ("-" shrink-window :color amaranth)
-     ("<" shrink-window-horizontally :color amaranth)
-     (">" enlarge-window-horizontally :color amaranth)
+     ("+" cfs-increase-fontsize :color red)
+     ("-" cfs-decrease-fontsize :color red)
      ("=" balance-windows "balance")
+
+     ("H" hydra-move-splitter-left :color red)
+     ("J" hydra-move-splitter-down :color red)
+     ("K" hydra-move-splitter-up :color red)
+     ("L" hydra-move-splitter-right :color red)
 
      ("3" (lambda ()
             (interactive)
@@ -333,23 +369,30 @@
             (split-window-below)
             (windmove-down))
       "horz")
-     ("t" transpose-frame "'")
+     ("t" (if (fboundp 'transpose-frame)
+              (funcall 'transpose-frame)
+            (message "transpose-frame is not defined")) "'")
+     ;; ("t" hydra-toggle/body)
+
      ("`" other-frame "`")
 
-     ("o" delete-other-windows "one")
      ("1" delete-other-windows "one")
 
      ("u" winner-undo "undo-win")
      ("r" winner-redo "redo-win")
 
      ("a" ace-window "ace")
+     ("o" other-window "other window")
      ("s" ace-swap-window "swap")
      ("d" ace-delete-window "del")
      ("x" delete-window)
      ("i" ace-maximize-window "ace-one")
      ("b" ido-switch-buffer "buf")
      ("m" bookmark-jump "bmk")
-     ("F" pl/toggle-full-window "full-window")
+     ("f" pl/toggle-full-window "full-window")
+     ("F" toggle-frame-maximized "frame max")
+     ("M-f" toggle-frame-fullscreen "frame fullscreen")
+
      ("q" nil "cancel"))))
 
 ;;;
