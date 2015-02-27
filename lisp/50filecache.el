@@ -13,12 +13,12 @@
 ;; if ido-everywhere is on, `C-Tab' file-cache-minibuffer-complete can not replace the previous
 ;; path.`minibuffer-prompt-end' can not work correctly.
 
-
+;;;; Code:
 (require 'filecache)
 ;; define dirs for cacheing file dirs
 ;; see http://www.emacswiki.org/cgi-bin/wiki/FileNameCache for more tricks with this...
 
-(defvar pl/file-cache-dirs '("~/" "/etc/" "~/.emacs.d/lisp/" "~/Downloads/"))
+(defvar pl/file-cache-dirs '("~/" "/etc/" "~/.emacs.d/lisp/"))
 (defvar pl/file-cache-recursive-dirs '("~/org"))
 
 (defun pl/filecache-add-files ()
@@ -31,10 +31,10 @@
   '(progn
      (setq file-cache-completion-ignore-case t
            file-cache-ignore-case t)
+     ;; works after 60 seconds and repeat every half day
+     (run-at-time (pl/future-time-string 60) (* 12 60 60) 'pl/filecache-add-files)
      (mapcar (lambda (str) (add-to-list 'file-cache-filter-regexps str))
-             '("\\.svn-base$" "\\.svn" "\\.jar$" "\\.git$" "\\.gz$" "\\.tar$" "\\.rar$" "\\.exe$" "resolv.conf$"))
-     ;; works after 60 seconds and repeat every half hour
-     (run-at-time (pl/future-time-string 60) (* 0.5 60 60) 'pl/filecache-add-files)))
+             '("\\.svn-base$" "\\.svn" "\\.jar$" "\\.git$" "\\.gz$" "\\.tar$" "\\.rar$" "\\.exe$" "resolv.conf$"))))
 
 (defun pl/file-cache-add-this-file ()
   (and buffer-file-name
@@ -45,3 +45,4 @@
 
 
 (provide '50filecache)
+;;; 50filecache.el ends here
