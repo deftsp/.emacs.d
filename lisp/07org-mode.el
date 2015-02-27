@@ -213,11 +213,24 @@
 (setq org-expiry-inactive-timestamps t)
 
 ;;; refile
-(setq org-refile-use-outline-path nil
+(setq org-refile-use-outline-path t ; use full outline paths for refile targets
+      org-outline-path-complete-in-steps nil ; targets complete directly with IDO
+      ;; Allow refile to create parent tasks with confirmation
       org-refile-allow-creating-parent-nodes 'confirm
-      ;; org-refile-targets '((org-agenda-files . (:maxlevel . 6)))
+      ;; targets include this file and any file contributing to the agenda - up to 9 levels deep
+      org-refile-targets '((nil :maxlevel . 9)
+                           (org-agenda-files :maxlevel . 9))
       org-blank-before-new-entry nil
       org-refile-use-cache nil)
+
+;; Refile settings
+;; Exclude DONE state tasks from refile targets
+(defun pl/verify-refile-target ()
+  "Exclude todo keywords with a done state from refile targets"
+  (not (member (nth 2 (org-heading-components)) org-done-keywords)))
+
+(setq org-refile-target-verify-function 'pl/verify-refile-target)
+
 
 ;;; for MobileOrg
 ;; Set to the name of the file where new notes will be stored
@@ -235,16 +248,24 @@
 
 ;;;; Capture
 (define-key global-map (kbd "C-c c") 'org-capture)
+
+;; https://lists.gnu.org/archive/html/emacs-orgmode/2010-08/msg00469.html
+(defun pl/find-today-trading-journal ()
+  "Find today's trading journal."
+  (let ((p (concat org-directory
+                   (format-time-string
+                    "/trading-journal/%Y-%m-%d.org"))))
+    (find-file p)
+    (goto-char (point-min))))
+
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "~/org/GTD.org" "Inbox")
          "* TODO %?\n  %i%u"
          :kill-buffer t)
-        ("T" "Trading Journal" plain (file (concat org-directory
-                                                   (format-time-string
-                                                    "/trading-journal/%Y%m%d-%H%M%S.org")))
-         "* TRADING JOURNAL\n  %?\n\n  %i%u "
+        ("T" "Trading Journal" plain (function pl/find-today-trading-journal)
+         "* %U\n  %i%?"
          :prepend t
-         :unnarrowed t
+         :unnarrowed nil
          :kill-buffer t)
         ("j" "Journal" entry (file+datetree "~/org/journal.org")
          "* %?\n  %i\n  %U\n"
@@ -282,6 +303,7 @@
 (global-set-key (kbd "C-S-g") 'org-clock-goto) ; jump to current task from anywhere
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
+(setq org-clock-idle-time 15)
 
 (setq org-clock-into-drawer t)
 
@@ -396,7 +418,9 @@
           ;; most importantly after `desktop-read'.
           t)
 
-;;; babel
+;;; Embed source code and babel
+;; fontify code in code blocks
+(setq org-src-fontify-natively t)
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((emacs-lisp . t)
@@ -414,6 +438,8 @@
    (latex . t)))
 
 
+;; stop emacs asking for confirmation
+;; (setq org-confirm-babel-evaluate nil)
 (defun pl/org-confirm-babel-evaluate (lang body)
   (cond ((string= lang "ditaa") nil) ; don't ask for ditaa
         ((string= lang "emacs-lisp") nil)))
