@@ -415,4 +415,72 @@ _w_ whitespace-mode:       %(and (boundp 'whitespace-mode) whitespace-mode)
    ("s" shell "shell")
    ("q" nil "cancel")))
 
+;;; high frequency key
+(key-chord-define-global
+ "jf"
+ (defhydra hydra-high-frequency (:color teal)
+   "high frequency bindings"
+   ("SPC" mark-sexp "sexp" :color red)
+   ("a" org-agenda "agenda")
+   ("c" org-capture "capture")
+   ("g" org-clock-goto "goto clock")
+   ("s" pl/switch-to-scratch "scratch")
+   ("t" hydra-toggle/body "toggle")
+   ("u" undo-tree-undo "undo" :color red)
+   ("r" undo-tree-redo "redo" :color red)
+   ("q" nil "cancel")))
+
+(defun pl/switch-to-scratch ()
+  (interactive)
+  (switch-to-buffer "*scratch*"))
+
+;;; Rectangle-mode Hydra
+;; http://oremacs.com/2015/02/25/rectangle-hydra/
+;; d deletes rectangle; it's similar to C-d.
+;; n copies rectangle; it's similar to M-w.
+;; q exits; it's very easy to press.
+;; e exchanges the point and mark; it's also quite useful to re-activate the region if you disabled it with n or r.
+;; s fills the selected rectangle with a string.
+;; y yanks the rectangle that you saved before with n.
+;; r deactivates or activates the rectangle at point.
+;; u calls undo.
+;; p kills the rectangle; it's similar to C-w.
+
+(defun pl/exchange-point-mark ()
+  (interactive)
+  (if rectangle-mark-mode
+      (exchange-point-and-mark)
+    (let ((mk (mark)))
+      (rectangle-mark-mode 1)
+      (goto-char mk))))
+
+(defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
+                           :color pink
+                           :post (deactivate-mark))
+  "
+  ^_k_^     _d_elete    _s_tring     |\\     _,,,--,,_
+_h_   _l_   _q_uite     _y_ank       /,`.-'`'   ._  \-;;,_
+  ^_j_^     _n_ew-copy  _r_eset     |,4-  ) )_   .;.(  `'-'
+^^^^        _e_xchange  _u_ndo     '---''(_/._)-'(_\_)
+^^^^        ^ ^         _p_aste
+"
+  ("h" backward-char nil)
+  ("l" forward-char nil)
+  ("k" previous-line nil)
+  ("j" next-line nil)
+  ("e" pl/exchange-point-mark nil)
+  ("n" copy-rectangle-as-kill nil)
+  ("d" delete-rectangle nil)
+  ("r" (if (region-active-p)
+           (deactivate-mark)
+         (rectangle-mark-mode 1)) nil)
+  ("y" yank-rectangle nil)
+  ("u" undo nil)
+  ("s" string-rectangle nil)
+  ("p" kill-rectangle nil)
+  ("q" nil nil))
+
+(global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
+
+
 (provide '50keys)

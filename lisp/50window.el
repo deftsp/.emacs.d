@@ -344,20 +344,39 @@
   (global-set-key
    (kbd "M-o")
    (defhydra hydra-window (:color teal)
-     "window"
-     ("h" windmove-left)
-     ("j" windmove-down)
-     ("k" windmove-up)
-     ("l" windmove-right)
+     "
+Move Point^^^^   Move Splitter   ^Ace^                       ^Split^                          Tranpose
+--------------------------------------------------------------------------------------------------
+_k_, _<up>_      Shift + Move    _a_: ace-window             _2_: split-window-below         _t_: transpose-frame
+_h_, _<left>_                    _s_: ace-window-swap        _3_: split-window-right         _e_: rotate-frame-clockwise
+_j_, _<down>_                    _d_: ace-window-delete      ^ ^                             _y_: flip-frame vertically
+_l_, _<right>_                   ^ ^                         ^ ^                             _c_: flop-frame horizontally
+You can use arrow-keys or HJKL.
+"
+     ("h" windmove-left nil)
+     ("j" windmove-down nil)
+     ("k" windmove-up nil)
+     ("l" windmove-right nil)
+
+     ("<left>" windmove-left nil)
+     ("<down>" windmove-down nil)
+     ("<up>" windmove-up nil)
+     ("<right>" windmove-right nil)
+
+     ("H" hydra-move-splitter-left nil :color red)
+     ("J" hydra-move-splitter-down nil :color red)
+     ("K" hydra-move-splitter-up nil :color red)
+     ("L" hydra-move-splitter-right nil :color red)
+
+     ("<S-left>" hydra-move-splitter-left nil)
+     ("<S-down>" hydra-move-splitter-down nil)
+     ("<S-up>" hydra-move-splitter-up nil)
+     ("<S-right>" hydra-move-splitter-right nil)
 
      ("+" cfs-increase-fontsize :color red)
      ("-" cfs-decrease-fontsize :color red)
-     ("=" balance-windows "balance")
 
-     ("H" hydra-move-splitter-left :color red)
-     ("J" hydra-move-splitter-down :color red)
-     ("K" hydra-move-splitter-up :color red)
-     ("L" hydra-move-splitter-right :color red)
+     ("=" balance-windows "balance")
 
      ("3" (lambda ()
             (interactive)
@@ -369,20 +388,26 @@
             (split-window-below)
             (windmove-down))
       "horz")
+
      ("t" (if (fboundp 'transpose-frame)
               (funcall 'transpose-frame)
             (message "transpose-frame is not defined")) "'")
-     ;; ("t" hydra-toggle/body)
+
+     ("e" rotate-frame-clockwise nil)
+     ("y" flip-frame nil)
+     ("c" flop-frame nil)
 
      ("`" other-frame "`")
 
      ("1" delete-other-windows "one")
 
-     ("u" winner-undo "undo-win")
-     ("r" winner-redo "redo-win")
+     ("u" hydra-universal-argument "universal arg")
+     ("M-u" winner-undo "undo-win")
+     ("M-r" winner-redo "redo-win")
 
      ("a" ace-window "ace")
      ("o" other-window "other window")
+     ("M-o" other-window "other window")
      ("s" ace-swap-window "swap")
      ("d" ace-delete-window "del")
      ("x" delete-window)
