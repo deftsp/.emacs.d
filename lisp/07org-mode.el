@@ -50,6 +50,10 @@
 
 (setq org-todo-interpretation 'sequence ; or 'type
       org-use-fast-todo-selection t
+      ;; `!' for a timestamp, `@' for a note with timestamp
+      ;; `/!' means that in addition to the note taken when entering the state,
+      ;; a timestamp should be recorded when leaving the WAIT state, if and only if the
+      ;; target state does not configure logging for entering it.
       org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "DELEGATED(l)" "APPT(a)" "|" "DONE(d)" "DEFERRED(f)" "CANCELLED(c@)")
                           (sequence "WAITING(w@/!)" "HOLD(h@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
                           (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
@@ -86,54 +90,53 @@
 
 (eval-after-load "org"
   '(setq org-agenda-custom-commands
-      `(("A" agenda "Today's Priority #A tasks"
-         ((org-agenda-skip-function
-           '(org-agenda-skip-entry-if 'notregexp "\\=.*\\[#A\\]"))
-          (org-agenda-span 'day)
-          (org-agenda-overriding-header "Today's Priority #A tasks: ")))
+         `(("A" agenda "Today's Priority #A tasks"
+            ((org-agenda-skip-function
+              '(org-agenda-skip-entry-if 'notregexp "\\=.*\\[#A\\]"))
+             (org-agenda-span 'day)
+             (org-agenda-overriding-header "Today's Priority #A tasks: ")))
 
-        ("B" agenda "Today's Priority #B tasks"
-         ((org-agenda-skip-function
-           '(org-agenda-skip-entry-if 'notregexp "\\=.*\\[#B\\]"))
-          (org-agenda-span 'day)
-          (org-agenda-overriding-header "Today's Priority #B tasks: ")))
+           ("B" agenda "Today's Priority #B tasks"
+            ((org-agenda-skip-function
+              '(org-agenda-skip-entry-if 'notregexp "\\=.*\\[#B\\]"))
+             (org-agenda-span 'day)
+             (org-agenda-overriding-header "Today's Priority #B tasks: ")))
 
-        ("C" agenda "Today's Priority #C tasks"
-         ((org-agenda-skip-function
-           '(org-agenda-skip-entry-if 'notregexp "\\=.*\\[#C\\]"))
-          (org-agenda-span 'day)
-          (org-agenda-overriding-header "Today's Priority #B tasks: ")))
+           ("C" agenda "Today's Priority #C tasks"
+            ((org-agenda-skip-function
+              '(org-agenda-skip-entry-if 'notregexp "\\=.*\\[#C\\]"))
+             (org-agenda-span 'day)
+             (org-agenda-overriding-header "Today's Priority #B tasks: ")))
 
-        ("c" todo "DONE|DEFERRED|CANCELLED") ; not include scheduled TODO entiries
+           ("c" todo "DONE|DEFERRED|CANCELLED") ; not include scheduled TODO entiries
 
-        ("d" todo "DELEGATED")
+           ("d" todo "DELEGATED")
 
-        ;; to create a sparse tree (again: current buffer only) with all entries containing the word `FIXME'.
-        ("f" occur-tree "\\<FIXME\\>")
+           ;; to create a sparse tree (again: current buffer only) with all entries containing the word `FIXME'.
+           ("f" occur-tree "\\<FIXME\\>")
 
-        ("g" "GeekTool Agenda" ((agenda ""))
-         ((org-agenda-todo-keyword-format "%-11s")
-          (org-agenda-prefix-format "  %-10T%?-16t% s")
-          (org-agenda-show-inherited-tags nil)
-          (org-agenda-remove-tags 'prefix)
-          (org-agenda-tags-column 70))
-         (,(concat org-directory  "/Agenda.txt")))
+           ("g" "GeekTool Agenda"
+            ((agenda ""))
+            ((org-agenda-todo-keyword-format "%-11s")
+             (org-agenda-prefix-format "  %-10T%?-16t% s")
+             (org-agenda-show-inherited-tags nil)
+             (org-agenda-remove-tags 'prefix)
+             (org-agenda-tags-column 70))
+            (,(concat org-directory  "/Agenda.txt")))
 
-        ("h" "Daily habits"
-         ((agenda ""))
-         ((org-agenda-show-log t)
-          (org-agenda-span 'week)
-          (org-agenda-log-mode-items '(state))
-          (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp ":daily:"))))
+           ("h" "Habits" tags-todo "STYLE=\"habit\""
+            ((org-agenda-overriding-header "Habits")
+             (org-agenda-sorting-strategy
+              '(todo-state-down effort-up category-keep))))
 
-        ("p" tags "+project-TODO=\"DONE\"-TODO=\"CANCELLED\"")
+           ("p" tags "+project-TODO=\"DONE\"-TODO=\"CANCELLED\"")
 
-        ("u" alltodo "Unscheduled TODO entries"
-         ((org-agenda-skip-function
-           '(org-agenda-skip-entry-if 'scheduled 'deadline 'regexp "<[^>\n]+>"))
-          (org-agenda-overriding-header "Unscheduled TODO entries: ")))
-        ("w" todo "WAITING" )
-        ("W" todo-tree "WAITING"))))
+           ("u" alltodo "Unscheduled TODO entries"
+            ((org-agenda-skip-function
+              '(org-agenda-skip-entry-if 'scheduled 'deadline 'regexp "<[^>\n]+>"))
+             (org-agenda-overriding-header "Unscheduled TODO entries: ")))
+           ("w" todo "WAITING" )
+           ("W" todo-tree "WAITING"))))
 
 (setq org-special-ctrl-a/e t
       org-cycle-separator-lines 2
