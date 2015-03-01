@@ -154,5 +154,23 @@
      ;; (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
      (global-git-gutter-mode t)))
 
+(defhydra hydra-git-gutter
+  (:pre (git-gutter-mode 1))
+  "
+Git:
+_j_: next hunk        _s_tage hunk     _q_uit
+_k_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
+                      _p_opup hunk
+
+set start _R_evision
+"
+  ("j" git-gutter:next-hunk          nil)
+  ("k" git-gutter:previous-hunk      nil)
+  ("s" git-gutter:stage-hunk         nil)
+  ("r" git-gutter:revert-hunk        nil)
+  ("p" git-gutter:popup-hunk         nil)
+  ("R" git-gutter:set-start-revision nil)
+  ("q" nil                  nil :color blue)
+  ("Q" (git-gutter-mode -1) nil :color blue))
 
 (provide '50vc)

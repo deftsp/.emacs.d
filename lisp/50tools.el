@@ -1219,6 +1219,50 @@ such character is found, following options are shown:
      ;; (add-hook 'emacs-lisp-mode-hook 'projectile-on)
      (projectile-global-mode)))
 
+(defhydra hydra-projectile-other-window (:color teal)
+  "projectile-other-window"
+  ("f"  projectile-find-file-other-window        "file")
+  ("g"  projectile-find-file-dwim-other-window   "file dwim")
+  ("d"  projectile-find-dir-other-window         "dir")
+  ("b"  projectile-switch-to-buffer-other-window "buffer")
+  ("q"  nil                                      "cancel" :color blue))
+
+(defhydra hydra-projectile (:color teal)
+  "
+     PROJECTILE: %(projectile-project-root)
+
+     Find File            Search/Tags          Buffers                Cache
+------------------------------------------------------------------------------------------
+ ^^                    _a_: ag                _i_: Ibuffer           _c_: cache clear
+ _ff_: file dwim       _g_: update gtags      _b_: switch to buffer  _x_: remove known project
+ _fd_: file curr dir   _o_: multi-occur       ^^                     _X_: cleanup non-existing
+  _r_: recent file                                               ^^^^_z_: cache current
+  _d_: dir
+
+"
+  ("a"   projectile-ag                      nil)
+  ("b"   projectile-switch-to-buffer        nil)
+  ("c"   projectile-invalidate-cache        nil)
+  ("d"   projectile-find-dir                nil)
+  ("F"   projectile-find-file               nil)
+  ("ff"  projectile-find-file-dwim          nil)
+  ("fd"  projectile-find-file-in-directory  nil)
+  ("g"   ggtags-update-tags                 nil)
+  ("s-g" ggtags-update-tags                 nil)
+  ("i"   projectile-ibuffer                 nil)
+  ("K"   projectile-kill-buffers            nil)
+  ("m"   projectile-multi-occur             nil)
+  ("o"   projectile-multi-occur             nil)
+  ("s-p" projectile-switch-project          "switch project")
+  ("p"   projectile-switch-project          nil)
+  ("s"   projectile-switch-project          nil)
+  ("r"   projectile-recentf                 nil)
+  ("x"   projectile-remove-known-project    nil)
+  ("X"   projectile-cleanup-known-projects  nil)
+  ("z"   projectile-cache-current-file      nil)
+  ("`"   hydra-projectile-other-window/body "other window")
+  ("q"   nil                                "cancel" :color blue))
+
 ;;; xmsi-math-symbols-input.el
 (autoload 'xmsi-mode "xmsi-math-symbols-input" "Load xmsi minor mode for inputting math (Unicode) symbols." t)
 (xmsi-mode 1) ; activate the mode.
