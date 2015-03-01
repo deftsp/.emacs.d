@@ -131,6 +131,10 @@
                :type github
                :description "Fancy completion all over Emacs, not just for buffers and files."
                :pkgname "DarwinAwardWinner/ido-ubiquitous")
+        (:name pinyin-search
+               :type github
+               :description "Search Chinese by the first letter of Chinese pinyin."
+               :pkgname "xuchunyang/pinyin-search.el")
         (:name minimap
                :type github
                :description "Sidebar showing a "mini-map" of a buffer"

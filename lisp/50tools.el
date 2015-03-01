@@ -1064,7 +1064,7 @@ such character is found, following options are shown:
 (with-eval-after-load "ace-isearch"
   (global-ace-isearch-mode +1)
   (setq ace-isearch-input-length 5
-        ace-isearch-input-idle-delay 0.3
+        ace-isearch-input-idle-delay 0.5
         ace-isearch-submode 'ace-jump-char-mode
         ace-isearch-use-ace-jump 'printing-char)
 
