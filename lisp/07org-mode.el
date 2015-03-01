@@ -281,6 +281,9 @@
          :prepend t
          :unnarrowed t
          :kill-buffer t)
+        ("d" "Drill" entry (file+headline "~/org/drill/playground.org" "Pond")
+         "* Q: %?       :drill:\n\n** A:\n"
+         :kill-buffer t)
         ("p" "Phone call" entry (file+headline "~/org/GTD.org" "Inbox")
          "* PHONE %? :PHONE:\n  %U" :clock-in t :clock-resume t)
         ("h" "Habit" entry (file "~/org/GTD.org" "Inbox")
