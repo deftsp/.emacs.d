@@ -267,7 +267,7 @@
 
    ;; ace-window-mode-line
    '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0))))
-   '(aw-mode-line-face ((t (:foreground "##00cbcb"))))
+   '(aw-mode-line-face ((t (:foreground "#00cccc"))))
 
    ;; company-mode
    `(company-tooltip ((t (:background ,base01 :foreground "#dfdfdf"))))
