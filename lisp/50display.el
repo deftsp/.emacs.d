@@ -11,7 +11,8 @@
 
 (when (memq window-system '(x w32 mac ns))
   (setq initial-frame-alist `((tool-bar-lines . 0)
-                              (menu-bar-lines . 0)
+                              ;; FIXME: https://github.com/railwaycat/emacs-mac-port/issues/79
+                              (menu-bar-lines . ,(if (eq window-system 'mac) 1 0))
                               (width . 202)
                               (height . 51)
                               (top . 22) ; (frame-parameter nil 'top)
