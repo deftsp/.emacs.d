@@ -8,6 +8,34 @@
 ;;; neat stuffs
 (require 'key-chord nil t)
 
+;; http://oremacs.com/2015/03/05/testing-init-sanity/
+(defun pl/test-emacs ()
+  "Testing your .emacs sanity.
+If there were no start up errors, it will echo \"All is well\",
+otherwise, it will pop to a *startup error* buffer with the error description."
+  (interactive)
+  (require 'async)
+  (async-start
+   (lambda ()
+     (let ((current-emacs (concat invocation-directory invocation-name)))
+       (shell-command-to-string
+        (concat current-emacs " --batch --eval \"
+(condition-case e
+    (progn
+      (load \\\"~/.emacs.d/init.el\\\")
+      (message \\\"-OK-\\\"))
+  (error
+   (message \\\"ERROR!\\\")
+   (signal (car e) (cdr e))))\""))))
+   `(lambda (output)
+      (if (string-match "-OK-" output)
+          (when ,(called-interactively-p 'any)
+            (message "All is well"))
+        (switch-to-buffer-other-window "*startup error*")
+        (delete-region (point-min) (point-max))
+        (insert output)
+        (search-backward "ERROR!")))))
+
 (defmacro aif (&rest forms)
   "Create an anonymous interactive function.
     Mainly for use when binding a key to a non-interactive function."
