@@ -246,16 +246,25 @@
 ;; not use switch-window anymore, ace-window is faster
 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l))
 
-;; TODO: Fix it
-(require 'ace-window-mode-line nil t)
-(setq ace-window-mode-line-format "⌗%c"
-      ace-window-mode-line-position 1)
+(require 'ace-window nil t)
 
-(defun pl/turn-on-ace-window-show-key ()
-  (when (fboundp 'ace-window-mode-line-show-key)
-    (ace-window-mode-line-show-key +1)))
-;; make sure ace window key to the right position
-(add-to-list 'after-init-hook 'pl/turn-on-ace-window-show-key)
+(defvar pl/aw-mode-line-format "#%s")
+
+(defadvice aw-update (around format-ace-window-path activate)
+  "add customization for ace window path"
+  (avy-traverse
+   (avy-tree (aw-window-list) aw-keys)
+   (lambda (path leaf)
+     (set-window-parameter
+      leaf 'ace-window-path
+      (propertize
+       (format pl/aw-mode-line-format
+               (apply #'string (reverse path)))
+       'face 'aw-mode-line-face)))))
+;; (ad-deactivate 'aw-update)
+
+(when (fboundp 'ace-window-display-mode)
+  (ace-window-display-mode +1))
 
 ;;; golden-ratio.el
 ;; (require 'golden-ratio nil t)

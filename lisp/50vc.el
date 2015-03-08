@@ -54,14 +54,14 @@
 
 (defadvice git--install-state-mark-modeline (around insert-after-ace-window-key activate)
   "Add git state mark modeline after ace window key"
-  (if (assq 'aw-mode-line-key-display-on mode-line-format)
+  (if (assq 'ace-window-display-mode mode-line-format)
       (let* ((left)
              (right mode-line-format)
              (next (car right)))
         (catch 'break
           (while t
             (when (eq (if (consp next) (car next))
-                      'aw-mode-line-key-display-on)
+                      'ace-window-display-mode)
               (setq mode-line-format
                     (append left
                             (list next)
