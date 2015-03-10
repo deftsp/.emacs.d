@@ -570,6 +570,46 @@
       (insert output-string))
     output-string))
 
+
+;;; hydra org template
+(with-eval-after-load "hydra"
+  (defhydra hydra-org-template (:color blue :hint nil)
+    "
+_c_enter  _q_uote    _L_aTeX:
+_l_atex   _e_xample  _i_ndex:
+_a_scii   _v_erse    _I_NCLUDE:
+_s_rc     ^ ^        _H_TML:
+_h_tml    ^ ^        _A_SCII:
+"
+    ("s" (pl/hot-expand "<s"))
+    ("e" (pl/hot-expand "<e"))
+    ("q" (pl/hot-expand "<q"))
+    ("v" (pl/hot-expand "<v"))
+    ("c" (pl/hot-expand "<c"))
+    ("l" (pl/hot-expand "<l"))
+    ("h" (pl/hot-expand "<h"))
+    ("a" (pl/hot-expand "<a"))
+    ("L" (pl/hot-expand "<L"))
+    ("i" (pl/hot-expand "<i"))
+    ("I" (pl/hot-expand "<I"))
+    ("H" (pl/hot-expand "<H"))
+    ("A" (pl/hot-expand "<A"))
+    ("<" self-insert-command "ins")
+    ("o" nil "quit")))
+
+(defun pl/hot-expand (str)
+  "Expand org template."
+  (insert str)
+  (org-try-structure-completion))
+
+(with-eval-after-load "org"
+  (define-key org-mode-map "<"
+    (lambda () (interactive)
+      (if (looking-back "^")
+          (hydra-org-template/body)
+        (self-insert-command 1)))))
+
+
 (provide '07org-mode)
 
 ;; Local Variables:
