@@ -90,6 +90,8 @@
 
 (setq magit-stage-all-confirm nil
       magit-unstage-all-confirm nil)
+
+
 ;; (defun magit-toggle-whitespace ()
 ;;   (interactive)
 ;;   (if (member "-w" magit-diff-options)
@@ -105,6 +107,23 @@
 ;;   (interactive)
 ;;   (setq magit-diff-options (remove "-w" magit-diff-options))
 ;;   (magit-refresh))
+
+;; http://endlessparentheses.com/automatically-configure-magit-to-access-github-prs.html
+(defun pl/add-PR-fetch ()
+  "If refs/pull is not defined on a GH repo, define it."
+  (let ((fetch-address
+         "+refs/pull/*/head:refs/pull/origin/*"))
+    (unless (member
+             fetch-address
+             (magit-get-all "remote" "origin" "fetch"))
+      (when (string-match
+             "github" (magit-get "remote" "origin" "url"))
+        (magit-git-string
+         "config" "--add" "remote.origin.fetch"
+         fetch-address)))))
+
+;; access pull requests from Magit by hitting b b. The reference names start with /refs/pull/origin/.
+(add-hook 'magit-mode-hook #'pl/add-PR-fetch)
 
 ;; git-messenger
 ;; (require 'git-messenger)
