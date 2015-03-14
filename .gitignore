@@ -78,7 +78,7 @@ packages/cedet/
 el-get/
 share/
 packages/lunar-mode-line/
-cfs-profiles.d/
+chinese-fonts-setup/
 workgroups
 test/
 /.mc-lists.el

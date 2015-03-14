@@ -15,6 +15,8 @@
 ;; http://zhuoqiang.me/torture-emacs.html
 ;; http://baohaojun.github.io/perfect-emacs-chinese-font.html
 ;; https://github.com/tumashu/chinese-fonts-setup
+;; Avoiding use the font with its name contain '-'.
+;; https://github.com/tumashu/chinese-fonts-setup/issues/11
 (setq cfs-profiles '("program" "org-mode" "read-book"))
 
 (with-eval-after-load "chinese-fonts-setup"
