@@ -36,7 +36,7 @@
   (temp-buffer-resize-mode 1))
 
 ;;; auto fill mode
-(setq-default fill-column 120)
+(setq-default fill-column 80)
 
 (defun pl/unfill-buffer ()
   "Undo filling for all paragraphs."
