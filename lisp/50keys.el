@@ -419,18 +419,23 @@ _w_ whitespace-mode:       %(and (boundp 'whitespace-mode) whitespace-mode)
 (key-chord-define-global
  "jf"
  (defhydra hydra-high-frequency (:color teal)
-   "high frequency bindings"
-   ("SPC" mark-sexp "sexp" :color red)
-   ("a" org-agenda "agenda")
-   ("c" org-capture "capture")
-   ("g" org-clock-goto "goto clock")
+   "
+org-agend_a_ org-_c_apture org-clock-_g_oto
+_p_rojectile _s_cratch
+undo-tree-_u_ndo undo-tree-_r_edo
+"
+   ("SPC" mark-sexp "mark sexp" :color red)
+   ("a" org-agenda nil)
+   ("c" org-capture nil)
+   ("g" org-clock-goto nil)
    ("G" hydra-git-gutter/body "git gutter")
+   ("h" hydra-apropos/body "apropos")
    ("j" dired-jump "dired jump")
-   ("p" hydra-projectile/body "projectile")
-   ("s" pl/switch-to-scratch "scratch")
+   ("p" hydra-projectile/body nil)
+   ("s" pl/switch-to-scratch nil)
    ("t" hydra-toggle/body "toggle")
-   ("u" undo-tree-undo "undo" :color red)
-   ("r" undo-tree-redo "redo" :color red)
+   ("u" undo-tree-undo nil :color red)
+   ("r" undo-tree-redo nil :color red)
    ("q" nil "cancel")))
 
 (defun pl/switch-to-scratch ()
@@ -485,5 +490,19 @@ _h_   _l_   _q_uite     _y_ank       /,`.-'`'   ._  \-;;,_
 
 (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
 
+;;; hydra apropos family
+(defhydra hydra-apropos (:color blue :hint nil)
+  "
+_a_propos _c_ommand
+_d_ocumentation _l_ibrary
+_v_ariable _u_ser-option
+^ ^ valu_e_"
+  ("a" apropos)
+  ("d" apropos-documentation)
+  ("v" apropos-variable)
+  ("c" apropos-command)
+  ("l" apropos-library)
+  ("u" apropos-user-option)
+  ("e" apropos-value))
 
 (provide '50keys)
