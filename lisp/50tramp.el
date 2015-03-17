@@ -54,49 +54,4 @@
 ;;; backup
 (setq tramp-backup-directory-alist backup-directory-alist)
 
-;;---------------------------------------------------------------------------------------------------------
-;; reopen current file with tramp by the method of sudo
-(defun find-alternative-file-with-sudo ()
-  (interactive)
-  (let ((fname (or buffer-file-name
-                   dired-directory)))
-    (when fname
-      (find-alternate-file
-       (if (string-match "^/su:root@localhost:" fname)
-           (replace-regexp-in-string "^/su:root@localhost:" "" fname)
-           (concat "/su:root@localhost:" fname))))))
-
-(global-set-key (kbd "C-c f s") 'find-alternative-file-with-sudo) ; "C-x C-r"
-;; find-alternative-file-with-sudo ------------------------------------------------------------------------
-
-;; if we try to save a file owned by someone else, use sudo
-;; http://www.emacswiki.org/cgi-bin/wiki/SudoSave
-(when (require 'sudo nil t)
-  (defun sudo-before-save-hook ()
-    (set (make-local-variable 'sudo:file) (buffer-file-name))
-    (when sudo:file
-      (unless (file-writable-p sudo:file)
-        (set (make-local-variable 'sudo:old-owner-uid)
-             (nth 2 (file-attributes sudo:file)))
-        (when (numberp sudo:old-owner-uid)
-          (unless (= (user-uid) sudo:old-owner-uid)
-            (when (y-or-n-p
-                   (format "File %s is owned by %s, save it with sudo? "
-                           (file-name-nondirectory sudo:file)
-                           (user-login-name sudo:old-owner-uid)))
-              (sudo-chown-file (int-to-string (user-uid))
-                               (sudo-quoting sudo:file))
-              (add-hook 'after-save-hook
-                        (lambda ()
-                          (sudo-chown-file (int-to-string sudo:old-owner-uid)
-                                           (sudo-quoting sudo:file))
-                          (if sudo-clear-password-always
-                              (sudo-kill-password-timeout)))
-                        nil ;; not append
-                        t   ;; buffer local hook
-                        )))))))
-  (add-hook 'before-save-hook 'sudo-before-save-hook))
-
-
-
 (provide '50tramp)

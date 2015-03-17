@@ -307,12 +307,26 @@
           (add-to-list 'symbol-names name)
           (add-to-list 'name-and-pos (cons name position))))))))
 
-;;; find file with ido and open it with sudo
+
+;;; edit as root
+;; find file with ido and open it with sudo
 (defun pl/ido-sudo-edit (&optional arg)
   (interactive "p")
   (if (or arg (not buffer-file-name))
       (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
     (find-alternate-file (concat "/sudo:root@localhost:" buffer-file-name))))
+
+;; http://emacsredux.com/blog/2013/04/21/edit-files-as-root/
+;; This advises ido-find-file(you might want to advise find-file instead if
+;; you’re not using ido) to reopen the selected file as root(you’ll be
+;; prompted for your sudo password) if you don’t have write permissions for it.
+(defadvice ido-find-file (after find-file-sudo activate)
+  "Find file as root if necessary."
+  (unless (and buffer-file-name
+               (file-writable-p buffer-file-name))
+    (find-alternate-file (concat "/sudo:" user-login-name
+                                 "@localhost:" buffer-file-name))))
+
 
 ;;; Occasionally ido
 ;; http://oremacs.com/2015/02/12/ido-occasional/
