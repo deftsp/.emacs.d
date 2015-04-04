@@ -103,6 +103,10 @@
       resize-mini-windows t
       enable-recursive-minibuffers t)
 (minibuffer-depth-indicate-mode 1)
+;; don't let the cursor go into minibuffer prompt
+;; http://ergoemacs.org/emacs/emacs_stop_cursor_enter_prompt.html
+(setq minibuffer-prompt-properties
+      '(read-only t point-entered minibuffer-avoid-prompt face minibuffer-prompt))
 
 (setq ring-bell-function 'ignore)
 ;; Emacs does not beep when you hit `C-g' in the minibuffer or during
