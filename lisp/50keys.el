@@ -454,7 +454,10 @@ undo-tree-_u_ndo undo-tree-_r_edo
 ;; u calls undo.
 ;; p kills the rectangle; it's similar to C-w.
 
-(defun pl/exchange-point-mark ()
+
+(defvar rectangle-mark-mode)
+(defun hydra-ex-point-mark ()
+  "Exchange point and mark."
   (interactive)
   (if rectangle-mark-mode
       (exchange-point-and-mark)
@@ -466,17 +469,17 @@ undo-tree-_u_ndo undo-tree-_r_edo
                            :color pink
                            :post (deactivate-mark))
   "
-  ^_k_^     _d_elete    _s_tring     |\\     _,,,--,,_
-_h_   _l_   _q_uite     _y_ank       /,`.-'`'   ._  \-;;,_
-  ^_j_^     _n_ew-copy  _r_eset     |,4-  ) )_   .;.(  `'-'
-^^^^        _e_xchange  _u_ndo     '---''(_/._)-'(_\_)
+  ^_k_^     _d_elete    _s_tring
+_h_   _l_   _o_k        _y_ank
+  ^_j_^     _n_ew-copy  _r_eset
+^^^^        _e_xchange  _u_ndo
 ^^^^        ^ ^         _p_aste
 "
   ("h" backward-char nil)
   ("l" forward-char nil)
   ("k" previous-line nil)
   ("j" next-line nil)
-  ("e" pl/exchange-point-mark nil)
+  ("e" hydra-ex-point-mark nil)
   ("n" copy-rectangle-as-kill nil)
   ("d" delete-rectangle nil)
   ("r" (if (region-active-p)
@@ -486,6 +489,7 @@ _h_   _l_   _q_uite     _y_ank       /,`.-'`'   ._  \-;;,_
   ("u" undo nil)
   ("s" string-rectangle nil)
   ("p" kill-rectangle nil)
+  ("o" nil nil)
   ("q" nil nil))
 
 (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
