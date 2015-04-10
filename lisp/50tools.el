@@ -1219,6 +1219,9 @@ such character is found, following options are shown:
      ;; (add-hook 'emacs-lisp-mode-hook 'projectile-on)
      (projectile-global-mode)))
 
+(with-eval-after-load "ivy"
+  (setq projectile-completion-system 'ivy))
+
 (defhydra hydra-projectile-other-window (:color teal)
   "projectile-other-window"
   ("f"  projectile-find-file-other-window        "file")
