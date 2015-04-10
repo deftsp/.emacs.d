@@ -86,6 +86,8 @@
 (make-variable-buffer-local 'pl/evil-saved-state)
 
 (defun pl/evil-emacs-state-cycle ()
+  "When this function be called, it will change evil-state back
+to previous saved state, or simply change evil-state to emacs."
   (when evil-mode
     (cond (pl/evil-saved-state
            (unless (eq evil-state pl/evil-saved-state)
@@ -609,7 +611,7 @@ to replace the symbol under cursor"
 
 ;;; git-timemachine
 (with-eval-after-load "git-timemachine"
-  (add-hook 'git-timemachine-mode-hook 'pl/evil-emacs-state-cycle)
+  ;; (add-hook 'git-timemachine-mode-hook 'pl/evil-emacs-state-cycle)
 
   ;; @see https://bitbucket.org/lyro/evil/issue/511/let-certain-minor-modes-key-bindings
   (evil-make-overriding-map git-timemachine-mode-map 'normal)
