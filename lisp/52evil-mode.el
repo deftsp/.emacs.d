@@ -608,8 +608,13 @@ to replace the symbol under cursor"
      (define-key evil-normal-state-map "gk" 'evil-jump-out-args)))
 
 ;;; git-timemachine
-(eval-after-load "git-timemachine"
-  '(add-hook 'git-timemachine-mode-hook 'pl/evil-emacs-state-cycle))
+(with-eval-after-load "git-timemachine"
+  (add-hook 'git-timemachine-mode-hook 'pl/evil-emacs-state-cycle)
+
+  ;; @see https://bitbucket.org/lyro/evil/issue/511/let-certain-minor-modes-key-bindings
+  (evil-make-overriding-map git-timemachine-mode-map 'normal)
+  ;; force update evil keymaps after git-timemachine-mode loaded
+  (add-hook 'git-timemachine-mode-hook #'evil-normalize-keymaps))
 
 ;;; company-mode
 (when (fboundp 'evil-declare-change-repeat)
