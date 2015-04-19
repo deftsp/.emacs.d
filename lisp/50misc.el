@@ -406,10 +406,7 @@ vi style of % jumping to matching brace."
   (kill-sexp 1)
   (yank 2))
 
-
-;; paren end there----------------------------------------------------------------------
-
-;;; scroll
+;;; mouse
 (when window-system
   (mouse-wheel-mode t)
   ;; scroll one line at a time (less "jumpy" than defaults).
@@ -448,6 +445,7 @@ vi style of % jumping to matching brace."
 ;; (global-set-key [C-mouse-4] 'down-a-lot)
 ;; (global-set-key [C-mouse-5] 'up-a-lot)
 
+;;; scroll
 (setq scroll-step 1                     ; default 0, keyboard scroll one line at a time
       scroll-margin 3
       scroll-conservatively 10000)     ; Fix the whole huge-jumps-scrolling-between-windows nastiness
