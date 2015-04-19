@@ -49,8 +49,8 @@
   ;; "O" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading))
   "t" 'org-todo
   "T" '(lambda () (interactive) (evil-org-eol-call '(org-insert-todo-heading nil)))
-  ",i" 'pl/org-insert-image
-  ",I" 'org-toggle-inline-images
+  ",i" 'org-toggle-inline-images
+  ",I" 'pl/org-insert-image
   ",r" 'org-redisplay-inline-images
   ",t" 'org-show-todo-tree)
 
