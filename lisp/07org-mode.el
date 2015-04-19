@@ -509,12 +509,14 @@
           ((not current-prefix-arg)
            (let ((selected-file-full-name (read-file-name "Image: ")))
              (when selected-file-full-name
-               (if (string-equal (concat current-directory "images/")
-                                 (file-name-directory selected-file-full-name))
-                   (setq image-file-name
-                         (concat "./images/"
-                                 (file-name-nondirectory selected-file-full-name)))
-                 (setq image-file-name selected-file-full-name)))))
+               (let ((sub-image-dir-path (concat current-directory "images/")))
+                 (if (string-prefix-p sub-image-dir-path
+                                      (file-name-directory selected-file-full-name))
+                     (setq image-file-name
+                           (concat "./images/"
+                                   (string-remove-prefix sub-image-dir-path
+                                                         selected-file-full-name)))
+                   (setq image-file-name selected-file-full-name))))))
           (t
            (message "Unable to guess where to save screenshot.")))
     (when image-file-name
