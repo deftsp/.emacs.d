@@ -7,7 +7,8 @@
 
 (require 'evil nil t)
 
-;; `C-M-x' on a defface expression reinitializes the face according to the defface specification.
+;; `C-M-x' on a defface expression reinitializes the face according to the
+;; defface specification.
 
 (defface pl/evil-normal-tag
   `((t (:weight bold :foreground "orchid")))
@@ -155,12 +156,6 @@ to previous saved state, or simply change evil-state to emacs."
 ;; (define-key minibuffer-local-must-match-map [escape] 'pl/minibuffer-keyboard-quit)
 ;; (define-key minibuffer-local-isearch-map [escape] 'pl/minibuffer-keyboard-quit)
 
-;;; ace jump mode
-(define-key evil-normal-state-map (kbd "SPC") 'ace-jump-mode)
-(define-key evil-normal-state-map (kbd "S-SPC") 'ace-jump-char-mode)
-(define-key evil-visual-state-map (kbd "SPC") 'ace-jump-mode)
-(define-key evil-visual-state-map (kbd "S-SPC") 'ace-jump-char-mode)
-
 ;;;
 (define-key evil-normal-state-map (kbd "C-o") 'pl/open-line-with-indent) ; default evil-jump-backward
 
@@ -216,22 +211,64 @@ to previous saved state, or simply change evil-state to emacs."
 (define-key evil-insert-state-map [remap newline-and-indent] nil)
 
 ;;; evil-leader
-;; Note: You should enable global-evil-leader-mode before you enable evil-mode, otherwise evil-leader won't be enabled
-;; in initial buffers (*scratch*, *Messages*, ...).
-(setq evil-leader/leader ","
-      evil-leader/in-all-states t)
+;; Note: You should enable global-evil-leader-mode before you enable evil-mode,
+;; otherwise evil-leader won't be enabled in initial buffers (*scratch*,
+;; *Messages*, ...).
 
-(if (fboundp 'global-evil-leader-mode)
-    (global-evil-leader-mode))
+(defun pl/activate-major-mode-leader ()
+  "Bind major mode key map to `pl/major-mode-leader-key'."
+  (let ((mode-map (cdr (assoc major-mode evil-leader--mode-maps))))
+    (when mode-map
+      (setq major-mode-map (lookup-key mode-map (kbd "m")))
+      (mapc (lambda (s)
+              (eval `(define-key
+                       ,(intern (format "evil-%S-state-local-map" s))
+                       ,(kbd pl/major-mode-leader-key)
+                       major-mode-map)))
+            '(normal motion))
+      (mapc (lambda (s)
+              (eval `(define-key
+                       ,(intern (format "evil-%S-state-local-map" s))
+                       ,(kbd pl/major-mode-emacs-leader-key)
+                       major-mode-map)))
+            '(emacs insert normal motion visual)))))
+
+(defun pl/init-evil-leader ()
+  (setq evil-leader/leader "SPC"
+        evil-leader/in-all-states t)
+
+  (if (fboundp 'global-evil-leader-mode)
+      (global-evil-leader-mode))
+
+  ;; make leader available in visual and motion states
+  (mapc (lambda (s)
+          (eval `(define-key
+                   ,(intern (format "evil-%S-state-map" s))
+                   ,(kbd pl/leader-key)
+                   evil-leader--default-map)))
+        '(motion visual))
+  ;; emacs and insert states (make it also available in other states
+  ;; for consistency and POLA.)
+  (mapc (lambda (s)
+          (eval `(define-key
+                   ,(intern (format "evil-%S-state-map" s))
+                   ,(kbd pl/emacs-leader-key)
+                   evil-leader--default-map)))
+        '(emacs insert normal visual motion))
+  ;; experimental: map SPC m to ,
+  (when pl/major-mode-leader-key
+    (add-hook 'after-change-major-mode-hook
+              'pl/activate-major-mode-leader)))
+
+(pl/init-evil-leader)
 
 (evil-leader/set-key
-  ","  'evilnc-comment-operator
   "1"   'delete-other-windows
   "2"   (kbd "C-x 2")
   "3"   "\C-x3"
   "a"   'org-agenda
   "b"   'bookmark-map
-  ;; "ci", "cl", "cc", "cp", cr" and "cv" are used by evil-nerd-commenter
+  ;; ";" "cc" "ci", "cl", "cp", "cr", "ct", "cy" and "cv" are used by evil-nerd-commenter
   "cs"  'pl/evil-change-symbol-in-defun
   "ch"  'crosshairs-mode
   "D"   'dired-jump
@@ -265,7 +302,7 @@ to previous saved state, or simply change evil-state to emacs."
   "k"   'kill-this-buffer
   ;; "ll" are used by evil-nerd-commenter
   "lr"  'pl/linum-relative-toggle
-  "ms"  'magit-status
+  "n"   'evil-narrow-indirect
   "p"   'projectile-commander
   "ut"  'undo-tree-visualize
   "vr"  'vr/replace
@@ -282,11 +319,14 @@ to previous saved state, or simply change evil-state to emacs."
   "xv=" 'vc-diff
   "xvl" 'vc-print-log)
 
-(eval-after-load "helm-config"
-  '(progn
-     (evil-leader/set-key "4" helm-command-map)))
+(with-eval-after-load "helm-config"
+  (evil-leader/set-key "4" helm-command-map))
 
 ;; (evil-leader/set-key-for-mode 'emacs-lisp-mode "b" 'byte-compile-file)
+(evil-leader/set-key-for-mode 'emacs-lisp-mode
+  "md"  'elisp-slime-nav-describe-elisp-thing-at-point
+  "me"  'eval-defun
+  "mg"  'elisp-slime-nav-find-elisp-thing-at-point)
 
 ;;; expand-region
 (with-eval-after-load 'key-chord
@@ -458,22 +498,24 @@ to previous saved state, or simply change evil-state to emacs."
 
 ;;; evil-nerd-commenter
 ;; installed with el-get
-(setq evilnc-hotkey-comment-operator ",,")
-(require 'evil-nerd-commenter nil t)
+;; (setq evilnc-hotkey-comment-operator ",,")
+;; (require 'evil-nerd-commenter nil t)
 
 (global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
 ;; (global-set-key (kbd "C-c l") 'evilnc-comment-or-uncomment-to-the-line)
 ;; (global-set-key (kbd "C-c c") 'evilnc-copy-and-comment-lines)
 ;; (global-set-key (kbd "C-c p") 'evilnc-comment-or-uncomment-paragraphs)
 
-(with-eval-after-load 'evil
-  (define-key evil-normal-state-map ",ci" 'evilnc-comment-or-uncomment-lines)
-  (define-key evil-normal-state-map ",cl" 'evilnc-comment-or-uncomment-to-the-line)
-  (define-key evil-normal-state-map ",cc" 'evilnc-copy-and-comment-lines)
-  (define-key evil-normal-state-map ",cp" 'evilnc-comment-or-uncomment-paragraphs)
-  (define-key evil-normal-state-map ",cr" 'comment-or-uncomment-region)
-  (define-key evil-normal-state-map ",cv" 'evilnc-toggle-invert-comment-line-by-line)
-  (define-key evil-normal-state-map ",ll" 'evilnc-quick-comment-or-uncomment-to-the-line))
+(evil-leader/set-key
+  ";"  'evilnc-comment-operator
+  "cc" 'evilnc-copy-and-comment-lines
+  "ci" 'evilnc-toggle-invert-comment-line-by-line
+  "cl" 'evilnc-comment-or-uncomment-lines
+  "cp" 'evilnc-comment-or-uncomment-paragraphs
+  "cr" 'comment-or-uncomment-region
+  "ct" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "cy" 'evilnc-copy-and-comment-lines
+  "cv" 'evilnc-toggle-invert-comment-line-by-line)
 
 ;;;
 (require 'evil-indent-textobject nil t)
@@ -668,10 +710,9 @@ to replace the symbol under cursor"
 ;; https://github.com/hlissner/evil-snipe
 (require 'evil-snipe nil t)
 (with-eval-after-load "evil-snipe"
-  (global-evil-snipe-mode +1)
   ;; (evil-snipe-enable-nN)
   ;; replaces evil-mode's f/F/t/T/;/, with snipe
-  (evil-snipe-replace-evil))
+  (global-evil-snipe-mode +1))
 
 
 ;;; bugfix

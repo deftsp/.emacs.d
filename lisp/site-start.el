@@ -1,10 +1,11 @@
-;;; 00util.el ---
+;;; site-start.el ---
 
 ;; Copyright (C) 2010  Shihpin Tseng
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+(require '00prelude)
 (require '01env)
 (require '02utils)
 (require '05cc-mode)
@@ -108,4 +109,4 @@
 
 (load-file "~/.emacs.d/private-ede-projects.el")
 
-(provide '00site-start)
+(provide 'site-start)

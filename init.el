@@ -62,7 +62,7 @@
   (when (file-exists-p p)
     (add-to-list 'load-path p)))
 
-(require '00site-start)
+(require 'site-start)
 ;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
 
 

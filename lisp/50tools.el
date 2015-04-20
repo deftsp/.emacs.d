@@ -1087,27 +1087,29 @@ such character is found, following options are shown:
   "Show line numbers temporarily, while prompting for the line number input"
   (interactive)
   (let* ((is-linum-mode-load (boundp 'linum-mode))
-        (origin-linum-mode-state
-         (if is-linum-mode-load linum-mode nil))
-        (origin-linum-format
-         (if is-linum-mode-load linum-format nil)))
-      (unwind-protect
-          (progn
-            (setq linum-format 'dynamic)
-            (linum-mode 1)
-            (goto-line (read-number "Goto line: ")))
+         (origin-linum-mode-state
+          (if is-linum-mode-load linum-mode nil))
+         (origin-linum-format
+          (if is-linum-mode-load linum-format nil)))
+    (unwind-protect
         (progn
-          (setq linum-format origin-linum-format)
-          (linum-mode origin-linum-mode-state)
-          (linum-update-current)))))
+          (setq linum-format 'dynamic)
+          (linum-mode 1)
+          (goto-line (read-number "Goto line: ")))
+      (progn
+        (setq linum-format origin-linum-format)
+        (linum-mode origin-linum-mode-state)
+        (linum-update-current)))))
 
 ;;; jump-char
 ;; <char> :: move to the next match in the current direction.
 ;; ; :: next match forward (towards end of buffer)
 ;; , :: next match backward (towards beginning of buffer)
 ;; C-c C-c :: invoke ace-jump-mode if available (also <M-/>)
-(global-set-key (kbd "M-m") 'jump-char-forward)
-(global-set-key (kbd "M-M") 'jump-char-backward)
+;; `M-m' are used by emacs leader key see spacemacs
+;; https://github.com/syl20bnr/spacemacs
+;; (global-set-key (kbd "M-m") 'jump-char-forward)
+;; (global-set-key (kbd "M-M") 'jump-char-backward)
 
 ;; toggle between the beginning of the line and the beginning of the code.
 ;; bind `C-a' to this function, `C-a C-a' can be used to  replace default `M-m' back-to-indentation
@@ -1116,7 +1118,7 @@ such character is found, following options are shown:
   (interactive)
   (if (bolp)
       (back-to-indentation)
-      (beginning-of-line)))
+    (beginning-of-line)))
 
 (global-set-key (kbd "C-a") 'pl/beginning-of-line-or-indentation)
 
@@ -1313,28 +1315,38 @@ such character is found, following options are shown:
 
 ;;; guide-key
 ;; (require 'guide-key nil t)
-(eval-after-load "guide-key"
-  '(progn
-     ;; This hack may be dangerous because it advices primitive functions, this-command-keys and
-     ;; this-command-keys-vector
-     (guide-key/key-chord-hack-on)
-     (setq guide-key/recursive-key-sequence-flag t
-           guide-key/popup-window-position 'right
-           guide-key/highlight-command-regexp "rectangle\\|register"
-           guide-key/idle-delay 1.2)
+(with-eval-after-load "guide-key"
+  ;; This hack may be dangerous because it advices primitive functions,
+  ;; this-command-keys and this-command-keys-vector
+  (guide-key/key-chord-hack-on)
+  (setq guide-key/recursive-key-sequence-flag t
+        guide-key/popup-window-position 'right
+        guide-key/highlight-command-regexp "rectangle\\|register"
+        guide-key/idle-delay 1.2)
 
-     (setq guide-key/guide-key-sequence
-           '("C-c"
-             "C-h"
-             "C-x"
-             "M-o"
-             "M-s"
-             "<key-chord>"
-             (org-mode "C-c")
-             (outline-minor-mode "C-c @")
-             (evil-mode ",")))
+  (setq guide-key/guide-key-sequence
+        '("C-c"
+          "C-h"
+          "C-x"
+          "M-o"
+          "M-s"
+          "<key-chord>"
+          ,pl/leader-key
+          ,pl/emacs-leader-key
+          ,pl/major-mode-leader-key
+          ,pl/major-mode-emacs-leader-key
+          ;; M-m in terminal
+          "<ESC>m"
+          ;; C-M-m in terminal
+          "<ESC><RET>"
+          "g"
+          "\["
+          "\]"
+          (org-mode "C-c")
+          (outline-minor-mode "C-c @")
+          (evil-mode ",")))
 
-     (guide-key-mode 1)))
+  (guide-key-mode 1))
 
 ;;; hexcolour
 (autoload 'hexcolor-mode "hexcolor" nil t nil)

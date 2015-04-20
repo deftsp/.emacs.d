@@ -18,12 +18,12 @@
 
 (defun pl/narrow-to-region-indirect (boundary-start boundary-end)
   "Edit the current region in a new, cloned, indirect buffer.
- 
+
 This function is responsible for helping the operator to easily
 manipulate a subset of a buffer's contents within a new buffer. The
 newly created clone buffer is created with `clone-indirect-buffer',
-so all of its behaviors apply. 
- 
+so all of its behaviors apply.
+
 The subset chosen for manipulation is narrowed by
 `narrow-to-region'. When the clone buffer is created, the lines in
 which the start and end of the boundary occur are included at the
@@ -48,16 +48,12 @@ end the new clone buffer name to serve as a reminder for its
 (when (boundp 'ido-ignore-buffers)
   (add-to-list 'ido-ignore-buffers "^.*/INDIRECT\\[.*\\]$"))
 
-(eval-after-load "evil"
-  '(progn
-     (define-key evil-normal-state-map ",n" 'evil-narrow-indirect)
-     (define-key evil-visual-state-map ",n" 'evil-narrow-indirect)
-
-     (evil-define-operator evil-narrow-indirect (beg end type)
-       "Indirectly narrow the region from BEG to END."
-       (interactive "<R>")
-       (evil-normal-state)
-       (pl/narrow-to-region-indirect beg end))))
+(with-eval-after-load "evil"
+  (evil-define-operator evil-narrow-indirect (beg end type)
+    "Indirectly narrow the region from BEG to END."
+    (interactive "<R>")
+    (evil-normal-state)
+    (pl/narrow-to-region-indirect beg end)))
 
 ;;; narrow-indirect.el --- Narrow using an indirect buffer that is a clone
 ;; http://www.emacswiki.org/emacs/NarrowIndirect
