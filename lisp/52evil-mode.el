@@ -288,12 +288,16 @@ to previous saved state, or simply change evil-state to emacs."
   "fV"  'flycheck-version
   "f?"  'flycheck-describe-checker
   "ft"  'flycheck-mode
-  "g="  'git-gutter:popup-hunk
-  "gj"  'git-gutter:next-hunk
-  "gk"  'git-gutter:previous-hunk
-  "gs"  'git-gutter:stage-hunk
-  "gr"  'git-gutter:revert-hunk
-  "gt"  'git-gutter:toggle
+  "gb"  'magit-blame-mode
+  "gl"  'magit-log
+  "gs"  'magit-status
+  "gC"  'magit-commit
+  "ggt" 'git-gutter:toggle
+  "ghs" 'git-gutter:stage-hunk
+  "ghr" 'git-gutter:revert-hunk
+  "ghN" 'git-gutter:previous-hunk
+  "ghn" 'git-gutter:next-hunk
+  "gh="  'git-gutter:popup-hunk
   "hs"  'helm-swoop
   "hS"  'helm-swoop-back-to-last-point
   "Hs"  'helm-multi-swoop
