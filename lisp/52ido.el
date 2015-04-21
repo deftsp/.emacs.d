@@ -93,13 +93,13 @@
 ;; ~/ -        go to the home directory.
 
 (mapcar (lambda (str) (add-to-list 'ido-ignore-buffers str))
-        '("^\\ " "^\\*Completions*" "^\\*Article\\*" "^\\*Apropos*"  "^\\*Ibuffer*"
-          "^\\*Backtrace*"  "^\\*Help"  "^\\*Bookmark" "^\\*Messages"
-          "^\\.newsrc-dribble"  "^\\*Woman-Log"  "^\\*Compilation"
-          "^\\*Compile-Log" "^\\*Calendar" "^\\*cscope"  "^\\*grep"
-          "*BBDB*" "*Tree*"  "*Group*" "*EMMS Playlist*"  "^\\*Summary\\ n"
-          "Map_Sym.txt" "^\\*w3m*" "^\\#" "^\\irc.*:" "localhost:6668" "^\\*TeX\\ Help\\*"))
-
+        '("^\\ " "^\\*Completions*" "^\\*Article\\*" "^\\*Apropos*"
+          "^\\*Ibuffer*" "^\\*Backtrace*"  "^\\*Help"  "^\\*Bookmark"
+          "^\\*Messages" "^\\.newsrc-dribble"  "^\\*Woman-Log"
+          "^\\*Compilation" "^\\*Compile-Log" "^\\*Calendar"
+          "^\\*cscope"  "^\\*grep" "*BBDB*" "*Tree*"  "*Group*"
+          "*Helm Swoop*"  "*EMMS Playlist*"  "^\\*Summary\\ n" "Map_Sym.txt"
+          "^\\*w3m*" "^\\#" "^\\irc.*:" "localhost:6668" "^\\*TeX\\ Help\\*"))
 
 (mapcar (lambda (str) (add-to-list 'ido-ignore-files str))
         '("\\`auto/" "\\.prv/" "_region_" "^.DS_Store$" "\\.hi\\'"))
