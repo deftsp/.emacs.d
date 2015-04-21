@@ -292,7 +292,8 @@ to previous saved state, or simply change evil-state to emacs."
   "gl"  'magit-log
   "gs"  'magit-status
   "gC"  'magit-commit
-  "ggt" 'git-gutter:toggle
+  "gg"  'pl/counsel-git-grep
+  "gt"  'git-gutter:toggle
   "ghs" 'git-gutter:stage-hunk
   "ghr" 'git-gutter:revert-hunk
   "ghN" 'git-gutter:previous-hunk
@@ -308,7 +309,8 @@ to previous saved state, or simply change evil-state to emacs."
   "lr"  'pl/linum-relative-toggle
   "n"   'evil-narrow-indirect
   "p"   'projectile-commander
-  "ut"  'undo-tree-visualize
+  "u"   'universal-argument
+  ;; "ut"  'undo-tree-visualize
   "vr"  'vr/replace
   "vq"  'vr/query-replace
   "vm"  'vr/mc-mark
@@ -328,9 +330,12 @@ to previous saved state, or simply change evil-state to emacs."
 
 ;; (evil-leader/set-key-for-mode 'emacs-lisp-mode "b" 'byte-compile-file)
 (evil-leader/set-key-for-mode 'emacs-lisp-mode
-  "md"  'elisp-slime-nav-describe-elisp-thing-at-point
-  "me"  'eval-defun
-  "mg"  'elisp-slime-nav-find-elisp-thing-at-point)
+  "md" 'elisp-slime-nav-describe-elisp-thing-at-point
+  "me" 'eval-defun
+  "mf" 'describe-function/with-ido
+  "mk" 'describe-key
+  "mg" 'elisp-slime-nav-find-elisp-thing-at-point
+  "mv" 'describe-variable/with-ido)
 
 ;;; expand-region
 (with-eval-after-load 'key-chord
@@ -501,14 +506,10 @@ to previous saved state, or simply change evil-state to emacs."
   (kbd "M-L") 'sp-backward-barf-sexp)
 
 ;;; evil-nerd-commenter
-;; installed with el-get
-;; (setq evilnc-hotkey-comment-operator ",,")
-;; (require 'evil-nerd-commenter nil t)
+(with-eval-after-load "evil"
+  (require 'evil-nerd-commenter nil t))
 
 (global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
-;; (global-set-key (kbd "C-c l") 'evilnc-comment-or-uncomment-to-the-line)
-;; (global-set-key (kbd "C-c c") 'evilnc-copy-and-comment-lines)
-;; (global-set-key (kbd "C-c p") 'evilnc-comment-or-uncomment-paragraphs)
 
 (evil-leader/set-key
   ";"  'evilnc-comment-operator
