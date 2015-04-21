@@ -19,8 +19,11 @@ pressing `<leader> m`. Set it to `nil` to disable it.")
 (defvar pl/major-mode-emacs-leader-key "C-M-m"
   "Major mode leader key accessible in `emacs state' and `insert state'")
 
-(defvar pl/default-cfs-fontsizes-list '(12.5 14.5 14.5)
-  "Default cfs fontsizes list used by chinse-font-setup.")
+(defvar pl/default-cfs-profile-name "program"
+  "Default cfs profile name used by chinse-font-setup.")
+
+(defvar pl/default-cfs-fontsize-step 4
+  "Default cfs fontsize step used by chinse-font-setup.")
 
 
 (provide '00prelude)

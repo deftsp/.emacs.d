@@ -29,12 +29,16 @@
     (global-set-key (kbd "<M-wheel-up>") 'cfs-decrease-fontsize)
     (global-set-key (kbd "<M-wheel-down>") 'cfs-increase-fontsize)))
 
-(defun pl/cfs-reset ()
+(defun pl/cfs-reset-profile-and-fontsize ()
+  "Reset fontsize with chinese-fonts-setup."
   (interactive)
-  (cfs--set-font pl/default-cfs-fontsizes-list)
-  (cfs--save-fontsize-step cfs--current-profile-name
-                           pl/default-cfs-fontsizes-list)
-  (message cfs--minibuffer-echo-string))
+  (when (display-graphic-p)
+    (let* ((profile-name pl/default-cfs-profile-name)
+           (current-step pl/default-cfs-fontsize-step))
+      (cfs--select-profile profile-name)
+      (cfs--set-font (cfs--get-fontsizes current-step))
+      (cfs--save-fontsize-step profile-name current-step)
+      (message cfs--minibuffer-echo-string))))
 
 ;;; old method, which will cause Chinese font can scale when English scale.
 ;; To get a list of all the possible values of "charset" that is available to set-fontset-font, use
