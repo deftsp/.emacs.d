@@ -382,9 +382,6 @@ You can use arrow-keys or HJKL.
      ("<S-up>" hydra-move-splitter-up nil)
      ("<S-right>" hydra-move-splitter-right nil)
 
-     ("+" cfs-increase-fontsize :color red)
-     ("-" cfs-decrease-fontsize :color red)
-
      ("=" balance-windows "balance")
 
      ("3" (lambda ()

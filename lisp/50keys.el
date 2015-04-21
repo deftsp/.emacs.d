@@ -425,6 +425,9 @@ _p_rojectile _s_cratch
 undo-tree-_u_ndo undo-tree-_r_edo
 "
    ("SPC" mark-sexp "mark sexp" :color red)
+   ("+" cfs-increase-fontsize :color red)
+   ("-" cfs-decrease-fontsize :color red)
+   ("=" pl/cfs-reset "reset fontsize")
    ("a" org-agenda nil)
    ("c" org-capture nil)
    ("g" org-clock-goto nil)
