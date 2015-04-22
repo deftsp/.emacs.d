@@ -293,12 +293,6 @@ to previous saved state, or simply change evil-state to emacs."
   "gs"  'magit-status
   "gC"  'magit-commit
   "gg"  'pl/counsel-git-grep
-  "gt"  'git-gutter:toggle
-  "ghs" 'git-gutter:stage-hunk
-  "ghr" 'git-gutter:revert-hunk
-  "ghN" 'git-gutter:previous-hunk
-  "ghn" 'git-gutter:next-hunk
-  "gh="  'git-gutter:popup-hunk
   "hs"  'helm-swoop
   "hS"  'helm-swoop-back-to-last-point
   "Hs"  'helm-multi-swoop

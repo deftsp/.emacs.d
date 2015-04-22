@@ -174,24 +174,34 @@
      ;; (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
      (global-git-gutter-mode t)))
 
-(defhydra hydra-git-gutter
-  (:pre (git-gutter-mode 1))
-  "
-Git:
-_j_: next hunk        _s_tage hunk     _q_uit
-_k_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
-                      _p_opup hunk
+(key-chord-define-global "GG" 'hydra-git-gutter/body)
 
-set start _R_evision
+(defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1) :hint nil)
+  "
+Git gutter:
+  _j_: next hunk        _s_tage hunk     _q_uit
+  _k_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
+  ^ ^                   _p_opup hunk
+  _h_: first hunk
+  _l_: last hunk        set start _R_evision
 "
-  ("j" git-gutter:next-hunk          nil)
-  ("k" git-gutter:previous-hunk      nil)
-  ("s" git-gutter:stage-hunk         nil)
-  ("r" git-gutter:revert-hunk        nil)
-  ("p" git-gutter:popup-hunk         nil)
-  ("R" git-gutter:set-start-revision nil)
-  ("q" nil                  nil :color blue)
-  ("Q" (git-gutter-mode -1) nil :color blue))
+  ("j" git-gutter:next-hunk)
+  ("k" git-gutter:previous-hunk)
+  ("h" (progn (goto-char (point-min))
+              (git-gutter:next-hunk 1)))
+  ("l" (progn (goto-char (point-min))
+              (git-gutter:previous-hunk 1)))
+  ("s" git-gutter:stage-hunk)
+  ("r" git-gutter:revert-hunk)
+  ("p" git-gutter:popup-hunk)
+  ("R" git-gutter:set-start-revision)
+  ("q" nil :color blue)
+  ("Q" (progn (git-gutter-mode -1)
+              ;; git-gutter-fringe doesn't seem to
+              ;; clear the markup right away
+              (sit-for 0.1)
+              (git-gutter:clear))
+   :color blue))
 
 ;; Grep in a git repository using ivy
 (defun counsel-git-grep-function (string &optional _pred &rest _u)
