@@ -285,67 +285,65 @@ See also`haskell-check'."
     (define-key shm-map (kbd "C-k") nil)
     (define-key shm-map (kbd "C-j") nil)
 
-    (evil-define-key 'normal shm-map (kbd "R") 'shm/raise)
-    (evil-define-key 'normal shm-map (kbd "P") 'shm/yank)
-    (evil-define-key 'insert shm-map (kbd "RET") 'shm/newline-indent)
-    (evil-define-key 'normal shm-map (kbd "RET") 'shm/newline-indent)
-    (evil-define-key 'insert shm-map (kbd "M-RET") 'evil-ret)
-
     (evil-define-key 'normal shm-map
-      (kbd "J") 'pl/shm-evil-join
+      (kbd "TAB") 'shm/tab
+      (kbd "<backtab>") 'shm/backtab
       (kbd "D") 'shm/kill-line
-      (kbd "DEL") 'shm/del
-      ;; (kbd "M-k") 'sp-splice-sexp-killing-backward
-      ;; (kbd "M-j") 'sp-splice-sexp-killing-forward
-      ;; (kbd "M-l") 'sp-forward-slurp-sexp
-      ;; (kbd "M-h") 'sp-forward-barf-sexp
-      ;; (kbd "M-H") 'sp-backward-slurp-sexp
-      ;; (kbd "M-L") 'sp-backward-barf-sexp
-      ;; (kbd "s") 'sp-splice-sexp
-      ;; (kbd "S") 'shm/split-list
-      ;; (kbd "M-R") 'sp-raise-sexp
-      ;; (kbd "J") 'sp-join-sexp
-      ;; (kbd ")") 'shm/forward-node
-      ;; (kbd "(") 'shm/backward-node
-      ;; (kbd "M-(") 'sp-backward-up-sexp
-      ;; (kbd "M-)") 'sp-down-sexp
-      ;; (kbd "C-(") 'sp-backward-down-sexp
-      ;; (kbd "C-)") 'sp-up-sexp
-      )
+      (kbd "R") 'shm/raise
+      (kbd "P") 'shm/yank
+      (kbd "RET") 'shm/newline-indent ; 'shm/ret-proxy
+      (kbd "M-RET") 'evil-ret
+      (kbd "M-k") 'sp-splice-sexp-killing-backward
+      (kbd "M-j") 'sp-splice-sexp-killing-forward
+      (kbd "M-l") 'sp-forward-slurp-sexp
+      (kbd "M-h") 'sp-forward-barf-sexp
+      (kbd "M-H") 'sp-backward-slurp-sexp
+      (kbd "M-L") 'sp-backward-barf-sexp
+      (kbd "s") 'sp-splice-sexp
+      (kbd "S") 'shm/split-list
+      (kbd "M-R") 'sp-raise-sexp
+      (kbd "J") 'pl/shm-evil-join ; 'sp-join-sexp
+      (kbd ")") 'shm/forward-node
+      (kbd "(") 'shm/backward-node
+      (kbd "M-(") 'sp-backward-up-sexp
+      (kbd "M-)") 'sp-down-sexp
+      (kbd "C-(") 'sp-backward-down-sexp
+      (kbd "C-)") 'sp-up-sexp
+      (kbd "DEL") 'shm/del)
 
-    ;; (evil-define-key 'insert shm-map
-    ;;   (kbd "M-k") 'sp-splice-sexp-killing-backward
-    ;;   (kbd "M-j") 'sp-splice-sexp-killing-forward
-    ;;   (kbd "M-l") 'sp-forward-slurp-sexp
-    ;;   (kbd "M-h") 'sp-forward-barf-sexp
-    ;;   (kbd "M-H") 'sp-backward-slurp-sexp
-    ;;   (kbd "M-L") 'sp-backward-barf-sexp)
+    (evil-define-key 'insert shm-map
+      (kbd "M-RET") 'evil-ret
+      (kbd "RET") 'shm/newline-indent ; 'shm/ret-proxy
+      (kbd "M-k") 'sp-splice-sexp-killing-backward
+      (kbd "M-j") 'sp-splice-sexp-killing-forward
+      (kbd "M-l") 'sp-forward-slurp-sexp
+      (kbd "M-h") 'sp-forward-barf-sexp
+      (kbd "M-H") 'sp-backward-slurp-sexp
+      (kbd "M-L") 'sp-backward-barf-sexp)
 
-    ;; (evil-define-key 'operator shm-map
-    ;;   (kbd ")") 'shm/forward-node
-    ;;   (kbd "(") 'shm/backward-node
-    ;;   (kbd "M-(") 'sp-backward-up-sexp
-    ;;   (kbd "M-)") 'sp-down-sexp
-    ;;   (kbd "C-(") 'sp-backward-down-sexp
-    ;;   (kbd "C-)") 'sp-up-sexp)
+    (evil-define-key 'operator shm-map
+      (kbd ")") 'shm/forward-node
+      (kbd "(") 'shm/backward-node
+      (kbd "M-(") 'sp-backward-up-sexp
+      (kbd "M-)") 'sp-down-sexp
+      (kbd "C-(") 'sp-backward-down-sexp
+      (kbd "C-)") 'sp-up-sexp)
 
-    ;; (evil-define-key 'motion shm-map
-    ;;   (kbd ")") 'shm/forward-node
-    ;;   (kbd "(") 'shm/backward-node
-    ;;   (kbd "M-(") 'sp-backward-up-sexp
-    ;;   (kbd "M-)") 'sp-down-sexp
-    ;;   (kbd "C-(") 'sp-backward-down-sexp
-    ;;   (kbd "C-)") 'sp-up-sexp)
+    (evil-define-key 'motion shm-map
+      (kbd ")") 'shm/forward-node
+      (kbd "(") 'shm/backward-node
+      (kbd "M-(") 'sp-backward-up-sexp
+      (kbd "M-)") 'sp-down-sexp
+      (kbd "C-(") 'sp-backward-down-sexp
+      (kbd "C-)") 'sp-up-sexp)
 
-
-    ;; (evil-define-key 'emacs shm-map
-    ;;   (kbd "M-k") 'sp-splice-sexp-killing-backward
-    ;;   (kbd "M-j") 'sp-splice-sexp-killing-forward
-    ;;   (kbd "M-l") 'sp-forward-slurp-sexp
-    ;;   (kbd "M-h") 'sp-forward-barf-sexp
-    ;;   (kbd "M-H") 'sp-backward-slurp-sexp
-    ;;   (kbd "M-L") 'sp-backward-barf-sexp)
-    ))
+    (evil-define-key 'emacs shm-map
+      (kbd "M-k") 'sp-splice-sexp-killing-backward
+      (kbd "M-j") 'sp-splice-sexp-killing-forward
+      (kbd "M-l") 'sp-forward-slurp-sexp
+      (kbd "M-h") 'sp-forward-barf-sexp
+      (kbd "M-H") 'sp-backward-slurp-sexp
+      (kbd "M-L") 'sp-backward-barf-sexp)))
 
 ;;;
 ;; https://github.com/chrisdone/chrisdone-emacs/blob/master/config/haskell.el
@@ -432,6 +430,40 @@ point."
                (> (match-end 1) old-point))
           (kill-region (match-beginning 0) (match-end 0))
         (error "No SCC at point")))))
+
+(evil-leader/set-key-for-mode 'haskell-mode
+  "mu"   'haskell-mode-find-uses
+  "mht"  'haskell-mode-show-type-at
+  "mgl"  'haskell-mode-goto-loc
+
+  "mgg"  'haskell-mode-jump-to-def-or-tag
+  "mf"   'haskell-mode-stylish-buffer
+
+  "msb"  'haskell-process-load-or-reload
+  "msc"  'haskell-interactive-mode-clear
+  "mss"  'haskell-interactive-bring
+  "msS"  'haskell-interactive-switch
+
+  "mca"  'haskell-process-cabal
+  "mcb"  'haskell-process-cabal-build
+  "mcc"  'haskell-compile
+  "mcv"  'haskell-cabal-visit-file
+
+  "mhd"  'inferior-haskell-find-haddock
+  "mhh"  'hoogle
+  "mhi"  'haskell-process-do-info
+  "mht"  'haskell-process-do-type
+  "mhT"  'spacemacs/haskell-process-do-type-on-prev-line
+  "mhy"  'hayoo
+
+  "mdd"  'haskell-debug
+  "mdb"  'haskell-debug/break-on-function
+  "mdn"  'haskell-debug/next
+  "mdN"  'haskell-debug/previous
+  "mdB"  'haskell-debug/delete
+  "mdc"  'haskell-debug/continue
+  "mda"  'haskell-debug/abandon
+  "mdr"  'haskell-debug/refresh)
 
 ;;; misc
 ;; (require 'yesod-devel-mode nil t)

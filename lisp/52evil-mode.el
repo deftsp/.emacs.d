@@ -322,8 +322,8 @@ to previous saved state, or simply change evil-state to emacs."
 (with-eval-after-load "helm-config"
   (evil-leader/set-key "4" helm-command-map))
 
-;; (evil-leader/set-key-for-mode 'emacs-lisp-mode "b" 'byte-compile-file)
 (evil-leader/set-key-for-mode 'emacs-lisp-mode
+  "mb" 'byte-compile-file
   "md" 'elisp-slime-nav-describe-elisp-thing-at-point
   "me" 'eval-defun
   "mf" 'describe-function/with-ido
@@ -439,65 +439,6 @@ to previous saved state, or simply change evil-state to emacs."
 (evil-define-key 'insert haskell-interactive-mode-map (kbd "C-u") 'haskell-interactive-mode-kill-whole-line)
 (evil-define-key 'normal haskell-interactive-mode-map (kbd "G") 'end-of-buffer)
 
-(evil-define-key 'normal shm-map (kbd "D") 'shm/kill-line)
-(evil-define-key 'normal shm-map (kbd "R") 'shm/raise)
-(evil-define-key 'normal shm-map (kbd "P") 'shm/yank)
-(evil-define-key 'normal shm-map (kbd "TAB") 'shm/tab)
-(evil-define-key 'normal shm-map (kbd "<backtab>") 'shm/backtab)
-
-(evil-define-key 'insert shm-map (kbd "RET") 'shm/ret-proxy)
-(evil-define-key 'normal shm-map (kbd "RET") 'shm/ret-proxy)
-(evil-define-key 'insert shm-map (kbd "M-RET") 'evil-ret)
-
-(evil-define-key 'normal shm-map
-  (kbd "M-k") 'sp-splice-sexp-killing-backward
-  (kbd "M-j") 'sp-splice-sexp-killing-forward
-  (kbd "M-l") 'sp-forward-slurp-sexp
-  (kbd "M-h") 'sp-forward-barf-sexp
-  (kbd "M-H") 'sp-backward-slurp-sexp
-  (kbd "M-L") 'sp-backward-barf-sexp
-  (kbd "s") 'sp-splice-sexp
-  (kbd "S") 'shm/split-list
-  (kbd "M-R") 'sp-raise-sexp
-  (kbd "J") 'sp-join-sexp
-  (kbd ")") 'shm/forward-node
-  (kbd "(") 'shm/backward-node
-  (kbd "M-(") 'sp-backward-up-sexp
-  (kbd "M-)") 'sp-down-sexp
-  (kbd "C-(") 'sp-backward-down-sexp
-  (kbd "C-)") 'sp-up-sexp)
-
-(evil-define-key 'operator shm-map
-  (kbd ")") 'shm/forward-node
-  (kbd "(") 'shm/backward-node
-  (kbd "M-(") 'sp-backward-up-sexp
-  (kbd "M-)") 'sp-down-sexp
-  (kbd "C-(") 'sp-backward-down-sexp
-  (kbd "C-)") 'sp-up-sexp)
-
-(evil-define-key 'motion shm-map
-  (kbd ")") 'shm/forward-node
-  (kbd "(") 'shm/backward-node
-  (kbd "M-(") 'sp-backward-up-sexp
-  (kbd "M-)") 'sp-down-sexp
-  (kbd "C-(") 'sp-backward-down-sexp
-  (kbd "C-)") 'sp-up-sexp)
-
-(evil-define-key 'insert shm-map
-  (kbd "M-k") 'sp-splice-sexp-killing-backward
-  (kbd "M-j") 'sp-splice-sexp-killing-forward
-  (kbd "M-l") 'sp-forward-slurp-sexp
-  (kbd "M-h") 'sp-forward-barf-sexp
-  (kbd "M-H") 'sp-backward-slurp-sexp
-  (kbd "M-L") 'sp-backward-barf-sexp)
-
-(evil-define-key 'emacs shm-map
-  (kbd "M-k") 'sp-splice-sexp-killing-backward
-  (kbd "M-j") 'sp-splice-sexp-killing-forward
-  (kbd "M-l") 'sp-forward-slurp-sexp
-  (kbd "M-h") 'sp-forward-barf-sexp
-  (kbd "M-H") 'sp-backward-slurp-sexp
-  (kbd "M-L") 'sp-backward-barf-sexp)
 
 ;;; evil-nerd-commenter
 (with-eval-after-load "evil"
