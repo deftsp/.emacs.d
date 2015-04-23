@@ -56,7 +56,6 @@
       ;; remove no-run-time function warnings
       byte-compile-warnings (quote (noruntime))
       Man-notify-method 'pushy ; make the manpage the current buffer in the current window
-      default-major-mode 'text-mode
       ;; means save bookmarks when Emacs is killed, 1 save bookmark every time you set bookmark, not only when you exit
       ;; emacs
       bookmark-save-flag t

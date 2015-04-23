@@ -340,7 +340,7 @@ it marks the next ARG lines after the ones already marked."
 
 ;;; hydra
 ;; hydra-lv is buggy, see https://github.com/abo-abo/hydra/issues/114
-(setq hydra-lv nil)
+(setq hydra-lv t)
 
 ;; bind to "gt" as prefix key in evil normal mode
 (with-eval-after-load "hydra"
