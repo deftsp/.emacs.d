@@ -48,12 +48,13 @@
   ;; "o" '(lambda () (interactive) (evil-org-eol-call 'always-insert-item))
   ;; "O" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading))
   "t" 'org-todo
-  "T" '(lambda () (interactive) (evil-org-eol-call '(org-insert-todo-heading nil)))
-  ",i" 'org-toggle-inline-images
-  ",I" 'pl/org-insert-image
-  ",r" 'org-redisplay-inline-images
-  ",t" 'org-show-todo-tree)
+  "T" '(lambda () (interactive) (evil-org-eol-call '(org-insert-todo-heading nil))))
 
+(evil-leader/set-key-for-mode 'org-mode
+  "mi" 'org-toggle-inline-images
+  "mI" 'pl/org-insert-image
+  "mr" 'org-redisplay-inline-images
+  "mt" 'org-show-todo-tree)
 
 ;; normal & insert state shortcuts.
 (mapc #'(lambda (state)
