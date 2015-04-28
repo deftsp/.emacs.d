@@ -215,7 +215,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 ;;; ivy
 (with-eval-after-load "ivy"
   (define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line-or-history)
-  (define-key helm-map (kbd "M-k") 'ivy-previous-line-or-history))
+  (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-previous-line-or-history))
 
 (autoload 'counsel-describe-function "counsel" "Forward to (`describe-function' FUNCTION) with ivy completion." t)
 (autoload 'counsel-describe-variable "counsel" "Forward to (`describe-variable' VARIABLE BUFFER FRAME)." t)
