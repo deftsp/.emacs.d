@@ -292,7 +292,7 @@ to previous saved state, or simply change evil-state to emacs."
   "gl"  'magit-log
   "gs"  'magit-status
   "gC"  'magit-commit
-  "gg"  'pl/counsel-git-grep
+  "gg"  'counsel-git-grep
   "hs"  'helm-swoop
   "hS"  'helm-swoop-back-to-last-point
   "Hs"  'helm-multi-swoop
