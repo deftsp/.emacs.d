@@ -54,29 +54,66 @@
 
 (defadvice git--install-state-mark-modeline (around insert-after-ace-window-key activate)
   "Add git state mark modeline after ace window key"
-  (if (assq 'ace-window-display-mode mode-line-format)
-      (let* ((left)
-             (right mode-line-format)
-             (next (car right)))
-        (catch 'break
-          (while t
-            (when (eq (if (consp next) (car next))
-                      'ace-window-display-mode)
-              (setq mode-line-format
-                    (append left
-                            (list next)
-                            (list `(git--state-mark-modeline
-                                    ,(git--state-decoration-dispatch
-                                      stat)))
-                            (cdr right)))
-              (throw 'break nil))
+  (if (and (boundp 'powerline-git-state-mark-modeline)
+           (and (boundp 'powerline-git-state-mark-modeline)
+                powerline-git-state-mark-modeline))
+      (progn
+        (setq powerline-git-state-mark
+              (git--state-decoration-dispatch
+               stat)))
+    (if (assq 'ace-window-display-mode mode-line-format)
+        (let* ((left)
+               (right mode-line-format)
+               (next (car right)))
+          (catch 'break
+            (while t
+              (when (eq (if (consp next) (car next))
+                        'ace-window-display-mode)
+                (setq mode-line-format
+                      (append left
+                              (list next)
+                              (list `(git--state-mark-modeline
+                                      ,(git--state-decoration-dispatch
+                                        stat)))
+                              (cdr right)))
+                (throw 'break nil))
 
-            (setq left (append left (list next))
-                  right (cdr right)
-                  next (car right))
-            (when (null next)
-              (throw 'break nil)))))
-    ad-do-it))
+              (setq left (append left (list next))
+                    right (cdr right)
+                    next (car right))
+              (when (null next)
+                (throw 'break nil)))))
+      ad-do-it)))
+
+
+(defadvice git--install-state-mark-modeline (around insert-after-ace-window-key activate)
+  "Add git state mark modeline after ace window key"
+  (unless (and (boundp 'powerline-git-state-mark-modeline)
+               (and (boundp 'powerline-git-state-mark-modeline)
+                    powerline-git-state-mark-modeline))
+    (if (assq 'ace-window-display-mode mode-line-format)
+        (let* ((left)
+               (right mode-line-format)
+               (next (car right)))
+          (catch 'break
+            (while t
+              (when (eq (if (consp next) (car next))
+                        'ace-window-display-mode)
+                (setq mode-line-format
+                      (append left
+                              (list next)
+                              (list `(git--state-mark-modeline
+                                      ,(git--state-decoration-dispatch
+                                        stat)))
+                              (cdr right)))
+                (throw 'break nil))
+
+              (setq left (append left (list next))
+                    right (cdr right)
+                    next (car right))
+              (when (null next)
+                (throw 'break nil)))))
+      ad-do-it)))
 
 ;;; magit
 (autoload 'magit-grep "magit" "Command for `grep'." t) ; which is not a autload function at 2013.06.25 yet

@@ -248,7 +248,7 @@
 
 (require 'ace-window nil t)
 
-(defvar pl/aw-mode-line-format "#%s")
+(defvar pl/aw-mode-line-format "♯%s")
 
 (defadvice aw-update (around format-ace-window-path activate)
   "add customization for ace window path"
@@ -259,9 +259,22 @@
       leaf 'ace-window-path
       (propertize
        (format pl/aw-mode-line-format
-               (apply #'string (reverse path)))
+               (upcase (apply #'string (reverse path))))
        'face 'aw-mode-line-face)))))
 ;; (ad-deactivate 'aw-update)
+
+(with-eval-after-load "ace-window"
+  (defadvice ace-window-display-mode (after
+                                      do-not-insert-to-mode-line-with-powerline
+                                      activate)
+    "do not auto insert ace window path into modeline with powerline."
+    (when (and (boundp 'powerline-git-state-mark-modeline)
+               powerline-git-state-mark-modeline
+               ace-window-display-mode)
+      (set-default 'mode-line-format
+                   (assq-delete-all
+                    'ace-window-display-mode
+                    (default-value 'mode-line-format))))))
 
 (when (fboundp 'ace-window-display-mode)
   (ace-window-display-mode +1))

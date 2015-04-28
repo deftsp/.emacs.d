@@ -12,7 +12,7 @@
 (require '07org-mode)
 ;; (require '09cedet)
 (require '12el-get)
-;; (require '23powerline)
+(require '23powerline)
 (when (eq system-type 'gnu/linux)
   (require '42ecb.el))
 
@@ -60,7 +60,7 @@
 (require '50maxima)
 (require '50misc)
 (require '50mmm-mode)
-(require '50mode-line)
+;; (require '50mode-line)
 (require '50moz-controller)
 (require '50narrowing)
 (require '50net-utils)

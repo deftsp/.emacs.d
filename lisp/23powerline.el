@@ -14,19 +14,31 @@
 ;; vc.*face inherit the face of mode-line, it cause powerline-vc can not change
 ;; it's background and foreground. Defining vc-state-base-face not to inherit
 ;; will slove that.
-(add-to-list 'load-path (expand-file-name "~/.emacs.d/site-lisp/powerline"))
 (require 'powerline nil t)
 
-(defface powerline-wg-face '((t (:background "#009956" :foreground "#0a3540")))
-  "Powerline face 3."
+(defvar powerline-git-state-mark-modeline t
+  "When t git state mark on will work with powrline instead of in the front of
+the modeline")
+
+(defface powerline-workgroups-face
+  '((t (:background "#778899" :foreground "#0a3540")))
+  "Powerline workgroups face."
   :group 'powerline)
 
-(defface powerline-vc-face '((t (:background "#849c10" :foreground "#0a3540")))
-  "Powerline face 3."
+(defface powerline-vc-face
+  '((t (:background "#849c10" :foreground "#0a3540")))
+  "Powerline vc face."
   :group 'powerline)
 
-(defface powerline-file-base-info-face '((t (:background "#3d89d0" :foreground "#0a3540")))
-  "Powerline face 3."
+
+(defface powerline-file-base-info-face
+  '((t (:background "#3d89d0" :foreground "#0a3540")))
+  "Powerline file base info face."
+  :group 'powerline)
+
+(defface powerline-buffer-id-face
+  '((t (:background "#008b8b" :foreground "#22eeee")))
+  "Powerline buffer id face."
   :group 'powerline)
 
 
@@ -78,15 +90,14 @@ mouse-1: Display Line and Column Mode Menu")
 mouse-1: Display Line and Column Mode Menu")
      "")))
 
-(defpowerline pl/powerline-workgroup
+(defpowerline powerline-workgroup
   (if (and (boundp 'workgroups-mode)
            (symbol-value 'workgroups-mode))
       (wg-mode-line-string)
     " ### "))
 
-(defpowerline pl/powerline-ace-window-show-key
-  (when aw-mode-line-show-key
-    (aw-mode-line-key-string)))
+(defpowerline powerline-ace-window-path
+  (window-parameter (selected-window) 'ace-window-path))
 
 (defpowerline pl/powerline-vc
   (let ((vc-mark (char-to-string #xe0a0)))
@@ -98,16 +109,129 @@ mouse-1: Display Line and Column Mode Menu")
           (format-mode-line '(vc-mode vc-mode)))
       (concat " " vc-mark " untracked "))))
 
-(defpowerline pl/powerline-evil-tag
-  (let* ((raw-text (strip-text-properties evil-mode-line-tag))
-         (raw-tag (replace-regexp-in-string "[<> «»]" "" raw-text)))
-    (cond
-     ((and (evil-visual-state-p) (eq evil-visual-selection 'block))
-      (concat "+" raw-tag "+"))
-     ((and (evil-visual-state-p) (eq evil-visual-selection 'line))
-      (concat "-" raw-tag "-"))
-     (t
-      (concat " " raw-tag " ")))))
+(defface powerline-evil-insert-face
+  '((((class color))
+     :foreground "white" :background "green" :weight bold :inherit mode-line)
+    (t (:weight bold)))
+  "face to fontify evil insert state"
+  :group 'powerline)
+
+(defface powerline-evil-normal-face
+  '((((class color))
+     :foreground "white" :background "red" :weight bold :inherit mode-line)
+    (t (:weight bold)))
+  "face to fontify evil normal state"
+  :group 'powerline)
+
+(defface powerline-evil-visual-face
+  '((((class color))
+     :foreground "white" :background "orange" :weight bold :inherit mode-line)
+    (t (:weight bold)))
+  "face to fontify evil visual state"
+  :group 'powerline)
+
+(defface powerline-evil-motion-face
+  '((((class color))
+     :foreground "white" :background "blue" :weight bold :inherit mode-line)
+    (t (:weight bold)))
+  "face to fontify evil motion state"
+  :group 'powerline)
+
+(defface powerline-evil-emacs-face
+  '((((class color))
+     :foreground "white" :background "blue violet" :weight bold :inherit mode-line)
+    (t (:weight bold)))
+  "face to fontify evil emacs state"
+  :group 'powerline)
+
+(defface powerline-evil-replace-face
+  '((((class color))
+     :foreground "white" :background "black" :weight bold :inherit mode-line)
+    (t (:weight bold)))
+  "face to fontify evil replace state"
+  :group 'powerline)
+
+(defface powerline-evil-operator-face
+  '((((class color))
+     :foreground "white" :background "sky blue" :weight bold :inherit mode-line)
+    (t (:weight bold)))
+  "face to fontify evil operator state"
+  :group 'powerline)
+
+(defun powerline-evil-face (active)
+  (let ((face (intern (concat "powerline-evil-" (symbol-name evil-state) "-face"))))
+    (cond ((and active (facep face))
+           face)
+          (active 'powerline-active2)
+          (t 'powerline-inactive2))))
+
+(defpowerline powerline-evil-tag
+  (if (eq (boundp 'evil-mode) evil-mode)
+      (let* ((raw-text (strip-text-properties evil-mode-line-tag))
+             (raw-tag (replace-regexp-in-string "[<> «»]" "" raw-text)))
+        (cond
+         ((and (evil-visual-state-p) (eq evil-visual-selection 'block))
+          (concat "+" raw-tag "+"))
+         ((and (evil-visual-state-p) (eq evil-visual-selection 'line))
+          (concat "-" raw-tag "-"))
+         (t
+          (concat " " raw-tag " "))))
+    "NIL"))
+
+
+(defpowerline pl/powerline-client
+  (if (frame-parameter nil 'client)
+      "@"
+    ""))
+
+(defpowerline pl/powerline-remote
+  (propertize
+   (if (file-remote-p default-directory)
+       "@"
+     "")
+   'mouse-face 'mode-line-highlight
+   'help-echo (purecopy (lambda (window _object _point)
+                          (format "%s"
+                                  (with-selected-window window
+                                    (concat
+                                     (if (file-remote-p default-directory)
+                                         "Current directory is remote: "
+                                       "Current directory is local: ")
+                                     default-directory)))))))
+
+
+(defpowerline pl/powerline-frame-id
+  (if (or (null window-system)
+          (eq window-system 'pc))
+      "-%F "
+    ""))
+
+
+(defpowerline powerline-which-func
+  (propertize
+   (replace-regexp-in-string "%" "%%"
+                             (or
+                              (gethash
+                               (selected-window)
+                               which-func-table)
+                              which-func-unknown))
+   'mouse-face 'mode-line-highlight
+   'help-echo "mouse-1: go to beginning\n\
+mouse-2: toggle rest visibility\nmouse-3: go to end"
+   'local-map which-func-keymap
+   'face 'which-func))
+
+(defpowerline powerline-recursive-left
+  #("%[" 0 2
+    (help-echo "Recursive edit, type C-M-c to get out")))
+
+(defpowerline powerline-recursive-right
+  #("%]" 0 2
+    (help-echo "Recursive edit, type C-M-c to get out")))
+
+(defvar powerline-git-state-mark "" "git state mode line mark.")
+(defpowerline powerline-git-state-mark
+  powerline-git-state-mark)
 
 (defun pl/powerline-evil-theme ()
   "Setup the default mode-line."
@@ -122,7 +246,8 @@ mouse-1: Display Line and Column Mode Menu")
              (face2 (if active 'powerline-active2 'powerline-inactive2))
              (face3 (if active 'powerline-active3 'powerline-inactive2))
              (vc-face (if active 'powerline-vc-face 'powerline-inactive2))
-             (wg-face (if active 'powerline-wg-face 'powerline-inactive2))
+             (workgroups-face (if active 'powerline-workgroups-face 'powerline-inactive2))
+             (buffer-id-face (if active 'powerline-buffer-id-face 'powerline-inactive1))
              (file-base-info-face (if active 'powerline-file-base-info-face 'powerline-inactive2))
              (evil-face (powerline-evil-face active))
              (separator-left (intern (format "powerline-%s-%s"
@@ -131,44 +256,36 @@ mouse-1: Display Line and Column Mode Menu")
              (separator-right (intern (format "powerline-%s-%s"
                                               powerline-default-separator
                                               (cdr powerline-default-separator-dir))))
-             (lhs `(,(pl/powerline-workgroup wg-face)
-                    ,(funcall separator-left wg-face evil-face)
-                    ;; ,(pl/powerline-ace-window-show-key face1 'r)
-                    ;; ,(funcall separator-left face1 evil-face)
-                    ;; ,(pl/powerline-evil-tag evil-face)
+             (lhs `(,(powerline-evil-tag evil-face)
                     ,@(let ((vc-info (pl/powerline-vc vc-face 'r)))
                         (if vc-info
                             (list (funcall separator-left evil-face vc-face)
                                   vc-info
+                                  (powerline-git-state-mark vc-face)
                                   (funcall separator-left vc-face file-base-info-face))
-                          (list (funcall separator-left evil-face file-base-info-face))))
+                          (list (funcall separator-left
+                                         evil-face
+                                         file-base-info-face))))
 
-                    ,(powerline-raw mode-line-front-space file-base-info-face 'l)
+                    ,(powerline-raw mode-line-front-space file-base-info-face)
+                    ,(pl/powerline-client file-base-info-face)
+                    ,(pl/powerline-remote file-base-info-face)
+                    ,(pl/powerline-frame-id file-base-info-face)
                     ,(powerline-raw mode-line-mule-info file-base-info-face)
                     ,(powerline-raw mode-line-modified file-base-info-face)
-                    ,(powerline-client file-base-info-face)
-                    ,(powerline-remote file-base-info-face)
-                    ,(powerline-frame-id file-base-info-face)
-                    ,(powerline-buffer-id file-base-info-face 'l)
-                    ,(funcall separator-left file-base-info-face face2)
-                    ,(pl/powerline-position face2)
+                    ,(pl/powerline-position file-base-info-face)
+                    ,(funcall separator-left file-base-info-face buffer-id-face)
+                    ,(powerline-buffer-id buffer-id-face 'l)
 
-                    ,(powerline-raw " " file-base-info-face)
+                    ,(powerline-raw ":" buffer-id-face)
                     ,@(when (and (boundp 'which-function-mode) which-function-mode)
-                        (list (funcall separator-left face2 face1)
-                              (powerline-which-func face1 'l)
-                              (powerline-raw " " face1)
-                              ;; (funcall separator-left face1 wg-face)
-                              ))
-                    ;; ,(funcall separator-left wg-face face2)
-                    ;; ,(when (boundp 'erc-modified-channels-object)
-                    ;;    (powerline-raw erc-modified-channels-object face1 'l))
+                        (list (powerline-which-func buffer-id-face 'l)
+                              (powerline-raw " " buffer-id-face)))
+
+                    ,(funcall separator-left buffer-id-face face2)
+
                     ,(powerline-raw " " face2)
-                    ;; ,(powerline-raw
-                    ;;   (if (and (boundp 'mode-line-debug-mode) mode-line-debug-mode)
-                    ;;       (mode-line-debug-control)
-                    ;;     " ")
-                    ;;   face1)
+                    ,(powerline-raw " " face2)
                     ,(powerline-recursive-left face2)
                     ,(powerline-major-mode face2)
                     ,(powerline-process face2)
@@ -178,20 +295,25 @@ mouse-1: Display Line and Column Mode Menu")
                     ,(powerline-raw "  " face2)
                     ,(funcall separator-left face2 face2)))
              (rhs (list
-                   (funcall separator-right face2 face1)
+                   (funcall separator-right face2 workgroups-face)
+                   (powerline-workgroup workgroups-face)
+                   (powerline-raw ": "  workgroups-face)
+                   (powerline-ace-window-path workgroups-face 'r)
+
+                   (funcall separator-right workgroups-face face1)
                    (powerline-raw "  " face1)
                    (powerline-raw global-mode-string face1 'r)
                    (powerline-raw " " face1)
                    (funcall separator-right face1 face2)
                    (pl/powerline-file-size face2 'r)
-                   (when powerline-use-hud (powerline-hud face2 face1)))))
+                   (when powerline-display-hud (powerline-hud face2 face1)))))
         (concat (powerline-render lhs)
                 (powerline-fill face2 (powerline-width rhs))
                 (powerline-render rhs)))))))
 
 
 (with-eval-after-load 'powerline-themes
-  (setq powerline-default-separator 'utf-8) ; 'arrow
+  ;; (setq powerline-default-separator 'utf-8) ; 'arrow
   (pl/powerline-evil-theme))
 
 (defun pl/force-update-mode-line  ()
