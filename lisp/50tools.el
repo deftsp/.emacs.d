@@ -1068,11 +1068,7 @@ such character is found, following options are shown:
         ace-isearch-submode 'ace-jump-char-mode
         ace-isearch-use-ace-jump 'printing-char)
 
-  (ace-isearch-set-ace-jump-after-isearch-exit t)
-  (with-eval-after-load "helm-swoop"
-    (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
-    (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)))
-
+  (ace-isearch-set-ace-jump-after-isearch-exit t))
 
 ;;; ace-link
 ;; bind ace-link-info and ace-link-help to o in their respective modes.

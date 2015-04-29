@@ -78,14 +78,10 @@
      ;; Split direcion. 'split-window-vertically or 'split-window-horizontally
      (setq helm-swoop-split-direction 'split-window-vertically)
      ;; If nil, you can slightly boost invoke speed in exchange for text color
-     (setq helm-swoop-speed-or-color t)))
-(global-set-key (kbd "H-i") 'helm-swoop)
-(global-set-key (kbd "H-I") 'helm-swoop-back-to-last-point)
-(global-set-key (kbd "C-c H-i") 'helm-multi-swoop)
-(global-set-key (kbd "C-x H-i") 'helm-multi-swoop-all)
-;; When doing isearch, hand the word over to helm-swoop
-(define-key isearch-mode-map (kbd "H-i") 'helm-swoop-from-isearch)
-(define-key isearch-mode-map (kbd "C-S-i") 'helm-swoop-from-isearch)
+     (setq helm-swoop-speed-or-color t)
+     (define-key helm-swoop-map (kbd "C-s") 'helm-next-line)
+     (define-key helm-swoop-map (kbd "C-r") 'helm-previous-line)))
+
 
 ;; http://oremacs.com/2014/12/21/helm-backspace/
 (defun pl/helm-backspace ()

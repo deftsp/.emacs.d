@@ -293,10 +293,6 @@ to previous saved state, or simply change evil-state to emacs."
   "gs"  'magit-status
   "gC"  'magit-commit
   "gg"  'counsel-git-grep
-  "hs"  'helm-swoop
-  "hS"  'helm-swoop-back-to-last-point
-  "Hs"  'helm-multi-swoop
-  "HS"  'helm-multi-swoop-all
   "j"   'helm-etags-select
   "k"   'kill-this-buffer
   ;; "ll" are used by evil-nerd-commenter
@@ -304,6 +300,9 @@ to previous saved state, or simply change evil-state to emacs."
   "n"   'evil-narrow-indirect
   "p"   'projectile-commander
   "u"   'universal-argument
+  "ss"  'helm-swoop
+  "sS"  'helm-multi-swoop
+  "s C-s" 'helm-multi-swoop-all
   ;; "ut"  'undo-tree-visualize
   "vr"  'vr/replace
   "vq"  'vr/query-replace
