@@ -27,7 +27,7 @@
       yank-excluded-properties t        ; do not paste any properties
       mouse-yank-at-point t
       ;; directory-sep-char ?\\
-      confirm-kill-emacs 'yes-or-no-p ; 'y-or-n-p
+      confirm-kill-emacs nil ; alternative `yes-or-no-p' ; `y-or-n-p'
       use-dialog-box nil                  ; mouse commands don't use dialog boxes to ask quesary "english"
       ;; ps-multibyte-buffer 'non-latin-printer
       display-time-24hr-format t
