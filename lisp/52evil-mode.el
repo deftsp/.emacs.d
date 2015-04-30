@@ -38,6 +38,9 @@
   `((t (:weight bold :foreground "maroon")))
   "Evil operator mode indicator face")
 
+(defface pl/evil-lispy-tag
+  `((t (:weight bold :foreground "lispy")))
+  "Evil lispy mode indicator face")
 
 ;;; visual indicators
 (setq evil-mode-line-format 'before
@@ -114,6 +117,10 @@ to previous saved state, or simply change evil-state to emacs."
          (keyboard-quit))
         ((and (fboundp 'evil-mode) evil-mode)
          (cond ((eq evil-state 'emacs) (evil-exit-emacs-state))
+               ((eq evil-state 'lispy)
+                (let ((binding (key-binding (kbd "C-g"))))
+                  (if binding (call-interactively binding)
+                    (keyboard-quit))))
                (t (let ((binding (key-binding [escape])))
                     (if binding (call-interactively binding)
                       (keyboard-quit))))))

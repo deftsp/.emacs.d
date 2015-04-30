@@ -158,6 +158,14 @@ mouse-1: Display Line and Column Mode Menu")
   "face to fontify evil operator state"
   :group 'powerline)
 
+
+(defface powerline-evil-lispy-face
+  '((((class color))
+     :foreground "white" :background "orange" :weight bold :inherit mode-line)
+    (t (:weight bold)))
+  "face to fontify evil lispy state"
+  :group 'powerline)
+
 (defun powerline-evil-face (active)
   (let ((face (intern (concat "powerline-evil-" (symbol-name evil-state) "-face"))))
     (cond ((and active (facep face))

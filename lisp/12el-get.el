@@ -94,13 +94,13 @@
                :type github
                :description "Extensions to standard library `bookmark.el'"
                :features bookmark+)
-        (:name evil-nerd-commenter
-               :website "http://github.com/redguardtoo/evil-nerd-commenter"
-               :description "Comment/uncomment lines efficiently. Like Nerd Commenter in Vim"
+        (:name evil-lispy
+               :website "https://github.com/deftsp/evil-lispy"
+               :description "Minor mode to integrate Lispy and Evil"
                :type github
-               :pkgname "redguardtoo/evil-nerd-commenter"
-               :compile nil
-               :depends evil)
+               :pkgname "deftsp/evil-lispy"
+               :branch "develop"
+               :depends (evil lispy))
         (:name linum-relative
                :type github
                :description "display relative line number in emacs."
