@@ -554,15 +554,6 @@ to replace the symbol under cursor"
      (define-key org-agenda-mode-map "j" 'evil-next-line) ; overide org-agenda-goto-date
      (define-key org-agenda-mode-map "k" 'evil-previous-line))) ; org-agenda-capture
 
-;;; smartparens
-(define-key evil-normal-state-map "M" 'evil-set-marker)
-;; my own evil movements. Some default bindings were moved here.
-(defvar pl/evil-move-map (make-sparse-keymap))
-(define-prefix-command 'pl/evil-move-map)
-(define-key evil-normal-state-map "m" pl/evil-move-map)
-(define-key pl/evil-move-map "d" 'sp-down-sexp)
-(define-key pl/evil-move-map "a" 'sp-backward-down-sexp)
-
 ;;; evil-exchange
 ;; `gx': evil-exchange-key, `gX': evil-exchange-cancel-key
 ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/evil-exchange")
