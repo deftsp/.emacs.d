@@ -79,8 +79,10 @@
 
 (add-hook 'emacs-lisp-mode-hook 'pl/imenu-elisp-init)
 
+(require 'lispy nil t)
 (with-eval-after-load "lispy"
   (define-key lispy-mode-map-lispy (kbd "M-o") nil)
+
   (defun pl/enable-evil-lispy-mode ()
     (when (fboundp 'evil-lispy-mode)
       (evil-lispy-mode +1)))

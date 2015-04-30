@@ -98,7 +98,7 @@
                :website "https://github.com/deftsp/evil-lispy"
                :description "Minor mode to integrate Lispy and Evil"
                :type github
-               :pkgname "deftsp/evil-lispy"
+               :url "git@github.com:deftsp/evil-lispy.git"
                :branch "develop"
                :depends (evil lispy))
         (:name linum-relative
