@@ -354,31 +354,27 @@ to previous saved state, or simply change evil-state to emacs."
 
 ;;; evil-surround
 (when (fboundp 'global-evil-surround-mode)
-    (global-evil-surround-mode 1)
-    ;; evil-surround-pairs-alist is a buffer local variable
-    (setq-default evil-surround-pairs-alist (cl-adjoin
-                                             '(?~ . ("``" . "``"))
-                                             evil-surround-pairs-alist)))
+  (global-evil-surround-mode 1)
+  ;; evil-surround-pairs-alist is a buffer local variable
+  (setq-default evil-surround-pairs-alist (cl-adjoin
+                                           '(?~ . ("``" . "``"))
+                                           evil-surround-pairs-alist)))
 ;;; default mode
-(setq evil-default-state 'normal)
 (loop for (mode . state) in
       '((comint-mode               . insert)
         (compilation-mode          . emacs)
         (diff-mode                 . emacs)
         (eshell-mode               . emacs)
         (eww-mode                  . emacs)
-        (help-mode                 . emacs)
         (helm-grep-mode            . emacs)
         (ibuffer-mode              . normal)
         (inferior-emacs-lisp-mode  . emacs)
         (inf-ruby-mode             . emacs)
-        (Info-mode                 . emacs)
         (log-edit-mode             . emacs)
         (flycheck-error-list-mode  . emacs)
         (fundamental-mode          . emacs)
         (erc-mode                  . emacs)
         (git-commit-mode           . insert)
-        (git-rebase-mode           . emacs)
         (git-rebase-mode           . emacs)
         (gtags-select-mode         . emacs)
         (gud-mode                  . emacs)
