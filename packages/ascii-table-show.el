@@ -46,6 +46,7 @@
   "Print the ascii table"
   (interactive)
   (switch-to-buffer "*ASCII table*")
+  (auto-fill-mode -1)
   (erase-buffer)
   (let ((i   0)
         (tmp 0))
