@@ -330,11 +330,6 @@ to previous saved state, or simply change evil-state to emacs."
   "mgg" 'elisp-slime-nav-find-elisp-thing-at-point
   "mv" 'describe-variable/with-ido)
 
-(with-eval-after-load "evil"
-  (setq evil-lisp-state-major-modes
-        '(emacs-lisp-mode lisp-interaction-mode))
-  (require 'evil-lisp-state nil t))
-
 ;;; expand-region
 (with-eval-after-load 'key-chord
   (setq expand-region-contract-fast-key "r") ; default "-"
