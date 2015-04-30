@@ -323,12 +323,17 @@ to previous saved state, or simply change evil-state to emacs."
 
 (evil-leader/set-key-for-mode 'emacs-lisp-mode
   "mb" 'byte-compile-file
-  "md" 'elisp-slime-nav-describe-elisp-thing-at-point
   "me" 'eval-defun
   "mf" 'describe-function/with-ido
   "mk" 'describe-key
-  "mg" 'elisp-slime-nav-find-elisp-thing-at-point
+  "mhh" 'elisp-slime-nav-describe-elisp-thing-at-point
+  "mgg" 'elisp-slime-nav-find-elisp-thing-at-point
   "mv" 'describe-variable/with-ido)
+
+(with-eval-after-load "evil"
+  (setq evil-lisp-state-major-modes
+        '(emacs-lisp-mode lisp-interaction-mode))
+  (require 'evil-lisp-state nil t))
 
 ;;; expand-region
 (with-eval-after-load 'key-chord
@@ -441,12 +446,13 @@ to previous saved state, or simply change evil-state to emacs."
 
 ;;; evil-nerd-commenter
 (with-eval-after-load "evil"
+  (setq evilnc-hotkey-comment-operator (kbd "SPC SPC"))
   (require 'evil-nerd-commenter nil t))
 
 (global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
 
 (evil-leader/set-key
-  ";"  'evilnc-comment-operator
+  "SPC" 'evilnc-comment-operator ; alternative ";"
   "cc" 'evilnc-copy-and-comment-lines
   "ci" 'evilnc-toggle-invert-comment-line-by-line
   "cl" 'evilnc-comment-or-uncomment-lines
