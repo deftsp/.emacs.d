@@ -6,8 +6,14 @@
 ;; Keywords:
 
 ;;; elpy
-(elpy-enable)
-(elpy-use-ipython)
+
+(with-eval-after-load "elpy"
+  ;; use flycheck instead of flymake
+  ;; https://github.com/jorgenschaefer/elpy/issues/137
+  ;; https://github.com/jorgenschaefer/elpy/issues/328
+  (setq elpy-modules (delete 'elpy-module-flymake elpy-modules))
+  (elpy-enable)
+  (elpy-use-ipython))
 
 
 ;;; ropemacs
@@ -25,7 +31,8 @@
   ;; (ropemacs-mode)
   (setq imenu-create-index-function 'py--imenu-create-index-new))
 
-;; python-mode set imenu-create-index-function too, make sure init function orverride it  by append it
+;; python-mode set imenu-create-index-function too, make sure init function
+;; orverride it by append it
 (add-hook 'python-mode-hook 'pl/python-mode-init t)
 
 (add-hook 'inferior-python-mode-hook 'pl/init-inferior-python-mode)
