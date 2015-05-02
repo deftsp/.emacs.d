@@ -646,6 +646,7 @@ to replace the symbol under cursor"
 (with-eval-after-load "evil-snipe"
   ;; (evil-snipe-enable-nN)
   ;; replaces evil-mode's f/F/t/T/;/, with snipe
+  (setq evil-snipe-override-evil t)
   (global-evil-snipe-mode +1))
 
 
