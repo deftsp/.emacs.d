@@ -30,7 +30,9 @@
   ;; completion. Among this list is self-insert-command, which is rebound to
   ;; outshine-self-insert-command by outshine.
   (add-to-list 'company-begin-commands 'outshine-self-insert-command)
-  ;; Enable key-chord "jk" which binded to `company-complete' work
+  ;; Enable key-chord "jk" which binded to `company-complete' work,
+  ;; `company-manual-begin' will not begin when `last-command' started with
+  ;; "company-"
   (add-to-list 'company-begin-commands 'company-complete)
   (add-to-list 'company-backends 'company-cmake))
 
