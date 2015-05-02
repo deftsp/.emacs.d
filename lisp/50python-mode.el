@@ -50,6 +50,8 @@
 (defun pl/python-mode-init ()
   (setq mode-name "Python"
         tab-width 4
+        python-indent-guess-indent-offset nil
+        python-indent-offset 4
         ;; auto-indent on colon doesn't work well with if statement
         electric-indent-chars (delq ?: electric-indent-chars))
 
