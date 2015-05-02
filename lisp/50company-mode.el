@@ -13,21 +13,24 @@
 
 (add-hook 'after-init-hook 'global-company-mode)
 
-(eval-after-load 'company
-  '(progn
-     company-require-match nil ; company-explicit-action-p
-     (setq company-show-numbers t
-           company-clang-insert-arguments nil
-           company-dabbrev-downcase nil
-           company-tooltip-limit 20
-           ;; company-begin-commands '(self-insert-command)
-           ;; company-backends (delete 'company-ropemacs company-backends)
-           ;; company-backends (delete 'company-capf company-backends)
-           company-idle-delay 0.2)
+(with-eval-after-load "company"
+  (setq company-show-numbers t
+        company-clang-insert-arguments nil
+        company-require-match nil ; company-explicit-action-p
+        company-dabbrev-downcase nil
+        company-tooltip-limit 20
+        ;; company-backends (delete 'company-ropemacs company-backends)
+        ;; company-backends (delete 'company-capf company-backends)
+        company-idle-delay 0.2)
 
-     (define-key company-active-map (kbd "M-j") 'company-select-next)
-     (define-key company-active-map (kbd "M-k") 'company-select-previous)
-     (add-to-list 'company-backends 'company-cmake)))
+  (define-key company-active-map (kbd "M-j") 'company-select-next)
+  (define-key company-active-map (kbd "M-k") 'company-select-previous)
+  ;; https://github.com/tj64/outshine/issues/38
+  ;; company-mode explicitly lists all commands which should trigger idle
+  ;; completion. Among this list is self-insert-command, which is rebound to
+  ;; outshine-self-insert-command by outshine.
+  (add-to-list 'company-begin-commands 'outshine-self-insert-command)
+  (add-to-list 'company-backends 'company-cmake))
 
 (defvar pl/company-common-backends
   '(company-capf
