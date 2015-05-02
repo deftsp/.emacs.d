@@ -70,7 +70,7 @@
      (key-chord-define-global "bf" 'ibuffer)
      (key-chord-define-global "cx" ctl-x-map)
 
-     (key-chord-define-global "jk" 'company-complete) ; auto-complete
+     (key-chord-define-global "jk" 'company-complete)
 
      (key-chord-define-global "jc" 'ace-jump-char-mode)
      (key-chord-define-global "jw" 'ace-jump-word-mode)

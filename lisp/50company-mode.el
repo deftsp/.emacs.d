@@ -32,7 +32,8 @@
 (defvar pl/company-common-backends
   '(company-capf
     company-files
-    company-dabbrev))
+    company-dabbrev
+    company-yasnippet))
 
 (defvar pl/company-prog-common-backends
   (cons '(company-dabbrev-code
@@ -81,6 +82,7 @@
 (defun pl/company-python-mode-setup ()
   (let ((backends pl/company-prog-common-backends))
     (push 'company-ropemacs backends)
+    (push 'company-anaconda backends)
     (set (make-local-variable 'company-backends) backends)))
 
 (add-hook 'css-mode-hook 'pl/company-css-mode-setup)
