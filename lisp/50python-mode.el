@@ -69,6 +69,9 @@
   ;; (ropemacs-mode)
   ;; (setq imenu-create-index-function 'py--imenu-create-index-new)
 
+  (when (string-prefix-p "*Org Src " (buffer-name))
+    (flycheck-mode -1))
+
   (if (executable-find "ipython")
       (setq python-shell-interpreter "ipython"
             python-shell-prompt-regexp "In \\[[0-9]+\\]: "
