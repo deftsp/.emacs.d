@@ -39,8 +39,12 @@
   "Evil operator mode indicator face")
 
 (defface pl/evil-lispy-tag
-  `((t (:weight bold :foreground "lispy")))
+  `((t (:weight bold :foreground "blue")))
   "Evil lispy mode indicator face")
+
+(defface pl/evil-iedit-tag
+  `((t (:weight bold :foreground "yellow")))
+  "Evil iedit mode indicator face")
 
 ;;; visual indicators
 (setq evil-mode-line-format 'before
@@ -50,7 +54,8 @@
       evil-motion-state-tag   (propertize "« M »" 'face 'pl/evil-motion-tag)
       evil-visual-state-tag   (propertize "« ∞ »" 'face 'pl/evil-visual-tag)
       evil-operator-state-tag (propertize "« O »" 'face 'pl/evil-operator-tag)
-      evil-replace-state-tag  (propertize "« R »" 'face 'pl/evil-replace-tag))
+      evil-replace-state-tag  (propertize "« R »" 'face 'pl/evil-replace-tag)
+      evil-iedit-state-tag    (propertize "« E »" 'face 'pl/evil-iedit-tag))
 
 ;; FIXME: as Official Emacs 24.4, if set color color,  when multile
 ;; windows (> 6), C-h evil-mode `q' then quit the help window will be very slow
@@ -62,7 +67,8 @@
           evil-motion-state-cursor   `(box    ,(face-attribute 'pl/evil-motion-tag   :foreground))
           evil-visual-state-cursor   `(hollow ,(face-attribute 'pl/evil-visual-tag   :foreground))
           evil-replace-state-cursor  `(hbar   ,(face-attribute 'pl/evil-replace-tag  :foreground))
-          evil-operator-state-cursor `(hollow ,(face-attribute 'pl/evil-operator-tag :foreground)))
+          evil-operator-state-cursor `(hollow ,(face-attribute 'pl/evil-operator-tag :foreground))
+          evil-iedit-state-cursor    `(box   ,(face-attribute 'pl/evil-iedit-tag  :foreground)))
   (setq evil-default-cursor '(box "#cd0000") ; emacs official
         evil-emacs-state-cursor    'box
         evil-normal-state-cursor   'box
@@ -70,7 +76,8 @@
         evil-motion-state-cursor   'box
         evil-visual-state-cursor   'hollow
         evil-replace-state-cursor  'hbar
-        evil-operator-state-cursor 'hollow))
+        evil-replace-state-cursor  'hbar
+        evil-iedit-state-cursor    'box))
 
 ;; Getting :n[ew] to work
 ;; As of this writing, Evil does not allow you to shorten ':new' to ':n', but you can define a command that does.
@@ -307,6 +314,7 @@ to previous saved state, or simply change evil-state to emacs."
   "n"   'evil-narrow-indirect
   "p"   'projectile-commander
   "u"   'universal-argument
+  "se"  'evil-iedit-state/iedit-mode
   "ss"  'helm-swoop
   "sS"  'helm-multi-swoop
   "s C-s" 'helm-multi-swoop-all
@@ -648,6 +656,14 @@ to replace the symbol under cursor"
   ;; replaces evil-mode's f/F/t/T/;/, with snipe
   (setq evil-snipe-override-evil t)
   (global-evil-snipe-mode +1))
+
+
+;; evil-iedit-state
+(require 'iedit nil t)
+(with-eval-after-load "iedit"
+  (require 'evil-iedit-state nil t)
+  (with-eval-after-load "evil-iedit-state"
+    ))
 
 
 ;;; bugfix

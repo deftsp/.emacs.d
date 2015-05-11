@@ -166,6 +166,13 @@ mouse-1: Display Line and Column Mode Menu")
   "face to fontify evil lispy state"
   :group 'powerline)
 
+(defface powerline-evil-iedit-face
+  '((((class color))
+     :foreground "blue" :background "yellow" :weight bold :inherit mode-line)
+    (t (:weight bold)))
+  "face to fontify evil iedit state"
+  :group 'powerline)
+
 (defun powerline-evil-face (active)
   (let ((face (intern (concat "powerline-evil-" (symbol-name evil-state) "-face"))))
     (cond ((and active (facep face))
@@ -184,7 +191,7 @@ mouse-1: Display Line and Column Mode Menu")
           (concat "-" raw-tag "-"))
          (t
           (concat " " raw-tag " "))))
-    "NIL"))
+    " NIL "))
 
 
 (defpowerline pl/powerline-client

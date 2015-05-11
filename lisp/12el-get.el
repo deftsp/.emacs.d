@@ -122,6 +122,16 @@
                :description "Helm extension to search dash docsets"
                :pkgname "areina/helm-dash"
                :depends esqlite)
+        (:name iedit
+               :description "Edit multiple regions simultaneously in a buffer or a region."
+               :type github
+               :pkgname "victorhge/iedit"
+               :depends (cl-lib))
+        (:name evil-iedit-state
+               :type github
+               :description "Slick Evil states for iedit."
+               :pkgname "syl20bnr/evil-iedit-state"
+               :depends (evil iedit))
         (:name esqlite
                :type github
                :description "Manipulate sqlite file from Emacs"
