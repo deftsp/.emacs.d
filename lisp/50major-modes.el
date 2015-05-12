@@ -289,5 +289,11 @@
 ;; (autoload 'gtk-lookup-symbol "gtk-look" nil t)
 ;; (define-key global-map [?\C-h ?\C-j] 'gtk-lookup-symbol)
 
+;;; sgml-mode
+(defun pl/init-sgml-mode ()
+  (outline-minor-mode +1))
+
+(with-eval-after-load "sgml-mode"
+  (add-hook 'sgml-mode-hook 'pl/init-sgml-mode))
 
 (provide '50major-modes)
