@@ -184,6 +184,12 @@
         ad-do-it
       (call-interactively 'sp-backward-delete-char))))
 
+(require 'virtualenvwrapper nil t)
+(with-eval-after-load "virtualenvwrapper"
+  (venv-initialize-interactive-shells)
+  (venv-initialize-eshell) ;; if you want eshell support
+  (setq venv-location (expand-file-name "~/.virtualenvs/")))
+
 
 (provide '50python-mode)
 ;;; 50python-mode.el ends here
