@@ -46,6 +46,15 @@
         (insert-string "\n")
         (python-indent-line)))))
 
+(with-eval-after-load "python"
+  (if (executable-find "ipython")
+      (setq python-shell-interpreter "ipython"
+            python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+            python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+            python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
+            python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
+            python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+    (setq python-shell-interpreter "python")))
 
 (defun pl/python-mode-init ()
   (setq mode-name "Python"
@@ -70,16 +79,7 @@
   ;; (setq imenu-create-index-function 'py--imenu-create-index-new)
 
   (when (string-prefix-p "*Org Src " (buffer-name))
-    (flycheck-mode -1))
-
-  (if (executable-find "ipython")
-      (setq python-shell-interpreter "ipython"
-            python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-            python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-            python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
-            python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
-            python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
-    (setq python-shell-interpreter "python")))
+    (flycheck-mode -1)))
 
 ;; python-mode set imenu-create-index-function too, make sure init function
 ;; override it by append it
