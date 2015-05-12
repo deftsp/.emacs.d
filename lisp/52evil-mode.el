@@ -133,15 +133,16 @@ to previous saved state, or simply change evil-state to emacs."
                       (keyboard-quit))))))
         (t (keyboard-quit))))
 
-(key-chord-define-global "df" 'pl/escape-dwim)
-
 (defun pl/company-abort-then-escape-dwim ()
   (interactive)
   (company-abort)
   (pl/escape-dwim))
 
-(with-eval-after-load 'company
-  (key-chord-define company-active-map "df" 'pl/company-abort-then-escape-dwim))
+
+;;; use Karabiner to remap simultaneous key presses [D+F] to Escape
+;; (key-chord-define-global "df" 'pl/escape-dwim)
+;; (with-eval-after-load 'company
+;;   (key-chord-define company-active-map "df" 'pl/company-abort-then-escape-dwim))
 
 ;;; 'imap fd <ESC>' equivalent
 ;; (key-chord-define-global "df" [escape])
@@ -610,6 +611,12 @@ to replace the symbol under cursor"
           company-select-previous
           company-complete-selection
           company-complete-number)))
+
+;; Abort company-mode when exiting insert mode
+(defun pl/abort-company-on-insert-state-exit ()
+  (company-abort))
+
+(add-hook 'evil-insert-state-exit-hook 'pl/abort-company-on-insert-state-exit)
 
 (eval-after-load "helm-swoop"
   '(progn

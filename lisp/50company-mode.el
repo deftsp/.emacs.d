@@ -25,6 +25,7 @@
 
   (define-key company-active-map (kbd "M-j") 'company-select-next)
   (define-key company-active-map (kbd "M-k") 'company-select-previous)
+
   ;; https://github.com/tj64/outshine/issues/38
   ;; company-mode explicitly lists all commands which should trigger idle
   ;; completion. Among this list is self-insert-command, which is rebound to
