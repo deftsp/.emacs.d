@@ -173,6 +173,13 @@ mouse-1: Display Line and Column Mode Menu")
   "face to fontify evil iedit state"
   :group 'powerline)
 
+(defface powerline-evil-evilified-face
+  '((((class color))
+     :foreground "#232323" :background "DarkOrchid2" :weight bold :inherit mode-line)
+    (t (:weight bold)))
+  "face to fontify evil evilified state"
+  :group 'powerline)
+
 (defun powerline-evil-face (active)
   (let ((face (intern (concat "powerline-evil-" (symbol-name evil-state) "-face"))))
     (cond ((and active (facep face))

@@ -47,6 +47,9 @@
         (python-indent-line)))))
 
 (with-eval-after-load "python"
+  (setq python-indent-guess-indent-offset nil
+        python-indent-offset 4)
+
   (if (executable-find "ipython")
       (setq python-shell-interpreter "ipython"
             python-shell-prompt-regexp "In \\[[0-9]+\\]: "
@@ -56,13 +59,19 @@
             python-shell-completion-string-code "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
     (setq python-shell-interpreter "python")))
 
+
+(put 'project-venv-name 'safe-local-variable 'stringp)
+
 (defun pl/python-mode-init ()
   (setq mode-name "Python"
         tab-width 4
-        python-indent-guess-indent-offset nil
-        python-indent-offset 4
         ;; auto-indent on colon doesn't work well with if statement
         electric-indent-chars (delq ?: electric-indent-chars))
+
+  (hack-local-variables)
+  (when (boundp 'project-venv-name)
+    (message (format "Activate virtual environment %s" project-venv-name))
+    (pyvenv-workon project-venv-name))
 
   (annotate-pdb)
   ;; make C-j work the same way as RET
@@ -110,6 +119,7 @@
   "msR" 'python-shell-send-region-switch
   "msr" 'python-shell-send-region
   "mhh" 'anaconda-mode-view-doc
+  "mhH" 'pylookup-lookup
   "mgg" 'anaconda-mode-goto
   "mvs" 'pyenv-mode-set
   "mvu" 'pyenv-mode-unset
@@ -190,6 +200,13 @@
   (venv-initialize-eshell) ;; if you want eshell support
   (setq venv-location (expand-file-name "~/.virtualenvs/")))
 
+;;; pylookup
+;; https://github.com/tsgates/pylookup
+;; cd ~/.emacs.d/el-get/pylookup && make download
+;; (setq pylookup-search-options '("--insensitive" "0" "--desc" "0"))
+(with-eval-after-load "pylookup"
+  (with-eval-after-load "evil-evilified-state"
+    (evilify pylookup-mode pylookup-mode-map)))
 
 (provide '50python-mode)
 ;;; 50python-mode.el ends here

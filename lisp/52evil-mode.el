@@ -6,6 +6,8 @@
 ;; Keywords:
 
 (require 'evil nil t)
+(with-eval-after-load "evil"
+  (require 'evil-evilified-state))
 
 ;; `C-M-x' on a defface expression reinitializes the face according to the
 ;; defface specification.
@@ -276,6 +278,15 @@ to previous saved state, or simply change evil-state to emacs."
               'pl/activate-major-mode-leader)))
 
 (pl/init-evil-leader)
+
+(with-eval-after-load "workgroups2"
+  (defun pl/activate-all-major-mode-leader ()
+    (dolist (buf (buffer-list))
+      (with-current-buffer buf
+        (pl/activate-major-mode-leader))))
+  (add-hook 'wg-after-switch-to-workgroup-hook
+            'pl/activate-all-major-mode-leader))
+
 
 (evil-leader/set-key
   "1"   'delete-other-windows
@@ -614,7 +625,8 @@ to replace the symbol under cursor"
 
 ;; Abort company-mode when exiting insert mode
 (defun pl/abort-company-on-insert-state-exit ()
-  (company-abort))
+  (when (fboundp 'company-abort)
+    (company-abort)))
 
 (add-hook 'evil-insert-state-exit-hook 'pl/abort-company-on-insert-state-exit)
 
