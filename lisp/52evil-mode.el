@@ -410,7 +410,6 @@ to previous saved state, or simply change evil-state to emacs."
         (nrepl-mode                . insert)
         (weibo-timeline-mode       . emacs)
         (weibo-post-mode           . emacs)
-        (org-mode                  . insert)
         (sr-mode                   . emacs)
         (shell-mode                . emacs)
         (term-mode                 . emacs)
