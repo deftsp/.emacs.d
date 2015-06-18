@@ -11,7 +11,11 @@
 ;;; Code:
 
 ;;; web-mode.el is an autonomous emacs major-mode for editing web templates:
-;f;; HTML documents embedding parts (CSS / JavaScript) and blocks (client / server side)
+;;; HTML documents embedding parts (CSS / JavaScript) and blocks (client / server side)
+
+(setq web-mode-script-padding 4
+      web-mode-style-padding 1
+      web-mode-block-padding 0)
 
 (defun pl/init-web-mode ()
   "Hooks for Web mode."
