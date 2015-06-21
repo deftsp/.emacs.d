@@ -394,7 +394,7 @@ to previous saved state, or simply change evil-state to emacs."
         (inf-ruby-mode             . emacs)
         (log-edit-mode             . emacs)
         (flycheck-error-list-mode  . emacs)
-        (fundamental-mode          . emacs)
+        (fundamental-mode          . normal)
         (erc-mode                  . emacs)
         (git-commit-mode           . insert)
         (git-rebase-mode           . emacs)
