@@ -683,7 +683,8 @@ to replace the symbol under cursor"
   (with-eval-after-load "evil-iedit-state"
     ))
 
-
+;;; shift
+;; (setq evil-shift-width 2)
 (defun pl/shift-left-visual ()
   "Shift left and restore visual selection."
   (interactive)
