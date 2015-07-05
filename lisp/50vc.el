@@ -125,8 +125,7 @@
      (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
      (setq magit-completing-read-function 'magit-ido-completing-read)))
 
-(setq magit-last-seen-setup-instructions "1.4.0"
-      magit-stage-all-confirm nil
+(setq magit-stage-all-confirm nil
       magit-unstage-all-confirm nil)
 
 
