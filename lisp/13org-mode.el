@@ -1,4 +1,4 @@
-;;; 07org-mode.el ---
+;;; 13org-mode.el ---
 
 ;; Copyright (C) 2007  Shihpin Tseng
 
@@ -6,14 +6,18 @@
 ;; Keywords:
 
 ;;; Install
-(add-to-list 'load-path "~/.emacs.d/site-lisp/org-mode/lisp")
-(add-to-list 'load-path "~/.emacs.d/site-lisp/org-mode/contrib/lisp" t)
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/org-mode/lisp")
+;; (add-to-list 'load-path "~/.emacs.d/site-lisp/org-mode/contrib/lisp" t)
 ;; $ git pull
 ;; $ make autoloads EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
 ;; $ make EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
 ;; $ make doc EMACS=/Applications/Emacs.app/Contents/MacOS/Emacs
 
-(require 'org-loaddefs)
+;; (require 'org-loaddefs)
+
+;;; org-opaml
+;; https://github.com/edavis/org-opml
+;; C-c C-e m
 
 (eval-after-load "org"
   '(progn
@@ -31,7 +35,6 @@
      (add-to-list 'org-modules 'org-panel)
      (add-to-list 'org-modules 'org-toc)
      (add-to-list 'org-modules 'org-drill)))
-
 
 (eval-after-load "evil"
   '(progn
@@ -612,7 +615,7 @@ _h_tml    ^ ^        _A_SCII:
         (self-insert-command 1)))))
 
 
-(provide '07org-mode)
+(provide '13org-mode)
 
 ;; Local Variables:
 ;; outline-regexp: ";;; "

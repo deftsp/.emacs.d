@@ -9,9 +9,10 @@
 (require '01env)
 (require '02utils)
 (require '05cc-mode)
-(require '07org-mode)
 ;; (require '09cedet)
 (require '12el-get)
+(require '13org-mode)
+
 (require '23powerline)
 (when (eq system-type 'gnu/linux)
   (require '42ecb.el))
