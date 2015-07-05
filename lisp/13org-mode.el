@@ -614,6 +614,11 @@ _h_tml    ^ ^        _A_SCII:
           (hydra-org-template/body)
         (self-insert-command 1)))))
 
+;;; indent
+;; C-x C-i or C-x Tab to call indent-rigidly
+;; (define-key indent-rigidly-map (kbd "H-h") 'indent-rigidly-left)
+;; (define-key indent-rigidly-map (kbd "H-l") 'indent-rigidly-right)
+
 
 (provide '13org-mode)
 
