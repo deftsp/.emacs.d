@@ -79,6 +79,7 @@
 (require '50search)
 (require '50shell)
 (require '50slime-js)
+(require '50swift-mode)
 (require '50syntax-checker)
 (require '50buffer)
 (require '50smartparens)
