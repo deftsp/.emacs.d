@@ -1030,6 +1030,24 @@ such character is found, following options are shown:
      ;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
      (global-set-key (kbd "M-x") 'smex)))
 
+;; avy
+(with-eval-after-load "avy"
+  (setq avy-background nil)
+  (setq avy-all-windows t)
+  (setq avy-case-fold-search nil)
+  (setq avy-timeout-seconds 0.6)
+  (setq avy-keys
+        (nconc (loop for i from ?a to ?z collect i)
+               (loop for i from ?A to ?Z collect i)
+               (loop for i from ?\! to ?\@ collect i)
+               (loop for i from ?\[ to ?\` collect i)
+               (loop for i from ?\{ to ?\~ collect i)))
+  (setq avy-keys-alist
+        `((avy-goto-word-1 . (nconc (loop for i from ?a to ?z collect i)
+                                    (loop for i from ?A to ?Z collect i)))))
+  (setq avy-style 'at)
+  (setq avy-styles-alist '((avy-goto-char-2 . post))))
+
 
 ;;; ace jump
 ;; 'C-c SPC' is used by Org mode

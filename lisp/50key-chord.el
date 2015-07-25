@@ -59,8 +59,6 @@
        (key-chord-define-global (car combo) (cdr combo)))
 
      (key-chord-define-global "''" 'pl/apostrophe-key-chord)
-     (key-chord-define-global ";a" 'ace-jump-buffer)
-     (key-chord-define-global ",a" 'ace-jump-buffer-other-window)
      (key-chord-define-global ";b" 'switch-to-buffer)
      (key-chord-define-global ";r" 'helm-resume)
      (key-chord-define-global ";s" 'helm-occur)
@@ -72,9 +70,9 @@
 
      (key-chord-define-global "jk" 'company-complete)
 
-     (key-chord-define-global "jc" 'ace-jump-char-mode)
-     (key-chord-define-global "jw" 'ace-jump-word-mode)
-     (key-chord-define-global "jl" 'ace-jump-line-mode)
+     (key-chord-define-global "jc" 'avy-goto-char)
+     (key-chord-define-global "jw" 'avy-goto-word-0)
+     (key-chord-define-global "jl" 'avy-goto-line)
 
      (key-chord-define-global "/s" 'save-buffer)
      (key-chord-define-global "##" 'server-edit)
