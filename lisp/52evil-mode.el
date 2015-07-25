@@ -673,7 +673,7 @@ to replace the symbol under cursor"
   ;; (evil-snipe-enable-nN)
   ;; replaces evil-mode's f/F/t/T/;/, with snipe
   (setq evil-snipe-override-evil t)
-  (global-evil-snipe-mode +1))
+  (evil-snipe-mode +1))
 
 
 ;; evil-iedit-state
