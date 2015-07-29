@@ -1362,6 +1362,13 @@ such character is found, following options are shown:
 
   (guide-key-mode 1))
 
+;; https://github.com/justbur/emacs-which-key
+(require 'which-key nil t)
+(with-eval-after-load "which-key"
+  (setq which-key-idle-delay 1.0)
+  (which-key-mode +1))
+
+
 ;;; hexcolour
 (autoload 'hexcolor-mode "hexcolor" nil t nil)
 
