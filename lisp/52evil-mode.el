@@ -513,30 +513,6 @@ to replace the symbol under cursor"
 (evil-declare-key 'normal lua-mode-map
   ",md" 'mobdebug-minor-mode)
 
-;;; magit mode
-;; (evil-add-hjkl-bindings magit-mode-map 'emacs)
-;; (evil-add-hjkl-bindings magit-diff-mode-map 'emacs)
-;; (evil-add-hjkl-bindings git-rebase-mode-map 'emacs
-;;   "K" 'git-rebase-mode-kill-line
-;;   "h" 'describe-mode)
-;; (evil-add-hjkl-bindings magit-log-mode-map 'emacs
-;;   "l" 'magit-key-mode-popup-logging)
-(evil-add-hjkl-bindings magit-status-mode-map 'emacs
-  "K" 'magit-discard-item
-  "l" 'magit-key-mode-popup-logging
-  "h" 'magit-toggle-diff-refine-hunk
-  "J" 'magit-section-jump-map ; `J  default bind to `magit-key-mode-popup-apply-mailbox'
-  "j" 'magit-goto-next-section ; default bind to `magit-section-jump-map'
-  "k" 'magit-goto-previous-section)
-
-(evil-define-key 'normal magit-log-mode-map
-  "j" 'magit-goto-next-section
-  "k" 'magit-goto-previous-section)
-
-(evil-define-key 'normal magit-diff-mode-map
-  "j" 'magit-goto-next-section
-  "k" 'magit-goto-previous-section)
-
 ;;;
 ;; (evil-add-hjkl-bindings grep-mode-map 'emacs)
 ;; (evil-add-hjkl-bindings helm-grep-mode-map 'emacs)
