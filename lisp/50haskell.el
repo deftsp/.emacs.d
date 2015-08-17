@@ -84,7 +84,9 @@
                         "-fno-warn-warnings-deprecations"
                         "-fno-warn-missing-signatures"
                         "-fno-warn-unused-imports"))
-(setq ghc-hlint-options '("--ignore=Use camelCase" "--ignore=Unused LANGUAGE pragma"))
+;; TODO: which will cause ghc-check-syntax fail
+;; (setq ghc-hlint-options '("--ignore=Use camelCase"
+;;                           "--ignore=Unused LANGUAGE pragma"))
 
 ;;; haskell mode hook
 (add-hook 'haskell-mode-hook 'pl/haskell-mode-setup)
