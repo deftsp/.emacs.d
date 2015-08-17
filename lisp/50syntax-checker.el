@@ -22,6 +22,8 @@
      (setq flymake-gui-warnings-enabled nil)))
 
 
+;;; install el-get
+;; makeinfo should use /usr/local/Cellar/texinfo/6.0/bin/makeinfo
 (require 'flycheck nil t)
 ;; (set-default 'flycheck-check-syntax-automatically nil)
 
