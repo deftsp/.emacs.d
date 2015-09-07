@@ -1,0 +1,5 @@
+(:name undercover
+       :description "A test coverage library for Emacs"
+       :type github
+       :pkgname "sviridov/undercover.el"
+       :depends (dash shut-up))

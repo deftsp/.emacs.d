@@ -1,0 +1,5 @@
+(:name ecukes
+       :description ""
+       :type github
+       :pkgname "sviridov/undercover.el"
+       :depends (f s dash ansi espuds commander))

@@ -1,0 +1,5 @@
+(:name ert-runner
+       :description "Opinionated Ert testing workflow"
+       :type github
+       :pkgname "rejeep/ert-runner.el"
+       :depends (cl-lib s dash f commander ansi shut-up))

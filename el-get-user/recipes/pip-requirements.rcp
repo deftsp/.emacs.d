@@ -1,0 +1,5 @@
+(:name pip-requirements
+       :description "Major mode for editing pip requirements files"
+       :type github
+       :pkgname "Wilfred/pip-requirements.el"
+       :depends (dash))
