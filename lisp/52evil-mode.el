@@ -212,6 +212,7 @@ to previous saved state, or simply change evil-state to emacs."
 
 ;;;
 ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
+(define-key evil-insert-state-map "\C-v" nil)
 (define-key evil-insert-state-map "\C-k" nil)
 (define-key evil-insert-state-map "\C-o" nil)
 (define-key evil-insert-state-map "\C-r" nil)
@@ -223,6 +224,7 @@ to previous saved state, or simply change evil-state to emacs."
 (define-key evil-insert-state-map "\C-x\C-p" nil)
 (define-key evil-insert-state-map "\C-t" nil)
 (define-key evil-insert-state-map "\C-d" nil)
+(define-key evil-insert-state-map "\C-a" nil)
 (define-key evil-insert-state-map "\C-w" nil)
 (define-key evil-insert-state-map [remap newline] nil)
 (define-key evil-insert-state-map [remap newline-and-indent] nil)
