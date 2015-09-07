@@ -83,6 +83,7 @@
   (smartparens-mode +1)
 
   (semantic-mode +1)
+  (pl/lazy-load-stickyfunc-enhance)
   ;; (virtualenv-minor-mode 1)
   ;; (ropemacs-mode)
   ;; (setq imenu-create-index-function 'py--imenu-create-index-new)

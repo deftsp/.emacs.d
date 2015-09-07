@@ -18,8 +18,9 @@
        (goto-char (point-max))
        (eval-print-last-sexp)))))
 
-(setq el-get-github-default-url-type 'git)
-(setq el-get-verbose t)
+(add-to-list 'el-get-recipe-path (expand-file-name "~/.emacs.d/el-get-user/recipes"))
+(setq el-get-github-default-url-type 'git
+      el-get-verbose nil)
 
 
 ;; el-get-sources is another source location for recipes, adding to your el-get-recipe-path.
@@ -152,6 +153,7 @@
 
 ;; (el-get-save-package-status "package-name-here" "removed")
 
+(el-get 'sync 'cedet)
 (el-get 'sync 'org-mode) ; init org-mode first
 (el-get 'sync 'exec-path-from-shell)
 (require 'exec-path-from-shell nil t) ; https://github.com/purcell/exec-path-from-shell

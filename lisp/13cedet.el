@@ -1,6 +1,6 @@
-;;; 09cedet.el ---
+;;; 13cedet.el ---
 
-;; Copyright (C) 2012  Shihpin Tseng
+;; Copyright (C) 2015  Shihpin Tseng
 
 ;;; CEDET
 
@@ -19,19 +19,19 @@
 ;; CEDET component (including EIEIO) gets activated by another
 ;; package (Gnus, auth-source, ...).
 
-;;; Install bzr vesion
+;;; install develop version cedet
+;; install with el-get now
 ;; Note: don't add cedet directory recursive, it'll cause strange problem
-(defvar pl/cedet-root-path (file-name-as-directory "~/.emacs.d/site-lisp/cedet/"))
-(load-file (concat pl/cedet-root-path "cedet-devel-load.el"))
-(load-file (concat pl/cedet-root-path "contrib/cedet-contrib-load.el"))
+;; (defvar pl/cedet-root-path (file-name-as-directory "~/.emacs.d/site-lisp/cedet/"))
+;; (load-file (concat pl/cedet-root-path "cedet-devel-load.el"))
+;; (load-file (concat pl/cedet-root-path "contrib/cedet-contrib-load.el"))
 
 ;; Add further minor-modes to be enabled by semantic-mode. See doc-string of `semantic-default-submodes' for other
 ;; things you can use here.
 (add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode t)
 (add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
-;; use auto completion instead
-;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t)
+;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t) ; use auto completion instead
 (add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode t)
 (add-to-list 'semantic-default-submodes 'global-semantic-mru-bookmark-mode t)
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-decoration-mode t) ; Additional tag decorations.
@@ -42,17 +42,20 @@
 (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode t) ; show current fun in header line
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-show-unmatched-syntax-mode t)
 
+(defun pl/lazy-load-stickyfunc-enhance ()
+  "Lazy load the package."
+  (require 'stickyfunc-enhance))
+
 ;;; inhibit semantic for some major modes
 (defun pl/semantic-inhibit-func ()
   (cond
-    ((member major-mode '(scheme-mode
-                          python-mode
-                          javascript-mode
-                          html-helper-mode
-                          html-mode))
-     ;; to disable semantic, return non-nil.
-     t)
-    (t nil)))
+   ((member major-mode '(scheme-mode
+                         javascript-mode
+                         html-helper-mode
+                         html-mode))
+    ;; to disable semantic, return non-nil.
+    t)
+   (t nil)))
 
 (when (boundp 'semantic-inhibit-functions)
   (add-to-list 'semantic-inhibit-functions 'pl/semantic-inhibit-func))
@@ -72,7 +75,7 @@
 
 
 ;;; Enable SRecode (Template management) minor-mode.
-(global-srecode-minor-mode 1)
+;; (global-srecode-minor-mode 1)
 
 ;; (remove-hook 'scheme-mode-hook 'semantic-default-scheme-setup)
 
@@ -117,12 +120,12 @@
 ;; enable ctags for some languages:
 ;; Unix Shell, Perl, Pascal, Tcl, Fortran, Asm
 ;; brew install ctags
-(semantic-load-enable-all-ectags-support)
-(semantic-load-enable-primary-ectags-support)
+;; (semantic-load-enable-all-ectags-support)
+;; (semantic-load-enable-primary-ectags-support)
 
 ;;; cscope
-(require 'semantic/db-cscope)
-(semanticdb-enable-cscope-databases t)
+;; (require 'semantic/db-cscope)
+;; (semanticdb-enable-cscope-databases t)
 
 ;;; complete
 (setq semantic-complete-inline-analyzer-displayor-class
@@ -220,16 +223,16 @@
 ;; (setq semantic-imenu-auto-rebuild-directory-indexes nil)
 
 ;;; info
-(defun cedet-settings-4-info ()
-  "`cedet' settings for `info'."
-  (info-initialize)
-  (dolist (package `("cogre" "common" "ede" "eieio" "semantic/doc" "speedbar" "srecode"))
-    (add-to-list 'Info-default-directory-list (concat "~/.emacs.d/site-lisp/cedet/" package "/"))))
+;; (defun cedet-settings-4-info ()
+;;   "`cedet' settings for `info'."
+;;   (info-initialize)
+;;   (dolist (package `("cogre" "common" "ede" "eieio" "semantic/doc" "speedbar" "srecode"))
+;;     (add-to-list 'Info-default-directory-list (concat "~/.emacs.d/site-lisp/cedet/" package "/"))))
 
-(eval-after-load "info"
-  `(cedet-settings-4-info))
+;; (eval-after-load "info"
+;;   `(cedet-settings-4-info))
 
-(provide '09cedet)
+(provide '13cedet)
 
 ;; Local Variables:
 ;; outline-regexp: ";;; *"

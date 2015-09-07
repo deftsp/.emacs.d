@@ -9,8 +9,8 @@
 (require '01env)
 (require '02utils)
 (require '05cc-mode)
-;; (require '09cedet)
 (require '12el-get)
+(require '13cedet)
 (require '13org-mode)
 
 (require '23powerline)

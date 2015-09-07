@@ -79,6 +79,7 @@ el-get/
 share/
 packages/lunar-mode-line/
 chinese-fonts-setup/
+anaconda-mode/
 workgroups
 test/
 /.mc-lists.el
