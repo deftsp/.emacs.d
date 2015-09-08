@@ -24,7 +24,9 @@
 
 ;;; install el-get
 ;; makeinfo should use /usr/local/Cellar/texinfo/6.0/bin/makeinfo
-(require 'flycheck nil t)
+;; /usr/local/Cellar/texinfo/6.0/bin/makeinfo -o doc/flycheck.info doc/flycheck.texi
+;; brew link  --force texinfo
+;; (require 'flycheck nil t)
 ;; (set-default 'flycheck-check-syntax-automatically nil)
 
 (when (fboundp 'global-flycheck-mode)
