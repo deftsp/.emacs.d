@@ -34,7 +34,8 @@
 (defun python-toggle-breakpoint ()
   "Add a break point, highlight it."
   (interactive)
-  (let ((trace (if (executable-find "ipdb")
+  (let ((trace (if (or (executable-find "ipdb")
+                       (executable-find "ipdb3"))
                    "import ipdb; ipdb.set_trace()"
                  "import pdb; pdb.set_trace()"))
         (line (thing-at-point 'line)))
