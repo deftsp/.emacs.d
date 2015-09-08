@@ -1,4 +1,4 @@
-;;; 05misc.el ---
+;;; 05misc.el ---                          -*- lexical-binding: t; -*-
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
 
 ;;; Personal data
@@ -379,6 +379,35 @@
 
 (eval-after-load "cc-mode"
   '(define-key c-mode-base-map (kbd "%") 'pl/goto-match-paren))
+
+(defvar --pl/rainbow-delimiters-strong-color nil)
+(defun pl/toggle-saturate-rainbow-delimiters-color (arg)
+  (interactive "P")
+  (let ((fun nil))
+    (if --pl/rainbow-delimiters-strong-color
+        (if (or (null arg) (< arg 0))
+            (progn
+              (fset 'fun (symbol-function 'color-desaturate-name))
+              (setq --pl/rainbow-delimiters-strong-color nil)
+              (message "Turn off rainbow delimiters strong color."))
+          (when arg
+            (message "rainbow delimiters strong color is already on.")))
+      (if (or (null arg) (> arg 0))
+          (progn (fset 'fun (symbol-function 'color-saturate-name))
+                 (setq --pl/rainbow-delimiters-strong-color t)
+                 (message "Turn on rainbow delimiters strong color."))
+        (when arg
+          (message "rainbow delimiters strong color is already off."))))
+
+    (when (fboundp 'fun)
+      (cl-loop
+       for index from 1 to rainbow-delimiters-max-face-count
+       do
+       (let ((face (intern (format "rainbow-delimiters-depth-%d-face" index))))
+         (cl-callf fun (face-foreground face) 60))))))
+
+(with-eval-after-load "rainbow-delimiters"
+  (pl/toggle-saturate-rainbow-delimiters-color +1))
 
 (defun pl/goto-match-paren (arg)
   "Go to the matching parenthesis if on parenthesis,

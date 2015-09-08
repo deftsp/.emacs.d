@@ -63,7 +63,7 @@
 
    '(minibuffer-prompt ((t (:foreground "chartreuse2" :weight bold))))
    `(fringe ((t (:foreground "green" :background ,base02))))
-   `(region ((t (:foreground unspecified :background ,base02))))
+   `(region ((t (:foreground unspecified :background "#244252"))))
    '(secondary-selection ((t (:foreground unspecified :background "#485c60"))))
 
    ;; powerline
@@ -355,7 +355,9 @@
    `(ni-mode-line-buffer-id ((t (:foreground "RosyBrown" :box nil))))
 
    ;; rainbow-delimiters
-   '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3"))))
+   '(rainbow-delimiters-unmatched-face ((t (:foreground unspecified :inherit show-paren-mismatch :strike-through t))))
+
+   '(rainbow-delimiters-depth-1-face ((t (:foreground "#93e0e3" :weight bold))))
    '(rainbow-delimiters-depth-2-face ((t (:foreground "#f0dfaf"))))
    '(rainbow-delimiters-depth-3-face ((t (:foreground "#94bff3"))))
    '(rainbow-delimiters-depth-4-face ((t (:foreground "#dca3a3"))))
