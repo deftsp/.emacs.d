@@ -47,6 +47,23 @@
         (insert-string "\n")
         (python-indent-line)))))
 
+;; from https://www.snip2code.com/Snippet/127022/Emacs-auto-remove-unused-import-statemen
+(defun python-remove-unused-imports()
+  "Use Autoflake to remove unused function"
+  "autoflake --remove-all-unused-imports -i unused_imports.py"
+  (interactive)
+  (if (executable-find "autoflake")
+      (progn
+        (shell-command (format "autoflake --remove-all-unused-imports -i %s"
+                               (shell-quote-argument (buffer-file-name))))
+        (revert-buffer t t t))
+    (message "Error: Cannot find autoflake executable.")))
+
+
+
+;; do not warning me, I like delay set it.
+(setq python-shell-prompt-detect-failure-warning nil)
+
 (with-eval-after-load "python"
   (setq python-indent-guess-indent-offset nil
         python-indent-offset 4)
@@ -113,6 +130,7 @@
   "mcc" 'pl/python-execute-file
   "mcC" 'pl/python-execute-file-focus
   "mdb" 'python-toggle-breakpoint
+  "mri" 'python-remove-unused-imports
   "msB" 'python-shell-send-buffer-switch
   "msb" 'python-shell-send-buffer
   "msF" 'python-shell-send-defun-switch
@@ -120,9 +138,13 @@
   "msi" 'python-start-or-switch-repl
   "msR" 'python-shell-send-region-switch
   "msr" 'python-shell-send-region
-  "mhh" 'anaconda-mode-view-doc
+  "mhh" 'anaconda-mode-show-doc
   "mhH" 'pylookup-lookup
-  "mgg" 'anaconda-mode-goto
+  "mgd" 'anaconda-mode-find-definitions
+  "mga" 'anaconda-mode-find-assignments
+  "mgr" 'anaconda-mode-find-references
+  "mgb" 'anaconda-mode-go-back
+  "mg*" 'anaconda-mode-go-back
   "mvs" 'pyenv-mode-set
   "mvu" 'pyenv-mode-unset
   "mV"  'pyvenv-workon)
@@ -209,6 +231,10 @@
 (with-eval-after-load "pylookup"
   (with-eval-after-load "evil-evilified-state"
     (evilify pylookup-mode pylookup-mode-map)))
+
+;;; pdb
+(setq gud-pdb-command-name "ipdb3")
+
 
 (provide '50python-mode)
 ;;; 50python-mode.el ends here
