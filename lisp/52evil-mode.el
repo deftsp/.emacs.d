@@ -167,7 +167,7 @@ to previous saved state, or simply change evil-state to emacs."
 ;; (key-chord-define minibuffer-local-must-match-map "df" 'pl/minibuffer-keyboard-quit)
 ;; (key-chord-define minibuffer-local-isearch-map    "df" 'pl/minibuffer-keyboard-quit)
 
-;; (define-key minibuffer-local-map [escape] 'pl/minibuffer-keyboard-quit)
+(define-key minibuffer-local-map [escape] 'pl/escape-dwim)
 ;; (define-key minibuffer-local-ns-map [escape] 'pl/minibuffer-keyboard-quit)
 ;; (define-key minibuffer-local-completion-map [escape] 'pl/minibuffer-keyboard-quit)
 ;; (define-key minibuffer-local-must-match-map [escape] 'pl/minibuffer-keyboard-quit)
