@@ -153,7 +153,7 @@
 
 ;; (el-get-save-package-status "package-name-here" "removed")
 
-(el-get 'sync 'cedet)
+;; (el-get 'sync 'cedet)
 (el-get 'sync 'org-mode) ; init org-mode first
 (el-get 'sync 'exec-path-from-shell)
 (require 'exec-path-from-shell nil t) ; https://github.com/purcell/exec-path-from-shell
