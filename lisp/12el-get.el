@@ -20,7 +20,7 @@
 
 (add-to-list 'el-get-recipe-path (expand-file-name "~/.emacs.d/el-get-user/recipes"))
 (setq el-get-github-default-url-type 'git
-      el-get-verbose nil)
+      el-get-verbose t)
 
 
 ;; el-get-sources is another source location for recipes, adding to your el-get-recipe-path.
