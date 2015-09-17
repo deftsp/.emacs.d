@@ -1,0 +1,5 @@
+(:name haskell-emacs
+       :description "Write Emacs extensions in Haskell."
+       :type github
+       :pkgname "knupfer/haskell-emacs"
+       :depends (cl-lib))
