@@ -16,10 +16,10 @@
 ;; check-syntax:
 ;;       gcc -o nul -Wall -Wextra -fsyntax-only $(CHK_SOURCES)
 
-(eval-after-load "flymake"
-  '(progn
-     (require 'flymake-cursor)
-     (setq flymake-gui-warnings-enabled nil)))
+;; (eval-after-load "flymake"
+;;  '(progn
+;;     (require 'flymake-cursor)
+;;     (setq flymake-gui-warnings-enabled nil)))
 
 
 ;;; install el-get
