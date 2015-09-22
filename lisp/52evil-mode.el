@@ -405,6 +405,7 @@ to previous saved state, or simply change evil-state to emacs."
         (grep-mode                 . emacs)
         (haskell-error-mode        . emacs)
         (haskell-interactive-mode  . insert)
+        (Info-mode                 . emacs)
         (message-mode              . emacs)
         (magit-commit-mode         . normal)
         (magit-log-edit-mode       . emacs)
@@ -648,10 +649,11 @@ to replace the symbol under cursor"
 ;; https://github.com/hlissner/evil-snipe
 (require 'evil-snipe nil t)
 (with-eval-after-load "evil-snipe"
-  ;; (evil-snipe-enable-nN)
+  (setq evil-snipe-scope 'line)
+
+  (evil-snipe-mode +1)
   ;; replaces evil-mode's f/F/t/T/;/, with snipe
-  (setq evil-snipe-override-evil t)
-  (evil-snipe-mode +1))
+  (evil-snipe-override-mode +1))
 
 
 ;; evil-iedit-state

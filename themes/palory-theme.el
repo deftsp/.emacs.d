@@ -84,6 +84,8 @@
    `(powerline-vc-face ((t (:background ,base01 :foreground "#f4bb66" :inherit mode-line))))
    `(powerline-workgroups-face ((t (:background "#778899" :foreground "#0a3540" :inherit mode-line))))
 
+   ;; evil-snipe
+   `(evil-snipe-first-match-face ((t (:background "orchid" :foreground unspecified))))
 
    ;; vc
    `(vc-state-base-face ((t (:background unspecified :foreground ,base0))))
