@@ -92,4 +92,7 @@
 (defalias 'egr 'el-get-remove)
 (defalias 'egfr 'el-get-find-recipe-file)
 
+;; swiper
+(defalias 'ag 'counsel-ag)
+
 (provide '50alias)
