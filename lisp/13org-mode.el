@@ -168,6 +168,7 @@
       org-adapt-indentation t
       org-agenda-restore-windows-after-quit t
       org-agenda-repeating-timestamp-show-all nil
+      org-agenda-use-time-grid nil
       org-fast-tag-selection-single-key (quote expert)
       org-reverse-note-order t
       org-deadline-warning-days 7
