@@ -20,10 +20,11 @@
 
 
 ;;; geiser
-(setq geiser-racket-binary "/Applications/Racket/bin/racket"
-      geiser-mode-auto-p t ; active geiser by default in all scheme buffer
+(setq geiser-active-implementations '(racket)
+      ;; geiser-racket-binary "/Applications/Racket/bin/racket"
       geiser-racket-collects nil ; it seems gesier can auto find racket collects
-      geiser-active-implementations '(racket))
+      ;; active geiser by default in all scheme buffer
+      geiser-mode-auto-p t)
 
 ;; scsh
 ;; (add-to-list 'interpreter-mode-alist '("scsh" . scheme-mode))
