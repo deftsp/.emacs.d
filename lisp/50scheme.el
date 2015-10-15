@@ -18,6 +18,11 @@
 ;; (add-hook 'scheme-mode-hook (function gambit-mode))
 ;; (add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
 
+(defun pl/scheme-mode-init ()
+  (semantic-mode -1))
+
+(add-hook 'scheme-mode-hook 'pl/scheme-mode-init)
+
 
 ;;; geiser
 (setq geiser-active-implementations '(racket)
