@@ -1384,4 +1384,8 @@ such character is found, following options are shown:
 (when (eq system-type 'darwin)
   (global-set-key (kbd "C-c R") 'reveal-in-finder))
 
+;;; beacon
+(when (fboundp 'beacon-mode)
+  (beacon-mode +1))
+
 (provide '50tools)
