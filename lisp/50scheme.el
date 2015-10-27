@@ -36,11 +36,11 @@
 
 ;;; Quack
 ;; http://alexott.net/en/writings/emacs-devenv/EmacsScheme.html
-(eval-after-load "geiser" '(require 'quack))
-(with-eval-after-load "quack"
-  (setq quack-fontify-style nil    ;or 'plt 'emacs
-        quack-default-program "gsi -:d-"
-        quack-newline-behavior 'indent-newline-indent))
+;; (eval-after-load "geiser" '(require 'quack))
+;; (with-eval-after-load "quack"
+;;   (setq quack-fontify-style nil    ;or 'plt 'emacs
+;;         quack-default-program "gsi -:d-"
+;;         quack-newline-behavior 'indent-newline-indent))
 
 ;;; tell emacs about the indentation of some not-so-well-known procedures.
 ;; (put 'with-error-handler 'scheme-indent-function 1)     ; 'defun)
