@@ -544,6 +544,11 @@ to replace the symbol under cursor"
      (evil-define-key 'normal ibuffer-mode-map "M-r" 'ibuffer-redisplay) ; default `l'
      (evil-define-key 'normal ibuffer-mode-map "K" 'ibuffer-do-kill-lines)))
 
+
+;; (with-eval-after-load "magit"
+;;   (define-key magit-status-mode-map "j" 'magit-section-forward)
+;;   (define-key magit-status-mode-map "k" 'magit-section-backward))
+
 ;;; org agenda -- leave in emacs mode but add j & k
 (eval-after-load "org-agenda"
   '(progn
