@@ -40,6 +40,16 @@
       (cfs--save-fontsize-step profile-name current-step)
       (message cfs--minibuffer-echo-string))))
 
+(defun pl/cfs-set-symbol-fonts (fontsizes-list)
+  ;; (set-fontset-font t 'symbol "Inconsolata" nil 'append)
+  ;; (set-fontset-font t 'symbol "Symbola" nil 'append)
+  ;; (set-fontset-font t 'unicode "Segoe UI Emoji" nil 'append)
+  ;; (set-fontset-font t 'unicode "STIX" nil 'append)
+  (set-fontset-font t 'symbol "DejaVu Sans Mono"))
+
+(add-hook 'cfs-set-font-finish-hook 'pl/cfs-set-symbol-fonts)
+
+
 ;;; old method, which will cause Chinese font can scale when English scale.
 ;; To get a list of all the possible values of "charset" that is available to set-fontset-font, use
 ;; the "list-character-sets" function. You can also use the "list-charset-chars" function to see the
