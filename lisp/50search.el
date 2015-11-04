@@ -219,7 +219,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 
 (autoload 'counsel-describe-function "counsel" "Forward to (`describe-function' FUNCTION) with ivy completion." t)
 (autoload 'counsel-describe-variable "counsel" "Forward to (`describe-variable' VARIABLE BUFFER FRAME)." t)
-(autoload 'counsel-ag "counsel" "Grep for a string in the current directory using ag. INITIAL-INPUT can be given as the initial minibuffer input.")
+(autoload 'counsel-ag "counsel" "Grep for a string in the current directory using ag. INITIAL-INPUT can be given as the initial minibuffer input." t)
 (global-set-key (kbd "C-h f") 'counsel-describe-function)
 (global-set-key (kbd "C-h v") 'counsel-describe-variable)
 
