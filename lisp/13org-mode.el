@@ -177,6 +177,10 @@
       org-startup-truncated t
       org-display-internal-link-with-indirect-buffer nil)
 
+(when window-system
+  ;; … ↴, ⬎, ⤷, and ⋱.
+  (setq org-ellipsis "⤵"))
+
 (with-eval-after-load "org"
   (org-defkey org-mode-map (kbd "C-c C-x t") 'pl/org-clock-summary-today-by-tags)
   ;; Undefine C-c [ and C-c ] since this breaks my
