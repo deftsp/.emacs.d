@@ -49,6 +49,13 @@
 
 (add-hook 'cfs-set-font-finish-hook 'pl/cfs-set-symbol-fonts)
 
+;; (defhydra hydra-zoom ()
+;;   "zoom"
+;;   ("+" text-scale-increase "in")
+;;   ("-" text-scale-decrease "out")
+;;   ("0" (text-scale-adjust 0) "reset")
+;;   ("q" nil "quit" :color blue))
+
 
 ;;; old method, which will cause Chinese font can scale when English scale.
 ;; To get a list of all the possible values of "charset" that is available to set-fontset-font, use

@@ -214,14 +214,35 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 ;;; ivy
 (with-eval-after-load "ivy"
   (setq ivy-display-style 'fancy)
+  (setq ivy-use-virtual-buffers t)
   (define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line-or-history)
   (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-previous-line-or-history))
+
+;; (when (fboundp 'ivy-mode)
+;;   (ivy-mode 1))
 
 (autoload 'counsel-describe-function "counsel" "Forward to (`describe-function' FUNCTION) with ivy completion." t)
 (autoload 'counsel-describe-variable "counsel" "Forward to (`describe-variable' VARIABLE BUFFER FRAME)." t)
 (autoload 'counsel-ag "counsel" "Grep for a string in the current directory using ag. INITIAL-INPUT can be given as the initial minibuffer input." t)
 (global-set-key (kbd "C-h f") 'counsel-describe-function)
 (global-set-key (kbd "C-h v") 'counsel-describe-variable)
+
+;;; swiper
+(global-set-key "\C-s" 'swiper)
+(global-set-key "\C-r" 'swiper)
+(global-set-key (kbd "C-c C-r") 'ivy-resume)
+(global-set-key [f6] 'ivy-resume)
+
+
+(defun pl/swiper-dwim (arg)
+  "Start swiper with input as the selected region or symbol at point by default.
+C-u     -> `ivy-resume' (resume from where you last left off swiper)
+C-u C-u -> Start swiper without any arguments (stock behavior)"
+  (interactive "P")
+  (cl-case (car arg)
+    (4  (ivy-resume)) ; C-u
+    (16 (swiper)) ; C-u C-u
+    (t  (swiper (modi/get-symbol-at-point)))))
 
 
 (provide '50search)
