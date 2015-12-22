@@ -658,6 +658,7 @@ vi style of % jumping to matching brace."
           ("\\.\\(ba\\)?sh\\'"                  . sh-mode)
           ("\\.l\\'"                            . c-mode)
           ("\\.mm\\'"                           . objc-mode)
+          ("\\.xm$"                             . objc-mode)
           ("\\.o\\'"                            . hexl-mode)
           ("\\.max\\'"                          . maxima-mode)
           ("\\.fvwm2rc$"                        . fvwm-mode)
