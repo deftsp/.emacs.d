@@ -107,12 +107,6 @@
                :description "display relative line number in emacs."
                :pkgname "coldnew/linum-relative"
                :features linum-relative)
-        (:name chinese-fonts-setup
-               :website "https://github.com/tumashu/chinese-fonts-setup"
-               :type github
-               :description "A fonts config tool enforcing double-width Chinese character display."
-               :pkgname "tumashu/chinese-fonts-setup"
-               :features chinese-fonts-setup)
         (:name reveal-in-finder
                :website "https://github.com/kaz-yos/elisp"
                :description "Reveal file associated with buffer in OS X Finder"
