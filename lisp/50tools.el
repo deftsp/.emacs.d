@@ -7,13 +7,13 @@
 
 
 ;;; thing-cmds
-;; ‘C-M-SPC’ – `mark-thing’ (overwrites the standard binding for ‘mark-sexp’; `sexp’ is the default thing type)
-;; `M-@’ – `cycle-thing-region’ (overwrites the standard binding for ‘mark-word’)
-;; ‘C-M-U’ (aka ‘C-M-S-u’) – `mark-enclosing-sexp’
-;; ‘C-M-F’ (aka ‘C-M-S-f’) – `mark-enclosing-sexp-forward’
-;; ‘C-M-B’ (aka ‘C-M-S-b’) – `mark-enclosing-sexp-backward’
-;; ‘C-x down’ – `next-visible-thing-repeat’ (Emacs 22 and later)
-;; ‘C-x up’ – `previous-visible-thing-repeat’ (Emacs 22 and later)
+;; ‘ C-M-SPC ’ – `mark-thing ’ (overwrites the standard binding for ‘ mark-sexp ’; `sexp ’ is the default thing type)
+;; `M-@’ – `cycle-thing-region ’ (overwrites the standard binding for ‘ mark-word ’)
+;; ‘ C-M-U ’ (aka ‘ C-M-S-u ’) – `mark-enclosing-sexp ’
+;; ‘ C-M-F ’ (aka ‘ C-M-S-f ’) – `mark-enclosing-sexp-forward ’
+;; ‘ C-M-B ’ (aka ‘ C-M-S-b ’) – `mark-enclosing-sexp-backward ’
+;; ‘ C-x down ’ – `next-visible-thing-repeat ’ (Emacs 22 and later)
+;; ‘ C-x up ’ – `previous-visible-thing-repeat ’ (Emacs 22 and later)
 ;; (thgcmd-bind-keys)
 ;; (global-set-key (kbd "C-M-?") 'mark-thing) ; vs `mark-sexp', how to press?
 ;; (global-set-key (kbd "M-@") 'cycle-thing-region) ; vs `mark-word'
@@ -1383,6 +1383,12 @@ such character is found, following options are shown:
 ;; https://github.com/kaz-yos/elisp
 (when (eq system-type 'darwin)
   (global-set-key (kbd "C-c R") 'reveal-in-finder))
+
+;;; pangu-spacing
+;; emacs minor-mode to add space between Chinese and English characters.
+(when (fboundp 'global-pangu-spacing-mode)
+  (setq pangu-spacing-real-insert-separtor t)
+  (global-pangu-spacing-mode 1))
 
 ;;; beacon
 (when (fboundp 'beacon-mode)

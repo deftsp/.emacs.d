@@ -65,7 +65,7 @@
   (let ((fill-column (if unfill (point-max) fill-column)))
     (fill-paragraph nil region)))
 
-(global-set-key (kbd "M-q") 'pl/fill-or-unfill-paragraph)
+(global-set-key (kbd "M-q") 'pl/fill-or-unfill-paragraph) ;; `M-q' default to `fill-paragraph'
 
 ;; You can convert an entire buffer from paragraphs to lines by recording a macro that calls 'pl/unfill-paragraph' and
 ;; moves past the blank-line to the next unfilled paragraph and then executing that macro on the whole buffer, 'C-u 0
@@ -92,33 +92,33 @@
 (put-charset-property 'chinese-cns11643-6 'nospace-between-words t)
 (put-charset-property 'chinese-cns11643-7 'nospace-between-words t)
 
-(defun pl/add-blank-between-chinese-and-english (&optional start end)
-  "automaticall add a blank between English and Chinese words."
-  (interactive)
-  (save-excursion
-    (progn
-      (if (not start)
-          (setq start (point-min)))
-      (if (not end)
-          (setq end (point-max)))
-      (goto-char start)
-      (while (and (re-search-forward "\\(\\cc\\)\\([0-9-]*[a-z]\\)"  nil t)
-                  (<= (match-end 0) end ))
-        (replace-match "\\1 \\2" nil nil))
-      (goto-char start)
-      (while (and (re-search-forward "\\([a-z][0-9-]*\\)\\(\\cc\\)"  nil t)
-                  (<= (match-end 0) end ))
-        (replace-match "\\1 \\2" nil nil)))))
+;; (defun pl/add-blank-between-chinese-and-english (&optional start end)
+;;   "automaticall add a blank between English and Chinese words."
+;;   (interactive)
+;;   (save-excursion
+;;     (progn
+;;       (if (not start)
+;;           (setq start (point-min)))
+;;       (if (not end)
+;;           (setq end (point-max)))
+;;       (goto-char start)
+;;       (while (and (re-search-forward "\\(\\cc\\)\\([0-9-]*[a-z]\\)"  nil t)
+;;                   (<= (match-end 0) end ))
+;;         (replace-match "\\1 \\2" nil nil))
+;;       (goto-char start)
+;;       (while (and (re-search-forward "\\([a-z][0-9-]*\\)\\(\\cc\\)"  nil t)
+;;                   (<= (match-end 0) end ))
+;;         (replace-match "\\1 \\2" nil nil)))))
 
-;; Function called (if non-nil) to perform auto-fill. It is called after
-;; self-inserting any character specified in the `auto-fill-chars' table. NOTE:
-;; This variable is not a hook; its value may not be a list of functions.
-(defun pl/add-blank-between-chinese-and-english-whole-buffer ()
-  (interactive)
-  (pl/add-blank-between-chinese-and-english (point-at-bol) (point-at-eol))
-  (do-auto-fill))
+;; ;; Function called (if non-nil) to perform auto-fill. It is called after
+;; ;; self-inserting any character specified in the `auto-fill-chars' table. NOTE:
+;; ;; This variable is not a hook; its value may not be a list of functions.
+;; (defun pl/add-blank-between-chinese-and-english-whole-buffer ()
+;;   (interactive)
+;;   (pl/add-blank-between-chinese-and-english (point-at-bol) (point-at-eol))
+;;   (do-auto-fill))
 
-(setq-default auto-fill-function
-              #'pl/add-blank-between-chinese-and-english-whole-buffer)
+;; (setq-default auto-fill-function
+;;               #'pl/add-blank-between-chinese-and-english-whole-buffer)
 
 (provide '50auto-fill)

@@ -98,7 +98,7 @@
 (require '50xcode)
 (require '50yasnippet)
 (require '51CommonLispTemplates)
-(require '51helm)
+;; (require '51helm)
 
 ;; (require '52emms) ; do not use it any more
 ;; (require '52icicles)
