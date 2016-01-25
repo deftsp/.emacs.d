@@ -294,8 +294,10 @@
          :kill-buffer t)
         ("p" "Phone call" entry (file+headline "~/org/GTD.org" "Inbox")
          "* PHONE %? :PHONE:\n  %U" :clock-in t :clock-resume t)
-        ("h" "Habit" entry (file "~/org/GTD.org" "Inbox")
-         "* %?\n\n  %U\n\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n  :STYLE: habit \n  :REPEAT_TO_STATE: NEXT\n  :END:\n")))
+        ("r" "Remind" entry (file+headline "~/org/GTD.org" "Remind")
+         "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n\n  %U\n\n")
+        ("h" "Habit" entry (file+headline "~/org/GTD.org" "Habit")
+         "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n  :STYLE: habit \n  :REPEAT_TO_STATE: NEXT\n  :END:\n\n  %U\n")))
 
 ;;; work with appt
 (defun pl/org-agenda-to-appt ()
