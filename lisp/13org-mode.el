@@ -152,6 +152,11 @@
       org-default-notes-file (concat org-directory "/notes.org")
       org-agenda-files (list (concat org-directory "/GTD.org")
                              (concat org-directory "/from-mobile.org"))  ; (directory-files org-directory t ".*\\.org$")
+      ;; speedup and optimization
+      ;; https://punchagan.muse-amuse.in/posts/how-i-learnt-to-use-emacs-profiler.html
+      ;; http://orgmode.org/worg/agenda-optimization.html
+      org-agenda-inhibit-startup t ;;
+      ;; org-agenda-use-tag-inheritance nil ; set this on a per-command in org-agenda-custom-commands
       org-agenda-show-all-dates t
       org-agenda-span 'week
       org-agenda-include-all-todo nil
