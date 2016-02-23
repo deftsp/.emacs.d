@@ -82,6 +82,7 @@ chinese-fonts-setup/
 anaconda-mode/
 workgroups
 test/
+haskell-emacs-exts/
 /.mc-lists.el
 /geiser-history.racket
 /orgcard.txt

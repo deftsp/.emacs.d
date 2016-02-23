@@ -51,6 +51,7 @@
 (require '50gdb)
 (require '50go)
 (require '50haskell)
+(require '50haskell-emacs)
 (require '50hideshow)
 (require '50input-method)
 (require '50javascript)
