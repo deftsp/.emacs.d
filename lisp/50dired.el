@@ -161,6 +161,7 @@ and blocks emacs.  The default for ASYNC is t." t)
   (define-key dired-mode-map (kbd "W") 'pl/dired-w3m-find-file)
   (define-key dired-mode-map (kbd ";") 'dired-view-minor-mode-toggle)
   (define-key dired-mode-map (kbd ":") 'dired-view-minor-mode-dired-toggle)
+  (define-key dired-mode-map (kbd "/") 'dired-narrow)
 
   ;; dired use `s' to switch sort by name/time, we undefine it so that
   ;; it can be used as prefix
@@ -539,8 +540,8 @@ Requires ImageMagick shell tool."
    (list (dired-get-marked-files) (read-from-minibuffer "scale args: ")))
   (require 'dired)
   (mapc
-   (lambda (ξf)
-     (let ((new-file-name (concat (file-name-sans-extension ξf) "-s" (file-name-extension ξf t)))
+   (lambda (ξ f)
+     (let ((new-file-name (concat (file-name-sans-extension ξ f) "-s" (file-name-extension ξ f t)))
            cmd-str)
        (while (file-exists-p new-file-name)
          (setq new-file-name (concat (file-name-sans-extension new-file-name) "-s" (file-name-extension new-file-name t))))
@@ -549,7 +550,7 @@ Requires ImageMagick shell tool."
        (let ((cmd-str (concat "convert -scale "
                               scale-args
                               " "
-                              (file-relative-name ξf)
+                              (file-relative-name ξ f)
                               " "
                               (file-relative-name new-file-name))))
          (shell-command cmd-str))))
@@ -572,10 +573,10 @@ Require unix zip commandline tool."
   "Open the current file or dired marked files in external app.
 Works in Microsoft Windows, Mac OS X, Linux."
   (interactive)
-  (let* ((ξfile-list (if (eq major-mode 'dired-mode)
+  (let* ((ξ file-list (if (eq major-mode 'dired-mode)
                          (dired-get-marked-files)
                          (list (buffer-file-name))))
-         (do-or-not-p (if (<= (length ξfile-list) 5)
+         (do-or-not-p (if (<= (length ξ file-list) 5)
                           t
                           (y-or-n-p "Open more than 5 files?") )))
 
@@ -584,17 +585,17 @@ Works in Microsoft Windows, Mac OS X, Linux."
         ((eq system-type 'windows-nt)
          (mapc (lambda (file-path)
                  (w32-shell-execute "open" (replace-regexp-in-string "/" "\\" file-path t t)))
-               ξfile-list))
+               ξ file-list))
         ((eq system-type 'darwin)
          (mapc (lambda (file-path)
                  (let ((process-connection-type nil))
                    (start-process "" nil "open" file-path)))
-               ξfile-list))
+               ξ file-list))
         ((eq system-type 'gnu/linux)
          (mapc (lambda (file-path)
                  (let ((process-connection-type nil))
                    (start-process "" nil "xdg-open" file-path)))
-               ξfile-list))
+               ξ file-list))
         (t (message "unsupported system!"))))))
 
 (setq diredp-hide-details-initially-flag nil)
