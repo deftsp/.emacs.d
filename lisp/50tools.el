@@ -1365,9 +1365,13 @@ such character is found, following options are shown:
 ;; https://github.com/justbur/emacs-which-key
 (require 'which-key nil t)
 (with-eval-after-load "which-key"
+  (add-to-list 'which-key-key-replacement-alist '("RET" . "⏎"))
+  (add-to-list 'which-key-key-replacement-alist '("DEL" . "⇤"))
+  (add-to-list 'which-key-key-replacement-alist '("SPC" . "␣"))
+  (setq which-key-popup-type 'side-window)
   (setq which-key-idle-delay 1.0)
+  (setq which-key-show-operator-state-maps t)
   (which-key-mode +1))
-
 
 ;;; hexcolour
 (autoload 'hexcolor-mode "hexcolor" nil t nil)
