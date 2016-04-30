@@ -151,6 +151,12 @@
 ;;   (define-coding-system-alias 'gb2312 'gbk)
 ;;   (define-coding-system-alias 'x-gbk 'gbk))
 
+;; unicad
+;; https://www.emacswiki.org/emacs/Unicad
+(require 'unicad nil t)
+(with-eval-after-load "unicad"
+  (unicad-enable))
+
 ;;; modifier
 (cl-case system-type
   (darwin
