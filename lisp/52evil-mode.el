@@ -668,6 +668,10 @@ to replace the symbol under cursor"
   (with-eval-after-load "evil-iedit-state"
     ))
 
+(require 'evil-visualstar nil t)
+(with-eval-after-load 'evil-visualstar
+  (global-evil-visualstar-mode +1))
+
 ;;; shift
 ;; (setq evil-shift-width 2)
 (defun pl/shift-left-visual ()
