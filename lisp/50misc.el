@@ -280,7 +280,7 @@
 
 ;; 2 — skip anything less than error
 ;; 1 — skip anything less than warning, or
-;; 0 — don’t skip any messages.
+;; 0 — don ’ t skip any messages.
 
 ;; get intermittent messages to stop typing
 ;; (type-break-mode)
@@ -581,10 +581,10 @@ vi style of % jumping to matching brace."
 (setq whitespace-line-column nil) ; use `fill-column' variable value
 (setq whitespace-display-mappings
       ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
-      '((space-mark 32 [183] [46])     ; 32   SPACE 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
-        (space-mark 160 [164] [95])    ; 160  NO-BREAK SPACE 「 」, 164 MIDDLE DOT 「¤」, 95 FULL STOP 「_」
-        (newline-mark 10 [182 10])     ; 10   LINE FEED, 182 PILCROW SIGN 「¶」
-        (tab-mark 9 [9655 9] [92 9])   ; 9 TAB, 9655 WHITE RIGHT-POINTING TRIANGLE 「▷」
+      '((space-mark 32 [183] [46])     ; 32   SPACE「 」, 183 MIDDLE DOT「·」, 46 FULL STOP「.」
+        (space-mark 160 [164] [95])    ; 160  NO-BREAK SPACE「 」, 164 MIDDLE DOT「¤」, 95 FULL STOP「_」
+        (newline-mark 10 [182 10])     ; 10   LINE FEED, 182 PILCROW SIGN「¶」
+        (tab-mark 9 [9655 9] [92 9])   ; 9 TAB, 9655 WHITE RIGHT-POINTING TRIANGLE「▷」
         ))
 
 ;; auto delete trailing whitespace
@@ -810,7 +810,7 @@ that was stored with pl/point-to-register."
            " -*- " comment-end)))
 
 ;; cscope
-;; 使用 cscope 浏览源代码,这个 xcscope 是个改进版，为每一次查找的结果使用不同 buffer ，
+;; 使用 cscope 浏览源代码,这个 xcscope 是个改进版，为每一次查找的结果使用不同 buffer，
 ;; 这样就可以保存以前的结果。
 
 (when (eq system-type 'gnu/linux)
@@ -829,7 +829,7 @@ if it is displayed there."
 ;; C-c s C             看看指定函数调用了哪些函数
 ;; C-c s e             寻找正则表达式
 ;; C-c s f             寻找文件
-;; C-c s i             看看指定的文件被哪些文件include
+;; C-c s i             看看指定的文件被哪些文件 include
 
 ;;; charset-to-oem
 (defun pl/replace-charset-to-oem (start end)
@@ -1213,10 +1213,10 @@ This command is to be used interactively."
 (setq gnus-init-file "~/.emacs.d/.gnus.el")
 ;; (load "~/.emacs.d/.gnus.el") ;; I use C-x m to send mail, load gnus config file
 ;; (setq gnus-startup-file "~/.emacs.d/.newsrc")
-;; gnus默认采用rfc2231对附件文件名进行编码，有些MUA无法识别这种编码。
-;; 现在比较流行的方式是采用base64对附件文件名进行编码。可以采用如下设定，让gnus也采用base64编码文件名：
+;; gnus 默认采用 rfc2231 对附件文件名进行编码，有些 MUA 无法识别这种编码。
+;; 现在比较流行的方式是采用 base64 对附件文件名进行编码。可以采用如下设定，让 gnus 也采用 base64 编码文件名：
 
-;; 如果你是脱离Gnus发Mail(如C-x m)一定要放在 ~/.emacs而不是 ~/.gnus.el
+;; 如果你是脱离 Gnus 发 Mail(如 C-x m)一定要放在 ~/.emacs 而不是 ~/.gnus.el
 (defalias 'mail-header-encode-parameter 'rfc2047-encode-parameter)
 
 (eval-after-load "rfc2047"
@@ -1445,7 +1445,7 @@ This command is to be used interactively."
 ;; http://ergoemacs.org/emacs/modernization_upcase-word.html
 (defun pl/toggle-letter-case ()
   "Toggle the letter case of current word or text selection.
-Toggles between: “all lower”, “Init Caps”, “ALL CAPS”."
+Toggles between: “ all lower ”, “ Init Caps ”, “ ALL CAPS ”."
   (interactive)
   (let (p1 p2 (deactivate-mark nil) (case-fold-search nil))
     (if (region-active-p)
@@ -1478,6 +1478,12 @@ Toggles between: “all lower”, “Init Caps”, “ALL CAPS”."
 (defun pl/revert-to-gbk-dos ()
   (interactive)
   (revert-buffer-with-coding-system 'gbk-dos))
+
+;; unicad
+;; https://www.emacswiki.org/emacs/Unicad
+(require 'unicad nil t)
+(with-eval-after-load "unicad"
+  (unicad-enable))
 
 ;;----------------------------------------------------------------------------------------------------
 ;;; stumpwm
