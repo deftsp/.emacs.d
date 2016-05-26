@@ -324,7 +324,7 @@ to previous saved state, or simply change evil-state to emacs."
   "j"   'helm-etags-select
   "k"   'kill-this-buffer
   ;; "ll" are used by evil-nerd-commenter
-  "lr"  'pl/linum-relative-toggle
+  ;; "lr"  'pl/linum-relative-toggle
   "n"   'evil-narrow-indirect
   "p"   'projectile-commander
   "u"   'universal-argument

@@ -1,0 +1,5 @@
+(:name nlinum-relative
+       :description "Emacs relative line number besed on nlinum-mode"
+       :type github
+       :depends (nlinum)
+       :pkgname "CodeFalling/nlinum-relative")

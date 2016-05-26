@@ -150,25 +150,35 @@ space and marks next symbol."
    'face 'linum))
 
 ;; linum-relative
-(setq linum-relative-format "%3s|")
+;; (setq linum-relative-format "%3s|")
 ;; if linum-relative-current-symbol is empty string,
 ;; linum-relative will show the real line number at current line.
-(setq linum-relative-current-symbol "->")
+;; (setq linum-relative-current-symbol "->")
 
-(defun pl/turn-on-relative-linum ()
-  (linum-mode 1)
-  (if (fboundp 'linum-relative)
-      (setq linum-format 'linum-relative)))
+;; (defun pl/turn-on-relative-linum ()
+;;   (linum-mode 1)
+;;   (if (fboundp 'linum-relative)
+;;       (setq linum-format 'linum-relative)))
 
-(add-hook 'prog-mode-hook 'pl/turn-on-relative-linum)
+;; (add-hook 'prog-mode-hook 'pl/turn-on-relative-linum)
 
-(defun pl/linum-relative-toggle ()
-  "Toggle between linum-relative and linum."
-  (interactive)
-  (if (or (eq linum-format 'dynamic)
-          (eq linum-format 'pl/linum-format))
-      (setq linum-format 'linum-relative)
-      (setq linum-format 'pl/linum-format)))
+;; (defun pl/linum-relative-toggle ()
+;;   "Toggle between linum-relative and linum."
+;;   (interactive)
+;;   (if (or (eq linum-format 'dynamic)
+;;           (eq linum-format 'pl/linum-format))
+;;       (setq linum-format 'linum-relative)
+;;       (setq linum-format 'pl/linum-format)))
+
+;;; nlinum-relative
+(require 'nlinum-relative nil t)
+(with-eval-after-load "nlinum-relative"
+  (nlinum-relative-setup-evil)                    ;; setup for evil
+  (setq nlinum-relative-redisplay-delay 0)      ;; delay
+  (setq nlinum-relative-current-symbol "->")      ;; or "" for display current line number
+  (setq nlinum-relative-offset 0)                 ;; 1 if you want 0, 2, 3...
+  (add-hook 'prog-mode-hook 'nlinum-relative-mode))
+
 
 ;;; highlight current line in buffer
 ;; (require 'hl-line)
