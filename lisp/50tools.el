@@ -172,12 +172,19 @@ space and marks next symbol."
 
 ;;; nlinum-relative
 (require 'nlinum-relative nil t)
+(defun pl/turn-on-nlinum-relative ()
+  (if linum-mode
+      (linum-mode -1))
+  (if (fboundp 'nlinum-relative-mode)
+      (nlinum-relative-mode 1)))
+
+
 (with-eval-after-load "nlinum-relative"
   (nlinum-relative-setup-evil)                    ;; setup for evil
   (setq nlinum-relative-redisplay-delay 0)      ;; delay
   (setq nlinum-relative-current-symbol "->")      ;; or "" for display current line number
   (setq nlinum-relative-offset 0)                 ;; 1 if you want 0, 2, 3...
-  (add-hook 'prog-mode-hook 'nlinum-relative-mode))
+  (add-hook 'prog-mode-hook 'pl/turn-on-nlinum-relative))
 
 
 ;;; highlight current line in buffer
