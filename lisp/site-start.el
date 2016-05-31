@@ -50,6 +50,7 @@
 (require '50font)
 (require '50gdb)
 (require '50go)
+(require '50hammerspoon)
 (require '50haskell)
 (require '50haskell-emacs)
 (require '50hideshow)
