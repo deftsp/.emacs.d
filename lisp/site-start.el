@@ -67,6 +67,7 @@
 (require '50narrowing)
 (require '50net-utils)
 ;; (require '50nethack)
+(require '50nxml)
 (require '50ocaml)
 (require '50outline-mode)
 (require '50paredit)

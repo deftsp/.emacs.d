@@ -649,7 +649,7 @@ vi style of % jumping to matching brace."
 (mapcar #'(lambda (lst) (add-to-list 'auto-mode-alist lst))
         '(("\\.js$"                             . js2-mode)
           ("\\.julius$"                         . js2-mode)
-          ("\\.\\(xml\\|rdf\\)\\'"              . sgml-mode)
+          ("\\.\\(xml\\|rdf\\)\\'"              . nxml-mode) ; sgml-mode
           ("\\.css\\'"                          . css-mode)
           ("\\.\\(emacs\\|session\\|gnus\\)\\'" . emacs-lisp-mode)
           ("\\.\\(jl\\|sawfishrc\\)\\'"         . sawfish-mode)
