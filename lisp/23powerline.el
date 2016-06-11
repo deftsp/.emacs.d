@@ -306,6 +306,9 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
 
                     ,(funcall separator-left buffer-id-face face2)
 
+                    ,(when (bound-and-true-p nyan-mode)
+                       (powerline-raw (list (nyan-create) face2 'l)))
+
                     ,(powerline-raw " " face2)
                     ,(powerline-raw " " face2)
                     ,(powerline-recursive-left face2)

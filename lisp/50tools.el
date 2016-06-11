@@ -1415,4 +1415,10 @@ such character is found, following options are shown:
 (when (fboundp 'beacon-mode)
   (beacon-mode +1))
 
+;;; nyan-mode
+;; https://github.com/TeMPOraL/nyan-mode
+;; (nyan-mode +1)
+;; (setq nyan-animate-nyancat t)
+
+
 (provide '50tools)
