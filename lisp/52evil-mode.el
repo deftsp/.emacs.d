@@ -210,6 +210,7 @@ to previous saved state, or simply change evil-state to emacs."
 ;; window at the same time, which results in recording a macro instead of closing the window.
 (define-key evil-normal-state-map (kbd "q") nil) ; `q' is binded to `evil-record-macro'
 
+
 ;;;
 ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
 (define-key evil-insert-state-map "\C-v" nil)
@@ -690,6 +691,14 @@ to replace the symbol under cursor"
 
 (define-key evil-visual-state-map (kbd ">") 'pl/shift-right-visual)
 (define-key evil-visual-state-map (kbd "<") 'pl/shift-left-visual)
+
+;;; auto insert blank in between Chinese and English
+(define-key evil-visual-state-map "g " 'evil/add-blank-between-chinese-and-english)
+
+(defun evil/add-blank-between-chinese-and-english ()
+  (interactive)
+  (pl/add-blank-between-chinese-and-english (region-beginning) (region-end))
+  (evil-normal-state))
 
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
