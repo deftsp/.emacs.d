@@ -96,8 +96,12 @@
   (local-set-key (kbd "C-j") 'newline-and-indent)
 
   (subword-mode +1)
-  (anaconda-mode +1)
   (eldoc-mode +1)
+
+  (when (fboundp 'anaconda-mode)
+    (anaconda-mode +1)
+    (anaconda-eldoc-mode +1))
+
   (smartparens-mode +1)
 
   (semantic-mode +1)
