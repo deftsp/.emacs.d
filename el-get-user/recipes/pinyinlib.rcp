@@ -1,0 +1,4 @@
+(:name pinyinlib
+       :description "Elisp library for converting first letter of Pinyin to Simplified/Traditional Chinese characters"
+       :type github
+       :pkgname "cute-jumper/pinyinlib.el")

@@ -1,0 +1,4 @@
+(:name ace-pinyin
+       :description "Jump to Chinese character by pinyin with `ace-jump-mode' or `avy'"
+       :type github
+       :pkgname "cute-jumper/ace-pinyin")
