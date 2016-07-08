@@ -13,7 +13,7 @@
   (setq initial-frame-alist `((tool-bar-lines . 0)
                               ;; FIXME: https://github.com/railwaycat/emacs-mac-port/issues/79
                               (menu-bar-lines . ,(if (eq window-system 'mac) 1 0))
-                              (width . 202)
+                              (width . 201)
                               (height . 51)
                               (top . 22) ; (frame-parameter nil 'top)
                               (left . 0)
