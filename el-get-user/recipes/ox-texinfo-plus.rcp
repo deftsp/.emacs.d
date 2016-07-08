@@ -1,0 +1,4 @@
+(:name ox-texinfo-plus
+       :description "Extended Texinfo Back-End for Org Export Engine"
+       :type github
+       :pkgname "tarsius/ox-texinfo-plus")
