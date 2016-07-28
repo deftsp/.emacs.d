@@ -15,6 +15,7 @@
 ;; it's background and foreground. Defining vc-state-base-face not to inherit
 ;; will slove that.
 (require 'powerline nil t)
+(require 's)
 
 (defvar powerline-git-state-mark-modeline t
   "When t git state mark on will work with powrline instead of in the front of
@@ -100,14 +101,16 @@ mouse-1: Display Line and Column Mode Menu")
   (window-parameter (selected-window) 'ace-window-path))
 
 (defpowerline pl/powerline-vc
-  (let ((vc-mark (char-to-string #xe0a0)))
-    (if (and (buffer-file-name (current-buffer)) vc-mode)
-        (if window-system
-            (let ((backend (vc-backend (buffer-file-name (current-buffer)))))
-              (when backend
-                (concat " " vc-mark " " (vc-working-revision (buffer-file-name (current-buffer)) backend))))
-          (format-mode-line '(vc-mode vc-mode)))
-      (concat " " vc-mark " untracked "))))
+  (if (and buffer-file-name vc-mode)
+      (let ((vc-mark (char-to-string #xe0a0))
+            (backend (vc-backend buffer-file-name)))
+        (if (and window-system (not powerline-gui-use-vcs-glyph))
+            (format " %s %s: %s"
+                    vc-mark
+                    backend
+                    (s-left 7 (vc-working-revision buffer-file-name)))
+          (format-mode-line '(vc-mode vc-mode))))
+    (format " %s untracked " vc-mark)))
 
 (defface powerline-evil-insert-face
   '((((class color))
