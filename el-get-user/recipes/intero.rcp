@@ -1,0 +1,6 @@
+(:name intero
+       :description "Complete interactive development program for Haskell"
+       :type github
+       :pkgname "commercialhaskell/intero"
+       :depends (haskell-mode dash company-mode flycheck cl-lib)
+       :load-path "elisp")
