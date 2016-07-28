@@ -20,13 +20,16 @@
      (setq haskell-process-log t
            haskell-font-lock-symbols nil ; disabled because it will casue alignment problem
            haskell-process-path-cabal (expand-file-name "~/.cabal/bin/cabal")
-           haskell-process-type 'cabal-repl  ; 'cabal-dev
            haskell-stylish-on-save nil ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
            haskell-notify-p t)
 
      (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
      (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
      (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
+
+     ;; use stack instead cabal
+     (setq haskell-compile-cabal-build-command "stack build")
+     (setq haskell-process-type 'auto) ; alternative: cabal-repl or cabal-dev
 
 
      (define-key haskell-mode-map (kbd "C-c v c") 'haskell-cabal-visit-file)
@@ -91,9 +94,13 @@
 ;;; haskell mode hook
 (add-hook 'haskell-mode-hook 'pl/haskell-mode-setup)
 (defun pl/haskell-mode-setup ()
-  (ghc-init) ; ghc-mod
-  ;; (when (buffer-file-name (current-buffer)) (flymake-mode))
-  ; do not use flycheck to do syntax check
+  (when (fboundp 'intero-mode)
+    (intero-mode +1))
+  ;; (when (buffer-file-name (current-buffer))
+  ;;   (flymake-mode))
+
+  ;; (ghc-init) ; ghc-mod
+
   (add-to-list 'flycheck-disabled-checkers 'haskell-ghc)
   (add-to-list 'flycheck-disabled-checkers 'haskell-hlint)
 
