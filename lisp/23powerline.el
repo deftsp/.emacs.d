@@ -101,16 +101,15 @@ mouse-1: Display Line and Column Mode Menu")
   (window-parameter (selected-window) 'ace-window-path))
 
 (defpowerline pl/powerline-vc
-  (if (and buffer-file-name vc-mode)
-      (let ((vc-mark (char-to-string #xe0a0))
-            (backend (vc-backend buffer-file-name)))
+  (let ((vc-mark (char-to-string #xe0a0)))
+    (if (and buffer-file-name vc-mode)
         (if (and window-system (not powerline-gui-use-vcs-glyph))
             (format " %s %s: %s"
                     vc-mark
-                    backend
+                    (vc-backend buffer-file-name)
                     (s-left 7 (vc-working-revision buffer-file-name)))
-          (format-mode-line '(vc-mode vc-mode))))
-    (format " %s untracked " vc-mark)))
+          (format-mode-line '(vc-mode vc-mode)))
+      (format " %s untracked " vc-mark))))
 
 (defface powerline-evil-insert-face
   '((((class color))
