@@ -21,7 +21,8 @@
                               (mouse-color . "gray80")
                               (right-fringe . 0) ; do not show right fringe
                               ;; (scroll-bar-width . 12)
-                              (vertical-scroll-bars . right))
+                              ;; (vertical-scroll-bars . right)
+                              (vertical-scroll-bars . nil))
 
         ;; default-frame-alist is defined in terms of initial-frame-alist.  Don't
         ;; use copy-sequence here -- it doesn't copy the list elements, just the
