@@ -66,6 +66,9 @@
    `(region ((t (:foreground unspecified :background "#244252"))))
    '(secondary-selection ((t (:foreground unspecified :background "#485c60"))))
 
+   ;; the split line of two window
+   `(vertical-border ((t (:foreground ,base02))))
+
    ;; powerline
    `(powerline-active1 ((t (:background "#6b6b6b" :foreground "#fefefe" :inherit mode-line))))
    ;; `(powerline-active2 ((t (:background "#585858" :foreground "#adadad" :inherit mode-line))))
@@ -89,8 +92,6 @@
 
    ;; vc
    `(vc-state-base-face ((t (:background unspecified :foreground ,base0))))
-
-   ;; `(vertical-border ((t (:foreground ,base2))))
 
    ;; tooltip
    '(tooltip ((t (:foreground "#111111" :background "#bcc8dd"))))
