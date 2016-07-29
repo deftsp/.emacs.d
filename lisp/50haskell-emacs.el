@@ -10,7 +10,8 @@
 ;; https://github.com/knupfer/haskell-emacs
 ;; cabal "install" "--allow-newer=deepseq,blaze-builder" "atto-lisp"
 (setq haskell-emacs-dir "~/.emacs.d/haskell-emacs-exts/")
-(haskell-emacs-init)
+
+;; (haskell-emacs-init)
 
 
 (provide '50haskell-emacs)
