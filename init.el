@@ -4,16 +4,18 @@
 ;; site-start.el --> .emacs --> default.el and terminal type file.
 
 ;; I use the Common Lisp stuff all the time
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-(package-initialize)
-
 (require 'cl-lib)
 
-;; First, avoid the evil:
+;;; package
+(setq package-archives
+      '(("marmalade" . "https://marmalade-repo.org/packages/")
+        ("gnu" . "https://elpa.gnu.org/packages/")
+        ("melpa" . "https://melpa.org/packages/")
+        ("elpy" . "https://jorgenschaefer.github.io/packages/")
+        ("org" . "http://orgmode.org/elpa/")))
+
+(package-initialize)
+
 (when (featurep 'xemacs)
   (error "This .emacs file (probably) does not work with XEmacs."))
 
