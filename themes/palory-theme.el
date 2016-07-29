@@ -82,7 +82,7 @@
    '(powerline-evil-emacs-face ((t (:foreground "#383838" :background "#7cfa42" :weight bold :inherit mode-line))))
    '(powerline-evil-replace-face ((t (:foreground "#383838" :background "orchid" :weight bold :inherit mode-line))))
    '(powerline-evil-operator-face ((t (:foreground "#383838" :background "maroon" :weight bold :inherit mode-line))))
-   `(powerline-file-base-info-face ((t (:background ,base01 :foreground "#fefefe" :inherit mode-line))))
+   `(powerline-file-base-info-face ((t (:background ,base00 :foreground "#fefefe" :inherit mode-line))))
    `(powerline-buffer-id-face ((t (:background ,base02 :foreground "#fefefe" :inherit mode-line))))
    `(powerline-vc-face ((t (:background ,base01 :foreground "#f4bb66" :inherit mode-line))))
    `(powerline-workgroups-face ((t (:background "#778899" :foreground "#0a3540" :inherit mode-line))))
