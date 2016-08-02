@@ -25,6 +25,7 @@
 ;;; base on zenburn and solarized
 ;; https://github.com/bbatsov/zenburn-emacs/blob/master/zenburn-theme.el and
 ;; https://github.com/sellout/emacs-color-theme-solarized
+;; see also https://github.com/purcell/color-theme-sanityinc-solarized
 
 ;; the easy way to get following vlaue is: `customize face' => Apply and save => copy and paste
 
@@ -326,6 +327,12 @@
    '(git-gutter-fr:modified ((t (:foreground "Magenta"))))
    '(git-gutter-fr:added ((t (:foreground "cyan"))))
    '(git-gutter-fr:deleted ((t (:foreground "white"))))
+
+   ;; diff-hl
+   `(diff-hl-insert ((t (:foreground ,green :background ,green))))
+   `(diff-hl-change ((t (:foreground ,blue :background ,blue))))
+   `(diff-hl-delete ((t (:foreground ,yellow :background ,yellow))))
+   `(diff-hl-unknown ((t (:foreground)) ,violet :background ,violet))
 
    ;; structured-haskell-mode
    '(shm-current-face ((t (:background "#222222"))))
