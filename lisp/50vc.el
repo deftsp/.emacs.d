@@ -241,6 +241,9 @@
 (with-eval-after-load "diff-hl"
   (global-diff-hl-mode +1))
 
+(with-eval-after-load "magit"
+  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+
 ;;; git-gutter
 ;; https://github.com/syohex/emacs-git-gutter-fringe
 ;; it makes split window very slow, disable now
