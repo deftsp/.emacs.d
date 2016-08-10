@@ -408,9 +408,6 @@ to previous saved state, or simply change evil-state to emacs."
         (haskell-interactive-mode  . insert)
         (Info-mode                 . emacs)
         (message-mode              . emacs)
-        (magit-commit-mode         . normal)
-        (magit-log-edit-mode       . emacs)
-        (magit-branch-manager-mode . emacs)
         (nrepl-mode                . insert)
         (weibo-timeline-mode       . emacs)
         (weibo-post-mode           . emacs)
@@ -421,6 +418,8 @@ to previous saved state, or simply change evil-state to emacs."
         (speedbar-mode             . emacs)
         (yari-mode                 . emacs))
       do (evil-set-initial-state mode state))
+
+(add-to-list 'evil-emacs-state-modes 'org-drill-mode)
 
 ;; (define-key evil-motion-state-map "f" 'jump-char-forward)
 ;; (define-key evil-motion-state-map "F" 'jump-char-backward)
