@@ -19,7 +19,7 @@
 
 ;;; add commentaires keywords
 ;; use wcheck-mode insead now
-;; (defun pl/font-lock-add-commentaires-keywords (m)
+;; (defun paloryemacs/font-lock-add-commentaires-keywords (m)
 ;;   (font-lock-add-keywords m '(("\\<\\(FIXME\\):" 1 font-lock-warning-face prepend)
 ;;                               ("\\<\\(XXX+\\):" 1 font-lock-warning-face prepend)
 ;;                               ("\\<\\(TODO\\):" 1 font-lock-warning-face prepend)
@@ -35,16 +35,16 @@
 ;;                               ("^[^\n]\\{121\\}\\(.*\\)$" 1 font-lock-warning-face t))))
 
 
-;; (pl/font-lock-add-commentaires-keywords 'emacs-lisp-mode)
+;; (paloryemacs/font-lock-add-commentaires-keywords 'emacs-lisp-mode)
 
 ;; (eval-after-load "scheme"
 ;;   '(progn
-;;     (pl/font-lock-add-commentaires-keywords 'scheme-mode)))
+;;     (paloryemacs/font-lock-add-commentaires-keywords 'scheme-mode)))
 
 (eval-after-load "cc-mode"
   '(progn
      ;; (dolist (m '(c-mode objc-mode c++-mode))        ; Colorisation : C/C++/Object-C : Commentaires
-     ;; (pl/font-lock-add-commentaires-keywords m))
+     ;; (paloryemacs/font-lock-add-commentaires-keywords m))
      (dolist (type (list "UCHAR" "USHORT" "ULONG" "BOOL" "BOOLEAN" "LPCTSTR" "C[A-Z]\\sw+" "\\sw+_t"))
        (add-to-list 'c-font-lock-extra-types type))))
 
@@ -70,8 +70,8 @@
 ;;; comment current line
 ;; Original idea from
 ;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
-(global-set-key (kbd "M-;") 'pl/comment-dwim)
-(defun pl/comment-dwim (&optional arg)
+(global-set-key (kbd "M-;") 'paloryemacs/comment-dwim)
+(defun paloryemacs/comment-dwim (&optional arg)
   "Replacement for the comment-dwim command.
         If no region is selected and current line is not blank and we are not at the end of the line,
         then comment current line.
@@ -85,14 +85,14 @@
 
 
 ;;; aggressive-indent-mode
-(defun pl/turn-on-aggressive-indent-mode ()
+(defun paloryemacs/turn-on-aggressive-indent-mode ()
   (aggressive-indent-mode +1))
 
 (when (fboundp 'global-aggressive-indent-mode )
   (dolist (l '(c-mode-common-hook ; all CC Mode modes for common initializations
                scheme-mode-hook
                emacs-lisp-mode-hook))
-    (add-to-list l #'pl/turn-on-aggressive-indent-mode)))
+    (add-to-list l #'paloryemacs/turn-on-aggressive-indent-mode)))
 
 ;;; highlight-symbol
 (when (fboundp 'highlight-symbol-mode)
@@ -114,7 +114,7 @@
 
 ;;; inset file variable
 ;; insert -*- MODENAME -*- tag
-(defun pl/insert-file-variable ()
+(defun paloryemacs/insert-file-variable ()
   "Insert file variable string \"-*- Major-Mode-Name -*-\" with
   comment char"
   (interactive)
@@ -241,7 +241,7 @@
 ;;          (cons "\\(\\.\\.\\)" 'horizontal-ellipsis))))
 
 
-;; (defun pl/fonts-replace ()
+;; (defun paloryemacs/fonts-replace ()
 ;;   (interactive)
 ;;   (substitute-patterns-with-unicode
 ;;    (list (cons "\\(<\\)" 'less-than)
@@ -252,14 +252,14 @@
 ;;----------------------------------------------------------------------------------------------------
 
 ;;; pretty lambda
-;; (defun pl/pretty-lambdas ()
+;; (defun paloryemacs/pretty-lambdas ()
 ;;   (font-lock-add-keywords
 ;;    nil `(("(?\\(lambda\\>\\)"
 ;;           (0 (progn (compose-region (match-beginning 1) (match-end 1)
 ;;                                     ,(make-char 'greek-iso8859-7 107))
 ;;                     nil))))))
 
-;; (add-hook 'prog-mode-hook 'pl/pretty-lambdas)
+;; (add-hook 'prog-mode-hook 'paloryemacs/pretty-lambdas)
 
 ;; function to comment a region using #if 0 -----------------------------------
 ;; (defun if0-region (p1 p2)
@@ -290,10 +290,10 @@
 ;; (define-key global-map [?\C-h ?\C-j] 'gtk-lookup-symbol)
 
 ;;; sgml-mode
-(defun pl/init-sgml-mode ()
+(defun paloryemacs/init-sgml-mode ()
   (outline-minor-mode +1))
 
 (with-eval-after-load "sgml-mode"
-  (add-hook 'sgml-mode-hook 'pl/init-sgml-mode))
+  (add-hook 'sgml-mode-hook 'paloryemacs/init-sgml-mode))
 
 (provide '50major-modes)

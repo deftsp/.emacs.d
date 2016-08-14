@@ -37,7 +37,7 @@
 ;; set-window-dedicated-p
 ;; When a window is dedicated to its buffer, `display-buffer' will refrain
 ;; from displaying another buffer in it.
-(defun pl/toggle-current-window-dedication ()
+(defun paloryemacs/toggle-current-window-dedication ()
   (interactive)
   (let* ((window (selected-window))
          (dedicated (window-dedicated-p window)))
@@ -46,7 +46,7 @@
              (if dedicated "no longer " "")
              (buffer-name))))
 
-(define-key ctl-x-4-map (kbd "C-d") 'pl/toggle-current-window-dedication)
+(define-key ctl-x-4-map (kbd "C-d") 'paloryemacs/toggle-current-window-dedication)
 
 ;;; window extension
 ;; http://www.emacswiki.org/emacs/window-extension.el
@@ -68,8 +68,8 @@
 
 ;;; switch between horizontal and vertical layout of two windows
 ;; base on http://whattheemacsd.com/buffer-defuns.el-03.html
-(global-set-key (kbd "C-x !") 'pl/toggle-window-split)
-(defun pl/toggle-window-split ()
+(global-set-key (kbd "C-x !") 'paloryemacs/toggle-window-split)
+(defun paloryemacs/toggle-window-split ()
   (interactive)
   (cond ((not (= (count-windows) 2))
          (message "You need exactly 2 windows to do this."))
@@ -96,22 +96,22 @@
              (select-window first-win)
              (if this-win-2nd (other-window 1)))))))
 
-(defun pl/vsplit-last-buffer (prefix)
+(defun paloryemacs/vsplit-last-buffer (prefix)
   "Split the window vertically and display the previous buffer."
   (interactive "p")
   (split-window-vertically)
   (other-window 1 nil)
   (when (= prefix 1) (switch-to-next-buffer)))
 
-(defun pl/hsplit-last-buffer (prefix)
+(defun paloryemacs/hsplit-last-buffer (prefix)
   "Split the window horizontally and display the previous buffer."
   (interactive "p")
   (split-window-horizontally)
   (other-window 1 nil)
   (when (= prefix 1) (switch-to-next-buffer)))
 
-(global-set-key (kbd "C-x 2") 'pl/vsplit-last-buffer)
-(global-set-key (kbd "C-x 3") 'pl/hsplit-last-buffer)
+(global-set-key (kbd "C-x 2") 'paloryemacs/vsplit-last-buffer)
+(global-set-key (kbd "C-x 3") 'paloryemacs/hsplit-last-buffer)
 
 
 ;;; for wide-screen display
@@ -169,10 +169,10 @@
 ;;             (add-to-list 'special-display-buffer-names buffer-name))
 ;;         (list "*Ido Completions*" "*Completions*"))
 
-;; (setq special-display-function 'pl/display-special-buffer-popup)
+;; (setq special-display-function 'paloryemacs/display-special-buffer-popup)
 ;; (add-to-list 'special-display-regexps ".*")  ; match any window
 
-;; (defun pl/display-special-buffer-popup (buffer &optional args)
+;; (defun paloryemacs/display-special-buffer-popup (buffer &optional args)
 ;;   "put the special buffers in the bottom right"
 ;;   ;; The top left corner of the frame is considered to be row 0,
 ;;   ;; column 0.
@@ -196,7 +196,7 @@
 ;; also quits the unfinished command immediately.
 
 ;;; ",r" key-chord
-(defun pl/recursive-edit-save-window-config ()
+(defun paloryemacs/recursive-edit-save-window-config ()
   (interactive)
   (save-window-excursion
     (save-excursion
@@ -208,13 +208,13 @@
 ;; wrote this macro:
 
 ;; inspired by Erik Naggum's `recursive-edit-with-single-window'
-(defmacro pl/recursive-edit-preserving-window-config (body)
+(defmacro paloryemacs/recursive-edit-preserving-window-config (body)
   "*Return a command that enters a recursive edit after executing BODY.
  Upon exiting the recursive edit (with \\[exit-recursive-edit] (exit)
  or \\[abort-recursive-edit] (abort)), restore window configuration
  in current frame."
   `(lambda ()
-     "See the documentation for `pl/recursive-edit-preserving-window-config'."
+     "See the documentation for `paloryemacs/recursive-edit-preserving-window-config'."
      (interactive)
      (save-window-excursion
        ,body
@@ -222,12 +222,12 @@
 
 ;; Use it like this:
 
-(global-set-key (kbd "C-c 0") (pl/recursive-edit-preserving-window-config (delete-window)))
-(global-set-key (kbd "C-c 2") (pl/recursive-edit-preserving-window-config
+(global-set-key (kbd "C-c 0") (paloryemacs/recursive-edit-preserving-window-config (delete-window)))
+(global-set-key (kbd "C-c 2") (paloryemacs/recursive-edit-preserving-window-config
                                (split-window-vertically 20)))
-(global-set-key (kbd "C-c 3") (pl/recursive-edit-preserving-window-config
+(global-set-key (kbd "C-c 3") (paloryemacs/recursive-edit-preserving-window-config
                                (split-window-horizontally -52)))
-(global-set-key (kbd "C-c 1") (pl/recursive-edit-preserving-window-config
+(global-set-key (kbd "C-c 1") (paloryemacs/recursive-edit-preserving-window-config
                                (if (one-window-p 'ignore-minibuffer)
                                    (message "Current window is the only window in its frame")
                                  (delete-other-windows))))
@@ -248,7 +248,7 @@
 
 (require 'ace-window nil t)
 
-(defvar pl/aw-mode-line-format "♯%s")
+(defvar paloryemacs/aw-mode-line-format "♯%s")
 
 (defadvice aw-update (around format-ace-window-path activate)
   "add customization for ace window path"
@@ -258,7 +258,7 @@
      (set-window-parameter
       leaf 'ace-window-path
       (propertize
-       (format pl/aw-mode-line-format
+       (format paloryemacs/aw-mode-line-format
                (upcase (apply #'string (reverse path))))
        'face 'aw-mode-line-face)))))
 ;; (ad-deactivate 'aw-update)
@@ -288,15 +288,15 @@
 ;;      (add-to-list 'golden-ratio-exclude-modes "w3m-select-buffer-mode")
 ;;      (add-to-list 'golden-ratio-exclude-modes "w3m-mode")
 ;;      (add-to-list 'golden-ratio-exclude-modes "org-mode")
-;;      (add-to-list 'golden-ratio-inhibit-functions 'pl/helm-alive-p)
+;;      (add-to-list 'golden-ratio-inhibit-functions 'paloryemacs/helm-alive-p)
 ;;      (require 'ediff nil t)
 ;;      (if (boundp 'ediff-this-buffer-ediff-sessions)
-;;          (add-to-list 'golden-ratio-inhibit-functions 'pl/ediff-comparison-buffer-p))))
+;;          (add-to-list 'golden-ratio-inhibit-functions 'paloryemacs/ediff-comparison-buffer-p))))
 
-(defun pl/ediff-comparison-buffer-p ()
+(defun paloryemacs/ediff-comparison-buffer-p ()
   ediff-this-buffer-ediff-sessions)
 
-(defun pl/helm-alive-p ()
+(defun paloryemacs/helm-alive-p ()
   (if (boundp 'helm-alive-p)
       (symbol-value 'helm-alive-p)))
 
@@ -319,7 +319,7 @@
 ;;   (popwin-mode 1))
 
 ;;; toggle full window
-(defun pl/toggle-full-window()
+(defun paloryemacs/toggle-full-window()
   "Toggle the full view of selected window"
   (interactive)
   ;; @see http://www.gnu.org/software/emacs/manual/html_node/elisp/Splitting-Windows.html
@@ -431,9 +431,10 @@ You can use arrow-keys or HJKL.
      ("d" ace-delete-window "del")
      ("x" delete-window)
      ("i" ace-maximize-window "ace-one")
-     ("b" ido-switch-buffer "buf")
+     ;; ("b" ido-switch-buffer "buf")
+     ("b" ivy-switch-buffer "buf")
      ("m" bookmark-jump "bmk")
-     ("f" pl/toggle-full-window "full-window")
+     ("f" paloryemacs/toggle-full-window "full-window")
      ("F" toggle-frame-maximized "frame max")
      ("M-f" toggle-frame-fullscreen "frame fullscreen")
 

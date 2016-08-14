@@ -28,7 +28,7 @@
   "etags source")
 
 
-(defun pl/auto-complete-settings ()
+(defun paloryemacs/auto-complete-settings ()
   "Settings for `auto-complete'."
   (add-to-list 'ac-modes 'objc-mode) ; add objc-mode to ac-modes
   (add-to-list 'ac-modes 'org-mode)
@@ -72,7 +72,7 @@
   (define-key ac-completing-map "\C-p" 'ac-previous))
 
 
-(defun pl/ac-c-mode-common-setup ()
+(defun paloryemacs/ac-c-mode-common-setup ()
   ;; (add-to-list 'ac-sources 'ac-source-company-xcode)
   ;; (add-to-list 'ac-sources 'ac-source-clang)
   ;; (add-to-list 'ac-sources 'ac-source-gtags)
@@ -80,15 +80,15 @@
   (add-to-list 'ac-sources 'ac-source-yasnippet)
   (add-to-list 'ac-sources 'ac-source-semantic))
 
-(add-hook 'c-mode-common-hook 'pl/ac-c-mode-common-setup)
-(add-hook 'org-mode-hook 'pl/ac-c-mode-common-setup)
+(add-hook 'c-mode-common-hook 'paloryemacs/ac-c-mode-common-setup)
+(add-hook 'org-mode-hook 'paloryemacs/ac-c-mode-common-setup)
 
 (add-hook 'lisp-interaction-mode 'ac-emacs-lisp-mode-setup)
 
-(defun pl/ac-haskell-mode-setup ()
+(defun paloryemacs/ac-haskell-mode-setup ()
   (add-to-list 'ac-sources 'ac-source-ghc-mod))
 
-(add-hook 'haskell-mode-hook 'pl/ac-haskell-mode-setup)
+(add-hook 'haskell-mode-hook 'paloryemacs/ac-haskell-mode-setup)
 
 ;;; Scheme
 (require 'scheme-complete nil t)
@@ -99,41 +99,41 @@
                         (all-completions ac-target (car (scheme-current-env))))))
       "Source for scheme keywords.")))
 
-(defun pl/ac-scheme-mode-setup ()
+(defun paloryemacs/ac-scheme-mode-setup ()
   (if (fboundp 'scheme-current-env)
       (add-to-list 'ac-sources 'ac-source-scheme))
   (add-to-list 'ac-sources 'ac-source-yasnippet))
 
-(add-hook 'scheme-mode-hook 'pl/ac-scheme-mode-setup)
+(add-hook 'scheme-mode-hook 'paloryemacs/ac-scheme-mode-setup)
 
 ;;; Clojure
-(defun pl/ac-clojure-mode-setup ()
+(defun paloryemacs/ac-clojure-mode-setup ()
   (add-to-list 'ac-sources 'ac-source-nrepl-all-classes)
   (add-to-list 'ac-sources 'ac-source-nrepl-java-methods)
   (add-to-list 'ac-sources 'ac-source-nrepl-ns)
   (add-to-list 'ac-sources 'ac-source-nrepl-ns-classes)
   (add-to-list 'ac-sources 'ac-source-nrepl-vars)
   (add-to-list 'ac-sources 'ac-source-nrepl-static-methods))
-(add-hook 'clojure-mode-hook 'pl/ac-clojure-mode-setup)
-(add-hook 'nrepl-mode-hook 'pl/ac-clojure-mode-setup)
+(add-hook 'clojure-mode-hook 'paloryemacs/ac-clojure-mode-setup)
+(add-hook 'nrepl-mode-hook 'paloryemacs/ac-clojure-mode-setup)
 
 ;;; Ruby
-(defun pl/ac-ruby-mode-setup ()
+(defun paloryemacs/ac-ruby-mode-setup ()
   (add-to-list 'ac-sources 'ac-source-rsense-method)
   (add-to-list 'ac-sources 'ac-source-rsense-constant))
 
-(add-hook 'ruby-mode-hook 'pl/ac-ruby-mode-setup)
+(add-hook 'ruby-mode-hook 'paloryemacs/ac-ruby-mode-setup)
 
 ;;; Python
-(defun pl/ac-python-mode-setup ()
+(defun paloryemacs/ac-python-mode-setup ()
   (add-to-list 'ac-sources 'ac-source-ropemacs))
-(add-hook 'python-mode-hook 'pl/ac-python-mode-setup)
+(add-hook 'python-mode-hook 'paloryemacs/ac-python-mode-setup)
 
 (eval-after-load "auto-complete"
   '(progn
      (require 'auto-complete-config)
      (require 'auto-complete-clang)
-     (pl/auto-complete-settings)
+     (paloryemacs/auto-complete-settings)
      (ac-config-default)))
 
 

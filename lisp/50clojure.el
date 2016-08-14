@@ -6,7 +6,7 @@
 
 ;; install clojure-mode and cider with el-get
 
-(defun pl/clojure-mode-init ()
+(defun paloryemacs/clojure-mode-init ()
   (when (fboundp 'rainbow-delimiters-mode)
     (rainbow-delimiters-mode +1))
   ;; indentation
@@ -17,10 +17,10 @@
   (smartparens-strict-mode +1))
 
 (with-eval-after-load "clojure-mode"
-  (add-hook 'clojure-mode-hook 'pl/clojure-mode-init))
+  (add-hook 'clojure-mode-hook 'paloryemacs/clojure-mode-init))
 
 
-(defun pl/cider-mode-init ()
+(defun paloryemacs/cider-mode-init ()
   (setq nrepl-log-messages t
         ;; hide the *nrepl-connection* and *nrepl-server* buffers from appearing
         ;; in some buffer switching commands like switch-to-buffer
@@ -41,7 +41,7 @@
   (cider-turn-on-eldoc-mode +1))
 
 (with-eval-after-load "cider"
-  (add-hook 'cider-mode-hook 'pl/cider-mode-init))
+  (add-hook 'cider-mode-hook 'paloryemacs/cider-mode-init))
 
 
 (provide '50clojure)

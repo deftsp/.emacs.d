@@ -84,7 +84,7 @@
 
 
 ;; http://oremacs.com/2014/12/21/helm-backspace/
-(defun pl/helm-backspace ()
+(defun paloryemacs/helm-backspace ()
   "Forward to `backward-delete-char'.
 On error (read-only), quit without selecting."
   (interactive)
@@ -95,7 +95,7 @@ On error (read-only), quit without selecting."
 
 (eval-after-load "helm"
   '(progn
-     (define-key helm-map (kbd "DEL") 'pl/helm-backspace)
+     (define-key helm-map (kbd "DEL") 'paloryemacs/helm-backspace)
      (define-key helm-map (kbd "M-j") 'helm-next-line)
      (define-key helm-map (kbd "M-k") 'helm-previous-line)))
 

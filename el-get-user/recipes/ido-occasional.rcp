@@ -1,0 +1,4 @@
+(:name ido-occasional
+       :description "Use ido where you choose."
+       :type github
+       :pkgname "abo-abo/ido-occasional")

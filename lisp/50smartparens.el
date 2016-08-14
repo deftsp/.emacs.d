@@ -103,13 +103,13 @@
 (sp-with-modes sp--lisp-modes
   (sp-local-pair "(" nil :bind "C-("))
 
-;; (defun pl/sp-lisp-binding (map)
+;; (defun paloryemacs/sp-lisp-binding (map)
 ;;   (define-key map (kbd "M-s") 'sp-splice-sexp)
 ;;   (define-key map (kbd "M-S") 'sp-split-sexp)
 ;;   (define-key map (kbd "M-r") 'sp-splice-sexp-killing-around))
 
-;; (pl/sp-lisp-binding lisp-mode-map)
-;; (pl/sp-lisp-binding emacs-lisp-mode-map)
+;; (paloryemacs/sp-lisp-binding lisp-mode-map)
+;; (paloryemacs/sp-lisp-binding emacs-lisp-mode-map)
 
 
 (provide '50smartparens)

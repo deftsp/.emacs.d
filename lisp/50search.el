@@ -24,10 +24,10 @@
 ;;; search at point
 ;; Many times you'll want to search for the word or expression at the point.
 ;; Here is a feature stolen from vi:
-(global-set-key (kbd "<f7>")  'pl/isearch-forward-current-symbol-keep-offset)
-(global-set-key (kbd "<f8>") 'pl/isearch-backward-current-symbol-keep-offset)
+(global-set-key (kbd "<f7>")  'paloryemacs/isearch-forward-current-symbol-keep-offset)
+(global-set-key (kbd "<f8>") 'paloryemacs/isearch-backward-current-symbol-keep-offset)
 
-(defun pl/isearch-forward-current-symbol-keep-offset ()
+(defun paloryemacs/isearch-forward-current-symbol-keep-offset ()
   (interactive)
   (let* ((curword (thing-at-point 'symbol))
          (opoint (point))
@@ -48,7 +48,7 @@
           (goto-char opoint)
           (message "Searching from top: Not found"))))))
 
-(defun pl/isearch-backward-current-symbol-keep-offset ()
+(defun paloryemacs/isearch-backward-current-symbol-keep-offset ()
   (interactive)
   (let* ((curword (thing-at-point 'symbol))
          (opoint (point))
@@ -77,9 +77,9 @@
 ;; for:
 
 ;; Always end searches at the beginning of the matching expression.
-(add-hook 'isearch-mode-end-hook 'pl/custom-goto-match-beginning)
+(add-hook 'isearch-mode-end-hook 'paloryemacs/custom-goto-match-beginning)
 
-(defun pl/custom-goto-match-beginning ()
+(defun paloryemacs/custom-goto-match-beginning ()
   "Use with isearch hook to end search at first char of match."
   (if isearch-other-end
       (when isearch-forward (goto-char isearch-other-end))))
@@ -129,7 +129,7 @@
 
 ;;; query-replace-regexp
 ;; http://emacs-journey.blogspot.tw/2012/06/re-builder-query-replace-this.html
-(defun pl/reb-query-replace-this-regxp (replace)
+(defun paloryemacs/reb-query-replace-this-regxp (replace)
   "Uses the regexp built with re-builder to query the target buffer.
 This function must be run from within the re-builder buffer, not the target
 buffer.
@@ -146,7 +146,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
       (message "Not in a re-builder buffer!")))
 
 (eval-after-load "re-builder"
-  '(define-key reb-mode-map "\C-c\M-%" 'pl/reb-query-replace-this-regxp))
+  '(define-key reb-mode-map "\C-c\M-%" 'paloryemacs/reb-query-replace-this-regxp))
 
 
 
@@ -215,8 +215,16 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 (with-eval-after-load "ivy"
   (setq ivy-display-style 'fancy)
   (setq ivy-use-virtual-buffers t)
-  (define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line-or-history)
-  (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-previous-line-or-history))
+  (define-key ivy-minibuffer-map [escape] 'minibuffer-keyboard-quit)
+  (define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line)
+  (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-previous-line))
+
+;; http://oremacs.com/2016/01/06/ivy-flx/
+;; let flx (hopefully) sort the matches in a nice way
+(setq ivy-initial-inputs-alist nil)
+
+(setq ivy-re-builders-alist
+      '((t . ivy--regex-fuzzy)))
 
 ;; (when (fboundp 'ivy-mode)
 ;;   (ivy-mode 1))
@@ -234,7 +242,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 (global-set-key [f6] 'ivy-resume)
 
 
-(defun pl/swiper-dwim (arg)
+(defun paloryemacs/swiper-dwim (arg)
   "Start swiper with input as the selected region or symbol at point by default.
 C-u     -> `ivy-resume' (resume from where you last left off swiper)
 C-u C-u -> Start swiper without any arguments (stock behavior)"

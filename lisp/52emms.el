@@ -125,7 +125,7 @@
         ((emms-last-played-seconds-year)  . "%m-%d")
         (t                                . "%Y-%m-%d")))
 
-(defun pl/upcase-initials (string)
+(defun paloryemacs/upcase-initials (string)
   "Do `upcase-initials' on STRING, but do not uppercase letters
 that come after quote characters."
   (with-temp-buffer
@@ -152,10 +152,10 @@ after AFTER with '...'"
 
 (eval-after-load 'emms
   '(progn
-    (setq pl/emms-playlist-last-track nil)
-    (setq pl/emms-playlist-last-indent "\\")
+    (setq paloryemacs/emms-playlist-last-track nil)
+    (setq paloryemacs/emms-playlist-last-indent "\\")
 
-    (defun pl/emms-track-description-function (track)
+    (defun paloryemacs/emms-track-description-function (track)
       "Return a description of the current track."
       (let* ((name (emms-track-name track))
              (type (emms-track-type track))
@@ -178,7 +178,7 @@ after AFTER with '...'"
                       (title (or (emms-track-get track 'info-title) short-name))
 
                       ;; last track
-                      (ltrack pl/emms-playlist-last-track)
+                      (ltrack paloryemacs/emms-playlist-last-track)
                       (lartist (or (and ltrack (emms-track-get ltrack 'info-artist))
                                   empty))
                       (lalbum (or (and ltrack (emms-track-get ltrack 'info-album))
@@ -198,9 +198,9 @@ after AFTER with '...'"
                          ;; (format "%s%s%-40s"
                          (prettyfy-string (concat
                                            (if same-album-p ; indention by album
-                                               (setq pl/emms-playlist-last-indent
-                                                     (concat " " pl/emms-playlist-last-indent))
-                                               (setq pl/emms-playlist-last-indent "\\")
+                                               (setq paloryemacs/emms-playlist-last-indent
+                                                     (concat " " paloryemacs/emms-playlist-last-indent))
+                                               (setq paloryemacs/emms-playlist-last-indent "\\")
                                                "")
                                            (if (and tracknumber ; tracknumber
                                                   (not (zerop (string-to-number tracknumber))))
@@ -228,9 +228,9 @@ after AFTER with '...'"
                (format "%-3d%s"
                        play-count
                        (concat (symbol-name type) ":" name))))
-          (setq pl/emms-playlist-last-track track))))
+          (setq paloryemacs/emms-playlist-last-track track))))
     (setq emms-track-description-function
-     'pl/emms-track-description-function)))
+     'paloryemacs/emms-track-description-function)))
 
 
 ;;To get track information from MusicPD, invoke the following:
@@ -277,9 +277,9 @@ after AFTER with '...'"
 ;;                       (emms-playlist-mode-go-popup)
 ;;                       (message "EMMS not started"))))
 
-;; (defun pl/emms-playlist-mode-hook ()
+;; (defun paloryemacs/emms-playlist-mode-hook ()
 ;;   (toggle-truncate-lines 1))
-;; (add-hook 'emms-playlist-mode-hook 'pl/emms-playlist-mode-hook)
+;; (add-hook 'emms-playlist-mode-hook 'paloryemacs/emms-playlist-mode-hook)
 
 
 ;; (global-set-key (kbd "s-m s") 'emms-stream-popup)
@@ -305,7 +305,7 @@ after AFTER with '...'"
 
 (global-set-key (kbd "C-c e b") 'emms-smart-browse)
 
-(global-set-key (kbd "C-c e d") 'pl/playlist-mode-delete-track-at)
+(global-set-key (kbd "C-c e d") 'paloryemacs/playlist-mode-delete-track-at)
 
 (global-set-key (kbd "C-c e <left>")  (lambda () (interactive) (emms-seek -10)))
 (global-set-key (kbd "C-c e <right>") (lambda () (interactive) (emms-seek +10)))
@@ -341,7 +341,7 @@ after AFTER with '...'"
 (define-key emms-playlist-mode-map (kbd "P") 'emms-previous)
 (define-key emms-playlist-mode-map (kbd "E") 'emms-tag-editor-edit)
 (define-key emms-playlist-mode-map (kbd "d") 'emms-playlist-mode-kill-track)
-(define-key emms-playlist-mode-map (kbd "D") 'pl/playlist-mode-delete-track-at)
+(define-key emms-playlist-mode-map (kbd "D") 'paloryemacs/playlist-mode-delete-track-at)
 
 (define-key emms-playlist-mode-map (kbd "n") 'next-line)
 (define-key emms-playlist-mode-map (kbd "p") 'previous-line)
@@ -367,9 +367,9 @@ after AFTER with '...'"
 ;; (define-key emms-playlist-mode-map (kbd "S t") 'emms-score-set-tolerance)
 ;; (define-key emms-playlist-mode-map (kbd "S s") 'emms-score-show-playing)
 ;; (setq emms-playlist-sort-prefix "S")
-;; (define-key emms-playlist-mode-map (kbd "/") 'pl/search)
+;; (define-key emms-playlist-mode-map (kbd "/") 'paloryemacs/search)
 
-;; (defun pl/search ()
+;; (defun paloryemacs/search ()
 ;;   (interactive)
 ;;   (goto-char (point-min))
 ;;   (call-interactively 'isearch-forward))
@@ -388,7 +388,7 @@ after AFTER with '...'"
 
 ;;; Misc
 
-(defun pl/playlist-mode-delete-track-at ()
+(defun paloryemacs/playlist-mode-delete-track-at ()
   "Delete the track at point in emms-playlist buffer"
   (interactive)
   (if (emms-playlist-ensure-playlist-buffer)
@@ -476,7 +476,7 @@ tree."
 
 
 ;;;----------------------------------------------------------------------------------------------------
-(defun pl/emms-lyrics-visit-lyric ()
+(defun paloryemacs/emms-lyrics-visit-lyric ()
   "Visit playing track's lyric file.
 If we can't find it from local disk, then search it from internet."
   (interactive)
@@ -564,7 +564,7 @@ If we can't find it from local disk, then search it from internet."
 
 ;;; mp3 crawler from http://mp3.baidu.com
 (require 'wget nil t)
-(defun pl/mp3-crawler (title)
+(defun paloryemacs/mp3-crawler (title)
   "Download mp3 with TITLE from http://mp3.baidu.com."
   (interactive "sTitle: ")
   (let* ((urlencoded-title (emms-url-quote-plus
@@ -572,9 +572,9 @@ If we can't find it from local disk, then search it from internet."
          (url1 (concat "http://mp3.baidu.com/m?f=ms&rn=&tn=baidump3&ct=134217728&word="
                        urlencoded-title
                        "&lm=0")))
-    (url-retrieve url1 'pl/mp3-crawler-url1-callback (list title))))
+    (url-retrieve url1 'paloryemacs/mp3-crawler-url1-callback (list title))))
 
-(defun pl/mp3-crawler-url1-callback (status title)
+(defun paloryemacs/mp3-crawler-url1-callback (status title)
   (let (url2)
     (goto-char (point-min))
     (search-forward "<td class=tdn>" nil t 1)
@@ -588,10 +588,10 @@ If we can't find it from local disk, then search it from internet."
             (setq url2 (replace-regexp-in-string
                         i (url-hexify-string i) url2)))
           '(";" " "))
-    (url-retrieve url2 'pl/mp3-crawler-url2-callback (list title))
+    (url-retrieve url2 'paloryemacs/mp3-crawler-url2-callback (list title))
     (kill-buffer (current-buffer))))
 
-(defun pl/mp3-crawler-url2-callback (status title)
+(defun paloryemacs/mp3-crawler-url2-callback (status title)
   (let (url3)
     (goto-char (point-min))
     (search-forward "<li class=\"li\" style=\"margin-right:10px;\">" nil t 1)

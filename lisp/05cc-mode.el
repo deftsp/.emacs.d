@@ -21,12 +21,12 @@
 
 
 
-(defun pl/next-c-function ()
+(defun paloryemacs/next-c-function ()
   "Go to start of next C function."
   (interactive)
   (c-beginning-of-defun -1))
 
-(defun pl/prev-c-function ()
+(defun paloryemacs/prev-c-function ()
   "Go to start of next C function."
   (interactive)
   (c-beginning-of-defun 2))
@@ -35,27 +35,27 @@
 
 
 ;;; doxymacs
-(defun pl/doxymacs-font-lock-hook ()
+(defun paloryemacs/doxymacs-font-lock-hook ()
   (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
       (doxymacs-font-lock)))
 
 (eval-after-load "doxymacs"
   '(progn
-     (add-hook 'font-lock-mode-hook 'pl/doxymacs-font-lock-hook)
+     (add-hook 'font-lock-mode-hook 'paloryemacs/doxymacs-font-lock-hook)
      (add-hook 'c-mode-common-hook 'doxymacs-mode)))
 
 ;;; doxymacs end here -----
 
 
 ;;; ctypes
-(defun pl/ctypes-load-hook ()
+(defun paloryemacs/ctypes-load-hook ()
   (ctypes-read-file "~/.ctypes_std_c" nil t t))
 
 (eval-after-load "cc-mode"
   '(progn
      (require 'ctypes)                     ; beautify typedefs
      (ctypes-auto-parse-mode 1)
-     (add-hook 'ctypes-load-hook 'pl/ctypes-load-hook)))
+     (add-hook 'ctypes-load-hook 'paloryemacs/ctypes-load-hook)))
 
 
 
@@ -85,39 +85,39 @@
 (eval-after-load "cc-mode"
   '(progn
      (define-key c-mode-base-map (kbd "C-m") 'c-context-line-break) ; Do a line break suitable to the context.
-     ;; (define-key c-mode-base-map (kbd "H-M-j") 'pl/move-function-down)
-     ;; (define-key c-mode-base-map (kbd "H-M-k") 'pl/move-function-up)
+     ;; (define-key c-mode-base-map (kbd "H-M-j") 'paloryemacs/move-function-down)
+     ;; (define-key c-mode-base-map (kbd "H-M-k") 'paloryemacs/move-function-up)
      ;; ifdef - Parse the #if...#elif...#else...#endif block in a C file.
      (local-set-key (kbd "<M-S-iso-lefttab>") 'mark-ifdef)))
 
 
-(defun pl/c-mode-common-hook ()
+(defun paloryemacs/c-mode-common-hook ()
   (subword-mode 1) ; C-c C-w toggle it
   ;; the delete key gobbles all preceding whitespace in one fell swoop
   (c-toggle-hungry-state 1))
 
 
-(defun pl/c-mode-hook ()
+(defun paloryemacs/c-mode-hook ()
   ;; (local-set-key [(control tab)] 'tempo-forward-mark)    ; move to next tempo mark
   (c-set-style "palory"))
 
 
-(defun pl/objc-mode-hook ()
+(defun paloryemacs/objc-mode-hook ()
   (c-set-style "palory")
   (define-key objc-mode-map (kbd "C-c C-r") 'xcode:build-and-run))
 
 
-(defun pl/cpp-mode-hook ()
+(defun paloryemacs/cpp-mode-hook ()
   (c-set-style "palory"))
 
-(add-hook 'c-mode-common-hook 'pl/c-mode-common-hook)
-(add-hook 'c-mode-hook 'pl/c-mode-hook)
-(add-hook 'c++-mode-hook 'pl/cpp-mode-hook)
-(add-hook 'objc-mode-hook 'pl/objc-mode-hook)
+(add-hook 'c-mode-common-hook 'paloryemacs/c-mode-common-hook)
+(add-hook 'c-mode-hook 'paloryemacs/c-mode-hook)
+(add-hook 'c++-mode-hook 'paloryemacs/cpp-mode-hook)
+(add-hook 'objc-mode-hook 'paloryemacs/objc-mode-hook)
 
 ;;;
 ;; move current function up
-(defun pl/move-function-up ()
+(defun paloryemacs/move-function-up ()
   (interactive)
   (save-excursion
     (c-mark-function)
@@ -126,7 +126,7 @@
     (yank)))
 
 ;; move current function down
-(defun pl/move-function-down ()
+(defun paloryemacs/move-function-down ()
   (interactive)
   (save-excursion
     (c-mark-function)
@@ -226,7 +226,7 @@
 
 ;;----------------------------------------------------------------------------------------------------
 ;; jump out from a pair(like quote, parenthesis, etc.)
-(defun pl/c-escape-pair ()
+(defun paloryemacs/c-escape-pair ()
   (interactive)
   (let ((pair-regexp "[^])}\"'>]*[])}\"'>]"))
     (if (looking-at pair-regexp)

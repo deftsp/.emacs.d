@@ -50,11 +50,11 @@
   "t" 'org-todo
   "T" '(lambda () (interactive) (evil-org-eol-call '(org-insert-todo-heading nil))))
 
-(evil-leader/set-key-for-mode 'org-mode
-  "mi" 'org-toggle-inline-images
-  "mI" 'pl/org-insert-image
-  "mr" 'org-redisplay-inline-images
-  "mt" 'org-show-todo-tree)
+;; (evil-leader/set-key-for-mode 'org-mode
+;;   "mi" 'org-toggle-inline-images
+;;   "mI" 'palory/org-insert-image
+;;   "mr" 'org-redisplay-inline-images
+;;   "mt" 'org-show-todo-tree)
 
 ;; normal & insert state shortcuts.
 (mapc #'(lambda (state)

@@ -6,7 +6,7 @@
 
 (require 'dash)
 
-(defun pl/open-hammerspoon-url (event &rest params)
+(defun paloryemacs/open-hammerspoon-url (event &rest params)
   (let ((len (length params))
         (url (concat "hammerspoon://" event)))
     (when (> len 0)
@@ -20,10 +20,10 @@
         (error "illegal hammerspoon params")))
     (shell-command (concat "open -g" " " url))))
 
-(defun pl/notify-hammerspoon-did-initialzie ()
-  (pl/open-hammerspoon-url "emacs_did_load"))
+(defun paloryemacs/notify-hammerspoon-did-initialzie ()
+  (paloryemacs/open-hammerspoon-url "emacs_did_load"))
 
-(add-hook 'after-init-hook #'pl/notify-hammerspoon-did-initialzie t)
+(add-hook 'after-init-hook #'paloryemacs/notify-hammerspoon-did-initialzie t)
 
 
 (provide '50hammerspoon)

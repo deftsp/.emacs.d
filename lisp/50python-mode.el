@@ -82,7 +82,7 @@
 
 (put 'project-venv-name 'safe-local-variable 'stringp)
 
-(defun pl/python-mode-init ()
+(defun paloryemacs/python-mode-init ()
   (setq mode-name "Python"
         tab-width 4
         ;; auto-indent on colon doesn't work well with if statement
@@ -107,7 +107,7 @@
   (smartparens-mode +1)
 
   (semantic-mode +1)
-  (pl/lazy-load-stickyfunc-enhance)
+  (paloryemacs/lazy-load-stickyfunc-enhance)
   ;; (virtualenv-minor-mode 1)
   ;; (ropemacs-mode)
   ;; (setq imenu-create-index-function 'py--imenu-create-index-new)
@@ -117,11 +117,11 @@
 
 ;; python-mode set imenu-create-index-function too, make sure init function
 ;; override it by append it
-(add-hook 'python-mode-hook 'pl/python-mode-init t)
+(add-hook 'python-mode-hook 'paloryemacs/python-mode-init t)
 
 
-(add-hook 'inferior-python-mode-hook 'pl/init-inferior-python-mode)
-(defun pl/init-inferior-python-mode ()
+(add-hook 'inferior-python-mode-hook 'paloryemacs/init-inferior-python-mode)
+(defun paloryemacs/init-inferior-python-mode ()
   ;; do not echo input
   ;; http://stackoverflow.com/questions/8060609/python-interpreter-in-emacs-repeats-lines
   (setq comint-process-echoes t))
@@ -132,32 +132,32 @@
   (define-key inferior-python-mode-map (kbd "C-l") 'comint-clear-buffer)
   (define-key inferior-python-mode-map (kbd "C-r") 'comint-history-isearch-backward))
 
-(evil-leader/set-key-for-mode 'python-mode
-  "mcc" 'pl/python-execute-file
-  "mcC" 'pl/python-execute-file-focus
-  "mdb" 'python-toggle-breakpoint
-  "mri" 'python-remove-unused-imports
-  "msB" 'python-shell-send-buffer-switch
-  "msb" 'python-shell-send-buffer
-  "msF" 'python-shell-send-defun-switch
-  "msf" 'python-shell-send-defun
-  "msi" 'python-start-or-switch-repl
-  "msR" 'python-shell-send-region-switch
-  "msr" 'python-shell-send-region
-  "mhh" 'anaconda-mode-show-doc
-  "mhH" 'pylookup-lookup
-  "mgd" 'anaconda-mode-find-definitions
-  "mga" 'anaconda-mode-find-assignments
-  "mgr" 'anaconda-mode-find-references
-  "mgb" 'anaconda-mode-go-back
-  "mg*" 'anaconda-mode-go-back
-  "mvs" 'pyenv-mode-set
-  "mvu" 'pyenv-mode-unset
-  "mV"  'pyvenv-workon)
+(paloryemacs/set-leader-keys-for-major-mode 'python-mode
+  "cc" 'paloryemacs/python-execute-file
+  "cC" 'paloryemacs/python-execute-file-focus
+  "db" 'python-toggle-breakpoint
+  "ri" 'python-remove-unused-imports
+  "sB" 'python-shell-send-buffer-switch
+  "sb" 'python-shell-send-buffer
+  "sF" 'python-shell-send-defun-switch
+  "sf" 'python-shell-send-defun
+  "si" 'python-start-or-switch-repl
+  "sR" 'python-shell-send-region-switch
+  "sr" 'python-shell-send-region
+  "hh" 'anaconda-mode-show-doc
+  "hH" 'pylookup-lookup
+  "gd" 'anaconda-mode-find-definitions
+  "ga" 'anaconda-mode-find-assignments
+  "gr" 'anaconda-mode-find-references
+  "gb" 'anaconda-mode-go-back
+  "g*" 'anaconda-mode-go-back
+  "vs" 'pyenv-mode-set
+  "vu" 'pyenv-mode-unset
+  "V"  'pyvenv-workon)
 
-(evil-leader/set-key-for-mode 'cython-mode
-  "mhh" 'anaconda-mode-view-doc
-  "mgg"  'anaconda-mode-goto)
+(paloryemacs/set-leader-keys-for-major-mode 'cython-mode
+  "hh" 'anaconda-mode-view-doc
+  "gg"  'anaconda-mode-goto)
 
 (with-eval-after-load "evil-jumper"
   (defadvice anaconda-mode-goto (before python/anaconda-mode-goto activate)
@@ -191,7 +191,7 @@
   (python-shell-switch-to-shell)
   (evil-insert-state))
 
-(defun pl/python-execute-file (arg)
+(defun paloryemacs/python-execute-file (arg)
   "Execute a python script in a shell."
   (interactive "P")
   ;; set compile command to buffer-file-name
@@ -207,11 +207,11 @@
     (with-current-buffer (get-buffer "*compilation*")
       (inferior-python-mode))))
 
-(defun pl/python-execute-file-focus (arg)
+(defun paloryemacs/python-execute-file-focus (arg)
   "Execute a python script in a shell and switch to the shell buffer in
 `insert state'."
   (interactive "P")
-  (pl/python-execute-file arg)
+  (paloryemacs/python-execute-file arg)
   (switch-to-buffer-other-window "*compilation*")
   (end-of-buffer)
   (evil-insert-state))
@@ -234,9 +234,9 @@
 ;; https://github.com/tsgates/pylookup
 ;; cd ~/.emacs.d/el-get/pylookup && make download
 ;; (setq pylookup-search-options '("--insensitive" "0" "--desc" "0"))
-(with-eval-after-load "pylookup"
-  (with-eval-after-load "evil-evilified-state"
-    (evilify pylookup-mode pylookup-mode-map)))
+;; (with-eval-after-load "pylookup"
+;;   (with-eval-after-load "evil-evilified-state"
+;;     (evilify pylookup-mode pylookup-mode-map)))
 
 ;;; pdb
 (setq gud-pdb-command-name "ipdb3")

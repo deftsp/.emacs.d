@@ -1,0 +1,4 @@
+(:name bind-map
+       :description "Bind personal keymaps in multiple locations"
+       :type github
+       :pkgname "justbur/emacs-bind-map")

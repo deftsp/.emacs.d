@@ -5,7 +5,8 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-(require '00prelude)
+(require 'prelude)
+(require 'core-keybindings)
 (require '01env)
 (require '02utils)
 (require '05cc-mode)

@@ -59,7 +59,7 @@
    ("\\<\\(nil\\|\\t\\)\\_>" . font-lock-constant-face)))
 
 ;;; imenu
-(setq pl/emacs-lisp-imenu-generic-expression
+(setq paloryemacs/emacs-lisp-imenu-generic-expression
       '((nil "^\\s-*(def\\(un\\|subst\\|macro\\|advice\\)\
 \\s-+\\([-A-Za-z0-9+/]+\\)" 2)
         ("*Vars*" "^\\s-*(def\\(var\\|const\\)\
@@ -72,20 +72,20 @@
         ("Sections" "^;;;; \\(.+\\)$" 1)))
 
 
-(defun pl/imenu-elisp-init ()
+(defun paloryemacs/imenu-elisp-init ()
   (setq imenu-prev-index-position-function nil)
-  (setq imenu-generic-expression pl/emacs-lisp-imenu-generic-expression))
+  (setq imenu-generic-expression paloryemacs/emacs-lisp-imenu-generic-expression))
 
 
-(add-hook 'emacs-lisp-mode-hook 'pl/imenu-elisp-init)
+(add-hook 'emacs-lisp-mode-hook 'paloryemacs/imenu-elisp-init)
 
 (with-eval-after-load "lispy"
   (define-key lispy-mode-map-lispy (kbd "M-o") nil)
 
-  (defun pl/enable-evil-lispy-mode ()
+  (defun paloryemacs/enable-evil-lispy-mode ()
     (when (fboundp 'evil-lispy-mode)
       (evil-lispy-mode +1)))
-  (add-hook 'emacs-lisp-mode-hook 'pl/enable-evil-lispy-mode))
+  (add-hook 'emacs-lisp-mode-hook 'paloryemacs/enable-evil-lispy-mode))
 
 
 (provide '50emacs-lisp-mode)

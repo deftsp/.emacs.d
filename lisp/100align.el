@@ -26,11 +26,11 @@
 
 ;;; align
 
-(defvar pl/c-align-rules-list nil "C/C++ mode align rules")
+(defvar paloryemacs/c-align-rules-list nil "C/C++ mode align rules")
 
 (eval-after-load "align"
   '(progn
-     (setq pl/c-align-rules-list
+     (setq paloryemacs/c-align-rules-list
            `((c-comment-one-line
               (regexp . "[^- \t]\\(\\s-*\\)/\\*.*\\*/$")
               (group  . 1)
@@ -79,8 +79,8 @@
                               (save-excursion
                                 (goto-char (match-end 2))
                                 (looking-at "\\s-*\\(/[*/]\\|$\\)")))))))))
-     (add-hook 'c-mode-hook (lambda () (setq align-mode-rules-list pl/c-align-rules-list)))
-     (add-hook 'c++-mode-hook (lambda () (setq align-mode-rules-list pl/c-align-rules-list)))))
+     (add-hook 'c-mode-hook (lambda () (setq align-mode-rules-list paloryemacs/c-align-rules-list)))
+     (add-hook 'c++-mode-hook (lambda () (setq align-mode-rules-list paloryemacs/c-align-rules-list)))))
 
 
 

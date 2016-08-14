@@ -45,26 +45,26 @@
      (setq global-dictionary-tooltip-mode nil
            dictionary-tooltip-mode nil)))
 
-(defun pl/dictionary-next-dictionary ()
+(defun paloryemacs/dictionary-next-dictionary ()
   (interactive)
   (end-of-line)
   (search-forward-regexp "^From" nil t)
   (beginning-of-line))
 
-(defun pl/dictionary-prev-dictionary ()
+(defun paloryemacs/dictionary-prev-dictionary ()
   (interactive)
   (beginning-of-line)
   (search-backward-regexp "^From" nil t)
   (beginning-of-line))
 
-(defun pl/dictionary-mode-hook ()
+(defun paloryemacs/dictionary-mode-hook ()
   (define-key dictionary-mode-map (kbd "<backtab>") 'dictionary-prev-link)
-  (define-key dictionary-mode-map (kbd "n") 'pl/dictionary-next-dictionary)
-  (define-key dictionary-mode-map (kbd "p") 'pl/dictionary-prev-dictionary))
+  (define-key dictionary-mode-map (kbd "n") 'paloryemacs/dictionary-next-dictionary)
+  (define-key dictionary-mode-map (kbd "p") 'paloryemacs/dictionary-prev-dictionary))
 
 
 (eval-after-load "dictionary"
-  '(add-hook 'dictionary-mode-hook 'pl/dictionary-mode-hook))
+  '(add-hook 'dictionary-mode-hook 'paloryemacs/dictionary-mode-hook))
 
 ;;; wordnet
 (condition-case nil
@@ -73,20 +73,20 @@
 
 ;;; Emacs & Dictionary.app
 ;; http://larkery.tumblr.com/post/465585528/emacs-dictionary-app
-(defun pl/mac-open-dictionary (the-word)
+(defun paloryemacs/mac-open-dictionary (the-word)
   "Open Dictionary.app for the-word"
   (interactive "sDictionary Lookup: ")
   (shell-command (concat "open \"dict:///" (replace-regexp-in-string "\"" "\\\\\"" the-word) "\"")))
 
-(defun pl/lookup-current-word ()
+(defun paloryemacs/lookup-current-word ()
   (interactive)
   (let ((w (current-word)))
     (if w
-        (pl/mac-open-dictionary w)
-      (call-interactively #'pl/mac-open-dictionary))))
+        (paloryemacs/mac-open-dictionary w)
+      (call-interactively #'paloryemacs/mac-open-dictionary))))
 
 (eval-after-load "key-chord"
-  '(key-chord-define-global "/d" 'pl/lookup-current-word))
+  '(key-chord-define-global "/d" 'paloryemacs/lookup-current-word))
 
 
 (provide '50dictionary)

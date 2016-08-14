@@ -89,12 +89,12 @@
 
 ;; clean comint buffer
 ;; http://emacsredux.com/blog/2015/01/18/clear-comint-buffers/
-(defun pl/comint-clear-buffer ()
+(defun paloryemacs/comint-clear-buffer ()
   (interactive)
   (let ((comint-buffer-maximum-size 0))
     (comint-truncate-buffer)))
 
-(define-key comint-mode-map "\C-c\M-o" #'pl/comint-clear-buffer)
+(define-key comint-mode-map "\C-c\M-o" #'paloryemacs/comint-clear-buffer)
 
 
 ;;; minibuffer
@@ -185,8 +185,8 @@
 ;; (set-default 'truncate-lines t) ; This is a BufferLocalVariable don't recommend.
 (setq truncate-partial-width-windows t) ;; truncate lines in all windows less than full frame wide.
 
-(global-set-key (kbd "C-c T") 'pl/toggle-truncate-partial-width-windows)
-(defun pl/toggle-truncate-partial-width-windows ()
+(global-set-key (kbd "C-c T") 'paloryemacs/toggle-truncate-partial-width-windows)
+(defun paloryemacs/toggle-truncate-partial-width-windows ()
   (interactive)
   (set-default 'truncate-partial-width-windows
                (not truncate-partial-width-windows))
@@ -199,7 +199,7 @@
 ;;; display-time-string-forms
 (display-time-mode 1)
 
-(defface pl/display-time-face '((((type x w32 mac))
+(defface paloryemacs/display-time-face '((((type x w32 mac))
                                  ;; #060525
                                  (:foreground "lawn green" :inherit bold))
                                 (((type tty))
@@ -216,7 +216,7 @@
 (setq display-time-string-forms
       '((format-time-string "%Y/%m/%d " now)
         (propertize (concat " " 24-hours ":" minutes)
-                    'face 'pl/display-time-face)
+                    'face 'paloryemacs/display-time-face)
         (if time-zone " ") time-zone (if time-zone " ")
         load
         (if mail
@@ -371,30 +371,30 @@
 
 
 ;; rainbow-delimiters
-(defun pl/turn-on-rainbow-delimiters-mode ()
+(defun paloryemacs/turn-on-rainbow-delimiters-mode ()
   (rainbow-delimiters-mode +1))
 
 (when (fboundp 'rainbow-delimiters-mode)
-  (add-hook 'prog-mode-hook 'pl/turn-on-rainbow-delimiters-mode))
+  (add-hook 'prog-mode-hook 'paloryemacs/turn-on-rainbow-delimiters-mode))
 
 (eval-after-load "cc-mode"
-  '(define-key c-mode-base-map (kbd "%") 'pl/goto-match-paren))
+  '(define-key c-mode-base-map (kbd "%") 'paloryemacs/goto-match-paren))
 
-(defvar --pl/rainbow-delimiters-strong-color nil)
-(defun pl/toggle-saturate-rainbow-delimiters-color (arg)
+(defvar --paloryemacs/rainbow-delimiters-strong-color nil)
+(defun paloryemacs/toggle-saturate-rainbow-delimiters-color (arg)
   (interactive "P")
   (let ((fun nil))
-    (if --pl/rainbow-delimiters-strong-color
+    (if --paloryemacs/rainbow-delimiters-strong-color
         (if (or (null arg) (< arg 0))
             (progn
               (fset 'fun (symbol-function 'color-desaturate-name))
-              (setq --pl/rainbow-delimiters-strong-color nil)
+              (setq --paloryemacs/rainbow-delimiters-strong-color nil)
               (message "Turn off rainbow delimiters strong color."))
           (when arg
             (message "rainbow delimiters strong color is already on.")))
       (if (or (null arg) (> arg 0))
           (progn (fset 'fun (symbol-function 'color-saturate-name))
-                 (setq --pl/rainbow-delimiters-strong-color t)
+                 (setq --paloryemacs/rainbow-delimiters-strong-color t)
                  (message "Turn on rainbow delimiters strong color."))
         (when arg
           (message "rainbow delimiters strong color is already off."))))
@@ -407,9 +407,9 @@
          (cl-callf fun (face-foreground face) 60))))))
 
 (with-eval-after-load "rainbow-delimiters"
-  (pl/toggle-saturate-rainbow-delimiters-color +1))
+  (paloryemacs/toggle-saturate-rainbow-delimiters-color +1))
 
-(defun pl/goto-match-paren (arg)
+(defun paloryemacs/goto-match-paren (arg)
   "Go to the matching parenthesis if on parenthesis,
 C-u delte pair if on parenthesis
  otherwise insert %.
@@ -424,8 +424,8 @@ vi style of % jumping to matching brace."
          (if (>= arg 4) (delete-pair)))
         (t (self-insert-command (or arg 1)))))
 
-(global-set-key (kbd "C-x %") 'pl/kill-outside-paren-with-elt)
-(defun pl/kill-outside-paren-with-elt (arg)
+(global-set-key (kbd "C-x %") 'paloryemacs/kill-outside-paren-with-elt)
+(defun paloryemacs/kill-outside-paren-with-elt (arg)
   (interactive "p")
   (if (not (looking-at "[([{]"))
       (up-list -1))
@@ -738,17 +738,17 @@ vi style of % jumping to matching brace."
 
 ;; ISO Date formatting
 
-(defvar pl/iso-date-format "%Y-%m-%dT%H:%M:%S%z"
+(defvar paloryemacs/iso-date-format "%Y-%m-%dT%H:%M:%S%z"
   "Format string for ISO dates.")
 
-(defun pl/iso-timestamp (&optional time)
+(defun paloryemacs/iso-timestamp (&optional time)
   (format-time-string iso-date-format
                       (or time (current-time))))
-(defun pl/insert-iso-timestamp ()
+(defun paloryemacs/insert-iso-timestamp ()
   (interactive)
   (insert (iso-timestamp)))
 
-(defun pl/iso-timestamp-sexp (&optional time)
+(defun paloryemacs/iso-timestamp-sexp (&optional time)
   (parse-time-string (iso-timestamp)))
 
 ;;----------------------------------------------------------------------------------------------------
@@ -760,7 +760,7 @@ vi style of % jumping to matching brace."
 ;;   (interactive)
 ;;   (copy-region-as-kill (point) (line-end-position)) )
 
-(defun pl/insert-userid ()
+(defun paloryemacs/insert-userid ()
   "Insert the users email address"
   (interactive)
   (insert user-full-name " <" user-mail-address ">" ) )
@@ -771,23 +771,23 @@ vi style of % jumping to matching brace."
 ;;   (recenter "1"))
 ;; (global-set-key  "\C-cl"      'recenter-to-first-line)
 
-(defun pl/point-to-register()
+(defun paloryemacs/point-to-register()
   "Store cursorposition _fast_ in a register.
-Use pl/jump-to-register to jump back to the stored
+Use paloryemacs/jump-to-register to jump back to the stored
 position."
   (interactive)
   (point-to-register 6)
   (message "point-to-register 6"))
 
-(defun pl/jump-to-register()
+(defun paloryemacs/jump-to-register()
   "Switches between current cursorposition and position
-that was stored with pl/point-to-register."
+that was stored with paloryemacs/point-to-register."
   (interactive)
   (let ((tmp (point-marker)))
     (jump-to-register 6)
     (set-register 6 tmp)))
-(global-set-key (kbd "C-c 6") 'pl/point-to-register)
-(global-set-key (kbd "C-c ^") 'pl/jump-to-register)
+(global-set-key (kbd "C-c 6") 'paloryemacs/point-to-register)
+(global-set-key (kbd "C-c ^") 'paloryemacs/jump-to-register)
 ;;===========================================================
 
 ;;=============================================
@@ -799,7 +799,7 @@ that was stored with pl/point-to-register."
 (add-hook 'before-save-hook 'time-stamp)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defun pl/insert-file-variable ()
+(defun paloryemacs/insert-file-variable ()
   "Insert file variable string \"-*- Major-Mode-Name -*-\" with
   comment char"
   (interactive)
@@ -832,7 +832,7 @@ if it is displayed there."
 ;; C-c s i             看看指定的文件被哪些文件 include
 
 ;;; charset-to-oem
-(defun pl/replace-charset-to-oem (start end)
+(defun paloryemacs/replace-charset-to-oem (start end)
   (interactive "r")
   (save-excursion
     (format-replace-strings '(("’"   .   "'")
@@ -881,9 +881,9 @@ if it is displayed there."
              (line-beginning-position 2)))))
 
 ;;; versatile kill-ring-save-dwim
-(global-set-key (kbd "M-w") 'pl/kill-ring-save-dwim)
+(global-set-key (kbd "M-w") 'paloryemacs/kill-ring-save-dwim)
 
-(defun pl/kill-ring-save-dwim ()
+(defun paloryemacs/kill-ring-save-dwim ()
   "This command dwim on saving text. \n
 If region is active, call `kill-ring-save'. Else, call
 `sdl-kill-ring-save-thing-at-point'. \n
@@ -891,7 +891,7 @@ This command is to be used interactively."
   (interactive)
   (if (use-region-p)
       (call-interactively 'kill-ring-save)
-      (call-interactively 'pl/kill-ring-save-thing-at-point)))
+      (call-interactively 'paloryemacs/kill-ring-save-thing-at-point)))
 
 
 
@@ -903,7 +903,7 @@ This command is to be used interactively."
 ;; s     sexp
 ;; f     file name
 ;; and it can accpet prefix, M-3 M-w will copy three lines and M-3 M-w w will copy three words.
-(defun pl/kill-ring-save-thing-at-point (&optional n)
+(defun paloryemacs/kill-ring-save-thing-at-point (&optional n)
   "Save THING at point to kill-ring."
   (interactive "p")
   (let ((things '((?l . list) (?f . filename) (?w . word) (?s . sexp)))
@@ -956,7 +956,7 @@ This command is to be used interactively."
 ;; M-x autoarg-mode & autoarg-kp-mode
 
 ;;; rename-file-and-buffer
-(defun pl/rename-file-and-buffer (new-name)
+(defun paloryemacs/rename-file-and-buffer (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
   (interactive "sNew name: ")
   (let ((name (buffer-name))
@@ -971,9 +971,9 @@ This command is to be used interactively."
               (set-visited-file-name new-name)
               (set-buffer-modified-p nil))))))
 
-(global-set-key (kbd "C-c f r")  'pl/rename-file-and-buffer)
+(global-set-key (kbd "C-c f r")  'paloryemacs/rename-file-and-buffer)
 
-(defun pl/move-buffer-and-file (dir)
+(defun paloryemacs/move-buffer-and-file (dir)
   "Moves both current buffer and file it's visiting to DIR."
   (interactive "DNew directory: ")
   (let* ((name (buffer-name))
@@ -992,7 +992,7 @@ This command is to be used interactively."
           (set-buffer-modified-p nil)
           t))))
 
-(global-set-key (kbd "C-c f R") 'pl/move-buffer-and-file)
+(global-set-key (kbd "C-c f R") 'paloryemacs/move-buffer-and-file)
 
 ;;; info
 ;; make sure info dir in `Info-directory-list' add to `Info-directory-list'
@@ -1087,7 +1087,7 @@ This command is to be used interactively."
 
 
 ;;;###autoload
-(defun pl/insert-char-next-line (arg)
+(defun paloryemacs/insert-char-next-line (arg)
   "insert char below the cursor"
   (interactive "p")
   (let ((col (current-column))
@@ -1110,10 +1110,10 @@ This command is to be used interactively."
                          " line.")))))
 
 ;;;###autoload
-(defun pl/insert-char-prior-line (arg)
+(defun paloryemacs/insert-char-prior-line (arg)
   "insert char above the cursor"
   (interactive "p")
-  (pl/insert-char-next-line (- arg)))
+  (paloryemacs/insert-char-next-line (- arg)))
 
 ;;----------------------------------------------------------------------------------------------------
 ;; (add-hook 'find-file-hooks
@@ -1172,7 +1172,7 @@ This command is to be used interactively."
 ;; https://github.com/emacsmirror/nxhtml/blob/master/util/anchored-transpose.el
 (autoload 'anchored-transpose "anchored-transpose" nil t)
 
-;; (defun pl/shell-command ()
+;; (defun paloryemacs/shell-command ()
 ;;   "Launch a shell command."
 ;;   (interactive)
 ;;   (let ((command (read-string "Command: ")))
@@ -1180,7 +1180,7 @@ This command is to be used interactively."
 
 
 ;; check for unsaved changes for killing
-;; (defun pl/context-kill (arg)
+;; (defun paloryemacs/context-kill (arg)
 ;;   "Kill buffer, taking gnuclient into account."
 ;;   (interactive "p")
 ;;   (when (eq major-mode 'erc-mode)
@@ -1443,7 +1443,7 @@ This command is to be used interactively."
 
 ;;; toggle-letter-case
 ;; http://ergoemacs.org/emacs/modernization_upcase-word.html
-(defun pl/toggle-letter-case ()
+(defun paloryemacs/toggle-letter-case ()
   "Toggle the letter case of current word or text selection.
 Toggles between: “ all lower ”, “ Init Caps ”, “ ALL CAPS ”."
   (interactive)
@@ -1472,10 +1472,10 @@ Toggles between: “ all lower ”, “ Init Caps ”, “ ALL CAPS ”."
      ((string= "all caps" (get this-command 'state))
       (downcase-region p1 p2) (put this-command 'state "all lower")) )))
 
-(global-set-key (kbd "M-c") 'pl/toggle-letter-case)
+(global-set-key (kbd "M-c") 'paloryemacs/toggle-letter-case)
 
 ;;; Coding
-(defun pl/revert-to-gbk-dos ()
+(defun paloryemacs/revert-to-gbk-dos ()
   (interactive)
   (revert-buffer-with-coding-system 'gbk-dos))
 

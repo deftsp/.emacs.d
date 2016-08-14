@@ -8,15 +8,15 @@
 (setq eshell-error-if-no-glob t
       eshell-history-size 500)
 
-(defun pl/eshell-mode-init ()
-  (local-set-key "\C-d" 'pl/eshell-delchar-or-exit)
+(defun paloryemacs/eshell-mode-init ()
+  (local-set-key "\C-d" 'paloryemacs/eshell-delchar-or-exit)
   (local-set-key "\C-u" 'eshell-kill-input)
-  (local-set-key "\C-a" 'pl/eshell-maybe-bol)
+  (local-set-key "\C-a" 'paloryemacs/eshell-maybe-bol)
   (set (make-local-variable 'scroll-margin) 0))
 
-(add-hook 'eshell-mode-hook 'pl/eshell-mode-init)
+(add-hook 'eshell-mode-hook 'paloryemacs/eshell-mode-init)
 
-(defun pl/eshell-delchar-or-exit (arg)
+(defun paloryemacs/eshell-delchar-or-exit (arg)
   (interactive "P")
   (let ((cur-point (point))
         (delchar-flag t))
@@ -37,7 +37,7 @@
 ;; I use the following code. It makes C-a go to the beginning of the command line, unless it is already there, in which
 ;; case it goes to the beginning of the line. So if you are at the end of the command line and want to go to the real
 ;; beginning of line, hit C-a twice:
-(defun pl/eshell-maybe-bol ()
+(defun paloryemacs/eshell-maybe-bol ()
   (interactive)
   (let ((p (point)))
     (eshell-bol)
@@ -47,7 +47,7 @@
 
 ;;; eshell here
 ;; http://www.howardism.org/Technical/Emacs/eshell-fun.html
-(defun pl/eshell-here ()
+(defun paloryemacs/eshell-here ()
   "Opens up a new shell in the directory associated with the
 current buffer's file. The eshell is renamed to match that
 directory to make multiple eshell windows easier."
@@ -65,7 +65,7 @@ directory to make multiple eshell windows easier."
     (insert (concat "ls"))
     (eshell-send-input)))
 
-(global-set-key (kbd "C-!") 'pl/eshell-here)
+(global-set-key (kbd "C-!") 'paloryemacs/eshell-here)
 
 ;;; alias
 (defun eshell/l (&rest args)

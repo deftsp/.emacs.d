@@ -17,14 +17,14 @@
       web-mode-style-padding 1
       web-mode-block-padding 0)
 
-(defun pl/init-web-mode ()
+(defun paloryemacs/init-web-mode ()
   "Hooks for Web mode."
   (setq web-mode-markup-indent-offset 2)
   web-mode-css-indent-offset 2
   ;; script offset indentation (for JavaScript, Java, PHP, etc.)
   web-mode-code-indent-offset 2)
 
-(add-hook 'web-mode-hook 'pl/init-web-mode)
+(add-hook 'web-mode-hook 'paloryemacs/init-web-mode)
 
 
 (provide '50web-mode)

@@ -26,7 +26,7 @@
      (define-key slime-js-minor-mode-map (kbd "C-c C-e") 'slime-js-eval-and-replace-current)
      (define-key slime-js-minor-mode-map [f5] 'slime-js-reload)))
 
-(defun pl/slime-js-run-swank ()
+(defun paloryemacs/slime-js-run-swank ()
   "Runs the swank side of the equation."
     (interactive)
     (let ((slime-js-swank-command "swank-js")
@@ -37,22 +37,22 @@
                                          nil
                                          slime-js-swank-args))))
 
-(defun pl/slime-js-jack-in-node ()
+(defun paloryemacs/slime-js-jack-in-node ()
   "Start a swank-js server and connect to it, opening a repl."
   (interactive)
   (let ((slime-protocol-version 'ignore))
-    (pl/slime-js-run-swank)
+    (paloryemacs/slime-js-run-swank)
     (sleep-for 2)
     (slime-connect "localhost" 4005)))
 
-(defun pl/slime-js-jack-in-browser ()
+(defun paloryemacs/slime-js-jack-in-browser ()
   "Start a swank-js server, connect to it, open a repl, open a browser, connect to that."
   (interactive)
   (let ((slime-js-target-url "http://localhost:3000")
         (slime-js-browser-command "open -a \"Google Chrome\"")
         (slime-js-starting-url "/swank-js/test.html")
         (slime-js-connect-url "http://localhost:8009"))
-   (pl/slime-js-jack-in-node)
+   (paloryemacs/slime-js-jack-in-node)
    (sleep-for 2)
    (slime-js-set-target-url slime-js-target-url)
    (shell-command (concat slime-js-browser-command " " slime-js-connect-url slime-js-starting-url))
@@ -107,22 +107,22 @@
 
 
 ;;; work with js2-mode
-(defun pl/enable-slime-js-minor-mode ()
+(defun paloryemacs/enable-slime-js-minor-mode ()
   (when (fboundp 'slime-js-minor-mode)
     (slime-js-minor-mode +1)))
 
 (eval-after-load "js2-mode"
   '(progn
-    (add-hook 'js2-mode-hook 'pl/enable-slime-js-minor-mode)))
+    (add-hook 'js2-mode-hook 'paloryemacs/enable-slime-js-minor-mode)))
 
 ;;; work with css mode
-(defun pl/slime-js-css-setup ()
+(defun paloryemacs/slime-js-css-setup ()
   (define-key css-mode-map "\M-\C-x" 'slime-js-refresh-css)
   (define-key css-mode-map "\C-c\C-r" 'slime-js-embed-css))
 
 (eval-after-load "css-mode"
   '(progn
-    (add-hook 'css-mode-hook 'pl/slime-js-css-setup)))
+    (add-hook 'css-mode-hook 'paloryemacs/slime-js-css-setup)))
 
 ;; Remove slime-minor-mode from mode line if diminish.el is installed
 (when (boundp 'diminish)

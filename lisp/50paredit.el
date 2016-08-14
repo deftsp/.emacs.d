@@ -31,8 +31,8 @@
      ;; (define-key paredit-mode-map (kbd "RET") nil)
      ;; (define-key emacs-lisp-mode-map (kbd "RET") 'paredit-newline)
      ;; (define-key lisp-mode-shared-map (kbd "RET") 'paredit-newline)
-     (define-key paredit-mode-map (kbd "<delete>") 'pl/paredit-forward-maybe-delete-region)
-     (define-key paredit-mode-map (kbd "DEL") 'pl/paredit-backward-maybe-delete-region)))
+     (define-key paredit-mode-map (kbd "<delete>") 'paloryemacs/paredit-forward-maybe-delete-region)
+     (define-key paredit-mode-map (kbd "DEL") 'paloryemacs/paredit-backward-maybe-delete-region)))
 
 ;; (dolist (hook '(emacs-lisp-mode-hook lisp-mode-hook inferior-lisp-mode-hook))
 ;;   (add-hook hook 'enable-paredit-mode))
@@ -65,7 +65,7 @@ scan-error if not."
               t)
           (scan-error (signal 'scan-error '("Region parentheses not balanced"))))))))
 
-(defun pl/paredit-backward-maybe-delete-region ()
+(defun paloryemacs/paredit-backward-maybe-delete-region ()
   (interactive)
   (if mark-active
       (progn
@@ -73,7 +73,7 @@ scan-error if not."
         (cua-delete-region))
     (paredit-backward-delete)))
 
-(defun pl/paredit-forward-maybe-delete-region ()
+(defun paloryemacs/paredit-forward-maybe-delete-region ()
   (interactive)
   (if mark-active
       (progn
@@ -88,7 +88,7 @@ scan-error if not."
 
 ;; http://whattheemacsd.com//setup-paredit.el-01.html
 
-(defun pl/paredit-wrap-round-from-behind ()
+(defun paloryemacs/paredit-wrap-round-from-behind ()
   (interactive)
   (forward-sexp -1)
   (paredit-wrap-round)

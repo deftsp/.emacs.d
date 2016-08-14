@@ -1,6 +1,6 @@
 ;;; 50keys.el ---
 
-(defun pl/global-set-keys (&rest keycommands)
+(defun paloryemacs/global-set-keys (&rest keycommands)
   "Register keys to commands."
   (while keycommands
     (let ((key (car keycommands))
@@ -10,7 +10,7 @@
 
 
 ;; register my preferred keybindings
-(pl/global-set-keys
+(paloryemacs/global-set-keys
  "<f1>"    'anything-man ; 'woman-word-at-point
  "<C-f1>"  '(lambda () (interactive) (manual-entry (current-word))) ;;; load man pages when on a word and F1 is pressed
  "<S-f1>"  'iman
@@ -34,8 +34,8 @@
  ;; "<f9>"    'door-gnus
  "<S-f9>"  'ascii-table-show
  "<C-f9>"  'shell
- "<M-f9>"  'pl/ansi-term
- "<f10>"   'pl/w3m-switch-to-buffer
+ "<M-f9>"  'paloryemacs/ansi-term
+ "<f10>"   'paloryemacs/w3m-switch-to-buffer
  ;; "<f11>"
  "<S-f11>" 'appt-add
  "<S-f12>" 'recentf-open-files
@@ -59,8 +59,8 @@
 ;; (global-set-key "\C-j" 'reindent-then-newline-and-indent)
 
 ;;; indent the whole buffer
-(global-set-key (kbd "C-c i w") 'pl/indent-whole-buffer)
-(defun pl/indent-whole-buffer ()
+(global-set-key (kbd "C-c i w") 'paloryemacs/indent-whole-buffer)
+(defun paloryemacs/indent-whole-buffer ()
   "indent whole buffer"
   (interactive)
   (delete-trailing-whitespace)
@@ -79,8 +79,8 @@
 ;;; view mode
 ;; rebind "C-x C-q" to `view-mode' instead of `read-only-mode'
 (define-key ctl-x-map "\C-q" 'view-mode)
-(add-hook 'view-mode-hook 'pl/view-mode-hook)
-(defun pl/view-mode-hook ()
+(add-hook 'view-mode-hook 'paloryemacs/view-mode-hook)
+(defun paloryemacs/view-mode-hook ()
   (define-key view-mode-map "b" 'View-scroll-page-backward)
   (define-key view-mode-map "f" 'View-scroll-page-forward)
   (define-key view-mode-map "h" 'backward-char)
@@ -94,22 +94,22 @@
 ;;Maverick WOO <sw77@cornell.edu>" This is complex. In short, the first invocation of Home/End moves to the beginning of
 ;;the *text* line. A second invocation moves the cursor to the beginning of the *absolute* line. Most of the time this
 ;;won't matter or even be noticeable, but when it does (in comments, for example) it will be quite convenient.
-(global-set-key [home] 'pl/smart-home)
-(global-set-key [end] 'pl/smart-end)
+(global-set-key [home] 'paloryemacs/smart-home)
+(global-set-key [end] 'paloryemacs/smart-end)
 
-(defun pl/smart-home ()
+(defun paloryemacs/smart-home ()
   "Odd home to beginning of line, even home to beginning of
 text/code."
   (interactive)
-  (if (and (eq last-command 'pl/smart-home)
+  (if (and (eq last-command 'paloryemacs/smart-home)
            (/= (line-beginning-position) (point)))
       (beginning-of-line)
     (beginning-of-line-text)))
 
-(defun pl/smart-end ()
+(defun paloryemacs/smart-end ()
   "Odd end to end of line, even end to begin of text/code."
   (interactive)
-  (if (and (eq last-command 'pl/smart-end)
+  (if (and (eq last-command 'paloryemacs/smart-end)
            (= (line-end-position) (point)))
       (end-of-line-text)
     (end-of-line)))
@@ -173,8 +173,8 @@ Require `font-lock'."
 ;; Unshifted special characters ends there--------------------------------------------------------------------------------
 
 ;;; repeat to mark multi-line
-;; (global-set-key (kbd "C-z") 'pl/mark-line)
-(defun pl/mark-line (&optional arg allow-extend)
+;; (global-set-key (kbd "C-z") 'paloryemacs/mark-line)
+(defun paloryemacs/mark-line (&optional arg allow-extend)
   "Put point at beginning of this line, mark at end.
 The line marked is the one that contains point or follows point.
 
@@ -207,7 +207,7 @@ it marks the next ARG lines after the ones already marked."
 
 ;;-------------------------------------------------------------------------------------------------------
 
-(defun pl/return-current-point ()
+(defun paloryemacs/return-current-point ()
   (interactive)
   (message "Current point is: %d" (point)))
 ;;----------------------------------------------------------------------------------------------------
@@ -233,8 +233,8 @@ it marks the next ARG lines after the ones already marked."
 ;; "' and kill upto and including the final ", allowing you to change the output. In this case you'd
 ;; better use 'C-M-k' at the starting "
 
-;; (global-set-key (kbd "M-z") 'pl/zap-up-to-char)
-;; (defun pl/zap-up-to-char (arg char)
+;; (global-set-key (kbd "M-z") 'paloryemacs/zap-up-to-char)
+;; (defun paloryemacs/zap-up-to-char (arg char)
 ;;   "Kill up to and including ARGth occurrence of CHAR. "
 ;;   (interactive (list (prefix-numeric-value current-prefix-arg)
 ;;                      (read-char "Zap to char: " t)))
@@ -248,8 +248,8 @@ it marks the next ARG lines after the ones already marked."
 ;;                              (point))))
 ;;   (backward-char))
 
-;; (global-set-key (kbd "M-Z") 'pl/zap-to-char-save)
-;; (defun pl/zap-to-char-save (arg char)
+;; (global-set-key (kbd "M-Z") 'paloryemacs/zap-to-char-save)
+;; (defun paloryemacs/zap-to-char-save (arg char)
 ;;   "Zap to a character, but save instead of kill."
 ;;   (interactive "p\ncZap to char: ")
 ;;   (save-excursion
@@ -260,10 +260,10 @@ it marks the next ARG lines after the ones already marked."
 (global-set-key (kbd "M-Z") 'ace-jump-zap-to-char-dwim)
 
 ;;; extral key map
-;; (setq pl/extra-key-map (make-keymap))
-;; (global-set-key [(super z)] pl/extra-key-map)
-;; (define-key pl/extra-key-map "b" 'bbdb)
-;; (define-key pl/extra-key-map "m" 'bbdb-and-mail-with-default-mailer)
+;; (setq paloryemacs/extra-key-map (make-keymap))
+;; (global-set-key [(super z)] paloryemacs/extra-key-map)
+;; (define-key paloryemacs/extra-key-map "b" 'bbdb)
+;; (define-key paloryemacs/extra-key-map "m" 'bbdb-and-mail-with-default-mailer)
 
 
 ;;; M-^: delete-indentation
@@ -289,8 +289,8 @@ it marks the next ARG lines after the ones already marked."
                         (scroll-down 1))))))
 
 ;;; _/-/SPACE
-(global-set-key (kbd "H--") 'pl/_-SPC)
-(defun pl/_-SPC ()
+(global-set-key (kbd "H--") 'paloryemacs/_-SPC)
+(defun paloryemacs/_-SPC ()
   (interactive)
   (let ((char (following-char)))
     (cl-case char
@@ -353,7 +353,7 @@ _n_ narrow-or-widen-dwim:              %(buffer-narrowed-p)
 _g_ golden-ratio-mode:                 %`golden-ratio-mode
 _G_ debug-on-quit:                     %`debug-on-quit
 _r_ read-only-mode:                    %`buffer-read-only
-_s_ rainbow-delimiters-string-color    %`--pl/rainbow-delimiters-strong-color
+_s_ rainbow-delimiters-string-color    %`--paloryemacs/rainbow-delimiters-strong-color
 _t_ truncate-lines:                    %`truncate-lines
 _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespace-mode)
 
@@ -361,14 +361,14 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
     ("a" abbrev-mode "abbrev")
     ("d" toggle-debug-on-error "debug")
     ("f" auto-fill-mode "fill")
-    ("n" pl/narrow-or-widen-dwim "narrow<->widen")
+    ("n" paloryemacs/narrow-or-widen-dwim "narrow<->widen")
     ("g" golden-ratio-mode "golden-ratio")
     ("G" toggle-debug-on-quit "debug-quit")
-    ("o" pl/replace-charset-to-oem "char->oem")
+    ("o" paloryemacs/replace-charset-to-oem "char->oem")
     ("r" dired-toggle-read-only "read only") ; generalized version of `read-only-mode'.
     ("t" toggle-truncate-lines "truncate")
     ("w" whitespace-mode "whitespace")
-    ("s" pl/toggle-saturate-rainbow-delimiters-color "strong color")
+    ("s" paloryemacs/toggle-saturate-rainbow-delimiters-color "strong color")
     ("q" nil "cancel")))
 
 ;; Launcher Keymap
@@ -381,9 +381,9 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
 
 ;; Launching External Applications and Websites
 ;; http://endlessparentheses.com/keymap-for-launching-external-applications-and-websites.html
-;; (defmacro pl/def-run (exec)
+;; (defmacro paloryemacs/def-run (exec)
 ;;   "Return a function that runs the executable EXEC."
-;;   (let ((func-name (intern (concat "pl/run-" exec))))
+;;   (let ((func-name (intern (concat "paloryemacs/run-" exec))))
 ;;     `(progn
 ;;        (defun ,func-name ()
 ;;          ,(format "Run the %s executable." exec)
@@ -391,11 +391,11 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
 ;;          (start-process "" nil ,exec))
 ;;        ',func-name)))
 
-;; (define-key launcher-map "m" (pl/def-run "Mathematica"))
+;; (define-key launcher-map "m" (paloryemacs/def-run "Mathematica"))
 
-;; (defmacro pl/def-browse (url)
+;; (defmacro paloryemacs/def-browse (url)
 ;;   "Return a function that calls `browse-url' on URL."
-;;   (let ((func-name (intern (concat "pl/browse-" url))))
+;;   (let ((func-name (intern (concat "paloryemacs/browse-" url))))
 ;;     `(progn
 ;;        (defun ,func-name ()
 ;;          ,(format "Browse to the url %s." url)
@@ -403,8 +403,8 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
 ;;          (browse-url ,url))
 ;;        ',func-name)))
 
-;; (define-key launcher-map "r" (pl/def-browse "http://www.reddit.com/r/emacs/"))
-;; (define-key launcher-map "w" (pl/def-browse "http://www.emacswiki.org/"))
+;; (define-key launcher-map "r" (paloryemacs/def-browse "http://www.reddit.com/r/emacs/"))
+;; (define-key launcher-map "w" (paloryemacs/def-browse "http://www.emacswiki.org/"))
 
 ;;; Launcher
 ;; C-x l is `count-lines-page' by default. If you use that, you can try s-l or <C-return>.
@@ -435,7 +435,7 @@ undo-tree-_u_ndo undo-tree-_r_edo
    ("SPC" mark-sexp "mark sexp" :color red)
    ("+" cfs-increase-fontsize :color red)
    ("-" cfs-decrease-fontsize :color red)
-   ("=" pl/cfs-reset-profile-and-fontsize "reset font")
+   ("=" paloryemacs/cfs-reset-profile-and-fontsize "reset font")
    ("a" org-agenda nil)
    ("c" org-capture nil)
    ("g" org-clock-goto nil)
@@ -443,13 +443,13 @@ undo-tree-_u_ndo undo-tree-_r_edo
    ("h" hydra-apropos/body "apropos")
    ("j" dired-jump "dired jump")
    ("p" hydra-projectile/body nil)
-   ("s" pl/switch-to-scratch nil)
+   ("s" paloryemacs/switch-to-scratch nil)
    ("t" hydra-toggle/body "toggle")
    ("u" undo-tree-undo nil :color red)
    ("r" undo-tree-redo nil :color red)
    ("q" nil "cancel")))
 
-(defun pl/switch-to-scratch ()
+(defun paloryemacs/switch-to-scratch ()
   (interactive)
   (switch-to-buffer "*scratch*"))
 

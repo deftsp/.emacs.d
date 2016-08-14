@@ -20,8 +20,8 @@
                                       search-ring
                                       regexp-search-ring))
 
-(when (boundp 'pl/cache-directory)
-  (setq savehist-file (concat pl/cache-directory "history")))
+(when (boundp 'paloryemacs/cache-directory)
+  (setq savehist-file (concat paloryemacs/cache-directory "history")))
 ;;; automatic saving of minibuffer history.
 (savehist-mode +1)
 
@@ -145,13 +145,13 @@
   '(when (fboundp 'key-chord-define-global)
      (key-chord-define-global ".w" wg-prefixed-map)))
 
-(defun pl/turn-on-workgroups-mode ()
+(defun paloryemacs/turn-on-workgroups-mode ()
   (interactive)
   (when (fboundp 'workgroups-mode)
     (workgroups-mode 1)))
 
 ;; make sure workgroups2 runs bofore desktop
-(add-hook 'after-init-hook 'pl/turn-on-workgroups-mode)
+(add-hook 'after-init-hook 'paloryemacs/turn-on-workgroups-mode)
 
 (provide '60session)
 

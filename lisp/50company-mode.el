@@ -37,23 +37,23 @@
   (add-to-list 'company-begin-commands 'company-complete)
   (add-to-list 'company-backends 'company-cmake))
 
-(defvar pl/company-common-backends
+(defvar paloryemacs/company-common-backends
   '(company-capf
     company-files
     company-dabbrev
     company-yasnippet))
 
-(defvar pl/company-prog-common-backends
+(defvar paloryemacs/company-prog-common-backends
   (cons '(company-dabbrev-code
           company-gtags
           company-etags
           company-keywords)
-        pl/company-common-backends)
+        paloryemacs/company-common-backends)
   "common company backends(as grouped) for editing programming language source code.")
 
-(add-hook 'c-mode-common-hook 'pl/company-c-mode-common-setup)
-(defun pl/company-c-mode-common-setup ()
-  (let ((backends pl/company-prog-common-backends))
+(add-hook 'c-mode-common-hook 'paloryemacs/company-c-mode-common-setup)
+(defun paloryemacs/company-c-mode-common-setup ()
+  (let ((backends paloryemacs/company-prog-common-backends))
     (push 'company-clang backends)
     (push 'company-semantic backends)
     (push 'company-xcode backends)
@@ -61,59 +61,59 @@
     (set (make-local-variable 'company-backends) backends)))
 
 
-(add-hook 'haskell-mode-hook 'pl/company-haskell-mode-setup)
-(defun pl/company-haskell-mode-setup ()
-  (let ((backends pl/company-prog-common-backends))
+(add-hook 'haskell-mode-hook 'paloryemacs/company-haskell-mode-setup)
+(defun paloryemacs/company-haskell-mode-setup ()
+  (let ((backends paloryemacs/company-prog-common-backends))
     (push 'company-cabal backends)
     (push 'company-ghc backends)
     (set (make-local-variable 'company-backends) backends)))
 
 
-(add-hook 'scheme-mode-hook 'pl/company-scheme-mode-setup)
-(defun pl/company-scheme-mode-setup ()
-  (let ((backends pl/company-prog-common-backends))
+(add-hook 'scheme-mode-hook 'paloryemacs/company-scheme-mode-setup)
+(defun paloryemacs/company-scheme-mode-setup ()
+  (let ((backends paloryemacs/company-prog-common-backends))
     (set (make-local-variable 'company-backends) backends)))
 
-(add-hook 'clojure-mode-hook 'pl/company-clojure-mode-setup)
-(add-hook 'nrepl-mode-hook 'pl/company-clojure-mode-setup)
-(defun pl/company-clojure-mode-setup ()
-  (let ((backends pl/company-prog-common-backends))
+(add-hook 'clojure-mode-hook 'paloryemacs/company-clojure-mode-setup)
+(add-hook 'nrepl-mode-hook 'paloryemacs/company-clojure-mode-setup)
+(defun paloryemacs/company-clojure-mode-setup ()
+  (let ((backends paloryemacs/company-prog-common-backends))
     (set (make-local-variable 'company-backends) backends)))
 
 
-(add-hook 'ruby-mode-hook 'pl/company-ruby-mode-setup)
-(defun pl/company-ruby-mode-setup ()
-  (let ((backends pl/company-prog-common-backends))
+(add-hook 'ruby-mode-hook 'paloryemacs/company-ruby-mode-setup)
+(defun paloryemacs/company-ruby-mode-setup ()
+  (let ((backends paloryemacs/company-prog-common-backends))
     (set (make-local-variable 'company-backends) backends)))
 
-(add-hook 'python-mode-hook 'pl/company-python-mode-setup)
-(defun pl/company-python-mode-setup ()
-  (let ((backends pl/company-prog-common-backends))
+(add-hook 'python-mode-hook 'paloryemacs/company-python-mode-setup)
+(defun paloryemacs/company-python-mode-setup ()
+  (let ((backends paloryemacs/company-prog-common-backends))
     (push 'company-ropemacs backends)
     (push 'company-anaconda backends)
     (set (make-local-variable 'company-backends) backends)))
 
-(add-hook 'css-mode-hook 'pl/company-css-mode-setup)
-(defun pl/company-css-mode-setup ()
-  (let ((backends pl/company-prog-common-backends))
+(add-hook 'css-mode-hook 'paloryemacs/company-css-mode-setup)
+(defun paloryemacs/company-css-mode-setup ()
+  (let ((backends paloryemacs/company-prog-common-backends))
     (push 'company-css backends)
     (set (make-local-variable 'company-backends) backends)))
 
-(add-hook 'nxml-mode-hook 'pl/company-nxml-mode-setup)
-(defun pl/company-nxml-mode-setup ()
-  (let ((backends pl/company-prog-common-backends))
+(add-hook 'nxml-mode-hook 'paloryemacs/company-nxml-mode-setup)
+(defun paloryemacs/company-nxml-mode-setup ()
+  (let ((backends paloryemacs/company-prog-common-backends))
     (push 'company-nxml backends)
     (set (make-local-variable 'company-backends) backends)))
 
-(add-hook 'emacs-lisp-mode-hook 'pl/company-emacs-lisp-mode-setup)
-(add-hook 'lisp-interaction-mode-hook 'pl/company-emacs-lisp-mode-setup)
-(defun pl/company-emacs-lisp-mode-setup ()
-  (let ((backends pl/company-prog-common-backends))
+(add-hook 'emacs-lisp-mode-hook 'paloryemacs/company-emacs-lisp-mode-setup)
+(add-hook 'lisp-interaction-mode-hook 'paloryemacs/company-emacs-lisp-mode-setup)
+(defun paloryemacs/company-emacs-lisp-mode-setup ()
+  (let ((backends paloryemacs/company-prog-common-backends))
     (set (make-local-variable 'company-backends) backends)))
 
-(add-hook 'org-mode-hook 'pl/company-org-mode-setup)
-(defun pl/company-org-mode-setup ()
-  (let ((backends pl/company-common-backends))
+(add-hook 'org-mode-hook 'paloryemacs/company-org-mode-setup)
+(defun paloryemacs/company-org-mode-setup ()
+  (let ((backends paloryemacs/company-common-backends))
     (set (make-local-variable 'company-backends) backends)))
 
 

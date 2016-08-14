@@ -18,13 +18,13 @@
 ;; define dirs for cacheing file dirs
 ;; see http://www.emacswiki.org/cgi-bin/wiki/FileNameCache for more tricks with this...
 
-(defvar pl/file-cache-dirs '("~/" "/etc/" "~/.emacs.d/lisp/"))
-(defvar pl/file-cache-recursive-dirs '("~/org"))
+(defvar paloryemacs/file-cache-dirs '("~/" "/etc/" "~/.emacs.d/lisp/"))
+(defvar paloryemacs/file-cache-recursive-dirs '("~/org"))
 
-(defun pl/filecache-add-files ()
-  (ignore-errors (file-cache-add-directory-list pl/file-cache-dirs)
+(defun paloryemacs/filecache-add-files ()
+  (ignore-errors (file-cache-add-directory-list paloryemacs/file-cache-dirs)
    ;; (file-cache-add-directory-list load-path)
-   (let ((cache-dirs pl/file-cache-recursive-dirs))
+   (let ((cache-dirs paloryemacs/file-cache-recursive-dirs))
      (dolist (dir cache-dirs) (file-cache-add-directory-recursively dir)))))
 
 (eval-after-load "filecache"
@@ -32,16 +32,16 @@
      (setq file-cache-completion-ignore-case t
            file-cache-ignore-case t)
      ;; works after 60 seconds and repeat every half day
-     (run-at-time (pl/future-time-string 60) (* 12 60 60) 'pl/filecache-add-files)
+     (run-at-time (paloryemacs/future-time-string 60) (* 12 60 60) 'paloryemacs/filecache-add-files)
      (mapcar (lambda (str) (add-to-list 'file-cache-filter-regexps str))
              '("\\.svn-base$" "\\.svn" "\\.jar$" "\\.git$" "\\.gz$" "\\.tar$" "\\.rar$" "\\.exe$" "resolv.conf$"))))
 
-(defun pl/file-cache-add-this-file ()
+(defun paloryemacs/file-cache-add-this-file ()
   (and buffer-file-name
        (file-exists-p buffer-file-name)
        (file-cache-add-file buffer-file-name)))
 
-(add-hook 'kill-buffer-hook 'pl/file-cache-add-this-file)
+(add-hook 'kill-buffer-hook 'paloryemacs/file-cache-add-this-file)
 
 
 (provide '50filecache)

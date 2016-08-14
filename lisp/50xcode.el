@@ -5,7 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-;; (defun pl/xcode-compile (directory build-action)
+;; (defun paloryemacs/xcode-compile (directory build-action)
 ;;   "Enhanced bh-compile function by Brett Hutley"
 ;;   (interactive
 ;;    (list (read-directory-name "Directory name: " nil default-directory nil)
@@ -25,15 +25,15 @@
 ;;       (compile "make"))))
 
 
-(global-set-key (kbd "C-c o x") 'pl/open-with-xcode)
-(defun pl/open-with-xcode ()
+(global-set-key (kbd "C-c o x") 'paloryemacs/open-with-xcode)
+(defun paloryemacs/open-with-xcode ()
   "Open current file with Xcode."
   (interactive)
   (shell-command
    (concat "open -a /Applications/Xcode.app " "\"" (buffer-file-name) "\"")))
 
 
-(defun pl/xcode:build-and-run ()
+(defun paloryemacs/xcode:build-and-run ()
   (interactive)
   (if (directory-files "." nil ".*\.xcodeproj$" nil)
       (compile "xcodebuild -configuration Debug")

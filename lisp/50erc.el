@@ -143,7 +143,7 @@
 ;; Re-fill lines
 
 ;; You can use the following function if you'd like to change the filling or to undo the filling in files saved by ErcLogging.
-;; (defun pl/erc-refill (column)
+;; (defun paloryemacs/erc-refill (column)
 ;;   "Fill the ERC messages in the current buffer to COLUMN.
 ;;     Using a very high number will undo any previous filling.
 ;;     See also `erc-fill-prefix'."
@@ -156,7 +156,7 @@
 ;; (setq erc-input-line-position -2)
 
 ;; helper defun to unfill lines that have been cut from elsewhere
-;; (defun pl/erc-unfill ()
+;; (defun paloryemacs/erc-unfill ()
 ;;   "Unfill the region after the prompt. Intended to be called just before you
 ;;     send a line"
 ;;   (interactive)
@@ -168,7 +168,7 @@
 ;;       (just-one-space))))
 
 ;; And here is how to replace the useless binding for fill-paragraph in ERC:
-;; (define-key erc-mode-map (kbd "M-q") 'pl/unfill-line)
+;; (define-key erc-mode-map (kbd "M-q") 'paloryemacs/unfill-line)
 
 ;;; keybinding
 ;; If you hit RETs by mistake before being done with the current line, rebind it...
@@ -273,19 +273,19 @@
 ;; (require 'assoc)                        ; for aget
 ;; TODO: Package assoc is obsolete, use something instead.
 
-;; (defun pl/get-char ()
+;; (defun paloryemacs/get-char ()
 ;;   (catch 'char (while t
 ;;                  (let ((event (read-event "channel #: ")))
 ;;                    (if (char-valid-p event)
 ;;                        (throw 'char event))))))
 
-;; (defun pl/switch-to-buffer ()
+;; (defun paloryemacs/switch-to-buffer ()
 ;;   "read events(chars), and switch to appropriate erc buffer"
 ;;   (interactive)
 ;;   (let ((buffers (erc-channel-list nil))
 ;;         buffer)
 ;;     ;;  lookup-key
-;;     (while (let ((char (char-to-string (pl/get-char))))
+;;     (while (let ((char (char-to-string (paloryemacs/get-char))))
 ;;              (switch-to-buffer (cond ((string-match "[a-z]" char)
 ;;                                       ;; letters -> ??
 ;;                                       (aget '(("d" . "#debian")
@@ -300,7 +300,7 @@
 ;;                                             char 't))
 ;;                                      ((string-match "[0-9]" char)
 ;;                                       (nth (string-to-int char) buffers))))))))
-;; (define-key erc-mode-map [(meta ?g)] 'pl/switch-to-buffer)
+;; (define-key erc-mode-map [(meta ?g)] 'paloryemacs/switch-to-buffer)
 
 ;; SwitchToErc ens there---------------------------------------------------------------------------------------
 
@@ -339,13 +339,13 @@
 ;; Maybe you want minimal distraction for all channels but #emacs (the following is only useful after ERC is running and
 ;; you've joined some channels)
 
-;; (defun pl/erc-md-all-but-emacs ()
+;; (defun paloryemacs/erc-md-all-but-emacs ()
 ;;   "Minimal distraction for all channels except #emacs"
 ;;   (interactive)
 ;;   (setq erc-track-priority-faces-only
 ;;         (remove "#emacs" (my-erc-joined-channels))))
 
-;; (defun pl/erc-joined-channels ()
+;; (defun paloryemacs/erc-joined-channels ()
 ;;   (interactive)
 ;;   "Return all the channels you're in as a list.  This does not include queries."
 ;;   (save-excursion
@@ -375,7 +375,7 @@
 ;;         (switch-to-buffer target))))
 
 
-;; (defun pl/toggle-erc-busy ()
+;; (defun paloryemacs/toggle-erc-busy ()
 ;;   "Toggle `erc-default-face' in `erc-track-faces-priority-list'
 ;; so as to keep an eye on work when necessarily."
 ;;   (interactive)
@@ -390,7 +390,7 @@
 ;;                     '(erc-default-face)))
 ;;       (message "Ah, time for tea")))
 
-;; (global-set-key (kbd "C-c n e") 'pl/toggle-erc-busy)
+;; (global-set-key (kbd "C-c n e") 'paloryemacs/toggle-erc-busy)
 
 ;;; /REVERSE
 

@@ -15,20 +15,20 @@
 
 ;; (setq ediff-diff-options "-w") ; ignore white space
 
-(defun pl/ediff-mode-init ()
+(defun paloryemacs/ediff-mode-init ()
   (ediff-setup-keymap)
   (define-key ediff-mode-map "J" 'ediff-next-difference) ; default to "j"
   (define-key ediff-mode-map "j" 'ediff-jump-to-difference)
   (define-key ediff-mode-map "k" 'ediff-previous-difference))
 
-(add-hook 'ediff-mode-hook 'pl/ediff-mode-init)
+(add-hook 'ediff-mode-hook 'paloryemacs/ediff-mode-init)
 
 ;; Restoring the windows after Ediff quits
-(defun pl/winner-undo-maybe ()
+(defun paloryemacs/winner-undo-maybe ()
   (when winner-mode
     (winner-undo)))
 
-(add-hook 'ediff-after-quit-hook-internal 'pl/winner-undo-maybe)
+(add-hook 'ediff-after-quit-hook-internal 'paloryemacs/winner-undo-maybe)
 
 
 (provide '50ediff)

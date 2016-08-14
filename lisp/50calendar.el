@@ -31,25 +31,25 @@
 
 ;; appointments notification
 ;; http://article.gmane.org/gmane.emacs.orgmode/66151
-(defvar pl/terminal-notifier-bin "terminal-notifier")
+(defvar paloryemacs/terminal-notifier-bin "terminal-notifier")
 
-(defun pl/terminal-notification (title msg)
-  (if (executable-find pl/terminal-notifier-bin)
-      (shell-command (concat pl/terminal-notifier-bin " -message " msg " -title " title))
-    (message (format "unable to find: %s" pl/terminal-notifier-bin))))
+(defun paloryemacs/terminal-notification (title msg)
+  (if (executable-find paloryemacs/terminal-notifier-bin)
+      (shell-command (concat paloryemacs/terminal-notifier-bin " -message " msg " -title " title))
+    (message (format "unable to find: %s" paloryemacs/terminal-notifier-bin))))
 
-;; designate the window function for pl/appt-send-notification
-(defun pl/appt-display (min-to-app new-time msg)
-  (pl/terminal-notification
+;; designate the window function for paloryemacs/appt-send-notification
+(defun paloryemacs/appt-display (min-to-app new-time msg)
+  (paloryemacs/terminal-notification
     (format "'Appointment in %s minutes'" min-to-app)    ;; passed to -title in terminal-notifier call
     (format "'%s'" msg)))                                ;; passed to -message in terminal-notifier call
 
 (if (eq system-type 'darwin)
-    (setq appt-disp-window-function #'pl/appt-display)
+    (setq appt-disp-window-function #'paloryemacs/appt-display)
   (setq appt-disp-window-function #'appt-disp-window))
 
 ;; use grow to notification
-;; (defun pl/grow-appt-display (min-to-app new-time msg)
+;; (defun paloryemacs/grow-appt-display (min-to-app new-time msg)
 ;;   (growl (format "Appointment in %s minute(s)" min-to-app) msg t))
 
 
@@ -131,7 +131,7 @@
 
 ;; `diary-chinese-anniversary' use cycles
 ;; https://github.com/leoliu/cal-china-plus/pull/2
-(defun pl/diary-lunar-anniversary (month day &optional year mark)
+(defun paloryemacs/diary-lunar-anniversary (month day &optional year mark)
   (pcase-let* ((`(,cc ,cy ,cm ,cd)
                 (calendar-chinese-from-absolute
                  (calendar-absolute-from-gregorian date)))

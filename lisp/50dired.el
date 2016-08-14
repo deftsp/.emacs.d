@@ -149,8 +149,8 @@ and blocks emacs.  The default for ASYNC is t." t)
     (dired-advertised-find-file)
     (kill-buffer buf)))
 
-(add-hook 'dired-mode-hook 'pl/dired-mode-hook-init)
-(defun pl/dired-mode-hook-init ()
+(add-hook 'dired-mode-hook 'paloryemacs/dired-mode-hook-init)
+(defun paloryemacs/dired-mode-hook-init ()
   (setq dired-bind-jump nil
         dired-bind-man nil
         dired-bind-info nil)
@@ -158,7 +158,7 @@ and blocks emacs.  The default for ASYNC is t." t)
   ;; (define-key dired-mode-map "^" 'dired-up-directory-after-kill)
   ;; (define-key dired-mode-map "\M-\C-m" 'dired-advertised-find-file-after-kill)
   ;; (define-key dired-mode-map "\C-co" 'dired-omit-mode)
-  (define-key dired-mode-map (kbd "W") 'pl/dired-w3m-find-file)
+  (define-key dired-mode-map (kbd "W") 'paloryemacs/dired-w3m-find-file)
   (define-key dired-mode-map (kbd ";") 'dired-view-minor-mode-toggle)
   (define-key dired-mode-map (kbd ":") 'dired-view-minor-mode-dired-toggle)
   (define-key dired-mode-map (kbd "/") 'dired-narrow)
@@ -166,21 +166,21 @@ and blocks emacs.  The default for ASYNC is t." t)
   ;; dired use `s' to switch sort by name/time, we undefine it so that
   ;; it can be used as prefix
   (define-key dired-mode-map (kbd "s") nil)
-  (pl/dired-define-sort "RET" "")   ; default
-  (pl/dired-define-sort "X" "X")    ; sort alphabetically by entry extension
-  (pl/dired-define-sort "t" "t")    ; sort by modification time, newest first
-  (pl/dired-define-sort "S" "S")    ; sort by file size
-  (pl/dired-define-sort "U" "U")    ; do not sort; list entries in directory order
-  (pl/dired-define-sort "u" "ut")   ; sort by access time
-  (pl/dired-define-sort "c" "ct")   ; sort by ctime
-  (pl/dired-define-sort "n" "n")    ; sort by like -l, but list numeric user and group ID
-  (pl/dired-define-sort "." "d .*") ; sort by invisible only
-  (pl/dired-define-toggle "r" pl/dired-sort-reverse)
-  (pl/dired-define-toggle "R" pl/dired-sort-recursive)
+  (paloryemacs/dired-define-sort "RET" "")   ; default
+  (paloryemacs/dired-define-sort "X" "X")    ; sort alphabetically by entry extension
+  (paloryemacs/dired-define-sort "t" "t")    ; sort by modification time, newest first
+  (paloryemacs/dired-define-sort "S" "S")    ; sort by file size
+  (paloryemacs/dired-define-sort "U" "U")    ; do not sort; list entries in directory order
+  (paloryemacs/dired-define-sort "u" "ut")   ; sort by access time
+  (paloryemacs/dired-define-sort "c" "ct")   ; sort by ctime
+  (paloryemacs/dired-define-sort "n" "n")    ; sort by like -l, but list numeric user and group ID
+  (paloryemacs/dired-define-sort "." "d .*") ; sort by invisible only
+  (paloryemacs/dired-define-toggle "r" paloryemacs/dired-sort-reverse)
+  (paloryemacs/dired-define-toggle "R" paloryemacs/dired-sort-recursive)
 
   (dired-omit-mode +1))
 
-(defun pl/dired-w3m-find-file ()
+(defun paloryemacs/dired-w3m-find-file ()
   (interactive)
   (let ((file (dired-get-filename)))
     (when (y-or-n-p (format "Open 'w3m' %s " (file-name-nondirectory file)))
@@ -188,28 +188,28 @@ and blocks emacs.  The default for ASYNC is t." t)
 
 ;;; sorting
 ;; http://lifegoo.pluskid.org/wiki/EnhanceDired.html
-(defconst pl/default-listing-switches "-alh")
-(defvar pl/dired-sort-reverse nil "sort reversely")
-(defvar pl/dired-sort-recursive nil "sort recursively")
+(defconst paloryemacs/default-listing-switches "-alh")
+(defvar paloryemacs/dired-sort-reverse nil "sort reversely")
+(defvar paloryemacs/dired-sort-recursive nil "sort recursively")
 
-(setq dired-listing-switches pl/default-listing-switches)
+(setq dired-listing-switches paloryemacs/default-listing-switches)
 
 ;; "s" Toggle between sort by date/name and refresh the dired buffer.
-(defmacro pl/dired-define-sort (key switches)
+(defmacro paloryemacs/dired-define-sort (key switches)
   "redefine the key `s KEY' to sort use switches to ls."
   ;; `(define-key dired-mode-map ,(concat "s" key)
   `(define-key dired-mode-map (kbd ,(concat "s " key))
      (lambda ()
        (interactive)
        (let ((new-switches
-              (concat pl/default-listing-switches
+              (concat paloryemacs/default-listing-switches
                       ,switches
-                      (if pl/dired-sort-reverse "r" "")
-                      (if pl/dired-sort-recursive "R" ""))))
+                      (if paloryemacs/dired-sort-reverse "r" "")
+                      (if paloryemacs/dired-sort-recursive "R" ""))))
          (setq dired-listing-switches new-switches)
          (dired-sort-other new-switches)))))
 
-(defmacro pl/dired-define-toggle (key var)
+(defmacro paloryemacs/dired-define-toggle (key var)
   `(define-key dired-mode-map ,(concat "s" key)
      (lambda ()
        (interactive)
@@ -219,19 +219,19 @@ and blocks emacs.  The default for ASYNC is t." t)
                 (if ,var "enabled" "disabled")))))
 
 ;;; Shell command guess
-;; (defadvice dired-run-shell-command (around pl/dired-run-shell-command (command))
+;; (defadvice dired-run-shell-command (around paloryemacs/dired-run-shell-command (command))
 ;;   "run a shell command COMMAND .
 ;; If the COMMAND ends with `&' then run it in background and *discard* the
 ;; output, otherwise simply let the original `dired-run-shell-command' run it."
 ;;   (if (string-match "&[[:blank:]]*$" command)
-;;       (let ((proc (start-process "pl/shell" nil shell-file-name
+;;       (let ((proc (start-process "paloryemacs/shell" nil shell-file-name
 ;;                                  shell-command-switch
 ;;                                  (substring command 0 (match-beginning 0)))))
 ;;         (set-process-sentinel proc 'shell-command-sentinel))
 ;;       ad-do-it))
 ;; (ad-activate 'dired-run-shell-command)
 
-;; (defmacro pl/dired-define-assoc-group (patterns actions &optional name)
+;; (defmacro paloryemacs/dired-define-assoc-group (patterns actions &optional name)
 ;;   "define an assoc entry to help dired guess the shell command.
 ;; PATTERN is a list of regexps used to match the filename.
 ;; NAME is a list of string or expression which eval to a string
@@ -245,23 +245,23 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;; (add-hook 'dired-load-hook
 ;;           (lambda ()
 ;;             (setq dired-guess-shell-alist-user nil)
-;;             (pl/dired-define-assoc-group
+;;             (paloryemacs/dired-define-assoc-group
 ;;              ("rm" "rmvb" "RM" "RMVB" "avi" "mpg" "mpeg" "mov")
 ;;              ("mplayer * &")
 ;;              video)
-;;             (pl/dired-define-assoc-group
+;;             (paloryemacs/dired-define-assoc-group
 ;;              ("pdf" "PDF")
 ;;              ("acroread * &" "xpdf * &")
 ;;              pdf-document)
-;;             (pl/dired-define-assoc-group
+;;             (paloryemacs/dired-define-assoc-group
 ;;              ("png" "jpg" "jpeg" "gif")
 ;;              ("xloadimage * &" "gqview * &")
 ;;              image)
-;;             (pl/dired-define-assoc-group
+;;             (paloryemacs/dired-define-assoc-group
 ;;              ("chm" "CHM")
 ;;              ("xchm * &")
 ;;              chm-document)
-;;             (pl/dired-define-assoc-group
+;;             (paloryemacs/dired-define-assoc-group
 ;;              ("html" "HTML" "htm" "HTML")
 ;;              ("firefox * &"))))
 
@@ -277,11 +277,11 @@ and blocks emacs.  The default for ASYNC is t." t)
 ;;     (if handler
 ;;  (apply handler 'shell-command (list command))
 ;;       ;; (shell-command command)))
-;;       (pl/shell-command-asynchronously command)))
+;;       (paloryemacs/shell-command-asynchronously command)))
 ;;   ;; Return nil for sake of nconc in dired-bunch-files.
 ;;   nil)
 
-;; (defun pl/shell-command-asynchronously (cmd)
+;; (defun paloryemacs/shell-command-asynchronously (cmd)
 ;;   (start-process-shell-command cmd nil cmd))
 
 
@@ -354,7 +354,7 @@ and blocks emacs.  The default for ASYNC is t." t)
        (car (split-string (shell-command-to-string "echo $OSTYPE")))
        "linux-gnu")
 
-  (setq pl/dircolors-string
+  (setq paloryemacs/dircolors-string
         (replace-regexp-in-string
          ":$" "" (cadr
                   (split-string
@@ -362,18 +362,18 @@ and blocks emacs.  The default for ASYNC is t." t)
                    "'"))))
 
   ;; colored by file extensions
-  (setq pl/dircolors-extensions
+  (setq paloryemacs/dircolors-extensions
         (split-string
          (replace-regexp-in-string
           "=[0-9;]+\\|\\*\\." ""
-          (replace-regexp-in-string "^[^*]*" "" pl/dircolors-string))
+          (replace-regexp-in-string "^[^*]*" "" paloryemacs/dircolors-string))
          ":"))
 
-  (defun pl/dircolors-get-escape-seq (regexp)
-    "Get escape-seq by matching REGEXP against `pl/dircolors-string'.
-e.g., (pl/dircolors-get-escape-seq \"*.gz\") => \"01;31\""
-    (string-match (concat regexp "=\\([^:]+\\):") pl/dircolors-string)
-    (match-string 1 pl/dircolors-string))
+  (defun paloryemacs/dircolors-get-escape-seq (regexp)
+    "Get escape-seq by matching REGEXP against `paloryemacs/dircolors-string'.
+e.g., (paloryemacs/dircolors-get-escape-seq \"*.gz\") => \"01;31\""
+    (string-match (concat regexp "=\\([^:]+\\):") paloryemacs/dircolors-string)
+    (match-string 1 paloryemacs/dircolors-string))
 
   (setq dired-font-lock-keywords
         `(,(list dired-subdir-regexp '(1 dired-header-face)) ; Directory headers.
@@ -427,7 +427,7 @@ e.g., (pl/dircolors-get-escape-seq \"*.gz\") => \"01;31\""
                   `(".+"
                     (dired-move-to-filename)
                     nil
-                    (0 (ansi-color-get-face ,(pl/dircolors-get-escape-seq "ex")))))
+                    (0 (ansi-color-get-face ,(paloryemacs/dircolors-get-escape-seq "ex")))))
 
            ;; colorful by extensions
            ,@(mapcar (lambda (ext)
@@ -435,8 +435,8 @@ e.g., (pl/dircolors-get-escape-seq \"*.gz\") => \"01;31\""
                           (".+"
                            (dired-move-to-filename)
                            nil
-                           (0 (ansi-color-get-face ,(pl/dircolors-get-escape-seq ext))))))
-                     pl/dircolors-extensions)
+                           (0 (ansi-color-get-face ,(paloryemacs/dircolors-get-escape-seq ext))))))
+                     paloryemacs/dircolors-extensions)
 
            ;;
            ;; Files suffixed with `completion-ignored-extensions'.
@@ -463,7 +463,7 @@ e.g., (pl/dircolors-get-escape-seq \"*.gz\") => \"01;31\""
                          nil (0 dired-ignored-face)))))))
 
 
-(defun pl/view-chm (file)
+(defun paloryemacs/view-chm (file)
   (interactive
    (list (let ((file (dired-get-filename)))
            (or file
@@ -531,8 +531,8 @@ e.g., (pl/dircolors-get-escape-seq \"*.gz\") => \"01;31\""
 
 ;;; work with ImageMagic
 ;; thanks to http://ergoemacs.org/emacs/emacs_dired_convert_images.html
-(define-key dired-mode-map (kbd "ESC ESC i s") 'pl/image-scale)
-(defun pl/image-scale (file-list scale-args)
+(define-key dired-mode-map (kbd "ESC ESC i s") 'paloryemacs/image-scale)
+(defun paloryemacs/image-scale (file-list scale-args)
   "Create a scaled version of images of marked files in dired.
 The new names have \"-s\" appended before the file name extension.
 Requires ImageMagick shell tool."
@@ -558,7 +558,7 @@ Requires ImageMagick shell tool."
    file-list))
 
 ;;; zip file/dir
-(defun pl/2zip ()
+(defun paloryemacs/2zip ()
   "Zip the current file/dir in `dired'.
 If multiple files are marked, only zip the first one.
 Require unix zip commandline tool."
@@ -568,8 +568,8 @@ Require unix zip commandline tool."
     (shell-command (format "zip -r '%s.zip' '%s'" (file-relative-name file-name) (file-relative-name file-name)))))
 
 ;;; open in external application
-(define-key dired-mode-map (kbd "M-O") 'pl/open-in-external-application)
-(defun pl/open-in-external-application ()
+(define-key dired-mode-map (kbd "M-O") 'paloryemacs/open-in-external-application)
+(defun paloryemacs/open-in-external-application ()
   "Open the current file or dired marked files in external app.
 Works in Microsoft Windows, Mac OS X, Linux."
   (interactive)

@@ -14,9 +14,9 @@
 ;;; narrow to region indirect
 ;; http://demonastery.org/2013/04/emacs-narrow-to-region-indirect/
 ;; http://www.wisdomandwonder.com/link/8610/lightweight-multiple-modes-for-semi-literate-programming
-(global-set-key (kbd "C-x n i") 'pl/narrow-to-region-indirect)
+(global-set-key (kbd "C-x n i") 'paloryemacs/narrow-to-region-indirect)
 
-(defun pl/narrow-to-region-indirect (boundary-start boundary-end)
+(defun paloryemacs/narrow-to-region-indirect (boundary-start boundary-end)
   "Edit the current region in a new, cloned, indirect buffer.
 
 This function is responsible for helping the operator to easily
@@ -53,7 +53,7 @@ end the new clone buffer name to serve as a reminder for its
     "Indirectly narrow the region from BEG to END."
     (interactive "<R>")
     (evil-normal-state)
-    (pl/narrow-to-region-indirect beg end)))
+    (paloryemacs/narrow-to-region-indirect beg end)))
 
 ;;; narrow-indirect.el --- Narrow using an indirect buffer that is a clone
 ;; http://www.emacswiki.org/emacs/NarrowIndirect
@@ -66,7 +66,7 @@ end the new clone buffer name to serve as a reminder for its
 
 
 ;; http://endlessparentheses.com/emacs-narrow-or-widen-dwim.html
-(defun pl/narrow-or-widen-dwim (p)
+(defun paloryemacs/narrow-or-widen-dwim (p)
   "If the buffer is narrowed, it widens. Otherwise, it narrows intelligently.
 Intelligently means: region, org-src-block, org-subtree, or defun,
 whichever applies first.

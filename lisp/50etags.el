@@ -36,7 +36,7 @@
 
 
 ;;; generate tags
-(defun pl/create-tags ()
+(defun palory/create-tags ()
   "create etag file"
   (interactive)
   (let ((suffix (read-from-minibuffer "suffix: "))
@@ -47,7 +47,7 @@
        (buffer-name)))))
 
 
-(defun pl/create-haskell-tags (sd dd name)
+(defun palory/create-haskell-tags (sd dd name)
   (interactive (list (read-directory-name "source directory: " nil "" t)
                      (read-directory-name "destination directory: " nil "" t)
                      (read-from-minibuffer "Tag name(TAGS): " "")))

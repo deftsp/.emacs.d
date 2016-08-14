@@ -309,6 +309,10 @@
    ;; hl-line
    `(hl-line ((t (:background ,base02))))
 
+   ;;ivy
+   '(ivy-action ((t (:foreground "PaleGoldenrod"))))
+   '(ivy-virtual ((t (:foreground "#536393"))))
+
    ;; col-highlight
    `(col-highlight ((t (:background ,base02))))
 

@@ -9,10 +9,10 @@
 ;; (add-to-list 'Info-default-directory-list "~/.emacs.d/site-lisp/haskell-mode/")
 ;; (require 'haskell-mode-autoloads)
 
-(defvar pl/haskell-mode-doc-map nil
+(defvar paloryemacs/haskell-mode-doc-map nil
   "Keymap for documentation commands. Bound to a prefix key.")
 
-(defvar pl/haskell-mode-key-chord-map nil
+(defvar paloryemacs/haskell-mode-key-chord-map nil
   "Keymap for key chord prefix commands in haskell mode.")
 
 (eval-after-load "haskell-mode"
@@ -34,30 +34,30 @@
 
      (define-key haskell-mode-map (kbd "C-c v c") 'haskell-cabal-visit-file)
 
-     (setq pl/haskell-mode-key-chord-map (make-sparse-keymap))
-     (define-key pl/haskell-mode-key-chord-map (kbd "e") 'haskell-indent-insert-equal)
-     (define-key pl/haskell-mode-key-chord-map (kbd "=") 'haskell-indent-insert-equal)
-     (define-key pl/haskell-mode-key-chord-map (kbd "g") 'haskell-indent-insert-guard)
-     (define-key pl/haskell-mode-key-chord-map (kbd "|") 'haskell-indent-insert-guard)
-     (define-key pl/haskell-mode-key-chord-map (kbd "o") 'haskell-indent-insert-otherwise)
-     (define-key pl/haskell-mode-key-chord-map (kbd "w") 'haskell-indent-insert-where)
-     (define-key pl/haskell-mode-key-chord-map (kbd ".") 'haskell-indent-align-guards-and-rhs)
-     (define-key pl/haskell-mode-key-chord-map (kbd ">") 'haskell-indent-put-region-in-literate)
-     (define-key pl/haskell-mode-key-chord-map (kbd "l") 'pl/pop-haskell-process-log-buffer)
-     (define-key pl/haskell-mode-key-chord-map (kbd "y") 'pl/pop-yesod-devel-buffer)
-     (define-key pl/haskell-mode-key-chord-map (kbd "u") (lambda () (interactive) (insert "undefined")))
+     (setq paloryemacs/haskell-mode-key-chord-map (make-sparse-keymap))
+     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "e") 'haskell-indent-insert-equal)
+     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "=") 'haskell-indent-insert-equal)
+     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "g") 'haskell-indent-insert-guard)
+     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "|") 'haskell-indent-insert-guard)
+     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "o") 'haskell-indent-insert-otherwise)
+     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "w") 'haskell-indent-insert-where)
+     (define-key paloryemacs/haskell-mode-key-chord-map (kbd ".") 'haskell-indent-align-guards-and-rhs)
+     (define-key paloryemacs/haskell-mode-key-chord-map (kbd ">") 'haskell-indent-put-region-in-literate)
+     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "l") 'paloryemacs/pop-haskell-process-log-buffer)
+     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "y") 'paloryemacs/pop-yesod-devel-buffer)
+     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "u") (lambda () (interactive) (insert "undefined")))
 
      ;; keymap for documentation
-     (setq pl/haskell-mode-doc-map (make-sparse-keymap))
-     (define-key pl/haskell-mode-doc-map (kbd "i") 'haskell-process-do-info) ; inferior-haskell-info
-     (define-key pl/haskell-mode-doc-map (kbd "C-i") 'haskell-process-do-info)
-     (define-key pl/haskell-mode-doc-map (kbd "t") 'haskell-process-do-type) ; inferior-haskell-type
-     (define-key pl/haskell-mode-doc-map (kbd "C-t") 'haskell-process-do-type)
-     (define-key pl/haskell-mode-doc-map (kbd "a") 'helm-ghc-browse-document)
-     (define-key pl/haskell-mode-doc-map (kbd "C-a") 'helm-ghc-browse-document)
-     (define-key pl/haskell-mode-doc-map (kbd "h") 'haskell-hoogle)
-     (define-key pl/haskell-mode-doc-map (kbd "d") 'inferior-haskell-find-haddock)
-     (define-key pl/haskell-mode-doc-map (kbd "C-d") 'inferior-haskell-find-haddock)))
+     (setq paloryemacs/haskell-mode-doc-map (make-sparse-keymap))
+     (define-key paloryemacs/haskell-mode-doc-map (kbd "i") 'haskell-process-do-info) ; inferior-haskell-info
+     (define-key paloryemacs/haskell-mode-doc-map (kbd "C-i") 'haskell-process-do-info)
+     (define-key paloryemacs/haskell-mode-doc-map (kbd "t") 'haskell-process-do-type) ; inferior-haskell-type
+     (define-key paloryemacs/haskell-mode-doc-map (kbd "C-t") 'haskell-process-do-type)
+     (define-key paloryemacs/haskell-mode-doc-map (kbd "a") 'helm-ghc-browse-document)
+     (define-key paloryemacs/haskell-mode-doc-map (kbd "C-a") 'helm-ghc-browse-document)
+     (define-key paloryemacs/haskell-mode-doc-map (kbd "h") 'haskell-hoogle)
+     (define-key paloryemacs/haskell-mode-doc-map (kbd "d") 'inferior-haskell-find-haddock)
+     (define-key paloryemacs/haskell-mode-doc-map (kbd "C-d") 'inferior-haskell-find-haddock)))
 
 (eval-after-load 'flycheck
   '(progn
@@ -92,8 +92,8 @@
 ;;                           "--ignore=Unused LANGUAGE pragma"))
 
 ;;; haskell mode hook
-(add-hook 'haskell-mode-hook 'pl/haskell-mode-setup)
-(defun pl/haskell-mode-setup ()
+(add-hook 'haskell-mode-hook 'paloryemacs/haskell-mode-setup)
+(defun paloryemacs/haskell-mode-setup ()
   (when (fboundp 'intero-mode)
     (intero-mode +1))
   ;; (when (buffer-file-name (current-buffer))
@@ -105,7 +105,7 @@
   (add-to-list 'flycheck-disabled-checkers 'haskell-hlint)
 
   ;; enable our level computation
-  (setq outline-level 'pl/outline-level)
+  (setq outline-level 'paloryemacs/outline-level)
   (outline-minor-mode t)
   ;; initially hide all but the headers
   ;; (hide-body)
@@ -124,7 +124,7 @@
   (prettify-symbols-mode +1)
 
   (when (fboundp 'key-chord-define)
-    (key-chord-define haskell-mode-map ".x" pl/haskell-mode-key-chord-map))
+    (key-chord-define haskell-mode-map ".x" paloryemacs/haskell-mode-key-chord-map))
   ;; (flyspell-prog-mode) ; can not work with key-chord
   (setq evil-auto-indent nil)
   ;; smartparens-mode
@@ -139,7 +139,7 @@
   ;;         ("{" . "}")
   ;;         ("`" . "`")))
 
-  (define-key haskell-mode-map (kbd "C-c C-d") pl/haskell-mode-doc-map)
+  (define-key haskell-mode-map (kbd "C-c C-d") paloryemacs/haskell-mode-doc-map)
   (define-key haskell-mode-map (kbd "C-M-x") 'inferior-haskell-send-decl)
   (define-key haskell-mode-map (kbd "C-x C-e") 'inferior-haskell-send-decl)
   (define-key haskell-mode-map (kbd "C-c |") 'haskell-indent-insert-guard)
@@ -155,7 +155,7 @@
   ;; Interactively choose the Cabal command to run.
   ;; (define-key haskell-mode-map (kbd "C-c c") 'haskell-process-cabal) ; M-x hpc
 
-  (define-key haskell-mode-map (kbd "C-c C-v") 'pl/haskell-check)
+  (define-key haskell-mode-map (kbd "C-c C-v") 'paloryemacs/haskell-check)
 
   ;; Contextually do clever things on the space key, in particular:
   ;;   1. Complete imports, letting you choose the module name.
@@ -173,8 +173,8 @@
   (define-key haskell-mode-map (kbd "M-.") 'haskell-mode-jump-to-def-or-tag)
   (define-key haskell-mode-map (kbd "C-c h") 'haskell-hoogle))
 
-(add-hook 'haskell-interactive-mode-hook 'pl/haskell-interactive-mode-setup)
-(defun pl/haskell-interactive-mode-setup ()
+(add-hook 'haskell-interactive-mode-hook 'paloryemacs/haskell-interactive-mode-setup)
+(defun paloryemacs/haskell-interactive-mode-setup ()
   ;; (modify-syntax-entry ?_ "w")
   (define-key haskell-interactive-mode-map (kbd "C-u") 'haskell-interactive-mode-kill-whole-line)
   ;; (define-key haskell-interactive-mode-map (kbd "C-w") 'backward-kill-word)
@@ -186,7 +186,7 @@
 
 
 ;; this gets called by outline to determine the level. Just use the length of the whitespace
-(defun pl/outline-level ()
+(defun paloryemacs/outline-level ()
   (let (buffer-invisibility-spec)
     (save-excursion
       (skip-chars-forward "\t ")
@@ -194,7 +194,7 @@
 
 
 ;;;
-(defun pl/pop-haskell-process-log-buffer ()
+(defun paloryemacs/pop-haskell-process-log-buffer ()
   (interactive)
   (let ((buf (get-buffer "*haskell-process-log*")))
     (if buf
@@ -233,7 +233,7 @@
 
 
 ;;; Check
-(defun pl/haskell-check (arg)
+(defun paloryemacs/haskell-check (arg)
   "Check a Haskell file (default current buffer's file).
 if arg is not equal to 1, ignore `haskell-saved-check-command'
 See also`haskell-check'."
@@ -251,13 +251,13 @@ See also`haskell-check'."
 
 ;;; cabal
 ;; Useful to have these keybindings for .cabal files, too.
-(defun pl/haskell-cabal-hook ()
+(defun paloryemacs/haskell-cabal-hook ()
   (define-key haskell-cabal-mode-map (kbd "C-c C-c") 'haskell-compile)
   ;; (define-key haskell-cabal-mode-map (kbd "C-c c") 'haskell-process-cabal) ; ; M-x hpc
   (define-key haskell-cabal-mode-map (kbd "C-`") 'haskell-interactive-bring)
   (define-key haskell-cabal-mode-map [?\C-c ?\C-z] 'haskell-interactive-switch))
 
-(add-hook 'haskell-cabal-mode-hook 'pl/haskell-cabal-hook)
+(add-hook 'haskell-cabal-mode-hook 'paloryemacs/haskell-cabal-hook)
 
 
 ;;; hamlet-mode
@@ -280,7 +280,7 @@ See also`haskell-check'."
      (define-key shm-map (kbd "M-a") 'shm/goto-parent)
      (define-key shm-map (kbd "M-e") 'shm/goto-parent-end)))
 
-(defun pl/shm-evil-join ()
+(defun paloryemacs/shm-evil-join ()
   "send the node of the next line up one line."
   (interactive)
   (evil-next-line 1)
@@ -311,7 +311,7 @@ See also`haskell-check'."
       (kbd "s") 'sp-splice-sexp
       (kbd "S") 'shm/split-list
       (kbd "M-R") 'sp-raise-sexp
-      (kbd "J") 'pl/shm-evil-join ; 'sp-join-sexp
+      (kbd "J") 'paloryemacs/shm-evil-join ; 'sp-join-sexp
       (kbd ")") 'shm/forward-node
       (kbd "(") 'shm/backward-node
       (kbd "M-(") 'sp-backward-up-sexp
@@ -356,7 +356,7 @@ See also`haskell-check'."
 
 ;;;
 ;; https://github.com/chrisdone/chrisdone-emacs/blob/master/config/haskell.el
-(defun pl/haskell-who-calls (&optional prompt)
+(defun paloryemacs/haskell-who-calls (&optional prompt)
   "Grep the codebase to see who uses the symbol at point."
   (interactive "P")
   (let ((sym (if prompt
@@ -440,45 +440,45 @@ point."
           (kill-region (match-beginning 0) (match-end 0))
         (error "No SCC at point")))))
 
-(evil-leader/set-key-for-mode 'haskell-mode
-  "mu"   'haskell-mode-find-uses
-  "mht"  'haskell-mode-show-type-at
-  "mgl"  'haskell-mode-goto-loc
+;; (evil-leader/set-key-for-mode 'haskell-mode
+;;   "mu"   'haskell-mode-find-uses
+;;   "mht"  'haskell-mode-show-type-at
+;;   "mgl"  'haskell-mode-goto-loc
 
-  "mgg"  'haskell-mode-jump-to-def-or-tag
-  "mf"   'haskell-mode-stylish-buffer
+;;   "mgg"  'haskell-mode-jump-to-def-or-tag
+;;   "mf"   'haskell-mode-stylish-buffer
 
-  "msb"  'haskell-process-load-or-reload
-  "msc"  'haskell-interactive-mode-clear
-  "mss"  'haskell-interactive-bring
-  "msS"  'haskell-interactive-switch
+;;   "msb"  'haskell-process-load-or-reload
+;;   "msc"  'haskell-interactive-mode-clear
+;;   "mss"  'haskell-interactive-bring
+;;   "msS"  'haskell-interactive-switch
 
-  "mca"  'haskell-process-cabal
-  "mcb"  'haskell-process-cabal-build
-  "mcc"  'haskell-compile
-  "mcv"  'haskell-cabal-visit-file
+;;   "mca"  'haskell-process-cabal
+;;   "mcb"  'haskell-process-cabal-build
+;;   "mcc"  'haskell-compile
+;;   "mcv"  'haskell-cabal-visit-file
 
-  "mhd"  'inferior-haskell-find-haddock
-  "mhh"  'hoogle
-  "mhi"  'haskell-process-do-info
-  "mht"  'haskell-process-do-type
-  "mhT"  'spacemacs/haskell-process-do-type-on-prev-line
-  "mhy"  'hayoo
+;;   "mhd"  'inferior-haskell-find-haddock
+;;   "mhh"  'hoogle
+;;   "mhi"  'haskell-process-do-info
+;;   "mht"  'haskell-process-do-type
+;;   "mhT"  'spacemacs/haskell-process-do-type-on-prev-line
+;;   "mhy"  'hayoo
 
-  "mdd"  'haskell-debug
-  "mdb"  'haskell-debug/break-on-function
-  "mdn"  'haskell-debug/next
-  "mdN"  'haskell-debug/previous
-  "mdB"  'haskell-debug/delete
-  "mdc"  'haskell-debug/continue
-  "mda"  'haskell-debug/abandon
-  "mdr"  'haskell-debug/refresh)
+;;   "mdd"  'haskell-debug
+;;   "mdb"  'haskell-debug/break-on-function
+;;   "mdn"  'haskell-debug/next
+;;   "mdN"  'haskell-debug/previous
+;;   "mdB"  'haskell-debug/delete
+;;   "mdc"  'haskell-debug/continue
+;;   "mda"  'haskell-debug/abandon
+;;   "mdr"  'haskell-debug/refresh)
 
 ;;; misc
 ;; (require 'yesod-devel-mode nil t)
 (autoload 'yesod-devel-mode "yesod-devel-mode" "Yesod devel mode." t)
 
-(defun pl/pop-yesod-devel-buffer ()
+(defun paloryemacs/pop-yesod-devel-buffer ()
   (interactive)
   (let ((buf (get-buffer "*yesod-devel*")))
     (if buf

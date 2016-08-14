@@ -47,7 +47,7 @@ the modeline")
   (set-text-properties 0 (length text) nil text)
   text)
 
-(defpowerline pl/powerline-position
+(defpowerline paloryemacs/powerline-position
   (concat
    (if (and column-number-mode line-number-mode)
        (propertize
@@ -74,7 +74,7 @@ mouse-1: Display Line and Column Mode Menu")
 mouse-1: Display Line and Column Mode Menu")
          "")))))
 
-(defpowerline pl/powerline-file-size
+(defpowerline paloryemacs/powerline-file-size
   (concat
    (propertize
     " %p"
@@ -100,7 +100,7 @@ mouse-1: Display Line and Column Mode Menu")
 (defpowerline powerline-ace-window-path
   (window-parameter (selected-window) 'ace-window-path))
 
-(defpowerline pl/powerline-vc
+(defpowerline paloryemacs/powerline-vc
   (let ((vc-mark (char-to-string #xe0a0)))
     (if (and buffer-file-name vc-mode)
         (if (and window-system (not powerline-gui-use-vcs-glyph))
@@ -203,12 +203,12 @@ mouse-1: Display Line and Column Mode Menu")
     " NIL "))
 
 
-(defpowerline pl/powerline-client
+(defpowerline paloryemacs/powerline-client
   (if (frame-parameter nil 'client)
       "@"
     ""))
 
-(defpowerline pl/powerline-remote
+(defpowerline paloryemacs/powerline-remote
   (propertize
    (if (file-remote-p default-directory)
        "@"
@@ -224,7 +224,7 @@ mouse-1: Display Line and Column Mode Menu")
                                      default-directory)))))))
 
 
-(defpowerline pl/powerline-frame-id
+(defpowerline paloryemacs/powerline-frame-id
   (if (or (null window-system)
           (eq window-system 'pc))
       "-%F "
@@ -257,7 +257,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
 (defpowerline powerline-git-state-mark
   powerline-git-state-mark)
 
-(defun pl/powerline-evil-theme ()
+(defun paloryemacs/powerline-evil-theme ()
   "Setup the default mode-line."
   (interactive)
   (setq-default
@@ -281,7 +281,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                                               powerline-default-separator
                                               (cdr powerline-default-separator-dir))))
              (lhs `(,(powerline-evil-tag evil-face)
-                    ,@(let ((vc-info (pl/powerline-vc vc-face 'r)))
+                    ,@(let ((vc-info (paloryemacs/powerline-vc vc-face 'r)))
                         (if vc-info
                             (list (funcall separator-left evil-face vc-face)
                                   vc-info
@@ -292,12 +292,12 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                                          file-base-info-face))))
 
                     ,(powerline-raw mode-line-front-space file-base-info-face)
-                    ,(pl/powerline-client file-base-info-face)
-                    ,(pl/powerline-remote file-base-info-face)
-                    ,(pl/powerline-frame-id file-base-info-face)
+                    ,(paloryemacs/powerline-client file-base-info-face)
+                    ,(paloryemacs/powerline-remote file-base-info-face)
+                    ,(paloryemacs/powerline-frame-id file-base-info-face)
                     ,(powerline-raw mode-line-mule-info file-base-info-face)
                     ,(powerline-raw mode-line-modified file-base-info-face)
-                    ,(pl/powerline-position file-base-info-face)
+                    ,(paloryemacs/powerline-position file-base-info-face)
                     ,(funcall separator-left file-base-info-face buffer-id-face)
                     ,(powerline-buffer-id buffer-id-face 'l)
 
@@ -332,7 +332,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                    (powerline-raw global-mode-string face1 'r)
                    (powerline-raw " " face1)
                    (funcall separator-right face1 face2)
-                   (pl/powerline-file-size face2 'r)
+                   (paloryemacs/powerline-file-size face2 'r)
                    (when powerline-display-hud (powerline-hud face2 face1)))))
         (concat (powerline-render lhs)
                 (powerline-fill face2 (powerline-width rhs))
@@ -341,11 +341,11 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
 
 (with-eval-after-load 'powerline-themes
   ;; (setq powerline-default-separator 'utf-8) ; 'arrow
-  (pl/powerline-evil-theme))
+  (paloryemacs/powerline-evil-theme))
 
-(defun pl/force-update-mode-line  ()
+(defun paloryemacs/force-update-mode-line  ()
   (interactive)
-  (pl/powerline-evil-theme)
+  (paloryemacs/powerline-evil-theme)
   (powerline-reset)
   (force-mode-line-update t)
   (let* ((buf (current-buffer))
@@ -355,7 +355,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
     (find-file fn))
   (message "updated mode-line"))
 
-(global-set-key (kbd "<f5>") 'pl/force-update-mode-line)
+(global-set-key (kbd "<f5>") 'paloryemacs/force-update-mode-line)
 
 
 (provide '23powerline)

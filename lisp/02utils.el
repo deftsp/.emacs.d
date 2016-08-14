@@ -9,7 +9,7 @@
 (require 'key-chord nil t)
 
 ;; http://oremacs.com/2015/03/05/testing-init-sanity/
-(defun pl/test-emacs ()
+(defun paloryemacs/test-emacs ()
   "Testing your .emacs sanity.
 If there were no start up errors, it will echo \"All is well\",
 otherwise, it will pop to a *startup error* buffer with the error description."
@@ -42,25 +42,25 @@ otherwise, it will pop to a *startup error* buffer with the error description."
   `(lambda () (interactive) ,@forms))
 
 (if (fboundp 'with-eval-after-load)
-    (defmacro pl/after (feature &rest body)
+    (defmacro paloryemacs/after (feature &rest body)
       "After FEATURE is loaded, evaluate BODY."
       (declare (indent defun))
       `(with-eval-after-load ,feature ,@body))
-  (defmacro pl/after (feature &rest body)
+  (defmacro paloryemacs/after (feature &rest body)
     "After FEATURE is loaded, evaluate BODY."
     (declare (indent defun))
     `(eval-after-load ,feature
        '(progn ,@body))))
 
 
-(defun pl/future-time-string (delay)
+(defun paloryemacs/future-time-string (delay)
   (format-time-string "%H:%M:%S"
                       (seconds-to-time (+ (time-to-seconds (current-time))
                                           delay))))
 
 
 
-(defun pl/apostrophe-key-chord ()
+(defun paloryemacs/apostrophe-key-chord ()
   (interactive)
   (let* ((regionp (region-active-p))
          (end (if regionp
@@ -73,7 +73,7 @@ otherwise, it will pop to a *startup error* buffer with the error description."
           (goto-char (+ end 1)))
       (insert "'"))))
 
-(defun pl/underline-with-char (char)
+(defun paloryemacs/underline-with-char (char)
   (interactive (list (read-from-minibuffer "Char: ")))
   (when (= 0 (length char))
     (error "Need a character"))

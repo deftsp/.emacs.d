@@ -13,7 +13,7 @@
  (setenv "GOPATH" (concat (expand-file-name "~/opt/go-packages") ":"
                           (expand-file-name "~/Lab/gocode"))))
 
-(defun pl/go-mode-hook-func ()
+(defun paloryemacs/go-mode-hook-func ()
   (setq imenu-generic-expression '(("variable" "^var *\\(.*\\) *" 1)
                                    ("type" "^type *\\([^ \t\n\r\f]*\\)" 1)
                                    ("func" "^func *\\(.*\\)" 1)))
@@ -24,17 +24,17 @@
 
 (eval-after-load "go-mode"
   '(progn
-     (add-hook 'go-mode-hook 'pl/go-mode-hook-func)
+     (add-hook 'go-mode-hook 'paloryemacs/go-mode-hook-func)
      (add-hook 'before-save-hook 'gofmt-before-save)))
 
 ;; helper function
 ;; https://github.com/astaxie/build-web-application-with-golang/blob/master/ebook/01.4.md
-(defun pl/go ()
+(defun paloryemacs/go ()
   "run current buffer"
   (interactive)
   (compile (concat "go run " (buffer-file-name))))
 
-(defun pl/go-fix-buffer ()
+(defun paloryemacs/go-fix-buffer ()
   "run gofix on current buffer"
   (interactive)
   (show-all)

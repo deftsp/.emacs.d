@@ -31,13 +31,13 @@
          slime-fuzzy-completion-in-place nil))
 
 ;;;
-(defun pl/lisp-mode-hook ()
+(defun paloryemacs/lisp-mode-hook ()
   ;; (imenu-add-to-menubar "Symbols")
   ;; (make-local-variable 'outline-regexp)
   ;; (setq outline-regexp "^(.*")
   (slime-mode t))
 
-(add-hook 'lisp-mode-hook 'pl/lisp-mode-hook)
+(add-hook 'lisp-mode-hook 'paloryemacs/lisp-mode-hook)
 
 ;;; this prevents us from requiring the user get dev-lisp/hyperspec (which is non-free) as a hard dependency
 (if (file-exists-p "/usr/share/doc/hyperspec")
@@ -138,7 +138,7 @@
 
 
 ;;----------------------------------------------------------------------------------------------------
-(defun pl/lispdoc (arg)
+(defun paloryemacs/lispdoc (arg)
   "Searches lispdoc.com for SYMBOL, which is by default the symbol
 currently under the cursor."
   (interactive "P")
@@ -156,7 +156,7 @@ currently under the cursor."
           (browse-url (concat "http://lispdoc.com?q=" target-symbol
                               "&search=" search-type))))))
 
-(define-key help-map (kbd "l") 'pl/lispdoc) ; was view-lossage
+(define-key help-map (kbd "l") 'paloryemacs/lispdoc) ; was view-lossage
 ;;----------------------------------------------------------------------------------------------------
 
 ;;; cldoc -- can not work well with slime, use autodoc instead of.
@@ -219,11 +219,11 @@ currently under the cursor."
 
 
 ;;; Making slime connect to your lisp automatically when you open a lisp file.
-;; (defun pl/start-slime ()
+;; (defun paloryemacs/start-slime ()
 ;;   (interactive)
 ;;   (unless (slime-connected-p)
 ;;     (save-excursion (slime))))
-;; (add-hook 'slime-mode-hook 'pl/start-slime)
+;; (add-hook 'slime-mode-hook 'paloryemacs/start-slime)
 
 
 (provide '50common-lisp)

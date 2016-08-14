@@ -107,8 +107,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;uses ido on the recently opened files
-(global-set-key (kbd "C-x C-r") 'pl/ido-choose-from-recentf)
-(defun pl/ido-choose-from-recentf ()
+(global-set-key (kbd "C-x C-r") 'paloryemacs/ido-choose-from-recentf)
+(defun paloryemacs/ido-choose-from-recentf ()
   "Use ido to select a recently opened file from the `recentf-list'"
   (interactive)
   (find-file
@@ -120,7 +120,7 @@
                         nil t)))
 
 ;;; ido copy selection
-(defun pl/ido-copy-selection ()
+(defun paloryemacs/ido-copy-selection ()
   "Copy the current ido selection to the kill ring."
   (interactive)
   (kill-new
@@ -129,12 +129,12 @@
             ido-text))))
 
 ;;; Using ido to open files from file name cache-------------------------------
-(defun pl/ido-file-cache-find-file (&optional init-text)
+(defun paloryemacs/ido-file-cache-find-file (&optional init-text)
   ;;   "Using ido, interactively open file from file cache'.
   ;; First select a file, matched using ido-switch-buffer against the contents
   ;; in `file-cache-alist'. If the file exist in more than one
   ;; directory, select directory. Lastly the file is opened."
-  ;;   (interactive (list (pl/ido-file-cache-read "File: "
+  ;;   (interactive (list (paloryemacs/ido-file-cache-read "File: "
   (interactive)
   (let* ((file-name-list (mapcar (lambda (x)
                                    (car x))
@@ -160,22 +160,22 @@
                  (setq ido-temp-list (cdr record)))))
           (ido-read-buffer (format "Find %s in dir: " file))))))))
 
-(global-set-key (kbd "ESC ESC f") 'pl/ido-file-cache-find-file) ; equal to 'C-[ C-[ f'
-(define-key minibuffer-local-map [C-tab] 'pl/ido-magic-file-cache)
+(global-set-key (kbd "ESC ESC f") 'paloryemacs/ido-file-cache-find-file) ; equal to 'C-[ C-[ f'
+(define-key minibuffer-local-map [C-tab] 'paloryemacs/ido-magic-file-cache)
 
-(defun pl/ido-magic-file-cache (arg)
-  "Drop into `pl/ido-file-cache-find-file'."
+(defun paloryemacs/ido-magic-file-cache (arg)
+  "Drop into `paloryemacs/ido-file-cache-find-file'."
   (interactive "P")
   (when (memq ido-cur-item '(file buffer))
     (setq ido-exit 'refresh)
-    (pl/ido-file-cache-find-file ido-text)
+    (paloryemacs/ido-file-cache-find-file ido-text)
     (exit-minibuffer)))
 
 
 ;; ---------------------------------------------------------------------------------
 
 ;;; Find files in Tags File
-(defun pl/ido-find-file-in-tag-files ()
+(defun paloryemacs/ido-find-file-in-tag-files ()
   (interactive)
   (save-excursion
     (let ((enable-recursive-minibuffers t))
@@ -185,7 +185,7 @@
       (ido-completing-read
        "Project file: " (tags-table-files) nil t)))))
 
-(global-set-key (kbd "C-x f") 'pl/ido-find-file-in-tag-files)
+(global-set-key (kbd "C-x f") 'paloryemacs/ido-find-file-in-tag-files)
 
 
 ;; Invoking bookmarks from ido
@@ -228,20 +228,20 @@
 ;;             (setq ido-enable-flex-matching t)
 ;;             (global-set-key "\M-x" 'ido-execute-command)))
 
-(add-hook 'ido-setup-hook 'pl/ido-keys)
+(add-hook 'ido-setup-hook 'paloryemacs/ido-keys)
 
-(defun pl/ido-keys ()
+(defun paloryemacs/ido-keys ()
   "Add my keybindings for ido."
   (when ido-vertical-mode
     (define-key ido-completion-map (kbd "M-j") 'ido-next-match)
     (define-key ido-completion-map (kbd "M-k") 'ido-prev-match))
   (define-key ido-completion-map (kbd "C-.") 'ido-delete-backward-updir)
-  ;; (define-key ido-completion-map (kbd "C-k") 'pl/ido-erase-minibuffer-or-dwim)
+  ;; (define-key ido-completion-map (kbd "C-k") 'paloryemacs/ido-erase-minibuffer-or-dwim)
   (define-key ido-completion-map (kbd "ESC ESC k") 'ido-delete-file-at-head))
 
 ;;; // - go to the root directory.
 ;;; ~/ - go to the home directory.
-;; (defun pl/ido-erase-minibuffer-or-dwim ()
+;; (defun paloryemacs/ido-erase-minibuffer-or-dwim ()
 ;;   "If cursor the EOL erases whole minibuffer and insert  `~/'.
 ;; If cursor at the EOL and the whole minibuffer is `~/', erase whole minibuffer.
 ;; Or else erases whole minibuffer. "
@@ -258,8 +258,8 @@
 
 ;;; imenu goto symbol
 ;;; http://emacswiki.org/emacs/ImenuMode
-(global-set-key (kbd "C-c j") 'pl/ido-goto-symbol)
-(defun pl/ido-goto-symbol (&optional symbol-list)
+(global-set-key (kbd "C-c j") 'paloryemacs/ido-goto-symbol)
+(defun paloryemacs/ido-goto-symbol (&optional symbol-list)
   "Refresh imenu and jump to a place in the buffer using Ido."
   (interactive)
   (unless (featurep 'imenu)
@@ -277,7 +277,7 @@
       (while (progn
                (imenu--cleanup)
                (setq imenu--index-alist nil)
-               (pl/ido-goto-symbol (imenu--make-index-alist))
+               (paloryemacs/ido-goto-symbol (imenu--make-index-alist))
                (setq selected-symbol
                      (ido-completing-read "Symbol: " symbol-names))
                (string= (car imenu--rescan-item) selected-symbol)))
@@ -294,7 +294,7 @@
       (let (name position)
         (cond
          ((and (listp symbol) (imenu--subalist-p symbol))
-          (pl/ido-goto-symbol symbol))
+          (paloryemacs/ido-goto-symbol symbol))
          ((listp symbol)
           (setq name (car symbol))
           (setq position (cdr symbol)))
@@ -310,7 +310,7 @@
 
 ;;; edit as root
 ;; find file with ido and open it with sudo
-(defun pl/ido-sudo-edit (&optional arg)
+(defun paloryemacs/ido-sudo-edit (&optional arg)
   (interactive "p")
   (if (or arg (not buffer-file-name))
       (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))
@@ -330,39 +330,11 @@
 
 ;;; Occasionally ido
 ;; http://oremacs.com/2015/02/12/ido-occasional/
-;; The only thing that ido-occasional-completing-read does is to pre-filter
-;; collection with predicate and pass it on to ido-completing-read.
-(defun ido-occasional-completing-read
-    (prompt collection
-            &optional predicate require-match initial-input
-            hist def inherit-input-method)
-  "Use `ido-completing-read' if the collection isn't too large.
-Fall back to `completing-read' otherwise."
-  (let ((filtered-collection
-         (all-completions "" collection predicate)))
-    (if (<= (length filtered-collection) 30000)
-        (ido-completing-read
-         prompt filtered-collection nil
-         require-match initial-input hist
-         def nil)
-      (completing-read
-       prompt collection predicate
-       require-match initial-input hist
-       def inherit-input-method))))
+(require 'ido-occasional nil t)
 
-;;;###autoload
-(defmacro with-ido-completion (fun)
-  "Wrap FUN in another interactive function with ido completion."
-  `(defun ,(intern (concat (symbol-name fun) "/with-ido")) ()
-     ,(format "Forward to `%S' with ido completion." fun)
-     (interactive)
-     (let ((completing-read-function
-            'ido-occasional-completing-read))
-       (call-interactively #',fun))))
-
-(global-set-key (kbd "C-h f") (with-ido-completion describe-function))
-(global-set-key (kbd "C-h v") (with-ido-completion describe-variable))
-;; (global-set-key (kbd "C-h i") (with-ido-completion info-lookup-symbol))
-
+(with-eval-after-load "ido-occasional"
+  ;; (global-set-key (kbd "C-h i") (with-ido-completion info-lookup-symbol))
+  (global-set-key (kbd "C-h f") (with-ido-completion describe-function))
+  (global-set-key (kbd "C-h v") (with-ido-completion describe-variable)))
 
 (provide '52ido)

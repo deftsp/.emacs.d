@@ -29,10 +29,10 @@
 
 (eval-after-load "latex"
   '(progn
-     (add-hook 'LaTeX-mode-hook #'pl/init-Tex)     ; with AUCTeX LaTeX mode
+     (add-hook 'LaTeX-mode-hook #'paloryemacs/init-Tex)     ; with AUCTeX LaTeX mode
      (add-hook 'LaTeX-mode-hook 'turn-on-reftex)))
 
-(defun pl/init-Tex ()
+(defun paloryemacs/init-Tex ()
   (add-to-list 'TeX-command-list '("XeLaTeX" "%`xelatex%(mode)%' %t" TeX-run-TeX nil t))
   (setq-default TeX-master nil)
   (setq TeX-auto-untabify t) ; do not use TAB char

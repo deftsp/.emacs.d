@@ -187,7 +187,7 @@
   (setq org-ellipsis "⤵"))
 
 (with-eval-after-load "org"
-  (org-defkey org-mode-map (kbd "C-c C-x t") 'pl/org-clock-summary-today-by-tags)
+  (org-defkey org-mode-map (kbd "C-c C-x t") 'paloryemacs/org-clock-summary-today-by-tags)
   ;; Undefine C-c [ and C-c ] since this breaks my
   ;; org-agenda files when directories are include It
   ;; expands the files in the directories individually
@@ -241,11 +241,11 @@
 
 ;; Refile settings
 ;; Exclude DONE state tasks from refile targets
-(defun pl/verify-refile-target ()
+(defun paloryemacs/verify-refile-target ()
   "Exclude todo keywords with a done state from refile targets"
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
-(setq org-refile-target-verify-function 'pl/verify-refile-target)
+(setq org-refile-target-verify-function 'paloryemacs/verify-refile-target)
 
 
 ;;; for MobileOrg
@@ -266,7 +266,7 @@
 (define-key global-map (kbd "C-c c") 'org-capture)
 
 ;; https://lists.gnu.org/archive/html/emacs-orgmode/2010-08/msg00469.html
-(defun pl/find-today-trading-journal ()
+(defun paloryemacs/find-today-trading-journal ()
   "Find today's trading journal."
   (let ((p (concat org-directory
                    (format-time-string
@@ -278,7 +278,7 @@
       '(("t" "Todo" entry (file+headline "~/org/GTD.org" "Inbox")
          "* TODO %?\n  %i%u"
          :kill-buffer t)
-        ("T" "Trading Journal" plain (function pl/find-today-trading-journal)
+        ("T" "Trading Journal" plain (function paloryemacs/find-today-trading-journal)
          "* %U\n  %i%?"
          :prepend t
          :unnarrowed nil
@@ -305,15 +305,15 @@
          "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n  :STYLE: habit \n  :REPEAT_TO_STATE: NEXT\n  :END:\n\n  %U\n")))
 
 ;;; work with appt
-(defun pl/org-agenda-to-appt ()
+(defun paloryemacs/org-agenda-to-appt ()
   (setq appt-time-msg-list nil)
   ;; Dangerous!!! do not use `appt-add', this might remove entries added by `appt-add' manually.
   (org-agenda-to-appt t "TODO"))
 ;; update appt
-(run-at-time "24:01" (* 0.5 60 60) 'pl/org-agenda-to-appt) ;; update every half an hour
+(run-at-time "24:01" (* 0.5 60 60) 'paloryemacs/org-agenda-to-appt) ;; update every half an hour
 
 ;; update appt each time agenda opened
-(add-hook 'org-agenda-finalize-hook 'pl/org-agenda-to-appt)
+(add-hook 'org-agenda-finalize-hook 'paloryemacs/org-agenda-to-appt)
 
 ;;;
 (setq org-fontify-emphasized-text t
@@ -412,7 +412,7 @@
 ;; get the idea from http://www.dbrunner.de/it/org-mode.html
 ;; I give a little update. execute recursive edit before pop a new window
 ;; see also `org-agenda-restore-windows-after-quit'
-(defun pl/jump-to-org-agenda ()
+(defun paloryemacs/jump-to-org-agenda ()
   (interactive)
   (let* ((buf-name (if (boundp 'org-agenda-buffer-name)
                        org-agenda-buffer-name
@@ -427,13 +427,13 @@
         (call-interactively 'org-agenda-list)))))
 
 ;; every 20 minutes
-(run-with-idle-timer (* 20 60) t 'pl/jump-to-org-agenda)
+(run-with-idle-timer (* 20 60) t 'paloryemacs/jump-to-org-agenda)
 
-(defun pl/delay-jump-to-org-agenda ()
-  (run-at-time 3 nil #'pl/jump-to-org-agenda))
+(defun paloryemacs/delay-jump-to-org-agenda ()
+  (run-at-time 3 nil #'paloryemacs/jump-to-org-agenda))
 
 (add-hook 'after-init-hook
-          #'pl/delay-jump-to-org-agenda
+          #'paloryemacs/delay-jump-to-org-agenda
           ;; Note that 3-rd argument of this `add-hook' should be `t'
           ;; to append the call of the `dired' after other hooked functions,
           ;; most importantly after `desktop-read'.
@@ -461,10 +461,10 @@
 
 ;; stop emacs asking for confirmation
 ;; (setq org-confirm-babel-evaluate nil)
-(defun pl/org-confirm-babel-evaluate (lang body)
+(defun paloryemacs/org-confirm-babel-evaluate (lang body)
   (cond ((string= lang "ditaa") nil) ; don't ask for ditaa
         ((string= lang "emacs-lisp") nil)))
-(setq org-confirm-babel-evaluate 'pl/org-confirm-babel-evaluate)
+(setq org-confirm-babel-evaluate 'paloryemacs/org-confirm-babel-evaluate)
 
 ;; give us some hint we are running
 (defadvice org-babel-execute-src-block (around progress nil activate)
@@ -496,13 +496,61 @@
       org-drill-add-random-noise-to-intervals-p t)
 
 
+;;; Fix org-drill and use space key as prefix key in evil mode
+;; Space key have been used as prefix key. When org-drill presentation prompt,
+;; press space key one time, it will expect other key sequence. Switch to
+;; `evil-emacs-state' to prevent this and recover it when org-drill finish.
+;; (defadvice org-drill (before paloryemacs/org-drill-switch-to-evil-emacs-state activate)
+;;   "Switch to evil-emacs-state before org-drill begin."
+;;   (paloryemacs/evil-state-cycle 'insert))
+
+;; (defadvice org-drill (after paloryemacs/org-drill-recover-evil-state activate)
+;;   "Recover the evil state which saved before org-drill begin."
+;;   (paloryemacs/evil-state-cycle))
+
+;; use evil-save-state to wrap it
+(defun paloryemacs/evil-org-drill ()
+  "Switch to evil insert state, execute `org-drill' then restore the state."
+  (interactive)
+  (evil-save-state
+    (evil-change-state 'insert)
+    (org-drill)))
+
+(defun paloryemacs/evil-org-drill-directory ()
+  "Switch to evil insert state, execute `org-drill-directory' then restore the state."
+  (interactive)
+  (evil-save-state
+    (evil-change-state 'insert)
+    (org-drill-directory)))
+
+(defun paloryemacs/evil-org-drill-resume ()
+  "Switch to evil insert state, execute `org-drill-resume' then restore the state."
+  (interactive)
+  (evil-save-state
+    (evil-change-state 'insert)
+    (org-drill-resume)))
+
+(defun paloryemacs/evil-org-drill-again ()
+  "Switch to evil insert state, execute `org-drill-again' then restore the state."
+  (interactive)
+  (evil-save-state
+    (evil-change-state 'insert)
+    (org-drill-again)))
+
+(defun paloryemacs/evil-org-drill-cram ()
+  "Switch to evil insert state, execute `org-drill-cram' then restore the state."
+  (interactive)
+  (evil-save-state
+    (evil-change-state 'insert)
+    (org-drill-cram)))
+
 ;;; agenda mode
-(defun pl/org-agenda-mode-init ()
+(defun paloryemacs/org-agenda-mode-init ()
   (define-key org-agenda-mode-map " " 'org-agenda-cycle-show))
 
-(add-hook 'org-agenda-mode-hook 'pl/org-agenda-mode-init)
+(add-hook 'org-agenda-mode-hook 'paloryemacs/org-agenda-mode-init)
 
-(defun pl/org-insert-image ()
+(defun paloryemacs/org-insert-image ()
   "Insert a image link, when C-u take a screenshot."
   (interactive)
   (let* ((buf-file-name (buffer-file-name))
@@ -542,7 +590,7 @@
 ;;; get the summary of a today by tags
 ;; called by C-u sum last day
 ;; called by C-u sum specify date
-(defun pl/org-clock-summary-today-by-tags (timerange &optional tstart tend noinsert)
+(defun paloryemacs/org-clock-summary-today-by-tags (timerange &optional tstart tend noinsert)
   (interactive "P")
   (let* ((timerange-numeric-value (prefix-numeric-value timerange))
          (files (org-add-archive-files (org-agenda-files)))
@@ -598,23 +646,23 @@ _a_scii   _v_erse    _I_NCLUDE:
 _s_rc     ^ ^        _H_TML:
 _h_tml    ^ ^        _A_SCII:
 "
-    ("s" (pl/hot-expand "<s"))
-    ("e" (pl/hot-expand "<e"))
-    ("q" (pl/hot-expand "<q"))
-    ("v" (pl/hot-expand "<v"))
-    ("c" (pl/hot-expand "<c"))
-    ("l" (pl/hot-expand "<l"))
-    ("h" (pl/hot-expand "<h"))
-    ("a" (pl/hot-expand "<a"))
-    ("L" (pl/hot-expand "<L"))
-    ("i" (pl/hot-expand "<i"))
-    ("I" (pl/hot-expand "<I"))
-    ("H" (pl/hot-expand "<H"))
-    ("A" (pl/hot-expand "<A"))
+    ("s" (paloryemacs/hot-expand "<s"))
+    ("e" (paloryemacs/hot-expand "<e"))
+    ("q" (paloryemacs/hot-expand "<q"))
+    ("v" (paloryemacs/hot-expand "<v"))
+    ("c" (paloryemacs/hot-expand "<c"))
+    ("l" (paloryemacs/hot-expand "<l"))
+    ("h" (paloryemacs/hot-expand "<h"))
+    ("a" (paloryemacs/hot-expand "<a"))
+    ("L" (paloryemacs/hot-expand "<L"))
+    ("i" (paloryemacs/hot-expand "<i"))
+    ("I" (paloryemacs/hot-expand "<I"))
+    ("H" (paloryemacs/hot-expand "<H"))
+    ("A" (paloryemacs/hot-expand "<A"))
     ("<" self-insert-command "ins")
     ("o" nil "quit")))
 
-(defun pl/hot-expand (str)
+(defun paloryemacs/hot-expand (str)
   "Expand org template."
   (insert str)
   (org-try-structure-completion))

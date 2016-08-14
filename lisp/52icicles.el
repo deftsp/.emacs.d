@@ -176,7 +176,7 @@
 ;;          (error "%s is not a project directory." default-directory))))
 
 
-;; (icicle-define-command pl/change-font
+;; (icicle-define-command paloryemacs/change-font
 ;;                        "Change font of current frame."
 ;;                        (lambda (font)
 ;;                          (modify-frame-parameters orig-frame

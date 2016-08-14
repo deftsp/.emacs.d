@@ -31,25 +31,25 @@
     (global-set-key (kbd "<M-wheel-up>") 'cfs-decrease-fontsize)
     (global-set-key (kbd "<M-wheel-down>") 'cfs-increase-fontsize)))
 
-(defun pl/cfs-reset-profile-and-fontsize ()
+(defun paloryemacs/cfs-reset-profile-and-fontsize ()
   "Reset fontsize with chinese-fonts-setup."
   (interactive)
   (when (display-graphic-p)
-    (let* ((profile-name pl/default-cfs-profile-name)
-           (current-step pl/default-cfs-fontsize-step))
+    (let* ((profile-name paloryemacs/default-cfs-profile-name)
+           (current-step paloryemacs/default-cfs-fontsize-step))
       (cfs--select-profile profile-name)
       (cfs--set-font (cfs--get-fontsizes current-step))
       (cfs--save-fontsize-step profile-name current-step)
       (message cfs--minibuffer-echo-string))))
 
-(defun pl/cfs-set-symbol-fonts (fontsizes-list)
+(defun paloryemacs/cfs-set-symbol-fonts (fontsizes-list)
   ;; (set-fontset-font t 'symbol "Inconsolata" nil 'append)
   ;; (set-fontset-font t 'symbol "Symbola" nil 'append)
   ;; (set-fontset-font t 'unicode "Segoe UI Emoji" nil 'append)
   ;; (set-fontset-font t 'unicode "STIX" nil 'append)
   (set-fontset-font t 'symbol "DejaVu Sans Mono"))
 
-(add-hook 'cfs-set-font-finish-hook 'pl/cfs-set-symbol-fonts)
+(add-hook 'cfs-set-font-finish-hook 'paloryemacs/cfs-set-symbol-fonts)
 
 ;; (defhydra hydra-zoom ()
 ;;   "zoom"
@@ -63,7 +63,7 @@
 ;; To get a list of all the possible values of "charset" that is available to set-fontset-font, use
 ;; the "list-character-sets" function. You can also use the "list-charset-chars" function to see the
 ;; list of characters contained in a specific charset.
-;; (defun pl/set-font ()
+;; (defun paloryemacs/set-font ()
 ;;   (let* ((default-font-size
 ;;            (case window-system
 ;;              ('x   12)
@@ -141,7 +141,7 @@
 ;;                         (font-spec :family "fixed" :size default-font-size)))))
 
 ;; (when window-system
-;;   (pl/set-font))
+;;   (paloryemacs/set-font))
 
 (provide '50font)
 

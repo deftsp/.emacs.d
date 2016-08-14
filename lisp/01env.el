@@ -120,7 +120,7 @@
 (set-east-asian-ambiguous-width 2)
 
 ;;; coding system
-(defun pl/set-coding-system (coding)
+(defun paloryemacs/set-coding-system (coding)
   (prefer-coding-system coding) ; default coding system for subprocess I/O
   (set-clipboard-coding-system coding) ; 'ctext
   (set-selection-coding-system coding)
@@ -133,7 +133,7 @@
   (add-to-list 'process-coding-system-alist `("git" . ,coding))
   (add-to-list 'auto-coding-alist `("COMMIT_EDITMSG" . ,coding)))
 
-(pl/set-coding-system 'utf-8)
+(paloryemacs/set-coding-system 'utf-8)
 
 (set-input-method nil)
 
@@ -187,7 +187,7 @@
 (when (eq system-type 'darwin)
   (setenv "INFOPATH" (concat (expand-file-name "~/share/info:") (getenv "INFOPATH"))))
 
-(defconst pl/cache-directory (concat user-emacs-directory "caches/")
+(defconst paloryemacs/cache-directory (concat user-emacs-directory "caches/")
   "cache files directory")
 
 ;;; preset variables
