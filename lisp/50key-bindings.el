@@ -1,4 +1,227 @@
-;;; 50keys.el ---
+;;; 50key-bindings.el ---
+
+;;; Code:
+;; We define prefix commands only for the sake of which-key
+(setq paloryemacs/key-binding-prefixes '(("a"   "applications")
+                                         ("b"   "buffers")
+                                         ("c"   "compile/comments")
+                                         ("C"   "capture/colors")
+                                         ("e"   "errors")
+                                         ("f"   "files")
+                                         ("fC"  "files/convert")
+                                         ("fv"  "variables")
+                                         ("g"   "git/versions-control")
+                                         ("h"   "help")
+                                         ("hd"  "help-describe")
+                                         ("i"   "insertion")
+                                         ("j"   "jump/join/split")
+                                         ("k"   "lisp")
+                                         ("kd"  "delete")
+                                         ("kD"  "delete-backward")
+                                         ("n"   "narrow/numbers")
+                                         ("p"   "projects")
+                                         ("q"   "quit")
+                                         ("r"   "registers/rings/resume")
+                                         ("Re"  "elisp")
+                                         ("Rp"  "pcre")
+                                         ("s"   "search/symbol")
+                                         ("sa"  "ag")
+                                         ("sg"  "grep")
+                                         ("sk"  "ack")
+                                         ("st"  "pt")
+                                         ("t"   "toggles")
+                                         ("tC"  "colors")
+                                         ("tE"  "editing-styles")
+                                         ("th"  "highlight")
+                                         ("tm"  "modeline")
+                                         ("T"   "UI toggles/themes")
+                                         ("C-t" "other toggles")
+                                         ("w"   "windows")
+                                         ("wp"  "popup")
+                                         ("x"   "text")
+                                         ("xa"  "align")
+                                         ("xd"  "delete")
+                                         ("xl"  "lines")
+                                         ("xm"  "move")
+                                         ("xt"  "transpose")
+                                         ("xw"  "words")
+                                         ("z"   "zoom")))
+
+(mapc (lambda (x) (apply #'paloryemacs/declare-prefix x))
+      paloryemacs/key-binding-prefixes)
+
+;; Universal argument ---------------------------------------------------------
+(paloryemacs/set-leader-keys "u" 'universal-argument)
+(define-key universal-argument-map
+  (kbd (concat dotpaloryemacs-leader-key " u"))
+  'universal-argument-more)
+
+
+(paloryemacs/set-leader-keys
+  "1"   'delete-other-windows
+  "2"   (kbd "C-x 2")
+  "3"   "\C-x3"
+  "a"   'org-agenda
+  ;; "b"   'bookmark-map
+  ;; ";" "cc" "ci", "cl", "cp", "cr", "ct", "cy" and "cv" are used by evil-nerd-commenter
+  "cs"  'paloryemacs/evil-change-symbol-in-defun
+  "ch"  'crosshairs-mode
+  "D"   'dired-jump
+  "dp"  'dash-at-point
+  "dP"  'dash-at-point-with-docset
+  "ff"  'paloryemacs/toggle-full-window
+  "gb"  'magit-blame-mode
+  "gl"  'magit-log
+  "gs"  'magit-status
+  "gC"  'magit-commit
+  "gg"  'counsel-git-grep
+  "j"   'helm-etags-select
+  "k"   'kill-this-buffer
+  ;; "ll" are used by evil-nerd-commenter
+  ;; "lr"  'paloryemacs/linum-relative-toggle
+  "n"   'evil-narrow-indirect
+  "p"   'projectile-commander
+  "se"  'evil-iedit-state/iedit-mode
+  "ss"  'helm-swoop
+  "sS"  'helm-multi-swoop
+  "s C-s" 'helm-multi-swoop-all
+  ;; "ut"  'undo-tree-visualize
+  "vr"  'vr/replace
+  "vq"  'vr/query-replace
+  "vm"  'vr/mc-mark
+  "xb"  'switch-to-buffer
+  "xc"  'save-buffers-kill-terminal
+  "xf"  'ido-find-file
+  "xk"  'kill-buffer
+  "xz"  'suspend-frame
+  "xvv" 'vc-next-action
+  "xv=" 'vc-diff
+  "xvl" 'vc-print-log)
+
+;; errors ---------------------------------------------------------------------
+(paloryemacs/set-leader-keys
+  "ec" 'flycheck-clear
+  "eh" 'flycheck-describe-checker
+  "el" 'flycheck-list-errors
+  "eL" 'spacemacs/goto-flycheck-error-list
+  "es" 'flycheck-select-checker
+  "eS" 'flycheck-set-checker-executable
+  "ev" 'flycheck-verify-setup
+
+  "ef"  'flycheck-mode
+
+  "en" 'spacemacs/next-error
+  "eN" 'spacemacs/previous-error
+  "ep" 'spacemacs/previous-error)
+
+
+(paloryemacs/set-leader-keys
+  ;; "TAB" 'spacemacs/alternate-buffer
+  "bb"  'ivy-switch-buffer
+  "bd"  'kill-this-buffer
+  ;; "be"  'spacemacs/safe-erase-buffer
+  ;; "bh"  'spacemacs/home
+  "bk"  'paloryemacs/kill-matching-buffers-rudely
+  "bn"  'next-buffer
+  ;; "em"  'spacemacs/kill-other-buffers
+  ;; "bN"  'spacemacs/new-empty-buffer
+  ;; "bP"  'spacemacs/copy-clipboard-to-whole-buffer
+  "bp"  'previous-buffer
+  ;; "bR"  'spacemacs/safe-revert-buffer
+  "bs"  'paloryemacs/switch-to-scratch-buffer
+  ;; "bY"  'spacemacs/copy-whole-buffer-to-clipboard
+  "bw"  'read-only-mode
+
+  "bR"  'revert-buffer
+
+  "bmh" 'buf-move-left
+  "bmj" 'buf-move-down
+  "bmk" 'buf-move-up
+  "bml" 'buf-move-right)
+
+;; file -----------------------------------------------------------------------
+(paloryemacs/set-leader-keys
+  ;; "fc" 'spacemacs/copy-file
+  ;; "fD" 'spacemacs/delete-current-buffer-file
+  ;; "fei" 'spacemacs/find-user-init-file
+  ;; "fed" 'spacemacs/find-dotfile
+  ;; "feD" 'spacemacs/ediff-dotfile-and-template
+  ;; "feR" 'dotspacemacs/sync-configuration-layers
+  ;; "fev" 'spacemacs/display-and-copy-version
+  ;; "fCd" 'spacemacs/unix2dos
+  ;; "fCu" 'spacemacs/dos2unix
+  "fg" 'rgrep
+  "fl" 'find-file-literally
+  ;; "fE" 'spacemacs/sudo-edit
+  ;; "fo" 'spacemacs/open-in-external-app
+  ;; "fR" 'spacemacs/rename-current-buffer-file
+  "fS" 'evil-write-all
+  "fs" 'save-buffer
+  "fvd" 'add-dir-local-variable
+  "fvf" 'add-file-local-variable
+  "fvp" 'add-file-local-variable-prop-line
+  ;; "fy" 'spacemacs/show-and-copy-buffer-filename
+  )
+
+;; help -----------------------------------------------------------------------
+(paloryemacs/set-leader-keys
+  "hdb" 'describe-bindings
+  "hdc" 'describe-char
+  "hdf" 'describe-function
+  "hdk" 'describe-key
+  ;; "hdl" 'spacemacs/describe-last-keys
+  "hdp" 'describe-package
+  "hdP" 'configuration-layer/describe-package
+  ;; "hds" 'spacemacs/describe-system-info
+  "hdt" 'describe-theme
+  "hdv" 'describe-variable
+  ;; "hI"  'spacemacs/report-issue
+  "hn"  'view-emacs-news)
+
+
+(paloryemacs/set-leader-keys
+  "w1"  'delete-other-windows
+  "w2"  (kbd "C-x 2")
+  "w3"  "\C-x3"
+  ;; "wb"  'spacemacs/switch-to-minibuffer-window
+  ;; "wd"  'spacemacs/delete-window
+  ;; "wt"  'spacemacs/toggle-current-window-dedication
+  "wf"  'follow-mode
+  "wF"  'make-frame
+  "wH"  'evil-window-move-far-left
+  "w <S-left>"  'evil-window-move-far-left
+  "wh"  'evil-window-left
+  "w <left>"  'evil-window-left
+  "wJ"  'evil-window-move-very-bottom
+  "w <S-down>"  'evil-window-move-very-bottom
+  "wj"  'evil-window-down
+  "w <down>"  'evil-window-down
+  "wK"  'evil-window-move-very-top
+  "w <S-up>"  'evil-window-move-very-top
+  "wk"  'evil-window-up
+  "w <up>"  'evil-window-up
+  "wL"  'evil-window-move-far-right
+  "w <S-right>"  'evil-window-move-far-right
+  "wl"  'evil-window-right
+  "w <right>"  'evil-window-right
+  ;; "wm"  'spacemacs/toggle-maximize-buffer
+  ;; "wc"  'spacemacs/toggle-centered-buffer-mode
+  ;; "wC"  'spacemacs/centered-buffer-mode-full-width
+  "wo"  'other-frame
+  ;; "wr"  'spacemacs/rotate-windows
+  ;; "wR"  'spacemacs/rotate-windows-backward
+  "ws"  'split-window-below
+  "wS"  'split-window-below-and-focus
+  "w-"  'split-window-below
+  "wU"  'winner-redo
+  "wu"  'winner-undo
+  "wv"  'split-window-right
+  "wV"  'split-window-right-and-focus
+  "ww"  'other-window
+  "w/"  'split-window-right
+  "w="  'balance-windows
+  ;; "w_"  'spacemacs/maximize-horizontally
+  )
 
 (defun paloryemacs/global-set-keys (&rest keycommands)
   "Register keys to commands."
@@ -74,8 +297,6 @@
 ;;   (define-prefix-command 'ctl-z-map)
 ;;   (global-set-key (kbd "C-z") 'ctl-z-map))
 
-(global-set-key (kbd "C-c u") 'revert-buffer) ; how about C-x C-v?
-
 ;;; view mode
 ;; rebind "C-x C-q" to `view-mode' instead of `read-only-mode'
 (define-key ctl-x-map "\C-q" 'view-mode)
@@ -111,13 +332,12 @@ text/code."
   (interactive)
   (if (and (eq last-command 'paloryemacs/smart-end)
            (= (line-end-position) (point)))
-      (end-of-line-text)
+      (paloryemacs//end-of-line-text)
     (end-of-line)))
 
-(defun end-of-line-text ()
+(defun paloryemacs//end-of-line-text ()
   "Move to end of current line and skip comments and trailing space.
 Require `font-lock'."
-  (interactive)
   (end-of-line)
   (let ((bol (line-beginning-position)))
     (unless (eq font-lock-comment-face (get-text-property bol 'face))
@@ -127,50 +347,6 @@ Require `font-lock'."
         (backward-char 1))
       (unless (= (point) bol)
         (forward-char 1) (skip-chars-backward " \t\n"))))) ; Done with home and end keys.
-
-;;--------------------------------------------------------------------------------
-;;;Unshifted special characters
-;;--------------------------------------------------------------------------------
-;; In almost any given programming language you will use the special characters a lot more than numbers. Why not
-;; optimize for the most common case? While the code below is for the standard US layout it will automatically handle
-;; multibyte characters in order to support extended layouts.
-
-;; (defvar *unshifted-special-chars-layout*
-;;   '(("1" "!")                           ; from -> to
-;;     ("2" "@")
-;;     ("3" "#")
-;;     ("4" "$")
-;;     ("5" "%")
-;;     ("6" "^")
-;;     ("7" "&")
-;;     ("8" "*")
-;;     ("9" "(")
-;;     ("0" ")")
-;;     ("!" "1")
-;;     ("@" "2")
-;;     ("#" "3")
-;;     ("$" "4")
-;;     ("%" "5")
-;;     ("^" "6")
-;;     ("&" "7")
-;;     ("*" "8")
-;;     ("(" "9")
-;;     (")" "0")))
-
-;; (defun mb-str-to-unibyte-char (s)
-;;   "Translate first multibyte char in s to internal unibyte representation."
-;;   (multibyte-char-to-unibyte (string-to-char s)))
-
-;; (defun remap-keyboard (mapping)
-;;   "Setup keyboard translate table using a list of pairwise key-mappings."
-;;   (mapcar
-;;    (lambda (mb-string-pair)
-;;      (apply #'keyboard-translate
-;;             (mapcar #'mb-str-to-unibyte-char mb-string-pair)))
-;;    mapping))
-
-;; (remap-keyboard *unshifted-special-chars-layout*)
-;; Unshifted special characters ends there--------------------------------------------------------------------------------
 
 ;;; repeat to mark multi-line
 ;; (global-set-key (kbd "C-z") 'paloryemacs/mark-line)
@@ -520,4 +696,4 @@ _v_ariable _u_ser-option
   ("u" apropos-user-option)
   ("e" apropos-value))
 
-(provide '50keys)
+(provide '50key-bindings)

@@ -58,7 +58,7 @@
 (require '50input-method)
 (require '50javascript)
 (require '50key-chord)
-(require '50keys)
+(require '50key-bindings)
 (require '50major-modes)
 (require '50lua)
 (require '50maxima)

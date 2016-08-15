@@ -249,81 +249,6 @@ recover evil state to it, otherwiser change to evil-emacs-state."
 ;;             'paloryemacs/activate-all-major-mode-leader))
 
 
-(paloryemacs/set-leader-keys
-  "1"   'delete-other-windows
-  "2"   (kbd "C-x 2")
-  "3"   "\C-x3"
-  "a"   'org-agenda
-  ;; "b"   'bookmark-map
-  ;; ";" "cc" "ci", "cl", "cp", "cr", "ct", "cy" and "cv" are used by evil-nerd-commenter
-  "cs"  'paloryemacs/evil-change-symbol-in-defun
-  "ch"  'crosshairs-mode
-  "D"   'dired-jump
-  "dp"  'dash-at-point
-  "dP"  'dash-at-point-with-docset
-  "ff"  'paloryemacs/toggle-full-window
-  "fc"  'flycheck-buffer
-  "fC"  'flycheck-clear
-  "fi"  'flycheck-info
-  "fl"  'flycheck-list-errors
-  "fn"  'flycheck-next-error
-  "fp"  'flycheck-previous-error
-  "fs"  'flycheck-select-checker
-  "f/"  'flycheck-google-messages
-  "fy"  'flycheck-copy-messages-as-kill
-  "fb"  'flycheck-compile
-  "fV"  'flycheck-version
-  "f?"  'flycheck-describe-checker
-  "ft"  'flycheck-mode
-  "gb"  'magit-blame-mode
-  "gl"  'magit-log
-  "gs"  'magit-status
-  "gC"  'magit-commit
-  "gg"  'counsel-git-grep
-  "j"   'helm-etags-select
-  "k"   'kill-this-buffer
-  ;; "ll" are used by evil-nerd-commenter
-  ;; "lr"  'paloryemacs/linum-relative-toggle
-  "n"   'evil-narrow-indirect
-  "p"   'projectile-commander
-  "u"   'universal-argument
-  "se"  'evil-iedit-state/iedit-mode
-  "ss"  'helm-swoop
-  "sS"  'helm-multi-swoop
-  "s C-s" 'helm-multi-swoop-all
-  ;; "ut"  'undo-tree-visualize
-  "vr"  'vr/replace
-  "vq"  'vr/query-replace
-  "vm"  'vr/mc-mark
-  "w"   'save-buffer
-  "W"   'save-some-buffers
-  "xb"  'switch-to-buffer
-  "xc"  'save-buffers-kill-terminal
-  "xf"  'ido-find-file
-  "xk"  'kill-buffer
-  "xz"  'suspend-frame
-  "xvv" 'vc-next-action
-  "xv=" 'vc-diff
-  "xvl" 'vc-print-log)
-
-(paloryemacs/set-leader-keys
-  ;; "TAB" 'spacemacs/alternate-buffer
-  "bb"  'ivy-switch-buffer
-  "bd"  'kill-this-buffer
-  ;; "be"  'spacemacs/safe-erase-buffer
-  ;; "bh"  'spacemacs/home
-  "bk"  'paloryemacs/kill-matching-buffers-rudely
-  "bn"  'next-buffer
-  ;; "em"  'spacemacs/kill-other-buffers
-  ;; "bN"  'spacemacs/new-empty-buffer
-  ;; "bP"  'spacemacs/copy-clipboard-to-whole-buffer
-  "bp"  'previous-buffer
-  ;; "bR"  'spacemacs/safe-revert-buffer
-  "bs"  'paloryemacs/switch-to-scratch-buffer
-  ;; "bY"  'spacemacs/copy-whole-buffer-to-clipboard
-  "bw"  'read-only-mode)
-
-(paloryemacs/declare-prefix "b" "buffers")
 
 ;; from https://github.com/gempesaw/dotemacs/blob/emacs/dg-defun.el
 (defun paloryemacs/kill-matching-buffers-rudely (regexp &optional internal-too)
@@ -363,26 +288,34 @@ kill internal buffers too."
 (paloryemacs-bootstrap/init-bind-map)
 
 ;;; emacs-lisp
-(paloryemacs/set-leader-keys-for-major-mode 'emacs-lisp-mode
-  "cc" 'emacs-lisp-byte-compile
-  "e$" 'lisp-state-eval-sexp-end-of-line
-  "eb" 'eval-buffer
-  "ee" 'eval-last-sexp
-  "er" 'eval-region
-  "ef" 'eval-defun
-  "el" 'lisp-state-eval-sexp-end-of-line
-  ","  'lisp-state-toggle-lisp-state
-  "tb" 'paloryemacs/ert-run-tests-buffer
-  "tq" 'ert
-  "f" 'describe-function/with-ido
-  "k" 'describe-key
-  "hh" 'elisp-slime-nav-describe-elisp-thing-at-point
-  "gg" 'elisp-slime-nav-find-elisp-thing-at-point
-  "v" 'describe-variable/with-ido)
+(defun paloryemacs/init-emacs-lisp ()
+  (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
+    (paloryemacs/declare-prefix-for-mode mode "mc" "compile")
+    (paloryemacs/declare-prefix-for-mode mode "me" "eval")
+    (paloryemacs/declare-prefix-for-mode mode "mt" "tests")
+    (paloryemacs/set-leader-keys-for-major-mode mode
+      "cc" 'emacs-lisp-byte-compile
+      "e$" 'lisp-state-eval-sexp-end-of-line
+      "eb" 'eval-buffer
+      "ee" 'eval-last-sexp
+      "er" 'eval-region
+      "ef" 'eval-defun
+      "el" 'lisp-state-eval-sexp-end-of-line
+      ","  'lisp-state-toggle-lisp-state
+      "tb" 'paloryemacs/ert-run-tests-buffer
+      "tq" 'ert
+      "f" 'describe-function/with-ido
+      "k" 'describe-key
+      "hh" 'elisp-slime-nav-describe-elisp-thing-at-point
+      "gg" 'elisp-slime-nav-find-elisp-thing-at-point
+      "v" 'describe-variable/with-ido)))
 
+(paloryemacs/init-emacs-lisp)
+
+;;; evil-lisp-state
+(setq evil-lisp-state-global t) ; set it before require
 (require 'evil-lisp-state nil t)
 (with-eval-after-load "evil-lisp-state"
-  (setq evil-lisp-state-global t)
   (paloryemacs/set-leader-keys "k" evil-lisp-state-map))
 
 ;;; expand-region
