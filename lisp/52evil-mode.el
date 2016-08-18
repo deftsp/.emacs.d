@@ -438,11 +438,9 @@ kill internal buffers too."
   "cy" 'evilnc-copy-and-comment-lines
   "cv" 'evilnc-toggle-invert-comment-line-by-line)
 
-;;;
-(require 'evil-indent-textobject nil t)
-;; ii - Inner Indentation: the surrounding textblock with the same indentation
-;; ai - Above and Indentation: ii + the line above with a different indentation
-;; aI - Above and Indentation+: ai + the line below with a different indentation
+;;; evil-indent-plus
+(with-eval-after-load "evil"
+  (evil-indent-plus-default-bindings))
 
 ;;; evil-matchit
 (require 'evil-matchit nil t)

@@ -1,0 +1,5 @@
+(:name evil-indent-plus
+       :description "Better indent textobjects for evil."
+       :type github
+       :pkgname "TheBB/evil-indent-plus"
+       :depends (cl-lib evil))
