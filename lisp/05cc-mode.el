@@ -177,7 +177,7 @@
 (setq comment-style 'extra-line)        ;default "indent"
 
 ;;; indent the entire buffer
-(defun indent-entire-c-buffer ()
+(defun paloryemacs/indent-entire-c-buffer ()
   "Indent entire buffer of C source code."
   (interactive)
   (save-excursion
@@ -237,7 +237,7 @@
       (c-indent-command))))
 
 
-(defun do-cdecl ()
+(defun paloryemacs/do-cdecl ()
   "Compose C and C++ type declarations"
   (interactive)
   (shell-command
