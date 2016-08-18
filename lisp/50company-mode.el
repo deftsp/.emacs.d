@@ -64,10 +64,16 @@
 (add-hook 'haskell-mode-hook 'paloryemacs/company-haskell-mode-setup)
 (defun paloryemacs/company-haskell-mode-setup ()
   (let ((backends paloryemacs/company-prog-common-backends))
-    (push 'company-cabal backends)
-    (push 'company-ghc backends)
+    ;; use intero which will auto config company
+    ;; (push 'company-cabal backends)
+    ;; (push 'company-ghc backends)
     (set (make-local-variable 'company-backends) backends)))
 
+(add-hook 'haskell-cabal-mode-hook 'paloryemacs/company-haskell-cabal-mode-setup)
+(defun paloryemacs/company-haskell-cabal-mode-setup ()
+  (let ((backends paloryemacs/company-prog-common-backends))
+    (push 'company-cabal backends)
+    (set (make-local-variable 'company-backends) backends)))
 
 (add-hook 'scheme-mode-hook 'paloryemacs/company-scheme-mode-setup)
 (defun paloryemacs/company-scheme-mode-setup ()

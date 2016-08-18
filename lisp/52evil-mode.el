@@ -404,20 +404,22 @@ kill internal buffers too."
 (evil-declare-key 'insert haskell-mode-map (kbd "RET") 'paloryemacs/newline-and-indent-relative)
 (evil-declare-key 'normal haskell-mode-map "o" 'paloryemacs/haskell-evil-open-below)
 (evil-declare-key 'normal haskell-mode-map "O" 'paloryemacs/haskell-evil-open-above)
-(evil-declare-key 'normal haskell-mode-map ",gn" 'ghc-goto-next-error)
-(evil-declare-key 'normal haskell-mode-map ",gp" 'ghc-goto-prev-error)
+;; (evil-declare-key 'normal haskell-mode-map ",gn" 'ghc-goto-next-error)
+;; (evil-declare-key 'normal haskell-mode-map ",gp" 'ghc-goto-prev-error)
 
-(evil-define-key 'normal haskell-mode-map (kbd "gT") 'haskell-process-do-type)
-(evil-define-key 'normal haskell-mode-map (kbd "gI") 'haskell-process-do-info)
-(evil-define-key 'normal haskell-mode-map (kbd "gz") 'haskell-interactive-switch)
-(evil-define-key 'normal haskell-interactive-mode (kbd "gz") 'haskell-interactive-switch-back)
-(evil-define-key 'normal haskell-cabal-mode-map (kbd "gz") 'haskell-interactive-switch)
+(evil-define-key 'normal haskell-mode-map (kbd "gd") 'intero-goto-definition)
 
-(evil-define-key 'normal haskell-mode-map (kbd "gl") 'haskell-process-load-or-reload)
+;; (evil-define-key 'normal haskell-mode-map (kbd "gT") 'haskell-process-do-type)
+;; (evil-define-key 'normal haskell-mode-map (kbd "gI") 'haskell-process-do-info)
+;; (evil-define-key 'normal haskell-mode-map (kbd "gz") 'haskell-interactive-switch)
+;; (evil-define-key 'normal haskell-interactive-mode (kbd "gz") 'haskell-interactive-switch-back)
+;; (evil-define-key 'normal haskell-cabal-mode-map (kbd "gz") 'haskell-interactive-switch)
 
-(evil-define-key 'normal haskell-interactive-mode-map (kbd "RET") #'haskell-interactive-mode-return)
-(evil-define-key 'insert haskell-interactive-mode-map (kbd "C-u") 'haskell-interactive-mode-kill-whole-line)
-(evil-define-key 'normal haskell-interactive-mode-map (kbd "G") 'end-of-buffer)
+;; (evil-define-key 'normal haskell-mode-map (kbd "gl") 'haskell-process-load-or-reload)
+
+;; (evil-define-key 'normal haskell-interactive-mode-map (kbd "RET") #'haskell-interactive-mode-return)
+;; (evil-define-key 'insert haskell-interactive-mode-map (kbd "C-u") 'haskell-interactive-mode-kill-whole-line)
+;; (evil-define-key 'normal haskell-interactive-mode-map (kbd "G") 'end-of-buffer)
 
 
 ;;; evil-nerd-commenter

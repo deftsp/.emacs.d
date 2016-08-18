@@ -21,6 +21,9 @@
            haskell-font-lock-symbols nil ; disabled because it will casue alignment problem
            haskell-process-path-cabal (expand-file-name "~/.cabal/bin/cabal")
            haskell-stylish-on-save nil ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
+           ;; Better import handling
+           haskell-process-suggest-remove-import-lines t
+           haskell-process-auto-import-loaded-modules t
            haskell-notify-p t)
 
      (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
@@ -94,15 +97,21 @@
 ;;; haskell mode hook
 (add-hook 'haskell-mode-hook 'paloryemacs/haskell-mode-setup)
 (defun paloryemacs/haskell-mode-setup ()
+  (let ((checkers '(haskell-ghc  haskell-stack-ghc)))
+    (if (boundp 'flycheck-disabled-checkers)
+        (dolist (checker checkers)
+          (add-to-list 'flycheck-disabled-checkers checker))
+      (setq flycheck-disabled-checkers checkers)))
+
   (when (fboundp 'intero-mode)
     (intero-mode +1))
-  ;; (when (buffer-file-name (current-buffer))
-  ;;   (flymake-mode))
+
+  ;; (flycheck-add-next-checker 'intero '(warning . haskell-hlint))
 
   ;; (ghc-init) ; ghc-mod
 
-  (add-to-list 'flycheck-disabled-checkers 'haskell-ghc)
-  (add-to-list 'flycheck-disabled-checkers 'haskell-hlint)
+  (if (fboundp 'electric-indent-local-mode)
+      (electric-indent-local-mode -1))
 
   ;; enable our level computation
   (setq outline-level 'paloryemacs/outline-level)
@@ -440,39 +449,97 @@ point."
           (kill-region (match-beginning 0) (match-end 0))
         (error "No SCC at point")))))
 
-;; (evil-leader/set-key-for-mode 'haskell-mode
-;;   "mu"   'haskell-mode-find-uses
-;;   "mht"  'haskell-mode-show-type-at
-;;   "mgl"  'haskell-mode-goto-loc
 
-;;   "mgg"  'haskell-mode-jump-to-def-or-tag
-;;   "mf"   'haskell-mode-stylish-buffer
+(paloryemacs/set-leader-keys-for-major-mode 'haskell-mode
+  "gg"  'haskell-mode-jump-to-def-or-tag
+  "gi"  'haskell-navigate-imports
+  ;; "gl"  'haskell-mode-goto-loc
 
-;;   "msb"  'haskell-process-load-or-reload
-;;   "msc"  'haskell-interactive-mode-clear
-;;   "mss"  'haskell-interactive-bring
-;;   "msS"  'haskell-interactive-switch
+  "F"   'haskell-mode-stylish-buffer
 
-;;   "mca"  'haskell-process-cabal
-;;   "mcb"  'haskell-process-cabal-build
-;;   "mcc"  'haskell-compile
-;;   "mcv"  'haskell-cabal-visit-file
+  ;; "sb"  'haskell-process-load-file
+  "sb"  'haskell-process-load-or-reload
+  "sc"  'haskell-interactive-mode-clear
+  ;; "ss"  'spacemacs/haskell-interactive-bring
+  "ss"  'haskell-interactive-bring
+  "sS"  'haskell-interactive-switch
 
-;;   "mhd"  'inferior-haskell-find-haddock
-;;   "mhh"  'hoogle
-;;   "mhi"  'haskell-process-do-info
-;;   "mht"  'haskell-process-do-type
-;;   "mhT"  'spacemacs/haskell-process-do-type-on-prev-line
-;;   "mhy"  'hayoo
+  "ca"  'haskell-process-cabal
+  "cb"  'haskell-process-cabal-build
+  "cc"  'haskell-compile
+  "cv"  'haskell-cabal-visit-file
 
-;;   "mdd"  'haskell-debug
-;;   "mdb"  'haskell-debug/break-on-function
-;;   "mdn"  'haskell-debug/next
-;;   "mdN"  'haskell-debug/previous
-;;   "mdB"  'haskell-debug/delete
-;;   "mdc"  'haskell-debug/continue
-;;   "mda"  'haskell-debug/abandon
-;;   "mdr"  'haskell-debug/refresh)
+  "hd"  'inferior-haskell-find-haddock
+  "hh"  'hoogle
+  "hH"  'haskell-hoogle-lookup-from-local
+  "hi"  'haskell-process-do-info
+  "ht"  'haskell-process-do-type
+  ;; "ht"  'haskell-mode-show-type-at
+  "hT"  'spacemacs/haskell-process-do-type-on-prev-line
+  "hy"  'hayoo
+
+  "da"  'haskell-debug/abandon
+  "db"  'haskell-debug/break-on-function
+  "dB"  'haskell-debug/delete
+  "dc"  'haskell-debug/continue
+  "dd"  'haskell-debug
+  "dn"  'haskell-debug/next
+  "dN"  'haskell-debug/previous
+  ;; "dp"  'haskell-debug/previous
+  "dr"  'haskell-debug/refresh
+  "ds"  'haskell-debug/step
+  "dt"  'haskell-debug/trace
+
+  "U"   'haskell-mode-find-uses)
+
+(with-eval-after-load "evil-evilified-state"
+  (evilified-state-evilify haskell-debug-mode haskell-debug-mode-map
+  "RET" 'haskell-debug/select
+  "a" 'haskell-debug/abandon
+  "b" 'haskell-debug/break-on-function
+  "c" 'haskell-debug/continue
+  "d" 'haskell-debug/delete
+  "n" 'haskell-debug/next
+  "N" 'haskell-debug/previous
+  "p" 'haskell-debug/previous
+  "r" 'haskell-debug/refresh
+  "s" 'haskell-debug/step
+  "t" 'haskell-debug/trace))
+
+;; Switch back to editor from REPL
+(paloryemacs/set-leader-keys-for-major-mode 'haskell-interactive-mode
+  "sS"  'haskell-interactive-switch-back)
+
+(paloryemacs/set-leader-keys-for-major-mode 'haskell-cabal
+  "C"  'haskell-compile)
+
+;; Cabal-file bindings
+(paloryemacs/set-leader-keys-for-major-mode 'haskell-cabal-mode
+  ;; "="   'haskell-cabal-subsection-arrange-lines ;; Does a bad job, 'gg=G' works better
+  "d"   'haskell-cabal-add-dependency
+  "b"   'haskell-cabal-goto-benchmark-section
+  "e"   'haskell-cabal-goto-executable-section
+  "t"   'haskell-cabal-goto-test-suite-section
+  "m"   'haskell-cabal-goto-exposed-modules
+  "l"   'haskell-cabal-goto-library-section
+  "n"   'haskell-cabal-next-subsection
+  "p"   'haskell-cabal-previous-subsection
+  "sc"  'haskell-interactive-mode-clear
+  ;; "ss"  'spacemacs/haskell-interactive-bring
+  "ss"  'haskell-interactive-bring
+  "sS"  'haskell-interactive-switch
+  "N"   'haskell-cabal-next-section
+  "P"   'haskell-cabal-previous-section
+  "f"   'haskell-cabal-find-or-create-source-file)
+
+;; Make "RET" behaviour in REPL saner
+(evil-define-key 'insert haskell-interactive-mode-map
+  (kbd "RET") 'haskell-interactive-mode-return)
+
+(evil-define-key 'normal haskell-interactive-mode-map
+  (kbd "RET") 'haskell-interactive-mode-return)
+
+
 
 ;;; misc
 ;; (require 'yesod-devel-mode nil t)
