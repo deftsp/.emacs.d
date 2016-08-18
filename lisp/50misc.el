@@ -1281,9 +1281,9 @@ This command is to be used interactively."
 (global-undo-tree-mode t)
 (eval-after-load "undo-tree"
   '(progn
-    (setq-default undo-tree-visualizer-timestamps t)
-    (setq-default undo-tree-visualizer-diff t)
-    (setq undo-tree-mode-lighter " UT")))
+     (setq-default undo-tree-visualizer-timestamps t)
+     (setq-default undo-tree-visualizer-diff t)
+     (setq undo-tree-mode-lighter " UT")))
 
 ;;; Table of contents - toc
 ;; (require 'toc "toc" t)
@@ -1409,21 +1409,27 @@ This command is to be used interactively."
 ;; Let yank and yank-pop to indent whatever they just pasted. This is useful if, for example, you
 ;; copy some code from another file at a different indentation level than you want to paste it at.
 ;; With these advice, the code will be indented properly relative to wherever you paste it.
-(defadvice yank (after indent-region activate)
-  (if (member major-mode
-          '(emacs-lisp-mode lisp-interaction-mode lisp-mode
-            c-mode c++-mode objc-mode
-            latex-mode plain-tex-mode))
-      (let ((mark-even-if-inactive t))
-        (indent-region (region-beginning) (region-end) nil))))
+(defadvice yank (after paloryemacs/indent-region activate)
+  "Auto indent after `yank', if evil mode off."
+  (when (and (not (boundp 'evil-mode))
+             (not evil-mode)
+             (member major-mode '(emacs-lisp-mode
+                                  lisp-interaction-mode lisp-mode
+                                  c-mode c++-mode objc-mode
+                                  latex-mode plain-tex-mode)))
+    (let ((mark-even-if-inactive t))
+      (indent-region (region-beginning) (region-end) nil))))
 
-(defadvice yank-pop (after indent-region activate)
-  (if (member major-mode
-              '(emacs-lisp-mode lisp-interaction-mode lisp-mode
-                                c-mode c++-mode objc-mode
-                                latex-mode plain-tex-mode))
-      (let ((mark-even-if-inactive t))
-        (indent-region (region-beginning) (region-end) nil))))
+(defadvice yank-pop (after paloryemacs/indent-region activate)
+  "Auto indent after `yank-pop', if evil mode off."
+  (when (and (not (boundp 'evil-mode))
+             (not evil-mode)
+             (member major-mode '(emacs-lisp-mode
+                                  lisp-interaction-mode lisp-mode
+                                  c-mode c++-mode objc-mode
+                                  latex-mode plain-tex-mode)))
+    (let ((mark-even-if-inactive t))
+      (indent-region (region-beginning) (region-end) nil))))
 
 
 ;; Normally, if you kill a newline and the next line is indented, you will have to execute
@@ -1431,7 +1437,7 @@ This command is to be used interactively."
 ;; automatically for you, saving some time. I just rebind it to C-k, overriding kill-line, since
 ;; this is almost always the behavior I want.
 
-;; (defun kill-and-join-forward (&optional arg)
+;; (defun paloryemac/kill-and-join-forward (&optional arg)
 ;;   "If at end of line, join with following; otherwise kill line.
 ;;     Deletes whitespace at join."
 ;;   (interactive "P")
@@ -1439,7 +1445,7 @@ This command is to be used interactively."
 ;;       (delete-indentation t)
 ;;       (kill-line arg)))
 
-;; (global-set-key (kbd "C-k") 'kill-and-join-forward)
+;; (global-set-key (kbd "C-k") 'paloryemacs/kill-and-join-forward)
 
 ;;; toggle-letter-case
 ;; http://ergoemacs.org/emacs/modernization_upcase-word.html
