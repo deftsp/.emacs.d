@@ -36,10 +36,11 @@
   (interactive)
   (when (display-graphic-p)
     (let* ((profile-name paloryemacs/default-cfs-profile-name)
-           (current-step paloryemacs/default-cfs-fontsize-step))
+           (profile-step paloryemacs/default-cfs-fontsize-step)
+           (fontsizes-list (cfs--get-fontsizes profile-step)))
       (cfs--select-profile profile-name)
-      (cfs--set-font (cfs--get-fontsizes current-step))
-      (cfs--save-fontsize-step profile-name current-step)
+      (cfs--set-font fontsizes-list)
+      (cfs--save-profile-step profile-name profile-step)
       (message cfs--minibuffer-echo-string))))
 
 (defun paloryemacs/cfs-set-symbol-fonts (fontsizes-list)
@@ -50,6 +51,8 @@
   (set-fontset-font t 'symbol "DejaVu Sans Mono"))
 
 (add-hook 'cfs-set-font-finish-hook 'paloryemacs/cfs-set-symbol-fonts)
+
+(chinese-fonts-setup-enable)
 
 ;; (defhydra hydra-zoom ()
 ;;   "zoom"
