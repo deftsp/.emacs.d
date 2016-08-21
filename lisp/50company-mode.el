@@ -120,7 +120,7 @@
 (add-hook 'org-mode-hook 'paloryemacs/company-org-mode-setup)
 (defun paloryemacs/company-org-mode-setup ()
   (let ((backends paloryemacs/company-common-backends))
-    (set (make-local-variable 'company-backends) backends)))
+    (setq-local company-backends backends)))
 
 
 
