@@ -1037,16 +1037,6 @@ such character is found, following options are shown:
 ;; I bound it to C-x r M-k to compliment C-x r k (just like M-w compliments C-w):
 (global-set-key (kbd "C-x r M-k") 'kill-save-rectangle)
 
-;;; smex
-(eval-after-load "smex"
-  '(progn
-     (unless smex-initialized-p
-       (smex-initialize))
-     (global-set-key (kbd "M-X") 'smex-major-mode-commands)
-     ;; This is your old M-x.
-     ;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-     (global-set-key (kbd "M-x") 'smex)))
-
 ;; avy
 (with-eval-after-load "avy"
   (setq avy-background nil)

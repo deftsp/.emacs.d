@@ -253,6 +253,17 @@ C-u C-u -> Start swiper without any arguments (stock behavior)"
     (t  (swiper (modi/get-symbol-at-point)))))
 
 
+;;; smex
+(with-eval-after-load "smex"
+  (unless smex-initialized-p
+    (smex-initialize))
+  ;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command) ; old M-x
+  ;; (global-set-key (kbd "M-x") 'smex) ; use 'counsel-M-x
+  (global-set-key (kbd "M-X") 'smex-major-mode-commands))
+
+;; counsel-M-x use smex
+(global-set-key (kbd "M-x") 'counsel-M-x)
+
 (provide '50search)
 
 
