@@ -269,7 +269,8 @@
 (dolist (str '("*Help*" "*Completions*"))
   (add-to-list 'completion-ignored-extensions str))
 
-
+;;; help window
+(setq help-window-select t)
 
 ;; (setq next-error-highlight 3
 ;;       next-error-highlight-no-select t)
