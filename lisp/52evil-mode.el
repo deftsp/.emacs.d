@@ -506,10 +506,10 @@ to replace the symbol under cursor"
 ;;   (define-key magit-status-mode-map "k" 'magit-section-backward))
 
 ;;; org agenda -- leave in emacs mode but add j & k
-(eval-after-load "org-agenda"
-  '(progn
-     (define-key org-agenda-mode-map "j" 'evil-next-line) ; overide org-agenda-goto-date
-     (define-key org-agenda-mode-map "k" 'evil-previous-line))) ; org-agenda-capture
+;; (eval-after-load "org-agenda"
+;;   '(progn
+;;      (define-key org-agenda-mode-map "j" 'evil-next-line) ; overide org-agenda-goto-date
+;;      (define-key org-agenda-mode-map "k" 'evil-previous-line))) ; org-agenda-capture
 
 ;;; evil-exchange
 ;; `gx': evil-exchange-key, `gX': evil-exchange-cancel-key

@@ -8,6 +8,12 @@
 ;;; neat stuffs
 (require 'key-chord nil t)
 
+(defun paloryemacs-buffer/warning (msg &rest args)
+  "Display MSG as a warning message but in buffer `*Messages*'.
+The message is always displayed. "
+  (message "(Paloryemacs) Warning: %s" (apply 'format msg args)))
+
+
 ;; http://oremacs.com/2015/03/05/testing-init-sanity/
 (defun paloryemacs/test-emacs ()
   "Testing your .emacs sanity.

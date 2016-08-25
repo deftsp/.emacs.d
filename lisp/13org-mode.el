@@ -19,27 +19,24 @@
 ;; https://github.com/edavis/org-opml
 ;; C-c C-e m
 
-(eval-after-load "org"
-  '(progn
-     (require '50calendar)
-     (when (eq system-type 'darwin)
-       (add-to-list 'org-modules 'org-mac-link))
-     (add-to-list 'org-modules 'org-habit)
-     (add-to-list 'org-modules 'org-expiry)
-     (add-to-list 'org-modules 'org-mouse)
-     (add-to-list 'org-modules 'org-annotate-file)
-     (add-to-list 'org-modules 'org-interactive-query)
-     (add-to-list 'org-modules 'org-info)
-     (add-to-list 'org-modules 'org-man)
-     (add-to-list 'org-modules 'org-eval)
-     (add-to-list 'org-modules 'org-panel)
-     (add-to-list 'org-modules 'org-toc)
-     (add-to-list 'org-modules 'org-drill)))
+(with-eval-after-load "org"
+  (require '50calendar)
+  (when (eq system-type 'darwin)
+    (add-to-list 'org-modules 'org-mac-link))
+  (add-to-list 'org-modules 'org-habit)
+  (add-to-list 'org-modules 'org-expiry)
+  (add-to-list 'org-modules 'org-mouse)
+  (add-to-list 'org-modules 'org-annotate-file)
+  (add-to-list 'org-modules 'org-interactive-query)
+  (add-to-list 'org-modules 'org-info)
+  (add-to-list 'org-modules 'org-man)
+  (add-to-list 'org-modules 'org-eval)
+  (add-to-list 'org-modules 'org-panel)
+  (add-to-list 'org-modules 'org-toc)
+  (add-to-list 'org-modules 'org-drill))
 
-(eval-after-load "evil"
-  '(progn
-     (require 'evil-org-mode)
-     (add-hook 'org-mode-hook 'evil-org-mode)))
+(with-eval-after-load "evil"
+  (require 'evil-org-mode))
 
 ;;; global key binding
 (global-set-key (kbd "C-c l") 'org-store-link)
@@ -147,6 +144,7 @@
       org-directory "~/org"
       org-hide-leading-stars t
       org-log-done 'time
+      ;; org-startup-indented t
       ;; Default target for storing notes. Used as a fall back file for org-capture.el, for templates that do not
       ;; specify a target file.
       org-default-notes-file (concat org-directory "/notes.org")
@@ -545,6 +543,25 @@
     (org-drill-cram)))
 
 ;;; agenda mode
+(with-eval-after-load "org-agenda"
+  (org-defkey org-agenda-mode-map "|" nil) ;'org-agenda-filter-remove-all
+  (org-defkey org-agenda-mode-map "\\" nil) ;'org-agenda-query-not-cmd
+  (org-defkey org-agenda-mode-map (kbd "C-n") nil)
+  (org-defkey org-agenda-mode-map (kbd "G") nil) ;'org-agenda-toggle-time-grid
+  (with-eval-after-load "evil-evilified-state"
+    (evilified-state-evilify-map org-agenda-mode-map
+      :mode org-agenda-mode
+      :bindings
+      (kbd "C-h") nil
+      "j" 'org-agenda-next-line
+      "k" 'org-agenda-previous-line
+      (kbd "M-j") 'org-agenda-next-item
+      (kbd "M-k") 'org-agenda-previous-item
+      (kbd "M-h") 'org-agenda-earlier
+      (kbd "M-l") 'org-agenda-later
+      (kbd "gd")  'org-agenda-toggle-time-grid
+      (kbd "gr")  'org-agenda-redo)))
+
 (defun paloryemacs/org-agenda-mode-init ()
   (define-key org-agenda-mode-map " " 'org-agenda-cycle-show))
 
