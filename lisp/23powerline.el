@@ -42,10 +42,44 @@ the modeline")
   "Powerline buffer id face."
   :group 'powerline)
 
+(defface powerline-mode-line-normal-face
+  '((t (:foreground unspecified :background unspecified)))
+  "Powerline mode line normal face."
+  :group 'powerline)
+
+
+(defface powerline-mode-line-modified-face
+  '((t (:foreground "#cc2200")))
+  "Powerline mode line modified face."
+  :group 'powerline)
+
+
 
 (defun strip-text-properties(text)
   (set-text-properties 0 (length text) nil text)
   text)
+
+;; base on mode-line-modified
+(defpowerline paloryemacs/mode-line-modified
+  (list (propertize
+         "%1*"
+         'help-echo 'mode-line-read-only-help-echo
+         'local-map (purecopy (make-mode-line-mouse-map
+                               'mouse-1
+                               #'mode-line-toggle-read-only))
+         'face (if (buffer-modified-p)
+                   'powerline-mode-line-modified-face
+                 'powerline-mode-line-normal-face)
+         'mouse-face 'mode-line-highlight)
+        (propertize
+         "%1+"
+         'help-echo 'mode-line-modified-help-echo
+         'local-map (purecopy (make-mode-line-mouse-map
+                               'mouse-1 #'mode-line-toggle-modified))
+         'face (if (buffer-modified-p)
+                   'powerline-mode-line-modified-face
+                 'powerline-mode-line-normal-face)
+         'mouse-face 'mode-line-highlight)))
 
 (defpowerline paloryemacs/powerline-position
   (concat
@@ -296,7 +330,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                     ,(paloryemacs/powerline-remote file-base-info-face)
                     ,(paloryemacs/powerline-frame-id file-base-info-face)
                     ,(powerline-raw mode-line-mule-info file-base-info-face)
-                    ,(powerline-raw mode-line-modified file-base-info-face)
+                    ,(paloryemacs/mode-line-modified file-base-info-face)
                     ,(paloryemacs/powerline-position file-base-info-face)
                     ,(funcall separator-left file-base-info-face buffer-id-face)
                     ,(powerline-buffer-id buffer-id-face 'l)
