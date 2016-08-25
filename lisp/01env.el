@@ -5,7 +5,7 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (when (display-graphic-p)
-  (load-theme 'palory t))
+  (load-theme 'paloryemacs t))
 
 ;; always load the newer one between .el and .elc
 (setq load-prefer-newer t)

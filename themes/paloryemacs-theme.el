@@ -1,4 +1,4 @@
-;;; palory-theme.el ---
+;;; paloryemacs-theme.el ---
 
 ;; Copyright (C) 2012  Shihpin Tseng
 
@@ -18,7 +18,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;;; Commentary: palory theme, for programmer
+;;; Commentary: paloryemacs theme, for programmer
 
 ;;; Code:
 
@@ -30,7 +30,7 @@
 ;; the easy way to get following vlaue is: `customize face' => Apply and save => copy and paste
 
 
-(deftheme palory "The Palory color theme. Base on zenburn and solarized")
+(deftheme paloryemacs "The Paloryemacs color theme. Base on zenburn and solarized")
 
 (let ((base03  "#002b36")
       (base02  "#073642")
@@ -50,7 +50,7 @@
       (green   "#859900"))
 
   (custom-theme-set-faces
-   'palory
+   'paloryemacs
    ;; basic coloring
    `(default ((t (:background ,base03 :foreground ,base0))))
    '(cursor ((t (:foreground unspecified :background "#cd0000"))))
@@ -385,7 +385,7 @@
 
   ;;; custom theme variables
   (custom-theme-set-variables
-   'palory
+   'paloryemacs
    `(ansi-color-names-vector ['bg ,red ,green ,yellow ,blue ,magenta ,cyan ,base0])
    ;; fill-column-indicator
    `(fci-rule-color ,base01)))
@@ -400,7 +400,7 @@
 
 
 
-(provide-theme 'palory)
+(provide-theme 'paloryemacs)
 
 ;;;###autoload
 (add-to-list 'safe-local-eval-forms
@@ -415,4 +415,4 @@
 ;; eval: (when (require 'rainbow-mode nil t) (rainbow-mode 1))
 ;; eval: (when (require 'hexcolor-mode nil t) (hexcolor-mode 1))
 ;; End:
-;;; palory-theme.el ends here.
+;;; paloryemacs-theme.el ends here.
