@@ -622,7 +622,13 @@ to replace the symbol under cursor"
 (with-eval-after-load "iedit"
   (require 'evil-iedit-state nil t)
   (with-eval-after-load "evil-iedit-state"
-    ))
+    ;; activate leader in iedit and iedit-insert states
+    (define-key evil-iedit-state-map
+      (kbd dotpaloryemacs-leader-key) paloryemacs-default-map)
+
+    (setq iedit-current-symbol-default t
+          iedit-only-at-symbol-boundaries t
+          iedit-toggle-key-default nil)))
 
 (require 'evil-visualstar nil t)
 (with-eval-after-load 'evil-visualstar
