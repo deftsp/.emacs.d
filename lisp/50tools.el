@@ -19,8 +19,6 @@
 ;; (global-set-key (kbd "M-@") 'cycle-thing-region) ; vs `mark-word'
 
 ;;; expand-region
-(global-set-key (kbd "C-=") 'er/expand-region)
-
 (defun paloryemacs/mark-sexp-forward ()
   "Mark the sexp from the point to end of the sexp."
   (interactive)
@@ -80,6 +78,9 @@ space and marks next symbol."
 (eval-after-load "lua-mode"
   '(add-hook 'lua-mode-hook 'paloryemacs/lua-mode-expand-list-init))
 
+(paloryemacs/set-leader-keys "v" 'er/expand-region)
+(setq expand-region-contract-fast-key "V"
+      expand-region-reset-fast-key "r")
 
 ;;; let ^L looks beautiful
 ;; (require 'pp-c-l)

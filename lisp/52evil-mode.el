@@ -318,11 +318,6 @@ kill internal buffers too."
 (with-eval-after-load "evil-lisp-state"
   (paloryemacs/set-leader-keys "k" evil-lisp-state-map))
 
-;;; expand-region
-(with-eval-after-load 'key-chord
-  (setq expand-region-contract-fast-key "r") ; default "-"
-  (key-chord-define evil-normal-state-map "er" 'er/expand-region))
-
 ;;; enable evil mode
 (if (fboundp 'evil-mode)
     (evil-mode 1))
