@@ -435,7 +435,7 @@ kill internal buffers too."
   "cy" 'evilnc-copy-and-comment-lines
   "cv" 'evilnc-toggle-invert-comment-line-by-line)
 
-;;; evil-indent-plus
+;;; evil-indent-plus wihch replace evil-indent-textobject
 (with-eval-after-load "evil"
   (evil-indent-plus-default-bindings))
 
