@@ -457,12 +457,11 @@ point."
 
   "F"   'haskell-mode-stylish-buffer
 
-  ;; "sb"  'haskell-process-load-file
-  "sb"  'haskell-process-load-or-reload
-  "sc"  'haskell-interactive-mode-clear
+  "sb"  'intero-repl-load ; 'haskell-process-load-or-reload
+  "sc"  nil ; 'haskell-interactive-mode-clear
   ;; "ss"  'spacemacs/haskell-interactive-bring
-  "ss"  'haskell-interactive-bring
-  "sS"  'haskell-interactive-switch
+  "ss"  'haskell-intero/display-repl  ; 'haskell-interactive-bring
+  "sS"  'haskell-intero/pop-to-repl  ; 'haskell-interactive-switch
 
   "ca"  'haskell-process-cabal
   "cb"  'haskell-process-cabal-build
@@ -472,10 +471,9 @@ point."
   "hd"  'inferior-haskell-find-haddock
   "hh"  'hoogle
   "hH"  'haskell-hoogle-lookup-from-local
-  "hi"  'haskell-process-do-info
-  "ht"  'haskell-process-do-type
-  ;; "ht"  'haskell-mode-show-type-at
-  "hT"  'spacemacs/haskell-process-do-type-on-prev-line
+  "hi"  'intero-info ; 'haskell-process-do-info
+  "ht"  'intero-type-at ; 'haskell-process-do-type or 'haskell-mode-show-type-at
+  "hT"  'haskell-intero/insert-type
   "hy"  'hayoo
 
   "da"  'haskell-debug/abandon
@@ -539,7 +537,38 @@ point."
 (evil-define-key 'normal haskell-interactive-mode-map
   (kbd "RET") 'haskell-interactive-mode-return)
 
+(dolist (mode '(haskell-mode haskell-cabal-mode intero-repl-mode))
+  (paloryemacs/declare-prefix-for-mode mode "mi" "haskell/intero")
+  (paloryemacs/set-leader-keys-for-major-mode mode
+    "ic"  'intero-cd
+    "id"  'intero-devel-reload
+    "ik"  'intero-destroy
+    "il"  'intero-list-buffers
+    "ir"  'intero-restart
+    "it"  'intero-targets))
 
+;; Intero functions
+(defun haskell-intero/insert-type ()
+  (interactive)
+  (intero-type-at :insert))
+
+(defun haskell-intero/display-repl (&optional prompt-options)
+  (interactive "P")
+  (let ((buffer (intero-repl-buffer prompt-options)))
+    (unless (get-buffer-window buffer 'visible)
+      (display-buffer buffer))))
+
+(defun haskell-intero/pop-to-repl (&optional prompt-options)
+  (interactive "P")
+  (pop-to-buffer (intero-repl-buffer prompt-options)))
+
+(defun haskell-intero//preserve-focus (f &rest args)
+  (let ((buffer (current-buffer)))
+    (apply f args)
+    (pop-to-buffer buffer)))
+
+(with-eval-after-load "intero"
+  (advice-add 'intero-repl-load :around #'haskell-intero//preserve-focus))
 
 ;;; misc
 ;; (require 'yesod-devel-mode nil t)
