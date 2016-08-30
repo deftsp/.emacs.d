@@ -1,0 +1,5 @@
+(:name hasky-extensions
+       :description "Library providing avy-powered popup menu for Emacs."
+       :type github
+       :pkgname "hasky-mode/hasky-extensions"
+       :depends (avy-menu cl-lib))

@@ -1,0 +1,5 @@
+(:name avy-menu
+       :description "Library providing avy-powered popup menu for Emacs."
+       :type github
+       :pkgname "mrkkrp/avy-menu"
+       :depends (avy cl-lib))

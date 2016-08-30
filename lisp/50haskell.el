@@ -488,6 +488,8 @@ point."
   "ds"  'haskell-debug/step
   "dt"  'haskell-debug/trace
 
+  "E"    #'hasky-extensions
+
   "U"   'haskell-mode-find-uses)
 
 (with-eval-after-load "evil-evilified-state"
