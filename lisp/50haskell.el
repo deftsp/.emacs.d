@@ -532,12 +532,13 @@ point."
   "P"   'haskell-cabal-previous-section
   "f"   'haskell-cabal-find-or-create-source-file)
 
-;; Make "RET" behaviour in REPL saner
-(evil-define-key 'insert haskell-interactive-mode-map
-  (kbd "RET") 'haskell-interactive-mode-return)
+(with-eval-after-load "evil"
+  ;; Make "RET" behaviour in REPL saner
+  (evil-define-key 'insert haskell-interactive-mode-map
+    (kbd "RET") 'haskell-interactive-mode-return)
 
-(evil-define-key 'normal haskell-interactive-mode-map
-  (kbd "RET") 'haskell-interactive-mode-return)
+  (evil-define-key 'normal haskell-interactive-mode-map
+    (kbd "RET") 'haskell-interactive-mode-return))
 
 (dolist (mode '(haskell-mode haskell-cabal-mode intero-repl-mode))
   (paloryemacs/declare-prefix-for-mode mode "mi" "haskell/intero")
