@@ -23,6 +23,10 @@
         ;; company-backends (delete 'company-capf company-backends)
         company-idle-delay 0.2)
 
+  (when (fboundp 'company-flx-mode)
+    (setq company-flx-limit 600)
+    (company-flx-mode +1))
+
   (define-key company-active-map (kbd "M-j") 'company-select-next)
   (define-key company-active-map (kbd "M-k") 'company-select-previous)
 
