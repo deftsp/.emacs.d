@@ -331,6 +331,11 @@ kill internal buffers too."
 
 
 ;;; evil-surround
+;; TODO: when install evil-surround with el-get, it will add
+;; `evil-define-command' to "~/.emacs.d/el-get/.loaddefs.el", when el-get sync
+;; that function haven't been defined. Temporarily, delete it form .loaddefs.el
+;; manually.
+
 (when (fboundp 'global-evil-surround-mode)
   (global-evil-surround-mode 1)
   ;; evil-surround-pairs-alist is a buffer local variable
