@@ -17,6 +17,7 @@
 ;; https://github.com/tumashu/chinese-fonts-setup
 ;; Avoiding use the font with its name contain '-'.
 ;; https://github.com/tumashu/chinese-fonts-setup/issues/11
+(setq cfs-verbose nil)
 (require 'chinese-fonts-setup nil t)
 
 (setq cfs-profiles '("program" "org-mode" "read-book"))
