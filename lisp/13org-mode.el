@@ -180,6 +180,19 @@
       org-startup-truncated t
       org-display-internal-link-with-indirect-buffer nil)
 
+;;;
+(defun paloryemacs/update-org-agenda-window-setup ()
+  "When there is only one monitor, set `org-agenda-window-setup'
+to `reorganize-frame', otherwise set to `other-frame'."
+  (let* ((monitor-count (length (display-monitor-attributes-list)))
+         (window-config (if (> monitor-count 1)
+                            'other-frame
+                          'reorganize-frame)))
+    (setq org-agenda-window-setup window-config)
+    (message "Update `org-agenda-window-setup' to %s" window-config)))
+
+(paloryemacs/update-org-agenda-window-setup)
+
 (when window-system
   ;; … ↴, ⬎, ⤷, and ⋱.
   (setq org-ellipsis "⤵"))

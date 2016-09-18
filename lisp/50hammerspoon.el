@@ -20,10 +20,15 @@
         (error "illegal hammerspoon params")))
     (shell-command (concat "open -g" " " url))))
 
-(defun paloryemacs/notify-hammerspoon-did-initialzie ()
-  (paloryemacs/open-hammerspoon-url "emacs_did_load"))
+(defun paloryemacs/notify-hammerspoon-did-init ()
+  (paloryemacs/open-hammerspoon-url "emacs_did_init"))
 
-(add-hook 'after-init-hook #'paloryemacs/notify-hammerspoon-did-initialzie t)
+(add-hook 'after-init-hook #'paloryemacs/notify-hammerspoon-did-init t)
+
+(defun paloryemacs/notify-hammerspoon-did-kill ()
+  (paloryemacs/open-hammerspoon-url "emacs_did_kill"))
+
+(add-hook 'kill-emacs-hook #'paloryemacs/notify-hammerspoon-did-kill t)
 
 
 (provide '50hammerspoon)
