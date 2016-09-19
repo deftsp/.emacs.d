@@ -39,7 +39,7 @@
       redisplay-dont-pause t
       mark-even-if-inactive t
       set-mark-command-repeat-pop t
-      x-select-enable-clipboard t ; cutting and pasting uses the clipboard.
+      select-enable-clipboard t ; cutting and pasting uses the clipboard.
       x-select-enable-primary t
       ;; default-directory "/"
       visible-bell nil                    ;no f* beep on error.

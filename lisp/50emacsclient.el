@@ -37,13 +37,13 @@
 ;;             (with-selected-frame frame
 ;;               (when window-system
 ;;                 (scroll-bar-mode -1)
-;;                 (setq x-select-enable-clipboard t)))))
+;;                 (setq select-enable-clipboard t)))))
 
 ;; 2009-09-29 see http://groups.google.com/group/ergoemacs/msg/9eec3b455cab3ff1 and http://stackoverflow.com/questions/885793/emacs-error-when-calling-server-start
 (eval-after-load "server"
   '(when (and (= emacs-major-version 23)
-          (equal system-type 'windows-nt))
-    (defun server-ensure-safe-dir (dir) "Noop" t)))
+              (equal system-type 'windows-nt))
+     (defun server-ensure-safe-dir (dir) "Noop" t)))
 
 
 
