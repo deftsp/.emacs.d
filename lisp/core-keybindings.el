@@ -10,6 +10,7 @@
 ;;; License: GPLv3
 
 ;; (require 'core-funcs)
+(require 'which-key)
 
 (defvar paloryemacs/prefix-titles nil
   "alist for mapping command prefixes to long names.")
