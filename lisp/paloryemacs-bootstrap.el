@@ -1,16 +1,19 @@
-;;; site-start.el ---
+;;; paloryemacs-bootstrap.el ---
 
 ;; Copyright (C) 2010  Shihpin Tseng
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+;;; Code:
+
 (require 'prelude)
-(require 'core-keybindings)
 (require '01env)
+(require '12el-get)
+
 (require '02utils)
 (require '05cc-mode)
-(require '12el-get)
+(require 'core-keybindings)
 (require '13cedet)
 (require '13org-mode)
 
@@ -27,7 +30,6 @@
 (require '50auto-insert)
 ;; (require '50bbdb)
 (require '50calendar)
-
 
 (require '50clojure)
 (require '50common-lisp)
@@ -115,4 +117,4 @@
 
 (load-file "~/.emacs.d/private-ede-projects.el")
 
-(provide 'site-start)
+(provide 'paloryemacs-bootstrap)

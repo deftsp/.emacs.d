@@ -71,7 +71,7 @@
   (when (file-exists-p p)
     (add-to-list 'load-path p)))
 
-(require 'site-start)
+(require 'paloryemacs-bootstrap)
 ;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
 
 
