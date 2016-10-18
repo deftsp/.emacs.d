@@ -1,0 +1,5 @@
+(:name general
+       :description "More convenient key definitions in emacs"
+       :type github
+       :pkgname "noctuid/general.el"
+       :depends (cl-lib))
