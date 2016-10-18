@@ -220,7 +220,20 @@ recover evil state to it, otherwiser change to evil-emacs-state."
 (define-key evil-normal-state-map (kbd "q") nil) ; `q' is binded to `evil-record-macro'
 
 
+(define-key evil-operator-state-map "l" 'evil-avy-goto-line)
+
+(require 'general nil t)
+(with-eval-after-load "general"
+  (general-evil-setup)
+  (general-omap
+   :prefix "SPC"
+   "." 'evil-avy-goto-word-or-subword-1
+   "l" 'evil-avy-goto-line
+   "c" 'evil-avy-goto-char
+   "w" 'evil-avy-goto-subword-0))
+
 ;;;
+(setq evil-disable-insert-state-bindings t)
 ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
 (define-key evil-insert-state-map "\C-v" nil)
 (define-key evil-insert-state-map "\C-k" nil)
