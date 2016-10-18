@@ -9,17 +9,12 @@
 ;; (eval-after-load "info"
 ;;   '(pushnew (expand-file-name "~/.emacs.d/site-lisp/cc-mode") Info-default-directory-list :test #'equal))
 
-(eval-after-load "cc-mode"
-  '(progn
-     (require 'ifdef)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(with-eval-after-load "cc-mode"
+  (require 'ifdef))
 
 ;; make a #define be left-aligned
 (setq c-electric-pound-behavior (quote (alignleft)))
 ;; variable: comment-padding Padding string that `comment-region' puts between comment chars and text.
-
-
 
 (defun paloryemacs/next-c-function ()
   "Go to start of next C function."
@@ -30,8 +25,6 @@
   "Go to start of next C function."
   (interactive)
   (c-beginning-of-defun 2))
-
-
 
 
 ;;; doxymacs
@@ -51,14 +44,10 @@
 (defun paloryemacs/ctypes-load-hook ()
   (ctypes-read-file "~/.ctypes_std_c" nil t t))
 
-(eval-after-load "cc-mode"
-  '(progn
-     (require 'ctypes)                     ; beautify typedefs
-     (ctypes-auto-parse-mode 1)
-     (add-hook 'ctypes-load-hook 'paloryemacs/ctypes-load-hook)))
-
-
-
+(with-eval-after-load "cc-mode"
+  (require 'ctypes)                     ; beautify typedefs
+  (ctypes-auto-parse-mode 1)
+  (add-hook 'ctypes-load-hook 'paloryemacs/ctypes-load-hook))
 
 ;; style I want to use in c++ mode
 ;; +   `c-basic-offset' times 1
