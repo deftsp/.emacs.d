@@ -169,7 +169,6 @@
   ;; Contextually do clever things on the space key, in particular:
   ;;   1. Complete imports, letting you choose the module name.
   ;;   2. Show the type of the symbol after the space.
-  (define-key haskell-mode-map (kbd "SPC") 'haskell-mode-contextual-space)
   ;; Jump to the imports. Keep tapping to jump between import groups. C-u C-c I to jump back again.
   (define-key haskell-mode-map (kbd "C-c I") 'haskell-navigate-imports)
 
