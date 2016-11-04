@@ -78,6 +78,7 @@
 ;; % cabal update
 ;; % cabal install ghc-mod
 (autoload 'ghc-init "ghc" nil t)
+(autoload 'ghc-debug "ghc" nil t)
 
 ;; initial syntax check with hlint not ghc use `ghc-toggle-check-command' switch them.
 (setq ghc-check-command t)
@@ -97,14 +98,14 @@
 ;;; haskell mode hook
 (add-hook 'haskell-mode-hook 'paloryemacs/haskell-mode-setup)
 (defun paloryemacs/haskell-mode-setup ()
-  (let ((checkers '(haskell-ghc  haskell-stack-ghc)))
-    (if (boundp 'flycheck-disabled-checkers)
-        (dolist (checker checkers)
-          (add-to-list 'flycheck-disabled-checkers checker))
-      (setq flycheck-disabled-checkers checkers)))
+  ;; (let ((checkers '(haskell-ghc  haskell-stack-ghc)))
+  ;;   (if (boundp 'flycheck-disabled-checkers)
+  ;;       (dolist (checker checkers)
+  ;;         (add-to-list 'flycheck-disabled-checkers checker))
+  ;;     (setq flycheck-disabled-checkers checkers)))
 
-  (when (fboundp 'intero-mode)
-    (intero-mode +1))
+  ;; (when (fboundp 'intero-mode)
+  ;;   (intero-mode +1))
 
   ;; (flycheck-add-next-checker 'intero '(warning . haskell-hlint))
 
@@ -191,6 +192,25 @@
   ;; (define-key haskell-interactive-mode-map (kbd "C-j") nil)
   (define-key haskell-interactive-mode-map (kbd "C-p") 'helm-for-files)
   (define-key haskell-interactive-mode-map (kbd "C-n") nil))
+
+;;; completion backend
+(defun paloryemacs-haskell//setup-ghc-mod ()
+  (ghc-init)
+  (paloryemacs/declare-prefix-for-mode 'haskell-mode "mm" "haskell/ghc-mod")
+  (paloryemacs/set-leader-keys-for-major-mode 'haskell-mode
+    "mt" 'ghc-insert-template-or-signature
+    "mu" 'ghc-initial-code-from-signature
+    "ma" 'ghc-auto
+    "mf" 'ghc-refine
+    "me" 'ghc-expand-th
+    "mn" 'ghc-goto-next-hole
+    "mp" 'ghc-goto-prev-hole
+    "m>" 'ghc-make-indent-deeper
+    "m<" 'ghc-make-indent-shallower
+    "hi" 'ghc-show-info
+    "ht" 'ghc-show-type))
+
+(add-hook 'haskell-mode-local-vars-hook #'paloryemacs-haskell//setup-ghc-mod)
 
 
 ;; this gets called by outline to determine the level. Just use the length of the whitespace
@@ -452,15 +472,21 @@ point."
 (paloryemacs/set-leader-keys-for-major-mode 'haskell-mode
   "gg"  'haskell-mode-jump-to-def-or-tag
   "gi"  'haskell-navigate-imports
-  ;; "gl"  'haskell-mode-goto-loc
+  "gl"  'haskell-mode-goto-loc
 
   "F"   'haskell-mode-stylish-buffer
 
-  "sb"  'intero-repl-load ; 'haskell-process-load-or-reload
-  "sc"  nil ; 'haskell-interactive-mode-clear
+  ;; "sb"  'intero-repl-load
+  "sb"  'haskell-process-load-or-reload
+
+  "sc"  'haskell-interactive-mode-clear
+
   ;; "ss"  'spacemacs/haskell-interactive-bring
-  "ss"  'haskell-intero/display-repl  ; 'haskell-interactive-bring
-  "sS"  'haskell-intero/pop-to-repl  ; 'haskell-interactive-switch
+  ;; "ss"  'haskell-intero/display-repl
+  "ss"  'haskell-interactive-bring
+
+  ;; "sS"  'haskell-intero/pop-to-repl
+  "sS"  'haskell-interactive-switch
 
   "ca"  'haskell-process-cabal
   "cb"  'haskell-process-cabal-build
@@ -470,9 +496,15 @@ point."
   "hd"  'inferior-haskell-find-haddock
   "hh"  'hoogle
   "hH"  'haskell-hoogle-lookup-from-local
-  "hi"  'intero-info ; 'haskell-process-do-info
-  "ht"  'intero-type-at ; 'haskell-process-do-type or 'haskell-mode-show-type-at
-  "hT"  'haskell-intero/insert-type
+
+  ;; "hi"  'intero-info
+  "hi"  'haskell-process-do-info
+
+  ;; "ht"  'intero-type-at
+  ;; "ht"  'haskell-process-do-type
+  "ht"  'haskell-mode-show-type-at
+
+  ;; "hT"  'haskell-intero/insert-type
   "hy"  'hayoo
 
   "da"  'haskell-debug/abandon
@@ -539,15 +571,15 @@ point."
   (evil-define-key 'normal haskell-interactive-mode-map
     (kbd "RET") 'haskell-interactive-mode-return))
 
-(dolist (mode '(haskell-mode haskell-cabal-mode intero-repl-mode))
-  (paloryemacs/declare-prefix-for-mode mode "mi" "haskell/intero")
-  (paloryemacs/set-leader-keys-for-major-mode mode
-    "ic"  'intero-cd
-    "id"  'intero-devel-reload
-    "ik"  'intero-destroy
-    "il"  'intero-list-buffers
-    "ir"  'intero-restart
-    "it"  'intero-targets))
+;; (dolist (mode '(haskell-mode haskell-cabal-mode intero-repl-mode))
+;;   (paloryemacs/declare-prefix-for-mode mode "mi" "haskell/intero")
+;;   (paloryemacs/set-leader-keys-for-major-mode mode
+;;     "ic"  'intero-cd
+;;     "id"  'intero-devel-reload
+;;     "ik"  'intero-destroy
+;;     "il"  'intero-list-buffers
+;;     "ir"  'intero-restart
+;;     "it"  'intero-targets))
 
 ;; Intero functions
 (defun haskell-intero/insert-type ()
@@ -569,8 +601,8 @@ point."
     (apply f args)
     (pop-to-buffer buffer)))
 
-(with-eval-after-load "intero"
-  (advice-add 'intero-repl-load :around #'haskell-intero//preserve-focus))
+;; (with-eval-after-load "intero"
+;;   (advice-add 'intero-repl-load :around #'haskell-intero//preserve-focus))
 
 ;;; misc
 ;; (require 'yesod-devel-mode nil t)
