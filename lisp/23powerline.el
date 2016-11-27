@@ -217,14 +217,17 @@ mouse-1: Display Line and Column Mode Menu")
   :group 'powerline)
 
 (defun powerline-evil-face (active)
-  (let ((face (intern (concat "powerline-evil-" (symbol-name evil-state) "-face"))))
+  (let* ((state (if (boundp 'evil-state)
+                    (symbol-name evil-state)
+                  "normal"))
+         (face (intern (concat "powerline-evil-" state "-face"))))
     (cond ((and active (facep face))
            face)
           (active 'powerline-active2)
           (t 'powerline-inactive2))))
 
 (defpowerline powerline-evil-tag
-  (if (eq (boundp 'evil-mode) evil-mode)
+  (if (and (boundp 'evil-mode) evil-mode)
       (let* ((raw-text (strip-text-properties evil-mode-line-tag))
              (raw-tag (replace-regexp-in-string "[<> «»]" "" raw-text)))
         (cond
