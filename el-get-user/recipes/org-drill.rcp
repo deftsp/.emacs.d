@@ -1,0 +1,4 @@
+(:name org-drill
+       :description "Self-testing using spaced repetition."
+       :url "https://bitbucket.org/eeeickythump/org-drill"
+       :type hg)
