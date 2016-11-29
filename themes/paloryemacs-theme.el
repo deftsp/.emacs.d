@@ -167,8 +167,9 @@
    '(org-level-8 ((t (:foreground "LightSalmon"))))
    '(org-habit-alert-face ((t (:foreground "#228822" :background "gold"))))
    `(org-agenda-structure ((t (:foreground "LightGoldenrod" :background ,base02))))
-   '(org-scheduled ((t (:foreground "CadetBlue"))))
-   '(org-scheduled-today ((t (:foreground "turquoise2"))))
+   '(org-scheduled ((t (:foreground "#8abeb2"))))
+   '(org-scheduled-previously ((t (:foreground "#f74471"))))
+   '(org-scheduled-today ((t (:foreground "#b5e666"))))
    '(org-agenda-calendar-sexp ((t (:foreground "MistyRose3"))))
    '(org-drill-hidden-cloze-face ((t (:foreground "#eeeeee" :background "violet red"))))
 
