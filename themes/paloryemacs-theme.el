@@ -165,6 +165,8 @@
    '(org-level-6 ((t (:foreground "Aquamarine"))))
    '(org-level-7 ((t (:foreground "LightSteelBlue"))))
    '(org-level-8 ((t (:foreground "LightSalmon"))))
+   '(org-date ((t (:foreground "#3cdeef"))))
+   '(org-link ((t (:foreground "#e2d282" :underline t))))
    '(org-habit-alert-face ((t (:foreground "#228822" :background "gold"))))
    `(org-agenda-structure ((t (:foreground "LightGoldenrod" :background ,base02))))
    '(org-scheduled ((t (:foreground "#8abeb2"))))
