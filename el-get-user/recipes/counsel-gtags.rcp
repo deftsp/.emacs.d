@@ -1,0 +1,5 @@
+(:name counsel-gtags
+       :description "GNU Global with ivy completion"
+       :type github
+       :pkgname "syohex/emacs-counsel-gtags"
+       :depends (swiper))

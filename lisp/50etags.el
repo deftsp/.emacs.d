@@ -53,8 +53,20 @@
                      (read-from-minibuffer "Tag name(TAGS): " "")))
 
   (let ((tag-name (if (string= name "") "TAGS" name)))
-   (with-temp-buffer
-     (shell-command
-      (concat "find " sd " -name '*.hs*' | xargs hasktags -e -x -o " dd tag-name)))))
+    (with-temp-buffer
+      (shell-command
+       (concat "find " sd " -name '*.hs*' | xargs hasktags -e -x -o " dd tag-name)))))
+
+
+
+;;; counsel-gtags
+;; https://github.com/syohex/emacs-counsel-gtags
+(add-hook 'c-mode-common-hook 'counsel-gtags-mode)
+
+(with-eval-after-load 'counsel-gtags
+  (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
+  (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
+  (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
+  (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-pop-stack))
 
 (provide '50etags)

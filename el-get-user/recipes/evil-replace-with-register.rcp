@@ -1,0 +1,5 @@
+(:name evil-replace-with-register
+       :description "Port of vim plugin ReplaceWithRegister"
+       :type github
+       :pkgname "Dewdrops/evil-ReplaceWithRegister"
+       :depends (evil))

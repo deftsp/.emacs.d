@@ -642,6 +642,12 @@ to replace the symbol under cursor"
 (with-eval-after-load 'evil-visualstar
   (global-evil-visualstar-mode +1))
 
+;;; evil-replace-with-register
+(require 'evil-replace-with-register nil t)
+(with-eval-after-load "evil-replace-with-register"
+  (setq evil-replace-with-register-key (kbd "gR"))
+  (evil-replace-with-register-install))
+
 ;;; shift
 ;; (setq evil-shift-width 2)
 (defun paloryemacs/shift-left-visual ()
