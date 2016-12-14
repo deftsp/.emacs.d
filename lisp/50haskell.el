@@ -15,52 +15,52 @@
 (defvar paloryemacs/haskell-mode-key-chord-map nil
   "Keymap for key chord prefix commands in haskell mode.")
 
-(eval-after-load "haskell-mode"
-  '(progn
-     (setq haskell-process-log t
-           haskell-font-lock-symbols nil ; disabled because it will casue alignment problem
-           haskell-process-path-cabal (expand-file-name "~/.cabal/bin/cabal")
-           haskell-stylish-on-save nil ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
-           ;; Better import handling
-           haskell-process-suggest-remove-import-lines t
-           haskell-process-auto-import-loaded-modules t
-           haskell-notify-p t)
+(with-eval-after-load "haskell-mode"
+  (setq haskell-process-log t
+        haskell-font-lock-symbols nil ; disabled because it will casue alignment problem
+        haskell-process-path-cabal (expand-file-name "~/.cabal/bin/cabal")
+        haskell-stylish-on-save nil ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
+        ;; Better import handling
+        haskell-process-suggest-remove-import-lines t
+        haskell-process-auto-import-loaded-modules t
+        haskell-process-args-stack-ghci '("--ghci-options=-ferror-spans")
+        haskell-notify-p t)
 
-     (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
-     (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
-     (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+  (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
 
-     ;; use stack instead cabal
-     (setq haskell-compile-cabal-build-command "stack build")
-     (setq haskell-process-type 'auto) ; alternative: cabal-repl or cabal-dev
+  ;; use stack instead cabal
+  (setq haskell-compile-cabal-build-command "stack build")
+  (setq haskell-process-type 'auto) ; alternative: cabal-repl or cabal-dev
 
 
-     (define-key haskell-mode-map (kbd "C-c v c") 'haskell-cabal-visit-file)
+  (define-key haskell-mode-map (kbd "C-c v c") 'haskell-cabal-visit-file)
 
-     (setq paloryemacs/haskell-mode-key-chord-map (make-sparse-keymap))
-     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "e") 'haskell-indent-insert-equal)
-     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "=") 'haskell-indent-insert-equal)
-     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "g") 'haskell-indent-insert-guard)
-     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "|") 'haskell-indent-insert-guard)
-     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "o") 'haskell-indent-insert-otherwise)
-     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "w") 'haskell-indent-insert-where)
-     (define-key paloryemacs/haskell-mode-key-chord-map (kbd ".") 'haskell-indent-align-guards-and-rhs)
-     (define-key paloryemacs/haskell-mode-key-chord-map (kbd ">") 'haskell-indent-put-region-in-literate)
-     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "l") 'paloryemacs/pop-haskell-process-log-buffer)
-     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "y") 'paloryemacs/pop-yesod-devel-buffer)
-     (define-key paloryemacs/haskell-mode-key-chord-map (kbd "u") (lambda () (interactive) (insert "undefined")))
+  (setq paloryemacs/haskell-mode-key-chord-map (make-sparse-keymap))
+  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "e") 'haskell-indent-insert-equal)
+  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "=") 'haskell-indent-insert-equal)
+  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "g") 'haskell-indent-insert-guard)
+  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "|") 'haskell-indent-insert-guard)
+  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "o") 'haskell-indent-insert-otherwise)
+  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "w") 'haskell-indent-insert-where)
+  (define-key paloryemacs/haskell-mode-key-chord-map (kbd ".") 'haskell-indent-align-guards-and-rhs)
+  (define-key paloryemacs/haskell-mode-key-chord-map (kbd ">") 'haskell-indent-put-region-in-literate)
+  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "l") 'paloryemacs/pop-haskell-process-log-buffer)
+  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "y") 'paloryemacs/pop-yesod-devel-buffer)
+  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "u") (lambda () (interactive) (insert "undefined")))
 
-     ;; keymap for documentation
-     (setq paloryemacs/haskell-mode-doc-map (make-sparse-keymap))
-     (define-key paloryemacs/haskell-mode-doc-map (kbd "i") 'haskell-process-do-info) ; inferior-haskell-info
-     (define-key paloryemacs/haskell-mode-doc-map (kbd "C-i") 'haskell-process-do-info)
-     (define-key paloryemacs/haskell-mode-doc-map (kbd "t") 'haskell-process-do-type) ; inferior-haskell-type
-     (define-key paloryemacs/haskell-mode-doc-map (kbd "C-t") 'haskell-process-do-type)
-     (define-key paloryemacs/haskell-mode-doc-map (kbd "a") 'helm-ghc-browse-document)
-     (define-key paloryemacs/haskell-mode-doc-map (kbd "C-a") 'helm-ghc-browse-document)
-     (define-key paloryemacs/haskell-mode-doc-map (kbd "h") 'haskell-hoogle)
-     (define-key paloryemacs/haskell-mode-doc-map (kbd "d") 'inferior-haskell-find-haddock)
-     (define-key paloryemacs/haskell-mode-doc-map (kbd "C-d") 'inferior-haskell-find-haddock)))
+  ;; keymap for documentation
+  (setq paloryemacs/haskell-mode-doc-map (make-sparse-keymap))
+  (define-key paloryemacs/haskell-mode-doc-map (kbd "i") 'haskell-process-do-info) ; inferior-haskell-info
+  (define-key paloryemacs/haskell-mode-doc-map (kbd "C-i") 'haskell-process-do-info)
+  (define-key paloryemacs/haskell-mode-doc-map (kbd "t") 'haskell-process-do-type) ; inferior-haskell-type
+  (define-key paloryemacs/haskell-mode-doc-map (kbd "C-t") 'haskell-process-do-type)
+  (define-key paloryemacs/haskell-mode-doc-map (kbd "a") 'helm-ghc-browse-document)
+  (define-key paloryemacs/haskell-mode-doc-map (kbd "C-a") 'helm-ghc-browse-document)
+  (define-key paloryemacs/haskell-mode-doc-map (kbd "h") 'haskell-hoogle)
+  (define-key paloryemacs/haskell-mode-doc-map (kbd "d") 'inferior-haskell-find-haddock)
+  (define-key paloryemacs/haskell-mode-doc-map (kbd "C-d") 'inferior-haskell-find-haddock))
 
 (eval-after-load 'flycheck
   '(progn
