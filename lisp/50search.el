@@ -220,6 +220,14 @@ Argument REPLACE String used to replace the matched strings in the buffer.
   (define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line)
   (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-previous-line))
 
+;;; ivy-rich
+(with-eval-after-load "ivy"
+  (require 'ivy-rich nil t)
+  (with-eval-after-load "ivy-rich"
+    (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
+    (setq ivy-virtual-abbreviate 'full
+          ivy-rich-switch-buffer-align-virtual-buffer t)))
+
 ;; http://oremacs.com/2016/01/06/ivy-flx/
 ;; let flx (hopefully) sort the matches in a nice way
 (setq ivy-initial-inputs-alist nil)
