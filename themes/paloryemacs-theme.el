@@ -44,7 +44,7 @@
       (orange  "#cb4b16")
       (red     "#dc322f")
       (magenta "#d33682")
-      (violet  "#6c71c4")
+      (violet  "#j6c71c4")
       (blue    "#268bd2")
       (cyan    "#2aa198")
       (green   "#859900"))
@@ -174,7 +174,9 @@
    '(org-scheduled-today ((t (:foreground "#b5e666"))))
    '(org-agenda-calendar-sexp ((t (:foreground "MistyRose3"))))
    '(org-drill-hidden-cloze-face ((t (:foreground "#eeeeee" :background "violet red"))))
-
+   '(org-block ((t (:background "#20323e"))))
+   '(org-block-begin-line ((t (:background "#30424e"))))
+   '(org-block-end-line ((t (:background "#30424e"))))
 
 
 
