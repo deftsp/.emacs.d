@@ -47,7 +47,9 @@
       (violet  "#j6c71c4")
       (blue    "#268bd2")
       (cyan    "#2aa198")
-      (green   "#859900"))
+      (green   "#859900")
+      (inactive1 "#43586d")
+      (inactive2 "#33485d"))
 
   (custom-theme-set-faces
    'paloryemacs
@@ -72,17 +74,16 @@
 
    ;; powerline
    `(powerline-active1 ((t (:background "#6b6b6b" :foreground "#fefefe" :inherit mode-line))))
-   ;; `(powerline-active2 ((t (:background "#585858" :foreground "#adadad" :inherit mode-line))))
    `(powerline-active2 ((t (:background "#182e3f" :foreground "#adadad" :inherit mode-line))))
-   `(powerline-inactive1 ((t (:background "#839496" :foreground "#6b6b6b" :inherit mode-line-inactive))))
-   `(powerline-inactive2 ((t (:background "#383838" :foreground "#9b9b9b" :inherit mode-line-inactive))))
-   '(powerline-evil-insert-face ((t (:foreground "#383838" :background "OliveDrab1" :weight bold :inherit mode-line))))
-   '(powerline-evil-normal-face ((t (:foreground "#383838" :background "orchid" :weight bold :inherit mode-line))))
-   '(powerline-evil-visual-face ((t (:foreground "#383838" :background "Purple" :weight bold :inherit mode-line))))
-   '(powerline-evil-motion-face ((t (:foreground "#383838" :background "Cyan" :weight bold :inherit mode-line))))
-   '(powerline-evil-emacs-face ((t (:foreground "#383838" :background "#7cfa42" :weight bold :inherit mode-line))))
-   '(powerline-evil-replace-face ((t (:foreground "#383838" :background "orchid" :weight bold :inherit mode-line))))
-   '(powerline-evil-operator-face ((t (:foreground "#383838" :background "maroon" :weight bold :inherit mode-line))))
+   `(powerline-inactive1 ((t (:background ,inactive1 :foreground "#bbbbbb" :inherit mode-line-inactive))))
+   `(powerline-inactive2 ((t (:background ,inactive2 :foreground "#9b9b9b" :inherit mode-line-inactive))))
+   `(powerline-evil-insert-face ((t (:foreground ,inactive2 :background "OliveDrab1" :weight bold :inherit mode-line))))
+   `(powerline-evil-normal-face ((t (:foreground ,inactive2 :background "orchid" :weight bold :inherit mode-line))))
+   `(powerline-evil-visual-face ((t (:foreground ,inactive2 :background "Purple" :weight bold :inherit mode-line))))
+   `(powerline-evil-motion-face ((t (:foreground ,inactive2 :background "Cyan" :weight bold :inherit mode-line))))
+   `(powerline-evil-emacs-face ((t (:foreground ,inactive2 :background "#7cfa42" :weight bold :inherit mode-line))))
+   `(powerline-evil-replace-face ((t (:foreground ,inactive2 :background "orchid" :weight bold :inherit mode-line))))
+   `(powerline-evil-operator-face ((t (:foreground ,inactive2 :background "maroon" :weight bold :inherit mode-line))))
    `(powerline-file-base-info-face ((t (:background ,base00 :foreground "#fefefe" :inherit mode-line))))
    `(powerline-buffer-id-face ((t (:background ,base02 :foreground "#fefefe" :inherit mode-line))))
    `(powerline-vc-face ((t (:background ,base01 :foreground "#f4bb66" :inherit mode-line))))

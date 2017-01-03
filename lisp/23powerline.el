@@ -223,8 +223,8 @@ mouse-1: Display Line and Column Mode Menu")
          (face (intern (concat "powerline-evil-" state "-face"))))
     (cond ((and active (facep face))
            face)
-          (active 'powerline-active2)
-          (t 'powerline-inactive2))))
+          (active 'powerline-active1)
+          (t 'powerline-inactive1))))
 
 (defpowerline powerline-evil-tag
   (if (and (boundp 'evil-mode) evil-mode)
@@ -279,8 +279,7 @@ mouse-1: Display Line and Column Mode Menu")
    'mouse-face 'mode-line-highlight
    'help-echo "mouse-1: go to beginning\n\
 mouse-2: toggle rest visibility\nmouse-3: go to end"
-   'local-map which-func-keymap
-   'face 'which-func))
+   'local-map which-func-keymap))
 
 (defpowerline powerline-recursive-left
   #("%[" 0 2
@@ -309,6 +308,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
              (vc-face (if active 'powerline-vc-face 'powerline-inactive2))
              (workgroups-face (if active 'powerline-workgroups-face 'powerline-inactive2))
              (buffer-id-face (if active 'powerline-buffer-id-face 'powerline-inactive1))
+             (which-func-face (if active 'which-func 'powerline-inactive1))
              (file-base-info-face (if active 'powerline-file-base-info-face 'powerline-inactive2))
              (evil-face (powerline-evil-face active))
              (separator-left (intern (format "powerline-%s-%s"
@@ -340,8 +340,8 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
 
                     ,(powerline-raw ":" buffer-id-face)
                     ,@(when (and (boundp 'which-function-mode) which-function-mode)
-                        (list (powerline-which-func buffer-id-face 'l)
-                              (powerline-raw " " buffer-id-face)))
+                        (list (powerline-which-func which-func-face 'l)
+                              (powerline-raw " " which-func-face)))
 
                     ,(funcall separator-left buffer-id-face face2)
 
