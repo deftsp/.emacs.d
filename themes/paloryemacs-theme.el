@@ -152,7 +152,7 @@
    ;; adoc-mode
    '(markup-meta-face ((t (:height 120 :foreground "#999999"))))
    '(markup-meta-hide-face ((t (:height 0.9 :foreground "#777777"))))
-   '(adoc-table-del ((t (:background "MidnightBlue" :foreground "eeeeee"))))
+   '(adoc-table-del ((t (:background "MidnightBlue" :foreground "#eeeeee"))))
 
    ;; org-mode
    '(org-headline-done ((t (:strike-through t))))
