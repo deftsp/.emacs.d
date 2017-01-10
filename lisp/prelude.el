@@ -13,6 +13,10 @@
 (defvar dotpaloryemacs-leader-key "SPC"
   "The leader key.")
 
+(defvar dotpaloryemacs-distinguish-gui-tab nil
+  "If non nil, distinguish C-i and tab in the GUI version of
+emacs.")
+
 (defvar dotpaloryemacs-emacs-leader-key "M-m"
   "The leader key accessible in `emacs state' and `insert state'")
 

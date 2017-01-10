@@ -1,6 +1,6 @@
 ;;; core-keybindings.el --- Spacemacs Core File
 ;;
-;; Copyright (c) 2012-2016 Sylvain Benner & Contributors
+;; Copyright (c) 2012-2017 Sylvain Benner & Contributors
 ;;
 ;; Author: Sylvain Benner <sylvain.benner@gmail.com>
 ;; URL: https://github.com/syl20bnr/spacemacs
@@ -103,7 +103,6 @@ pairs. For example,
     (define-key paloryemacs-default-map (kbd key) def)
     (setq key (pop bindings) def (pop bindings))))
 (put 'paloryemacs/set-leader-keys 'lisp-indent-function 'defun)
-
 
 (defun paloryemacs//acceptable-leader-p (key)
   "Return t if key is a string and non-empty."
