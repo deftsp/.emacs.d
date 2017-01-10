@@ -31,6 +31,10 @@ the modeline")
   "Powerline vc face."
   :group 'powerline)
 
+(defface powerline-anzu-face
+  '((t (:background "#dfaf8f" :foreground "#5e747a")))
+  "Powerline anzu face."
+  :group 'powerline)
 
 (defface powerline-file-base-info-face
   '((t (:background "#3d89d0" :foreground "#0a3540")))
@@ -130,6 +134,13 @@ mouse-1: Display Line and Column Mode Menu")
            (symbol-value 'workgroups-mode))
       (wg-mode-line-string)
     " ### "))
+
+(defpowerline powerline-anzu
+  (if (fboundp 'anzu--update-mode-line)
+      (anzu--update-mode-line)
+    nil))
+
+
 
 (defpowerline powerline-ace-window-path
   (window-parameter (selected-window) 'ace-window-path))
@@ -307,6 +318,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
              (face3 (if active 'powerline-active3 'powerline-inactive2))
              (vc-face (if active 'powerline-vc-face 'powerline-inactive2))
              (workgroups-face (if active 'powerline-workgroups-face 'powerline-inactive2))
+             (anzu-face (if active 'powerline-anzu-face 'powerline-inactive2))
              (buffer-id-face (if active 'powerline-buffer-id-face 'powerline-inactive1))
              (which-func-face (if active 'which-func 'powerline-inactive1))
              (file-base-info-face (if active 'powerline-file-base-info-face 'powerline-inactive2))
@@ -318,15 +330,43 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                                               powerline-default-separator
                                               (cdr powerline-default-separator-dir))))
              (lhs `(,(powerline-evil-tag evil-face)
-                    ,@(let ((vc-info (paloryemacs/powerline-vc vc-face 'r)))
-                        (if vc-info
-                            (list (funcall separator-left evil-face vc-face)
-                                  vc-info
-                                  (powerline-git-state-mark vc-face)
-                                  (funcall separator-left vc-face file-base-info-face))
-                          (list (funcall separator-left
-                                         evil-face
-                                         file-base-info-face))))
+                    ,@(let ((anzu-info (powerline-anzu anzu-face 'l))
+                            (vc-info (paloryemacs/powerline-vc vc-face 'r)))
+
+                        (cond ((and anzu-info vc-info)
+                               (list (funcall separator-left evil-face anzu-face)
+                                     anzu-info
+                                     (powerline-raw " " anzu-face)
+                                     (funcall separator-left anzu-face vc-face)
+                                     vc-info
+                                     (powerline-git-state-mark vc-face)
+                                     (funcall separator-left vc-face file-base-info-face)))
+                              ((and anzu-info (not vc-info))
+                               (list (funcall separator-left evil-face anzu-face)
+                                     anzu-info
+                                     (powerline-raw " " anzu-face)
+                                     (funcall separator-left anzu-face file-base-info-face)))
+                              ((and (not anzu-info) vc-info)
+                               (list (funcall separator-left evil-face vc-face)
+                                     vc-info
+                                     (powerline-git-state-mark vc-face)
+                                     (funcall separator-left vc-face file-base-info-face)))
+                              ((and (not anzu-info) (not vc-info))
+                               (list (funcall separator-left
+                                              evil-face
+                                              file-base-info-face)))))
+
+
+                    ;; ,@(let ((vc-info (paloryemacs/powerline-vc vc-face 'r)))
+                    ;;     (if vc-info
+                    ;;         (list (funcall separator-left evil-face vc-face)
+                    ;;               vc-info
+                    ;;               (powerline-git-state-mark vc-face)
+                    ;;               (funcall separator-left vc-face file-base-info-face))
+                    ;;       (list (funcall separator-left
+                    ;;                      evil-face
+                    ;;                      file-base-info-face))))
+
 
                     ,(powerline-raw mode-line-front-space file-base-info-face)
                     ,(paloryemacs/powerline-client file-base-info-face)

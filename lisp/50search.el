@@ -184,9 +184,22 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 (require 'anzu nil t)
 (with-eval-after-load "anzu"
   (setq anzu-search-threshold 1000)
+  (setq anzu-cons-mode-line-p nil)
   (global-anzu-mode +1)
   (global-set-key (kbd "M-%") 'anzu-query-replace)
   (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
+  (defun paloryemacs/anzu-update-mode-line (here total)
+    "Custom update function which does not propertize the status."
+    (when anzu--state
+      (let ((status (cl-case anzu--state
+                      (search (format "(%s/%d%s)"
+                                      (anzu--format-here-position here total)
+                                      total (if anzu--overflow-p "+" "")))
+                      (replace-query (format "(%d replace)" total))
+                      (replace (format "(%d/%d)" here total)))))
+        status)))
+  (setq anzu-mode-line-update-function 'paloryemacs/anzu-update-mode-line)
+
   (with-eval-after-load "evil"
     (require 'evil-anzu)))
 
