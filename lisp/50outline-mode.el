@@ -62,11 +62,8 @@
 
 
 ;;; change the characters outline mode uses for ellipsis (`…’ by default).
-(set-display-table-slot
- standard-display-table
- 'selective-display
- (let ((face-offset (* (face-id 'shadow) (lsh 1 22))))
-   (vconcat (mapcar (lambda (c) (+ face-offset c)) " {...} "))))
+(set-display-table-slot standard-display-table
+                        'selective-display (string-to-vector " ◦◦◦ "))
 
 
 ;;; Explorer like Key-Bindings ---------------------------
@@ -76,8 +73,8 @@
     (outline-back-to-heading)
     (outline-end-of-heading)
     (and (not (eobp))
-       (progn (forward-char 1)
-              (not (outline-on-heading-p))))))
+         (progn (forward-char 1)
+                (not (outline-on-heading-p))))))
 
 (defun body-visible-p ()
   (save-excursion

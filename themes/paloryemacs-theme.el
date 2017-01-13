@@ -178,6 +178,7 @@
    '(org-block ((t (:background "#20323e"))))
    '(org-block-begin-line ((t (:background "#30424e"))))
    '(org-block-end-line ((t (:background "#30424e"))))
+   '(org-ellipsis ((t (:underline nil :foreground "#c5e666" :background unspecified))))
 
 
 

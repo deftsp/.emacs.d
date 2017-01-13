@@ -195,7 +195,7 @@ to `reorganize-frame', otherwise set to `other-frame'."
 
 (when window-system
   ;; … ↴, ⬎, ⤷, and ⋱.
-  (setq org-ellipsis "⤵"))
+  (setq org-ellipsis " ⤵…"))
 
 (with-eval-after-load "org"
   (org-defkey org-mode-map (kbd "C-c C-x t") 'paloryemacs/org-clock-summary-today-by-tags)
