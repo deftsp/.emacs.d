@@ -118,15 +118,20 @@
 ;;; magit
 (autoload 'magit-grep "magit" "Command for `grep'." t) ; which is not a autload function at 2013.06.25 yet
 (global-set-key (kbd "C-x G") 'magit-status)
-(eval-after-load "magit"
-  '(progn
-     (add-to-list 'magit-repository-directories "~/.emacs.d") ; C-u C-u M-x magit-status will ignore it
-     (add-to-list 'magit-repository-directories "~/opt/emacs")
-     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
-     (setq magit-completing-read-function 'magit-ido-completing-read)))
+(with-eval-after-load "magit"
+  (add-to-list 'magit-repository-directories "~/.emacs.d") ; C-u C-u M-x magit-status will ignore it
+  (add-to-list 'magit-repository-directories "~/opt/emacs")
+  (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
+  (setq magit-completing-read-function 'magit-ido-completing-read))
 
-(setq magit-stage-all-confirm nil
-      magit-unstage-all-confirm nil)
+(with-eval-after-load "with-editor"
+  (with-eval-after-load "evil"
+    ;; start the commit window in insert mode
+    (add-hook 'with-editor-mode-hook 'evil-insert-state)
+    ;; add Evil bindings to accept/cancel commit
+    (evil-define-key 'normal with-editor-mode-map
+      (kbd "RET") 'with-editor-finish
+      [escape] 'with-editor-cancel)))
 
 ;;; evil-magit
 ;; https://github.com/justbur/evil-magit
