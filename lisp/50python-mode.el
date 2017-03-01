@@ -5,6 +5,21 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+;;; Code:
+
+;;; python-mode from https://gitlab.com/python-mode-devs/python-mode
+;; (let ((p (expand-file-name "~/.emacs.d/site-lisp/python-mode")))
+;;   (add-to-list 'load-path p)
+;;   (add-to-list 'auto-mode-alist
+;;                '("\\.py$" . python-mode))
+;;   (add-to-list 'interpreter-mode-alist
+;;                '("python" . python-mode))
+;;   (setq py-install-directory p)
+;;   (setq py-shell-name "ipython")
+
+;;   (autoload 'python-mode "python-mode"
+;;     "Support for the Python programming language, <http://www.python.org/>" t))
+
 ;;; elpy
 ;; use anaconda-mode instead elpy
 (with-eval-after-load "elpy"

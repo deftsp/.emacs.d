@@ -1,0 +1,5 @@
+(:name python-mode
+       :description "Edit, debug, develop, run Python programs from Emacs"
+       :website "https://gitlab.com/python-mode-devs/python-mode"
+       :type git
+       :url "https://gitlab.com/python-mode-devs/python-mode.git")
