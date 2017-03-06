@@ -260,6 +260,7 @@
 
    '(diredp-dir-heading ((t (:background "#555555" :foreground "magenta"))))
    '(diredp-file-name ((t (:foreground "dodger blue"))))
+   '(diredp-dir-name ((t (:foreground "#222222" :background "burlywood"))))
    '(diredp-dir-priv ((t (:foreground "steel blue" :background unspecified :weight bold))))
    '(diredp-no-priv ((t (:foreground unspecified :background unspecified))))
    '(diredp-read-priv ((t (:foreground "deep sky blue" :background unspecified))))
