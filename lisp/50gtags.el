@@ -83,4 +83,8 @@
 ;;   (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
 ;;   (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-pop-stack))
 
+
+;;; ggtags
+(setq ggtags-enable-navigation-keys nil)
+
 (provide '50gtags)
