@@ -1,4 +1,4 @@
-;;; 50etags.el ---
+;;; 50gtags.el ---
 
 ;; ctags and etags are distributed with Emacs
 ;; ExuberantCtags is superior to etags in many ways. You can find it here:
@@ -60,13 +60,27 @@
 
 
 ;;; counsel-gtags
+
 ;; https://github.com/syohex/emacs-counsel-gtags
 (add-hook 'c-mode-common-hook 'counsel-gtags-mode)
+(add-hook 'python-mode-hook 'counsel-gtags-mode)
 
 (with-eval-after-load 'counsel-gtags
-  (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
-  (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
-  (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
-  (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-pop-stack))
+  (dolist (mode '(python-mode))
+    (paloryemacs/set-leader-keys-for-major-mode mode
+      "gc" 'counsel-gtags-create-tags
+      "gd" 'counsel-gtags-dwim
+      "gD" 'counsel-gtags-find-definition
+      "gu" 'counsel-gtags-update-tags
+      "gr" 'counsel-gtags-find-reference
+      "gs" 'counsel-gtags-find-symbol
+      "gp" 'counsel-gtags-pop
+      "gf" 'counsel-gtags-find-file)))
 
-(provide '50etags)
+;; (with-eval-after-load 'counsel-gtags
+;;   (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
+;;   (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
+;;   (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
+;;   (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-pop-stack))
+
+(provide '50gtags)

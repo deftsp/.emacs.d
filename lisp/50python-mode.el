@@ -161,11 +161,12 @@
   "sr" 'python-shell-send-region
   "hh" 'anaconda-mode-show-doc
   "hH" 'pylookup-lookup
-  "gd" 'anaconda-mode-find-definitions
-  "ga" 'anaconda-mode-find-assignments
-  "gr" 'anaconda-mode-find-references
-  "gb" 'anaconda-mode-go-back
-  "g*" 'anaconda-mode-go-back
+  ;; use gtags
+  ;; "gd" 'anaconda-mode-find-definitions
+  ;; "ga" 'anaconda-mode-find-assignments
+  ;; "gr" 'anaconda-mode-find-references
+  ;; "gb" 'anaconda-mode-go-back
+  ;; "g*" 'anaconda-mode-go-back
   "vs" 'pyenv-mode-set
   "vu" 'pyenv-mode-unset
   "V"  'pyvenv-workon)
