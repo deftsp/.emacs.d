@@ -601,6 +601,10 @@ Works in Microsoft Windows, Mac OS X, Linux."
 (setq diredp-hide-details-initially-flag nil)
 (setq diredp-hide-details-propagate-flag nil)
 
+
+(autoload 'dired-jump "dired-x" "Jump to Dired buffer corresponding to current buffer." t)
+(define-key ctl-x-map "\C-j" 'dired-jump)
+
 ;;; tips
 ;; mark mutiple files in dired mode with m, press B to compile them to *.el.
 ;; dired-compare-directories
