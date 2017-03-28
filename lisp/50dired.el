@@ -115,19 +115,20 @@
   (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
   (dired-omit-mode +1))
 
-(with-eval-after-load "dired"
-  (evilified-state-evilify dired-mode dired-mode-map
-    (kbd "j")   'diredp-next-line
-    (kbd "k")   'diredp-previous-line
-    (kbd "^")   'diredp-up-directory-reuse-dir-buffer
-    (kbd "l")   'diredp-find-file-reuse-dir-buffer
-    (kbd "i")   'dired-omit-mode
-    (kbd "I")   'dired-maybe-insert-subdir
-    (kbd "M-r") 'dired-do-redisplay
-    (kbd "r") ' wdired-change-to-wdired-mode
-    (kbd "gg")  'paloryemacs/dired-back-to-top
-    (kbd "gr")  'revert-buffer
-    (kbd "G")   'paloryemacs/dired-jump-to-bottom))
+(with-eval-after-load "evil-evilified-state"
+  (with-eval-after-load "dired"
+    (evilified-state-evilify dired-mode dired-mode-map
+      (kbd "j")   'diredp-next-line
+      (kbd "k")   'diredp-previous-line
+      (kbd "^")   'diredp-up-directory-reuse-dir-buffer
+      (kbd "l")   'diredp-find-file-reuse-dir-buffer
+      (kbd "i")   'dired-omit-mode
+      (kbd "I")   'dired-maybe-insert-subdir
+      (kbd "M-r") 'dired-do-redisplay
+      (kbd "r") ' wdired-change-to-wdired-mode
+      (kbd "gg")  'paloryemacs/dired-back-to-top
+      (kbd "gr")  'revert-buffer
+      (kbd "G")   'paloryemacs/dired-jump-to-bottom)))
 
 
 (defun paloryemacs/dired-back-to-top()
