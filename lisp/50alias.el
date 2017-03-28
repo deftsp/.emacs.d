@@ -94,5 +94,6 @@
 
 ;; swiper
 (defalias 'ag 'counsel-ag)
+(defalias 'rg 'counsel-rg)
 
 (provide '50alias)

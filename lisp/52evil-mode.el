@@ -440,14 +440,15 @@ kill internal buffers too."
 
 (paloryemacs/set-leader-keys
   "SPC" 'evilnc-comment-operator ; alternative ";"
-  "cc" 'evilnc-copy-and-comment-lines
-  "ci" 'evilnc-toggle-invert-comment-line-by-line
-  "cl" 'evilnc-comment-or-uncomment-lines
-  "cp" 'evilnc-comment-or-uncomment-paragraphs
-  "cr" 'comment-or-uncomment-region
-  "ct" 'evilnc-quick-comment-or-uncomment-to-the-line
-  "cy" 'evilnc-copy-and-comment-lines
-  "cv" 'evilnc-toggle-invert-comment-line-by-line)
+  "y"   'counsel-yank-pop
+  "cc"  'evilnc-copy-and-comment-lines
+  "ci"  'evilnc-toggle-invert-comment-line-by-line
+  "cl"  'evilnc-comment-or-uncomment-lines
+  "cp"  'evilnc-comment-or-uncomment-paragraphs
+  "cr"  'comment-or-uncomment-region
+  "ct"  'evilnc-quick-comment-or-uncomment-to-the-line
+  "cy"  'evilnc-copy-and-comment-lines
+  "cv"  'evilnc-toggle-invert-comment-line-by-line)
 
 ;;; evil-indent-plus wihch replace evil-indent-textobject
 (with-eval-after-load "evil"
