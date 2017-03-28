@@ -1406,6 +1406,14 @@ such character is found, following options are shown:
 (when (fboundp 'beacon-mode)
   (beacon-mode +1))
 
+;;; dumb-jump
+(setq dumb-jump-selector 'ivy)
+(setq dumb-jump-prefer-searcher 'rg)
+(define-key global-map (kbd "M-g o") 'dumb-jump-go-other-window)
+(define-key global-map (kbd "M-g j") 'dumb-jump-go)
+(define-key global-map (kbd "M-g x") 'dumb-jump-go-prefer-external)
+(define-key global-map (kbd "M-g o") 'dumb-jump-go-prefer-external-other-window)
+
 ;;; nyan-mode
 ;; https://github.com/TeMPOraL/nyan-mode
 ;; (nyan-mode +1)

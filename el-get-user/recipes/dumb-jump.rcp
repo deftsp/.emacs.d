@@ -1,0 +1,4 @@
+(:name dumb-jump
+       :description "an Emacs "jump to definition" package"
+       :type github
+       :pkgname "jacktasia/dumb-jump")
