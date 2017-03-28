@@ -179,9 +179,9 @@ space and marks next symbol."
   (if (fboundp 'nlinum-relative-mode)
       (nlinum-relative-mode 1)))
 
-
 (with-eval-after-load "nlinum-relative"
-  (nlinum-relative-setup-evil)                    ;; setup for evil
+  (with-eval-after-load "evil"
+    (nlinum-relative-setup-evil))
   (setq nlinum-relative-redisplay-delay 0)      ;; delay
   (setq nlinum-relative-current-symbol "->")      ;; or "" for display current line number
   (setq nlinum-relative-offset 0)                 ;; 1 if you want 0, 2, 3...
@@ -1104,24 +1104,36 @@ such character is found, following options are shown:
 ;;; goto line with feedback
 ;; http://whattheemacsd.com//key-bindings.el-01.html
 ;; remap all key bindings from goto-line to goto-line-with-feedback.
-(global-set-key (vector 'remap 'goto-line) 'paloryemacs/goto-line-with-feedback)
-(defun paloryemacs/goto-line-with-feedback ()
+(global-set-key (vector 'remap 'goto-line) 'paloryemacs/goto-line-with-nlinum-and-feed-back)
+(defun paloryemacs/goto-line-with-nlinum-and-feed-back ()
   "Show line numbers temporarily, while prompting for the line number input"
   (interactive)
-  (let* ((is-linum-mode-load (boundp 'linum-mode))
-         (origin-linum-mode-state
-          (if is-linum-mode-load linum-mode nil))
-         (origin-linum-format
-          (if is-linum-mode-load linum-format nil)))
+  (let* ((is-nlinum-mode-load (boundp 'nlinum-mode))
+         (is-nlinum-relative-mode-load (boundp 'nlinum-relative-mode))
+         (saved-nlinum-mode-state
+          (if is-nlinum-mode-load nlinum-mode nil))
+         (saved-nlinum-format
+          (if is-nlinum-mode-load nlinum-format nil))
+         (saved-nlinum-relative-mode-state
+          (if is-nlinum-relative-mode-load nlinum-relative-mode nil)))
     (unwind-protect
         (progn
-          (setq linum-format 'dynamic)
-          (linum-mode 1)
+          (when is-nlinum-relative-mode-load
+            (nlinum-relative-off))
+          (setq nlinum-format "%5d")
+          (when is-nlinum-mode-load
+            (if saved-nlinum-mode-state
+                (nlinum--flush)
+              (nlinum-mode +1)))
           (goto-line (read-number "Goto line: ")))
       (progn
-        (setq linum-format origin-linum-format)
-        (linum-mode origin-linum-mode-state)
-        (linum-update-current)))))
+        (when (and is-nlinum-relative-mode-load saved-nlinum-relative-mode-state)
+          (nlinum-relative-on))
+        (when is-nlinum-mode-load
+          (setq nlinum-format saved-nlinum-format)
+          (nlinum-mode saved-nlinum-mode-state)
+          (nlinum--flush))))))
+
 
 ;;; jump-char
 ;; <char> :: move to the next match in the current direction.
