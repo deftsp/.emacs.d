@@ -1242,18 +1242,17 @@ such character is found, following options are shown:
 
 ;;; Projectile
 ;; https://github.com/bbatsov/projectile
-(eval-after-load "projectile"
-  '(progn
-     ;; bug: change cache file path will cause cache file be cleared after access any pojectile file.
-     ;; (when (boundp 'paloryemacs/cache-directory)
-     ;;   (setq projectile-cache-file (concat paloryemacs/cache-directory "projectile.cache")))
-     (when (eq system-type 'darwin)
-       (setq projectile-tags-command "/usr/local/bin/ctags -Re %s"))
-     (setq projectile-enable-caching t)
-     (add-to-list 'projectile-project-root-files ".cabal-sandbox")
-     (add-to-list 'projectile-project-root-files "Setup.hs")
-     ;; (add-hook 'emacs-lisp-mode-hook 'projectile-on)
-     (projectile-global-mode)))
+(with-eval-after-load "projectile"
+  ;; bug: change cache file path will cause cache file be cleared after access any pojectile file.
+  ;; (when (boundp 'paloryemacs/cache-directory)
+  ;;   (setq projectile-cache-file (concat paloryemacs/cache-directory "projectile.cache")))
+  (when (eq system-type 'darwin)
+    (setq projectile-tags-command "/usr/local/bin/ctags -Re %s"))
+  (setq projectile-enable-caching t)
+  (add-to-list 'projectile-project-root-files ".cabal-sandbox")
+  (add-to-list 'projectile-project-root-files "Setup.hs")
+  ;; (add-hook 'emacs-lisp-mode-hook 'projectile-on)
+  (projectile-global-mode))
 
 (with-eval-after-load "ivy"
   (setq projectile-completion-system 'ivy))
@@ -1266,41 +1265,43 @@ such character is found, following options are shown:
   ("b"  projectile-switch-to-buffer-other-window "buffer")
   ("q"  nil                                      "cancel" :color blue))
 
-(defhydra hydra-projectile (:color teal)
+(defhydra hydra-projectile (:color teal
+                                   :hint nil)
   "
      PROJECTILE: %(projectile-project-root)
 
      Find File            Search/Tags          Buffers                Cache
 ------------------------------------------------------------------------------------------
- ^^                    _a_: ag                _i_: Ibuffer           _c_: cache clear
+_s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache clear
  _ff_: file dwim       _g_: update gtags      _b_: switch to buffer  _x_: remove known project
- _fd_: file curr dir   _o_: multi-occur       ^^                     _X_: cleanup non-existing
+ _fd_: file curr dir   _o_: multi-occur     _s-k_: Kill all buffers  _X_: cleanup non-existing
   _r_: recent file                                               ^^^^_z_: cache current
   _d_: dir
 
 "
-  ("a"   projectile-ag                      nil)
-  ("b"   projectile-switch-to-buffer        nil)
-  ("c"   projectile-invalidate-cache        nil)
-  ("d"   projectile-find-dir                nil)
-  ("F"   projectile-find-file               nil)
-  ("ff"  projectile-find-file-dwim          nil)
-  ("fd"  projectile-find-file-in-directory  nil)
-  ("g"   ggtags-update-tags                 nil)
-  ("s-g" ggtags-update-tags                 nil)
-  ("i"   projectile-ibuffer                 nil)
-  ("K"   projectile-kill-buffers            nil)
-  ("m"   projectile-multi-occur             nil)
-  ("o"   projectile-multi-occur             nil)
-  ("s-p" projectile-switch-project          "switch project")
-  ("p"   projectile-switch-project          nil)
-  ("s"   projectile-switch-project          nil)
-  ("r"   projectile-recentf                 nil)
-  ("x"   projectile-remove-known-project    nil)
-  ("X"   projectile-cleanup-known-projects  nil)
-  ("z"   projectile-cache-current-file      nil)
+  ("a"   projectile-ag)
+  ("b"   projectile-switch-to-buffer)
+  ("c"   projectile-invalidate-cache)
+  ("d"   projectile-find-dir)
+  ("s-f" projectile-find-file)
+  ("ff"  projectile-find-file-dwim)
+  ("fd"  projectile-find-file-in-directory)
+  ("g"   ggtags-update-tags)
+  ("s-g" ggtags-update-tags)
+  ("i"   projectile-ibuffer)
+  ("K"   projectile-kill-buffers)
+  ("s-k" projectile-kill-buffers)
+  ("m"   projectile-multi-occur)
+  ("o"   projectile-multi-occur)
+  ("s-p" projectile-switch-project "switch project")
+  ("p"   projectile-switch-project)
+  ("s"   projectile-switch-project)
+  ("r"   projectile-recentf)
+  ("x"   projectile-remove-known-project)
+  ("X"   projectile-cleanup-known-projects)
+  ("z"   projectile-cache-current-file)
   ("`"   hydra-projectile-other-window/body "other window")
-  ("q"   nil                                "cancel" :color blue))
+  ("q"   nil "cancel" :color blue))
 
 ;;; xmsi-math-symbols-input.el
 (autoload 'xmsi-mode "xmsi-math-symbols-input" "Load xmsi minor mode for inputting math (Unicode) symbols." t)
