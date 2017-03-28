@@ -1,0 +1,4 @@
+(:name hide-comnt
+       :description "Hide/show comments in code."
+       :type emacswiki
+       :features hide-comnt)

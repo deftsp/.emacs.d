@@ -1,0 +1,5 @@
+(:name iedit
+       :description "Edit multiple regions simultaneously in a buffer or a region."
+       :type github
+       :pkgname "victorhge/iedit"
+       :depends (cl-lib))

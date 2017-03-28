@@ -1,0 +1,4 @@
+(:name minimap
+       :type github
+       :description "Sidebar showing a "mini-map" of a buffer"
+       :pkgname "dengste/minimap")

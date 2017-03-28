@@ -1,0 +1,5 @@
+(:name evil-iedit-state
+       :type github
+       :description "Slick Evil states for iedit."
+       :pkgname "syl20bnr/evil-iedit-state"
+       :depends (evil iedit))

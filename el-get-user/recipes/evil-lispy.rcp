@@ -1,0 +1,7 @@
+(:name evil-lispy
+       :website "https://github.com/deftsp/evil-lispy"
+       :description "Minor mode to integrate Lispy and Evil"
+       :type github
+       :url "git@github.com:deftsp/evil-lispy.git"
+       :branch "develop"
+       :depends (evil lispy))

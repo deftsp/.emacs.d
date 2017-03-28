@@ -1,0 +1,4 @@
+(:name crosshairs
+       :description "Highlight the current line and column."
+       :type emacswiki
+       :depends col-highlight)

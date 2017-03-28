@@ -1,0 +1,4 @@
+(:name counsel-projectile
+       :type github
+       :description "Ivy UI for Projectile"
+       :pkgname "ericdanan/counsel-projectile")

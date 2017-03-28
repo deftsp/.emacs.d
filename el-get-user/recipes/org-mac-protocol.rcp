@@ -1,0 +1,3 @@
+(:name org-mac-protocol
+       :type git
+       :url "git://github.com/claviclaws/org-mac-protocol.git")

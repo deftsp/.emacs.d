@@ -1,0 +1,4 @@
+(:name pinyin-search
+       :type github
+       :description "Search Chinese by the first letter of Chinese pinyin."
+       :pkgname "xuchunyang/pinyin-search.el")

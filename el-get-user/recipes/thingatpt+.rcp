@@ -1,0 +1,4 @@
+(:name thingatpt+
+       :description "Extensions to `thingatpt.el'."
+       :type emacswiki
+       :features thingatpt+)

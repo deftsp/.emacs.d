@@ -1,0 +1,4 @@
+(:name window-extension
+       :description "Some extension functions manipulate window."
+       :type emacswiki
+       :features window-extension)

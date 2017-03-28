@@ -1,0 +1,4 @@
+(:name col-highlight
+       :description "Highlight the current column."
+       :type emacswiki
+       :depends vline)
