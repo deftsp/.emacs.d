@@ -125,7 +125,7 @@
       (kbd "i")   'dired-omit-mode
       (kbd "I")   'dired-maybe-insert-subdir
       (kbd "M-r") 'dired-do-redisplay
-      (kbd "r") ' wdired-change-to-wdired-mode
+      (kbd "r")   ' wdired-change-to-wdired-mode
       (kbd "gg")  'paloryemacs/dired-back-to-top
       (kbd "gr")  'revert-buffer
       (kbd "G")   'paloryemacs/dired-jump-to-bottom)))
