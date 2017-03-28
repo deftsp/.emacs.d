@@ -70,6 +70,7 @@
   "dp"  'dash-at-point
   "dP"  'dash-at-point-with-docset
   "ff"  'paloryemacs/toggle-full-window
+  "fb"  'counsel-bookmark
   "gb"  'magit-blame-mode
   "gl"  'magit-log
   "gs"  'magit-status
@@ -87,9 +88,9 @@
   "sS"  'helm-multi-swoop
   "s C-s" 'helm-multi-swoop-all
   ;; "ut"  'undo-tree-visualize
-  "vr"  'vr/replace
-  "vq"  'vr/query-replace
-  "vm"  'vr/mc-mark
+  ;; "vr"  'vr/replace
+  ;; "vq"  'vr/query-replace
+  ;; "vm"  'vr/mc-mark
   "xb"  'switch-to-buffer
   "xc"  'save-buffers-kill-terminal
   "xf"  'ido-find-file
