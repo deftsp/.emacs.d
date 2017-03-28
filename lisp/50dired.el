@@ -28,6 +28,7 @@
 
 ;;; omit mode
 ;; C-x M-o
+(setq-default dired-omit-mode t)
 (with-eval-after-load "dired-x"
   (setq dired-omit-extensions
         '(".svn/" "CVS/" ".o" "~" ".bin" ".bak" ".obj" ".map" ".ico"
@@ -113,6 +114,33 @@
   (define-key dired-mode-map (kbd "/") 'dired-narrow)
   (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
   (dired-omit-mode +1))
+
+(with-eval-after-load "dired"
+  (evilified-state-evilify dired-mode dired-mode-map
+    (kbd "j")   'diredp-next-line
+    (kbd "k")   'diredp-previous-line
+    (kbd "^")   'diredp-up-directory-reuse-dir-buffer
+    (kbd "l")   'diredp-find-file-reuse-dir-buffer
+    (kbd "i")   'dired-omit-mode
+    (kbd "I")   'dired-maybe-insert-subdir
+    (kbd "M-r") 'dired-do-redisplay
+    (kbd "r") ' wdired-change-to-wdired-mode
+    (kbd "gg")  'paloryemacs/dired-back-to-top
+    (kbd "gr")  'revert-buffer
+    (kbd "G")   'paloryemacs/dired-jump-to-bottom))
+
+
+(defun paloryemacs/dired-back-to-top()
+  "Move to the first file."
+  (interactive)
+  (beginning-of-buffer)
+  (dired-next-line 2))
+
+(defun paloryemacs/dired-jump-to-bottom()
+  "Move to last file."
+  (interactive)
+  (end-of-buffer)
+  (dired-next-line -1))
 
 (defun paloryemacs/dired-w3m-find-file ()
   (interactive)

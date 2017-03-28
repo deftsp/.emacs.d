@@ -56,7 +56,7 @@
 (evil-define-state evilified
   "Evilified state.
  Hybrid `emacs state' with carrefully selected Vim key bindings.
- See spacemacs conventions for more info."
+ See paloryemacs conventions for more info."
   :tag " <N'> "
   :enable (emacs)
   :message "-- EVILIFIED BUFFER --"
@@ -229,7 +229,7 @@ Each pair KEYn FUNCTIONn is defined in MAP after the evilification of it."
               (setq evil-evilified-state-map (copy-keymap ,evilified-map))
               (let* ((sorted-map (evilified-state--sort-keymap
                                   evil-evilified-state-map))
-                    processed)
+                     processed)
                 (mapc (lambda (map-entry)
                         (unless (member (car map-entry) processed)
                           (setq processed (evilified-state--evilify-event
@@ -276,7 +276,7 @@ Each pair KEYn FUNCTIONn is defined in MAP after the evilification of it."
                          processed pending-funcs)))
     (when pending-funcs
       (message
-       (concat (format (concat "Auto-evilication could not remap these "
+       (concat (format (concat "Auto-evilification could not remap these "
                                "functions in map `%s':\n")
                        map-symbol)
                (mapconcat (lambda (x)

@@ -359,6 +359,7 @@ kill internal buffers too."
         (eww-mode                  . emacs)
         (helm-grep-mode            . emacs)
         (ibuffer-mode              . normal)
+        (dired-mode                . evilified)
         (inferior-emacs-lisp-mode  . emacs)
         (inf-ruby-mode             . emacs)
         (log-edit-mode             . emacs)
@@ -494,12 +495,6 @@ to replace the symbol under cursor"
 ;;; eww
 (evil-add-hjkl-bindings eww-mode-map 'emacs
   "L" 'eww-back-url) ; defaut "l"
-
-;;; dired
-(eval-after-load "dired"
-  '(progn
-     (evil-define-key 'normal dired-mode-map "M-r" 'dired-do-redisplay)
-     (evil-define-key 'normal dired-mode-map "r" 'wdired-change-to-wdired-mode)))
 
 ;;; ibuffer
 (eval-after-load "ibuffer"
