@@ -670,11 +670,20 @@ to replace the symbol under cursor"
   (paloryemacs/add-blank-between-chinese-and-english (region-beginning) (region-end))
   (evil-normal-state))
 
+;;; evil-lion
+;; use `g a` (mnemonic `align`)
+;; these variables should be changed before (evil-lion-mode) is called
+(setq evil-lion-left-align-key (kbd "g a"))
+(setq evil-lion-right-align-key (kbd "g A"))
+(evil-lion-mode +1)
+
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
 ;; (add-hook 'edebug-mode-hook 'evil-normalize-keymaps) ; recreate `evil-mode-map-alist'
 (with-eval-after-load 'edebug
   (add-hook 'edebug-mode-hook 'paloryemacs/evil-state-cycle))
+
+
 
 (provide '52evil-mode)
 ;;; 50evil-mode.el ends here

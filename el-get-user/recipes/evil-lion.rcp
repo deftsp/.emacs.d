@@ -1,0 +1,5 @@
+(:name evil-lion
+       :description "Evil align operator"
+       :type github
+       :pkgname "edkolev/evil-lion"
+       :depends (evil))
