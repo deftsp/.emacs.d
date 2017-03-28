@@ -109,7 +109,7 @@
 
 (add-hook 'dired-mode-hook 'paloryemacs/dired-mode-hook-init)
 (defun paloryemacs/dired-mode-hook-init ()
-  (define-key dired-mode-map "^" 'diredp-up-directory-reuse-dir-buffer)
+  (define-key dired-mode-map (kbd "^") 'diredp-up-directory-reuse-dir-buffer)
   (define-key dired-mode-map (kbd "W") 'paloryemacs/dired-w3m-find-file)
   (define-key dired-mode-map (kbd "/") 'dired-narrow)
   (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
@@ -131,13 +131,13 @@
       (kbd "G")   'paloryemacs/dired-jump-to-bottom)))
 
 
-(defun paloryemacs/dired-back-to-top()
+(defun paloryemacs/dired-back-to-top ()
   "Move to the first file."
   (interactive)
   (beginning-of-buffer)
   (dired-next-line 2))
 
-(defun paloryemacs/dired-jump-to-bottom()
+(defun paloryemacs/dired-jump-to-bottom ()
   "Move to last file."
   (interactive)
   (end-of-buffer)
