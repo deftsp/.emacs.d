@@ -534,6 +534,17 @@ If FORCE is non-nil, overwrite any existing line-height properties."
         (goto-char from)
         (eval convertor)))))
 
+(defvar paloryemacs/dircolors-string
+  (let ((dircolors-bin
+         (or (executable-find "dircolors") (executable-find "gdircolors"))))
+    (when (executable-find dircolors-bin)
+      (replace-regexp-in-string
+       ":$" "" (cadr
+                (split-string
+                 (shell-command-to-string
+                  (concat "TERM=xterm-color-256color " dircolors-bin))
+                 "'"))))))
+
 
 (provide '02utils)
 ;;; 02utils.el ends here

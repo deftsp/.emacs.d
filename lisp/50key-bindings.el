@@ -66,7 +66,7 @@
   ;; ";" "cc" "ci", "cl", "cp", "cr", "ct", "cy" and "cv" are used by evil-nerd-commenter
   "cs"  'paloryemacs/evil-change-symbol-in-defun
   "ch"  'crosshairs-mode
-  "D"   'dired-jump
+  "fj"  'dired-jump
   "dp"  'dash-at-point
   "dP"  'dash-at-point-with-docset
   "ff"  'paloryemacs/toggle-full-window
@@ -75,7 +75,8 @@
   "gs"  'magit-status
   "gC"  'magit-commit
   "gg"  'counsel-git-grep
-  "j"   'helm-etags-select
+  "jd"  'dired-jump
+  "jD"  'dired-jump-other-window
   "k"   'kill-this-buffer
   ;; "ll" are used by evil-nerd-commenter
   ;; "lr"  'paloryemacs/linum-relative-toggle
