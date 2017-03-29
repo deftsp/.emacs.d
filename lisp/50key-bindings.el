@@ -701,4 +701,12 @@ _v_ariable _u_ser-option
   ("u" apropos-user-option)
   ("e" apropos-value))
 
+(defhydra hydra-dumb-jump (:color pink)
+  "Dumb Jump"
+  ("g" dumb-jump-go "Go")
+  ("b" dumb-jump-back "Back")
+  ("l" dumb-jump-quick-look "Look")
+  ("e" dumb-jump-go-prefer-external "External")
+  ("q" nil "Quit" :color blue))
+
 (provide '50key-bindings)

@@ -1425,6 +1425,7 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 (setq dumb-jump-prefer-searcher 'rg)
 (define-key global-map (kbd "M-g o") 'dumb-jump-go-other-window)
 (define-key global-map (kbd "M-g j") 'dumb-jump-go)
+(define-key global-map (kbd "M-g b") 'dumb-jump-back)
 (define-key global-map (kbd "M-g x") 'dumb-jump-go-prefer-external)
 (define-key global-map (kbd "M-g o") 'dumb-jump-go-prefer-external-other-window)
 
