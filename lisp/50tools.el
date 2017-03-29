@@ -1265,6 +1265,7 @@ such character is found, following options are shown:
   ("b"  projectile-switch-to-buffer-other-window "buffer")
   ("q"  nil                                      "cancel" :color blue))
 
+(autoload 'projectile-project-root "projectile" "Retrieves the root directory of a project if available." t nil)
 (defhydra hydra-projectile (:color teal
                                    :hint nil)
   "
