@@ -1,0 +1,4 @@
+(:name queue
+       :description "Queue data structure"
+       :type http
+       :url "http://www.dr-qubit.org/download.php?file=predictive/queue.el")

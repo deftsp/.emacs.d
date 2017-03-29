@@ -14,6 +14,8 @@
         ("elpy" . "https://jorgenschaefer.github.io/packages/")
         ("org" . "http://orgmode.org/elpa/")))
 
+(setq package-check-signature nil)
+
 (package-initialize)
 
 (when (featurep 'xemacs)

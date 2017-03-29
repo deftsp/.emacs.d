@@ -1,0 +1,3 @@
+(:name narrow-indirect
+       :type emacswiki
+       :description "Narrow using an indirect buffer that is a clone")
