@@ -90,3 +90,5 @@ haskell-emacs-exts/
 /.erc-pass
 /org-clock-save.el
 flycheck_*.el
+network-security.data
+
