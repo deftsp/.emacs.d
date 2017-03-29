@@ -1286,6 +1286,12 @@ This command is to be used interactively."
      (setq-default undo-tree-visualizer-diff t)
      (setq undo-tree-mode-lighter " UT")))
 
+
+(with-eval-after-load "evil-evilified-state"
+  (evilified-state-evilify bookmark-bmenu-mode bookmark-bmenu-mode-map
+    (kbd "v")   'bookmark-bmenu-select
+    (kbd "L")   'bookmark-bmenu-load))
+
 ;;; Table of contents - toc
 ;; (require 'toc "toc" t)
 ;; set this mode/file specifically

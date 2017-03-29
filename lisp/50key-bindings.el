@@ -84,6 +84,8 @@
   "n"   'evil-narrow-indirect
   "p"   'hydra-projectile/body   ; 'projectile-commander
   "P"   'hydra-projectile-other-window/body
+  "re"  'paloryemacs/ivy-evil-registers
+  "ry"  'counsel-yank-pop
   "se"  'evil-iedit-state/iedit-mode
   "ss"  'helm-swoop
   "sS"  'helm-multi-swoop
