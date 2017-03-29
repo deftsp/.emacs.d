@@ -82,7 +82,8 @@
   ;; "ll" are used by evil-nerd-commenter
   ;; "lr"  'paloryemacs/linum-relative-toggle
   "n"   'evil-narrow-indirect
-  "p"   'projectile-commander
+  "p"   'hydra-projectile/body   ; 'projectile-commander
+  "P"   'hydra-projectile-other-window/body
   "se"  'evil-iedit-state/iedit-mode
   "ss"  'helm-swoop
   "sS"  'helm-multi-swoop
