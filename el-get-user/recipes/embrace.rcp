@@ -1,0 +1,5 @@
+(:name embrace
+       :description "Add/Change/Delete pairs based on `expand-region'"
+       :type github
+       :pkgname "cute-jumper/embrace.el"
+       :depends (expand-region))

@@ -1,0 +1,5 @@
+(:name evil-embrace
+       :description "Evil integration of embrace.el"
+       :type github
+       :pkgname "cute-jumper/evil-embrace.el"
+       :depends (embrace evil))

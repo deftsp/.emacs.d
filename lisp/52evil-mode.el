@@ -350,6 +350,10 @@ kill internal buffers too."
   (setq-default evil-surround-pairs-alist (cl-adjoin
                                            '(?~ . ("``" . "``"))
                                            evil-surround-pairs-alist)))
+;;; evil-embrace
+(when  (fboundp 'evil-embrace-enable-evil-surround-integration)
+  (evil-embrace-enable-evil-surround-integration))
+
 ;;; default mode
 (loop for (mode . state) in
       '((comint-mode               . insert)
