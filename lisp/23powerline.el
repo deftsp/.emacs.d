@@ -213,6 +213,14 @@ mouse-1: Display Line and Column Mode Menu")
   "face to fontify evil lispy state"
   :group 'powerline)
 
+(defface powerline-evil-lisp-face
+  '((((class color))
+     :foreground "white" :background "orange" :weight bold :inherit mode-line)
+    (t (:weight bold)))
+  "face to fontify evil lispy state"
+  :group 'powerline)
+
+
 (defface powerline-evil-iedit-face
   '((((class color))
      :foreground "blue" :background "yellow" :weight bold :inherit mode-line)

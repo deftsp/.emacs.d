@@ -42,8 +42,12 @@
   `((t (:weight bold :foreground "maroon")))
   "Evil operator mode indicator face")
 
+(defface paloryemacs/evil-lisp-tag
+  `((t (:weight bold :foreground "orange")))
+  "Evil lisp mode indicator face")
+
 (defface paloryemacs/evil-lispy-tag
-  `((t (:weight bold :foreground "blue")))
+  `((t (:weight bold :foreground "orange")))
   "Evil lispy mode indicator face")
 
 (defface paloryemacs/evil-iedit-tag
@@ -59,6 +63,7 @@
       evil-visual-state-tag   (propertize "« ∞ »" 'face 'paloryemacs/evil-visual-tag)
       evil-operator-state-tag (propertize "« O »" 'face 'paloryemacs/evil-operator-tag)
       evil-replace-state-tag  (propertize "« R »" 'face 'paloryemacs/evil-replace-tag)
+      evil-lisp-state-tag     (propertize "« L »" 'face 'paloryemacs/evil-lisp-tag)
       evil-iedit-state-tag    (propertize "« E »" 'face 'paloryemacs/evil-iedit-tag))
 
 ;; FIXME: as Official Emacs 24.4, if set color color,  when multile
@@ -72,7 +77,9 @@
           evil-visual-state-cursor   `(hollow ,(face-attribute 'paloryemacs/evil-visual-tag   :foreground))
           evil-replace-state-cursor  `(hbar   ,(face-attribute 'paloryemacs/evil-replace-tag  :foreground))
           evil-operator-state-cursor `(hollow ,(face-attribute 'paloryemacs/evil-operator-tag :foreground))
-          evil-iedit-state-cursor    `(box   ,(face-attribute 'paloryemacs/evil-iedit-tag  :foreground)))
+          evil-lisp-state-cursor     `(box    ,(face-attribute 'paloryemacs/evil-lisp-tag     :foreground))
+          evil-lispy-state-cursor    `(box    ,(face-attribute 'paloryemacs/evil-lispy-tag    :foreground))
+          evil-iedit-state-cursor    `(box    ,(face-attribute 'paloryemacs/evil-iedit-tag    :foreground)))
   (setq evil-default-cursor '(box "#cd0000") ; emacs official
         evil-emacs-state-cursor    'box
         evil-normal-state-cursor   'box
@@ -80,7 +87,8 @@
         evil-motion-state-cursor   'box
         evil-visual-state-cursor   'hollow
         evil-replace-state-cursor  'hbar
-        evil-replace-state-cursor  'hbar
+        evil-operator-state-cursor 'hbar
+        evil-lisp-state-cursor     'hbar
         evil-iedit-state-cursor    'box))
 
 ;; Getting :n[ew] to work
@@ -685,6 +693,10 @@ to replace the symbol under cursor"
 (setq evil-lion-right-align-key (kbd "g A"))
 (evil-lion-mode +1)
 
+;;; evil-textobj-column
+(define-key evil-inner-text-objects-map "c" 'evil-textobj-column-word)
+(define-key evil-inner-text-objects-map "C" 'evil-textobj-column-WORD)
+
 ;;; ivy
 (defun paloryemacs/ivy-evil-registers ()
   "Show evil registers"
@@ -703,6 +715,10 @@ to replace the symbol under cursor"
   (insert (replace-regexp-in-string "\\^J" "\n"
                                     (substring-no-properties candidate 4))))
 
+
+;;; evil-lispy
+(with-eval-after-load "evil"
+  (require 'evil-lispy))
 
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the

@@ -1,0 +1,5 @@
+(:name evil-textobj-column
+       :description "Column Text Objects for Evil"
+       :type github
+       :pkgname "noctuid/evil-textobj-column"
+       :depends (evil))

@@ -1,0 +1,6 @@
+(:name lispy
+       :description "vi-like paredit."
+       :type github
+       :pkgname "abo-abo/lispy"
+       :compile nil
+       :depends (avy ace-window iedit hydra swiper zoutline))
