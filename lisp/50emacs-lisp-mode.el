@@ -79,14 +79,6 @@
 
 (add-hook 'emacs-lisp-mode-hook 'paloryemacs/imenu-elisp-init)
 
-(with-eval-after-load "lispy"
-  (define-key lispy-mode-map-lispy (kbd "M-o") nil)
-
-  (defun paloryemacs/enable-evil-lispy-mode ()
-    (when (fboundp 'evil-lispy-mode)
-      (evil-lispy-mode +1)))
-  (add-hook 'emacs-lisp-mode-hook 'paloryemacs/enable-evil-lispy-mode))
-
 
 (provide '50emacs-lisp-mode)
 ;;; 50emacs-lisp-mode.el ends here
