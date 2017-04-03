@@ -629,6 +629,9 @@ to replace the symbol under cursor"
 ;; https://github.com/hlissner/evil-snipe
 (require 'evil-snipe nil t)
 (with-eval-after-load "evil-snipe"
+  (with-eval-after-load "magit-mode"
+    (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode))
+
   (setq evil-snipe-scope 'line)
 
   (evil-snipe-mode +1)
