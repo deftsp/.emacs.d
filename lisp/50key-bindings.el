@@ -78,7 +78,11 @@
   "gg"  'counsel-git-grep
   "jd"  'dired-jump
   "jD"  'dired-jump-other-window
-  "k"   'kill-this-buffer
+  "jb" 'avy-pop-mark
+  "jj" 'evil-avy-goto-char
+  "jJ" 'evil-avy-goto-char-2
+  "jl" 'evil-avy-goto-line
+  "jw" 'evil-avy-goto-word-or-subword-1
   ;; "ll" are used by evil-nerd-commenter
   ;; "lr"  'paloryemacs/linum-relative-toggle
   "n"   'evil-narrow-indirect
