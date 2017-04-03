@@ -1,0 +1,5 @@
+(:name lispyville
+       :type github
+       :description "A minor mode for integrating evil with lispy."
+       :pkgname "noctuid/lispyville"
+       :depends (lispy evil cl-lib))

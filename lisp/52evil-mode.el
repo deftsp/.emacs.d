@@ -730,6 +730,17 @@ to replace the symbol under cursor"
   (dolist (l '(emacs-lisp-mode-hook clojure-mode-hook))
     (add-hook l 'paloryemacs/enable-evil-lispy-mode)))
 
+(with-eval-after-load "evil-lispy"
+  (evil-define-key 'normal evil-lispy-mode-map
+    "gm" #'evil-lispy/enter-marked-state ; "gm" default to evil-middle-of-visual-line
+    (kbd "C-SPC") nil))
+
+;;; lispyville
+(with-eval-after-load 'lispyville
+  (lispyville-set-key-theme '(operators
+                              (escape insert)
+                              (additional-movement normal visual motion))))
+
 
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
