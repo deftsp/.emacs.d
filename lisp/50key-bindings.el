@@ -57,11 +57,35 @@
   'universal-argument-more)
 
 
+;; SPC o and SPC m o are reserved for the user
+(paloryemacs/set-leader-keys
+  "oa" 'org-agenda
+  "oc" 'org-capture)
+
+;; Add global evil-leader mappings. Used to access org-agenda
+;; functionalities – and a few others commands – from any other mode.
+(paloryemacs/declare-prefix "ao" "org")
+(paloryemacs/declare-prefix "aok" "clock")
+(paloryemacs/set-leader-keys
+  "ao#" 'org-agenda-list-stuck-projects
+  "ao/" 'org-occur-in-agenda-files
+  "aoa" 'org-agenda-list
+  "aoc" 'org-capture
+  "aoe" 'org-store-agenda-views
+  "aoki" 'org-clock-in-last
+  "aokj" 'org-clock-jump-to-current-clock
+  "aoko" 'org-clock-out
+  "aol" 'org-store-link
+  "aom" 'org-tags-view
+  "aoo" 'org-agenda
+  "aos" 'org-search-view
+  "aot" 'org-todo-list)
+
+
 (paloryemacs/set-leader-keys
   "1"   'delete-other-windows
   "2"   (kbd "C-x 2")
   "3"   "\C-x3"
-  "a"   'org-agenda
   ;; "b"   'bookmark-map
   ;; ";" "cc" "ci", "cl", "cp", "cr", "ct", "cy" and "cv" are used by evil-nerd-commenter
   "cs"  'paloryemacs/evil-change-symbol-in-defun

@@ -666,6 +666,23 @@ to `reorganize-frame', otherwise set to `other-frame'."
     output-string))
 
 
+;;; evil support
+(with-eval-after-load 'org-capture
+  (paloryemacs/set-leader-keys-for-minor-mode 'org-capture-mode
+    dotpaloryemacs-major-mode-leader-key 'org-capture-finalize
+    "a" 'org-capture-kill
+    "c" 'org-capture-finalize
+    "k" 'org-capture-kill
+    "R" 'org-capture-refile))
+
+(with-eval-after-load 'org-src
+  (paloryemacs/set-leader-keys-for-minor-mode 'org-src-mode
+    dotpaloryemacs-major-mode-leader-key 'org-edit-src-exit
+    "c" 'org-edit-src-exit
+    "a" 'org-edit-src-abort
+    "k" 'org-edit-src-abort))
+
+
 ;;; hydra org template
 (with-eval-after-load "hydra"
   (defhydra hydra-org-template (:color blue :hint nil)
