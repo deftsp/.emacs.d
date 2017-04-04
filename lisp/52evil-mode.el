@@ -745,6 +745,17 @@ to replace the symbol under cursor"
                               (additional-movement normal visual motion))))
 
 
+;; auto-complete word in Emacs mini-buffer when using Evil
+;; http://blog.binchen.org/posts/auto-complete-word-in-emacs-mini-buffer-when-using-evil.html
+(defun paloryemacs/minibuffer-inactive-mode-hook-setup ()
+  ;; make `try-expand-dabbrev' from `hippie-expand' work in mini-buffer
+  ;; @see `he-dabbrev-beg', so we need re-define syntax for '/'
+  (set-syntax-table (let* ((table (make-syntax-table)))
+                      (modify-syntax-entry ?/ "." table)
+                      table)))
+(add-hook 'minibuffer-inactive-mode-hook 'paloryemacs/minibuffer-inactive-mode-hook-setup)
+
+
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
 ;; (add-hook 'edebug-mode-hook 'evil-normalize-keymaps) ; recreate `evil-mode-map-alist'
