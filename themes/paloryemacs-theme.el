@@ -284,7 +284,7 @@
    `(popup-menu-selection-face ((t (:background "#0000ff" :foreground ,base03))))
 
    ;; ace-window-mode-line
-   '(aw-leading-char-face ((t (:inherit ace-jump-face-foreground :height 3.0))))
+   '(aw-leading-char-face ((t (:foreground "red" :height 9.0))))
    '(aw-mode-line-face ((t (:foreground "violet" :background unspecified))))
 
    ;; company-mode
