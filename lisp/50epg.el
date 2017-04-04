@@ -13,6 +13,9 @@
 
 ;; install GnuPG >= 2.1
 
+(setq epa-pinentry-mode 'loopback)
+
+
 (defadvice epg--start (around advice-epg-disable-agent disable)
   "Make epg--start not able to find a gpg-agent"
   (let ((agent (getenv "GPG_AGENT_INFO")))
