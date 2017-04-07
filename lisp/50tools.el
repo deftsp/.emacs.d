@@ -1180,26 +1180,39 @@ such character is found, following options are shown:
 (require 'multiple-cursors nil t)
 (defvar paloryemacs/mutiple-cursors-keymap nil
   "Keymap for key chord prefix commands in haskell mode.")
-(eval-after-load "multiple-cursors"
-  '(progn
-     (setq paloryemacs/mutiple-cursors-keymap (make-sparse-keymap))
 
-     (global-set-key (kbd "M-C") paloryemacs/mutiple-cursors-keymap)
-     (key-chord-define-global ";c" paloryemacs/mutiple-cursors-keymap)
-     (define-key paloryemacs/mutiple-cursors-keymap (kbd "l") 'mc/edit-lines)
-     (define-key paloryemacs/mutiple-cursors-keymap (kbd "c") 'mc/edit-lines)
-     (define-key paloryemacs/mutiple-cursors-keymap (kbd "M-C") 'mc/edit-lines)
-     (define-key paloryemacs/mutiple-cursors-keymap (kbd "C-e") 'mc/edit-ends-of-lines)
-     (define-key paloryemacs/mutiple-cursors-keymap (kbd "e") 'mc/edit-ends-of-lines)
-     (define-key paloryemacs/mutiple-cursors-keymap (kbd "C-a") 'mc/edit-beginnings-of-lines)
-     (define-key paloryemacs/mutiple-cursors-keymap (kbd "a") 'mc/edit-beginnings-of-lines)
-     (define-key paloryemacs/mutiple-cursors-keymap (kbd "SPC") 'set-rectangular-region-anchor)
-     (define-key paloryemacs/mutiple-cursors-keymap (kbd "m") 'set-rectangular-region-anchor)))
+(with-eval-after-load "multiple-cursors"
+  (with-eval-after-load "evil"
+    (add-hook 'multiple-cursors-mode-enabled-hook
+              'paloryemacs/evil-switch-to-insert-maybe))
 
-(add-to-list 'mc/unsupported-minor-modes 'autopair-mode)
-(add-to-list 'mc/unsupported-minor-modes 'smartparens-mode)
-(add-to-list 'mc/unsupported-minor-modes 'smartparens-strict-mode)
-;; (add-to-list 'mc/unsupported-minor-modes 'evil-mode)
+  (setq paloryemacs/mutiple-cursors-keymap (make-sparse-keymap))
+
+  (global-set-key (kbd "M-C") paloryemacs/mutiple-cursors-keymap)
+  (key-chord-define-global ";c" paloryemacs/mutiple-cursors-keymap)
+  (define-key paloryemacs/mutiple-cursors-keymap (kbd "l") 'mc/edit-lines)
+  (define-key paloryemacs/mutiple-cursors-keymap (kbd "c") 'mc/edit-lines)
+  (define-key paloryemacs/mutiple-cursors-keymap (kbd "M-C") 'mc/edit-lines)
+  (define-key paloryemacs/mutiple-cursors-keymap (kbd "C-e") 'mc/edit-ends-of-lines)
+  (define-key paloryemacs/mutiple-cursors-keymap (kbd "e") 'mc/edit-ends-of-lines)
+  (define-key paloryemacs/mutiple-cursors-keymap (kbd "C-a") 'mc/edit-beginnings-of-lines)
+  (define-key paloryemacs/mutiple-cursors-keymap (kbd "a") 'mc/edit-beginnings-of-lines)
+  (define-key paloryemacs/mutiple-cursors-keymap (kbd "SPC") 'set-rectangular-region-anchor)
+  (define-key paloryemacs/mutiple-cursors-keymap (kbd "m") 'set-rectangular-region-anchor)
+  (add-to-list 'mc/unsupported-minor-modes 'autopair-mode)
+  (add-to-list 'mc/unsupported-minor-modes 'smartparens-mode)
+  ;; (add-to-list 'mc/unsupported-minor-modes 'evil-mode)
+  (add-to-list 'mc/unsupported-minor-modes 'smartparens-strict-mode)
+
+  (global-set-key (kbd "C-S-SPC") 'paloryemacs/set-rectangular-region-anchor)
+
+  ;; Mark more like this
+  (global-set-key (kbd "C-*") 'mc/mark-all-like-this)
+  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+  ;; (global-set-key (kbd "M-å") 'mc/mark-all-in-region)
+  (global-set-key (kbd "C-M-m") 'mc/mark-more-like-this-extended))
+
 
 ;; Rectangular region mode
 (defun paloryemacs/evil-switch-to-insert-maybe ()
@@ -1211,15 +1224,6 @@ such character is found, following options are shown:
   (interactive)
   (paloryemacs/evil-switch-to-insert-maybe)
   (set-rectangular-region-anchor))
-
-(global-set-key (kbd "C-S-SPC") 'paloryemacs/set-rectangular-region-anchor)
-
-;; Mark more like this
-(global-set-key (kbd "C-*") 'mc/mark-all-like-this)
-(global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-(global-set-key (kbd "C->") 'mc/mark-next-like-this)
-(global-set-key (kbd "C-M-m") 'mc/mark-more-like-this-extended)
-;; (global-set-key (kbd "M-å") 'mc/mark-all-in-region)
 
 ;;; visual-regexp
 ;; (define-key global-map (kbd "C-c r") 'vr/replace)

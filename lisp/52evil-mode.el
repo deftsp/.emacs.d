@@ -134,8 +134,6 @@ recover evil state to it, otherwiser change to evil-emacs-state."
   (if (and delete-selection-mode transient-mark-mode mark-active)
       (setq deactivate-mark t))
   (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
-  (when multiple-cursors-mode
-    (multiple-cursors-mode -1))
   (cond ((minibuffer-window-active-p (selected-window))
          (abort-recursive-edit))
         ((or (memq major-mode '(Info-mode org-agenda-mode help-mode))
@@ -538,9 +536,6 @@ to replace the symbol under cursor"
 (if (fboundp 'evil-exchange-install)
     (evil-exchange-install))
 
-;;; work with mutiple cursors
-(add-hook 'multiple-cursors-mode-enabled-hook
-          'paloryemacs/evil-switch-to-insert-maybe)
 ;;; evil-args
 (require 'evil-args nil t)
 (eval-after-load "evil-args"
