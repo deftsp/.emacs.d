@@ -357,10 +357,10 @@ kill internal buffers too."
                                            '(?~ . ("``" . "``"))
                                            evil-surround-pairs-alist)))
 ;;; evil-embrace
-(when  (fboundp 'evil-embrace-enable-evil-surround-integration)
-  (setq embrace-show-help-p nil
-        evil-embrace-show-help-p nil)
-  (evil-embrace-enable-evil-surround-integration))
+;; (when  (fboundp 'evil-embrace-enable-evil-surround-integration)
+;;   (setq embrace-show-help-p nil
+;;         evil-embrace-show-help-p nil)
+;;   (evil-embrace-enable-evil-surround-integration))
 
 ;;; default mode
 (loop for (mode . state) in
