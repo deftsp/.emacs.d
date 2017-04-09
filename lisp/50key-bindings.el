@@ -93,7 +93,8 @@
   "fj"  'dired-jump
   "dp"  'dash-at-point
   "dP"  'dash-at-point-with-docset
-  "ff"  'paloryemacs/toggle-full-window
+  "ff"  'find-file-at-point             ; counsel-file-file
+  "fL"  'counsel-locate
   "fb"  'counsel-bookmark
   "gb"  'magit-blame-mode
   "gl"  'magit-log
