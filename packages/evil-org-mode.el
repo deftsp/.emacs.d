@@ -9,11 +9,13 @@
 (require 'org)
 
 
-(defun clever-insert-item ()
+(defun eo/open-line-below-or-insert-item ()
   "Clever insertion of org item."
-  (if (not (org-in-item-p))
-      (insert "\n")
-    (org-insert-item)))
+  (interactive)
+  (if (org-in-item-p)
+      (org-insert-item)
+    (org-show-entry)
+    (evil-open-below nil)))
 
 (defun evil-org-eol-call (fun)
   "Go to end of line and call provided function.
@@ -110,7 +112,7 @@ FUN function callback"
   "gl" 'outline-next-visible-heading
   "gn" 'outline-next-visible-heading
   "gp" 'outline-previous-heading
-  "o" '(lambda () (interactive) (evil-org-eol-call 'clever-insert-item))
+  "o" 'eo/open-line-below-or-insert-item
   "O" '(lambda () (interactive) (evil-org-eol-call 'org-insert-heading))
   "t" 'org-todo
   "T" '(lambda () (interactive) (evil-org-eol-call 'org-insert-todo-heading-respect-content)))
