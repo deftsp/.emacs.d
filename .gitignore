@@ -92,3 +92,4 @@ haskell-emacs-exts/
 flycheck_*.el
 network-security.data
 
+vimish-fold/
