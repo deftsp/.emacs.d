@@ -1,0 +1,6 @@
+(:name evil-vimish-fold
+       :description "Integrate vimish-fold with evil"
+       :type github
+       :pkgname "alexmurray/evil-vimish-fold"
+       :depends (evil vimish-fold)
+       :minimum-emacs-version (24 4))

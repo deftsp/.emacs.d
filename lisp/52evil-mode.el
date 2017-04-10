@@ -751,6 +751,11 @@ to replace the symbol under cursor"
                       table)))
 (add-hook 'minibuffer-inactive-mode-hook 'paloryemacs/minibuffer-inactive-mode-hook-setup)
 
+(require 'evil-vimish-fold nil t)
+(with-eval-after-load 'evil-vimish-fold
+  (evil-vimish-fold-mode +1))
+
+
 
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
