@@ -2,7 +2,6 @@
 
 ;; How about work with Google Calendars http://bc.tech.coop/blog/070306.html
 
-;; (require 'cal-china-x nil t)
 
 ;;; diary
 (setq diary-list-include-blanks nil
@@ -106,6 +105,7 @@
 ;;       ["正月" "二月" "三月" "四月" "五月" "六月" "七月" "八月" "九月" "十月"
 ;;               "十一月" "腊月"])
 
+(require 'cal-china-x nil t)
 (with-eval-after-load "cal-china-x"
   (setq cal-china-x-chinese-holidays
         '((holiday-fixed 1 1   "元旦")
@@ -154,6 +154,15 @@
                        100)))
     (and (> diff 0) (= dm cm) (= dd cd)
          (cons mark (format entry diff (diary-ordinal-suffix diff))))))
+
+(with-eval-after-load "evil-evilified-state"
+  (with-eval-after-load "calendar"
+    (evilified-state-evilify calendar-mode calendar-mode-map
+      (kbd "j")   'calendar-forward-week
+      (kbd "k")   'calendar-backward-week
+      (kbd "h")   'calendar-backward-day
+      (kbd "l")   'calendar-forward-day)))
+
 
 ;; Calendar 模式支持各种方式来更改当前日期
 ;;（这里的"前"是指还没有到来的那一天，"后"是指已经过去的日子）

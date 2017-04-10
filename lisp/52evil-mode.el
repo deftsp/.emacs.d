@@ -372,6 +372,7 @@ kill internal buffers too."
         (helm-grep-mode            . emacs)
         (ibuffer-mode              . normal)
         (bookmark-bmenu-mode       . evilified)
+        (calendar-mode             . evilified)
         (dired-mode                . evilified)
         (inferior-emacs-lisp-mode  . emacs)
         (inf-ruby-mode             . emacs)
