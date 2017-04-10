@@ -753,8 +753,16 @@ to replace the symbol under cursor"
 
 (require 'evil-vimish-fold nil t)
 (with-eval-after-load 'evil-vimish-fold
-  (evil-vimish-fold-mode +1))
+  (defun paloryemacs/evil-vimish-fold-create-dwim ()
+    "Create a fold from the current region or with avy."
+    (interactive)
+    (if mark-active
+        (call-interactively 'evil-vimish-fold/create)
+      (vimish-fold-avy)))
 
+  (evil-define-key 'motion evil-vimish-fold-mode-map "zf" 'paloryemacs/evil-vimish-fold-create-dwim)
+
+  (evil-vimish-fold-mode +1))
 
 
 ;;; bugfix
