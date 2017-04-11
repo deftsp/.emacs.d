@@ -96,6 +96,7 @@
   "ff"  'find-file-at-point             ; counsel-file-file
   "fL"  'counsel-locate
   "fb"  'counsel-bookmark
+  "fT"  'hydra-transparency/body
   "gb"  'magit-blame-mode
   "gl"  'magit-log
   "gs"  'magit-status

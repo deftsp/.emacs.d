@@ -17,7 +17,7 @@
                               (height . 51)
                               (top . 22) ; (frame-parameter nil 'top)
                               (left . 0)
-                              (alpha . (96 96)) ; first number is for the active window and the second for the inactive
+                              (alpha . (96 . 90)) ; first number is for the active window and the second for the inactive
                               (mouse-color . "gray80")
                               (right-fringe . 0) ; do not show right fringe
                               ;; (scroll-bar-width . 12)
@@ -138,6 +138,33 @@
   (setcdr (assq 'empty-line fringe-indicator-alist) 'solid-block)
   (setq-default indicate-empty-lines t))
 
+;;; frame transparency
+;; https://www.reddit.com/r/emacs/comments/5rnpsm/nice_hydra_to_set_frame_transparency/
+(defun paloryemacs/set-transparency (inc &optional inc-p)
+  "Increase or decrease the selected frame transparency"
+  (when (display-graphic-p)
+    (let* ((alphas (frame-parameter (selected-frame) 'alpha))
+           (alpha-active (car alphas))
+           (alpha-inactive (cdr alphas))
+           (alpha-next (if inc-p
+                           (cond ((> (- alpha-active inc) 100) 100)
+                                 ((< (- alpha-active inc) 0) 0)
+                                 (t (- alpha-active inc)))
+                         inc)))
+
+      (set-frame-parameter (selected-frame) 'alpha
+                           (cons alpha-next alpha-inactive)))))
+
+(defhydra hydra-transparency (:columns 2)
+  "
+ALPHA : [ %(frame-parameter nil 'alpha) ]
+"
+  ("j" (lambda () (interactive) (paloryemacs/set-transparency +1 t)) "+ more")
+  ("k" (lambda () (interactive) (paloryemacs/set-transparency -1 t)) "- less")
+  ("J" (lambda () (interactive) (paloryemacs/set-transparency +10 t)) "++ more")
+  ("K" (lambda () (interactive) (paloryemacs/set-transparency -10 t)) "-- less")
+  ("=" (lambda (value) (interactive "nTransparency Value 0 - 100 opaque: " )
+         (paloryemacs/set-transparency value nil)) "Set to ?" :color blue))
 
 (provide '50display)
 
