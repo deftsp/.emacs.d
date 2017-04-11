@@ -164,7 +164,9 @@ ALPHA : [ %(frame-parameter nil 'alpha) ]
   ("J" (lambda () (interactive) (paloryemacs/set-transparency +10 t)) "++ more")
   ("K" (lambda () (interactive) (paloryemacs/set-transparency -10 t)) "-- less")
   ("=" (lambda (value) (interactive "nTransparency Value 0 - 100 opaque: " )
-         (paloryemacs/set-transparency value nil)) "Set to ?" :color blue))
+         (paloryemacs/set-transparency value nil)) "Set to ?" :color blue)
+  ("" nil "cancel")
+  ("q" nil "cancel"))
 
 (provide '50display)
 
