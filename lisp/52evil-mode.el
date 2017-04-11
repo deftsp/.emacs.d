@@ -374,6 +374,7 @@ kill internal buffers too."
         (bookmark-bmenu-mode       . evilified)
         (calendar-mode             . evilified)
         (dired-mode                . evilified)
+        (ivy-occur-grep-mode       . evilified)
         (inferior-emacs-lisp-mode  . emacs)
         (inf-ruby-mode             . emacs)
         (log-edit-mode             . emacs)
@@ -763,6 +764,18 @@ to replace the symbol under cursor"
   (evil-define-key 'motion evil-vimish-fold-mode-map "zf" 'paloryemacs/evil-vimish-fold-create-dwim)
 
   (evil-vimish-fold-mode +1))
+
+;;; ivy-occur-grep-mode
+(with-eval-after-load "evil-evilified-state"
+  (with-eval-after-load 'ivy
+    (evilified-state-evilify-map ivy-occur-grep-mode-map
+      :mode ivy-occur-grep-mode
+      :bindings
+      (kbd "gr") 'ivy-occur-revert-buffer
+      (kbd "j")  'ivy-occur-next-line
+      (kbd "k")  'ivy-occur-previous-line
+      (kbd "h")  'evil-backward-char
+      (kbd "l")  'evil-forward-char)))
 
 
 ;;; bugfix
