@@ -118,6 +118,7 @@
 (with-eval-after-load "evil-evilified-state"
   (with-eval-after-load "dired"
     (evilified-state-evilify dired-mode dired-mode-map
+      (kbd "%")    'nil
       (kbd "j")   'diredp-next-line
       (kbd "k")   'diredp-previous-line
       (kbd "^")   'diredp-up-directory-reuse-dir-buffer
