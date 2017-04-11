@@ -11,10 +11,9 @@
 (defun eo/open-line-below-or-insert-item ()
   "Clever insertion of org item."
   (interactive)
-  (if (org-in-item-p)
-      (org-insert-item)
-    (org-show-entry)
-    (evil-open-below nil)))
+  (when (org-at-heading-p)
+    (org-show-subtree))
+  (evil-open-below nil))
 
 (defun evil-org-eol-call (fun)
   "Go to end of line and call provided function.
