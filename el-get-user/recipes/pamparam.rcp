@@ -1,0 +1,5 @@
+(:name pamparam
+       :description "Simple and fast flashcards for Emacs"
+       :type github
+       :pkgname "abo-abo/pamparam"
+       :depends (lispy worf))

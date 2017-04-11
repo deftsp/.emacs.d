@@ -1,0 +1,5 @@
+(:name worf
+       :description ""
+       :type github
+       :pkgname "vi-like bindings for org-mode"
+       :depends (swiper ace-link hydra zoutline))
