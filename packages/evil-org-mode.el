@@ -8,7 +8,6 @@
 (require 'evil)
 (require 'org)
 
-
 (defun eo/open-line-below-or-insert-item ()
   "Clever insertion of org item."
   (interactive)
@@ -30,7 +29,6 @@ FUN function callback"
   :lighter " EO"
   :keymap (make-sparse-keymap) ; defines evil-org-mode-map
   :group 'evil-org)
-
 
 (defun evil-org-mode-turn-on ()
   (evil-org-mode +1))
@@ -117,17 +115,145 @@ FUN function callback"
   "t" 'org-todo
   "T" '(lambda () (interactive) (evil-org-eol-call 'org-insert-todo-heading-respect-content)))
 
+
+(defmacro paloryemacs|org-emphasize (fname char)
+  "Make function for setting the emphasis in org mode"
+  `(defun ,fname () (interactive)
+          (org-emphasize ,char)))
+
+(dolist (prefix '(("me" . "export")
+                  ("mx" . "text")
+                  ("mh" . "headings")
+                  ("mi" . "insert & image")
+                  ("mS" . "subtrees")
+                  ("mt" . "tables")
+                  ("mtd" . "delete")
+                  ("mti" . "insert")
+                  ("mtt" . "toggle")))
+  (paloryemacs/declare-prefix-for-mode 'org-mode (car prefix) (cdr prefix)))
+
+;; Insert key for org-mode and markdown a la C-h k
+;; from SE endless http://emacs.stackexchange.com/questions/2206/i-want-to-have-the-kbd-tags-for-my-blog-written-in-org-mode/2208#2208
+(defun paloryemacs/insert-keybinding-org (key)
+  "Ask for a key then insert its description.
+Will work on both org-mode and any mode that accepts plain html."
+  (interactive "kType key sequence: ")
+  (let* ((tag "@@html:<kbd>@@ %s @@html:</kbd>@@"))
+    (if (null (equal key "\r"))
+        (insert
+         (format tag (help-key-description key nil)))
+      (insert (format tag ""))
+      (forward-char -8))))
+
 (paloryemacs/set-leader-keys-for-major-mode 'org-mode
-  "t"  'org-show-todo-tree
-  "a"  'org-agenda
-  "c"  'org-archive-subtree
+  "'" 'org-edit-special
+  "c" 'org-capture
+  "d" 'org-deadline
   "C" 'evil-org-recompute-clocks
-  "l"  'evil-org-open-links
-  "o"  'evil-org-recompute-clocks
-  "O" 'evil-open-above
-  "i"  'org-toggle-inline-images
-  "I"  'palory/org-insert-image
-  "r"  'org-redisplay-inline-images)
+
+  "D" 'org-insert-drawer
+  "ee" 'org-export-dispatch
+  "f" 'org-set-effort
+  "P" 'org-set-property
+  ":" 'org-set-tags
+
+  "a" 'org-agenda
+  "b" 'org-tree-to-indirect-buffer
+  "A" 'org-archive-subtree
+  "l" 'evil-org-open-links ;'org-open-at-point
+  "T" 'org-show-todo-tree
+
+  "." 'org-time-stamp
+  "!" 'org-time-stamp-inactive
+
+  ;; headings
+  "hi" 'org-insert-heading-after-current
+  "hI" 'org-insert-heading
+  "hs" 'org-insert-subheading
+
+  ;; More cycling options (timestamps, headlines, items, properties)
+  "L" 'org-shiftright
+  "H" 'org-shiftleft
+  "J" 'org-shiftdown
+  "K" 'org-shiftup
+
+  ;; Change between TODO sets
+  "C-S-l" 'org-shiftcontrolright
+  "C-S-h" 'org-shiftcontrolleft
+  "C-S-j" 'org-shiftcontroldown
+  "C-S-k" 'org-shiftcontrolup
+
+  ;; Subtree editing
+  "Sl" 'org-demote-subtree
+  "Sh" 'org-promote-subtree
+  "Sj" 'org-move-subtree-down
+  "Sk" 'org-move-subtree-up
+
+  ;; tables
+  "ta" 'org-table-align
+  "tb" 'org-table-blank-field
+  "tc" 'org-table-convert
+  "tdc" 'org-table-delete-column
+  "tdr" 'org-table-kill-row
+  "te" 'org-table-eval-formula
+  "tE" 'org-table-export
+  "th" 'org-table-previous-field
+  "tH" 'org-table-move-column-left
+  "tic" 'org-table-insert-column
+  "tih" 'org-table-insert-hline
+  "tiH" 'org-table-hline-and-move
+  "tir" 'org-table-insert-row
+  "tI" 'org-table-import
+  "tj" 'org-table-next-row
+  "tJ" 'org-table-move-row-down
+  "tK" 'org-table-move-row-up
+  "tl" 'org-table-next-field
+  "tL" 'org-table-move-column-right
+  "tn" 'org-table-create
+  "tN" 'org-table-create-with-table.el
+  "tr" 'org-table-recalculate
+  "ts" 'org-table-sort-lines
+  "ttf" 'org-table-toggle-formula-debugger
+  "tto" 'org-table-toggle-coordinate-overlays
+  "tw" 'org-table-wrap-region
+
+  ;; Multi-purpose keys
+  (or dotpaloryemacs-major-mode-leader-key ",") 'org-ctrl-c-ctrl-c
+  "*" 'org-ctrl-c-star
+  "RET" 'org-ctrl-c-ret
+  "-" 'org-ctrl-c-minus
+  "^" 'org-sort
+  "/" 'org-sparse-tree
+
+  "I" 'org-clock-in
+  "n" 'org-narrow-to-subtree
+  "N" 'widen
+  "O" 'org-clock-out
+  "q" 'org-clock-cancel
+  "R" 'org-refile
+  "s" 'org-schedule
+
+  ;; insertion of common elements
+  "ia" 'org-attach
+  "il" 'org-insert-link
+  "if" 'org-footnote-new
+  "ik" 'paloryemacs/insert-keybinding-org
+
+  ;; image
+  "it"  'org-toggle-inline-images
+  "ii"  'paloryemacs/org-insert-image
+  "ir"  'org-redisplay-inline-images
+
+  ;; images and other link types have no commands in org mode-line
+  ;; could be inserted using yasnippet?
+  ;; region manipulation
+  "xb" (paloryemacs|org-emphasize paloryemacs/org-bold ?*)
+  "xc" (paloryemacs|org-emphasize paloryemacs/org-code ?~)
+  "xi" (paloryemacs|org-emphasize paloryemacs/org-italic ?/)
+  "xr" (paloryemacs|org-emphasize paloryemacs/org-clear ? )
+  "xs" (paloryemacs|org-emphasize paloryemacs/org-strike-through ?+)
+  "xu" (paloryemacs|org-emphasize paloryemacs/org-underline ?_)
+  "xv" (paloryemacs|org-emphasize paloryemacs/org-verbose ?=))
 
 ;; normal & insert state shortcuts.
 (mapc #'(lambda (state)
