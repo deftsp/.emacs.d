@@ -1,5 +1,5 @@
 ;;; 50buffer.el ---
-;; Author: Shihpin Tsing <deftsp@gmail.com>
+;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;;; ibuffer.el
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -62,6 +62,7 @@
                       (filename . "/Applications/Emacs.app")
                       (filename . "/bin/emacs")))
          ("Lisp source" (mode . lisp-mode))
+         ("Ivy-Occur" (mode . ivy-occur-grep-mode))
          ("Agenda" (or (name . "^\\*Calendar\\*$")
                        (name . "^diary$")
                        (name . "^\\*Agenda")

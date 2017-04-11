@@ -777,6 +777,9 @@ to replace the symbol under cursor"
       (kbd "h")  'evil-backward-char
       (kbd "l")  'evil-forward-char)))
 
+;;; ibuffer
+(with-eval-after-load 'ibuffer
+  (evil-define-key 'normal ibuffer-mode-map (kbd "gr") 'ibuffer-update))
 
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
