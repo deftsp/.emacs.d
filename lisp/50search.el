@@ -229,6 +229,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 (with-eval-after-load "ivy"
   (setq ivy-display-style 'fancy)
   (setq ivy-use-virtual-buffers t)
+  (define-key ivy-minibuffer-map (kbd "C-w") 'ivy-occur)
   (define-key ivy-minibuffer-map [escape] 'minibuffer-keyboard-quit)
   (define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line)
   (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-previous-line))

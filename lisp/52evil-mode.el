@@ -374,7 +374,6 @@ kill internal buffers too."
         (bookmark-bmenu-mode       . evilified)
         (calendar-mode             . evilified)
         (dired-mode                . evilified)
-        (ivy-occur-grep-mode       . evilified)
         (inferior-emacs-lisp-mode  . emacs)
         (inf-ruby-mode             . emacs)
         (log-edit-mode             . emacs)
@@ -766,16 +765,15 @@ to replace the symbol under cursor"
   (evil-vimish-fold-mode +1))
 
 ;;; ivy-occur-grep-mode
-(with-eval-after-load "evil-evilified-state"
-  (with-eval-after-load 'ivy
-    (evilified-state-evilify-map ivy-occur-grep-mode-map
-      :mode ivy-occur-grep-mode
-      :bindings
-      (kbd "gr") 'ivy-occur-revert-buffer
-      (kbd "j")  'ivy-occur-next-line
-      (kbd "k")  'ivy-occur-previous-line
-      (kbd "h")  'evil-backward-char
-      (kbd "l")  'evil-forward-char)))
+(with-eval-after-load 'ivy
+  (paloryemacs/set-leader-keys-for-major-mode 'ivy-occur-grep-mode
+    "w" 'ivy-wgrep-change-to-wgrep-mode))
+
+(with-eval-after-load 'wgrep
+  (evil-define-key 'normal wgrep-mode-map ",," 'wgrep-finish-edit)
+  (evil-define-key 'normal wgrep-mode-map ",c" 'wgrep-finish-edit)
+  (evil-define-key 'normal wgrep-mode-map ",a" 'wgrep-abort-changes)
+  (evil-define-key 'normal wgrep-mode-map ",k" 'wgrep-abort-changes))
 
 ;;; ibuffer
 (with-eval-after-load 'ibuffer
