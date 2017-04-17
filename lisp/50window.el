@@ -437,7 +437,7 @@ You can use arrow-keys or HJKL.
      ("f" paloryemacs/toggle-full-window "full-window")
      ("F" toggle-frame-maximized "frame max")
      ("M-f" toggle-frame-fullscreen "frame fullscreen")
-     ("" nil "cancel")
+     ("<escape>" nil "cancel")
      ("q" nil "cancel"))))
 
 ;;;
