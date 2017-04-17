@@ -236,7 +236,8 @@
 ;;   ("r" git-gutter:revert-hunk)
 ;;   ("p" git-gutter:popup-hunk)
 ;;   ("R" git-gutter:set-start-revision)
-;;   ("q" nil :color blue)
+;;   ("<escape>" nil :color blue)
+;;   ("q"        nil :color blue)
 ;;   ("Q" (progn (git-gutter-mode -1)
 ;;               ;; git-gutter-fringe doesn't seem to
 ;;               ;; clear the markup right away

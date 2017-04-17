@@ -645,6 +645,7 @@ Headline^^            Visit entry^^               Filter^^                    Da
       ("cq" org-agenda-clock-cancel)
 
       ;; Other
+      ("<escape>" nil :exit t)
       ("q" nil :exit t)
       ("gr" org-agenda-redo)
       ("." org-agenda-goto-today)
@@ -832,6 +833,7 @@ _h_tml    ^ ^        _A_SCII:
     ("H" (paloryemacs/hot-expand "<H"))
     ("A" (paloryemacs/hot-expand "<A"))
     ("<" self-insert-command "ins")
+    ("<escape>" nil :exit t)
     ("o" nil "quit")))
 
 (defun paloryemacs/hot-expand (str)

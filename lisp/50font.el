@@ -60,7 +60,8 @@
 ;;   ("+" text-scale-increase "in")
 ;;   ("-" text-scale-decrease "out")
 ;;   ("0" (text-scale-adjust 0) "reset")
-;;   ("q" nil "quit" :color blue))
+;;   ("<escape>" nil "quit" :color blue)
+;;   ("q"        nil "quit" :color blue))
 
 
 ;;; old method, which will cause Chinese font can scale when English scale.

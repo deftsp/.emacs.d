@@ -1267,6 +1267,7 @@ such character is found, following options are shown:
   ("g"  projectile-find-file-dwim-other-window   "file dwim")
   ("d"  projectile-find-dir-other-window         "dir")
   ("b"  projectile-switch-to-buffer-other-window "buffer")
+  ("<escape>"  nil                               "cancel" :color blue)
   ("q"  nil                                      "cancel" :color blue))
 
 (autoload 'projectile-project-root "projectile" "Retrieves the root directory of a project if available." t nil)
@@ -1306,7 +1307,8 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   ("X"   projectile-cleanup-known-projects)
   ("z"   projectile-cache-current-file)
   ("`"   hydra-projectile-other-window/body "other window")
-  ("q"   nil "cancel" :color blue))
+  ("<escape>" nil "cancel" :color blue)
+  ("q"        nil "cancel" :color blue))
 
 ;;; xmsi-math-symbols-input.el
 (autoload 'xmsi-mode "xmsi-math-symbols-input" "Load xmsi minor mode for inputting math (Unicode) symbols." t)

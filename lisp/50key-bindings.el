@@ -580,7 +580,8 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
     ("t" toggle-truncate-lines "truncate")
     ("w" whitespace-mode "whitespace")
     ("s" paloryemacs/toggle-saturate-rainbow-delimiters-color "strong color")
-    ("q" nil "cancel")))
+    ("<escape>" nil "cancel")
+    ("q"        nil "cancel")))
 
 ;; Launcher Keymap
 ;; (define-prefix-command 'launcher-map)
@@ -632,7 +633,8 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
    ("r" (browse-url "http://www.reddit.com/r/emacs/") "reddit")
    ("w" (browse-url "http://www.emacswiki.org/") "emacswiki")
    ("s" shell "shell")
-   ("q" nil "cancel")))
+   ("<escape>" nil "cancel")
+   ("q"        nil "cancel")))
 
 ;;; high frequency key
 (key-chord-define-global
@@ -658,7 +660,8 @@ undo-tree-_u_ndo undo-tree-_r_edo
    ("t" hydra-toggle/body "toggle")
    ("u" undo-tree-undo nil :color red)
    ("r" undo-tree-redo nil :color red)
-   ("q" nil "cancel")))
+   ("<escape>" nil "cancel")
+   ("q"        nil "cancel")))
 
 (defun paloryemacs/switch-to-scratch ()
   (interactive)
@@ -688,8 +691,8 @@ undo-tree-_u_ndo undo-tree-_r_edo
       (goto-char mk))))
 
 (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
-                           :color pink
-                           :post (deactivate-mark))
+                                     :color pink
+                                     :post (deactivate-mark))
   "
   ^_k_^     _d_elete    _s_tring
 _h_   _l_   _o_k        _y_ank
@@ -712,7 +715,8 @@ _h_   _l_   _o_k        _y_ank
   ("s" string-rectangle nil)
   ("p" kill-rectangle nil)
   ("o" nil nil)
-  ("q" nil nil))
+  ("<escape>" nil nil)
+  ("q"        nil nil))
 
 (global-set-key (kbd "C-x SPC") 'hydra-rectangle/body)
 
@@ -729,7 +733,9 @@ _v_ariable _u_ser-option
   ("c" apropos-command)
   ("l" apropos-library)
   ("u" apropos-user-option)
-  ("e" apropos-value))
+  ("e" apropos-value)
+  ("<escape>" nil nil)
+  ("q"        nil nil))
 
 (defhydra hydra-dumb-jump (:color pink)
   "Dumb Jump"
@@ -737,6 +743,7 @@ _v_ariable _u_ser-option
   ("b" dumb-jump-back "Back")
   ("l" dumb-jump-quick-look "Look")
   ("e" dumb-jump-go-prefer-external "External")
-  ("q" nil "Quit" :color blue))
+  ("<escape>" nil "Quit" :color blue)
+  ("q"        nil "Quit" :color blue))
 
 (provide '50key-bindings)
