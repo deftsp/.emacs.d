@@ -125,6 +125,7 @@
       (kbd "l")   'diredp-find-file-reuse-dir-buffer
       (kbd "i")   'dired-omit-mode
       (kbd "I")   'dired-maybe-insert-subdir
+      (kbd "/")   'dired-narrow
       (kbd "M-r") 'dired-do-redisplay
       (kbd "r")   ' wdired-change-to-wdired-mode
       (kbd "gg")  'paloryemacs/dired-back-to-top
