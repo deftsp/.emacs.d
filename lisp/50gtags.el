@@ -66,7 +66,7 @@
 (add-hook 'python-mode-hook 'counsel-gtags-mode)
 
 (with-eval-after-load 'counsel-gtags
-  (dolist (mode '(python-mode))
+  (dolist (mode '(python-mode c-mode))
     (paloryemacs/set-leader-keys-for-major-mode mode
       "gc" 'counsel-gtags-create-tags
       "gd" 'counsel-gtags-dwim
