@@ -92,8 +92,8 @@
   (aggressive-indent-mode -1))
 
 (when (fboundp 'global-aggressive-indent-mode)
-  (dolist (l '(c-mode-common-hook ; all CC Mode modes for common initializations
-               scheme-mode-hook
+  (dolist (l '(scheme-mode-hook
+               ;; c-mode-common-hook ; all CC Mode modes for common initializations
                emacs-lisp-mode-hook))
     (add-to-list l #'paloryemacs/turn-on-aggressive-indent-mode)))
 
