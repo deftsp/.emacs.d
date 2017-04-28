@@ -848,6 +848,16 @@ _h_tml    ^ ^        _A_SCII:
           (hydra-org-template/body)
         (self-insert-command 1)))))
 
+;;; finding all tags
+(defun paloryemacs/counsel-org-tags ()
+  (interactive)
+  (let* ((tag-l (org-map-entries (lambda () org-scanner-tags) t 'agenda))
+         (tags (sort (delete-dups (apply 'append (delete-dups tag-l))) 'string<)))
+    (ivy-read "Org Tag View: "
+              tags
+              :action (lambda (tag) (org-tags-view nil tag))
+              :caller 'paloryemacs/org-tags)))
+
 ;;; indent
 ;; C-x C-i or C-x Tab to call indent-rigidly
 ;; (define-key indent-rigidly-map (kbd "H-h") 'indent-rigidly-left)
