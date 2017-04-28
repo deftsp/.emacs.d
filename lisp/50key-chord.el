@@ -49,49 +49,47 @@
     ("\\j" . "|")))
 
 ;; maybe try to bind a key chord to a key map is a good idea
-(eval-after-load "key-chord"
-  '(progn
-     (key-chord-mode 1)
-     (setq key-chord-one-key-delay 0.16)   ; default 0.2
-     (setq key-chord-two-keys-delay 0.08)  ; default 0.1
+(with-eval-after-load "key-chord"
+  (key-chord-mode 1)
+  (setq key-chord-one-key-delay 0.16)   ; default 0.2
+  (setq key-chord-two-keys-delay 0.08)  ; default 0.1
 
-     (dolist (combo banish-shift-key-combo)
-       (key-chord-define-global (car combo) (cdr combo)))
+  (dolist (combo banish-shift-key-combo)
+    (key-chord-define-global (car combo) (cdr combo)))
 
-     (key-chord-define-global "''" 'paloryemacs/apostrophe-key-chord)
-     (key-chord-define-global ";b" 'switch-to-buffer)
-     (key-chord-define-global ";r" 'helm-resume)
-     (key-chord-define-global ";s" 'helm-occur)
-     (key-chord-define-global ";f" 'helm-for-files)
-     (key-chord-define-global ";d" 'dired-jump-other-window)
+  (key-chord-define-global "''" 'paloryemacs/apostrophe-key-chord)
+  (key-chord-define-global ";b" 'switch-to-buffer)
+  (key-chord-define-global ";r" 'helm-resume)
+  (key-chord-define-global ";s" 'helm-occur)
+  (key-chord-define-global ";f" 'helm-for-files)
+  (key-chord-define-global ";d" 'dired-jump-other-window)
 
-     (key-chord-define-global "bf" 'ibuffer)
-     (key-chord-define-global "cx" ctl-x-map)
+  (key-chord-define-global "bf" 'ibuffer)
+  (key-chord-define-global "cx" ctl-x-map)
 
-     (key-chord-define-global "jk" 'company-complete)
+  (key-chord-define-global "jk" 'company-complete)
 
-     ;; (key-chord-define-global "jc" 'avy-goto-char)
-     (key-chord-define-global "jc" 'avy-goto-char-timer)
-     (key-chord-define-global "jw" 'avy-goto-word-1)
-     (key-chord-define-global "jl" 'avy-goto-line)
+  ;; (key-chord-define-global "jc" 'avy-goto-char)
+  (key-chord-define-global "jc" 'avy-goto-char-timer)
+  (key-chord-define-global "jw" 'avy-goto-word-1)
+  (key-chord-define-global "jl" 'avy-goto-line)
 
-     (key-chord-define-global "/s" 'save-buffer)
-     (key-chord-define-global "##" 'server-edit)
+  (key-chord-define-global "/s" 'save-buffer)
+  (key-chord-define-global "##" 'server-edit)
 
-     (key-chord-define-global "hd" 'helm-dash)
+  (key-chord-define-global "hd" 'helm-dash)
 
-     (key-chord-define-global ";g" 'magit-status)
-     (key-chord-define-global "mg" 'magit-grep)
-     (key-chord-define-global "ms" 'mark-sexp)
-     (key-chord-define-global ";w" 'paloryemacs/w3m-switch-to-buffer)
+  (key-chord-define-global ";g" 'magit-status)
+  (key-chord-define-global "mg" 'magit-grep)
+  (key-chord-define-global "ms" 'mark-sexp)
+  (key-chord-define-global ";w" 'paloryemacs/w3m-switch-to-buffer)
 
-     (key-chord-define-global "YY" 'browse-kill-ring)
+  (key-chord-define-global "YY" 'browse-kill-ring)
 
 
-     (key-chord-define-global ",r" 'paloryemacs/recursive-edit-save-window-config)
-     (key-chord-define-global ",c" 'org-capture)
-     (key-chord-define-global ".c" 'calendar)
-     (key-chord-define-global "VV" 'other-window)))
+  (key-chord-define-global ",r" 'paloryemacs/recursive-edit-save-window-config)
+  (key-chord-define-global ",c" 'org-capture)
+  (key-chord-define-global "VV" 'other-window))
 
 
 (provide '50key-chord)
