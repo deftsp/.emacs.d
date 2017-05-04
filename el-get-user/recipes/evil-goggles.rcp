@@ -1,0 +1,5 @@
+(:name evil-goggles
+       :description "Display visual hint on evil edit operations"
+       :type github
+       :pkgname "edkolev/evil-goggles"
+       :depends (evil))

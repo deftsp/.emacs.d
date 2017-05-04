@@ -764,6 +764,21 @@ to replace the symbol under cursor"
 
   (evil-vimish-fold-mode +1))
 
+;;; evil-goggles
+(require 'evil-goggles nil t)
+(with-eval-after-load 'evil-goggles
+  (require 'diff-mode) ;; load diff-* faces
+  ;; default is 'region, you can try `isearch-fail
+  (setq evil-goggles-default-face 'region) ; 'highlight
+  (setq evil-goggles-faces-alist `((evil-delete . diff-removed)
+                                   (evil-yank . diff-changed)
+                                   (evil-paste-after . diff-added)
+                                   (evil-paste-before . diff-added)))
+  (setq evil-goggles-duration 0.100) ;; default is 0.200
+  ;; to disable the hint when yanking or deleting
+  (setq evil-goggles-blacklist `(evil-yank evil-delete))
+  (evil-goggles-mode +1))
+
 ;;; ivy-occur-grep-mode
 (with-eval-after-load 'ivy
   (paloryemacs/set-leader-keys-for-major-mode 'ivy-occur-grep-mode
