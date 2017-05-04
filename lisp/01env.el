@@ -179,10 +179,11 @@
 ;; are using a shell in a terminal.
 ;; The "exec-path" is used by emacs itself to find programs it needs for its features, such as spell
 ;; checking, file compression, compiling, grep, diff, etc.
-(eval-after-load "exec-path-from-shell"
-  '(when (memq window-system '(mac ns))
-     (add-to-list 'exec-path-from-shell-variables "GOROOT")
-     (exec-path-from-shell-initialize)))
+(with-eval-after-load 'exec-path-from-shell
+  (when (memq window-system '(mac ns))
+    (add-to-list 'exec-path-from-shell-variables "GOROOT")
+    (setq exec-path-from-shell-check-startup-files nil)
+    (exec-path-from-shell-initialize)))
 
 (when (eq system-type 'darwin)
   (setenv "INFOPATH" (concat (expand-file-name "~/share/info:") (getenv "INFOPATH"))))
