@@ -685,6 +685,7 @@ vi style of % jumping to matching brace."
           ("\\.djhtml\\'"                       . web-mode)
           ("\\.tpl$"                            . web-mode)
           ("\\.php$"                            . web-mode)
+          ("/rfc[0-9]+\\.txt\\'"                . irfc-mode)
           ("\\.lrc$"                            . emms-lyrics-mode)))
 
 ;;; Since emacs 22 we can use magic-mode-alist to set mode
