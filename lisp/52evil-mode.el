@@ -374,6 +374,7 @@ kill internal buffers too."
         (bookmark-bmenu-mode       . evilified)
         (calendar-mode             . evilified)
         (dired-mode                . evilified)
+        (irfc-mode                 . evilified)
         (inferior-emacs-lisp-mode  . emacs)
         (inf-ruby-mode             . emacs)
         (log-edit-mode             . emacs)

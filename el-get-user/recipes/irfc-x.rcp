@@ -1,0 +1,5 @@
+(:name irfc-x
+       :description "Extension of irfc.el"
+       :type github
+       :pkgname "kai2nenobu/irfc-x"
+       :depends (irfc))

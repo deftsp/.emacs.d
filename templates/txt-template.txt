@@ -1,3 +1,0 @@
- -*- mode: txt -*-
- Time-stamp: <2012-10-19 18:23:43 Shihpin Tseng>
- coding: utf-8-unix; -*-

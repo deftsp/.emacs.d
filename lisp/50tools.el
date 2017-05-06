@@ -1,8 +1,5 @@
 ;;;; some useful packages
 
-(autoload 'rfc "rfc-util"
-  "Prompt for an rfc number and display it in a new buffer." t)
-
 ;;; (require 'pulse-settings)
 
 
@@ -1410,6 +1407,22 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 ;;       minimap-hide-scroll-bar t)
 ;; (when (fboundp 'minimap-mode)
 ;;   (minimap-mode +1))
+
+
+;;; rfc
+(setq irfc-directory "~/Documents/RFC")
+(setq irfc-assoc-mode t)
+(with-eval-after-load "evil-evilified-state"
+  (with-eval-after-load "irfc"
+    (evilified-state-evilify irfc-mode irfc-mode-map
+      (kbd "gp")  'irfc-page-goto
+      (kbd "gn")   'irfc-page-next
+      (kbd "gp")   'irfc-page-prev
+      (kbd "gv")   'irfc-visit
+      (kbd "j")   nil
+      (kbd "k")   nil
+      (kbd "h")   nil
+      (kbd "l")   nil)))
 
 ;;; reveal-in-finder
 ;; https://github.com/kaz-yos/elisp
