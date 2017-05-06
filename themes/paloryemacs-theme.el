@@ -111,7 +111,7 @@
    '(highlight ((t (:foreground unspecified :foreground "#66e2e2" :background "#454545")))) ; use `unspecified' or `nil' both ok
 
    ;; link
-   '(link ((t (:foreground "#33b2ef" :background unspecified :underline "#33b2ef" weight bold))))
+   '(link ((t (:foreground "#33b2ef" :background unspecified :underline t :weight bold))))
    '(link-visited ((t (:foreground "violet" :background unspecified :underline t :weight normal))))
 
    ;; info
@@ -267,6 +267,12 @@
    '(diredp-write-priv ((t (:foreground "yellow" :background unspecified))))
    '(diredp-exec-priv ((t (:foreground "red" :background unspecified))))
    '(diredp-flag-mark-line ((t (:foreground "white" :background "blue4"))))
+
+   ;; irfc
+   '(irfc-head-name-face ((t (:foreground "violet" :underline nil))))
+   '(irfc-head-number-face ((t (:foreground "violet"))))
+   '(irfc-reference-face ((t (:foreground "burlywood"))))
+
 
    ;; ace-jump-mode
    `(ace-jump-face-background
