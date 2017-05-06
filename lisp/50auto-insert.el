@@ -9,7 +9,7 @@
 ;;(define-auto-insert "\\.el" lisp-template.el")
 ;;(define-auto-insert "\\.c" "c-template.c")
 ;;(define-auto-insert "\\.cpp" "cpp-template.cpp")
-(define-auto-insert "\\.txt" "txt-template.txt")
+(define-auto-insert "\\.txt" "text-template.txt")
 ;;(define-auto-insert "\\.php" "my-php-template.php")
 (define-auto-insert "\\.asm" "asm-template.asm")
 ;;(define-auto-insert "\\.scm" "scheme-template.scm")
