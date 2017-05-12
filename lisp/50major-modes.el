@@ -4,6 +4,9 @@
 (with-eval-after-load 'imenu
   (setq imenu-max-items 40))
 
+(global-set-key (kbd "C-c j") 'counsel-imenu)
+
+
 ;;; auto insert the matching closing delimiter
 ;; electric pair mode is a global minor mode
 ;; (electric-pair-mode 1) ; use smartparens instead
