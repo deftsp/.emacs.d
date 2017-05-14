@@ -114,7 +114,6 @@
           (holiday-fixed 4 1   "愚人节")
           (holiday-fixed 5 1   "劳动节")
           (holiday-fixed 5 4   "青年节")
-          (holiday-float 5 0 2 "母亲节")
           (holiday-fixed 6  1  "儿童节")
           (holiday-float 6 0 3 "父亲节")
           (holiday-fixed 9  10 "教师节")
