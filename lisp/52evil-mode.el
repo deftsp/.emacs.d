@@ -630,7 +630,7 @@ to replace the symbol under cursor"
     (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode))
 
   (setq evil-snipe-scope 'line)
-
+  (push '(?\[ "[[{(]") evil-snipe-aliases)
   (evil-snipe-mode +1)
   ;; replaces evil-mode's f/F/t/T/;/, with snipe
   (evil-snipe-override-mode +1))
