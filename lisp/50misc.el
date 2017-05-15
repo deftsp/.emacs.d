@@ -1280,11 +1280,16 @@ This command is to be used interactively."
 
 ;;; undo-tree
 (global-undo-tree-mode t)
-(eval-after-load "undo-tree"
-  '(progn
-     (setq-default undo-tree-visualizer-timestamps t)
-     (setq-default undo-tree-visualizer-diff t)
-     (setq undo-tree-mode-lighter " UT")))
+(global-set-key (kbd "s-z") 'undo-tree-undo)
+(global-set-key (kbd "s-Z") 'undo-tree-redo)
+;;; TODO: cancel it when YoudaoDict able to change option-z global shortcut.
+(global-set-key (kbd "H-z") 'undo-tree-undo)
+(global-set-key (kbd "H-Z") 'undo-tree-redo)
+(with-eval-after-load "undo-tree"
+  (setq-default undo-tree-visualizer-timestamps t)
+  (setq-default undo-tree-visualizer-diff t)
+  (setq undo-tree-mode-lighter " UT"))
+
 
 
 (with-eval-after-load "evil-evilified-state"
