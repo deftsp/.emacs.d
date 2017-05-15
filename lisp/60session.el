@@ -128,8 +128,9 @@
 (require 'workgroups2 nil t)
 
 (setq wg-session-load-on-start t  ; set to nil, if you emacs started as daemon
-      wg-session-file (expand-file-name "~/.emacs.d/workgroups")
-      wg-prefix-key (kbd "C-c w")
+      wg-session-file (expand-file-name "~/.emacs.d/workgroups2")
+      ;; wg-prefix-key (kbd "C-c w")
+      wg-prefix-key (kbd "s-w")
       wg-emacs-exit-save-behavior 'save
       wg-workgroups-mode-exit-save-behavior 'save)
 
