@@ -236,6 +236,7 @@ recover evil state to it, otherwiser change to evil-emacs-state."
    "." 'evil-avy-goto-word-or-subword-1
    "l" 'evil-avy-goto-line
    "c" 'evil-avy-goto-char
+   "SPC" 'evil-avy-goto-subword-0
    "w" 'evil-avy-goto-subword-0))
 
 ;;;
@@ -448,22 +449,23 @@ kill internal buffers too."
 
 ;;; evil-nerd-commenter
 (with-eval-after-load "evil"
-  (setq evilnc-hotkey-comment-operator (kbd "SPC SPC"))
   (require 'evil-nerd-commenter nil t))
 
 (global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
+(define-key evil-normal-state-map "gc" 'evilnc-comment-operator)
+(define-key evil-normal-state-map "gy" 'evilnc-copy-and-comment-lines)
 
 (paloryemacs/set-leader-keys
-  "SPC" 'evilnc-comment-operator ; alternative ";"
-  "y"   'counsel-yank-pop
-  "cc"  'evilnc-copy-and-comment-lines
-  "ci"  'evilnc-toggle-invert-comment-line-by-line
-  "cl"  'evilnc-comment-or-uncomment-lines
-  "cp"  'evilnc-comment-or-uncomment-paragraphs
-  "cr"  'comment-or-uncomment-region
-  "ct"  'evilnc-quick-comment-or-uncomment-to-the-line
-  "cy"  'evilnc-copy-and-comment-lines
-  "cv"  'evilnc-toggle-invert-comment-line-by-line)
+  ";"   'evilnc-comment-operator
+  "ci" 'evilnc-comment-or-uncomment-lines
+  "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
+  "cc" 'evilnc-copy-and-comment-lines
+  "cp" 'evilnc-comment-or-uncomment-paragraphs
+  "cr" 'comment-or-uncomment-region
+  "cv" 'evilnc-toggle-invert-comment-line-by-line
+  "."  'evilnc-copy-and-comment-operator)
+
 
 ;;; evil-indent-plus wihch replace evil-indent-textobject
 (with-eval-after-load "evil"

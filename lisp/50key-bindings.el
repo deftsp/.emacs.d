@@ -86,8 +86,8 @@
   "1"   'delete-other-windows
   "2"   (kbd "C-x 2")
   "3"   "\C-x3"
-  ;; "b"   'bookmark-map
   ;; ";" "cc" "ci", "cl", "cp", "cr", "ct", "cy" and "cv" are used by evil-nerd-commenter
+  "au"  'undo-tree-visualize
   "cs"  'paloryemacs/evil-change-symbol-in-defun
   "ch"  'crosshairs-mode
   "fj"  'dired-jump
@@ -109,8 +109,6 @@
   "jJ" 'evil-avy-goto-char-2
   "jl" 'evil-avy-goto-line
   "jw" 'evil-avy-goto-word-or-subword-1
-  ;; "ll" are used by evil-nerd-commenter
-  ;; "lr"  'paloryemacs/linum-relative-toggle
   "n"   'evil-narrow-indirect
   "p"   'hydra-projectile/body   ; 'projectile-commander
   "P"   'hydra-projectile-other-window/body
@@ -120,7 +118,6 @@
   "ss"  'helm-swoop
   "sS"  'helm-multi-swoop
   "s C-s" 'helm-multi-swoop-all
-  ;; "ut"  'undo-tree-visualize
   ;; "vr"  'vr/replace
   ;; "vq"  'vr/query-replace
   ;; "vm"  'vr/mc-mark
@@ -131,7 +128,8 @@
   "xz"  'suspend-frame
   "xvv" 'vc-next-action
   "xv=" 'vc-diff
-  "xvl" 'vc-print-log)
+  "xvl" 'vc-print-log
+  "y"   'counsel-yank-pop)
 
 ;; errors ---------------------------------------------------------------------
 (paloryemacs/set-leader-keys
