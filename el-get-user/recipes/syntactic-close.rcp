@@ -1,0 +1,4 @@
+(:name syntactic-close
+       :description "Insert closing delimiter"
+       :type github
+       :pkgname "emacs-berlin/syntactic-close")

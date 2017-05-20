@@ -1448,6 +1448,10 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 (define-key global-map (kbd "M-g x") 'dumb-jump-go-prefer-external)
 (define-key global-map (kbd "M-g o") 'dumb-jump-go-prefer-external-other-window)
 
+;;; syntactic-close
+(global-set-key (kbd ")") 'syntactic-close)
+
+
 ;;; nyan-mode
 ;; https://github.com/TeMPOraL/nyan-mode
 ;; (nyan-mode +1)
