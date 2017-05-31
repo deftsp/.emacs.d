@@ -378,6 +378,11 @@ to `reorganize-frame', otherwise set to `other-frame'."
       '(("google"   . "http://www.google.com/search?q=")
         ("baidu"    . "http://www.baidu.com/s?wd=")))
 
+;; https://emacs.stackexchange.com/questions/33064/fontify-broken-links-in-org-mode
+(org-link-set-parameters
+ "file"
+ :face (lambda (path) (if (file-exists-p path) 'org-link 'org-warning)))
+
 ;;; org-mac-link
 
 
