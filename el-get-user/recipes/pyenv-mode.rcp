@@ -1,0 +1,5 @@
+(:name pyenv-mode
+       :description "Simple and fast flashcards for Emacs"
+       :type github
+       :pkgname "proofit404/pyenv-mode"
+       :depends (pythonic))

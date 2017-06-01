@@ -169,7 +169,9 @@
   ;; "g*" 'anaconda-mode-go-back
   "vs" 'pyenv-mode-set
   "vu" 'pyenv-mode-unset
-  "V"  'pyvenv-workon)
+  "Va" 'pyvenv-activate
+  "Vd" 'pyvenv-deactivate
+  "Vw" 'pyvenv-workon)
 
 (paloryemacs/set-leader-keys-for-major-mode 'cython-mode
   "hh" 'anaconda-mode-view-doc
