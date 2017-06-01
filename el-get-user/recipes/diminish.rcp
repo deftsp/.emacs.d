@@ -1,0 +1,4 @@
+(:name diminish
+       :description "An Emacs package that diminishes the amount of space taken on the mode line by the names of minor modes."
+       :type github
+       :pkgname "myrjola/diminish.el")

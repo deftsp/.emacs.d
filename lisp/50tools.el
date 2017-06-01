@@ -1318,30 +1318,60 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 
 ;;; diminish
 (when (require 'diminish nil 'noerror)
-  (eval-after-load "abbrev"
-    '(diminish 'abbrev-mode "Abv"))
-  (eval-after-load "subword"
-    '(diminish 'subword-mode " sw"))
-  (eval-after-load "yasnippet"
-    '(diminish 'yas-minor-mode " Y"))
-  (eval-after-load "paredit"
-    '(diminish 'paredit-mode " π"))
-  (eval-after-load "eldoc"
-    '(diminish 'eldoc-mode ""))
-  (eval-after-load "xmsi-math-symbols-input"
-    '(diminish 'xmsi-mode ""))
-  (eval-after-load "color-identifiers-mode"
-    '(diminish 'color-identifiers-mode))
-  (eval-after-load "elisp-slime-nav"
-    '(diminish 'elisp-slime-nav-mode))
-  (eval-after-load "guide-key"
-    '(diminish 'guide-key-mode))
-  (eval-after-load "auto-complete"
-    '(diminish 'auto-complete-mode))
-  (eval-after-load "golden-ratio"
-    '(diminish 'golden-ratio-mode " φ"))
-  (eval-after-load "highlight-symbol"
-    '(diminish 'highlight-symbol-mode " H")))
+  (with-eval-after-load "abbrev"
+    (diminish 'abbrev-mode " Abv"))
+  (with-eval-after-load "subword"
+    (diminish 'subword-mode " sw"))
+  (with-eval-after-load "yasnippet"
+    (diminish 'yas-minor-mode " Y"))
+  (with-eval-after-load "paredit"
+    (diminish 'paredit-mode " π"))
+  (with-eval-after-load "eldoc"
+    (diminish 'eldoc-mode ""))
+  (with-eval-after-load "xmsi-math-symbols-input"
+    (diminish 'xmsi-mode ""))
+  (with-eval-after-load "color-identifiers-mode"
+    (diminish 'color-identifiers-mode))
+  (with-eval-after-load "elisp-slime-nav"
+    (diminish 'elisp-slime-nav-mode))
+  (with-eval-after-load "guide-key"
+    (diminish 'guide-key-mode))
+  (with-eval-after-load "auto-complete"
+    (diminish 'auto-complete-mode))
+  (with-eval-after-load "golden-ratio"
+    (diminish 'golden-ratio-mode " φ"))
+  (with-eval-after-load "workgroups2"
+    (diminish 'workgroups-mode))
+  (with-eval-after-load "smartparens"
+    (diminish 'smartparens-mode " p"))
+  (with-eval-after-load "evil-lispy"
+    (diminish 'evil-lispy-mode))
+  (with-eval-after-load "company"
+    (diminish 'company-mode))
+  (with-eval-after-load "evil-snipe"
+    (diminish 'evil-snipe-local-mode))
+  (with-eval-after-load "outline"
+    (diminish 'outline-minor-mode))
+  (with-eval-after-load "simple"
+    (diminish 'auto-fill-function " F"))
+  (with-eval-after-load "anzu"
+    (diminish 'anzu-mode))
+  (with-eval-after-load "evil-goggles"
+    (diminish 'evil-goggles-mode))
+  (with-eval-after-load "which-key"
+    (diminish 'which-key-mode))
+  (with-eval-after-load "aggressive-indent"
+    (diminish 'aggressive-indent-mode " I"))
+  (with-eval-after-load "evil-vimish-fold"
+    (diminish 'evil-vimish-fold-mode))
+  (with-eval-after-load "autorevert"
+    (diminish 'auto-revert-mode))
+  (with-eval-after-load "undo-tree"
+    (diminish 'undo-tree-mode))
+  (with-eval-after-load "beacon"
+    (diminish 'beacon-mode))
+  (with-eval-after-load "highlight-symbol"
+    (diminish 'highlight-symbol-mode)))
 
 ;;; goto last change
 (global-set-key (kbd "C-x C-/") 'goto-last-change)
