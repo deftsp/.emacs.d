@@ -234,6 +234,9 @@ Argument REPLACE String used to replace the matched strings in the buffer.
   (define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line)
   (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-previous-line))
 
+(paloryemacs/set-leader-keys
+  "rl"   'ivy-resume)
+
 ;; https://oremacs.com/2016/06/27/ivy-push-view/
 ;; (global-set-key (kbd "s-v") 'ivy-push-view)
 ;;; delete view, delete many views at once by pressing C-M-m[M-RET] (ivy-call)
