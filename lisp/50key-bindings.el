@@ -94,6 +94,7 @@
   "dp"  'dash-at-point
   "dP"  'dash-at-point-with-docset
   "ff"  'find-file-at-point             ; counsel-file-file
+  "fel" 'counsel-find-library
   "fL"  'counsel-locate
   "fb"  'counsel-bookmark
   "fT"  'hydra-transparency/body
@@ -198,9 +199,13 @@
 
 ;; help -----------------------------------------------------------------------
 (paloryemacs/set-leader-keys
+  "?"   'counsel-descbinds
   "hdb" 'describe-bindings
   "hdc" 'describe-char
   "hdf" 'describe-function
+  "hdF" 'counsel-describe-face
+  "hi"  'counsel-info-lookup-symbol
+  "hdm" 'describe-mode
   "hdk" 'describe-key
   ;; "hdl" 'spacemacs/describe-last-keys
   "hdp" 'describe-package
@@ -210,7 +215,6 @@
   "hdv" 'describe-variable
   ;; "hI"  'spacemacs/report-issue
   "hn"  'view-emacs-news)
-
 
 (paloryemacs/set-leader-keys
   "w1"  'delete-other-windows
