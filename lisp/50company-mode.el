@@ -71,6 +71,7 @@
     ;; use intero which will auto config company
     ;; (push 'company-cabal backends)
     ;; (push 'company-ghc backends)
+    (push 'company-ghci backends)
     (set (make-local-variable 'company-backends) backends)))
 
 (add-hook 'haskell-cabal-mode-hook 'paloryemacs/company-haskell-cabal-mode-setup)

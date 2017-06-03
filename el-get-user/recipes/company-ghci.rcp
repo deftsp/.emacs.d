@@ -1,0 +1,5 @@
+(:name company-ghci
+       :description "company backend which uses the current ghci process."
+       :type github
+       :pkgname "juiko/company-ghci"
+       :depends (company-mode haskell-mode))
