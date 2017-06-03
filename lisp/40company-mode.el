@@ -1,4 +1,4 @@
-;;; 50company-mode.el ---                            -*- lexical-binding: t; -*-
+;;; 40company-mode.el ---                            -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014  Shihpin Tseng
 
@@ -26,6 +26,9 @@
   (when (fboundp 'company-flx-mode)
     (setq company-flx-limit 600)
     (company-flx-mode +1))
+
+  (when (fboundp 'company-quickhelp-mode)
+    (company-quickhelp-mode +1))
 
   (define-key company-active-map (kbd "M-j") 'company-select-next)
   (define-key company-active-map (kbd "M-k") 'company-select-previous)
@@ -64,21 +67,6 @@
     (push 'company-cmake backends)
     (set (make-local-variable 'company-backends) backends)))
 
-
-(add-hook 'haskell-mode-hook 'paloryemacs/company-haskell-mode-setup)
-(defun paloryemacs/company-haskell-mode-setup ()
-  (let ((backends paloryemacs/company-prog-common-backends))
-    ;; use intero which will auto config company
-    ;; (push 'company-cabal backends)
-    ;; (push 'company-ghc backends)
-    (push 'company-ghci backends)
-    (set (make-local-variable 'company-backends) backends)))
-
-(add-hook 'haskell-cabal-mode-hook 'paloryemacs/company-haskell-cabal-mode-setup)
-(defun paloryemacs/company-haskell-cabal-mode-setup ()
-  (let ((backends paloryemacs/company-prog-common-backends))
-    (push 'company-cabal backends)
-    (set (make-local-variable 'company-backends) backends)))
 
 (add-hook 'scheme-mode-hook 'paloryemacs/company-scheme-mode-setup)
 (defun paloryemacs/company-scheme-mode-setup ()
@@ -129,5 +117,5 @@
 
 
 
-(provide '50company-mode)
-;;; 50company-mode.el ends here
+(provide '40company-mode)
+;;; 40company-mode.el ends here

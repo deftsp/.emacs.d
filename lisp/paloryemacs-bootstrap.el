@@ -18,6 +18,7 @@
 (require '13org-mode)
 
 (require '23powerline)
+(require '40company-mode)
 (when (eq system-type 'gnu/linux)
   (require '42ecb.el))
 
@@ -33,7 +34,6 @@
 
 (require '50clojure)
 (require '50common-lisp)
-(require '50company-mode)
 (require '50completion)
 (require '50css)
 (require '50dictionary)
