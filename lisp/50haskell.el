@@ -9,6 +9,36 @@
 ;; (add-to-list 'Info-default-directory-list "~/.emacs.d/site-lisp/haskell-mode/")
 ;; (require 'haskell-mode-autoloads)
 
+;; dante: https://github.com/jyp/dante, a fork of Intero mode.
+(defvar paloryemacs/haskell-completion-backend 'ghc-mod
+  "Completion backend used by company.
+Available options are `intero', `ghc-mod'. ")
+
+(defun paloryemacs-haskell//setup-completion-backend ()
+  "Conditionally setup haskell completion backend."
+  (pcase haskell-completion-backend
+    (`ghc-mod (spacemacs-haskell//setup-ghc-mod))
+    (`intero (spacemacs-haskell//setup-intero))))
+
+(setq haskell-modes '(haskell-mode literate-haskell-mode))
+
+
+(add-hook 'haskell-mode-hook 'paloryemacs/company-haskell-mode-setup)
+(defun paloryemacs/company-haskell-mode-setup ()
+  (let ((backends paloryemacs/company-prog-common-backends))
+    (case paloryemacs/haskell-completion-backend
+      ('intero (push 'company-intero backends))
+      ('ghc-mod (push 'company-ghc backends)))
+    (set (make-local-variable 'company-backends) backends)))
+
+(add-hook 'haskell-cabal-mode-hook 'paloryemacs/company-haskell-cabal-mode-setup)
+(defun paloryemacs/company-haskell-cabal-mode-setup ()
+  (let ((backends paloryemacs/company-prog-common-backends))
+    (push 'company-cabal backends)
+    (set (make-local-variable 'company-backends) backends)))
+
+
+
 (defvar paloryemacs/haskell-mode-doc-map nil
   "Keymap for documentation commands. Bound to a prefix key.")
 
@@ -62,16 +92,15 @@
   (define-key paloryemacs/haskell-mode-doc-map (kbd "d") 'inferior-haskell-find-haddock)
   (define-key paloryemacs/haskell-mode-doc-map (kbd "C-d") 'inferior-haskell-find-haddock))
 
-(eval-after-load 'flycheck
-  '(progn
-     (setq flycheck-ghc-language-extensions '("DeriveFunctor"
-                                              "DeriveDataTypeable"
-                                              "DeriveFoldable"
-                                              "DeriveTraversable"
-                                              "TemplateHaskell"))
-     ;; (require 'flycheck-hdevtools nil t) ; not works with cabal sandbox for now
-     ;; flycheck-haskell: Improved Haskell support for Flycheck
-     (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup)))
+(with-eval-after-load 'flycheck
+  (setq flycheck-ghc-language-extensions '("DeriveFunctor"
+                                           "DeriveDataTypeable"
+                                           "DeriveFoldable"
+                                           "DeriveTraversable"
+                                           "TemplateHaskell"))
+  ;; (require 'flycheck-hdevtools nil t) ; not works with cabal sandbox for now
+  ;; flycheck-haskell: Improved Haskell support for Flycheck
+  (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
 
 ;;; ghc-mod
 ;; install ghc-mod
@@ -95,7 +124,64 @@
 ;; (setq ghc-hlint-options '("--ignore=Use camelCase"
 ;;                           "--ignore=Unused LANGUAGE pragma"))
 
+(paloryemacs/declare-prefix-for-mode 'haskell-mode "mg" "haskell/navigation")
+(paloryemacs/declare-prefix-for-mode 'haskell-mode "ms" "haskell/repl")
+(paloryemacs/declare-prefix-for-mode 'haskell-mode "mc" "haskell/cabal")
+(paloryemacs/declare-prefix-for-mode 'haskell-mode "mh" "haskell/documentation")
+(paloryemacs/declare-prefix-for-mode 'haskell-mode "md" "haskell/debug")
+(paloryemacs/declare-prefix-for-mode 'haskell-mode "mr" "haskell/refactor")
+(paloryemacs/declare-prefix-for-mode 'haskell-interactive-mode "ms" "haskell/repl")
+(paloryemacs/declare-prefix-for-mode 'haskell-cabal-mode "ms" "haskell/repl")
+
+(defun paloryemacs-haskell//setup-intero ()
+  (intero-mode +1)
+  (dolist (mode haskell-modes)
+    (paloryemacs/set-leader-keys-for-major-mode mode
+      "hi" 'intero-info
+      "ht" 'intero-type-at
+      "hT" 'haskell-intero/insert-type
+      "rs" 'intero-apply-suggestions
+      "sb" 'intero-repl-load))
+
+  (dolist (mode (cons 'haskell-cabal-mode haskell-modes))
+    (paloryemacs/set-leader-keys-for-major-mode mode
+      "sc"  nil
+      "ss"  'haskell-intero/display-repl
+      "sS"  'haskell-intero/pop-to-repl))
+
+  (dolist (mode (append haskell-modes '(haskell-cabal-mode intero-repl-mode)))
+    (paloryemacs/declare-prefix-for-mode mode "mi" "haskell/intero")
+    (paloryemacs/set-leader-keys-for-major-mode mode
+      "ic"  'intero-cd
+      "id"  'intero-devel-reload
+      "ik"  'intero-destroy
+      "il"  'intero-list-buffers
+      "ir"  'intero-restart
+      "it"  'intero-targets))
+
+  (evil-define-key '(insert normal) intero-mode-map
+    (kbd "M-.") 'intero-goto-definition))
+
+
+(defun paloryemacs-haskell//setup-ghc-mod ()
+  (ghc-init)
+  (dolist (mode haskell-modes)
+    (paloryemacs/declare-prefix-for-mode mode "mm" "haskell/ghc-mod")
+    (paloryemacs/set-leader-keys-for-major-mode mode
+      "mt" 'ghc-insert-template-or-signature
+      "mu" 'ghc-initial-code-from-signature
+      "ma" 'ghc-auto
+      "mf" 'ghc-refine
+      "me" 'ghc-expand-th
+      "mn" 'ghc-goto-next-hole
+      "mp" 'ghc-goto-prev-hole
+      "m>" 'ghc-make-indent-deeper
+      "m<" 'ghc-make-indent-shallower
+      "hi" 'ghc-show-info
+      "ht" 'ghc-show-type)))
+
 ;;; haskell mode hook
+(add-hook 'haskell-mode-local-vars-hook #'#'paloryemacs-haskell//setup-completion-backend)
 (add-hook 'haskell-mode-hook 'paloryemacs/haskell-mode-setup)
 (defun paloryemacs/haskell-mode-setup ()
   ;; (let ((checkers '(haskell-ghc  haskell-stack-ghc)))
@@ -104,13 +190,7 @@
   ;;         (add-to-list 'flycheck-disabled-checkers checker))
   ;;     (setq flycheck-disabled-checkers checkers)))
 
-  ;; (when (fboundp 'intero-mode)
-  ;;   (intero-mode +1))
-
-  ;; (flycheck-add-next-checker 'intero '(warning . haskell-hlint))
-
-  ;; (ghc-init) ; ghc-mod
-
+  ;; use only internal indentation system from haskell
   (if (fboundp 'electric-indent-local-mode)
       (electric-indent-local-mode -1))
 
@@ -122,11 +202,16 @@
   (subword-mode +1)
   ;; (capitalized-words-mode +1)
 
-  (when (fboundp 'structured-haskell-mode)
-    (structured-haskell-mode t))
+  ;; it doesn’t play very well with evil
+  ;; (when (fboundp 'structured-haskell-mode)
+  ;;   (structured-haskell-mode t))
 
   (smartparens-mode -1)
   (smartparens-strict-mode -1)
+
+  ;; https://github.com/commercialhaskell/hindent
+  (when (fboundp 'hindent-mode)
+    (hindent-mode +1))
 
   ;; lambda symbol can safely replace '\' because they are the same length and it wont screw up indentation
   (and (fboundp 'decode-char) ; prefer single-width Unicode font for lambda
@@ -210,7 +295,6 @@
     "hi" 'ghc-show-info
     "ht" 'ghc-show-type))
 
-(add-hook 'haskell-mode-local-vars-hook #'paloryemacs-haskell//setup-ghc-mod)
 
 
 ;; this gets called by outline to determine the level. Just use the length of the whitespace
@@ -302,11 +386,10 @@ See also`haskell-check'."
 ;; el-get install structured-haskell-mode
 ;; (require 'shm nil t)
 (autoload 'shm/case-split "shm-case-split" "Prompt for a type then do a case split based on it" t)
-(eval-after-load "shm"
-  '(progn
-     (define-key shm-map (kbd "C-c S") 'shm/case-split) ; "C-c C-s"
-     (define-key shm-map (kbd "M-a") 'shm/goto-parent)
-     (define-key shm-map (kbd "M-e") 'shm/goto-parent-end)))
+(with-eval-after-load "shm"
+  (define-key shm-map (kbd "C-c S") 'shm/case-split) ; "C-c C-s"
+  (define-key shm-map (kbd "M-a") 'shm/goto-parent)
+  (define-key shm-map (kbd "M-e") 'shm/goto-parent-end))
 
 (defun paloryemacs/shm-evil-join ()
   "send the node of the next line up one line."
@@ -406,23 +489,23 @@ See also`haskell-check'."
 
 ;;; align regexp
 ;; (require 'align nil t)
-(eval-after-load "align"
-  '(progn (add-to-list 'align-rules-list
-                       '(haskell-types
-                         (regexp . "\\(\\s-+\\)\\(::\\|∷\\|=\\)\\s-+")
-                         (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))
-          (add-to-list 'align-rules-list
-                       '(haskell-assignment
-                         (regexp . "\\(\\s-+\\)=\\s-+")
-                         (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))
-          (add-to-list 'align-rules-list
-                       '(haskell-arrows
-                         (regexp . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
-                         (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))
-          (add-to-list 'align-rules-list
-                       '(haskell-left-arrows
-                         (regexp . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")
-                         (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))))
+(with-eval-after-load 'align
+  (add-to-list 'align-rules-list
+               '(haskell-types
+                 (regexp . "\\(\\s-+\\)\\(::\\|∷\\|=\\)\\s-+")
+                 (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))
+  (add-to-list 'align-rules-list
+               '(haskell-assignment
+                 (regexp . "\\(\\s-+\\)=\\s-+")
+                 (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))
+  (add-to-list 'align-rules-list
+               '(haskell-arrows
+                 (regexp . "\\(\\s-+\\)\\(->\\|→\\)\\s-+")
+                 (modes quote (haskell-mode haskell-c-mode literate-haskell-mode))))
+  (add-to-list 'align-rules-list
+               '(haskell-left-arrows
+                 (regexp . "\\(\\s-+\\)\\(<-\\|←\\)\\s-+")
+                 (modes quote (haskell-mode haskell-c-mode literate-haskell-mode)))))
 
 ;;;
 ;; http://hub.darcs.net/ivanm/emacs-d/raw-file/site-lisp/haskell-settings.el
@@ -469,6 +552,18 @@ point."
         (error "No SCC at point")))))
 
 
+(defun paloryemacs/haskell-interactive-bring ()
+  "Bring up the interactive mode for this session without
+         switching to it."
+  (interactive)
+  (let* ((session (haskell-session))
+         (buffer (haskell-session-interactive-buffer session)))
+    (display-buffer buffer)))
+
+(defun paloryemacs/haskell-process-do-type-on-prev-line ()
+  (interactive)
+  (haskell-process-do-type 1))
+
 (paloryemacs/set-leader-keys-for-major-mode 'haskell-mode
   "gg"  'haskell-mode-jump-to-def-or-tag
   "gi"  'haskell-navigate-imports
@@ -476,16 +571,9 @@ point."
 
   "F"   'haskell-mode-stylish-buffer
 
-  ;; "sb"  'intero-repl-load
   "sb"  'haskell-process-load-or-reload
-
   "sc"  'haskell-interactive-mode-clear
-
-  ;; "ss"  'spacemacs/haskell-interactive-bring
-  ;; "ss"  'haskell-intero/display-repl
-  "ss"  'haskell-interactive-bring
-
-  ;; "sS"  'haskell-intero/pop-to-repl
+  "ss"  'paloryemacs/haskell-interactive-bring
   "sS"  'haskell-interactive-switch
 
   "ca"  'haskell-process-cabal
@@ -496,15 +584,10 @@ point."
   "hd"  'inferior-haskell-find-haddock
   "hh"  'hoogle
   "hH"  'haskell-hoogle-lookup-from-local
-
-  ;; "hi"  'intero-info
   "hi"  'haskell-process-do-info
-
-  ;; "ht"  'intero-type-at
-  ;; "ht"  'haskell-process-do-type
-  "ht"  'haskell-mode-show-type-at
-
-  ;; "hT"  'haskell-intero/insert-type
+  "ht"  'haskell-process-do-type
+  "hT"  'haskell-intero/insert-type
+  "hT"  'paloryemacs/haskell-process-do-type-on-prev-line
   "hy"  'hayoo
 
   "da"  'haskell-debug/abandon
@@ -520,22 +603,23 @@ point."
   "dt"  'haskell-debug/trace
 
   "E"    #'hasky-extensions
-
-  "U"   'haskell-mode-find-uses)
+  "U"   'haskell-mode-find-uses
+  "rb" 'hlint-refactor-refactor-buffer
+  "rr" 'hlint-refactor-refactor-at-point)
 
 (with-eval-after-load "evil-evilified-state"
   (evilified-state-evilify haskell-debug-mode haskell-debug-mode-map
-  "RET" 'haskell-debug/select
-  "a" 'haskell-debug/abandon
-  "b" 'haskell-debug/break-on-function
-  "c" 'haskell-debug/continue
-  "d" 'haskell-debug/delete
-  "n" 'haskell-debug/next
-  "N" 'haskell-debug/previous
-  "p" 'haskell-debug/previous
-  "r" 'haskell-debug/refresh
-  "s" 'haskell-debug/step
-  "t" 'haskell-debug/trace))
+    "RET" 'haskell-debug/select
+    "a" 'haskell-debug/abandon
+    "b" 'haskell-debug/break-on-function
+    "c" 'haskell-debug/continue
+    "d" 'haskell-debug/delete
+    "n" 'haskell-debug/next
+    "N" 'haskell-debug/previous
+    "p" 'haskell-debug/previous
+    "r" 'haskell-debug/refresh
+    "s" 'haskell-debug/step
+    "t" 'haskell-debug/trace))
 
 ;; Switch back to editor from REPL
 (paloryemacs/set-leader-keys-for-major-mode 'haskell-interactive-mode
@@ -556,8 +640,7 @@ point."
   "n"   'haskell-cabal-next-subsection
   "p"   'haskell-cabal-previous-subsection
   "sc"  'haskell-interactive-mode-clear
-  ;; "ss"  'spacemacs/haskell-interactive-bring
-  "ss"  'haskell-interactive-bring
+  "ss"  'paloryemacs/haskell-interactive-bring
   "sS"  'haskell-interactive-switch
   "N"   'haskell-cabal-next-section
   "P"   'haskell-cabal-previous-section
@@ -571,15 +654,6 @@ point."
   (evil-define-key 'normal haskell-interactive-mode-map
     (kbd "RET") 'haskell-interactive-mode-return))
 
-;; (dolist (mode '(haskell-mode haskell-cabal-mode intero-repl-mode))
-;;   (paloryemacs/declare-prefix-for-mode mode "mi" "haskell/intero")
-;;   (paloryemacs/set-leader-keys-for-major-mode mode
-;;     "ic"  'intero-cd
-;;     "id"  'intero-devel-reload
-;;     "ik"  'intero-destroy
-;;     "il"  'intero-list-buffers
-;;     "ir"  'intero-restart
-;;     "it"  'intero-targets))
 
 ;; Intero functions
 (defun haskell-intero/insert-type ()
@@ -603,6 +677,15 @@ point."
 
 ;; (with-eval-after-load "intero"
 ;;   (advice-add 'intero-repl-load :around #'haskell-intero//preserve-focus))
+
+;;; hindent
+(with-eval-after-load 'hindent
+  (paloryemacs/set-leader-keys-for-major-mode 'haskell-mode "f" 'hindent-reformat-decl))
+
+;;
+(paloryemacs|define-jump-handlers haskell-mode haskell-mode-jump-to-def-or-tag)
+(paloryemacs|define-jump-handlers intero-mode intero-goto-definition)
+
 
 ;;; misc
 ;; (require 'yesod-devel-mode nil t)

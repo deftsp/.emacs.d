@@ -1,0 +1,4 @@
+(:name hlint-refactor
+       :type github
+       :description "Apply HLint suggestions"
+       :pkgname "mpickering/hlint-refactor-mode")

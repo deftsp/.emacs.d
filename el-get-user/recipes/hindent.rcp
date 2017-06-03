@@ -1,0 +1,6 @@
+(:name hindent
+       :type github
+       :description "Indent haskell code using the \"hindent\" program"
+       :pkgname "commercialhaskell/hindent"
+       :load-path "elisp"
+       :depends (cl-lib))
