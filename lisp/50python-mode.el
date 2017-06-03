@@ -259,6 +259,12 @@
 ;;; pdb
 (setq gud-pdb-command-name "ipdb3")
 
+(paloryemacs|define-jump-handlers python-mode)
+(paloryemacs|define-jump-handlers cython-mode anaconda-mode-goto)
+
+(add-to-list 'paloryemacs-jump-handlers-python-mode
+             '(anaconda-mode-find-definitions :async t))
+
 
 (provide '50python-mode)
 ;;; 50python-mode.el ends here

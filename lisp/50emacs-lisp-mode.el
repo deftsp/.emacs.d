@@ -79,6 +79,15 @@
 
 (add-hook 'emacs-lisp-mode-hook 'paloryemacs/imenu-elisp-init)
 
+;;;
+(paloryemacs|define-jump-handlers emacs-lisp-mode)
+(paloryemacs|define-jump-handlers lisp-interaction-mode)
+
+
+(dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
+  (let ((jumpl (intern (format "paloryemacs-jump-handlers-%S" mode))))
+    (add-to-list jumpl 'elisp-slime-nav-find-elisp-thing-at-point)))
+
 
 (provide '50emacs-lisp-mode)
 ;;; 50emacs-lisp-mode.el ends here
