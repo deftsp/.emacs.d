@@ -131,7 +131,17 @@
     ;; add Evil bindings to accept/cancel commit
     (evil-define-key 'normal with-editor-mode-map
       (kbd "RET") 'with-editor-finish
-      [escape] 'with-editor-cancel)))
+      [escape] 'with-editor-cancel)
+
+    (when dotpaloryemacs-major-mode-leader-key
+      (add-hook 'with-editor-mode-hook 'evil-normalize-keymaps)
+      (let ((mm-key dotpaloryemacs-major-mode-leader-key))
+        (dolist (state '(normal motion))
+          (evil-define-key state with-editor-mode-map
+            (concat mm-key mm-key) 'with-editor-finish
+            (concat mm-key "a")    'with-editor-cancel
+            (concat mm-key "c")    'with-editor-finish
+            (concat mm-key "k")    'with-editor-cancel))))))
 
 ;;; evil-magit
 ;; https://github.com/justbur/evil-magit
