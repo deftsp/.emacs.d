@@ -15,6 +15,7 @@
 (require '05cc-mode)
 (require 'core-keybindings)
 (require 'core-jump)
+(require 'core-funcs)
 (require '13cedet)
 (require '13org-mode)
 

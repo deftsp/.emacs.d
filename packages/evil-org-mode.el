@@ -147,28 +147,21 @@ Will work on both org-mode and any mode that accepts plain html."
 (paloryemacs/set-leader-keys-for-major-mode 'org-mode
   "'" 'org-edit-special
   "c" 'org-capture
-  "d" 'org-deadline
-  "C" 'evil-org-recompute-clocks
-
-  "D" 'org-insert-drawer
+  "Cc" 'org-clock-cancel
+  "Ci" 'org-clock-in
+  "Co" 'org-clock-out
+  "dd" 'org-deadline
+  "ds" 'org-schedule
+  "dt" 'org-time-stamp
+  "dT" 'org-time-stamp-inactive
   "ee" 'org-export-dispatch
-  "f" 'org-set-effort
-  "P" 'org-set-property
-  ":" 'org-set-tags
 
   "a" 'org-agenda
-  "b" 'org-tree-to-indirect-buffer
-  "A" 'org-archive-subtree
-  "l" 'evil-org-open-links ;'org-open-at-point
-  "T" 'org-show-todo-tree
 
-  "." 'org-time-stamp
-  "!" 'org-time-stamp-inactive
-
-  ;; headings
-  "hi" 'org-insert-heading-after-current
-  "hI" 'org-insert-heading
-  "hs" 'org-insert-subheading
+  "Tt" 'org-show-todo-tree
+  "Ti" 'org-toggle-inline-images
+  "TV" 'space-doc-mode
+  "Tx" 'org-toggle-latex-fragment
 
   ;; More cycling options (timestamps, headlines, items, properties)
   "L" 'org-shiftright
@@ -183,10 +176,17 @@ Will work on both org-mode and any mode that accepts plain html."
   "C-S-k" 'org-shiftcontrolup
 
   ;; Subtree editing
-  "Sl" 'org-demote-subtree
-  "Sh" 'org-promote-subtree
-  "Sj" 'org-move-subtree-down
-  "Sk" 'org-move-subtree-up
+  "sa" 'org-archive-subtree
+  "sb" 'org-tree-to-indirect-buffer
+  "sh" 'org-promote-subtree
+  "sj" 'org-move-subtree-down
+  "sk" 'org-move-subtree-up
+  "sl" 'org-demote-subtree
+  "sn" 'org-narrow-to-subtree
+  "sN" 'widen
+  "sr" 'org-refile
+  "ss" 'org-sparse-tree
+  "sS" 'org-sort
 
   ;; tables
   "ta" 'org-table-align
@@ -216,43 +216,57 @@ Will work on both org-mode and any mode that accepts plain html."
   "tto" 'org-table-toggle-coordinate-overlays
   "tw" 'org-table-wrap-region
 
+
   ;; Multi-purpose keys
   (or dotpaloryemacs-major-mode-leader-key ",") 'org-ctrl-c-ctrl-c
   "*" 'org-ctrl-c-star
   "RET" 'org-ctrl-c-ret
   "-" 'org-ctrl-c-minus
-  "^" 'org-sort
-  "/" 'org-sparse-tree
-
-  "I" 'org-clock-in
-  "n" 'org-narrow-to-subtree
-  "N" 'widen
-  "O" 'org-clock-out
-  "q" 'org-clock-cancel
-  "R" 'org-refile
-  "s" 'org-schedule
-
-  ;; insertion of common elements
+  "#" 'org-update-statistics-cookies
+  ;; insertion
   "ia" 'org-attach
-  "il" 'org-insert-link
+  "id" 'org-insert-drawer
+  "ie" 'org-set-effort
   "if" 'org-footnote-new
-  "ik" 'paloryemacs/insert-keybinding-org
+  "ih" 'org-insert-heading
+  "iH" 'org-insert-heading-after-current
+  "iK" 'spacemacs/insert-keybinding-org
+  "il" 'org-insert-link
+  "ip" 'org-set-property
+  "is" 'org-insert-subheading
+  "it" 'org-set-tags
 
-  ;; image
-  "it"  'org-toggle-inline-images
-  "ii"  'paloryemacs/org-insert-image
-  "ir"  'org-redisplay-inline-images
-
-  ;; images and other link types have no commands in org mode-line
-  ;; could be inserted using yasnippet?
   ;; region manipulation
   "xb" (paloryemacs|org-emphasize paloryemacs/org-bold ?*)
   "xc" (paloryemacs|org-emphasize paloryemacs/org-code ?~)
   "xi" (paloryemacs|org-emphasize paloryemacs/org-italic ?/)
+  "xo" 'org-open-at-point
   "xr" (paloryemacs|org-emphasize paloryemacs/org-clear ? )
   "xs" (paloryemacs|org-emphasize paloryemacs/org-strike-through ?+)
   "xu" (paloryemacs|org-emphasize paloryemacs/org-underline ?_)
   "xv" (paloryemacs|org-emphasize paloryemacs/org-verbose ?=))
+
+;; Add global evil-leader mappings. Used to access org-agenda
+;; functionalities – and a few others commands – from any other mode.
+(paloryemacs/declare-prefix "ao" "org")
+(paloryemacs/declare-prefix "aok" "clock")
+(paloryemacs/set-leader-keys
+  ;; org-agenda
+  "ao#" 'org-agenda-list-stuck-projects
+  "ao/" 'org-occur-in-agenda-files
+  "aoa" 'org-agenda-list
+  "aoc" 'org-capture
+  "aoe" 'org-store-agenda-views
+  "aoki" 'org-clock-in-last
+  "aokj" 'org-clock-jump-to-current-clock
+  "aoko" 'org-clock-out
+  "aol" 'org-store-link
+  "aom" 'org-tags-view
+  "aoo" 'org-agenda
+  "aos" 'org-search-view
+  "aot" 'org-todo-list
+  ;; SPC C- capture/colors
+  "Cc" 'org-capture)
 
 ;; normal & insert state shortcuts.
 (mapc #'(lambda (state)

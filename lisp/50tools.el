@@ -1423,9 +1423,14 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   (add-to-list 'which-key-key-replacement-alist '("RET" . "⏎"))
   (add-to-list 'which-key-key-replacement-alist '("DEL" . "⇤"))
   (add-to-list 'which-key-key-replacement-alist '("SPC" . "␣"))
-  (setq which-key-popup-type 'side-window)
-  (setq which-key-idle-delay 1.0)
-  (setq which-key-show-operator-state-maps t)
+  (setq which-key-popup-type 'minibuffer
+        which-key-max-description-length 32
+        which-key-echo-keystrokes 0.02
+        which-key-allow-evil-operators t
+        which-key-idle-delay 1.0
+        which-key-sort-order 'which-key-key-order-alpha
+        which-key-show-operator-state-maps t)
+
   (which-key-mode +1))
 
 ;;; hexcolour

@@ -804,8 +804,15 @@ Headline^^            Visit entry^^               Filter^^                    Da
   (paloryemacs/set-leader-keys-for-major-mode 'org-agenda-mode
     ":" 'org-agenda-set-tags
     "a" 'org-agenda
-    "d" 'org-agenda-deadline
-    "f" 'org-agenda-set-effort
+    "Cc" 'org-agenda-clock-cancel
+    "Ci" 'org-agenda-clock-in
+    "Co" 'org-agenda-clock-out
+    "dd" 'org-agenda-deadline
+    "ds" 'org-agenda-schedule
+    "ie" 'org-agenda-set-effort
+    "ip" 'org-agenda-set-property
+    "it" 'org-agenda-set-tags
+    "sr" 'org-agenda-refile
     "I" 'org-agenda-clock-in
     "O" 'org-agenda-clock-out
     "P" 'org-agenda-set-property

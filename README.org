@@ -14,6 +14,7 @@
    #+END_EXAMPLE
 ** Credits
    In general, this config is a combination of lots of sources, including:
+   - [[https://github.com/syl20bnr/spacemacs][Spacemacs]]
    - [[http://www.emacswiki.org/][EmacsWiki]]
    - [[http://www.emacswiki.org][What the .emacs.d!?]]
    - [[http://ergoemacs.org/emacs/emacs.html][Xah Emacs Tutorial]]

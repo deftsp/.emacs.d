@@ -62,25 +62,6 @@
   "oa" 'org-agenda
   "oc" 'org-capture)
 
-;; Add global evil-leader mappings. Used to access org-agenda
-;; functionalities – and a few others commands – from any other mode.
-(paloryemacs/declare-prefix "ao" "org")
-(paloryemacs/declare-prefix "aok" "clock")
-(paloryemacs/set-leader-keys
-  "ao#" 'org-agenda-list-stuck-projects
-  "ao/" 'org-occur-in-agenda-files
-  "aoa" 'org-agenda-list
-  "aoc" 'org-capture
-  "aoe" 'org-store-agenda-views
-  "aoki" 'org-clock-in-last
-  "aokj" 'org-clock-jump-to-current-clock
-  "aoko" 'org-clock-out
-  "aol" 'org-store-link
-  "aom" 'org-tags-view
-  "aoo" 'org-agenda
-  "aos" 'org-search-view
-  "aot" 'org-todo-list)
-
 
 (paloryemacs/set-leader-keys
   "1"   'delete-other-windows
@@ -150,8 +131,9 @@
 
 
 (paloryemacs/set-leader-keys
-  ;; "TAB" 'spacemacs/alternate-buffer
+  "TAB" 'paloryemacs/alternate-buffer
   "bb"  'ivy-switch-buffer
+  "bB"  'ibuffer
   "bd"  'kill-this-buffer
   ;; "be"  'spacemacs/safe-erase-buffer
   ;; "bh"  'spacemacs/home
@@ -217,10 +199,11 @@
   "hn"  'view-emacs-news)
 
 (paloryemacs/set-leader-keys
+  "w TAB"  'paloryemacs/alternate-window
   "w1"  'delete-other-windows
   "w2"  (kbd "C-x 2")
   "w3"  "\C-x3"
-  ;; "wb"  'spacemacs/switch-to-minibuffer-window
+  "wb"  'paloryemacs/switch-to-minibuffer-window
   ;; "wd"  'spacemacs/delete-window
   ;; "wt"  'spacemacs/toggle-current-window-dedication
   "wf"  'follow-mode

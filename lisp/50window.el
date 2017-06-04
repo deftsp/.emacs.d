@@ -318,6 +318,13 @@
 ;;   ;; (add-to-list 'popwin:special-display-config)
 ;;   (popwin-mode 1))
 
+(defun paloryemacs/switch-to-minibuffer-window ()
+  "switch to minibuffer window (if active)"
+  (interactive)
+  (when (active-minibuffer-window)
+    (select-window (active-minibuffer-window))))
+
+
 ;;; toggle full window
 (defun paloryemacs/toggle-full-window()
   "Toggle the full view of selected window"
