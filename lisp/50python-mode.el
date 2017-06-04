@@ -1,4 +1,4 @@
-;;; 50python-mode.el ---
+;;; 49python-mode.el ---
 
 ;; Copyright (C) 2012  Shihpin Tseng
 
@@ -147,7 +147,18 @@
   (define-key inferior-python-mode-map (kbd "C-l") 'comint-clear-buffer)
   (define-key inferior-python-mode-map (kbd "C-r") 'comint-history-isearch-backward))
 
+
+(paloryemacs/declare-prefix-for-mode 'python-mode "mc" "execute")
+(paloryemacs/declare-prefix-for-mode 'python-mode "md" "debug")
+(paloryemacs/declare-prefix-for-mode 'python-mode "mh" "help")
+(paloryemacs/declare-prefix-for-mode 'python-mode "mg" "goto")
+(paloryemacs/declare-prefix-for-mode 'python-mode "ms" "send to REPL")
+(paloryemacs/declare-prefix-for-mode 'python-mode "mr" "refactor")
+(paloryemacs/declare-prefix-for-mode 'python-mode "mv" "pyenv")
+(paloryemacs/declare-prefix-for-mode 'python-mode "mV" "pyvenv")
+
 (paloryemacs/set-leader-keys-for-major-mode 'python-mode
+  "'"  'python-start-or-switch-repl
   "cc" 'paloryemacs/python-execute-file
   "cC" 'paloryemacs/python-execute-file-focus
   "db" 'python-toggle-breakpoint
@@ -206,8 +217,22 @@
 (defun python-start-or-switch-repl ()
   "Start and/or switch to the REPL."
   (interactive)
-  (python-shell-switch-to-shell)
-  (evil-insert-state))
+  (let ((shell-process
+         (or (python-shell-get-process)
+             ;; `run-python' has different return values and different
+             ;; errors in different emacs versions. In 24.4, it throws an
+             ;; error when the process didn't start, but in 25.1 it
+             ;; doesn't throw an error, so we demote errors here and
+             ;; check the process later
+             (with-demoted-errors "Error: %S"
+               ;; in Emacs 24.5 and 24.4, `run-python' doesn't return the
+               ;; shell process
+               (call-interactively #'run-python)
+               (python-shell-get-process)))))
+    (unless shell-process
+      (error "Failed to start python shell properly"))
+    (pop-to-buffer (process-buffer shell-process))
+    (evil-insert-state)))
 
 (defun paloryemacs/python-execute-file (arg)
   "Execute a python script in a shell."
