@@ -94,10 +94,10 @@ FUN function callback"
 ;; normal state shortcuts
 (evil-define-key 'normal evil-org-mode-map
   (kbd "TAB") 'org-cycle
-  "H" 'org-shiftleft
-  "J" 'org-shiftdown
-  "K" 'org-shiftup
-  "L" 'org-shiftright
+  ;; "H" 'org-shiftleft
+  ;; "J" 'org-shiftdown
+  ;; "K" 'org-shiftup
+  ;; "L" 'org-shiftright
   "$" 'org-end-of-line ; smarter behaviour on headlines etc.
   "^" 'org-beginning-of-line ; ditto
   "-" 'org-cycle-list-bullet
