@@ -151,9 +151,4 @@
 ;;   (paloryemacs/set-font))
 
 (provide '50font)
-
-;; Local Variables:
-;; eval: (mmm-mode 1)
-;; End:
-
 ;;; 50font.el ends here
