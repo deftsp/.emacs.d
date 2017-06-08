@@ -60,7 +60,7 @@
       evil-normal-state-tag   (propertize "« ☢ »" 'face 'paloryemacs/evil-normal-tag)
       evil-insert-state-tag   (propertize "« I »" 'face 'paloryemacs/evil-insert-tag)
       evil-motion-state-tag   (propertize "« M »" 'face 'paloryemacs/evil-motion-tag)
-      evil-visual-state-tag   (propertize "« ∞ »" 'face 'paloryemacs/evil-visual-tag)
+      evil-visual-state-tag   (propertize "« V »" 'face 'paloryemacs/evil-visual-tag)
       evil-operator-state-tag (propertize "« O »" 'face 'paloryemacs/evil-operator-tag)
       evil-replace-state-tag  (propertize "« R »" 'face 'paloryemacs/evil-replace-tag)
       evil-lisp-state-tag     (propertize "« L »" 'face 'paloryemacs/evil-lisp-tag)
