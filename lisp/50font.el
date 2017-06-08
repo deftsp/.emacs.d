@@ -41,8 +41,10 @@
            (fontsizes-list (cfs--get-fontsizes profile-step)))
       (cfs--select-profile profile-name)
       (cfs--set-font fontsizes-list)
-      (cfs--save-profile-step profile-name profile-step)
-      (message cfs--minibuffer-echo-string))))
+      (cfs--save-config-file profile-name profile-step)
+      (redisplay t)
+      (cfs-message t cfs--minibuffer-echo-string))))
+
 
 (defun paloryemacs/cfs-set-symbol-fonts (fontsizes-list)
   ;; (set-fontset-font t 'symbol "Inconsolata" nil 'append)
