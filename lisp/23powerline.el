@@ -26,6 +26,11 @@ the modeline")
   "Powerline workgroups face."
   :group 'powerline)
 
+(defface powerline-ace-window-path-face
+  '((t (:background "#174652" :foreground "#0a3540")))
+  "Powerline ace window path face."
+  :group 'powerline)
+
 (defface powerline-vc-face
   '((t (:background "#849c10" :foreground "#0a3540")))
   "Powerline vc face."
@@ -326,18 +331,27 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
              (face3 (if active 'powerline-active3 'powerline-inactive2))
              (vc-face (if active 'powerline-vc-face 'powerline-inactive2))
              (workgroups-face (if active 'powerline-workgroups-face 'powerline-inactive2))
+             (ace-window-path-face (if active
+                                       'powerline-ace-window-path-face
+                                     'powerline-inactive2))
              (anzu-face (if active 'powerline-anzu-face 'powerline-inactive2))
              (buffer-id-face (if active 'powerline-buffer-id-face 'powerline-inactive1))
              (which-func-face (if active 'which-func 'powerline-inactive1))
-             (file-base-info-face (if active 'powerline-file-base-info-face 'powerline-inactive2))
+             (file-base-info-face (if active
+                                      'powerline-file-base-info-face
+                                    'powerline-inactive2))
              (evil-face (powerline-evil-face active))
+             (zigzag-right (intern (format "powerline-zigzag-%s"
+                                           (cdr powerline-default-separator-dir))))
              (separator-left (intern (format "powerline-%s-%s"
                                              powerline-default-separator
                                              (car powerline-default-separator-dir))))
              (separator-right (intern (format "powerline-%s-%s"
                                               powerline-default-separator
                                               (cdr powerline-default-separator-dir))))
-             (lhs `(,(powerline-evil-tag evil-face)
+             (lhs `(,(powerline-ace-window-path ace-window-path-face 'r)
+                    ,(funcall zigzag-right ace-window-path-face evil-face)
+                    ,(powerline-evil-tag evil-face)
                     ,@(let ((anzu-info (powerline-anzu anzu-face 'l))
                             (vc-info (paloryemacs/powerline-vc vc-face 'r)))
 
@@ -363,19 +377,6 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                                (list (funcall separator-left
                                               evil-face
                                               file-base-info-face)))))
-
-
-                    ;; ,@(let ((vc-info (paloryemacs/powerline-vc vc-face 'r)))
-                    ;;     (if vc-info
-                    ;;         (list (funcall separator-left evil-face vc-face)
-                    ;;               vc-info
-                    ;;               (powerline-git-state-mark vc-face)
-                    ;;               (funcall separator-left vc-face file-base-info-face))
-                    ;;       (list (funcall separator-left
-                    ;;                      evil-face
-                    ;;                      file-base-info-face))))
-
-
                     ,(powerline-raw mode-line-front-space file-base-info-face)
                     ,(paloryemacs/powerline-client file-base-info-face)
                     ,(paloryemacs/powerline-remote file-base-info-face)
@@ -409,8 +410,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
              (rhs (list
                    (funcall separator-right face2 workgroups-face)
                    (powerline-workgroup workgroups-face)
-                   (powerline-raw ": "  workgroups-face)
-                   (powerline-ace-window-path workgroups-face 'r)
+                   (powerline-raw " "  workgroups-face)
 
                    (funcall separator-right workgroups-face face1)
                    (powerline-raw "  " face1)

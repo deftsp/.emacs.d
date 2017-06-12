@@ -88,6 +88,7 @@
    `(powerline-buffer-id-face ((t (:background ,base02 :foreground "#fefefe" :inherit mode-line))))
    `(powerline-vc-face ((t (:background ,base01 :foreground "#f4bb66" :inherit mode-line))))
    `(powerline-workgroups-face ((t (:background "#778899" :foreground "#0a3540" :inherit mode-line))))
+   `(powerline-ace-window-path-face ((t (:background "#174652" :foreground "#0a3540" :inherit mode-line))))
    `(powerline-mode-line-modified-face ((t (:foreground "#ee1280" :background unspecified))))
 
    ;; evil-snipe
