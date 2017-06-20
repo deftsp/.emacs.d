@@ -301,6 +301,12 @@ C-u C-u -> Start swiper without any arguments (stock behavior)"
     (16 (swiper)) ; C-u C-u
     (t  (swiper (modi/get-symbol-at-point)))))
 
+;; ace-pinyin
+(require 'ace-pinyin nil t)
+(with-eval-after-load 'ace-pinyin
+  (setq ace-pinyin-simplified-chinese-only-p t)
+  (setq ace-pinyin-use-avy t)
+  (ace-pinyin-global-mode +1))
 
 ;;; smex
 (with-eval-after-load "smex"

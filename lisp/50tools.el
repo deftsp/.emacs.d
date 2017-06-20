@@ -1370,6 +1370,8 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
     (diminish 'undo-tree-mode))
   (with-eval-after-load "beacon"
     (diminish 'beacon-mode))
+  (with-eval-after-load "ace-pinyin"
+    (diminish 'ace-pinyin-mode))
   (with-eval-after-load "highlight-symbol"
     (diminish 'highlight-symbol-mode)))
 

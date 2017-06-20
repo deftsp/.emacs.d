@@ -1,0 +1,4 @@
+(:name evil-find-char-pinyin
+       :type github
+       :description "Evil's f/F/t/T/evil-snipe commands with Pinyin support"
+       :pkgname "cute-jumper/evil-find-char-pinyin")

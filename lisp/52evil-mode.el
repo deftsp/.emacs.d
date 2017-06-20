@@ -638,6 +638,13 @@ to replace the symbol under cursor"
   ;; replaces evil-mode's f/F/t/T/;/, with snipe
   (evil-snipe-override-mode +1))
 
+;; pinyin
+(require 'evil-find-char-pinyin nil t)
+(with-eval-after-load 'evil-find-char-pinyin
+  (setq evil-find-char-pinyin-only-simplified t)
+  (evil-find-char-pinyin-toggle-snipe-integration t)
+  (evil-find-char-pinyin-mode +1))
+
 
 ;; evil-iedit-state
 (require 'iedit nil t)
