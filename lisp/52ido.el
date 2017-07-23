@@ -23,20 +23,6 @@
            flx-ido-use-faces t)
      (flx-ido-mode 1)))
 
-
-;; Fix ido-ubiquitous for newer packages
-;; http://whattheemacsd.com//setup-ido.el-01.html
-(defmacro ido-ubiquitous-use-new-completing-read (cmd package)
-  `(eval-after-load ,package
-     '(defadvice ,cmd (around ido-ubiquitous-new activate)
-        (let ((ido-ubiquitous-enable-compatibility nil))
-          ad-do-it))))
-
-(ido-ubiquitous-use-new-completing-read slime-js-read-remote-index 'slime-js)
-;; (ido-ubiquitous-use-new-completing-read webjump 'webjump)
-;; (ido-ubiquitous-use-new-completing-read yas/expand 'yasnippet)
-;; (ido-ubiquitous-use-new-completing-read yas/visit-snippet-file 'yasnippet)
-
 ;;; ido-vertical-mode
 ;; https://github.com/gempesaw/ido-vertical-mode.el
 (when (fboundp 'ido-vertical-mode)
