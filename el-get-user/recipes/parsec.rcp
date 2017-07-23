@@ -1,0 +1,5 @@
+(:name parsec
+       :type github
+       :description "A parser combinator library for Emacs Lisp, similar to Haskell's Parsec library."
+       :pkgname "cute-jumper/parsec.el"
+       :depends (cl-lib))
