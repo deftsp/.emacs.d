@@ -53,6 +53,7 @@ Available options are `intero', `ghc-mod'. ")
         haskell-process-suggest-remove-import-lines t
         haskell-process-auto-import-loaded-modules t
         haskell-process-args-stack-ghci '("--ghci-options=-ferror-spans")
+        haskell-interactive-popup-errors  nil
         haskell-notify-p t)
 
   (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
