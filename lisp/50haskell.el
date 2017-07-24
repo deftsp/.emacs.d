@@ -8,7 +8,6 @@
 ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/haskell-mode/")
 ;; (add-to-list 'Info-default-directory-list "~/.emacs.d/site-lisp/haskell-mode/")
 ;; (require 'haskell-mode-autoloads)
-
 ;; dante: https://github.com/jyp/dante, a fork of Intero mode.
 (defvar paloryemacs/haskell-completion-backend 'ghc-mod
   "Completion backend used by company.
@@ -242,8 +241,8 @@ Available options are `intero', `ghc-mod'. ")
   ;; (define-key haskell-mode-map (kbd "C-j") 'haskell-newline-and-indent)
   (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-interactive-switch)
   ;; Load the current file (and make a session if not already made).
-  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-or-reload)
-  (define-key haskell-mode-map [f5] 'haskell-process-load-or-reload)
+  (define-key haskell-mode-map (kbd "C-c C-l") 'haskell-process-load-file)
+  (define-key haskell-mode-map [f5] 'haskell-process-load-file)
   ;; “Bring” the REPL, hiding all other windows apart from the source and the REPL.
   (define-key haskell-mode-map (kbd "C-`") 'haskell-interactive-bring)
   (define-key haskell-mode-map (kbd "C-c C-c") 'haskell-compile)
@@ -571,7 +570,7 @@ point."
 
   "F"   'haskell-mode-stylish-buffer
 
-  "sb"  'haskell-process-load-or-reload
+  "sb"  'haskell-process-load-file
   "sc"  'haskell-interactive-mode-clear
   "ss"  'paloryemacs/haskell-interactive-bring
   "sS"  'haskell-interactive-switch
