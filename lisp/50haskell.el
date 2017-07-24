@@ -273,10 +273,8 @@ Available options are `intero', `ghc-mod'. ")
   (define-key haskell-interactive-mode-map (kbd "C-u") 'haskell-interactive-mode-kill-whole-line)
   ;; (define-key haskell-interactive-mode-map (kbd "C-w") 'backward-kill-word)
   ;; (define-key haskell-interactive-mode-map (kbd "TAB") 'haskell-interactive-mode-tab)
-  (define-key haskell-interactive-mode-map (kbd "C-c C-l") 'haskell-interactive-mode-clear)
   ;; (define-key haskell-interactive-mode-map (kbd "C-j") nil)
-  (define-key haskell-interactive-mode-map (kbd "C-p") 'helm-for-files)
-  (define-key haskell-interactive-mode-map (kbd "C-n") nil))
+  (define-key haskell-interactive-mode-map (kbd "C-c C-l") 'haskell-interactive-mode-clear))
 
 ;;; completion backend
 (defun paloryemacs-haskell//setup-ghc-mod ()
