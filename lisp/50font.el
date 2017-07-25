@@ -11,51 +11,50 @@
 
 ;;; Code:
 
-;;; tumashu/chinese-fonts-setup
-;; http://zhuoqiang.me/torture-emacs.html
+;;; tumashu/cnfonts;; http://zhuoqiang.me/torture-emacs.html
 ;; http://baohaojun.github.io/perfect-emacs-chinese-font.html
-;; https://github.com/tumashu/chinese-fonts-setup
+;; https://github.com/tumashu/cnfonts
 ;; Avoiding use the font with its name contain '-'.
-;; https://github.com/tumashu/chinese-fonts-setup/issues/11
-(setq cfs-verbose nil)
-(require 'chinese-fonts-setup nil t)
+;; https://github.com/tumashu/cnfonts/issues/11
+(setq cnfonts-verbose nil)
+(require 'cnfonts nil t)
 
-(setq cfs-profiles '("program" "org-mode" "read-book"))
+(setq cnfonts-profiles '("program" "org-mode" "read-book"))
 
-(with-eval-after-load "chinese-fonts-setup"
+(with-eval-after-load "cnfonts"
   (when window-system
     ;; https://github.com/railwaycat/emacs-mac-port
     (when (fboundp 'mac-magnify-text-scale)
       ;; instead of emacs-mac-port's mac-magnify-text-scale
-      (global-set-key [magnify-up] 'cfs-increase-fontsize)
-      (global-set-key [magnify-down] 'cfs-decrease-fontsize))
-    (global-set-key (kbd "<M-wheel-up>") 'cfs-decrease-fontsize)
-    (global-set-key (kbd "<M-wheel-down>") 'cfs-increase-fontsize)))
+      (global-set-key [magnify-up] 'cnfonts-increase-fontsize)
+      (global-set-key [magnify-down] 'cnfonts-decrease-fontsize))
+    (global-set-key (kbd "<M-wheel-up>") 'cnfonts-decrease-fontsize)
+    (global-set-key (kbd "<M-wheel-down>") 'cnfonts-increase-fontsize)))
 
-(defun paloryemacs/cfs-reset-profile-and-fontsize ()
+(defun paloryemacs/cnfonts-reset-profile-and-fontsize ()
   "Reset fontsize with chinese-fonts-setup."
   (interactive)
   (when (display-graphic-p)
-    (let* ((profile-name paloryemacs/default-cfs-profile-name)
-           (profile-step paloryemacs/default-cfs-fontsize-step)
-           (fontsizes-list (cfs--get-fontsizes profile-step)))
-      (cfs--select-profile profile-name)
-      (cfs--set-font fontsizes-list)
-      (cfs--save-config-file profile-name profile-step)
+    (let* ((profile-name paloryemacs/default-cnfonts-profile-name)
+           (profile-step paloryemacs/default-cnfonts-fontsize-step)
+           (fontsizes-list (cnfonts--get-fontsizes profile-step)))
+      (cnfonts--select-profile profile-name)
+      (cnfonts--set-font fontsizes-list)
+      (cnfonts--save-config-file profile-name profile-step)
       (redisplay t)
-      (cfs-message t cfs--minibuffer-echo-string))))
+      (cnfonts-message t cnfonts--minibuffer-echo-string))))
 
 
-(defun paloryemacs/cfs-set-symbol-fonts (fontsizes-list)
+(defun paloryemacs/cnfonts-set-symbol-fonts (fontsizes-list)
   ;; (set-fontset-font t 'symbol "Inconsolata" nil 'append)
   ;; (set-fontset-font t 'symbol "Symbola" nil 'append)
   ;; (set-fontset-font t 'unicode "Segoe UI Emoji" nil 'append)
   ;; (set-fontset-font t 'unicode "STIX" nil 'append)
   (set-fontset-font t 'symbol "DejaVu Sans Mono"))
 
-(add-hook 'cfs-set-font-finish-hook 'paloryemacs/cfs-set-symbol-fonts)
+(add-hook 'cnfonts-set-font-finish-hook 'paloryemacs/cnfonts-set-symbol-fonts)
 
-(chinese-fonts-setup-enable)
+(cnfonts-enable)
 
 ;; (defhydra hydra-zoom ()
 ;;   "zoom"

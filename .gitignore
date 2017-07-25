@@ -78,7 +78,7 @@ packages/cedet/
 el-get/
 share/
 packages/lunar-mode-line/
-chinese-fonts-setup/
+cnfonts/
 anaconda-mode/
 workgroups2
 test/

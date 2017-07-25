@@ -31,12 +31,12 @@ emacs.")
   "The key used for Emacs commands (M-x) (after pressing on the leader key).")
 
 
-;;; chinese-font-setup
-(defvar paloryemacs/default-cfs-profile-name "program"
-  "Default cfs profile name used by chinse-font-setup.")
+;;; cnfonts
+(defvar paloryemacs/default-cnfonts-profile-name "program"
+  "Default cnfonts profile name used by chinse-font-setup.")
 
-(defvar paloryemacs/default-cfs-fontsize-step 4
-  "Default cfs fontsize step used by chinse-font-setup.")
+(defvar paloryemacs/default-cnfonts-fontsize-step 4
+  "Default cnfonts fontsize step used by chinse-font-setup.")
 
 
 (provide 'prelude)
