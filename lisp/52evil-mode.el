@@ -228,6 +228,8 @@ recover evil state to it, otherwiser change to evil-emacs-state."
 
 
 (define-key evil-operator-state-map "l" 'evil-avy-goto-line)
+(define-key evil-operator-state-map "z" 'evil-avy-goto-char-2)
+
 
 (require 'general nil t)
 (with-eval-after-load "general"
