@@ -627,16 +627,28 @@ to replace the symbol under cursor"
 
 ;;; evil-snipe
 ;; https://github.com/hlissner/evil-snipe
-(require 'evil-snipe nil t)
-(with-eval-after-load "evil-snipe"
-  (with-eval-after-load "magit-mode"
-    (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode))
 
-  (setq evil-snipe-scope 'line)
+;; if not override mode, only binds s (forward)/S (backward) to evil-snipe-s and
+;; evil-snipe-S, respectively. In operator mode, snipe is bound to z/Z and x/X
+;; (exclusive). The last snipe can be repeated with s/S after a successful snipe
+;; (or with s+RET).
+
+(require 'evil-snipe nil t)
+(defvar paloryemacs/evil-snipe-enable-alternate-f-and-t-behaviors t)
+
+(with-eval-after-load "evil-snipe"
+  (setq evil-snipe-scope 'whole-buffer
+        evil-snipe-smart-case t)
   (push '(?\[ "[[{(]") evil-snipe-aliases)
-  (evil-snipe-mode +1)
-  ;; replaces evil-mode's f/F/t/T/;/, with snipe
-  (evil-snipe-override-mode +1))
+  (if paloryemacs/evil-snipe-enable-alternate-f-and-t-behaviors
+      (progn
+        (setq evil-snipe-repeat-scope 'whole-buffer)
+        (evil-snipe-override-mode +1) ; replaces evil-mode's f/F/t/T/;/, with snipe
+        (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
+        (add-hook 'git-rebase-mode-hook 'turn-off-evil-snipe-override-mode))
+    (evil-snipe-mode +1)
+    (add-hook 'magit-mode-hook 'turn-off-evil-snipe-mode)
+    (add-hook 'git-rebase-mode-hook 'turn-off-evil-snipe-mode)))
 
 ;; pinyin
 (require 'evil-find-char-pinyin nil t)
