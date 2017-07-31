@@ -631,9 +631,9 @@ _p_rojectile _s_cratch
 undo-tree-_u_ndo undo-tree-_r_edo
 "
    ("SPC" mark-sexp "mark sexp" :color red)
-   ("+" cfs-increase-fontsize :color red)
-   ("-" cfs-decrease-fontsize :color red)
-   ("=" paloryemacs/cfs-reset-profile-and-fontsize "reset font")
+   ("+" cnfonts-increase-fontsize :color red)
+   ("-" cnfonts-decrease-fontsize :color red)
+   ("=" paloryemacs/cnfonts-reset-profile-and-fontsize "reset font")
    ("a" org-agenda nil)
    ("c" org-capture nil)
    ("g" org-clock-goto nil)
