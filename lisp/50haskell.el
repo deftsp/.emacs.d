@@ -56,7 +56,6 @@ Available options are `intero', `ghc-mod'. ")
         haskell-interactive-popup-errors  nil
         haskell-notify-p t)
 
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
   (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
 
@@ -193,6 +192,9 @@ Available options are `intero', `ghc-mod'. ")
   ;; use only internal indentation system from haskell
   (if (fboundp 'electric-indent-local-mode)
       (electric-indent-local-mode -1))
+
+  (haskell-doc-mode +1)
+  (haskell-indentation-mode +1)
 
   ;; enable our level computation
   (setq outline-level 'paloryemacs/outline-level)
