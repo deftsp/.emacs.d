@@ -205,6 +205,8 @@ recover evil state to it, otherwiser change to evil-emacs-state."
 (define-key evil-normal-state-map "gt" 'hydra-toggle/body)
 (define-key evil-normal-state-map (kbd "gD") 'paloryemacs/jump-to-definition-other-window)
 
+(define-key evil-normal-state-map (kbd "gd") 'paloryemacs/jump-to-definition)
+
 ;; (define-key evil-normal-state-map "b" 'backward-word)
 ;; (define-key evil-normal-state-map "w" 'forward-word)
 (define-key evil-visual-state-map "Q" "gq")
@@ -434,8 +436,6 @@ kill internal buffers too."
 (evil-declare-key 'normal haskell-mode-map "O" 'paloryemacs/haskell-evil-open-above)
 ;; (evil-declare-key 'normal haskell-mode-map ",gn" 'ghc-goto-next-error)
 ;; (evil-declare-key 'normal haskell-mode-map ",gp" 'ghc-goto-prev-error)
-
-(evil-define-key 'normal haskell-mode-map (kbd "gd") 'intero-goto-definition)
 
 ;; (evil-define-key 'normal haskell-mode-map (kbd "gT") 'haskell-process-do-type)
 ;; (evil-define-key 'normal haskell-mode-map (kbd "gI") 'haskell-process-do-info)
