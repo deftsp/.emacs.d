@@ -576,6 +576,8 @@ point."
   "ss"  'paloryemacs/haskell-interactive-bring
   "sS"  'haskell-interactive-switch
 
+  "se"  'hasky-stack-execute
+
   "ca"  'haskell-process-cabal
   "cb"  'haskell-process-cabal-build
   "cc"  'haskell-compile

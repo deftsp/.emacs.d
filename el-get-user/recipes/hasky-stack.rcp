@@ -1,0 +1,5 @@
+(:name hasky-stack
+       :description "Interface to the Stack Haskell development tool"
+       :type github
+       :pkgname "hasky-mode/hasky-stack"
+       :depends (f magit haskell-mode))
