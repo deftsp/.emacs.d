@@ -55,9 +55,8 @@
 ;;; ido-better-flex
 ;; it is a little slow when use with smex
 ;; (require 'ido-better-flex nil t)
-;; (eval-after-load "ido-better-flex"
-;;   '(progn
-;;      (ido-better-flex/enable)))
+;; (with-eval-after-load "ido-better-flex"
+;;   (ido-better-flex/enable))
 
 
 ;;;

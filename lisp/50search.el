@@ -308,16 +308,14 @@ C-u C-u -> Start swiper without any arguments (stock behavior)"
   (setq ace-pinyin-use-avy t)
   (ace-pinyin-global-mode +1))
 
-;;; smex
-(with-eval-after-load "smex"
-  (unless smex-initialized-p
-    (smex-initialize))
-  ;; (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command) ; old M-x
-  ;; (global-set-key (kbd "M-x") 'smex) ; use 'counsel-M-x
-  (global-set-key (kbd "M-X") 'smex-major-mode-commands))
+;;; amx
+(require 'amx nil t)
+(with-eval-after-load "amx"
+  (setq amx-backend 'ivy)
+  (amx-mode +1))
 
-;; counsel-M-x use smex
-(global-set-key (kbd "M-x") 'counsel-M-x)
+;; counsel-M-x use smex, I have switch to amx
+;; (global-set-key (kbd "M-x") 'counsel-M-x)
 
 (provide '50search)
 
