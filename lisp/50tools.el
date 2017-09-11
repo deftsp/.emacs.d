@@ -1340,8 +1340,6 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
     (diminish 'auto-complete-mode))
   (with-eval-after-load "golden-ratio"
     (diminish 'golden-ratio-mode " φ"))
-  (with-eval-after-load "workgroups2"
-    (diminish 'workgroups-mode))
   (with-eval-after-load "smartparens"
     (diminish 'smartparens-mode " p"))
   (with-eval-after-load "evil-lispy"

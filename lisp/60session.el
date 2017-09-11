@@ -136,15 +136,17 @@
 
 ;; workgroup mode-line
 ;; use '(wg-workgroup-name (wg-current-workgroup))' to get workgroup name
-(setq wg-mode-line-display-on (not (featurep 'powerline)))
+(setq wg-mode-line-display-on (not (featurep 'powerline))
+      wg-modeline-string "")
 (setq wg-flag-modified t)                 ; Display modified flags as well
 (setq wg-mode-line-decor-left-brace "♯"
       wg-mode-line-decor-right-brace ""
       wg-mode-line-decor-divider ":")
 
-(eval-after-load "workgroups2"
-  '(when (fboundp 'key-chord-define-global)
-     (key-chord-define-global ".w" wg-prefixed-map)))
+(with-eval-after-load "workgroups2"
+  (when (fboundp 'key-chord-define-global)
+    (key-chord-define-global ".w" wg-prefixed-map)))
+
 
 (defun paloryemacs/turn-on-workgroups-mode ()
   (interactive)
