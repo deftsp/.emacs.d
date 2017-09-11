@@ -1,5 +1,5 @@
 (:name worf
-       :description ""
+       :description "vi-like bindings for org-mode."
        :type github
-       :pkgname "vi-like bindings for org-mode"
+       :pkgname "abo-abo/worf"
        :depends (swiper ace-link hydra zoutline))
