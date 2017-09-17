@@ -13,6 +13,9 @@
   "Completion backend used by company.
 Available options are `intero', `ghc-mod'. ")
 
+;; do not use it, since it doesn't play with well with evil.
+(defvar paloryemacs/use-structured-haskell-mode nil)
+
 (defun paloryemacs-haskell//setup-completion-backend ()
   "Conditionally setup haskell completion backend."
   (pcase haskell-completion-backend
@@ -323,25 +326,31 @@ Available options are `intero', `ghc-mod'. ")
 
 ;; Turn off haskell-indentation-modes. They are incompatible with structured-haskell-mode, which  has its own
 ;; indentation functionality.
-(remove-hook 'haskell-mode-hook 'turn-on-haskell-indentation) ;
-(setq haskell-indent-thenelse 2)
-(eval-after-load "haskell-indent"
-  '(setq haskell-indent-after-keywords '(("where" 2 0)
-                                         ("of" 2)
-                                         ("do" 4 0)
-                                         ("mdo" 2)
-                                         ("rec" 2)
-                                         ("in" 2 0)
-                                         ("{" 2)
-                                         ("defaultLayout" 4)
-                                         "if"
-                                         "then"
-                                         "else"
-                                         "let")))
+(defun paloryemacs/haskell-indent-init ()
+  (setq haskell-indent-thenelse 2)
+  (setq haskell-indent-after-keywords '(("where" 2 0)
+                                        ("of" 2)
+                                        ("do" 4 0)
+                                        ("mdo" 2)
+                                        ("rec" 2)
+                                        ("in" 2 0)
+                                        ("{" 2)
+                                        ("defaultLayout" 4)
+                                        "if"
+                                        "then"
+                                        "else"
+                                        "let")))
+(defun paloryemacs/haskell-indent-init ()
+  (setq haskell-indentation-layout-offset 2
+        haskell-indentation-left-offset 2
+        haskell-indentation-where-pre-offset 2
+        haskell-indentation-where-post-offset 2))
 
-;; (setq haskell-indentation-layout-offset 4
-;;       haskell-indentation-left-offset 4
-;;       haskell-indentation-ifte-offset 4)
+(paloryemacs/haskell-indent-init)
+
+;;; hindent
+(with-eval-after-load 'hindent
+  (paloryemacs/set-leader-keys-for-major-mode 'haskell-mode "f" 'hindent-reformat-decl))
 
 
 ;;; Check
@@ -679,10 +688,6 @@ point."
 
 ;; (with-eval-after-load "intero"
 ;;   (advice-add 'intero-repl-load :around #'haskell-intero//preserve-focus))
-
-;;; hindent
-(with-eval-after-load 'hindent
-  (paloryemacs/set-leader-keys-for-major-mode 'haskell-mode "f" 'hindent-reformat-decl))
 
 ;;
 (paloryemacs|define-jump-handlers haskell-mode haskell-mode-jump-to-def-or-tag)
