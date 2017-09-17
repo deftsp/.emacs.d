@@ -144,9 +144,9 @@
       wg-mode-line-decor-divider ":")
 
 (with-eval-after-load "workgroups2"
+  (define-key wg-prefixed-map (kbd "s") 'wg-save-session)
   (when (fboundp 'key-chord-define-global)
     (key-chord-define-global ".w" wg-prefixed-map)))
-
 
 (defun paloryemacs/turn-on-workgroups-mode ()
   (interactive)
