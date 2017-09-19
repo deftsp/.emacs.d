@@ -800,6 +800,7 @@ to replace the symbol under cursor"
                                    (evil-paste-after . diff-added)
                                    (evil-paste-before . diff-added)))
   (setq evil-goggles-duration 0.100) ;; default is 0.200
+  (setq evil-goggles-pulse t)
   ;; to disable the hint when yanking or deleting
   (setq evil-goggles-blacklist `(evil-yank evil-delete))
   (evil-goggles-mode +1))
