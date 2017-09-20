@@ -138,7 +138,9 @@
   ;; "be"  'spacemacs/safe-erase-buffer
   ;; "bh"  'spacemacs/home
   "bk"  'paloryemacs/kill-matching-buffers-rudely
+  "bM"  'paloryemacs/switch-to-messages-buffer
   "bn"  'next-buffer
+
   ;; "em"  'spacemacs/kill-other-buffers
   ;; "bN"  'spacemacs/new-empty-buffer
   ;; "bP"  'spacemacs/copy-clipboard-to-whole-buffer
@@ -154,6 +156,17 @@
   "bmj" 'buf-move-down
   "bmk" 'buf-move-up
   "bml" 'buf-move-right)
+
+
+(defun paloryemacs/switch-to-messages-buffer (&optional arg)
+  "Switch to the `*Messages*' buffer.
+if prefix argument ARG is given, switch to it in an other, possibly new window."
+  (interactive "P")
+  (with-current-buffer (messages-buffer)
+    (goto-char (point-max))
+    (if arg
+        (switch-to-buffer-other-window (current-buffer))
+      (switch-to-buffer (current-buffer)))))
 
 ;; file -----------------------------------------------------------------------
 (paloryemacs/set-leader-keys
