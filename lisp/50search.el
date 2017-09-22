@@ -317,6 +317,10 @@ C-u C-u -> Start swiper without any arguments (stock behavior)"
 ;; counsel-M-x use smex, I have switch to amx
 ;; (global-set-key (kbd "M-x") 'counsel-M-x)
 
+
+(global-set-key (kbd "s-g") 'counsel-rg)
+
+
 (provide '50search)
 
 
