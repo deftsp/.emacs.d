@@ -359,7 +359,7 @@
    '(shm-quarantine-face ((t (:background "#262230"))))
 
    ;; linum
-   '(linum ((t (:background "#102235" :foreground "#607b8b"))))
+   '(linum ((t (:background "#102530" :foreground "#607b8b"))))
 
    ;; guide-key
    '(guide-key/key-face ((t (:foreground "violet"))))
