@@ -1,6 +1,8 @@
 ;;; 05misc.el ---                          -*- lexical-binding: t; -*-
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
 
+;;; Code:
+
 ;;; Personal data
 (setq user-full-name "Shihpin Tseng"
       user-mail-address "deftsp@gmail.com"
@@ -35,11 +37,10 @@
       display-time-interval 10          ; Seconds between updates of time in the mode line
       window-min-height 4               ; Let's not have too-tiny windows.
       ;; undo-no-redo t
-      redisplay-dont-pause t
       mark-even-if-inactive t
       set-mark-command-repeat-pop t
       select-enable-clipboard t ; cutting and pasting uses the clipboard.
-      x-select-enable-primary t
+      select-enable-primary t
       ;; default-directory "/"
       visible-bell nil                    ;no f* beep on error.
       ;;ftp-program "ncftp"       ; use ncftp for ftp transfers.
@@ -1526,4 +1527,5 @@ Toggles between: “ all lower ”, “ Init Caps ”, “ ALL CAPS ”."
 
 ;; Local Variables: **
 ;; outline-regexp: ";;; " **
+;; byte-compile-warnings: (not noruntime free-vars) **
 ;; End: **
