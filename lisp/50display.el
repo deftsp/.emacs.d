@@ -20,6 +20,7 @@
                               (alpha . (96 . 90)) ; first number is for the active window and the second for the inactive
                               (mouse-color . "gray80")
                               (right-fringe . 0) ; do not show right fringe
+                              (scroll-bar-background . "#80abb6")
                               ;; (scroll-bar-width . 12)
                               ;; (vertical-scroll-bars . right)
                               (vertical-scroll-bars . nil))
