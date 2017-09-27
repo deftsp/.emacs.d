@@ -225,6 +225,14 @@ Argument REPLACE String used to replace the matched strings in the buffer.
   '(define-key grep-mode-map
      (kbd "C-c C-c") 'wgrep-finish-edit))
 
+(with-eval-after-load "evil-evilified-state"
+  (with-eval-after-load "grep"
+    (evilified-state-evilify grep-mode grep-mode-map
+      (kbd "n")   nil
+      (kbd "p")   nil
+      (kbd "h")   nil
+      (kbd "l")   nil)))
+
 ;;; ivy
 (with-eval-after-load "ivy"
   (setq ivy-display-style 'fancy)

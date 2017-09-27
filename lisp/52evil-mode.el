@@ -391,7 +391,7 @@ kill internal buffers too."
         (git-rebase-mode           . emacs)
         (gtags-select-mode         . emacs)
         (gud-mode                  . emacs)
-        (grep-mode                 . emacs)
+        (grep-mode                 . evilified)
         (haskell-error-mode        . emacs)
         (haskell-interactive-mode  . insert)
         (Info-mode                 . emacs)
