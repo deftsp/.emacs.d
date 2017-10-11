@@ -9,15 +9,22 @@
 ;; https://github.com/remvee/emacs-rails
 
 ;;; rinari
-(require 'rinari nil t)
-(eval-after-load "rinari"
-  '(progn
-     (add-hook 'ruby-mode-hook 'rinari-minor-mode)))
+(use-package rinari :defer t)
+
+(use-package ruby-mode
+  :init
+  (defun paloryemacs/ruby-mode-init ()
+    ;; (push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
+    ;; (push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
+    ;; (push '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns)
+    ;; (add-hook 'ruby-mode-hook 'paloryemacs/flymake-ruby-enable)
+    (rinari-minor-mode +1)
+    (define-key ruby-mode-map "\C-c\C-z" 'paloryemacs/ruby-switch-to-inf-dwim))
+  (add-hook 'ruby-mode-hook 'paloryemacs/ruby-mode-init))
 
 ;; el-get install ruby-electric
-(require 'ruby-electric nil t)
-
-(require 'rspec-mode nil t)
+(use-package ruby-electric :defer t)
+(use-package rspec-mode :defer t)
 
 ;; cucumber.el
 ;; https://github.com/michaelklishin/cucumber.el
@@ -28,16 +35,6 @@
 ;; (setq inf-ruby-default-implementation "pry")
 ;; (setq inf-ruby-first-prompt-pattern "^\\[[0-9]+\\] pry\\((.*)\\)> *")
 ;; (setq inf-ruby-prompt-pattern "^\\[[0-9]+\\] pry\\((.*)\\)[>*\"'] *")
-
-;;; init
-(defun paloryemacs/ruby-mode-init ()
-  ;; (push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
-  ;; (push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
-  ;; (push '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns)
-  ;; (add-hook 'ruby-mode-hook 'paloryemacs/flymake-ruby-enable)
-  (define-key ruby-mode-map "\C-c\C-z" 'paloryemacs/ruby-switch-to-inf-dwim))
-
-(add-hook 'ruby-mode-hook 'paloryemacs/ruby-mode-init)
 
 
 ;;; rsense

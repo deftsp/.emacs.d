@@ -5,10 +5,6 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-;; Copy from Spacemacs
-(with-eval-after-load "evil"
-  (require 'evil-evilified-state))
-
 ;; `C-M-x' on a defface expression reinitializes the face according to the
 ;; defface specification.
 
@@ -396,8 +392,8 @@ kill internal buffers too."
   :init
   (paloryemacs/evil-init)
   :config
+  (use-package evil-evilified-state)
   (paloryemacs/evil-set-initial-state))
-
 
 ;;; enable evil mode
 (when (fboundp 'evil-mode)

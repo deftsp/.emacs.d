@@ -4,7 +4,7 @@
 
 
 ;;; diary
-(use-package diary
+(use-package diary-lib
   :defer t
   :init
   (setq diary-list-include-blanks nil
