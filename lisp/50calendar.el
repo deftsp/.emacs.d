@@ -4,29 +4,36 @@
 
 
 ;;; diary
-(setq diary-list-include-blanks nil
-      calendar-view-diary-initially-flag nil
-      ;; number-of-diary-entries '[7 7 7 7 7 9 8]
-      diary-file (expand-file-name "~/.emacs.d/diary")
-      diary-mail-addr "deftsp@gmail.com"
-      calendar-mark-diary-entries-flag t)
-
-(setq diary-display-function 'diary-fancy-display)
-(add-hook 'diary-list-entries-hook 'diary-sort-entries t)
-(add-hook 'diary-list-entries-hook 'diary-include-other-diary-files)
-(add-hook 'diary-mark-entries-hook 'diary-mark-included-diary-files)
+(use-package diary
+  :defer t
+  :init
+  (setq diary-list-include-blanks nil
+        calendar-view-diary-initially-flag nil
+        ;; number-of-diary-entries '[7 7 7 7 7 9 8]
+        diary-file (expand-file-name "~/.emacs.d/diary")
+        diary-mail-addr "deftsp@gmail.com"
+        diary-display-function 'diary-fancy-display
+        calendar-mark-diary-entries-flag t)
+  :config
+  (add-hook 'diary-list-entries-hook 'diary-sort-entries t)
+  (add-hook 'diary-list-entries-hook 'diary-include-other-diary-files)
+  (add-hook 'diary-mark-entries-hook 'diary-mark-included-diary-files))
 
 ;; (add-hook 'today-visible-calendar-hook 'calendar-mark-today)
 
 ;;; Appointments
-(setq appt-display-diary t
-      appt-display-duration 10
-      appt-display-format 'window  ; use a separate window to remind appointments
-      appt-message-warning-time 15 ; warn 15 min in advance
-      appt-display-interval 5
-      appt-audible t ; beep to indicate appointment
-      appt-display-mode-line t)
-(appt-activate 1)
+(use-package appt
+  :init
+  (setq appt-display-diary t
+        appt-display-duration 10
+        appt-display-format 'window  ; use a separate window to remind appointments
+        appt-message-warning-time 15 ; warn 15 min in advance
+        appt-display-interval 5
+        appt-audible t ; beep to indicate appointment
+        appt-display-mode-line t)
+  :config
+  (appt-activate +1))
+
 
 ;; appointments notification
 ;; http://article.gmane.org/gmane.emacs.orgmode/66151
@@ -105,8 +112,9 @@
 ;;       ["正月" "二月" "三月" "四月" "五月" "六月" "七月" "八月" "九月" "十月"
 ;;               "十一月" "腊月"])
 
-(require 'cal-china-x nil t)
-(with-eval-after-load "cal-china-x"
+(use-package cal-china-x
+  :defer t
+  :init
   (setq cal-china-x-chinese-holidays
         '((holiday-fixed 1 1   "元旦")
           (holiday-fixed 3 8   "妇女节")
@@ -131,7 +139,6 @@
           (holiday-lunar 12 30 "春节" 0)
 
           (holiday-solar-term "清明" "清明节")))
-
   (setq cal-china-x-general-holidays cal-china-x-chinese-holidays)
   (setq cal-china-x-important-holidays '((holiday-float 5 0 2 "母亲节")))
   (setq calendar-holidays (append cal-china-x-important-holidays
@@ -154,15 +161,15 @@
     (and (> diff 0) (= dm cm) (= dd cd)
          (cons mark (format entry diff (diary-ordinal-suffix diff))))))
 
-(with-eval-after-load "evil-evilified-state"
-  (with-eval-after-load "calendar"
+(use-package calendar
+  :config
+  (with-eval-after-load "evil-evilified-state"
     (evilified-state-evilify calendar-mode calendar-mode-map
       (kbd "j")   'calendar-forward-week
       (kbd "k")   'calendar-backward-week
       (kbd "h")   'calendar-backward-day
       (kbd "j")   'calendar-forward-week
       (kbd "J")   'org-journal-read-entry)))
-
 
 ;; Calendar 模式支持各种方式来更改当前日期
 ;;（这里的"前"是指还没有到来的那一天，"后"是指已经过去的日子）

@@ -61,18 +61,13 @@
 (when (boundp 'semantic-inhibit-functions)
   (add-to-list 'semantic-inhibit-functions 'paloryemacs/semantic-inhibit-func))
 
-
-;; Activate semantic
-(semantic-mode 1)
-
-
-(require 'semantic/ia)
-(require 'semantic/bovine/c)
-(require 'semantic/bovine/gcc)
-(require 'semantic/bovine/clang nil t)
-(require 'semantic/decorate/include)
-(require 'semantic/lex-spp)
-(require 'eassist nil t) ; for eassist-lists-methods, and eassist-switch-h-cpp
+;; (require 'semantic/ia)
+;; (require 'semantic/bovine/c)
+;; (require 'semantic/bovine/gcc)
+;; (require 'semantic/bovine/clang nil t)
+;; (require 'semantic/decorate/include)
+;; (require 'semantic/lex-spp)
+;; (require 'eassist nil t) ; for eassist-lists-methods, and eassist-switch-h-cpp
 
 
 ;;; Enable SRecode (Template management) minor-mode.
@@ -82,6 +77,7 @@
 
 ;;; customisation of modes
 (defun paloryemacs/cedet-hook ()
+  (semantic-mode +1)
   (local-set-key "\C-x,." 'senator-complete-symbol)
   (local-set-key "\C-x,?" 'semantic-ia-complete-symbol) ; M-TAB
   (local-set-key "\C-x,>" 'semantic-complete-analyze-inline)
@@ -185,15 +181,14 @@
 ;; (semantic-add-system-include "/usr/include/gtk-2.0/" 'c-mode)
 ;; (semantic-add-system-include "/usr/include/glib-2.0/" 'c-mode)
 
-(defconst paloryemacs/cedet-win32-include-dirs
-  (list "C:/MinGW/include"
-        "C:/MinGW/include/c++/3.4.5"
-        "C:/MinGW/include/c++/3.4.5/mingw32"
-        "C:/MinGW/include/c++/3.4.5/backward"
-        "C:/MinGW/lib/gcc/mingw32/3.4.5/include"
-        "C:/Program Files/Microsoft Visual Studio/VC98/MFC/Include"))
-
 (when (eq system-type 'windows-nt)
+  (defconst paloryemacs/cedet-win32-include-dirs
+    (list "C:/MinGW/include"
+          "C:/MinGW/include/c++/3.4.5"
+          "C:/MinGW/include/c++/3.4.5/mingw32"
+          "C:/MinGW/include/c++/3.4.5/backward"
+          "C:/MinGW/lib/gcc/mingw32/3.4.5/include"
+          "C:/Program Files/Microsoft Visual Studio/VC98/MFC/Include"))
   (mapc (lambda (dir)
           (semantic-add-system-include dir 'c++-mode)
           (semantic-add-system-include dir 'c-mode))

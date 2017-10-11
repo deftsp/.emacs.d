@@ -5,12 +5,9 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-
-
 ;;; when open a file, point goes to the last place
-(setq-default save-place t)
-(require 'saveplace)
-
+(if (fboundp 'save-place-mode)
+    (save-place-mode +1))
 
 ;; hisotry save file
 (setq history-length 250
@@ -26,82 +23,81 @@
 (savehist-mode +1)
 
 ;;; Desktop
-(eval-after-load "desktop"
-  '(progn
-     (setq desktop-files-not-to-save
-           (concat "\\("
-                   "^/[^/:]*:\\|(ftp)$"
-                   "\\|\\.gpg$"
-                   "\\|\\.m$"
-                   "\\|\\.mm$"
-                   "\\|\\.h$"
-                   "\\|\\.gz$"
-                   "\\|^NEWS$"
-                   ;; "\\|\\.el$"
-                   "\\)"))
-     ;; See also desktop-locals-to-save
-     ;; Regexp identifying *buffers* that are to be excluded from saving.
-     (setq desktop-buffers-not-to-save
-           (concat "\\("
-                   "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
-                   "\\|\\.emacs.*\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
-                   "\\)$"))
+(with-eval-after-load "desktop"
+  (setq desktop-files-not-to-save
+        (concat "\\("
+                "^/[^/:]*:\\|(ftp)$"
+                "\\|\\.gpg$"
+                "\\|\\.m$"
+                "\\|\\.mm$"
+                "\\|\\.h$"
+                "\\|\\.gz$"
+                "\\|^NEWS$"
+                ;; "\\|\\.el$"
+                "\\)"))
+  ;; See also desktop-locals-to-save
+  ;; Regexp identifying *buffers* that are to be excluded from saving.
+  (setq desktop-buffers-not-to-save
+        (concat "\\("
+                "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
+                "\\|\\.emacs.*\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
+                "\\)$"))
 
-     (mapc #'(lambda (major-mode)
-               (add-to-list 'desktop-modes-not-to-save major-mode))
-           '(dired-by-name-mode
-             fundamental-mode
-             org-mode
-             ;; Info-mode
-             ;; info-lookup-mode
-             ;; tramp-cleanup-all-buffers
-             haskell-mode ; very slow
-             erc-mode
-             tags-table-mode))
+  (mapc #'(lambda (major-mode)
+            (add-to-list 'desktop-modes-not-to-save major-mode))
+        '(dired-by-name-mode
+          fundamental-mode
+          org-mode
+          ;; Info-mode
+          ;; info-lookup-mode
+          ;; tramp-cleanup-all-buffers
+          haskell-mode ; very slow
+          erc-mode
+          tags-table-mode))
 
-     (mapc #'(lambda (lst)
-               (add-to-list 'desktop-minor-mode-table lst))
-           '((icicle-mode nil)
-             (javascript-mode nil)
-             (nxhtml-mumamo-mode nil)
-             (autoinfo-mode nil)
-             (ecb-minor-mode nil)
-             ;; (key-chord-mode nil)
-             (structured-haskell-mode nil)
-             (senator-minor-mode nil)
-             (semantic-show-unmatched-syntax-mode nil)
-             (semantic-stickyfunc-mode nil)
-             (semantic-decoration-mode nil)
-             (semantic-idle-summary-mode nil)
-             (semantic-idle-scheduler-mode nil)))
+  (mapc #'(lambda (lst)
+            (add-to-list 'desktop-minor-mode-table lst))
+        '((icicle-mode nil)
+          (javascript-mode nil)
+          (nxhtml-mumamo-mode nil)
+          (autoinfo-mode nil)
+          (ecb-minor-mode nil)
+          ;; (key-chord-mode nil)
+          (structured-haskell-mode nil)
+          (senator-minor-mode nil)
+          (semantic-show-unmatched-syntax-mode nil)
+          (semantic-stickyfunc-mode nil)
+          (semantic-decoration-mode nil)
+          (semantic-idle-summary-mode nil)
+          (semantic-idle-scheduler-mode nil)))
 
-     ;; save a bunch of variables to the desktop file for lists specify the len of the maximal saved data also.
-     ;; (delq 'register-alist desktop-globals-to-save)
-     (setq desktop-globals-to-save
-           '((extended-command-history       . 30)
-             (file-name-history              . 100)
-             (kill-ring                      . 60)
-             (grep-history                   . 30)
-             (compile-history                . 30)
-             (minibuffer-history             . 50)
-             (query-replace-history          . 60)
-             (read-expression-history        . 60)
-             (regexp-history                 . 60)
-             (regexp-search-ring             . 20)
-             (search-ring                    . 20)
-             ;; Feature: Saving `kill-ring' implies saving `kill-ring-yank-pointer'.
-             (buffer-name-history            . 60)
-             (Info-search-history            . 60)
-             (command-history                . 60)
-             (dired-shell-command-history    . 60) ; TODO: join with shell-command-history
-             (dired-regexp-history           . 20)
-             (shell-command-history          . 50)
-             ;; desktop-missing-file-warning
-             tags-table-list
-             ;; register-alist
-             find-args-history
-             tags-file-name
-             locate-history-list))))
+  ;; save a bunch of variables to the desktop file for lists specify the len of the maximal saved data also.
+  ;; (delq 'register-alist desktop-globals-to-save)
+  (setq desktop-globals-to-save
+        '((extended-command-history       . 30)
+          (file-name-history              . 100)
+          (kill-ring                      . 60)
+          (grep-history                   . 30)
+          (compile-history                . 30)
+          (minibuffer-history             . 50)
+          (query-replace-history          . 60)
+          (read-expression-history        . 60)
+          (regexp-history                 . 60)
+          (regexp-search-ring             . 20)
+          (search-ring                    . 20)
+          ;; Feature: Saving `kill-ring' implies saving `kill-ring-yank-pointer'.
+          (buffer-name-history            . 60)
+          (Info-search-history            . 60)
+          (command-history                . 60)
+          (dired-shell-command-history    . 60) ; TODO: join with shell-command-history
+          (dired-regexp-history           . 20)
+          (shell-command-history          . 50)
+          ;; desktop-missing-file-warning
+          tags-table-list
+          ;; register-alist
+          find-args-history
+          tags-file-name
+          locate-history-list)))
 
 (setq desktop-load-locked-desktop t
       desktop-missing-file-warning nil

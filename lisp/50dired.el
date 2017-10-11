@@ -1,30 +1,40 @@
 ;;; 50dired.el ---
 
+(use-package dired
+  :defer t
+  :bind (:map dired-mode-map
+              ("r" . wdired-change-to-wdired-mode)
+              ("s" . hydra-dired-quick-sort/body)
+              ("ESC ESC i s" . paloryemacs/image-scale)
+              ("M-O" . paloryemacs/open-in-external-application))
+  :init
+  (setq dired-isearch-filenames 'dwim
+        dired-recursive-copies 'always
+        dired-recursive-deletes 'top
+        ;; If non-nil, Dired tries to guess a default target directory.
+        ;; This means: if there is a dired buffer displayed in the next window,
+        ;; use its current subdir, instead of the current subdir of this dired buffer.
+        dired-dwim-target t
+        dired-guess-shell-gnutar "tar"
+        dired-kept-versions 1)
 
-(with-eval-after-load 'dired
-  (require 'dired-quick-sort)
-  (require 'dired+ nil t))
+  ;; Enable `a' in dired-mode, to open files/dirs in the same buffer.
+  (put 'dired-find-alternate-file 'disabled nil)
 
-(setq dired-isearch-filenames 'dwim
-      dired-recursive-copies 'always
-      dired-recursive-deletes 'top
-      ;; If non-nil, Dired tries to guess a default target directory.
-      ;; This means: if there is a dired buffer displayed in the next window,
-      ;; use its current subdir, instead of the current subdir of this dired buffer.
-      dired-dwim-target t
-      dired-guess-shell-gnutar "tar"
-      dired-kept-versions 1)
+  ;; darwin only
+  (when (eq system-type 'darwin)
+    (let ((ls (executable-find "gls")))   ;; brew insall coreutils
+      (cond (ls (setq dired-use-ls-dired t)
+                (setq insert-directory-program ls))
+            (t (require 'ls-lisp)
+               (setq ls-lisp-use-insert-directory-program nil)))))
 
-;; Enable `a' in dired-mode, to open files/dirs in the same buffer.
-(put 'dired-find-alternate-file 'disabled nil)
+  :config
+  (add-hook 'dired-mode-hook 'dired-quick-sort)
+  (use-package dired-quick-sort :defer t)
+  (use-package dired+ :defer t)
+  (use-package wdired :defer t))
 
-;;; darwin only
-(when (eq system-type 'darwin)
-  (let ((ls (executable-find "gls")))   ;; brew insall coreutils
-    (cond (ls (setq dired-use-ls-dired t)
-              (setq insert-directory-program ls))
-          (t (require 'ls-lisp)
-             (setq ls-lisp-use-insert-directory-program nil)))))
 
 ;;; omit mode
 ;; C-x M-o
@@ -73,11 +83,6 @@
                 "\\|"
                 (regexp-opt '("TAGS" "cscope.out")))))
 
-;;; wdired
-;; press `r' to modify the filename in the dired buffer, `C-c C-c' to commit
-(autoload 'wdired-change-to-wdired-mode "wdired")
-(define-key dired-mode-map "r" 'wdired-change-to-wdired-mode)
-
 ;;;
 ;; Ask for confirm when opening some binary alike(.avi, .dvi, etc) files by accident.
 (defadvice dired-find-file (around ask-confirm-open-binary-file)
@@ -91,7 +96,7 @@
             (string-match "ELF" (dired-show-file-type f)))
         (when (y-or-n-p (format "Really open `%s'? " f))
           ad-do-it)
-        ad-do-it)))
+      ad-do-it)))
 (ad-activate 'dired-find-file)
 
 ;; diredp
@@ -100,12 +105,6 @@
 
 ;;; Sorting
 (setq dired-listing-switches "-alh")
-
-;;; dired-quick-sort
-(define-key dired-mode-map "s" 'hydra-dired-quick-sort/body)
-;; Automatically use the sorting defined here to sort.
-(add-hook 'dired-mode-hook 'dired-quick-sort)
-
 
 (add-hook 'dired-mode-hook 'paloryemacs/dired-mode-hook-init)
 (defun paloryemacs/dired-mode-hook-init ()
@@ -203,7 +202,6 @@
 
 ;;; work with ImageMagic
 ;; thanks to http://ergoemacs.org/emacs/emacs_dired_convert_images.html
-(define-key dired-mode-map (kbd "ESC ESC i s") 'paloryemacs/image-scale)
 (defun paloryemacs/image-scale (file-list scale-args)
   "Create a scaled version of images of marked files in dired.
 The new names have \"-s\" appended before the file name extension.
@@ -240,7 +238,6 @@ Require unix zip commandline tool."
     (shell-command (format "zip -r '%s.zip' '%s'" (file-relative-name file-name) (file-relative-name file-name)))))
 
 ;;; open in external application
-(define-key dired-mode-map (kbd "M-O") 'paloryemacs/open-in-external-application)
 (defun paloryemacs/open-in-external-application ()
   "Open the current file or dired marked files in external app.
 Works in Microsoft Windows, Mac OS X, Linux."
