@@ -1,0 +1,5 @@
+(:name goto-chg
+       :description "Goto the point of the most recent edit in the buffer."
+       :type github
+       :pkgname "emacs-evil/goto-chg"
+       :depends evil)
