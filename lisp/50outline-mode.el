@@ -13,10 +13,10 @@
   '(require 'foldout))
 
 ;; M-x outline-minor-mode (enable Outline minor mode)
-;; C-c @ C-t / M-x hide-body (hide all of buffer except headings)
-;; C-c @ C-a / M-x show-all (show all of the text in the buffer)
-;; C-c @ TAB / M-x show-children (show all direct subheadings of this heading)
-;; C-c @ C-k / M-x show-branches (show all subheadings, but not bodies)
+;; C-c @ C-t / M-x outline-hide-body (hide all of buffer except headings)
+;; C-c @ C-a / M-x outline-show-all (show all of the text in the buffer)
+;; C-c @ TAB / M-x outline-show-children (show all direct subheadings of this heading)
+;; C-c @ C-k / M-x outline-show-branches (show all subheadings, but not bodies)
 ;; M-x outline-previous-heading (go to previous heading)
 ;; M-x outline-next-heading (go to next heading)
 ;; C-c @ C-p / M-x outline-previous-visible-heading (go to previous visible heading)
@@ -26,33 +26,6 @@
 ;; ";;; \\|(...."
 
 ;;; key bindings
-(eval-after-load "outline"
-  '(let ((map (lookup-key outline-minor-mode-map
-                          outline-minor-mode-prefix)))
-	 (define-key map (kbd "a") 'show-all)
-	 (define-key map (kbd "b") 'outline-backward-same-level)
-	 (define-key map (kbd "c") 'hide-entry)
-	 (define-key map (kbd "d") 'hide-subtree)
-     (define-key map (kbd "e") 'show-entry)
-	 (define-key map (kbd "f") 'outline-forward-same-level)
-	 (define-key map (kbd "TAB") 'show-children)
-	 (define-key map (kbd "k") 'show-branches)
-	 (define-key map (kbd "l") 'hide-leaves)
-	 (define-key map (kbd "RET") 'outline-insert-heading)
-	 (define-key map (kbd "n") 'outline-next-visible-heading)
-     (define-key map (kbd "o") 'hide-other)
-     (define-key map (kbd "p") 'outline-previous-visible-heading)
-	 (define-key map (kbd "q") 'hide-sublevels)
-	 (define-key map (kbd "s") 'show-subtree)
-	 (define-key map (kbd "t") 'hide-body)
-	 (define-key map (kbd "u") 'outline-up-heading)
-	 (define-key map (kbd "v") 'outline-move-subtree-down)
-	 (define-key map (kbd "x") 'foldout-exit-fold)
-	 (define-key map (kbd "z") 'foldout-zoom-subtree)
-	 (define-key map (kbd "^") 'outline-move-subtree-up)
-	 (define-key map (kbd "@") 'outline-mark-subtree)
-	 (define-key map (kbd "<") 'outline-promote)
-	 (define-key map (kbd ">") 'outline-demote)))
 
 (eval-after-load 'outline
   '(progn
