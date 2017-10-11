@@ -45,75 +45,74 @@
 
 ;;; git-emacs
 ;; http://tsgates.cafe24.com/git/git-emacs.html
-(require 'git-emacs nil t)
-(eval-after-load "git-emacs"
-  '(progn
-     (when window-system
-       ;; git-state-decoration-colored-letter
-       (setq git-state-modeline-decoration 'git-state-decoration-small-dot))))
+;; (require 'git-emacs nil t)
+;; (with-eval-after-load "git-emacs"
+;;   (when window-system
+;;     ;; git-state-decoration-colored-letter
+;;     (setq git-state-modeline-decoration 'git-state-decoration-small-dot)))
 
-(defadvice git--install-state-mark-modeline (around insert-after-ace-window-key activate)
-  "Add git state mark modeline after ace window key"
-  (if (and (boundp 'powerline-git-state-mark-modeline)
-           (and (boundp 'powerline-git-state-mark-modeline)
-                powerline-git-state-mark-modeline))
-      (progn
-        (setq powerline-git-state-mark
-              (git--state-decoration-dispatch
-               stat)))
-    (if (assq 'ace-window-display-mode mode-line-format)
-        (let* ((left)
-               (right mode-line-format)
-               (next (car right)))
-          (catch 'break
-            (while t
-              (when (eq (if (consp next) (car next))
-                        'ace-window-display-mode)
-                (setq mode-line-format
-                      (append left
-                              (list next)
-                              (list `(git--state-mark-modeline
-                                      ,(git--state-decoration-dispatch
-                                        stat)))
-                              (cdr right)))
-                (throw 'break nil))
+;; (defadvice git--install-state-mark-modeline (around insert-after-ace-window-key activate)
+;;   "Add git state mark modeline after ace window key"
+;;   (if (and (boundp 'powerline-git-state-mark-modeline)
+;;            (and (boundp 'powerline-git-state-mark-modeline)
+;;                 powerline-git-state-mark-modeline))
+;;       (progn
+;;         (setq powerline-git-state-mark
+;;               (git--state-decoration-dispatch
+;;                stat)))
+;;     (if (assq 'ace-window-display-mode mode-line-format)
+;;         (let* ((left)
+;;                (right mode-line-format)
+;;                (next (car right)))
+;;           (catch 'break
+;;             (while t
+;;               (when (eq (if (consp next) (car next))
+;;                         'ace-window-display-mode)
+;;                 (setq mode-line-format
+;;                       (append left
+;;                               (list next)
+;;                               (list `(git--state-mark-modeline
+;;                                       ,(git--state-decoration-dispatch
+;;                                         stat)))
+;;                               (cdr right)))
+;;                 (throw 'break nil))
 
-              (setq left (append left (list next))
-                    right (cdr right)
-                    next (car right))
-              (when (null next)
-                (throw 'break nil)))))
-      ad-do-it)))
+;;               (setq left (append left (list next))
+;;                     right (cdr right)
+;;                     next (car right))
+;;               (when (null next)
+;;                 (throw 'break nil)))))
+;;       ad-do-it)))
 
 
-(defadvice git--install-state-mark-modeline (around insert-after-ace-window-key activate)
-  "Add git state mark modeline after ace window key"
-  (unless (and (boundp 'powerline-git-state-mark-modeline)
-               (and (boundp 'powerline-git-state-mark-modeline)
-                    powerline-git-state-mark-modeline))
-    (if (assq 'ace-window-display-mode mode-line-format)
-        (let* ((left)
-               (right mode-line-format)
-               (next (car right)))
-          (catch 'break
-            (while t
-              (when (eq (if (consp next) (car next))
-                        'ace-window-display-mode)
-                (setq mode-line-format
-                      (append left
-                              (list next)
-                              (list `(git--state-mark-modeline
-                                      ,(git--state-decoration-dispatch
-                                        stat)))
-                              (cdr right)))
-                (throw 'break nil))
+;; (defadvice git--install-state-mark-modeline (around insert-after-ace-window-key activate)
+;;   "Add git state mark modeline after ace window key"
+;;   (unless (and (boundp 'powerline-git-state-mark-modeline)
+;;                (and (boundp 'powerline-git-state-mark-modeline)
+;;                     powerline-git-state-mark-modeline))
+;;     (if (assq 'ace-window-display-mode mode-line-format)
+;;         (let* ((left)
+;;                (right mode-line-format)
+;;                (next (car right)))
+;;           (catch 'break
+;;             (while t
+;;               (when (eq (if (consp next) (car next))
+;;                         'ace-window-display-mode)
+;;                 (setq mode-line-format
+;;                       (append left
+;;                               (list next)
+;;                               (list `(git--state-mark-modeline
+;;                                       ,(git--state-decoration-dispatch
+;;                                         stat)))
+;;                               (cdr right)))
+;;                 (throw 'break nil))
 
-              (setq left (append left (list next))
-                    right (cdr right)
-                    next (car right))
-              (when (null next)
-                (throw 'break nil)))))
-      ad-do-it)))
+;;               (setq left (append left (list next))
+;;                     right (cdr right)
+;;                     next (car right))
+;;               (when (null next)
+;;                 (throw 'break nil)))))
+;;       ad-do-it)))
 
 ;;; magit
 (autoload 'magit-grep "magit" "Command for `grep'." t) ; which is not a autload function at 2013.06.25 yet
@@ -144,12 +143,12 @@
             (concat mm-key "k")    'with-editor-cancel))))))
 
 ;;; evil-magit
-;; https://github.com/justbur/evil-magit
 ;; optional: this is the evil state that evil-magit will use
 ;; (setq evil-magit-state 'normal)
 ;; optional: disable additional bindings for yanking text
 ;; (setq evil-magit-use-y-for-yank nil)
-(require 'evil-magit nil t)
+(with-eval-after-load "magit"
+  (require 'evil-magit nil t))
 
 ;; (defun magit-toggle-whitespace ()
 ;;   (interactive)
