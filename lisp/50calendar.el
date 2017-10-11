@@ -160,7 +160,8 @@
       (kbd "j")   'calendar-forward-week
       (kbd "k")   'calendar-backward-week
       (kbd "h")   'calendar-backward-day
-      (kbd "l")   'calendar-forward-day)))
+      (kbd "j")   'calendar-forward-week
+      (kbd "J")   'org-journal-read-entry)))
 
 
 ;; Calendar 模式支持各种方式来更改当前日期

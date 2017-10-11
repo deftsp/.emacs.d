@@ -1348,6 +1348,8 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
     (diminish 'company-mode))
   (with-eval-after-load "evil-snipe"
     (diminish 'evil-snipe-local-mode))
+  (with-eval-after-load "evil-org"
+    (diminish 'evil-org-mode " EO"))
   (with-eval-after-load "outline"
     (diminish 'outline-minor-mode))
   (with-eval-after-load "simple"
