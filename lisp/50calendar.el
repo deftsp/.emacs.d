@@ -31,6 +31,17 @@
         appt-display-interval 5
         appt-audible t ; beep to indicate appointment
         appt-display-mode-line t)
+
+  ;; designate the window function for paloryemacs/appt-send-notification
+  (defun paloryemacs/appt-display (min-to-app new-time msg)
+    (paloryemacs/terminal-notification
+     (format "'Appointment in %s minutes'" min-to-app)    ;; passed to -title in terminal-notifier call
+     (format "'%s'" msg)))                                ;; passed to -message in terminal-notifier call
+
+  (if (eq system-type 'darwin)
+      (setq appt-disp-window-function #'paloryemacs/appt-display)
+    (setq appt-disp-window-function #'appt-disp-window))
+
   :config
   (appt-activate +1))
 
@@ -44,15 +55,6 @@
       (shell-command (concat paloryemacs/terminal-notifier-bin " -message " msg " -title " title))
     (message (format "unable to find: %s" paloryemacs/terminal-notifier-bin))))
 
-;; designate the window function for paloryemacs/appt-send-notification
-(defun paloryemacs/appt-display (min-to-app new-time msg)
-  (paloryemacs/terminal-notification
-    (format "'Appointment in %s minutes'" min-to-app)    ;; passed to -title in terminal-notifier call
-    (format "'%s'" msg)))                                ;; passed to -message in terminal-notifier call
-
-(if (eq system-type 'darwin)
-    (setq appt-disp-window-function #'paloryemacs/appt-display)
-  (setq appt-disp-window-function #'appt-disp-window))
 
 ;; use grow to notification
 ;; (defun paloryemacs/grow-appt-display (min-to-app new-time msg)
