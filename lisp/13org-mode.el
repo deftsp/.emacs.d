@@ -791,6 +791,8 @@ Will work on both org-mode and any mode that accepts plain html."
                     ("mx" . "text")))
     (paloryemacs/declare-prefix-for-mode 'org-mode (car prefix) (cdr prefix)))
   (paloryemacs/set-leader-keys-for-major-mode 'org-mode
+    "C-l" 'paloryemacs/reflash-indentation
+
     "'" 'org-edit-special
     "c" 'org-capture
     "Cc" 'org-clock-cancel
@@ -1109,6 +1111,12 @@ _h_tml    ^ ^        _A_SCII:
               :caller 'paloryemacs/org-tags)))
 
 ;;; indent
+(defun paloryemacs/reflash-indentation ()
+  "Fix org-indent issues, center line."
+  (interactive)
+  (org-indent-mode +1)
+  (recenter-top-bottom))
+
 ;; C-x C-i or C-x Tab to call indent-rigidly
 ;; (define-key indent-rigidly-map (kbd "H-h") 'indent-rigidly-left)
 ;; (define-key indent-rigidly-map (kbd "H-l") 'indent-rigidly-right)
