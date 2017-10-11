@@ -94,8 +94,8 @@
   (let ((comint-buffer-maximum-size 0))
     (comint-truncate-buffer)))
 
-(define-key comint-mode-map "\C-c\M-o" #'paloryemacs/comint-clear-buffer)
-
+(with-eval-after-load "comint"
+  (define-key comint-mode-map "\C-c\M-o" #'paloryemacs/comint-clear-buffer))
 
 ;;; minibuffer
 (setq minibuffer-electric-default-mode 1

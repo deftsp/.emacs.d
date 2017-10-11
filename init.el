@@ -3,9 +3,6 @@
 ;;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
 
-;; I use the Common Lisp stuff all the time
-(require 'cl-lib)
-
 ;;; package
 (setq package-archives
       '(("marmalade" . "https://marmalade-repo.org/packages/")

@@ -330,10 +330,10 @@ to `reorganize-frame', otherwise set to `other-frame'."
 ;; To save the clock history across Emacs sessions
 (global-set-key (kbd "C-S-g") 'org-clock-goto) ; jump to current task from anywhere
 (setq org-clock-persist 'history)
-(org-clock-persistence-insinuate)
 (setq org-clock-idle-time 15)
-
 (setq org-clock-into-drawer t)
+(with-eval-after-load "org"
+  (org-clock-persistence-insinuate))
 
 ;;; org-publish
 (setq org-publish-project-alist
@@ -375,9 +375,10 @@ to `reorganize-frame', otherwise set to `other-frame'."
         ("baidu"    . "http://www.baidu.com/s?wd=")))
 
 ;; https://emacs.stackexchange.com/questions/33064/fontify-broken-links-in-org-mode
-(org-link-set-parameters
- "file"
- :face (lambda (path) (if (file-exists-p path) 'org-link 'org-warning)))
+(with-eval-after-load "org"
+  (org-link-set-parameters
+   "file"
+   :face (lambda (path) (if (file-exists-p path) 'org-link 'org-warning))))
 
 ;;; org-mac-link
 
@@ -451,23 +452,31 @@ to `reorganize-frame', otherwise set to `other-frame'."
 
 ;;; Embed source code and babel
 ;; fontify code in code blocks
-(setq org-src-fontify-natively t)
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((emacs-lisp . t)
-   (java . t)
-   (dot . t)
-   (ditaa . t)
-   (R . t)
-   (python . t)
-   (ruby . t)
-   (gnuplot . t)
-   (clojure . t)
-   (sh . t)
-   (org . t)
-   (plantuml . t)
-   (latex . t)))
-
+(with-eval-after-load "org"
+  (setq org-src-fontify-natively t)
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+     (java . t)
+     (dot . t)
+     (ditaa . t)
+     (R . t)
+     (python . t)
+     (ruby . t)
+     (gnuplot . t)
+     (clojure . t)
+     (sh . t)
+     (org . t)
+     (plantuml . t)
+     (latex . t)))
+  ;; give us some hint we are running
+  (defadvice org-babel-execute-src-block (around progress nil activate)
+    (set-face-attribute
+     'org-block nil :background "LightSteelBlue")
+    (message "Running your code block")
+    ad-do-it
+    (set-face-attribute 'org-block nil :background "gray")
+    (message "Done with code block")))
 
 ;; stop emacs asking for confirmation
 ;; (setq org-confirm-babel-evaluate nil)
@@ -476,22 +485,15 @@ to `reorganize-frame', otherwise set to `other-frame'."
         ((string= lang "emacs-lisp") nil)))
 (setq org-confirm-babel-evaluate 'paloryemacs/org-confirm-babel-evaluate)
 
-;; give us some hint we are running
-(defadvice org-babel-execute-src-block (around progress nil activate)
-  (set-face-attribute
-   'org-block nil :background "LightSteelBlue")
-  (message "Running your code block")
-  ad-do-it
-  (set-face-attribute 'org-block nil :background "gray")
-  (message "Done with code block"))
 
 ;;; Info directory
 (eval-after-load "info"
   '(add-to-list 'Info-directory-list "~/.emacs.d/site-lisp/org-mode/doc"))
 
 ;;; org-mac-protocol
-(when window-system
-  (require 'org-mac-protocol nil t))
+(with-eval-after-load "org"
+  (when window-system
+    (require 'org-mac-protocol nil t)))
 
 ;;; org-drill
 (setq org-drill-spaced-repetition-algorithm 'sm5
