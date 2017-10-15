@@ -7,7 +7,17 @@
 ;; This sets garbage collection to only occur when 6 megabytes are used.
 ;; Supposedly significantly speeds up startup time. (Seems to work for me, but
 ;; my computer is pretty modern. Disable if you are on anything less than 1GHZ).
-(setq gc-cons-threshold (max 100000000 gc-cons-threshold)) ; 100MB
+(defvar paloryemacs-gc-cons-threshold 100000000)
+(setq gc-cons-threshold (max paloryemacs-gc-cons-threshold gc-cons-threshold)) ; 100MB
+
+(defun paloryemacs-minibuffer-setup-hook ()
+  (setq gc-cons-threshold most-positive-fixnum))
+
+(defun paloryemacs-minibuffer-exit-hook ()
+  (setq gc-cons-threshold paloryemacs-gc-cons-threshold))
+
+(add-hook 'minibuffer-setup-hook #'paloryemacs-minibuffer-setup-hook)
+(add-hook 'minibuffer-exit-hook #'paloryemacs-minibuffer-exit-hook)
 
 ;; want to see how often GC happens
 ;; (setq garbage-collection-messages nil)
