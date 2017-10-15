@@ -29,10 +29,6 @@
       ;; save after 1 second of idle time (default is 30)
       auto-save-timeout 30)
 
-;; This causes files that I'm editing to be saved automatically by the emacs auto-save functionality. I'm hoping to
-;; break myself of the c-x c-s twitch.
-;; (add-hook 'auto-save-hook 'save-buffer-if-visiting-file)
-
 ;; (setq auto-save-file-name-transforms '((".*/\\(.*\\)" "~/.tmp/\\1" t)))
 
 ;;; Git

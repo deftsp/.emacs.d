@@ -6,7 +6,14 @@
 
 
 ;;; neat stuffs
-(require 'key-chord nil t)
+(use-package key-chord
+  :init
+  (progn
+    (setq key-chord-one-key-delay 0.16)
+    (setq key-chord-two-keys-delay 0.08))
+  :config (key-chord-mode +1))
+
+(use-package use-package-chords)
 
 (defun paloryemacs-buffer/warning (msg &rest args)
   "Display MSG as a warning message but in buffer `*Messages*'.
@@ -545,6 +552,11 @@ If FORCE is non-nil, overwrite any existing line-height properties."
                   (concat "TERM=xterm-color-256color " dircolors-bin))
                  "'"))))))
 
+;; https://github.com/krismolendyke/.emacs.d/blob/master/init.el
+(defvar paloryemacs/brew-cache-directory
+  (string-trim (shell-command-to-string
+                (string-join `(,(executable-find "brew") "--cache") " ")))
+  "Homebrew cache.")
 
 (provide '02utils)
 ;;; 02utils.el ends here

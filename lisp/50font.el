@@ -10,6 +10,8 @@
 ;;
 
 ;;; Code:
+;; (setq x-use-underline-position-properties nil)
+
 
 ;;; tumashu/cnfonts;; http://zhuoqiang.me/torture-emacs.html
 ;; http://baohaojun.github.io/perfect-emacs-chinese-font.html

@@ -44,12 +44,6 @@
 ;;   '(progn
 ;;     (paloryemacs/font-lock-add-commentaires-keywords 'scheme-mode)))
 
-(eval-after-load "cc-mode"
-  '(progn
-     ;; (dolist (m '(c-mode objc-mode c++-mode))        ; Colorisation : C/C++/Object-C : Commentaires
-     ;; (paloryemacs/font-lock-add-commentaires-keywords m))
-     (dolist (type (list "UCHAR" "USHORT" "ULONG" "BOOL" "BOOLEAN" "LPCTSTR" "C[A-Z]\\sw+" "\\sw+_t"))
-       (add-to-list 'c-font-lock-extra-types type))))
 
 ;;; Auto close *compilation* buffer, if no compile error
 ;; (setq compilation-finish-functions 'compile-autoclose)

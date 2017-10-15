@@ -24,29 +24,29 @@
           (progn
             (make-directory sysname)
             (cd sysname))
-          (cd (read-directory-name "Choose system directory: ")))))
+        (cd (read-directory-name "Choose system directory: ")))))
 
   ;; now create files
-  (flet ((create-lisp-file (name content)
-           (with-temp-buffer
-             (let ((author (user-full-name))
-                   (copyright (or (and (boundp 'my-copyright-holder)
-                                       my-copyright-holder)
-                                  (user-full-name)))
-                   (year (substring (current-time-string) -4)))
-               (insert
-                ";;; -*- Mode: LISP; -*-\n"
-                "\n"
-                ";;; Time-stamp: <>\n"
-                ";;; $Id: $\n;;;\n"
-                ";;; Copyright (C) " year " by " copyright "\n;;;\n"
-                ";;; Author: " author "\n;;;\n\n"))
-             (insert content)
-             (unless (file-writable-p name)
-               (error "%s is not writeable" name))
-             (when (or (not (file-exists-p name))
-                       (y-or-n-p (concat name " exists. Overwrite? ")))
-               (write-region (point-min) (point-max) name)))))
+  (cl-flet ((create-lisp-file (name content)
+                              (with-temp-buffer
+                                (let ((author (user-full-name))
+                                      (copyright (or (and (boundp 'my-copyright-holder)
+                                                          my-copyright-holder)
+                                                     (user-full-name)))
+                                      (year (substring (current-time-string) -4)))
+                                  (insert
+                                   ";;; -*- Mode: LISP; -*-\n"
+                                   "\n"
+                                   ";;; Time-stamp: <>\n"
+                                   ";;; $Id: $\n;;;\n"
+                                   ";;; Copyright (C) " year " by " copyright "\n;;;\n"
+                                   ";;; Author: " author "\n;;;\n\n"))
+                                (insert content)
+                                (unless (file-writable-p name)
+                                  (error "%s is not writeable" name))
+                                (when (or (not (file-exists-p name))
+                                          (y-or-n-p (concat name " exists. Overwrite? ")))
+                                  (write-region (point-min) (point-max) name)))))
     (create-lisp-file (concat sysname ".asd")
                       (concat "\n(in-package :cl-user)\n\n"
                               "(defpackage :" sysname ".system\n"

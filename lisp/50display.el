@@ -5,6 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+
 ;;; frame parameters
 (setq frame-resize-pixelwise t
       window-resize-pixelwise t)

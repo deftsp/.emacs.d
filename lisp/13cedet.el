@@ -124,6 +124,29 @@
 ;; (require 'semantic/db-cscope)
 ;; (semanticdb-enable-cscope-databases t)
 
+;; cscope
+;; 使用 cscope 浏览源代码,这个 xcscope 是个改进版，为每一次查找的结果使用不同 buffer，
+;; 这样就可以保存以前的结果。
+
+;; (when (eq system-type 'gnu/linux)
+;;   (require 'xcscope)
+;;   (defadvice cscope-bury-buffer (after bury-buffer activate)
+;;     "bury the current buffer and remove it from the selected window
+;; if it is displayed there."
+;;     (delete-window (get-buffer-window (get-buffer cscope-output-buffer-name)))))
+
+
+;; C-c s a             设定初始化的目录，一般是你代码的根目录
+;; C-s s I             对目录中的相关文件建立列表并进行索引
+;; C-c s s             序找符号
+;; C-c s g             寻找全局的定义
+;; C-c s c             看看指定函数被哪些函数所调用
+;; C-c s C             看看指定函数调用了哪些函数
+;; C-c s e             寻找正则表达式
+;; C-c s f             寻找文件
+;; C-c s i             看看指定的文件被哪些文件 include
+
+
 ;;; complete
 (setq semantic-complete-inline-analyzer-displayor-class
       'semantic-displayor-traditional-with-focus-highlight) ; semantic-displayor-ghost

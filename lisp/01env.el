@@ -13,6 +13,11 @@
 ;;; ENV
 ;; (setenv "SBCL_HOME" "/usr/lib/sbcl")
 
+;; this gives matlab access to the X11 windowing system, so I can see figures, etc.
+;; (setenv "DISPLAY" ":0.0")
+
+
+
 ;;; LANG
 (setenv "LANG" (or (getenv "LANG") "en_US.UTF-8"))
 (setenv "LC_CTYPE" (or (getenv "LC_CTYPE") "en_US.UTF-8"))

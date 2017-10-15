@@ -9,161 +9,116 @@
 ;; (eval-after-load "info"
 ;;   '(pushnew (expand-file-name "~/.emacs.d/site-lisp/cc-mode") Info-default-directory-list :test #'equal))
 
-(with-eval-after-load "cc-mode"
-  (require 'ifdef))
+(use-package cc-mode
+  :defer t
+  :init
+  ;; make a #define be left-aligned
+  (setq c-electric-pound-behavior (quote (alignleft)))
+  ;; variable: comment-padding Padding string that `comment-region' puts between comment chars and text.
 
-;; make a #define be left-aligned
-(setq c-electric-pound-behavior (quote (alignleft)))
-;; variable: comment-padding Padding string that `comment-region' puts between comment chars and text.
+  :config
+  (progn
+    (define-key c-mode-base-map (kbd "%") 'paloryemacs/goto-match-paren)
+    (define-key c-mode-base-map (kbd "C-m") 'c-context-line-break) ; Do a line break suitable to the context.
+    ;; (define-key c-mode-base-map (kbd "H-M-j") 'paloryemacs/move-function-down)
+    ;; (define-key c-mode-base-map (kbd "H-M-k") 'paloryemacs/move-function-up)
+    ;; ifdef - Parse the #if...#elif...#else...#endif block in a C file.
+    (local-set-key (kbd "<M-S-iso-lefttab>") 'mark-ifdef)
 
-(defun paloryemacs/next-c-function ()
-  "Go to start of next C function."
-  (interactive)
-  (c-beginning-of-defun -1))
+    (require 'ifdef)
+    ;; (dolist (m '(c-mode objc-mode c++-mode))        ; Colorisation : C/C++/Object-C : Commentaires
+    ;;   (paloryemacs/font-lock-add-commentaires-keywords m))
+    ;; (dolist (type (list "UCHAR" "USHORT" "ULONG" "BOOL" "BOOLEAN" "LPCTSTR" "C[A-Z]\\sw+" "\\sw+_t"))
+    ;;   (add-to-list 'c-font-lock-extra-types type))
+    (defun paloryemacs/next-c-function ()
+      "Go to start of next C function."
+      (interactive)
+      (c-beginning-of-defun -1))
 
-(defun paloryemacs/prev-c-function ()
-  "Go to start of next C function."
-  (interactive)
-  (c-beginning-of-defun 2))
+    (defun paloryemacs/prev-c-function ()
+      "Go to start of next C function."
+      (interactive)
+      (c-beginning-of-defun 2))
 
+    (use-package ctypes)                     ; beautify typedefs
+    (ctypes-auto-parse-mode 1)
+    (add-hook 'ctypes-load-hook 'paloryemacs/ctypes-load-hook)
+    (defun paloryemacs/ctypes-load-hook ()
+      (ctypes-read-file "~/.ctypes_std_c" nil t t))
 
-;;; doxymacs
-(defun paloryemacs/doxymacs-font-lock-hook ()
-  (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
-      (doxymacs-font-lock)))
+    ;; style I want to use in c++ mode
+    ;; +   `c-basic-offset' times 1
+    ;; -   `c-basic-offset' times -1
+    ;; ++  `c-basic-offset' times 2
+    ;; --  `c-basic-offset' times -2
+    ;; *   `c-basic-offset' times 0.5
+    ;; /   `c-basic-offset' times -0.5
+    (c-add-style "palory"
+                 '((indent-tabs-mode . nil)        ; use spaces rather than tabs
+                   (c-basic-offset . 4)            ; indent by four spaces
+                   (c-comment-only-line-offset . 0)
+                   (c-offsets-alist
+                    (statement-block-intro . +)
+                    (substatement-open . 0)  ; brackets should be at same indentation level as the statements they open
+                    (substatement-label . 0)
+                    (member-init-intro . 0)  ; first line in a member initialization list
+                    (case-label . +)         ; indent case labels by c-indent-level, too
+                    (label . 0)
+                    (statement-cont . +)
+                    (inline-open . 0))))
 
-(eval-after-load "doxymacs"
-  '(progn
-     (add-hook 'font-lock-mode-hook 'paloryemacs/doxymacs-font-lock-hook)
-     (add-hook 'c-mode-common-hook 'doxymacs-mode)))
+    (defun paloryemacs/c-mode-common-hook ()
+      (subword-mode 1) ; C-c C-w toggle it
+      ;; the delete key gobbles all preceding whitespace in one fell swoop
+      (c-toggle-hungry-state 1))
 
-;;; doxymacs end here -----
+    (defun paloryemacs/c-mode-hook ()
+      ;; (local-set-key [(control tab)] 'tempo-forward-mark)    ; move to next tempo mark
+      (c-set-style "palory"))
 
-
-;;; ctypes
-(defun paloryemacs/ctypes-load-hook ()
-  (ctypes-read-file "~/.ctypes_std_c" nil t t))
-
-(with-eval-after-load "cc-mode"
-  (require 'ctypes)                     ; beautify typedefs
-  (ctypes-auto-parse-mode 1)
-  (add-hook 'ctypes-load-hook 'paloryemacs/ctypes-load-hook))
-
-;; style I want to use in c++ mode
-;; +   `c-basic-offset' times 1
-;; -   `c-basic-offset' times -1
-;; ++  `c-basic-offset' times 2
-;; --  `c-basic-offset' times -2
-;; *   `c-basic-offset' times 0.5
-;; /   `c-basic-offset' times -0.5
-(c-add-style "palory"
-             '((indent-tabs-mode . nil)        ; use spaces rather than tabs
-               (c-basic-offset . 4)            ; indent by four spaces
-               (c-comment-only-line-offset . 0)
-               (c-offsets-alist
-                (statement-block-intro . +)
-                (substatement-open . 0)  ; brackets should be at same indentation level as the statements they open
-                (substatement-label . 0)
-                (member-init-intro . 0)  ; first line in a member initialization list
-                (case-label . +)         ; indent case labels by c-indent-level, too
-                (label . 0)
-                (statement-cont . +)
-                (inline-open . 0))))
-
-
-(eval-after-load "cc-mode"
-  '(progn
-     (define-key c-mode-base-map (kbd "C-m") 'c-context-line-break) ; Do a line break suitable to the context.
-     ;; (define-key c-mode-base-map (kbd "H-M-j") 'paloryemacs/move-function-down)
-     ;; (define-key c-mode-base-map (kbd "H-M-k") 'paloryemacs/move-function-up)
-     ;; ifdef - Parse the #if...#elif...#else...#endif block in a C file.
-     (local-set-key (kbd "<M-S-iso-lefttab>") 'mark-ifdef)))
-
-
-(defun paloryemacs/c-mode-common-hook ()
-  (subword-mode 1) ; C-c C-w toggle it
-  ;; the delete key gobbles all preceding whitespace in one fell swoop
-  (c-toggle-hungry-state 1))
+    (defun paloryemacs/objc-mode-hook ()
+      (c-set-style "palory")
+      (define-key objc-mode-map (kbd "C-c C-r") 'xcode:build-and-run))
 
 
-(defun paloryemacs/c-mode-hook ()
-  ;; (local-set-key [(control tab)] 'tempo-forward-mark)    ; move to next tempo mark
-  (c-set-style "palory"))
+    (defun paloryemacs/cpp-mode-hook ()
+      (c-set-style "palory"))
 
+    (add-hook 'c-mode-common-hook 'paloryemacs/c-mode-common-hook)
+    (add-hook 'c-mode-hook 'paloryemacs/c-mode-hook)
+    (add-hook 'c++-mode-hook 'paloryemacs/cpp-mode-hook)
+    (add-hook 'objc-mode-hook 'paloryemacs/objc-mode-hook)
 
-(defun paloryemacs/objc-mode-hook ()
-  (c-set-style "palory")
-  (define-key objc-mode-map (kbd "C-c C-r") 'xcode:build-and-run))
+    ;; move current function up
+    ;; Probably you you can use 'delete-and-extract-region' instead of 'kill-region' plus 'yank'.
+    (defun paloryemacs/move-function-up ()
+      (interactive)
+      (save-excursion
+        (c-mark-function)
+        (kill-region (region-beginning) (region-end))
+        (c-beginning-of-defun 1)
+        (yank)))
 
+    ;; move current function down
+    (defun paloryemacs/move-function-down ()
+      (interactive)
+      (save-excursion
+        (c-mark-function)
+        (kill-region (region-beginning) (region-end))
+        (c-beginning-of-defun -1)
+        (yank)))))
 
-(defun paloryemacs/cpp-mode-hook ()
-  (c-set-style "palory"))
+(use-package doxymacs
+  :defer t
+  :init
+  (add-hook 'c-mode-common-hook 'doxymacs-mode)
+  :config
+  (progn
+    (defun paloryemacs/doxymacs-font-lock-hook ()
+      (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+          (doxymacs-font-lock)))
 
-(add-hook 'c-mode-common-hook 'paloryemacs/c-mode-common-hook)
-(add-hook 'c-mode-hook 'paloryemacs/c-mode-hook)
-(add-hook 'c++-mode-hook 'paloryemacs/cpp-mode-hook)
-(add-hook 'objc-mode-hook 'paloryemacs/objc-mode-hook)
-
-;;;
-;; move current function up
-(defun paloryemacs/move-function-up ()
-  (interactive)
-  (save-excursion
-    (c-mark-function)
-    (kill-region (region-beginning) (region-end))
-    (c-beginning-of-defun 1)
-    (yank)))
-
-;; move current function down
-(defun paloryemacs/move-function-down ()
-  (interactive)
-  (save-excursion
-    (c-mark-function)
-    (kill-region (region-beginning) (region-end))
-    (c-beginning-of-defun -1)
-    (yank)))
-;; Probably you you can use 'delete-and-extract-region' instead of 'kill-region' plus 'yank'.
-
-;;----------------------------------------------------------------------------------------------------
-
-;; (defun mark-c-scope-beg ()
-;;   "Marks the c-scope (region between {}) enclosing the point.
-;;    Naive, as will be confused by { } within strings"
-;;   (let
-;;    ((scope-depth 1))
-;;  (while (not (= scope-depth 0))
-;;    (search-backward-regexp "}\\|{")
-;;    (if (string= (char-to-string (char-before)) "}")
-;;        (setq scope-depth (1+ scope-depth))
-;;          (setq scope-depth (1- scope-depth)))))
-;;   (point))
-
-;; (defun mark-c-scope-end ()
-;;   "Marks the c-scopie (region between {}) enclosing the point.
-;;    Naive, as will be confused by { } within strings"
-;;   (let
-;;    ((scope-depth 1))
-;;  (while (not (= scope-depth 0))
-;;    (search-forward-regexp "}\\|{")
-;;    (if (string= (char-to-string (char-before)) "}")
-;;        (setq scope-depth (1- scope-depth))
-;;          (setq scope-depth (1_ scope-depth)))))
-;;   (point))
-
-;; (defun kill-c-scope ()
-;;   (interactive)
-;;   (let
-;;    ((inital-point (point)))
-;;  (save-excursion
-;;    (let
-;;      ((beg (mark-c-scope-beg)))
-;;      (goto-char inital-point)
-;;      (let ((end (mark-c-scope-end))))))))
-
-;;; Comment
-;; (setq comment-start "//")
-;; (setq compilation-read-command 'nil)
-(setq comment-style 'extra-line)        ;default "indent"
+    (add-hook 'font-lock-mode-hook 'paloryemacs/doxymacs-font-lock-hook)))
 
 ;;; indent the entire buffer
 (defun paloryemacs/indent-entire-c-buffer ()
@@ -175,43 +130,6 @@
       (c-indent-command)
       (end-of-line)
       (forward-char 1))))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; "funky stuff"
-
-;; The function above is funky but useful. Having swapped the pairs ('[', '{'), ('-', '_') and (']', '}'), in order to type
-;; "->", we need to type four characters ('Shift' followed by '-' followed by 'Shift' followed by '>'). With the above
-;; code, all you need to type is two underscores: '__'). Automagically, they are converted into '->'). Similarly, two
-;; successive dots '..' are translated into '[]' (for array indexing). I find that these combinations improve my
-;; code-typing speed significantly.
-
-;; (defun my-editing-function (first last len)
-;;   (interactive)
-;;   (if (and (boundp 'major-mode)
-;;            (member major-mode (list 'c-mode 'c++-mode 'gud-mode))
-;;            (= len 0)
-;;            (> (point) 4)
-;;            (= first (- (point) 1)))
-;;       (cond
-;;        ((and (string-equal (buffer-substring (point) (- (point) 2)) "__")
-;;              (not (string-equal (buffer-substring (point) (- (point) 3)) "___")))
-;;         (progn (delete-backward-char 2) (insert-char ?- 1) (insert-char ?> 1)))
-
-;;        ((string-equal (buffer-substring (point) (- (point) 3)) "->_")
-;;         (progn (delete-backward-char 3) (insert-char ?_ 3)))
-
-;;        ((and (string-equal (buffer-substring (point) (- (point) 2)) "..")
-;;              (not (string-equal (buffer-substring (point) (- (point) 3)) "...")))
-;;         (progn (delete-backward-char 2) (insert-char ?[ 1) (insert-char ?] 1) (backward-char 1)))
-
-;;        ((and (> (point-max) (point))
-;;              (string-equal (buffer-substring (+ (point) 1) (- (point) 2)) "[.]"))
-;;         (progn (forward-char 1) (delete-backward-char 3) (insert-char ?. 1) (insert-char ?. 1) )))
-;;     nil))
-
-;; (add-hook 'after-change-functions 'my-editing-function)
-
 
 ;;----------------------------------------------------------------------------------------------------
 ;; jump out from a pair(like quote, parenthesis, etc.)

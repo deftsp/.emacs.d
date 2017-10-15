@@ -333,7 +333,6 @@ kill internal buffers too."
 
 ;;; evil-lisp-state
 (use-package evil-lisp-state
-  :defer t
   :init
   (setq evil-lisp-state-global t) ; set it before require
   :config
@@ -770,6 +769,8 @@ to replace the symbol under cursor"
   (define-key lispy-mode-map-lispy (kbd "M-o") nil)
   (use-package evil-lispy
     :config
+    (evil-define-key 'insert evil-lispy-mode-map ";" nil)
+
     (evil-define-key 'normal evil-lispy-mode-map
       "gm" #'evil-lispy/enter-marked-state ; "gm" default to evil-middle-of-visual-line
       (kbd "C-SPC") nil)

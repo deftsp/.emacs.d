@@ -3,6 +3,15 @@
 ;;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
 
+;;; Garbage Collection
+;; This sets garbage collection to only occur when 6 megabytes are used.
+;; Supposedly significantly speeds up startup time. (Seems to work for me, but
+;; my computer is pretty modern. Disable if you are on anything less than 1GHZ).
+(setq gc-cons-threshold (max 100000000 gc-cons-threshold)) ; 100MB
+
+;; want to see how often GC happens
+;; (setq garbage-collection-messages nil)
+
 ;;; package
 (setq package-archives
       '(("marmalade" . "https://marmalade-repo.org/packages/")

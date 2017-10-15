@@ -24,7 +24,6 @@
 
 ;;; Code:
 ;; notice: toggle input method will cause key-chord work abnormally
-(require 'key-chord nil t)
 
 ;;; banish the shift key
 ;; http://endlessparentheses.com/banishing-the-shift-key-with-key-chord-in-emacs.html
@@ -50,10 +49,6 @@
 
 ;; maybe try to bind a key chord to a key map is a good idea
 (with-eval-after-load "key-chord"
-  (key-chord-mode 1)
-  (setq key-chord-one-key-delay 0.16)   ; default 0.2
-  (setq key-chord-two-keys-delay 0.08)  ; default 0.1
-
   (dolist (combo banish-shift-key-combo)
     (key-chord-define-global (car combo) (cdr combo)))
 

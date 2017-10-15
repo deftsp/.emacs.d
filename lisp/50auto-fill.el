@@ -12,25 +12,6 @@
 ;; (setq adaptive-fill-mode nil) ; 解决段首空格缩进的问题
 (setq colon-double-space t) ; put two spaces after a colon when filling.
 
-;;; longline mode
-;; (longlines-mode t) ;; soft word wrap like the rest of the world
-;; (setq longlines-auto-wrap t)
-;; (setq longlines-show-hard-newlines nil)
-
-;; Visual-line-mode is a new addition that is set on by default. It is something of a replacement
-;; for longlines-mode. It doesn't insert soft line breaks, so it works better on larger files, and
-;; it wraps to whatever your screen is, so if you are using longlines-mode you should switch to
-;; using visual-line-mode. C-n and C-p will move by visual lines, which may screw up some macros,
-;; but mostly it seems to work quite well.
-
-(setq visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
-;; (global-visual-line-mode 1)
-
-
-;; don't use auto-fill inside minibuffer
-;; (add-hook 'minibuffer-setup-hook
-;;           (lambda () (interactive) (auto-fill-mode -1)))
-
 ;; temp buffers resize to their text size
 (when (fboundp 'temp-buffer-resize-mode)
   (temp-buffer-resize-mode 1))

@@ -878,7 +878,7 @@ such character is found, following options are shown:
   (interactive)
   (let* ((repev (read-char "Replace back character:" t))
          (repstr (string repev)))
-    (labels
+    (cl-labels
         ((check () (if (fboundp 'flyspell-word) (flyspell-word)))
          (rec ()
               (save-excursion
