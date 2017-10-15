@@ -8,65 +8,78 @@
 (add-to-list 'load-path "~/.emacs.d/site-lisp/slime/contrib")
 (require 'slime-autoloads)
 
-;;;  contribs
-;; slime-js conflict with swank-fack see more https://github.com/swank-js/swank-js/issues/40
-;; (slime-setup '(slime-fancy slime-asdf slime-tramp slime-js slime-repl slime-autodoc))
-;; (slime-setup '(slime-asdf slime-tramp slime-js slime-repl slime-fuzzy))
-;; When SLIME is loaded it loads the contribs you set up before in slime-contribs. You can use the command slime-setup
-;; to reload contribs.
-(setq slime-contribs '(slime-asdf slime-tramp slime-js slime-repl slime-fuzzy))
-(eval-after-load "slime"
-  '(setq inferior-lisp-program "~/opt/clbuild2/clbuild lisp"
-         slime-protocol-version 'ignore ; remove annoying warning
-         slime-complete-symbol*-fancy t
-         ;; slime-complete-symbol-function 'slime-fuzzy-complete-symbol
-         slime-net-coding-system 'utf-8-unix
-         slime-default-lisp 'clozure
-         slime-enable-evaluate-in-emacs nil
-         slime-log-events t
-         slime-outline-mode-in-events-buffer nil ; means use outline-mode in *slime-events*
-         slime-autodoc-use-multiline-p t
-         slime-use-autodoc-mode t
-         slime-highlight-compiler-notes t
-         slime-fuzzy-completion-in-place nil))
+(use-package slime
+  :defer t
+  :init
+  (progn
+    ;;  contribs
+    ;; slime-js conflict with swank-fack see more https://github.com/swank-js/swank-js/issues/40
+    ;; (slime-setup '(slime-fancy slime-asdf slime-tramp slime-js slime-repl slime-autodoc))
+    ;; (slime-setup '(slime-asdf slime-tramp slime-js slime-repl slime-fuzzy))
+    ;; When SLIME is loaded it loads the contribs you set up before in slime-contribs. You can use the command slime-setup
+    ;; to reload contribs.
+    (setq slime-contribs '(slime-asdf slime-tramp slime-js slime-repl slime-fuzzy))
+    (setq inferior-lisp-program "~/opt/clbuild2/clbuild lisp"
+          slime-protocol-version 'ignore ; remove annoying warning
+          slime-complete-symbol*-fancy t
+          ;; slime-complete-symbol-function 'slime-fuzzy-complete-symbol
+          slime-net-coding-system 'utf-8-unix
+          slime-default-lisp 'clozure
+          slime-enable-evaluate-in-emacs nil
+          slime-log-events t
+          slime-outline-mode-in-events-buffer nil ; means use outline-mode in *slime-events*
+          slime-autodoc-use-multiline-p t
+          slime-use-autodoc-mode t
+          slime-highlight-compiler-notes t
+          slime-fuzzy-completion-in-place nil))
+  :config
+  (progn
+    (define-key slime-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)
+    (define-key slime-repl-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)
+    ;; (define-key slime-mode-map (kbd "C-c I") 'slime-inspect)
 
-;;;
-(defun paloryemacs/lisp-mode-hook ()
+    ;; slime-lisp-implementations
+    ;; You start up your lisps using M-- M-x slime. It will ask you which Lisp to start up, and you use
+    ;; the name you defined in slime-lisp-implementations.
+
+    ;; You can switch the "active" REPL using the command C-c C-x c. For more info, see the Slime
+    ;; Documentation on controlling multiple connections
+    ;; (http://common-lisp.net/project/slime/doc/html/Multiple-connections.html#Multiple-connections).
+    (mapcar (lambda (lst) (add-to-list 'slime-lisp-implementations lst))
+            '((sbcl ("~/opt/clbuild2/clbuild" "--implementation" "sbcl" "lisp") :coding-system utf-8-unix)
+              (sbcl.core ("sbcl" "--core" "sbcl.core-with-swank")
+                         :init (lambda (port-file _)
+                                 (format
+                                  "(swank:start-server %S :coding-system \"utf-8-unix\")\n"
+                                  port-file))
+                         :coding-system utf-8-unix)
+              (cmucl ("lisp"))
+              (clozure ("/usr/local/bin/ccl")) ; "/usr/local/bin/ccl64 -K utf-8"
+              (ecl ("ecl"))
+              (allegro ("/usr/local/stow/AllegroCL/alisp"))
+              (clisp ("clisp") :coding-system utf-8-unix)
+              (lispworks (""))
+              (openmcl ("dx86cl64"))))))
+
+(defun paloryemacs/lisp-mode-init ()
   ;; (imenu-add-to-menubar "Symbols")
   ;; (make-local-variable 'outline-regexp)
   ;; (setq outline-regexp "^(.*")
+  ;; setup {} and [] to be treated like ()
+  (define-key lisp-mode-map [tab] 'lisp-indent-or-complete)
+  (modify-syntax-entry ?\{ "(}" lisp-mode-syntax-table)
+  (modify-syntax-entry ?\} "){" lisp-mode-syntax-table)
+  (modify-syntax-entry ?\[ "(]" lisp-mode-syntax-table)
+  (modify-syntax-entry ?\] ")[" lisp-mode-syntax-table)
+
   (slime-mode t))
 
-(add-hook 'lisp-mode-hook 'paloryemacs/lisp-mode-hook)
+(add-hook 'lisp-mode-hook 'paloryemacs/lisp-mode-init)
 
 ;;; this prevents us from requiring the user get dev-lisp/hyperspec (which is non-free) as a hard dependency
 (if (file-exists-p "/usr/share/doc/hyperspec")
     (setq common-lisp-hyperspec-root "file:///usr/share/doc/hyperspec/HyperSpec/")
-    (setq common-lisp-hyperspec-root "http://www.lispworks.com/reference/HyperSpec/"))
-
-;;; slime-lisp-implementations
-;; You start up your lisps using M-- M-x slime. It will ask you which Lisp to start up, and you use
-;; the name you defined in slime-lisp-implementations.
-
-;; You can switch the "active" REPL using the command C-c C-x c. For more info, see the Slime
-;; Documentation on controlling multiple connections
-;; (http://common-lisp.net/project/slime/doc/html/Multiple-connections.html#Multiple-connections).
-(eval-after-load "slime"
-  '(mapcar (lambda (lst) (add-to-list 'slime-lisp-implementations lst))
-           '((sbcl ("~/opt/clbuild2/clbuild" "--implementation" "sbcl" "lisp") :coding-system utf-8-unix)
-             (sbcl.core ("sbcl" "--core" "sbcl.core-with-swank")
-                        :init (lambda (port-file _)
-                                (format
-                                 "(swank:start-server %S :coding-system \"utf-8-unix\")\n"
-                                 port-file))
-                        :coding-system utf-8-unix)
-             (cmucl ("lisp"))
-             (clozure ("/usr/local/bin/ccl")) ; "/usr/local/bin/ccl64 -K utf-8"
-             (ecl ("ecl"))
-             (allegro ("/usr/local/stow/AllegroCL/alisp"))
-             (clisp ("clisp") :coding-system utf-8-unix)
-             (lispworks (""))
-             (openmcl ("dx86cl64")))))
+  (setq common-lisp-hyperspec-root "http://www.lispworks.com/reference/HyperSpec/"))
 
 (defmacro defslime-start (name mapping)
   `(defun ,name ()
@@ -80,13 +93,6 @@
 (defslime-start cmucl 'cmucl)
 
 
-;; setup {} and [] to be treated like ()
-(modify-syntax-entry ?\{ "(}" lisp-mode-syntax-table)
-(modify-syntax-entry ?\} "){" lisp-mode-syntax-table)
-(modify-syntax-entry ?\[ "(]" lisp-mode-syntax-table)
-(modify-syntax-entry ?\] ")[" lisp-mode-syntax-table)
-
-
 ;;; ansicl
 ;; Look up stuff in the ANSI Common Lisp Standard.
 ;; downloading instructions: (find-file "~/e/cl.e")
@@ -94,12 +100,15 @@
 ;; point in the manual, add the following
 
 ;;; info
-(require 'info-look)
-(info-lookup-add-help
- :mode 'lisp-mode
- :regexp "[^][()'\" \t\n]+"
- :ignore-case t
- :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))
+(use-package info-look
+  :config
+  (progn
+    (info-lookup-add-help
+     :mode 'lisp-mode
+     :regexp "[^][()'\" \t\n]+"
+     :ignore-case t
+     :doc-spec '(("(ansicl)Symbol Index" nil nil nil)))))
+
 
 ;;; Fontify *SLIME Description* buffer for SBCL
 (defun slime-description-fontify ()
@@ -180,20 +189,8 @@ currently under the cursor."
   (interactive "p")
   (if (or (looking-back "^\\s-*") (bolp))
       (call-interactively 'lisp-indent-line)
-      (call-interactively 'slime-indent-and-complete-symbol)))
+    (call-interactively 'slime-indent-and-complete-symbol)))
 
-;; (eval-after-load "lisp-mode"
-;;   '(progn
-;;     (define-key lisp-mode-map [tab] 'lisp-indent-or-complete)))
-
-;; (define-key slime-mode-map (kbd "C-c I") 'slime-inspect)
-
-(eval-after-load "slime"
-'(progn
-   (define-key slime-mode-map (kbd "C-c h") 'slime-hyperspec-lookup)))
-
-(eval-after-load "slime-repl"
-  '(define-key slime-repl-mode-map (kbd "C-c h") 'slime-hyperspec-lookup))
 
 ;;; stumpwm
 (defun stumpwm ()

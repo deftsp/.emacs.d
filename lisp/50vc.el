@@ -111,15 +111,27 @@
 ;;       ad-do-it)))
 
 ;;; magit
-(autoload 'magit-grep "magit" "Command for `grep'." t) ; which is not a autload function at 2013.06.25 yet
-(global-set-key (kbd "C-x G") 'magit-status)
-(with-eval-after-load "magit"
-  (add-to-list 'magit-repository-directories "~/.emacs.d") ; C-u C-u M-x magit-status will ignore it
-  (add-to-list 'magit-repository-directories "~/opt/emacs")
-  (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
-  (setq magit-completing-read-function 'magit-ido-completing-read))
+(use-package magit
+  :defer t
+  :init
+  (progn
+    (autoload 'magit-grep "magit" "Command for `grep'." t) ; which is not a autload function at 2013.06.25 yet
+    (global-set-key (kbd "C-x G") 'magit-status))
+  :config
+  (progn
+    (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
+    (setq magit-completing-read-function 'magit-ido-completing-read)
+    (add-to-list 'magit-repository-directories "~/.emacs.d") ; C-u C-u M-x magit-status will ignore it
+    (add-to-list 'magit-repository-directories "~/opt/emacs")
+    ;; optional: this is the evil state that evil-magit will use
+    ;; (setq evil-magit-state 'normal)
+    ;; optional: disable additional bindings for yanking text
+    ;; (setq evil-magit-use-y-for-yank nil)
+    (use-package evil-magit)))
 
-(with-eval-after-load "with-editor"
+(use-package with-editor
+  :defer t
+  :config
   (with-eval-after-load "evil"
     ;; start the commit window in insert mode
     (add-hook 'with-editor-mode-hook 'evil-insert-state)
@@ -128,23 +140,14 @@
       (kbd "RET") 'with-editor-finish
       [escape] 'with-editor-cancel)
 
-    (when dotpaloryemacs-major-mode-leader-key
-      (add-hook 'with-editor-mode-hook 'evil-normalize-keymaps)
-      (let ((mm-key dotpaloryemacs-major-mode-leader-key))
-        (dolist (state '(normal motion))
-          (evil-define-key state with-editor-mode-map
-            (concat mm-key mm-key) 'with-editor-finish
-            (concat mm-key "a")    'with-editor-cancel
-            (concat mm-key "c")    'with-editor-finish
-            (concat mm-key "k")    'with-editor-cancel))))))
-
-;;; evil-magit
-;; optional: this is the evil state that evil-magit will use
-;; (setq evil-magit-state 'normal)
-;; optional: disable additional bindings for yanking text
-;; (setq evil-magit-use-y-for-yank nil)
-(with-eval-after-load "magit"
-  (require 'evil-magit nil t))
+    (add-hook 'with-editor-mode-hook 'evil-normalize-keymaps)
+    (let ((mm-key dotpaloryemacs-major-mode-leader-key))
+      (dolist (state '(normal motion))
+        (evil-define-key state with-editor-mode-map
+          (concat mm-key mm-key) 'with-editor-finish
+          (concat mm-key "a")    'with-editor-cancel
+          (concat mm-key "c")    'with-editor-finish
+          (concat mm-key "k")    'with-editor-cancel)))))
 
 ;; (defun magit-toggle-whitespace ()
 ;;   (interactive)
@@ -187,13 +190,12 @@
 
 ;;; diff-hl
 ;; https://github.com/dgutov/diff-hl
-(require 'diff-hl nil t)
-
-(with-eval-after-load "diff-hl"
-  (global-diff-hl-mode +1))
-
-(with-eval-after-load "magit"
-  (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh))
+(use-package diff-hl
+  :defer 3
+  :config
+  (global-diff-hl-mode +1)
+  (with-eval-after-load "magit"
+    (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
 
 ;;; git-gutter
 ;; https://github.com/syohex/emacs-git-gutter-fringe

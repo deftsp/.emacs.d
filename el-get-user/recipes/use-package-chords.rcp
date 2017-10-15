@@ -2,4 +2,4 @@
        :type github
        :description "key-chord keyword for use-package"
        :pkgname "waymondo/use-package-chords"
-       :depends (use-package bind-key key-chord))
+       :depends (use-package key-chord))

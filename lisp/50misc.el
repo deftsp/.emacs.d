@@ -99,10 +99,19 @@
 ;;;
 (when (eq system-type 'darwin)
   ;; (setq find-function-C-source-directory "")
-  (dolist (dir '("emacs--git" "emacs-mac--git"))
-    (let ((p (string-join `(,paloryemacs/brew-cache-directory ,dir) "/")))
-      (when (file-exists-p p)
-        (setq source-directory p)))))
+
+  (defun paloryemacs//set-source-directory ()
+    ;; https://github.com/krismolendyke/.emacs.d/blob/master/init.el
+    (unless paloryemacs/brew-cache-directory
+      (setq paloryemacs/brew-cache-directory
+            (string-trim (shell-command-to-string
+                          (string-join `(,(executable-find "brew") "--cache") " ")))))
+    (dolist (dir '("emacs--git" "emacs-mac--git"))
+      (let ((p (string-join `(,paloryemacs/brew-cache-directory ,dir) "/")))
+        (when (file-exists-p p)
+          (setq source-directory p)))))
+  ;; brew --cache is slow for emacs bootup
+  (run-with-idle-timer 13 nil #'paloryemacs//set-source-directory))
 
 ;;; Move to trash when deleting stuff
 (when (eq system-type 'darwin)
@@ -134,6 +143,7 @@
 
 ;;; mailcap
 (use-package mailcap
+  :defer 7
   :config
   (mailcap-parse-mailcaps "~/.mailcap" t))
 
@@ -158,7 +168,7 @@
 ;; using visual-line-mode. C-n and C-p will move by visual lines, which may screw up some macros,
 ;; but mostly it seems to work quite well.
 (setq visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
-(global-visual-line-mode +1)
+;; (global-visual-line-mode +1)
 
 ;; Active Region Highlighting
 (transient-mark-mode t)
@@ -299,6 +309,7 @@
 
 ;;; paren
 (use-package mic-paren
+  :defer 7
   :init
   (setq paren-sexp-mode 'mismatch)
   :config
@@ -494,6 +505,7 @@ vi style of % jumping to matching brace."
 ;;     (setq-default show-trailing-whitespace t))
 ;; make whitespace-mode use just basic coloring
 (use-package whitespace
+  :defer 3
   :init
   (progn
     (setq whitespace-style (quote (face spaces lines-tail tabs trailing newline space-mark tab-mark newline-mark)))
@@ -994,6 +1006,7 @@ This command is to be used interactively."
   (global-set-key "\M-\C-y" 'kill-ring-search))
 
 (use-package undo-tree
+  :defer 3
   :init
   (progn
     (setq-default undo-tree-visualizer-timestamps t)
@@ -1122,6 +1135,7 @@ Toggles between: “ all lower ”, “ Init Caps ”, “ ALL CAPS ”."
 ;; unicad
 ;; https://www.emacswiki.org/emacs/Unicad
 (use-package unicad
+  :defer 4
   :config
   (unicad-enable))
 

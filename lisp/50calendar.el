@@ -23,6 +23,7 @@
 
 ;;; Appointments
 (use-package appt
+  :defer 3
   :init
   (setq appt-display-diary t
         appt-display-duration 10

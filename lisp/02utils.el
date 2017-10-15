@@ -11,9 +11,24 @@
   (progn
     (setq key-chord-one-key-delay 0.16)
     (setq key-chord-two-keys-delay 0.08))
-  :config (key-chord-mode +1))
+  :config
+  (key-chord-mode +1))
 
 (use-package use-package-chords)
+
+(defmacro paloryemacs-with-timer (title &rest forms)
+  "Run the given FORMS, counting the elapsed time.
+A message including the given TITLE and the corresponding elapsed
+time is displayed."
+  (declare (indent 1))
+  (let ((nowvar (make-symbol "now"))
+        (body   `(progn ,@forms)))
+    `(let ((,nowvar (current-time)))
+       (message "%s..." ,title)
+       (prog1 ,body
+         (let ((elapsed
+                (float-time (time-subtract (current-time) ,nowvar))))
+           (message "%s... done (%.3fs)" ,title elapsed))))))
 
 (defun paloryemacs-buffer/warning (msg &rest args)
   "Display MSG as a warning message but in buffer `*Messages*'.
@@ -404,19 +419,16 @@ If FORCE is non-nil, overwrite any existing line-height properties."
 
     (goto-char from)
     (while (search-forward-regexp method-call-2-arg to t)
-     (replace-match (concat (match-string 1)
-                            "->"
-                            (match-string 2)
-                            "("
-                            (match-string 3)
-                            ", "
-                            (match-string 4)
-                            ")"
+      (replace-match (concat (match-string 1)
+                             "->"
+                             (match-string 2)
+                             "("
+                             (match-string 3)
+                             ", "
+                             (match-string 4)
+                             ")"
 
-                            )))
-
-
-    ))
+                             )))))
 
 
 ;;; TODO: recursive
@@ -544,7 +556,7 @@ If FORCE is non-nil, overwrite any existing line-height properties."
 (defvar paloryemacs/dircolors-string
   (let ((dircolors-bin
          (or (executable-find "dircolors") (executable-find "gdircolors"))))
-    (when (executable-find dircolors-bin)
+    (when dircolors-bin
       (replace-regexp-in-string
        ":$" "" (cadr
                 (split-string
@@ -552,11 +564,10 @@ If FORCE is non-nil, overwrite any existing line-height properties."
                   (concat "TERM=xterm-color-256color " dircolors-bin))
                  "'"))))))
 
-;; https://github.com/krismolendyke/.emacs.d/blob/master/init.el
-(defvar paloryemacs/brew-cache-directory
-  (string-trim (shell-command-to-string
-                (string-join `(,(executable-find "brew") "--cache") " ")))
-  "Homebrew cache.")
+
+
+;;; it will be set later for time save
+(defvar paloryemacs/brew-cache-directory nil "Homebrew cache.")
 
 (provide '02utils)
 ;;; 02utils.el ends here

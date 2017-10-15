@@ -2,49 +2,49 @@
 
 
 ;;; modules
-(eval-after-load "erc"
-  '(progn
-     (mapc #'(lambda (x) (add-to-list 'erc-modules x))
-           '(services))
-     (erc-update-modules)
-     (erc-services-mode 1)))
+(use-package erc
+  :defer t
+  :init
+  (progn
+    (setq erc-nick "deftsp"
+          erc-nick-uniquifier "`"
+          erc-email-userid "deftsp"
+          erc-user-full-name user-full-name
+          ;; Channel-specific prompts
+          ;; This is what I use to provide channel-specific prompts (like #emacs> in the Emacs channel, and #php> in the PHP channel)
+          ;; erc-prompt (lambda ()
+          ;;              (if (and (boundp 'erc-default-recipients) (erc-default-target))
+          ;;                  (erc-propertize (concat (erc-default-target) ">") 'read-only t 'rear-nonsticky t 'front-nonsticky t)
+          ;;                (erc-propertize (concat "ERC›") 'read-only t 'rear-nonsticky t 'front-nonsticky t)))
 
-(load "~/.emacs.d/.erc-pass")
+          ;; erc-header-line-face-method t
+          erc-timestamp-format "%Y-%m-%d %H:%M"
+          ;; erc-pals '("johnsu01" "mwolson" "forcer")
 
-;;; Variables
-(setq erc-nick "deftsp"
-      erc-nick-uniquifier "`"
-      erc-email-userid "deftsp"
-      erc-user-full-name user-full-name
-      ;; Channel-specific prompts
-      ;; This is what I use to provide channel-specific prompts (like #emacs> in the Emacs channel, and #php> in the PHP channel)
-      ;; erc-prompt (lambda ()
-      ;;              (if (and (boundp 'erc-default-recipients) (erc-default-target))
-      ;;                  (erc-propertize (concat (erc-default-target) ">") 'read-only t 'rear-nonsticky t 'front-nonsticky t)
-      ;;                (erc-propertize (concat "ERC›") 'read-only t 'rear-nonsticky t 'front-nonsticky t)))
+          ;; erc-autoaway-message " autoaway after %i seconds idle. "
+          ;; erc-notify-list '("johnsu01" "mwolson" "forcer")
+          ;; erc-notify-interval 30
 
-      ;; erc-header-line-face-method t
-      erc-timestamp-format "%Y-%m-%d %H:%M"
-      ;; erc-pals '("johnsu01" "mwolson" "forcer")
+          ;; erc-log-insert-log-on-open nil
+          ;; erc-log-channels t
+          ;; erc-log-channels-directory "~/.erc/logs/"
+          ;; erc-save-buffer-on-part t
+          erc-track-visibility 'visible
+          erc-hide-timestamps nil)
+    ;; identification
+    (setq erc-prompt-for-nickserv-password nil))
+  :config
+  (progn
+    (load "~/.emacs.d/.erc-pass")
+    (setq erc-nickserv-passwords
+          `((freenode     (("deftsp" . ,freenode-deftsp-pass)
+                           ("Shihpin" . ,freenode-shihpin-pass)))
+            (DALnet       (("nickname" . ,dalnet-pass)))))
 
-      ;; erc-autoaway-message " autoaway after %i seconds idle. "
-      ;; erc-notify-list '("johnsu01" "mwolson" "forcer")
-      ;; erc-notify-interval 30
-
-      ;; erc-log-insert-log-on-open nil
-      ;; erc-log-channels t
-      ;; erc-log-channels-directory "~/.erc/logs/"
-      ;; erc-save-buffer-on-part t
-      erc-track-visibility 'visible
-      erc-hide-timestamps nil)
-
-
-;;; identification
-(setq erc-prompt-for-nickserv-password nil)
-(setq erc-nickserv-passwords
-      `((freenode     (("deftsp" . ,freenode-deftsp-pass)
-                       ("Shihpin" . ,freenode-shihpin-pass)))
-        (DALnet       (("nickname" . ,dalnet-pass)))))
+    (mapc #'(lambda (x) (add-to-list 'erc-modules x))
+          '(services))
+    (erc-update-modules)
+    (erc-services-mode +1)))
 
 ;; erc-bbdb: /whois nickname, export the name in irc to bbdb. If the person have in bbdb, you can use M-x
 ;; bbdb-insert-new-field, irc TAB to add his nickname. Then you type /whois nickname, other information of the person

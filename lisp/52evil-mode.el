@@ -245,8 +245,9 @@ recover evil state to it, otherwiser change to evil-emacs-state."
   (define-key evil-insert-state-map [remap newline] nil)
   (define-key evil-insert-state-map [remap newline-and-indent] nil))
 
-(require 'general nil t)
-(with-eval-after-load "general"
+(use-package general
+  :defer 3
+  :config
   (general-evil-setup)
   (general-omap
    :prefix "SPC"
@@ -255,7 +256,6 @@ recover evil state to it, otherwiser change to evil-emacs-state."
    "c" 'evil-avy-goto-char
    "SPC" 'evil-avy-goto-subword-0
    "w" 'evil-avy-goto-subword-0))
-
 
 ;; (with-eval-after-load "workgroups2"
 ;;   (defun paloryemacs/activate-all-major-mode-leader ()
@@ -295,13 +295,14 @@ kill internal buffers too."
 ;; only active in certain evil states which defined in bind-map-default-evil-states
 (with-eval-after-load 'evil
   (defun paloryemacs-bootstrap/init-bind-map ()
-    (require 'bind-map)
-    (bind-map paloryemacs-default-map
-      :prefix-cmd paloryemacs-cmds
-      :keys (dotpaloryemacs-emacs-leader-key)
-      :evil-keys (dotpaloryemacs-leader-key)
-      :override-minor-modes t
-      :override-mode-name paloryemacs-leader-override-mode))
+    (use-package bind-map
+      :config
+      (bind-map paloryemacs-default-map
+        :prefix-cmd paloryemacs-cmds
+        :keys (dotpaloryemacs-emacs-leader-key)
+        :evil-keys (dotpaloryemacs-leader-key)
+        :override-minor-modes t
+        :override-mode-name paloryemacs-leader-override-mode)))
 
   (paloryemacs-bootstrap/init-bind-map))
 
@@ -333,6 +334,7 @@ kill internal buffers too."
 
 ;;; evil-lisp-state
 (use-package evil-lisp-state
+  :defer 3
   :init
   (setq evil-lisp-state-global t) ; set it before require
   :config
@@ -398,14 +400,20 @@ kill internal buffers too."
 (when (fboundp 'evil-mode)
   (evil-mode +1))
 
-
 ;;; evil-surround
 (use-package evil-surround
+  :defer 2
   :config
   ;; evil-surround-pairs-alist is a buffer local variable
   (setq-default evil-surround-pairs-alist (cl-adjoin
                                            '(?~ . ("``" . "``"))
                                            evil-surround-pairs-alist))
+  (with-eval-after-load 'org
+    (defun paloryemacs/add-org-surrounds ()
+      (push '(?: . paloryemacs//surround-drawer) evil-surround-pairs-alist)
+      (push '(?# . paloryemacs//surround-code) evil-surround-pairs-alist))
+
+    (add-hook 'org-mode-hook 'paloryemacs/add-org-surrounds))
   (global-evil-surround-mode +1))
 
 ;;; evil-embrace
@@ -480,17 +488,20 @@ kill internal buffers too."
 
 ;;; evil-indent-plus wihch replace evil-indent-textobject
 (use-package evil-indent-plus
+  :defer 3
   :init
   (evil-indent-plus-default-bindings))
 
 ;;; evil-matchit
 (use-package evil-matchit
+  :defer 3
   :config
   (global-evil-matchit-mode +1))
 
 
 ;;; evil-textobj-between.el
-(use-package evil-textobj-between)
+(use-package evil-textobj-between
+  :defer 3)
 
 ;;; evil-numbers
 (use-package evil-numbers
@@ -548,11 +559,13 @@ to replace the symbol under cursor"
 ;; (add-to-list 'load-path "~/.emacs.d/site-lisp/evil-exchange")
 ;; installed with el-get
 (use-package evil-exchange
+  :defer 3
   :config
   (evil-exchange-install))
 
 ;;; evil-args
 (use-package evil-args
+  :defer 3
   :init
   ;; evil-args-openers
   ;; evil-args-closers
@@ -652,6 +665,7 @@ to replace the symbol under cursor"
 (defvar paloryemacs/evil-snipe-enable-alternate-f-and-t-behaviors t)
 
 (use-package evil-snipe
+  :defer 3
   :init
   (setq evil-snipe-scope 'whole-buffer
         evil-snipe-smart-case t)
@@ -669,6 +683,7 @@ to replace the symbol under cursor"
 
 
 (use-package evil-find-char-pinyin
+  :defer 3
   :init
   (setq evil-find-char-pinyin-only-simplified t)
   :config
@@ -677,6 +692,7 @@ to replace the symbol under cursor"
 
 ;; evil-iedit-state
 (use-package iedit
+  :defer 3
   :config
   (use-package evil-iedit-state
     :init
@@ -689,11 +705,13 @@ to replace the symbol under cursor"
       (kbd dotpaloryemacs-leader-key) paloryemacs-default-map)))
 
 (use-package evil-visualstar
+  :defer 3
   :config
   (global-evil-visualstar-mode +1))
 
 ;;; evil-replace-with-register
 (use-package evil-replace-with-register
+  :defer 3
   :init
   (setq evil-replace-with-register-key (kbd "gR"))
   :config
@@ -732,6 +750,7 @@ to replace the symbol under cursor"
 ;; use `g a` (mnemonic `align`)
 ;; these variables should be changed before (evil-lion-mode) is called
 (use-package evil-lion
+  :defer 3
   :init
   (setq evil-lion-left-align-key (kbd "g a"))
   (setq evil-lion-right-align-key (kbd "g A"))
@@ -765,6 +784,7 @@ to replace the symbol under cursor"
 
 ;;; evil-lispy
 (use-package lispy
+  :defer 3
   :config
   (define-key lispy-mode-map-lispy (kbd "M-o") nil)
   (use-package evil-lispy
@@ -802,6 +822,7 @@ to replace the symbol under cursor"
 
 
 (use-package evil-vimish-fold
+  :defer 3
   :config
   (defun paloryemacs/evil-vimish-fold-create-dwim ()
     "Create a fold from the current region or with avy."
@@ -816,6 +837,7 @@ to replace the symbol under cursor"
 
 ;;; evil-goggles
 (use-package evil-goggles
+  :defer 3
   :init
   ;; default is 'region, you can try `isearch-fail
   (setq evil-goggles-default-face 'region) ; 'highlight

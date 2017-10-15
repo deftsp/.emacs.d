@@ -20,7 +20,7 @@
 
 (add-to-list 'el-get-recipe-path (expand-file-name "~/.emacs.d/el-get-user/recipes"))
 (setq el-get-github-default-url-type 'git
-      el-get-verbose t
+      el-get-verbose nil
       el-get-is-lazy t)
 
 ;; (el-get-save-package-status "package-name-here" "removed")
@@ -31,7 +31,6 @@
 (el-get 'sync 'org-drill) ; init after org-mode, don't use build-in org-drill
 (el-get 'sync 'exec-path-from-shell)
 (require 'exec-path-from-shell nil t) ; https://github.com/purcell/exec-path-from-shell
-;; (el-get 'sync 'auto-complete)           ; auto-complete should init before ac-nrepl
 (el-get 'sync 'clojure-mode)
 (el-get 'sync 'evil)
 

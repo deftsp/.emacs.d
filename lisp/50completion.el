@@ -84,127 +84,132 @@
         try-expand-whole-kill))
 
 ;;; input inc, prompt inut file name.
+(use-package abbrev
+  :defer 3
+  :config
+  (progn
+    (define-abbrev-table 'c-mode-abbrev-table
+      '(("ife" "" paloryemacs/skel-c-ife 1)))
+    (define-abbrev-table 'c++-mode-abbrev-table
+      '(("ife" "" paloryemacs/skel-c-ife 1)))
 
-(mapc
- (lambda (mode)
-   (define-abbrev-table mode '(("inc" "" paloryemacs/skel-include 1))))
- '(c-mode-abbrev-table c++-mode-abbrev-table))
+    (mapc
+     (lambda (mode)
+       (define-abbrev-table mode '(("inc" "" paloryemacs/skel-include 1))))
+     '(c-mode-abbrev-table c++-mode-abbrev-table))))
 
 ;; input inc and space, auto prompt input filename which can be auto-complete.
-(define-skeleton paloryemacs/skel-include
-    "generate include<>" ""
-    > "#include <"
-    (let ((prompt "Include File: ")
-          (files (apply 'append
-                        (mapcar #'(lambda (dir)
-                                    (if (or (string= dir "/usr/include") (string= dir "/usr/local/include"))
-                                        (directory-files dir nil "^[^.]")
+(use-package skeleton
+  :defer 3
+  :init
+  (progn
+    (setq skeleton-pair t)
+    ;; do not insert newline after skeleton insertation
+    (setq skeleton-end-hook nil)
+
+    ;; (setq skeleton-pair-alist  '((?` ?` _ "''") ; "?" a space
+    ;;                              (?\( _ ")")
+    ;;                              (?\[ _ "]")
+    ;;                              (?{ \n > _ \n ?} >)))
+    (setq skeleton-pair-alist
+          '((?\( _ ?\)) (?\))
+            (?\[ _ ?\]) (?\])
+            (?{ _ ?}) (?\})
+            (?< _ ?>) (?\>)
+            (?« _ ?») (?\»)
+            (?` _ ?'))))
+  :config
+  (progn
+    (define-skeleton paloryemacs/skel-include
+      "generate include<>" ""
+      > "#include <"
+      (let ((prompt "Include File: ")
+            (files (apply 'append
+                          (mapcar #'(lambda (dir)
+                                      (if (or (string= dir "/usr/include") (string= dir "/usr/local/include"))
+                                          (directory-files dir nil "^[^.]")
                                         (flet ((last-dir (path)
-                                                 (string-match ".*/\\(.*\\)" path)
-                                                 (match-string 1 path)))
+                                                         (string-match ".*/\\(.*\\)" path)
+                                                         (match-string 1 path)))
                                           (mapcar #'(lambda (file-name)
                                                       (concat (last-dir dir)
                                                               "/" file-name))
                                                   (directory-files dir)))))
-                                (list "/usr/include"
-                                      "/usr/local/include"
-                                      "/usr/include/sys"
-                                      "/usr/include/netinet"
-                                      "/usr/include/arpa"
-                                      "/usr/include/bits")))))
-      (if (fboundp 'ido-completing-read)
-          (ido-completing-read prompt files nil t)
+                                  (list "/usr/include"
+                                        "/usr/local/include"
+                                        "/usr/include/sys"
+                                        "/usr/include/netinet"
+                                        "/usr/include/arpa"
+                                        "/usr/include/bits")))))
+        (if (fboundp 'ido-completing-read)
+            (ido-completing-read prompt files nil t)
           (completing-read prompt files nil t)))
-    ">\n")
+      ">\n")
 
+    ;; trigger abbrev use space, instead of RET, otherwise the cursor will stay the wrong place
+    (define-skeleton paloryemacs/skeleton-c-mode-main-func
+      "generate int main(int argc, char * argv[]) automatic" nil
+      "int\nmain(int argc, char *argv[]) \n{\n"
+      > _  "\n" > "return 0;"
+      "\n}")
+    (define-abbrev-table 'c-mode-abbrev-table
+      '(("main" "" paloryemacs/skeleton-c-mode-main-func 1)))
+    (define-abbrev-table 'c++-mode-abbrev-table
+      '(("main" "" paloryemacs/skeleton-c-mode-main-func 1)))
+    ;;-------------------------------------------------------------------------------------
+    (define-skeleton paloryemacs/skel-c-for-func
+      "generate for () { } automatic" nil
+      "for (" _ ") { " > \n
+      \n
+      "}"> \n)
+    (define-abbrev-table 'c-mode-abbrev-table
+      '(("fors" "" paloryemacs/skel-c-for-func 1)))
+    (define-abbrev-table 'c++-mode-abbrev-table
+      '(("fors" "" paloryemacs/skel-c-for-func 1)))
+    ;;-------------------------------------------------------------------------------------
 
-;;-------------------------------------------------------------------------------------
-;; trigger abbrev use space, instead of RET, otherwise the cursor will stay the wrong place
-(define-skeleton paloryemacs/skeleton-c-mode-main-func
-    "generate int main(int argc, char * argv[]) automatic" nil
-    "int\nmain(int argc, char *argv[]) \n{\n"
-    > _  "\n" > "return 0;"
-    "\n}")
-(define-abbrev-table 'c-mode-abbrev-table
-    '(("main" "" paloryemacs/skeleton-c-mode-main-func 1)))
-(define-abbrev-table 'c++-mode-abbrev-table
-    '(("main" "" paloryemacs/skeleton-c-mode-main-func 1)))
-;;-------------------------------------------------------------------------------------
-(define-skeleton paloryemacs/skel-c-for-func
-    "generate for () { } automatic" nil
-    "for (" _ ") { " > \n
-    \n
-    "}"> \n)
-(define-abbrev-table 'c-mode-abbrev-table
-    '(("fors" "" paloryemacs/skel-c-for-func 1)))
-(define-abbrev-table 'c++-mode-abbrev-table
-    '(("fors" "" paloryemacs/skel-c-for-func 1)))
-;;-------------------------------------------------------------------------------------
+    (define-skeleton paloryemacs/skel-c-ife
+      "Insert a C if ... else .. block" nil
+      > "if (" _ ") {" \n
+      \n
+      "}" > \n
+      "else {" > \n
+      \n
+      "}" > \n)
+    (define-skeleton paloryemacs/skel-elisp-separator
+      "Inserts a separator for elisp file."
+      nil
+      ";; ------------------------------------------------------------------------------------\n"
+      ";; "_"\n"
+      ";; ------------------------------------------------------------------------------------\n")
 
-(define-skeleton paloryemacs/skel-c-ife
-    "Insert a C if ... else .. block" nil
-    > "if (" _ ") {" \n
-    \n
-    "}" > \n
-    "else {" > \n
-    \n
-    "}" > \n)
-(define-abbrev-table 'c-mode-abbrev-table
-    '(("ife" "" paloryemacs/skel-c-ife 1)))
-(define-abbrev-table 'c++-mode-abbrev-table
-    '(("ife" "" paloryemacs/skel-c-ife 1)))
+    ;; (define-skeleton skeleton-c-mode-comment-box
+    ;;   "create a comment box" nil
+    ;;   "/**********************************************\n"
+    ;;   > " * " _ "\n"
+    ;;   > " **********************************************/"
+    ;;   )
 
-(define-skeleton paloryemacs/skel-elisp-separator
-    "Inserts a separator for elisp file."
-  nil
-  ";; ------------------------------------------------------------------------------------\n"
-  ";; "_"\n"
-  ";; ------------------------------------------------------------------------------------\n")
+    (define-skeleton paloryemacs/haskell-module-skeleton
+      "Haskell hs file header"
+      "Brief description: "
+      "{- \|\n"
+      '(setq module-name (haskell-guess-module-name))
+      "   Module      : " module-name "\n"
+      "   Description : " str | (concat "The \"" module-name "\" module") "\n"
+      "   Copyright   : (c) Shihpin Tseng\n"
+      "   License     : 3-Clause BSD-style\n"
+      "   Maintainer  : deftsp@gmail.com\n"
+      "\n"
+      "   " _ "\n"
+      "\n"
+      " -}\n"
+      "module " module-name " where\n\n")))
 
-;; (define-skeleton skeleton-c-mode-comment-box
-;;   "create a comment box" nil
-;;   "/**********************************************\n"
-;;   > " * " _ "\n"
-;;   > " **********************************************/"
-;;   )
-
-(define-skeleton paloryemacs/haskell-module-skeleton
-  "Haskell hs file header"
-  "Brief description: "
-  "{- \|\n"
-  '(setq module-name (haskell-guess-module-name))
-  "   Module      : " module-name "\n"
-  "   Description : " str | (concat "The \"" module-name "\" module") "\n"
-  "   Copyright   : (c) Shihpin Tseng\n"
-  "   License     : 3-Clause BSD-style\n"
-  "   Maintainer  : deftsp@gmail.com\n"
-  "\n"
-  "   " _ "\n"
-  "\n"
-  " -}\n"
-  "module " module-name " where\n\n")
 
 (add-to-list 'auto-insert-alist '("\\.hs\\'" . paloryemacs/haskell-module-skeleton))
 
-;;--------------------------------------------------------------------------------
-;;;Pair Insertion
-;;--------------------------------------------------------------------------------
-(setq skeleton-pair t)
-;; do not insert newline after skeleton insertation
-(setq skeleton-end-hook nil)
-
-;; (setq skeleton-pair-alist  '((?` ?` _ "''") ; "?" a space
-;;                              (?\( _ ")")
-;;                              (?\[ _ "]")
-;;                              (?{ \n > _ \n ?} >)))
-
-(setq skeleton-pair-alist '((?( _ ?)) (?\))
-                            (?[ _ ?]) (?\])
-                            (?{ _ ?}) (?\})
-                            (?< _ ?>) (?\>)
-                            (?« _ ?») (?\»)
-                            (?` _ ?')))
-
+;;; Pair Insertion
 
 (defun paloryemacs/auto-pair ()
   (interactive)

@@ -440,7 +440,7 @@ to `reorganize-frame', otherwise set to `other-frame'."
 (run-with-idle-timer (* 20 60) t 'paloryemacs/jump-to-org-agenda)
 
 (defun paloryemacs/delay-jump-to-org-agenda ()
-  (run-at-time 3 nil #'paloryemacs/jump-to-org-agenda))
+  (run-at-time 13 nil #'paloryemacs/jump-to-org-agenda))
 
 (add-hook 'after-init-hook
           #'paloryemacs/delay-jump-to-org-agenda
@@ -631,6 +631,7 @@ Headline^^            Visit entry^^               Filter^^                    Da
 
 
 (defun paloryemacs/org-agenda-mode-init ()
+  (setq truncate-lines t)
   (define-key org-agenda-mode-map " " 'org-agenda-cycle-show))
 
 (add-hook 'org-agenda-mode-hook 'paloryemacs/org-agenda-mode-init)
@@ -1159,14 +1160,7 @@ _h_tml    ^ ^        _A_SCII:
   (let ((dname (read-from-minibuffer "" "")))
     (cons (format "#+BEGIN_SRC %s" (or dname "")) "#+END_SRC")))
 
-(defun paloryemacs/add-org-surrounds ()
-  (push '(?: . paloryemacs//surround-drawer) evil-surround-pairs-alist)
-  (push '(?# . paloryemacs//surround-code) evil-surround-pairs-alist))
-
-(add-hook 'org-mode-hook 'paloryemacs/add-org-surrounds)
-
 ;;; evil-org-mode
-
 (defun paloryemacs//evil-org-mode ()
   (evil-org-mode)
   (evil-normalize-keymaps))

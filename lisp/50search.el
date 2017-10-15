@@ -181,27 +181,31 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 ;; E to edit the replacement string
 
 ;;; anzu -- a minor mode which displays current match and total matches information in the mode-line in various search mode.
-(require 'anzu nil t)
-(with-eval-after-load "anzu"
-  (setq anzu-search-threshold 1000)
-  (setq anzu-cons-mode-line-p nil)
-  (global-anzu-mode +1)
-  (global-set-key (kbd "M-%") 'anzu-query-replace)
-  (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp)
-  (defun paloryemacs/anzu-update-mode-line (here total)
-    "Custom update function which does not propertize the status."
-    (when anzu--state
-      (let ((status (cl-case anzu--state
-                      (search (format "(%s/%d%s)"
-                                      (anzu--format-here-position here total)
-                                      total (if anzu--overflow-p "+" "")))
-                      (replace-query (format "(%d replace)" total))
-                      (replace (format "(%d/%d)" here total)))))
-        status)))
-  (setq anzu-mode-line-update-function 'paloryemacs/anzu-update-mode-line)
+(use-package anzu
+  :defer 5
+  :init
+  (progn
+    (setq anzu-search-threshold 1000)
+    (setq anzu-cons-mode-line-p nil)
+    (global-set-key (kbd "M-%") 'anzu-query-replace)
+    (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp))
+  :config
+  (progn
+    (defun paloryemacs/anzu-update-mode-line (here total)
+      "Custom update function which does not propertize the status."
+      (when anzu--state
+        (let ((status (cl-case anzu--state
+                        (search (format "(%s/%d%s)"
+                                        (anzu--format-here-position here total)
+                                        total (if anzu--overflow-p "+" "")))
+                        (replace-query (format "(%d replace)" total))
+                        (replace (format "(%d/%d)" here total)))))
+          status)))
+    (setq anzu-mode-line-update-function 'paloryemacs/anzu-update-mode-line)
+    (global-anzu-mode +1)
 
-  (with-eval-after-load "evil"
-    (require 'evil-anzu)))
+    (with-eval-after-load "evil"
+      (use-package evil-anzu))))
 
 
 ;;; The Silver Searcher (ag)
@@ -216,39 +220,55 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 (setq wgrep-enable-key "r")
 (setq wgrep-change-readonly-file t) ; To apply all changes wheather or not buffer is read-only.
 
-;; bind the keys like wdired
-(eval-after-load 'grep
-  '(define-key grep-mode-map
-     (kbd "C-x C-q") 'wgrep-change-to-wgrep-mode))
-
-(eval-after-load 'wgrep
-  '(define-key grep-mode-map
-     (kbd "C-c C-c") 'wgrep-finish-edit))
+(with-eval-after-load 'wgrep
+  (define-key grep-mode-map (kbd "C-c C-c") 'wgrep-finish-edit))
 
 (with-eval-after-load "evil-evilified-state"
-  (with-eval-after-load "grep"
-    (evilified-state-evilify grep-mode grep-mode-map
-      (kbd "n")   nil
-      (kbd "p")   nil
-      (kbd "h")   nil
-      (kbd "l")   nil)))
-
+  (use-package grep
+    :defer 3
+    :config
+    (progn
+      ;; bind the keys like wdired
+      (define-key grep-mode-map
+        (kbd "C-x C-q") 'wgrep-change-to-wgrep-mode)
+      (evilified-state-evilify grep-mode grep-mode-map
+        (kbd "n")   nil
+        (kbd "p")   nil
+        (kbd "h")   nil
+        (kbd "l")   nil))))
 ;;; ivy
-(with-eval-after-load "ivy"
-  (setq ivy-display-style 'fancy)
-  (setq ivy-use-virtual-buffers t)
-  (define-key ivy-minibuffer-map (kbd "C-w") 'ivy-occur)
-  (define-key ivy-minibuffer-map [escape] 'minibuffer-keyboard-quit)
-  (define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line)
-  (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-previous-line))
+(use-package ivy
+  :defer t
+  :init
+  (progn
+    (setq ivy-display-style 'fancy)
+    (setq ivy-use-virtual-buffers t)
+    ;; http://oremacs.com/2016/01/06/ivy-flx/
+    ;; let flx (hopefully) sort the matches in a nice way
+    (setq ivy-initial-inputs-alist nil)
 
-(paloryemacs/set-leader-keys
-  "rl"   'ivy-resume)
+    (setq ivy-re-builders-alist
+          '((t . ivy--regex-fuzzy)))
+    ;; https://oremacs.com/2016/06/27/ivy-push-view/
+    ;; (global-set-key (kbd "s-v") 'ivy-push-view)
+    ;; delete view, delete many views at once by pressing C-M-m[M-RET] (ivy-call)
+    ;; (global-set-key (kbd "s-V") 'ivy-pop-view)
+    (paloryemacs/set-leader-keys "rl" 'ivy-resume))
+  :config
+  (progn
+    (define-key ivy-minibuffer-map (kbd "C-w") 'ivy-occur)
+    (define-key ivy-minibuffer-map [escape] 'minibuffer-keyboard-quit)
+    (define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line)
+    (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-previous-line)
 
-;; https://oremacs.com/2016/06/27/ivy-push-view/
-;; (global-set-key (kbd "s-v") 'ivy-push-view)
-;;; delete view, delete many views at once by pressing C-M-m[M-RET] (ivy-call)
-;; (global-set-key (kbd "s-V") 'ivy-pop-view)
+    (use-package ivy-rich
+      :init
+      (setq ivy-virtual-abbreviate 'full
+            ivy-rich-abbreviate-paths t
+            ivy-rich-switch-buffer-align-virtual-buffer t)
+      :config
+      (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer))))
+
 
 (global-set-key (kbd "s-v") 'hydra-view/body)
 (defhydra hydra-view (:color blue :hint nil)
@@ -266,22 +286,6 @@ Argument REPLACE String used to replace the matched strings in the buffer.
   (let ((ivy-initial-inputs-alist
          '((ivy-switch-buffer . "{}"))))
     (ivy-switch-buffer)))
-
-;;; ivy-rich
-(with-eval-after-load "ivy"
-  (require 'ivy-rich nil t)
-  (with-eval-after-load "ivy-rich"
-    (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer)
-    (setq ivy-virtual-abbreviate 'full
-          ivy-rich-abbreviate-paths t
-          ivy-rich-switch-buffer-align-virtual-buffer t)))
-
-;; http://oremacs.com/2016/01/06/ivy-flx/
-;; let flx (hopefully) sort the matches in a nice way
-(setq ivy-initial-inputs-alist nil)
-
-(setq ivy-re-builders-alist
-      '((t . ivy--regex-fuzzy)))
 
 ;; (when (fboundp 'ivy-mode)
 ;;   (ivy-mode 1))
@@ -310,16 +314,21 @@ C-u C-u -> Start swiper without any arguments (stock behavior)"
     (t  (swiper (modi/get-symbol-at-point)))))
 
 ;; ace-pinyin
-(require 'ace-pinyin nil t)
-(with-eval-after-load 'ace-pinyin
-  (setq ace-pinyin-simplified-chinese-only-p t)
-  (setq ace-pinyin-use-avy t)
+(use-package ace-pinyin
+  :defer 5
+  :init
+  (progn
+    (setq ace-pinyin-simplified-chinese-only-p t)
+    (setq ace-pinyin-use-avy t))
+  :config
   (ace-pinyin-global-mode +1))
 
 ;;; amx
-(require 'amx nil t)
-(with-eval-after-load "amx"
+(use-package amx
+  :defer 2
+  :init
   (setq amx-backend 'ivy)
+  :config
   (amx-mode +1))
 
 ;; counsel-M-x use smex, I have switch to amx
