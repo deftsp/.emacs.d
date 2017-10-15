@@ -465,7 +465,7 @@ to `reorganize-frame', otherwise set to `other-frame'."
      (ruby . t)
      (gnuplot . t)
      (clojure . t)
-     (sh . t)
+     (shell . t)
      (org . t)
      (plantuml . t)
      (latex . t)))
