@@ -29,6 +29,13 @@
     (define-key dired-mode-map (kbd "/") 'dired-narrow)
     (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
 
+    ;; TODO: dired will be require when el-get sync and here dired+ require slow.
+    (use-package dired+
+      :init
+      (progn
+        (setq diredp-hide-details-initially-flag nil)
+        (setq diredp-hide-details-propagate-flag nil)))
+
     (when (eq system-type 'darwin)
       (let ((ls (executable-find "gls")))   ;; brew insall coreutils
         (cond (ls (setq dired-use-ls-dired t)
@@ -68,62 +75,59 @@
 
     (use-package dired-quick-sort
       :defer t
-      :config
+      :init
       (add-hook 'dired-mode-hook 'dired-quick-sort))
-    (use-package dired+ :defer t)
-    (use-package wdired :defer t)))
+    (use-package dired-x
+      :init
+      (progn
+        (setq-default dired-omit-mode t)
+        (setq dired-omit-extensions
+              '(".svn/" "CVS/" ".o" "~" ".bin" ".bak" ".obj" ".map" ".ico"
+                ".pif" ".lnk" ".a" ".ln" ".blg" ".bbl" ".dll" ".drv" ".vxd"
+                ".386" ".elc" ".lof" ".glo" ".idx" ".lot" ".fmt" ".tfm"
+                ".class" ".lib" ".mem" ".x86f" ".sparcf" ".fasl"
+                ".ufsl" ".fsl" ".dxl" ".pfsl" ".dfsl" ".lo" ".la" ".gmo"
+                ".mo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr"
+                ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo"
+                ".idx" ".lof" ".lot" ".glo" ".blg" ".bbl" ".cps" ".fn"
+                ".fns" ".ky" ".kys" ".pg" ".pgs" ".tp" ".tps" ".vr" ".vrs"
+                ".pdb" ".ilk" ".lrc"))
 
-
+        (setq dired-omit-size-limit 150000)
+        (setq dired-omit-files
+              (concat "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^~\\|^\\.\\|^#.*#$\\|^nohup.out$\\|\\.jlc$"
+                      "\\|"
+                      (regexp-opt '("^TAGS$" "^cscope.out$")))))
+      :config
+      (progn
+        (setq dired-guess-shell-alist-user    ; use ! to call guess command
+              `((,(regexp-opt '(".gif" ".png" ".bmp" ".jpg" ".tif" ".jpeg"))
+                 '("qiv"                     ; feh, "xloadimage -onroot"
+                   ))
+                ("\\.htm[l]?$" "firefox")
+                ("\\.dvi$"    "xdvi")
+                ("\\.rar$"    "unrar x")
+                ("\\.pdf$"    ,(if (eq system-type 'gnu/linux)
+                                   "xpdf * &"
+                                 "open -a Preview"))
+                ("\\.pdf.gz$" "zxpdf")
+                ("\\.chm$"    "xchm")
+                ("\\.djvu$"   "djview")
+                ("\\.jar$"    "unzip")
+                ("\\.tar.bz2$" "tar jxf")
+                ;; (".doc" (xwl-dired-wvHtml))
+                (,(regexp-opt '(".doc" ".ppt" ".xls" ".doc")) "soffice")
+                ;; default
+                ,@dired-guess-shell-alist-default
+                ;; match any files
+                (".*" `(,(format "tar zcf %s.tar.gz"
+                                 (file-name-nondirectory (dired-get-filename)))
+                        ,(format "zip -r %s.jar"
+                                 (file-name-nondirectory (dired-get-filename)))
+                        "qiv"))))))))
 ;;; omit mode
 ;; C-x M-o
-(setq-default dired-omit-mode t)
-(with-eval-after-load "dired-x"
-  (setq dired-omit-extensions
-        '(".svn/" "CVS/" ".o" "~" ".bin" ".bak" ".obj" ".map" ".ico"
-          ".pif" ".lnk" ".a" ".ln" ".blg" ".bbl" ".dll" ".drv" ".vxd"
-          ".386" ".elc" ".lof" ".glo" ".idx" ".lot" ".fmt" ".tfm"
-          ".class" ".lib" ".mem" ".x86f" ".sparcf" ".fasl"
-          ".ufsl" ".fsl" ".dxl" ".pfsl" ".dfsl" ".lo" ".la" ".gmo"
-          ".mo" ".toc" ".aux" ".cp" ".fn" ".ky" ".pg" ".tp" ".vr"
-          ".cps" ".fns" ".kys" ".pgs" ".tps" ".vrs" ".pyc" ".pyo"
-          ".idx" ".lof" ".lot" ".glo" ".blg" ".bbl" ".cps" ".fn"
-          ".fns" ".ky" ".kys" ".pg" ".pgs" ".tp" ".tps" ".vr" ".vrs"
-          ".pdb" ".ilk" ".lrc"))
 
-  (setq dired-omit-size-limit 150000)
-  (setq dired-guess-shell-alist-user    ; use ! to call guess command
-        `((,(regexp-opt '(".gif" ".png" ".bmp" ".jpg" ".tif" ".jpeg"))
-           '("qiv"                     ; feh, "xloadimage -onroot"
-             ))
-          ("\\.htm[l]?$" "firefox")
-          ("\\.dvi$"    "xdvi")
-          ("\\.rar$"    "unrar x")
-          ("\\.pdf$"    ,(if (eq system-type 'gnu/linux)
-                             "xpdf * &"
-                           "open -a Preview"))
-          ("\\.pdf.gz$" "zxpdf")
-          ("\\.chm$"    "xchm")
-          ("\\.djvu$"   "djview")
-          ("\\.jar$"    "unzip")
-          ("\\.tar.bz2$" "tar jxf")
-          ;; (".doc" (xwl-dired-wvHtml))
-          (,(regexp-opt '(".doc" ".ppt" ".xls" ".doc")) "soffice")
-          ;; default
-          ,@dired-guess-shell-alist-default
-          ;; match any files
-          (".*" `(,(format "tar zcf %s.tar.gz"
-                           (file-name-nondirectory (dired-get-filename)))
-                  ,(format "zip -r %s.jar"
-                           (file-name-nondirectory (dired-get-filename)))
-                  "qiv"))))
-  (setq dired-omit-files
-        (concat "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^~\\|^\\.\\|^#.*#$\\|^nohup.out$\\|\\.jlc$"
-                "\\|"
-                (regexp-opt '("^TAGS$" "^cscope.out$")))))
-
-;; diredp
-(setq diredp-hide-details-initially-flag nil)
-(setq diredp-hide-details-propagate-flag nil)
 
 (add-hook 'dired-mode-hook 'paloryemacs/dired-mode-hook-init)
 (defun paloryemacs/dired-mode-hook-init ()

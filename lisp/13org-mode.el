@@ -439,15 +439,15 @@ to `reorganize-frame', otherwise set to `other-frame'."
 ;; every 20 minutes
 (run-with-idle-timer (* 20 60) t 'paloryemacs/jump-to-org-agenda)
 
-(defun paloryemacs/delay-jump-to-org-agenda ()
-  (run-at-time 13 nil #'paloryemacs/jump-to-org-agenda))
+;; (defun paloryemacs/delay-jump-to-org-agenda ()
+;;   (run-at-time 13 nil #'paloryemacs/jump-to-org-agenda))
 
-(add-hook 'after-init-hook
-          #'paloryemacs/delay-jump-to-org-agenda
-          ;; Note that 3-rd argument of this `add-hook' should be `t'
-          ;; to append the call of the `dired' after other hooked functions,
-          ;; most importantly after `desktop-read'.
-          t)
+;; (add-hook 'after-init-hook
+;;           #'paloryemacs/delay-jump-to-org-agenda
+;;           ;; Note that 3-rd argument of this `add-hook' should be `t'
+;;           ;; to append the call of the `dired' after other hooked functions,
+;;           ;; most importantly after `desktop-read'.
+;;           t)
 
 ;;; Embed source code and babel
 ;; fontify code in code blocks
