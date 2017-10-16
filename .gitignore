@@ -6,6 +6,7 @@ ede-projects.el
 private-ede-projects.el
 .DS_Store
 \#*\#
+TAGS
 *customzation*
 bookmarks
 .bm-repository

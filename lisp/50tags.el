@@ -20,20 +20,25 @@
 ;; C-M-i M-<TAB>      completion, using the selected tags table if one is loaded
 
 ;;;
-(setq tags-add-tables t) ; always add a new tags table to the current list instead of start a new one
-;; (setq tags-table-list '("." ".." "../.."))
-
-(eval-after-load "etags-table"
-  '(progn
-     (add-to-list  'etags-table-alist `(".*\\.[mh]$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS")))
-     (add-to-list  'etags-table-alist `(".*\\.mm$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS")))
-     (add-to-list  'etags-table-alist `(".*\\.hs$" ,(expand-file-name "~/.emacs.d/share/tags/yesod.TAGS")
-                                        ,(expand-file-name "~/.emacs.d/share/tags/persistent.TAGS")))
-     (setq etags-table-search-up-depth 10)))
-
-;; (global-set-key "\M-?" 'etags-select-find-tag-at-point)
-(global-set-key (kbd "M-.") 'etags-select-find-tag)
-
+(use-package etags
+  :defer t
+  :init (progn
+          ;; (setq tags-table-list '("." ".." "../.."))
+          ;; always add a new tags table to the current list instead of start a new one
+          (setq tags-add-tables t))
+  :config (progn
+            ;; (use-package etags-select
+            ;;   :bind (("\M-?" . etags-select-find-tag-at-point)
+            ;;          ("\M-." . etags-select-find-tag)))
+            (use-package etags-table
+              :init (progn
+                      (setq etags-table-search-up-depth 10))
+              :config
+              (progn
+                (add-to-list  'etags-table-alist `(".*\\.[mh]$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS")))
+                (add-to-list  'etags-table-alist `(".*\\.mm$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS")))
+                (add-to-list  'etags-table-alist `(".*\\.hs$" ,(expand-file-name "~/.emacs.d/share/tags/yesod.TAGS")
+                                                   ,(expand-file-name "~/.emacs.d/share/tags/persistent.TAGS")))))))
 
 ;;; generate tags
 (defun palory/create-tags ()
@@ -60,31 +65,48 @@
 
 
 ;;; counsel-gtags
-
 ;; https://github.com/syohex/emacs-counsel-gtags
-(add-hook 'c-mode-common-hook 'counsel-gtags-mode)
-(add-hook 'python-mode-hook 'counsel-gtags-mode)
-
-(with-eval-after-load 'counsel-gtags
-  (dolist (mode '(python-mode c-mode))
-    (paloryemacs/set-leader-keys-for-major-mode mode
-      "gc" 'counsel-gtags-create-tags
-      "gd" 'counsel-gtags-dwim
-      "gD" 'counsel-gtags-find-definition
-      "gu" 'counsel-gtags-update-tags
-      "gr" 'counsel-gtags-find-reference
-      "gs" 'counsel-gtags-find-symbol
-      "gp" 'counsel-gtags-pop
-      "gf" 'counsel-gtags-find-file)))
-
-;; (with-eval-after-load 'counsel-gtags
-;;   (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
-;;   (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
-;;   (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
-;;   (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-pop-stack))
-
+(use-package counsel-gtags
+  :defer t
+  :init (progn
+          (defun paloryemacs//turn-counsel-gtags-mode-on ()
+            (counsel-gtags-mode +1))
+          (add-hook 'c-mode-common-hook 'paloryemacs//turn-counsel-gtags-mode-on)
+          (add-hook 'python-mode-hook 'paloryemacs//turn-counsel-gtags-mode-on))
+  :config (progn
+            ;; (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
+            ;; (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
+            ;; (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
+            ;; (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-pop-stack)
+            (dolist (mode '(python-mode c-mode))
+              (paloryemacs/set-leader-keys-for-major-mode mode
+                "gc" 'counsel-gtags-create-tags
+                "gd" 'counsel-gtags-dwim
+                "gD" 'counsel-gtags-find-definition
+                "gu" 'counsel-gtags-update-tags
+                "gr" 'counsel-gtags-find-reference
+                "gs" 'counsel-gtags-find-symbol
+                "gp" 'counsel-gtags-pop
+                "gf" 'counsel-gtags-find-file))))
 
 ;;; ggtags
 (setq ggtags-enable-navigation-keys nil)
+
+;;; counsel-etags
+;; https://github.com/redguardtoo/counsel-etags
+(use-package counsel-gtags
+  :defer t
+  :commands (counsel-etags-find-tag-at-point)
+  :init (progn
+          (setq counsel-etags-update-interval 300) ; 300 seconds, OPTIONAL
+          ;; (setq counsel-etags-update-tags-backend
+          ;;       (lambda () (shell-command "find . -type f -iname \"*.[ch]\" | etags -")))
+
+          (el-get-bundle redguardtoo/counsel-etags
+            :depends (swiper cl-lib)))
+  :config
+  (progn
+    ;; (add-hook 'after-save-hook 'counsel-etags-virtual-update-tags)
+    ))
 
 (provide '50tags)
