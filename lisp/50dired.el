@@ -8,34 +8,70 @@
               ("ESC ESC i s" . paloryemacs/image-scale)
               ("M-O" . paloryemacs/open-in-external-application))
   :init
-  (setq dired-isearch-filenames 'dwim
-        dired-recursive-copies 'always
-        dired-recursive-deletes 'top
-        ;; If non-nil, Dired tries to guess a default target directory.
-        ;; This means: if there is a dired buffer displayed in the next window,
-        ;; use its current subdir, instead of the current subdir of this dired buffer.
-        dired-dwim-target t
-        dired-guess-shell-gnutar "tar"
-        dired-kept-versions 1)
+  (progn
+    (setq dired-isearch-filenames 'dwim
+          dired-recursive-copies 'always
+          dired-recursive-deletes 'top
+          ;; If non-nil, Dired tries to guess a default target directory.
+          ;; This means: if there is a dired buffer displayed in the next window,
+          ;; use its current subdir, instead of the current subdir of this dired buffer.
+          dired-dwim-target t
+          dired-guess-shell-gnutar "tar"
+          dired-listing-switches "-alh"
+          dired-kept-versions 1)
 
-  ;; Enable `a' in dired-mode, to open files/dirs in the same buffer.
-  (put 'dired-find-alternate-file 'disabled nil)
-
-  ;; darwin only
-  (when (eq system-type 'darwin)
-    (let ((ls (executable-find "gls")))   ;; brew insall coreutils
-      (cond (ls (setq dired-use-ls-dired t)
-                (setq insert-directory-program ls))
-            (t (require 'ls-lisp)
-               (setq ls-lisp-use-insert-directory-program nil)))))
-
+    ;; Enable `a' in dired-mode, to open files/dirs in the same buffer.
+    (put 'dired-find-alternate-file 'disabled nil))
   :config
   (progn
+    (define-key dired-mode-map (kbd "^") 'diredp-up-directory-reuse-dir-buffer)
+    (define-key dired-mode-map (kbd "W") 'paloryemacs/dired-w3m-find-file)
+    (define-key dired-mode-map (kbd "/") 'dired-narrow)
+    (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
+
+    (when (eq system-type 'darwin)
+      (let ((ls (executable-find "gls")))   ;; brew insall coreutils
+        (cond (ls (setq dired-use-ls-dired t)
+                  (setq insert-directory-program ls))
+              (t (require 'ls-lisp)
+                 (setq ls-lisp-use-insert-directory-program nil)))))
+    (with-eval-after-load "evil-evilified-state"
+      (evilified-state-evilify dired-mode dired-mode-map
+        (kbd "%")    'nil
+        (kbd "j")   'diredp-next-line
+        (kbd "k")   'diredp-previous-line
+        (kbd "^")   'diredp-up-directory-reuse-dir-buffer
+        (kbd "l")   'diredp-find-file-reuse-dir-buffer
+        (kbd "i")   'dired-omit-mode
+        (kbd "I")   'dired-maybe-insert-subdir
+        (kbd "/")   'dired-narrow
+        (kbd "M-r") 'dired-do-redisplay
+        (kbd "r")   ' wdired-change-to-wdired-mode
+        (kbd "gg")  'paloryemacs/dired-back-to-top
+        (kbd "gr")  'revert-buffer
+        (kbd "G")   'paloryemacs/dired-jump-to-bottom))
+
+    ;; Ask for confirm when opening some binary alike(.avi, .dvi, etc) files by accident.
+    (defadvice dired-find-file (around ask-confirm-open-binary-file)
+      (let ((f (file-name-nondirectory (dired-filename-at-point))))
+        (if (or (string-match
+                 (concat "\\.\\("
+                         (regexp-opt '("dvi" "pdf" "avi" "mp3" "sub"))
+                         "\\)$")
+                 f)
+                ;; ELF bin file
+                (string-match "ELF" (dired-show-file-type f)))
+            (when (y-or-n-p (format "Really open `%s'? " f))
+              ad-do-it)
+          ad-do-it)))
+    (ad-activate 'dired-find-file)
+
     (use-package dired-quick-sort
+      :defer t
       :config
       (add-hook 'dired-mode-hook 'dired-quick-sort))
-    (use-package dired+)
-    (use-package wdired)))
+    (use-package dired+ :defer t)
+    (use-package wdired :defer t)))
 
 
 ;;; omit mode
@@ -85,53 +121,13 @@
                 "\\|"
                 (regexp-opt '("^TAGS$" "^cscope.out$")))))
 
-;;;
-;; Ask for confirm when opening some binary alike(.avi, .dvi, etc) files by accident.
-(defadvice dired-find-file (around ask-confirm-open-binary-file)
-  (let ((f (file-name-nondirectory (dired-filename-at-point))))
-    (if (or (string-match
-             (concat "\\.\\("
-                     (regexp-opt '("dvi" "pdf" "avi" "mp3" "sub"))
-                     "\\)$")
-             f)
-            ;; ELF bin file
-            (string-match "ELF" (dired-show-file-type f)))
-        (when (y-or-n-p (format "Really open `%s'? " f))
-          ad-do-it)
-      ad-do-it)))
-(ad-activate 'dired-find-file)
-
 ;; diredp
 (setq diredp-hide-details-initially-flag nil)
 (setq diredp-hide-details-propagate-flag nil)
 
-;;; Sorting
-(setq dired-listing-switches "-alh")
-
 (add-hook 'dired-mode-hook 'paloryemacs/dired-mode-hook-init)
 (defun paloryemacs/dired-mode-hook-init ()
-  (define-key dired-mode-map (kbd "^") 'diredp-up-directory-reuse-dir-buffer)
-  (define-key dired-mode-map (kbd "W") 'paloryemacs/dired-w3m-find-file)
-  (define-key dired-mode-map (kbd "/") 'dired-narrow)
-  (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
   (dired-omit-mode +1))
-
-(with-eval-after-load "evil-evilified-state"
-  (with-eval-after-load "dired"
-    (evilified-state-evilify dired-mode dired-mode-map
-      (kbd "%")    'nil
-      (kbd "j")   'diredp-next-line
-      (kbd "k")   'diredp-previous-line
-      (kbd "^")   'diredp-up-directory-reuse-dir-buffer
-      (kbd "l")   'diredp-find-file-reuse-dir-buffer
-      (kbd "i")   'dired-omit-mode
-      (kbd "I")   'dired-maybe-insert-subdir
-      (kbd "/")   'dired-narrow
-      (kbd "M-r") 'dired-do-redisplay
-      (kbd "r")   ' wdired-change-to-wdired-mode
-      (kbd "gg")  'paloryemacs/dired-back-to-top
-      (kbd "gr")  'revert-buffer
-      (kbd "G")   'paloryemacs/dired-jump-to-bottom)))
 
 
 (defun paloryemacs/dired-back-to-top ()
