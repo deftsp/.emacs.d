@@ -1013,10 +1013,7 @@ This command is to be used interactively."
     (setq-default undo-tree-visualizer-diff t)
     (setq undo-tree-mode-lighter " UT"))
   :bind (("s-z" . undo-tree-undo)
-         ("s-Z" . undo-tree-redo)
-         ;; TODO: cancel it when YoudaoDict able to change option-z global shortcut.
-         ("H-z" . undo-tree-undo)
-         ("H-Z" . undo-tree-redo))
+         ("s-Z" . undo-tree-redo))
   :config
   (progn
     (global-undo-tree-mode t)))
