@@ -83,7 +83,7 @@
   (setq dired-omit-files
         (concat "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^~\\|^\\.\\|^#.*#$\\|^nohup.out$\\|\\.jlc$"
                 "\\|"
-                (regexp-opt '("TAGS" "cscope.out")))))
+                (regexp-opt '("^TAGS$" "^cscope.out$")))))
 
 ;;;
 ;; Ask for confirm when opening some binary alike(.avi, .dvi, etc) files by accident.
