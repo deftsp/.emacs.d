@@ -131,48 +131,48 @@ space and marks next symbol."
 (autoload 'ascii-table-show "ascii-table-show" "Create a buffer and print the ascii table" t)
 
 ;;; line numbers
-(use-package linum
-  :defer t
-  :init
-  (progn
-    (setq linum-format 'paloryemacs/linum-format)
-    (defun paloryemacs/linum-format (line)
-      (propertize
-       (format
-        (let ((w (length (number-to-string
-                          (count-lines
-                           (point-min)
-                           (point-max))))))
-          (concat "%" (number-to-string w) "d|"))
-        line)
-       'face 'linum))))
+;; (use-package linum
+;;   :defer t
+;;   :init
+;;   (progn
+;;     (setq linum-format 'paloryemacs/linum-format)
+;;     (defun paloryemacs/linum-format (line)
+;;       (propertize
+;;        (format
+;;         (let ((w (length (number-to-string
+;;                           (count-lines
+;;                            (point-min)
+;;                            (point-max))))))
+;;           (concat "%" (number-to-string w) "d|"))
+;;         line)
+;;        'face 'linum))))
 
 
 ;; linum-relative
-(use-package linum-relative
-  :defer t
-  :init
-  (progn
-    (setq linum-relative-format "%3s|")
-    ;; if linum-relative-current-symbol is empty string,
-    ;; linum-relative will show the real line number at current line.
-    (setq linum-relative-current-symbol "->")
+;; (use-package linum-relative
+;;   :defer t
+;;   :init
+;;   (progn
+;;     (setq linum-relative-format "%3s|")
+;;     ;; if linum-relative-current-symbol is empty string,
+;;     ;; linum-relative will show the real line number at current line.
+;;     (setq linum-relative-current-symbol "->")
 
-    (defun paloryemacs/turn-on-relative-linum ()
-      (linum-mode 1)
-      (if (fboundp 'linum-relative)
-          (setq linum-format 'linum-relative)))
+;;     (defun paloryemacs/turn-on-relative-linum ()
+;;       (linum-mode 1)
+;;       (if (fboundp 'linum-relative)
+;;           (setq linum-format 'linum-relative)))
 
-    (add-hook 'prog-mode-hook 'paloryemacs/turn-on-relative-linum))
-  :config
-  (progn
-    (defun paloryemacs/linum-relative-toggle ()
-      "Toggle between linum-relative and linum."
-      (interactive)
-      (if (or (eq linum-format 'dynamic)
-              (eq linum-format 'paloryemacs/linum-format))
-          (setq linum-format 'linum-relative)
-        (setq linum-format 'paloryemacs/linum-format)))))
+;;     (add-hook 'prog-mode-hook 'paloryemacs/turn-on-relative-linum))
+;;   :config
+;;   (progn
+;;     (defun paloryemacs/linum-relative-toggle ()
+;;       "Toggle between linum-relative and linum."
+;;       (interactive)
+;;       (if (or (eq linum-format 'dynamic)
+;;               (eq linum-format 'paloryemacs/linum-format))
+;;           (setq linum-format 'linum-relative)
+;;         (setq linum-format 'paloryemacs/linum-format)))))
 
 ;;; nlinum-relative
 (use-package nlinum-relative
