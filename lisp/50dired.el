@@ -30,10 +30,12 @@
                (setq ls-lisp-use-insert-directory-program nil)))))
 
   :config
-  (add-hook 'dired-mode-hook 'dired-quick-sort)
-  (use-package dired-quick-sort :defer t)
-  (use-package dired+ :defer t)
-  (use-package wdired :defer t))
+  (progn
+    (use-package dired-quick-sort
+      :config
+      (add-hook 'dired-mode-hook 'dired-quick-sort))
+    (use-package dired+)
+    (use-package wdired)))
 
 
 ;;; omit mode
