@@ -67,9 +67,8 @@
   '(add-hook 'dictionary-mode-hook 'paloryemacs/dictionary-mode-hook))
 
 ;;; wordnet
-(condition-case nil
-    (require 'wordnet)
-  (error nil))
+(use-package wordnet
+  :defer t)
 
 ;;; Emacs & Dictionary.app
 ;; http://larkery.tumblr.com/post/465585528/emacs-dictionary-app

@@ -526,9 +526,11 @@ it marks the next ARG lines after the ones already marked."
 (define-key 'help-command (kbd "C-v") 'find-variable)
 
 ;; Find the definition of the FUNCTION near point. That's very useful!
-(require 'find-func)
-;; Define some key bindings for the find-function family of functions.
-(find-function-setup-keys)
+(use-package find-func
+  :defer 7
+  :config
+  ;; Define some key bindings for the find-function family of functions.
+  (find-function-setup-keys))
 ;; C-x F   find-function
 ;; C-x 4 F find-function-other-window
 ;; C-x 5 F find-function-other-frame
