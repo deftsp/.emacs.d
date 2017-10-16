@@ -101,9 +101,7 @@
           (setq counsel-etags-update-interval 300) ; 300 seconds, OPTIONAL
           ;; (setq counsel-etags-update-tags-backend
           ;;       (lambda () (shell-command "find . -type f -iname \"*.[ch]\" | etags -")))
-
-          (el-get-bundle redguardtoo/counsel-etags
-            :depends (swiper cl-lib)))
+          )
   :config
   (progn
     ;; (add-hook 'after-save-hook 'counsel-etags-virtual-update-tags)

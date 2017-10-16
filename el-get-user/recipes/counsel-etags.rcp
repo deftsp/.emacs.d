@@ -1,0 +1,5 @@
+(:name counsel-etags
+       :description "Fast and complete Ctags solution using ivy-completion"
+       :type github
+       :pkgname "redguardtoo/counsel-etags"
+       :depends (cl-lib swiper))
