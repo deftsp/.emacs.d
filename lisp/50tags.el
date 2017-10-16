@@ -1,4 +1,4 @@
-;;; 50gtags.el ---
+;;; 50tags.el ---
 
 ;; ctags and etags are distributed with Emacs
 ;; ExuberantCtags is superior to etags in many ways. You can find it here:
@@ -87,4 +87,4 @@
 ;;; ggtags
 (setq ggtags-enable-navigation-keys nil)
 
-(provide '50gtags)
+(provide '50tags)

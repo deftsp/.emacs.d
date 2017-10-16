@@ -48,7 +48,7 @@
 (require '50epg)
 (require '50erc)
 (require '50eshell)
-(require '50gtags)
+(require '50tags)
 (require '50ffap)
 (require '50filecache)
 (require '50ftp)
