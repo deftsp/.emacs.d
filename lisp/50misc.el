@@ -1127,17 +1127,10 @@ Toggles between: “ all lower ”, “ Init Caps ”, “ ALL CAPS ”."
 
 (global-set-key (kbd "M-c") 'paloryemacs/toggle-letter-case)
 
-;;; Coding
+;;; coding
 (defun paloryemacs/revert-to-gbk-dos ()
   (interactive)
   (revert-buffer-with-coding-system 'gbk-dos))
-
-;; unicad
-;; https://www.emacswiki.org/emacs/Unicad
-(use-package unicad
-  :defer 4
-  :config
-  (unicad-enable))
 
 ;;----------------------------------------------------------------------------------------------------
 ;;; stumpwm

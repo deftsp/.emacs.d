@@ -1,8 +1,5 @@
 ;;;; some useful packages
 
-;;; (require 'pulse-settings)
-
-
 ;;; thing-cmds
 ;; ‘ C-M-SPC ’ – `mark-thing ’ (overwrites the standard binding for ‘ mark-sexp ’; `sexp ’ is the default thing type)
 ;; `M-@’ – `cycle-thing-region ’ (overwrites the standard binding for ‘ mark-word ’)
@@ -16,89 +13,82 @@
 ;; (global-set-key (kbd "M-@") 'cycle-thing-region) ; vs `mark-word'
 
 ;;; expand-region
-(defun paloryemacs/mark-sexp-forward ()
-  "Mark the sexp from the point to end of the sexp."
-  (interactive)
-  (set-mark (point))
-  (forward-sexp 1)
-  (exchange-point-and-mark))
-
-(defun paloryemacs/mark-next-symbol ()
-  "Presumes that current symbol is already marked, skips over one
-space and marks next symbol."
-  (interactive)
-  (when (use-region-p)
-    (when (< (point) (mark))
-      (exchange-point-and-mark))
-    (let ((symbol-regexp "\\s_\\|\\sw"))
-      (when (looking-at "\\ ")
-        (forward-char 1)
-        (skip-syntax-forward "_w")
-        (exchange-point-and-mark)))))
-
-(defun paloryemacs/mark-lua-method-call ()
-  "Mark the current symbol (including dots) and then paren to closing paren."
-  (interactive)
-  (let ((symbol-regexp "\\s_\\|\\sw\\|\\:"))
-    (when (or (looking-at symbol-regexp)
-              (er/looking-back-on-line symbol-regexp))
-      (skip-syntax-backward "_w:")
+(use-package expand-region
+  :defer t
+  :init
+  (progn
+    (paloryemacs/set-leader-keys "v" 'er/expand-region)
+    (setq expand-region-contract-fast-key "V"
+          expand-region-reset-fast-key "r"))
+  :config
+  (progn
+    (defun paloryemacs/mark-sexp-forward ()
+      "Mark the sexp from the point to end of the sexp."
+      (interactive)
       (set-mark (point))
-      (while (looking-at symbol-regexp)
-        (forward-char))
-      (if (looking-at "(")
-          (forward-list))
-      (exchange-point-and-mark))))
+      (forward-sexp 1)
+      (exchange-point-and-mark))
 
-;; general expand list
-(with-eval-after-load 'expand-region
-  (add-to-list 'er/try-expand-list 'paloryemacs/mark-sexp-forward))
+    (defun paloryemacs/mark-next-symbol ()
+      "Presumes that current symbol is already marked, skips over one
+space and marks next symbol."
+      (interactive)
+      (when (use-region-p)
+        (when (< (point) (mark))
+          (exchange-point-and-mark))
+        (let ((symbol-regexp "\\s_\\|\\sw"))
+          (when (looking-at "\\ ")
+            (forward-char 1)
+            (skip-syntax-forward "_w")
+            (exchange-point-and-mark)))))
 
-(defun paloryemacs/lua-mode-expand-list-init ()
-  (make-variable-buffer-local 'er/try-expand-list)
-  (setq er/try-expand-list '(er/mark-word
-                             er/mark-symbol
-                             er/mark-symbol-with-prefix
-                             paloryemacs/mark-next-symbol
-                             er/mark-next-accessor
-                             paloryemacs/mark-lua-method-call
-                             er/mark-method-call
-                             er/mark-outside-quotes
-                             er/mark-inside-quotes
-                             er/mark-inside-pairs
-                             er/mark-outside-pairs
-                             er/mark-comment
-                             er/mark-defun
-                             er/mark-url
-                             er/mark-email)))
+    (defun paloryemacs/mark-lua-method-call ()
+      "Mark the current symbol (including dots) and then paren to closing paren."
+      (interactive)
+      (let ((symbol-regexp "\\s_\\|\\sw\\|\\:"))
+        (when (or (looking-at symbol-regexp)
+                  (er/looking-back-on-line symbol-regexp))
+          (skip-syntax-backward "_w:")
+          (set-mark (point))
+          (while (looking-at symbol-regexp)
+            (forward-char))
+          (if (looking-at "(")
+              (forward-list))
+          (exchange-point-and-mark))))
 
-(eval-after-load "lua-mode"
-  '(add-hook 'lua-mode-hook 'paloryemacs/lua-mode-expand-list-init))
+    ;; general expand list
+    (add-to-list 'er/try-expand-list 'paloryemacs/mark-sexp-forward)
 
-(paloryemacs/set-leader-keys "v" 'er/expand-region)
-(setq expand-region-contract-fast-key "V"
-      expand-region-reset-fast-key "r")
+    (with-eval-after-load 'lua-mode
+      (defun paloryemacs/lua-mode-expand-list-init ()
+        (make-variable-buffer-local 'er/try-expand-list)
+        (setq er/try-expand-list '(er/mark-word
+                                   er/mark-symbol
+                                   er/mark-symbol-with-prefix
+                                   paloryemacs/mark-next-symbol
+                                   er/mark-next-accessor
+                                   paloryemacs/mark-lua-method-call
+                                   er/mark-method-call
+                                   er/mark-outside-quotes
+                                   er/mark-inside-quotes
+                                   er/mark-inside-pairs
+                                   er/mark-outside-pairs
+                                   er/mark-comment
+                                   er/mark-defun
+                                   er/mark-url
+                                   er/mark-email)))
+      (add-hook 'lua-mode-hook 'paloryemacs/lua-mode-expand-list-init))))
 
 ;;; let ^L looks beautiful
 ;; (require 'pp-c-l)
 ;; (pretty-control-l-mode 1)
 
-;; (load "~/.emacs.d/packages/nxhtml/autostart.el")
-;; (setq nxhtml-skip-welcome t)
-
-;; (require 'misc-fns)
-
-;;; beautify symbol mode will cause symbol indent incorrect
-;; (require 'beautify-symbol nil t)
-;; (global-beautify-symbol-mode 1)
-
-(eval-after-load "sgml-mode"
-  '(progn
-     ;; for go lang template
-     (key-chord-define html-mode-map "{{"  "{{}}\C-b\C-b")))
-
-
-
+(use-package sgml-mode
+  :defer t
+  :config
+  (progn
+    ;; for go lang template
+    (key-chord-define html-mode-map "{{"  "{{}}\C-b\C-b")))
 
 ;;; linkd
 (autoload 'linkd-mode "linkd" "Create or follow hypertext links." t)
@@ -107,121 +97,100 @@ space and marks next symbol."
 (autoload 'sensitive-mode "sensitive-mode" "Disables backup creation and auto saving." t)
 
 ;;; uptime
-(require 'uptimes nil t)
+(use-package uptimes
+  :defer t
+  :commands (uptimes uptimes-this))
 
 ;;; recentf
-(recentf-mode 1)
-(setq recentf-max-saved-items 500)
-(setq recentf-max-menu-items 10)
-(setq recentf-auto-cleanup 'never) ; To protect tramp
-(add-to-list 'recentf-keep 'file-remote-p) ; the remote connection is NOT opened
-
-(add-to-list 'recentf-exclude "^/su:")
-(add-to-list 'recentf-exclude "^/sudo:")
-(add-to-list 'recentf-exclude "\\.gpg$")
+(use-package recentf
+  :init
+  (progn
+    (setq recentf-max-saved-items 500)
+    (setq recentf-max-menu-items 10)
+    (setq recentf-auto-cleanup 'never) ; To protect tramp
+    )
+  :config
+  (progn
+    (add-to-list 'recentf-keep 'file-remote-p) ; the remote connection is NOT opened
+    (add-to-list 'recentf-exclude "^/su:")
+    (add-to-list 'recentf-exclude "^/sudo:")
+    (add-to-list 'recentf-exclude "\\.gpg$")
+    (recentf-mode +1)))
 
 ;;; unicad
+;; https://www.emacswiki.org/emacs/Unicad
 ;; Unicad is short for Universal Charset Auto Detector. It is an Emacs-Lisp port of Mozilla Universal Charset Detector.
 ;; Unicad helps Emacs to guess the correct coding system when opening a file. It's designed to work automatically and
 ;; quietly without user interaction.
-;; (require 'unicad nil t)
-;; (unicad-enable)
-;; (add-hook 'kill-emacs-hook 'unicad-disable)
+(use-package unicad
+  :defer 4
+  :config
+  (unicad-enable))
 
 ;;; ascii table
 (autoload 'ascii-table-show "ascii-table-show" "Create a buffer and print the ascii table" t)
 
 ;;; line numbers
-;; (eval-after-load "linum"
-;;   '(progn
-;;      (setq linum-format 'paloryemacs/linum-format)))
+(use-package linum
+  :defer t
+  :init
+  (progn
+    (setq linum-format 'paloryemacs/linum-format)
+    (defun paloryemacs/linum-format (line)
+      (propertize
+       (format
+        (let ((w (length (number-to-string
+                          (count-lines
+                           (point-min)
+                           (point-max))))))
+          (concat "%" (number-to-string w) "d|"))
+        line)
+       'face 'linum))))
 
-(defun paloryemacs/linum-format (line)
-  (propertize
-   (format
-    (let ((w (length (number-to-string
-                      (count-lines
-                       (point-min)
-                       (point-max))))))
-      (concat "%" (number-to-string w) "d|"))
-    line)
-   'face 'linum))
 
 ;; linum-relative
-;; (setq linum-relative-format "%3s|")
-;; if linum-relative-current-symbol is empty string,
-;; linum-relative will show the real line number at current line.
-;; (setq linum-relative-current-symbol "->")
+(use-package linum-relative
+  :defer t
+  :init
+  (progn
+    (setq linum-relative-format "%3s|")
+    ;; if linum-relative-current-symbol is empty string,
+    ;; linum-relative will show the real line number at current line.
+    (setq linum-relative-current-symbol "->")
 
-;; (defun paloryemacs/turn-on-relative-linum ()
-;;   (linum-mode 1)
-;;   (if (fboundp 'linum-relative)
-;;       (setq linum-format 'linum-relative)))
+    (defun paloryemacs/turn-on-relative-linum ()
+      (linum-mode 1)
+      (if (fboundp 'linum-relative)
+          (setq linum-format 'linum-relative)))
 
-;; (add-hook 'prog-mode-hook 'paloryemacs/turn-on-relative-linum)
-
-;; (defun paloryemacs/linum-relative-toggle ()
-;;   "Toggle between linum-relative and linum."
-;;   (interactive)
-;;   (if (or (eq linum-format 'dynamic)
-;;           (eq linum-format 'paloryemacs/linum-format))
-;;       (setq linum-format 'linum-relative)
-;;       (setq linum-format 'paloryemacs/linum-format)))
+    (add-hook 'prog-mode-hook 'paloryemacs/turn-on-relative-linum))
+  :config
+  (progn
+    (defun paloryemacs/linum-relative-toggle ()
+      "Toggle between linum-relative and linum."
+      (interactive)
+      (if (or (eq linum-format 'dynamic)
+              (eq linum-format 'paloryemacs/linum-format))
+          (setq linum-format 'linum-relative)
+        (setq linum-format 'paloryemacs/linum-format)))))
 
 ;;; nlinum-relative
-(require 'nlinum-relative nil t)
-(defun paloryemacs/turn-on-nlinum-relative ()
-  (if linum-mode
-      (linum-mode -1))
-  (if (fboundp 'nlinum-relative-mode)
-      (nlinum-relative-mode 1)))
-
-(with-eval-after-load "nlinum-relative"
-  (with-eval-after-load "evil"
-    (nlinum-relative-setup-evil))
-  (setq nlinum-relative-redisplay-delay 0)      ;; delay
-  (setq nlinum-relative-current-symbol "->")      ;; or "" for display current line number
-  (setq nlinum-relative-offset 0)                 ;; 1 if you want 0, 2, 3...
-  (add-hook 'prog-mode-hook 'paloryemacs/turn-on-nlinum-relative))
-
-
-;;; highlight current line in buffer
-;; (require 'hl-line)
-;; (eval-after-load "hl-line"
-;;   '(progn
-;;      (global-hl-line-mode t)))
-
-;;; buffer action
-;; http://xwl.appspot.com/ref/buffer-action.el
-(autoload 'buffer-action-compile "buffer-action")
-(autoload 'buffer-action-run "buffer-action")
-(setq buffer-action-table '((c-mode    "gcc -Wall -ggdb -Wextra %f -lm -o %n" "%n" "./%n")
-                            (c++-mode  "g++ %f -lm -o %n" "%n" "./%n")
-                            (java-mode "javac %n" "%n.class" "java %n")
-                            (makefile-mode "make" nil nil)
-                            ("\\.pl$" "perl -cw %f" nil "perl -s %f")
-                            ("\\.php$" nil nil "php %f")
-                            ("\\.tex$" "latex %f" "%n.dvi" "xdvi %n.dvi &")
-                            (texinfo-mode (lambda ()
-                                            (save-excursion
-                                              ;; (texinfo-make-menu)
-                                              (texinfo-all-menus-update)
-                                              (texinfo-every-node-update)
-                                              (save-buffer))
-                                            (makeinfo-buffer))
-                             "%n.info"
-                             (lambda ()
-                               (Info-revert-find-node
-                                (replace-regexp-in-string
-                                 "\\.texinfo*$" ".info" (buffer-action-replace "%F"))
-                                (makeinfo-current-node))))
-                            (emacs-lisp-mode (lambda ()
-                                               (byte-compile-file (buffer-action-replace "%f")))
-                             "%n.elc"
-                             eval-buffer)
-                            ("\\.info$" nil nil (lambda () (info (buffer-file-name))))
-                            ("\\.dot$" "dot -Tjpg %f -o %n.jpg" "%n.png" "qiv %f &")))
-
+(use-package nlinum-relative
+  :init
+  (progn
+    (setq nlinum-relative-current-symbol "->")      ;; or "" for display current line number
+    (setq nlinum-relative-offset 0)                 ;; 1 if you want 0, 2, 3...
+    (setq nlinum-relative-redisplay-delay 0)
+    (defun paloryemacs/turn-on-nlinum-relative ()
+      (if linum-mode
+          (linum-mode -1))
+      (if (fboundp 'nlinum-relative-mode)
+          (nlinum-relative-mode 1)))
+    (add-hook 'prog-mode-hook 'paloryemacs/turn-on-nlinum-relative))
+  :config
+  (progn
+    (with-eval-after-load "evil"
+      (nlinum-relative-setup-evil))))
 
 ;;; uniquify
 ;; add parent directory name to the buffers of the same name
@@ -230,63 +199,6 @@ space and marks next symbol."
       uniquify-after-kill-buffer-p t
       uniquify-ignore-buffers-re "\\`\\*")
 ;; (toggle-uniquify-buffer-names)
-
-;;; header2
-;;(load "~/.emacs.d/elisp/header2")
-;; Update file headers when write files.
-;;(add-hook 'write-file-hooks 'update-file-header)
-;; Create headers for file buffers in my favorite modes.
-;;(add-hook 'emacs-lisp-mode-hook 'auto-make-header)
-;;(add-hook 'c-mode-common-hook   'auto-make-header)
-
-;; (defsubst paloryemacs/header-author ()
-;;   "Insert current user's name (`user-full-name') as this file's author."
-;;   (insert header-prefix-string "Author: " (user-full-name) " <deftsp@gmail.com>" "\n"))
-
-;; (defsubst paloryemacs/header-svn-keyword ()
-;;   "Insert $Id$."
-;;   (insert header-prefix-string "$Id$" "\n"))
-
-;; (setq make-header-hook '(
-;;                          ;;header-mode-line
-;;                          header-title
-;;                          paloryemacs/header-svn-keyword
-;;                          ;;header-blank
-;;                          ;;header-file-name
-;;                          header-description
-;;                          ;;header-status
-;;                          ;;header-author
-;;                          paloryemacs/header-author
-;;                          ;;header-maintainer
-;;                          ;;header-copyright
-;;                          header-creation-date
-;;                          ;;header-rcs-id
-;;                          ;;header-version
-;;                          ;;header-sccs
-;;                          ;;header-modification-date
-;;                          ;;header-modification-author
-;;                          ;;header-update-count
-;;                          ;;xbheader-url
-;;                          ;;header-keywords
-;;                          ;;header-compatibility
-;;                          ;;header-blank
-;;                          ;;header-lib-requires
-;;                          ;;header-end-line
-;;                          ;;header-commentary
-;;                          ;;header-blank
-;;                          ;;header-blank
-;;                          ;;header-blank
-;;                          ;;header-end-line
-;;                          ;;header-history
-;;                          ;;header-blank
-;;                          ;;header-blank
-;;                          ;; header-rcs-log
-;;                          header-end-line
-;;                          ;;header-free-software
-;;                          ;;header-code
-;;                          ;;header-eof
-;;                          ))
-
 
 ;;; moving region/line
 ;; Many times you'll kill a line with the intention of pasting it back a couple of lines up/below.
@@ -351,7 +263,6 @@ space and marks next symbol."
   "Moves current line N (1) lines down leaving point in place."
   (interactive "p")
   (paloryemacs/move-line (if (null n) 1 n)))
-;;  moving region/line ends there---------------------------------------------------------------------------------------
 
 
 ;;; Open new line
@@ -1095,7 +1006,9 @@ such character is found, following options are shown:
 
 ;;; ace-link
 ;; bind ace-link-info and ace-link-help to o in their respective modes.
-(when (fboundp 'ace-link-setup-default)
+(use-package ace-link
+  :defer 7
+  :config
   (ace-link-setup-default))
 
 ;;; goto line with feedback
@@ -1174,43 +1087,43 @@ such character is found, following options are shown:
   "Run cclookup-update and create the database at `cclookup-db-file'." t)
 
 ;;; mutiple cursors
-(require 'multiple-cursors nil t)
-(defvar paloryemacs/mutiple-cursors-keymap nil
-  "Keymap for key chord prefix commands in haskell mode.")
+(use-package multiple-cursors
+  :defer t
+  :init
+  (progn
+    ;; Mark more like this
+    (global-set-key (kbd "C-*") 'mc/mark-all-like-this)
+    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+    ;; (global-set-key (kbd "M-å") 'mc/mark-all-in-region)
+    (global-set-key (kbd "C-M-m") 'mc/mark-more-like-this-extended)
 
-(with-eval-after-load "multiple-cursors"
-  (with-eval-after-load "evil"
-    (add-hook 'multiple-cursors-mode-enabled-hook
-              'paloryemacs/evil-switch-to-insert-maybe))
+    (defvar paloryemacs/mutiple-cursors-keymap (make-sparse-keymap)
+      "Keymap for key chord prefix commands in haskell mode.")
+    (define-key paloryemacs/mutiple-cursors-keymap (kbd "l") 'mc/edit-lines)
+    (define-key paloryemacs/mutiple-cursors-keymap (kbd "c") 'mc/edit-lines)
+    (define-key paloryemacs/mutiple-cursors-keymap (kbd "M-C") 'mc/edit-lines)
+    (define-key paloryemacs/mutiple-cursors-keymap (kbd "C-e") 'mc/edit-ends-of-lines)
+    (define-key paloryemacs/mutiple-cursors-keymap (kbd "e") 'mc/edit-ends-of-lines)
+    (define-key paloryemacs/mutiple-cursors-keymap (kbd "C-a") 'mc/edit-beginnings-of-lines)
+    (define-key paloryemacs/mutiple-cursors-keymap (kbd "a") 'mc/edit-beginnings-of-lines)
+    (define-key paloryemacs/mutiple-cursors-keymap (kbd "SPC") 'set-rectangular-region-anchor)
+    (define-key paloryemacs/mutiple-cursors-keymap (kbd "m") 'set-rectangular-region-anchor)
 
-  (setq paloryemacs/mutiple-cursors-keymap (make-sparse-keymap))
+    (global-set-key (kbd "M-C") paloryemacs/mutiple-cursors-keymap)
+    (key-chord-define-global ";c" paloryemacs/mutiple-cursors-keymap))
+  :config
+  (progn
+    (with-eval-after-load "evil"
+      (add-hook 'multiple-cursors-mode-enabled-hook
+                'paloryemacs/evil-switch-to-insert-maybe))
 
-  (global-set-key (kbd "M-C") paloryemacs/mutiple-cursors-keymap)
-  (key-chord-define-global ";c" paloryemacs/mutiple-cursors-keymap)
-  (define-key paloryemacs/mutiple-cursors-keymap (kbd "l") 'mc/edit-lines)
-  (define-key paloryemacs/mutiple-cursors-keymap (kbd "c") 'mc/edit-lines)
-  (define-key paloryemacs/mutiple-cursors-keymap (kbd "M-C") 'mc/edit-lines)
-  (define-key paloryemacs/mutiple-cursors-keymap (kbd "C-e") 'mc/edit-ends-of-lines)
-  (define-key paloryemacs/mutiple-cursors-keymap (kbd "e") 'mc/edit-ends-of-lines)
-  (define-key paloryemacs/mutiple-cursors-keymap (kbd "C-a") 'mc/edit-beginnings-of-lines)
-  (define-key paloryemacs/mutiple-cursors-keymap (kbd "a") 'mc/edit-beginnings-of-lines)
-  (define-key paloryemacs/mutiple-cursors-keymap (kbd "SPC") 'set-rectangular-region-anchor)
-  (define-key paloryemacs/mutiple-cursors-keymap (kbd "m") 'set-rectangular-region-anchor)
-  (add-to-list 'mc/unsupported-minor-modes 'autopair-mode)
-  (add-to-list 'mc/unsupported-minor-modes 'smartparens-mode)
-  ;; (add-to-list 'mc/unsupported-minor-modes 'evil-mode)
-  (add-to-list 'mc/unsupported-minor-modes 'smartparens-strict-mode)
+    (add-to-list 'mc/unsupported-minor-modes 'autopair-mode)
+    (add-to-list 'mc/unsupported-minor-modes 'smartparens-mode)
+    ;; (add-to-list 'mc/unsupported-minor-modes 'evil-mode)
+    (add-to-list 'mc/unsupported-minor-modes 'smartparens-strict-mode)))
 
-  (global-set-key (kbd "C-S-SPC") 'paloryemacs/set-rectangular-region-anchor)
-
-  ;; Mark more like this
-  (global-set-key (kbd "C-*") 'mc/mark-all-like-this)
-  (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
-  (global-set-key (kbd "C->") 'mc/mark-next-like-this)
-  ;; (global-set-key (kbd "M-å") 'mc/mark-all-in-region)
-  (global-set-key (kbd "C-M-m") 'mc/mark-more-like-this-extended))
-
-
+(global-set-key (kbd "C-S-SPC") 'paloryemacs/set-rectangular-region-anchor)
 ;; Rectangular region mode
 (defun paloryemacs/evil-switch-to-insert-maybe ()
   (when (and (fboundp 'evil-mode) evil-mode)
@@ -1243,20 +1156,26 @@ such character is found, following options are shown:
 
 ;;; Projectile
 ;; https://github.com/bbatsov/projectile
-(with-eval-after-load "projectile"
-  ;; bug: change cache file path will cause cache file be cleared after access any pojectile file.
-  ;; (when (boundp 'paloryemacs/cache-directory)
-  ;;   (setq projectile-cache-file (concat paloryemacs/cache-directory "projectile.cache")))
-  (when (eq system-type 'darwin)
-    (setq projectile-tags-command "/usr/local/bin/ctags -Re %s"))
-  (setq projectile-enable-caching t)
-  (add-to-list 'projectile-project-root-files ".cabal-sandbox")
-  (add-to-list 'projectile-project-root-files "Setup.hs")
-  ;; (add-hook 'emacs-lisp-mode-hook 'projectile-on)
-  (projectile-global-mode))
+(use-package projectile
+  :defer t
+  :init
+  (progn
+    ;; bug: change cache file path will cause cache file be cleared after access any pojectile file.
+    ;; (when (boundp 'paloryemacs/cache-directory)
+    ;;   (setq projectile-cache-file (concat paloryemacs/cache-directory "projectile.cache")))
+    (when (eq system-type 'darwin)
+      (setq projectile-tags-command "/usr/local/bin/ctags -Re %s"))
+    (setq projectile-enable-caching t))
+  :config
+  (progn
+    (add-to-list 'projectile-project-root-files ".cabal-sandbox")
+    (add-to-list 'projectile-project-root-files "Setup.hs")
+    ;; (add-hook 'emacs-lisp-mode-hook 'projectile-on)
+    (projectile-global-mode)
+    (with-eval-after-load "ivy"
+      (setq projectile-completion-system 'ivy))))
 
-(with-eval-after-load "ivy"
-  (setq projectile-completion-system 'ivy))
+
 
 (defhydra hydra-projectile-other-window (:color teal)
   "projectile-other-window"
@@ -1308,158 +1227,127 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   ("q"        nil "cancel" :color blue))
 
 ;;; xmsi-math-symbols-input.el
-(autoload 'xmsi-mode "xmsi-math-symbols-input" "Load xmsi minor mode for inputting math (Unicode) symbols." t)
-(xmsi-mode 1) ; activate the mode.
+(use-package xmsi-mode
+  :defer 7
+  :init
+  (progn
+    (autoload 'xmsi-mode "xmsi-math-symbols-input" "Load xmsi minor mode for
+inputting math (Unicode) symbols." t))
+  :config
+  (xmsi-mode 1))
 
-;;; info+
-;; (eval-after-load "info+"
-;;   '(progn
-;;     ))
 
 ;;; diminish
-(when (require 'diminish nil 'noerror)
-  (with-eval-after-load "abbrev"
-    (diminish 'abbrev-mode " Abv"))
-  (with-eval-after-load "subword"
-    (diminish 'subword-mode " sw"))
-  (with-eval-after-load "yasnippet"
-    (diminish 'yas-minor-mode " Y"))
-  (with-eval-after-load "paredit"
-    (diminish 'paredit-mode " π"))
-  (with-eval-after-load "eldoc"
-    (diminish 'eldoc-mode ""))
-  (with-eval-after-load "xmsi-math-symbols-input"
-    (diminish 'xmsi-mode ""))
-  (with-eval-after-load "color-identifiers-mode"
-    (diminish 'color-identifiers-mode))
-  (with-eval-after-load "elisp-slime-nav"
-    (diminish 'elisp-slime-nav-mode))
-  (with-eval-after-load "guide-key"
-    (diminish 'guide-key-mode))
-  (with-eval-after-load "auto-complete"
-    (diminish 'auto-complete-mode))
-  (with-eval-after-load "golden-ratio"
-    (diminish 'golden-ratio-mode " φ"))
-  (with-eval-after-load "smartparens"
-    (diminish 'smartparens-mode " p"))
-  (with-eval-after-load "evil-lispy"
-    (diminish 'evil-lispy-mode))
-  (with-eval-after-load "company"
-    (diminish 'company-mode))
-  (with-eval-after-load "evil-snipe"
-    (diminish 'evil-snipe-local-mode))
-  (with-eval-after-load "evil-org"
-    (diminish 'evil-org-mode " EO"))
-  (with-eval-after-load "outline"
-    (diminish 'outline-minor-mode))
-  (with-eval-after-load "simple"
-    (diminish 'auto-fill-function " F"))
-  (with-eval-after-load "anzu"
-    (diminish 'anzu-mode))
-  (with-eval-after-load "evil-goggles"
-    (diminish 'evil-goggles-mode))
-  (with-eval-after-load "which-key"
-    (diminish 'which-key-mode))
-  (with-eval-after-load "aggressive-indent"
-    (diminish 'aggressive-indent-mode " I"))
-  (with-eval-after-load "evil-vimish-fold"
-    (diminish 'evil-vimish-fold-mode))
-  (with-eval-after-load "autorevert"
-    (diminish 'auto-revert-mode))
-  (with-eval-after-load "undo-tree"
-    (diminish 'undo-tree-mode))
-  (with-eval-after-load "beacon"
-    (diminish 'beacon-mode))
-  (with-eval-after-load "ace-pinyin"
-    (diminish 'ace-pinyin-mode))
-  (with-eval-after-load "highlight-symbol"
-    (diminish 'highlight-symbol-mode)))
+(use-package diminish
+  :config
+  (progn
+    (with-eval-after-load "abbrev"
+      (diminish 'abbrev-mode " Abv"))
+    (with-eval-after-load "subword"
+      (diminish 'subword-mode " sw"))
+    (with-eval-after-load "yasnippet"
+      (diminish 'yas-minor-mode " Y"))
+    (with-eval-after-load "paredit"
+      (diminish 'paredit-mode " π"))
+    (with-eval-after-load "eldoc"
+      (diminish 'eldoc-mode ""))
+    (with-eval-after-load "xmsi-math-symbols-input"
+      (diminish 'xmsi-mode ""))
+    (with-eval-after-load "color-identifiers-mode"
+      (diminish 'color-identifiers-mode))
+    (with-eval-after-load "elisp-slime-nav"
+      (diminish 'elisp-slime-nav-mode))
+    (with-eval-after-load "guide-key"
+      (diminish 'guide-key-mode))
+    (with-eval-after-load "auto-complete"
+      (diminish 'auto-complete-mode))
+    (with-eval-after-load "golden-ratio"
+      (diminish 'golden-ratio-mode " φ"))
+    (with-eval-after-load "smartparens"
+      (diminish 'smartparens-mode " p"))
+    (with-eval-after-load "evil-lispy"
+      (diminish 'evil-lispy-mode))
+    (with-eval-after-load "company"
+      (diminish 'company-mode))
+    (with-eval-after-load "evil-snipe"
+      (diminish 'evil-snipe-local-mode))
+    (with-eval-after-load "evil-org"
+      (diminish 'evil-org-mode " EO"))
+    (with-eval-after-load "outline"
+      (diminish 'outline-minor-mode))
+    (with-eval-after-load "simple"
+      (diminish 'auto-fill-function " F"))
+    (with-eval-after-load "anzu"
+      (diminish 'anzu-mode))
+    (with-eval-after-load "evil-goggles"
+      (diminish 'evil-goggles-mode))
+    (with-eval-after-load "which-key"
+      (diminish 'which-key-mode))
+    (with-eval-after-load "aggressive-indent"
+      (diminish 'aggressive-indent-mode " I"))
+    (with-eval-after-load "evil-vimish-fold"
+      (diminish 'evil-vimish-fold-mode))
+    (with-eval-after-load "autorevert"
+      (diminish 'auto-revert-mode))
+    (with-eval-after-load "undo-tree"
+      (diminish 'undo-tree-mode))
+    (with-eval-after-load "beacon"
+      (diminish 'beacon-mode))
+    (with-eval-after-load "ace-pinyin"
+      (diminish 'ace-pinyin-mode))
+    (with-eval-after-load "highlight-symbol"
+      (diminish 'highlight-symbol-mode))))
 
 ;;; goto last change
 (global-set-key (kbd "C-x C-/") 'goto-last-change)
 
-;;;
-(require 'keyfreq nil t)
-(when (fboundp 'keyfreq-mode)
-  (keyfreq-mode 1)
-  (keyfreq-autosave-mode 1))
-
-;;; guide-key
-;; (require 'guide-key nil t)
-(with-eval-after-load "guide-key"
-  ;; This hack may be dangerous because it advices primitive functions,
-  ;; this-command-keys and this-command-keys-vector
-  (guide-key/key-chord-hack-on)
-  (setq guide-key/recursive-key-sequence-flag t
-        guide-key/popup-window-position 'right
-        guide-key/highlight-command-regexp "rectangle\\|register"
-        guide-key/idle-delay 1.2)
-
-  (setq guide-key/guide-key-sequence
-        '("C-c"
-          "C-h"
-          "C-x"
-          "M-o"
-          "M-s"
-          "<key-chord>"
-          ,paloryemacs/leader-key
-          ,paloryemacs/emacs-leader-key
-          ,paloryemacs/major-mode-leader-key
-          ,paloryemacs/major-mode-emacs-leader-key
-          ;; M-m in terminal
-          "<ESC>m"
-          ;; C-M-m in terminal
-          "<ESC><RET>"
-          "g"
-          "\["
-          "\]"
-          (org-mode "C-c")
-          (outline-minor-mode "C-c @")
-          (evil-mode ",")))
-
-  (guide-key-mode 1))
+(use-package keyfreq
+  :config
+  (progn
+    (keyfreq-mode 1)
+    (keyfreq-autosave-mode 1)))
 
 ;; https://github.com/justbur/emacs-which-key
-(require 'which-key nil t)
-(with-eval-after-load "which-key"
-  (add-to-list 'which-key-key-replacement-alist '("RET" . "⏎"))
-  (add-to-list 'which-key-key-replacement-alist '("DEL" . "⇤"))
-  (add-to-list 'which-key-key-replacement-alist '("SPC" . "␣"))
-  (setq which-key-popup-type 'minibuffer
-        which-key-max-description-length 32
-        which-key-echo-keystrokes 0.02
-        which-key-allow-evil-operators t
-        which-key-idle-delay 1.0
-        which-key-sort-order 'which-key-key-order-alpha
-        which-key-show-operator-state-maps t)
-
-  (which-key-mode +1))
+(use-package which-key
+  :init
+  (progn
+    (setq which-key-popup-type 'minibuffer
+          which-key-max-description-length 32
+          which-key-echo-keystrokes 0.02
+          which-key-allow-evil-operators t
+          which-key-idle-delay 1.0
+          which-key-sort-order 'which-key-key-order-alpha
+          which-key-show-operator-state-maps t))
+  :config
+  (progn
+    (add-to-list 'which-key-key-replacement-alist '("RET" . "⏎"))
+    (add-to-list 'which-key-key-replacement-alist '("DEL" . "⇤"))
+    (add-to-list 'which-key-key-replacement-alist '("SPC" . "␣"))
+    (which-key-mode +1)))
 
 ;;; hexcolour
 (autoload 'hexcolor-mode "hexcolor" nil t nil)
 
-;;; minimap
-;; TODO: use with narrow-to-region in indirect buffer will freeze
-;; (setq minimap-window-location 'right
-;;       minimap-hide-scroll-bar t)
-;; (when (fboundp 'minimap-mode)
-;;   (minimap-mode +1))
-
-
 ;;; rfc
-(setq irfc-directory "~/Documents/RFC")
-(setq irfc-assoc-mode t)
-(with-eval-after-load "evil-evilified-state"
-  (with-eval-after-load "irfc"
-    (evilified-state-evilify irfc-mode irfc-mode-map
-      (kbd "gp")  'irfc-page-goto
-      (kbd "gn")   'irfc-page-next
-      (kbd "gp")   'irfc-page-prev
-      (kbd "gv")   'irfc-visit
-      (kbd "j")   nil
-      (kbd "k")   nil
-      (kbd "h")   nil
-      (kbd "l")   nil)))
+(use-package irfc
+  :defer t
+  :init
+  (progn
+    (setq irfc-directory "~/Documents/RFC")
+    (setq irfc-assoc-mode t))
+  :config
+  (progn
+    (with-eval-after-load "evil-evilified-state"
+      (evilified-state-evilify irfc-mode irfc-mode-map
+        (kbd "gp")  'irfc-page-goto
+        (kbd "gn")   'irfc-page-next
+        (kbd "gp")   'irfc-page-prev
+        (kbd "gv")   'irfc-visit
+        (kbd "j")   nil
+        (kbd "k")   nil
+        (kbd "h")   nil
+        (kbd "l")   nil))))
+
 
 ;;; reveal-in-finder
 ;; https://github.com/kaz-yos/elisp
@@ -1473,17 +1361,23 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 ;;   (global-pangu-spacing-mode 1))
 
 ;;; beacon
-(when (fboundp 'beacon-mode)
+(use-package beacon
+  :defer 7
+  :config
   (beacon-mode +1))
 
 ;;; dumb-jump
-(setq dumb-jump-selector 'ivy)
-(setq dumb-jump-prefer-searcher 'rg)
-(define-key global-map (kbd "M-g o") 'dumb-jump-go-other-window)
-(define-key global-map (kbd "M-g j") 'dumb-jump-go)
-(define-key global-map (kbd "M-g b") 'dumb-jump-back)
-(define-key global-map (kbd "M-g x") 'dumb-jump-go-prefer-external)
-(define-key global-map (kbd "M-g o") 'dumb-jump-go-prefer-external-other-window)
+(use-package dumb-jump
+  :defer t
+  :init
+  (progn
+    (setq dumb-jump-selector 'ivy)
+    (setq dumb-jump-prefer-searcher 'rg)
+    (define-key global-map (kbd "M-g o") 'dumb-jump-go-other-window)
+    (define-key global-map (kbd "M-g j") 'dumb-jump-go)
+    (define-key global-map (kbd "M-g b") 'dumb-jump-back)
+    (define-key global-map (kbd "M-g x") 'dumb-jump-go-prefer-external)
+    (define-key global-map (kbd "M-g o") 'dumb-jump-go-prefer-external-other-window)))
 
 ;;; syntactic-close
 (global-set-key (kbd ")") 'syntactic-close)
@@ -1493,6 +1387,5 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
 ;; https://github.com/TeMPOraL/nyan-mode
 ;; (nyan-mode +1)
 ;; (setq nyan-animate-nyancat t)
-
 
 (provide '50tools)
