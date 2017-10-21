@@ -33,6 +33,8 @@
       ;; default-enable-multibyte-characters t
       enable-local-variables :safe)
 
+(add-to-list 'safe-local-eval-forms '(auto-fill-mode -1))
+
 ;;; mode line
 (setq size-indication-mode t            ; show file size (emacs 22+)
       column-number-mode t)
