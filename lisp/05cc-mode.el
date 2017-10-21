@@ -108,17 +108,17 @@
         (c-beginning-of-defun -1)
         (yank)))))
 
-(use-package doxymacs
-  :defer t
-  :init
-  (add-hook 'c-mode-common-hook 'doxymacs-mode)
-  :config
-  (progn
-    (defun paloryemacs/doxymacs-font-lock-hook ()
-      (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
-          (doxymacs-font-lock)))
+;; (use-package doxymacs
+;;   :defer t
+;;   :init
+;;   (add-hook 'c-mode-common-hook 'doxymacs-mode)
+;;   :config
+;;   (progn
+;;     (defun paloryemacs/doxymacs-font-lock-hook ()
+;;       (if (or (eq major-mode 'c-mode) (eq major-mode 'c++-mode))
+;;           (doxymacs-font-lock)))
 
-    (add-hook 'font-lock-mode-hook 'paloryemacs/doxymacs-font-lock-hook)))
+;;     (add-hook 'font-lock-mode-hook 'paloryemacs/doxymacs-font-lock-hook)))
 
 ;;; indent the entire buffer
 (defun paloryemacs/indent-entire-c-buffer ()
