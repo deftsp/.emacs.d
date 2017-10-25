@@ -869,6 +869,9 @@ to replace the symbol under cursor"
 (with-eval-after-load 'ibuffer
   (evil-define-key 'normal ibuffer-mode-map (kbd "gr") 'ibuffer-update))
 
+(with-eval-after-load 'ediff
+  (use-package evil-ediff))
+
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
 ;; (add-hook 'edebug-mode-hook 'evil-normalize-keymaps) ; recreate `evil-mode-map-alist'

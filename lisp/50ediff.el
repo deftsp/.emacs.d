@@ -16,10 +16,8 @@
 ;; (setq ediff-diff-options "-w") ; ignore white space
 
 (defun paloryemacs/ediff-mode-init ()
-  (ediff-setup-keymap)
-  (define-key ediff-mode-map "J" 'ediff-next-difference) ; default to "j"
-  (define-key ediff-mode-map "j" 'ediff-jump-to-difference)
-  (define-key ediff-mode-map "k" 'ediff-previous-difference))
+
+  )
 
 (add-hook 'ediff-mode-hook 'paloryemacs/ediff-mode-init)
 

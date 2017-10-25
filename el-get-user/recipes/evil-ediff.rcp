@@ -1,0 +1,6 @@
+(:name evil-ediff
+       :website "https://github.com/emacs-evil/evil-ediff"
+       :description "Make ediff a little more evil"
+       :type github
+       :pkgname "emacs-evil/evil-ediff"
+       :depends evil)
