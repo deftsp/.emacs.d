@@ -68,6 +68,7 @@
 ;; https://github.com/syohex/emacs-counsel-gtags
 (use-package counsel-gtags
   :defer t
+  :diminish counsel-gtags-mode
   :init (progn
           (defun paloryemacs//turn-counsel-gtags-mode-on ()
             (counsel-gtags-mode +1))
@@ -94,7 +95,7 @@
 
 ;;; counsel-etags
 ;; https://github.com/redguardtoo/counsel-etags
-(use-package counsel-gtags
+(use-package counsel-etags
   :defer t
   :commands (counsel-etags-find-tag-at-point)
   :init (progn
