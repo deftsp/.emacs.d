@@ -26,8 +26,54 @@
   (progn
     (define-key dired-mode-map (kbd "^") 'diredp-up-directory-reuse-dir-buffer)
     (define-key dired-mode-map (kbd "W") 'paloryemacs/dired-w3m-find-file)
-    (define-key dired-mode-map (kbd "/") 'dired-narrow)
     (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
+
+
+
+    (with-eval-after-load "evil-evilified-state"
+      (evilified-state-evilify dired-mode dired-mode-map
+        (kbd "%")    'nil
+        (kbd "j")   'dired-hacks-next-file
+        (kbd "k")   'dired-hacks-previous-file
+        (kbd "^")   'diredp-up-directory-reuse-dir-buffer
+        (kbd "l")   'diredp-find-file-reuse-dir-buffer
+        (kbd "i")   'dired-omit-mode
+        (kbd "I")   'dired-maybe-insert-subdir
+        (kbd "/")   'dired-narrow
+        (kbd "M-r") 'dired-do-redisplay
+        (kbd "r")   ' wdired-change-to-wdired-mode
+        (kbd "gg")  'paloryemacs/dired-back-to-top
+        (kbd "gr")  'revert-buffer
+        (kbd "G")   'paloryemacs/dired-jump-to-bottom))
+
+    (use-package dired-narrow
+      :defer t
+      :bind (:map dired-mode-map
+                  ("/" . dired-narrow)))
+
+    (use-package dired-open
+      :init
+      (progn
+        (defun paloryemacs/dired-open-by-macos-open ()
+          "Try to run `open' with default app on macOS to open the file under point."
+          (interactive)
+          (let ((file (ignore-errors (dired-get-file-for-visit)))
+                process)
+            (setq process (dired-open--start-process file "open"))
+            process))
+
+        (setq dired-open-functions '(paloryemacs/dired-open-by-macos-open dired-open-subdir))))
+
+
+    ;; Note, dired-filter-by-omit removes the files that would be
+    ;; removed by dired-omit-mode, so you should not need to use both---in fact
+    ;; it is discouraged, as it would make the read-in slower.
+    (use-package dired-filter
+      :defer t
+      :init
+      (progn
+        (define-key dired-mode-map (kbd "s-m") dired-filter-mark-map)
+        (define-key dired-mode-map (kbd "s-f") dired-filter-map)))
 
     ;; TODO: dired will be require when el-get sync and here dired+ require slow.
     (use-package dired+
@@ -42,21 +88,6 @@
                   (setq insert-directory-program ls))
               (t (require 'ls-lisp)
                  (setq ls-lisp-use-insert-directory-program nil)))))
-    (with-eval-after-load "evil-evilified-state"
-      (evilified-state-evilify dired-mode dired-mode-map
-        (kbd "%")    'nil
-        (kbd "j")   'diredp-next-line
-        (kbd "k")   'diredp-previous-line
-        (kbd "^")   'diredp-up-directory-reuse-dir-buffer
-        (kbd "l")   'diredp-find-file-reuse-dir-buffer
-        (kbd "i")   'dired-omit-mode
-        (kbd "I")   'dired-maybe-insert-subdir
-        (kbd "/")   'dired-narrow
-        (kbd "M-r") 'dired-do-redisplay
-        (kbd "r")   ' wdired-change-to-wdired-mode
-        (kbd "gg")  'paloryemacs/dired-back-to-top
-        (kbd "gr")  'revert-buffer
-        (kbd "G")   'paloryemacs/dired-jump-to-bottom))
 
     ;; Ask for confirm when opening some binary alike(.avi, .dvi, etc) files by accident.
     (defadvice dired-find-file (around ask-confirm-open-binary-file)
