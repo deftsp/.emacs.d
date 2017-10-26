@@ -103,6 +103,7 @@
   ;; "vr"  'vr/replace
   ;; "vq"  'vr/query-replace
   ;; "vm"  'vr/mc-mark
+  "t"   'hydra-toggle/body
   "xb"  'switch-to-buffer
   "xc"  'save-buffers-kill-terminal
   "xf"  'ido-find-file
@@ -565,6 +566,7 @@ _g_ golden-ratio-mode:                 %`golden-ratio-mode
 _G_ debug-on-quit:                     %`debug-on-quit
 _r_ read-only-mode:                    %`buffer-read-only
 _s_ rainbow-delimiters-string-color    %`--paloryemacs/rainbow-delimiters-strong-color
+_p_ smartparens:                       %`smartparens-mode
 _t_ truncate-lines:                    %`truncate-lines
 _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespace-mode)
 
@@ -576,6 +578,8 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
     ("g" golden-ratio-mode "golden-ratio")
     ("G" toggle-debug-on-quit "debug-quit")
     ("o" paloryemacs/replace-charset-to-oem "char->oem")
+    ("p" smartparens-mode "smartparens")
+    ("C-p" smartparens-global-mode "global smartparens")
     ("r" dired-toggle-read-only "read only") ; generalized version of `read-only-mode'.
     ("t" toggle-truncate-lines "truncate")
     ("w" whitespace-mode "whitespace")

@@ -133,8 +133,8 @@
    '(info-header-node ((t (:weight normal))))
 
    ;; show-paren
-   '(show-paren-match ((t (:foreground "SteelBlue3"))))
-   '(show-paren-mismatch ((t (:foreground "white" :background "purple"))))
+   '(show-paren-match ((t (:foreground "#222222" :background "#3cdeef"))))
+   '(show-paren-mismatch ((t (:foreground "white" :background "#dd2222"))))
 
    ;; mic-paren
    '(paren-face-match ((t (:foreground "#222222" :background "DeepSkyBlue3"))))

@@ -10,16 +10,6 @@
 ;; el-get install smartparens
 
 ;;;;;;;;;
-;; global
-(require 'smartparens-config)
-
-(add-to-list 'sp-ignore-modes-list 'haskell-mode)
-(smartparens-global-mode t)
-;; (smartparens-global-strict-mode t) ; strict mode can not workedd with subword
-
-;; highlights matching pairs
-(show-smartparens-global-mode 1)
-
 ;;; keybinding management
 ;; paredit  -  smartparens
 ;; M-s      -  M-D
@@ -27,7 +17,7 @@
 ;; M-S      -  sp-split-sexp
 
 ;;; manually set `sp-keymap' instead of use predefined sp-smartparens-bindings
-(with-eval-after-load 'smartparens
+(defun paloryemacs/smartparens-set-keys ()
   (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
   (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
 
@@ -77,31 +67,93 @@
   (define-key sp-keymap (kbd "H-s j") 'sp-join-sexp)
   (define-key sp-keymap (kbd "H-s s") 'sp-split-sexp))
 
-;; pair management
-(sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
+(defun paloryemacs//adaptive-smartparent-pair-overlay-face ()
+  (set-face-attribute 'sp-pair-overlay-face nil
+                      :inherit 'lazy-highlight
+                      :background nil
+                      :foreground nil))
 
-;;; markdown-mode
-(sp-with-modes '(markdown-mode gfm-mode rst-mode)
-  (sp-local-pair "*" "*" :bind "C-*")
-  (sp-local-tag "2" "**" "**")
-  (sp-local-tag "s" "```scheme" "```")
-  (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
+(defun paloryemacs/smartparens-pair-newline (id action context)
+  (save-excursion
+    (newline)
+    (indent-according-to-mode)))
 
-;;; tex-mode latex-mode
-(sp-with-modes '(tex-mode plain-tex-mode latex-mode)
-  (sp-local-tag "i" "\"<" "\">"))
+(defun paloryemacs/smartparens-pair-newline-and-indent (id action context)
+  (paloryemacs/smartparens-pair-newline id action context)
+  (indent-according-to-mode))
 
-;;; html-mode
-(sp-with-modes '(html-mode sgml-mode)
-  (sp-local-pair "<" ">"))
+(defun paloryemacs/smart-closing-parenthesis ()
+  (interactive)
+  (let* ((sp-navigate-close-if-unbalanced t)
+         (current-pos (point))
+         (current-line (line-number-at-pos current-pos))
+         (next-pos (save-excursion
+                     (sp-up-sexp)
+                     (point)))
+         (next-line (line-number-at-pos next-pos)))
+    (cond
+     ((and (= current-line next-line)
+           (not (= current-pos next-pos)))
+      (sp-up-sexp))
+     (t
+      (insert-char ?\))))))
 
-;;; haskell-mode
-(sp-with-modes '(haskell-mode inferior-haskell-mode)
-  (sp-local-pair "\\{-" "-\\}"))
+(use-package smartparens
+  :defer t
+  :commands (sp-split-sexp sp-newline sp-up-sexp smartparens-global-mode)
+  :init
+  (progn
+    ;; settings
+    (setq sp-show-pair-delay  0.2
+          ;; fix paren highlighting in normal mode
+          sp-show-pair-from-inside t
+          sp-cancel-autoskip-on-backward-movement nil
+          sp-highlight-pair-overlay nil
+          sp-highlight-wrap-overlay nil
+          sp-highlight-wrap-tag-overlay nil)
 
-;;; lisp modes
-(sp-with-modes sp--lisp-modes
-  (sp-local-pair "(" nil :bind "C-("))
+    (paloryemacs/set-leader-keys
+      "js" 'sp-split-sexp
+      "jn" 'sp-newline))
+  :config
+  (progn
+    (require 'smartparens-config)
+    (add-to-list 'sp-ignore-modes-list 'haskell-mode)
+    ;; (define-key evil-insert-state-map ")" 'paloryemacs/smart-closing-parenthesis)
+    (paloryemacs//adaptive-smartparent-pair-overlay-face)
+    ;; (smartparens-global-strict-mode t) ; strict mode can not worked with subword
+    (show-smartparens-global-mode +1)
+    ;; don't create a pair with single quote in minibuffer
+    (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
+    (sp-pair "{" nil :post-handlers
+             '(:add (paloryemacs/smartparens-pair-newline-and-indent "RET")))
+    (sp-pair "[" nil :post-handlers
+             '(:add (paloryemacs/smartparens-pair-newline-and-indent "RET")))
+    ;; markdown-mode
+    (sp-with-modes '(markdown-mode gfm-mode rst-mode)
+      (sp-local-pair "*" "*" :bind "C-*")
+      (sp-local-tag "2" "**" "**")
+      (sp-local-tag "s" "```scheme" "```")
+      (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
+
+    ;; tex-mode latex-mode
+    (sp-with-modes '(tex-mode plain-tex-mode latex-mode)
+      (sp-local-tag "i" "\"<" "\">"))
+
+    ;; html-mode
+    (sp-with-modes '(html-mode sgml-mode)
+      (sp-local-pair "<" ">"))
+
+    ;; haskell-mode
+    (sp-with-modes '(haskell-mode inferior-haskell-mode)
+      (sp-local-pair "\\{-" "-\\}"))
+
+    ;; lisp modes
+    (sp-with-modes sp--lisp-modes
+      (sp-local-pair "(" nil :bind "C-("))))
+
+(smartparens-global-mode +1)
+
 
 ;; (defun paloryemacs/sp-lisp-binding (map)
 ;;   (define-key map (kbd "M-s") 'sp-splice-sexp)

@@ -310,12 +310,13 @@
   (file-name-shadow-mode t))
 
 ;;; paren
-(use-package mic-paren
-  :defer 7
-  :init
-  (setq paren-sexp-mode 'mismatch)
-  :config
-  (paren-activate))
+;; instead of by smartparens
+;; (use-package mic-paren
+;;   :defer 7
+;;   :init
+;;   (setq paren-sexp-mode 'mismatch)
+;;   :config
+;;   (paren-activate))
 
 ;; use mic-paren instead
 ;; (show-paren-mode t)
