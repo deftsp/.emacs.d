@@ -125,7 +125,7 @@
   :defer t
   :init
   (progn
-    (setq wg-session-load-on-start t  ; set to nil, if you emacs started as daemon
+    (setq wg-session-load-on-start (not (daemonp))  ; set to nil, if you emacs started as daemon
           wg-session-file (expand-file-name "~/.emacs.d/workgroups2")
           ;; wg-prefix-key (kbd "C-c w")
           wg-prefix-key (kbd "s-w")
@@ -139,8 +139,7 @@
     (setq wg-flag-modified t)                 ; Display modified flags as well
     (setq wg-mode-line-decor-left-brace "♯"
           wg-mode-line-decor-right-brace ""
-          wg-mode-line-decor-divider ":")
-    )
+          wg-mode-line-decor-divider ":"))
   :config
   (define-key wg-prefixed-map (kbd "s") 'wg-save-session)
   (when (fboundp 'key-chord-define-global)
