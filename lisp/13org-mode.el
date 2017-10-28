@@ -1165,10 +1165,21 @@ _h_tml    ^ ^        _A_SCII:
   (evil-org-mode)
   (evil-normalize-keymaps))
 
+(with-eval-after-load "org"
+  (require 'evil-org)
+  (add-hook 'org-mode-hook 'paloryemacs//evil-org-mode)
+  ;; https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org
+  (evil-org-set-key-theme '(navigation
+                            textobjects
+                            todo
+                            additional)))
+
+
 
 (use-package org-brain
   :init
   (setq org-brain-path (expand-file-name "brain" org-directory))
+  (paloryemacs/set-leader-keys "aob" 'org-brain-visualize)
   (with-eval-after-load 'evil
     (evil-set-initial-state 'org-brain-visualize-mode 'emacs))
   :config
@@ -1179,21 +1190,6 @@ _h_tml    ^ ^        _A_SCII:
         org-capture-templates)
   (setq org-brain-visualize-default-choices 'all)
   (setq org-brain-title-max-length 12))
-
-(with-eval-after-load "org"
-  (require 'evil-org)
-  (add-hook 'org-mode-hook 'paloryemacs//evil-org-mode)
-  ;; https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org
-  (evil-org-set-key-theme '(navigation
-                            textobjects
-                            todo
-                            additional)))
-
-(with-eval-after-load 'org-brain
-  (paloryemacs/set-leader-keys
-    "aob" 'org-brain-visualize)
-  (evil-set-initial-state 'org-brain-visualize-mode 'emacs))
-
 
 
 (provide '13org-mode)
