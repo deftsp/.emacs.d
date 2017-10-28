@@ -307,31 +307,6 @@ kill internal buffers too."
   (paloryemacs-bootstrap/init-bind-map))
 
 
-;;; emacs-lisp
-(defun paloryemacs/init-emacs-lisp ()
-  (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
-    (paloryemacs/declare-prefix-for-mode mode "mc" "compile")
-    (paloryemacs/declare-prefix-for-mode mode "me" "eval")
-    (paloryemacs/declare-prefix-for-mode mode "mt" "tests")
-    (paloryemacs/set-leader-keys-for-major-mode mode
-      "cc" 'emacs-lisp-byte-compile
-      "e$" 'lisp-state-eval-sexp-end-of-line
-      "eb" 'eval-buffer
-      "ee" 'eval-last-sexp
-      "er" 'eval-region
-      "ef" 'eval-defun
-      "el" 'lisp-state-eval-sexp-end-of-line
-      ","  'lisp-state-toggle-lisp-state
-      "tb" 'paloryemacs/ert-run-tests-buffer
-      "tq" 'ert
-      "f" 'describe-function/with-ido
-      "k" 'describe-key
-      "hh" 'elisp-slime-nav-describe-elisp-thing-at-point
-      "gg" 'elisp-slime-nav-find-elisp-thing-at-point
-      "v" 'describe-variable/with-ido)))
-
-(paloryemacs/init-emacs-lisp)
-
 ;;; evil-lisp-state
 (use-package evil-lisp-state
   :defer 3
@@ -871,6 +846,52 @@ to replace the symbol under cursor"
 
 (with-eval-after-load 'ediff
   (use-package evil-ediff))
+
+
+;;; sexp motion
+(with-eval-after-load 'evil
+  (evil-define-motion evil-sp-forward-sexp (count)
+    (sp-forward-sexp count))
+
+  (evil-define-motion evil-sp-backward-sexp (count)
+    (sp-backward-sexp count))
+
+  (evil-define-motion evil-sp-up-sexp (count)
+    (sp-up-sexp count))
+
+  (evil-define-motion evil-sp-backward-up-sexp (count)
+    (sp-backward-up-sexp count))
+
+  (evil-define-motion evil-sp-down-sexp (count)
+    (sp-down-sexp count))
+
+  (define-key evil-motion-state-map "e" 'evil-sp-forward-sexp)
+  (define-key evil-motion-state-map "E" 'evil-sp-backward-sexp))
+
+;;; sexp text object
+(with-eval-after-load 'evil
+  ;; think at point
+  ;; To make ‘forward-thing’ work with a particular kind of thing, say, a new
+  ;; type ‘foobar’ that you define, you can define a function
+  ;; ‘forward-foobar’ that moves forward one or more ‘foobar’s. (With a
+  ;; negative argument, ‘forward-foobar’ should move backward.)
+  (defun forward-evil-thingatpt-sexp (&optional count)
+    "Move forward COUNT sexps.
+Moves point COUNT sexps forward or (- COUNT) sexps backward
+if COUNT is negative. "
+    (evil-motion-loop (dir (or count 1))
+      (if (> dir 0)
+          (thing-at-point--end-of-sexp)
+        (thing-at-point--beginning-of-sexp))))
+
+  (evil-define-text-object evil-a-sexp (count &optional beg end type)
+    (evil-select-an-object 'evil-thingatpt-sexp beg end type count))
+
+  (evil-define-text-object evil-inner-sexp (count &optional beg end type)
+    (evil-select-inner-object 'evil-thingatpt-sexp beg end type count))
+
+  (define-key evil-outer-text-objects-map "e" 'evil-a-sexp)
+  (define-key evil-inner-text-objects-map "e" 'evil-inner-sexp))
 
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
