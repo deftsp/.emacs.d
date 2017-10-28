@@ -1,0 +1,5 @@
+(:name evil-textobj-anyblock
+       :description "Textobject for the closest user-defined blocks."
+       :type github
+       :pkgname "noctuid/evil-textobj-anyblock"
+       :depends (evil))

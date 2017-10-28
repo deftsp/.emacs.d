@@ -733,9 +733,50 @@ to replace the symbol under cursor"
   (evil-lion-mode +1))
 
 ;;; evil-textobj-column
-(with-eval-after-load 'evil
-  (define-key evil-inner-text-objects-map "c" 'evil-textobj-column-word)
-  (define-key evil-inner-text-objects-map "C" 'evil-textobj-column-WORD))
+(use-package evil-textobj-column
+  :defer t
+  :init
+  (with-eval-after-load 'evil
+    (define-key evil-inner-text-objects-map "c" 'evil-textobj-column-word)
+    (define-key evil-inner-text-objects-map "C" 'evil-textobj-column-WORD)))
+
+(use-package evil-textobj-anyblock
+  :defer 3
+  :init
+  (with-eval-after-load 'evil
+    (define-key evil-inner-text-objects-map "b" 'evil-textobj-anyblock-inner-block)
+    (define-key evil-inner-text-objects-map "b" 'evil-textobj-anyblock-a-block))
+  :config
+  (defun paloryemacs/evil-textobj-anyblock--init ()
+    (setq-local evil-textobj-anyblock-blocks
+                '(("(" . ")")
+                  ("{" . "}")
+                  ("\\[" . "\\]")
+                  ("\"" . "\""))))
+  (add-hook 'lisp-mode-hook 'paloryemacs/evil-textobj-anyblock--init)
+
+  (evil-define-text-object paloryemacs/evil-textobj-anyblock-inner-quote
+    (count &optional beg end type)
+    "Select the closest outer quote."
+    (let ((evil-textobj-anyblock-blocks
+           '(("'" . "'")
+             ("\"" . "\"")
+             ("`" . "'")
+             ("“" . "”"))))
+      (evil-textobj-anyblock--make-textobj beg end type count nil)))
+
+  (evil-define-text-object paloryemacs/evil-textobj-anyblock-a-quote
+    (count &optional beg end type)
+    "Select the closest outer quote."
+    (let ((evil-textobj-anyblock-blocks
+           '(("'" . "'")
+             ("\"" . "\"")
+             ("`" . "'")
+             ("“" . "”"))))
+      (evil-textobj-anyblock--make-textobj beg end type count t)))
+
+  (define-key evil-inner-text-objects-map "q" 'paloryemacs/evil-textobj-anyblock-inner-quote)
+  (define-key evil-outer-text-objects-map "q" 'paloryemacs/evil-textobj-anyblock-a-quote))
 
 
 ;;; ivy
@@ -892,6 +933,36 @@ if COUNT is negative. "
 
   (define-key evil-outer-text-objects-map "e" 'evil-a-sexp)
   (define-key evil-inner-text-objects-map "e" 'evil-inner-sexp))
+
+;;; column and defun text object
+(with-eval-after-load 'evil
+  (evil-define-text-object evil-sp-a-comment (count &optional beg end type)
+    "An outer comment text object as defined by `sp-get-comment-bounds'."
+    (let ((bounds (sp-get-comment-bounds)))
+      (if (not bounds)
+          (error "Not inside a comment.")
+        (let ((beg (car bounds))
+              (end (cdr bounds)))
+          (evil-range beg end 'line :expanded t)))))
+
+  (evil-define-text-object evil-sp-inner-comment (count &optional beg end type)
+    "An inner comment text object as defined by `sp-get-comment-bounds'."
+    (let ((bounds (sp-get-comment-bounds)))
+      (if (not bounds)
+          (error "Not inside a comment.")
+        (let ((beg (save-excursion
+                     (goto-char (car bounds))
+                     (forward-word 1)
+                     (forward-word -1)
+                     (point)))
+              (end (save-excursion
+                     (goto-char (cdr bounds))
+                     (evil-end-of-line)
+                     (point))))
+          (evil-range beg end 'block :expanded t)))))
+
+  (define-key evil-outer-text-objects-map (kbd "s-c") #'evil-sp-a-comment)
+  (define-key evil-inner-text-objects-map (kbd "s-c") #'evil-sp-inner-comment))
 
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
