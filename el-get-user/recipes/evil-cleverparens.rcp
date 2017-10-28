@@ -1,0 +1,5 @@
+(:name evil-cleverparens
+       :type github
+       :description "Evil normal-state minor-mode for editing lisp-like languages."
+       :pkgname "luxbock/evil-cleverparens"
+       :depends (evil paredit smartparens dash))
