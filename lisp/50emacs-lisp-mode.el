@@ -88,6 +88,74 @@
   (let ((jumpl (intern (format "paloryemacs-jump-handlers-%S" mode))))
     (add-to-list jumpl 'elisp-slime-nav-find-elisp-thing-at-point)))
 
+;; Idea from http://www.reddit.com/r/emacs/comments/312ge1/i_created_this_function_because_i_was_tired_of/
+(defun paloryemacs/eval-current-form ()
+  "Find and evaluate the current def* or set* command.
+Unlike `eval-defun', this does not go to topmost function."
+  (interactive)
+  (save-excursion
+    (search-backward-regexp "(def\\|(set")
+    (forward-list)
+    (call-interactively 'eval-last-sexp)))
+
+;; smartparens integration
+
+(defun paloryemacs/eval-current-form-sp (&optional arg)
+  "Call `eval-last-sexp' after moving out of one level of
+parentheses. Will exit any strings and/or comments first.
+An optional ARG can be used which is passed to `sp-up-sexp' to move out of more
+than one sexp.
+Requires smartparens because all movement is done using `sp-up-sexp'."
+  (interactive "p")
+  (require 'smartparens)
+  (let ((evil-move-beyond-eol t))
+    ;; evil-move-beyond-eol disables the evil advices around eval-last-sexp
+    (save-excursion
+      (let ((max 10))
+        (while (and (> max 0)
+                    (sp-point-in-string-or-comment))
+          (decf max)
+          (sp-up-sexp)))
+      (sp-up-sexp arg)
+      (call-interactively 'eval-last-sexp))))
+
+(defun paloryemacs/eval-current-symbol-sp ()
+  "Call `eval-last-sexp' on the symbol around point.
+Requires smartparens because all movement is done using `sp-forward-symbol'."
+  (interactive)
+  (require 'smartparens)
+  (let ((evil-move-beyond-eol t))
+    ;; evil-move-beyond-eol disables the evil advices around eval-last-sexp
+    (save-excursion
+      (sp-forward-symbol)
+      (call-interactively 'eval-last-sexp))))
+
+(defun paloryemacs/init-emacs-lisp ()
+  (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
+    (paloryemacs/declare-prefix-for-mode mode "mc" "compile")
+    (paloryemacs/declare-prefix-for-mode mode "me" "eval")
+    (paloryemacs/declare-prefix-for-mode mode "mt" "tests")
+    (paloryemacs/set-leader-keys-for-major-mode mode
+      "cc" 'emacs-lisp-byte-compile
+      "e$" 'lisp-state-eval-sexp-end-of-line
+      "eb" 'eval-buffer
+      "eC" 'paloryemacs/eval-current-form
+      "ee" 'eval-last-sexp
+      "er" 'eval-region
+      "ef" 'eval-defun
+      "el" 'lisp-state-eval-sexp-end-of-line
+      ","  'lisp-state-toggle-lisp-state
+      "tb" 'paloryemacs/ert-run-tests-buffer
+      "tq" 'ert
+      "f" 'describe-function/with-ido
+      "k" 'describe-key
+      "hh" 'elisp-slime-nav-describe-elisp-thing-at-point
+      "gg" 'elisp-slime-nav-find-elisp-thing-at-point
+      "v" 'describe-variable/with-ido)))
+
+(paloryemacs/init-emacs-lisp)
+
+
 
 (provide '50emacs-lisp-mode)
 ;;; 50emacs-lisp-mode.el ends here
