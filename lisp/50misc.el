@@ -522,7 +522,16 @@ vi style of % jumping to matching brace."
             ))))
 
 ;; auto delete trailing whitespace
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+;; (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Unobtrusively trim extraneous white-space *ONLY* in lines edited.
+;; https://github.com/lewang/ws-butler
+(use-package ws-butler
+  :defer 3
+  :init
+  :diminish ws-butler-mode
+  :config
+  (ws-butler-global-mode +1))
 
 (setq line-number-display-limit 10000000)
 

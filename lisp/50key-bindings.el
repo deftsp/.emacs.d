@@ -109,6 +109,7 @@
   "xf"  'ido-find-file
   "xk"  'kill-buffer
   "xz"  'suspend-frame
+  "xdw" 'delete-trailing-whitespace
   "xvv" 'vc-next-action
   "xv=" 'vc-diff
   "xvl" 'vc-print-log
