@@ -28,7 +28,7 @@
 ;; see also https://github.com/purcell/color-theme-sanityinc-solarized
 
 ;; the easy way to get following vlaue is: `customize face' => Apply and save => copy and paste
-
+;; Likes "#032238"
 
 (deftheme paloryemacs "The Paloryemacs color theme. Base on zenburn and solarized")
 
@@ -363,6 +363,10 @@
 
    ;; linum
    '(linum ((t (:background "#102530" :foreground "#607b8b"))))
+
+   ;; native line numbers (emacs 26)
+   `(line-number ((t (:foreground "#607b8b" :background "#04303d"))))
+   `(line-number-current-line ((t (:foreground "#202050" :background "#657b83"))))
 
    ;; guide-key
    '(guide-key/key-face ((t (:foreground "violet"))))

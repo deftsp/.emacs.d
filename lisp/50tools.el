@@ -130,67 +130,10 @@ space and marks next symbol."
 ;;; ascii table
 (autoload 'ascii-table-show "ascii-table-show" "Create a buffer and print the ascii table" t)
 
-;;; line numbers
-;; (use-package linum
-;;   :defer t
-;;   :init
-;;   (progn
-;;     (setq linum-format 'paloryemacs/linum-format)
-;;     (defun paloryemacs/linum-format (line)
-;;       (propertize
-;;        (format
-;;         (let ((w (length (number-to-string
-;;                           (count-lines
-;;                            (point-min)
-;;                            (point-max))))))
-;;           (concat "%" (number-to-string w) "d|"))
-;;         line)
-;;        'face 'linum))))
-
-
-;; linum-relative
-;; (use-package linum-relative
-;;   :defer t
-;;   :init
-;;   (progn
-;;     (setq linum-relative-format "%3s|")
-;;     ;; if linum-relative-current-symbol is empty string,
-;;     ;; linum-relative will show the real line number at current line.
-;;     (setq linum-relative-current-symbol "->")
-
-;;     (defun paloryemacs/turn-on-relative-linum ()
-;;       (linum-mode 1)
-;;       (if (fboundp 'linum-relative)
-;;           (setq linum-format 'linum-relative)))
-
-;;     (add-hook 'prog-mode-hook 'paloryemacs/turn-on-relative-linum))
-;;   :config
-;;   (progn
-;;     (defun paloryemacs/linum-relative-toggle ()
-;;       "Toggle between linum-relative and linum."
-;;       (interactive)
-;;       (if (or (eq linum-format 'dynamic)
-;;               (eq linum-format 'paloryemacs/linum-format))
-;;           (setq linum-format 'linum-relative)
-;;         (setq linum-format 'paloryemacs/linum-format)))))
-
-;;; nlinum-relative
-(use-package nlinum-relative
+(use-package display-line-numbers
   :init
-  (progn
-    (setq nlinum-relative-current-symbol "->")      ;; or "" for display current line number
-    (setq nlinum-relative-offset 0)                 ;; 1 if you want 0, 2, 3...
-    (setq nlinum-relative-redisplay-delay 0)
-    (defun paloryemacs/turn-on-nlinum-relative ()
-      (if linum-mode
-          (linum-mode -1))
-      (if (fboundp 'nlinum-relative-mode)
-          (nlinum-relative-mode 1)))
-    (add-hook 'prog-mode-hook 'paloryemacs/turn-on-nlinum-relative))
-  :config
-  (progn
-    (with-eval-after-load "evil"
-      (nlinum-relative-setup-evil))))
+  (setq display-line-numbers-type 'relative)
+  (global-display-line-numbers-mode +1))
 
 ;;; uniquify
 ;; add parent directory name to the buffers of the same name
