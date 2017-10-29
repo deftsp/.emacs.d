@@ -905,6 +905,14 @@ This command is to be used interactively."
 (mapc (lambda (p) (add-to-list 'Info-directory-list p t)) Info-default-directory-list)
 (add-to-list 'Info-additional-directory-list "~/share/info")
 
+(use-package info+
+  :defer t
+  :init
+  (progn
+    (with-eval-after-load 'info
+      (require 'info+))
+    (setq Info-fontify-angle-bracketed-flag nil)))
+
 ;; (defun find-subdirs-containing (dir pattern)
 ;;   "Return a list of all deep subdirectories of DIR that contain
 ;; files that match PATTERN."
