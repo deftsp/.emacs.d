@@ -1,0 +1,5 @@
+(:name evil-visual-mark-mode
+       :type github
+       :description "Display evil marks on buffer"
+       :pkgname "roman/evil-visual-mark-mode"
+       :depends (evil dash))

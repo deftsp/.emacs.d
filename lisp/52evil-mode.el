@@ -870,10 +870,11 @@ to replace the symbol under cursor"
   (require 'diff-mode) ;; load diff-* faces
   (evil-goggles-mode +1))
 
-;;; ivy-occur-grep-mode
-(with-eval-after-load 'ivy
-  (paloryemacs/set-leader-keys-for-major-mode 'ivy-occur-grep-mode
-    "w" 'ivy-wgrep-change-to-wgrep-mode))
+(use-package evil-visual-mark-mode
+  :defer t
+  :commands (evil-visual-mark-mode)
+  :init
+  (setq evil-visual-mark-exclude-marks '("^" "[" "]")))
 
 (with-eval-after-load 'wgrep
   (evil-define-key 'normal wgrep-mode-map ",," 'wgrep-finish-edit)

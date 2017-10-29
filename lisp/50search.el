@@ -246,20 +246,28 @@ Argument REPLACE String used to replace the matched strings in the buffer.
     ;; http://oremacs.com/2016/01/06/ivy-flx/
     ;; let flx (hopefully) sort the matches in a nice way
     (setq ivy-initial-inputs-alist nil)
-
+    (setq ivy-use-selectable-prompt t)
     (setq ivy-re-builders-alist
           '((t . ivy--regex-fuzzy)))
     ;; https://oremacs.com/2016/06/27/ivy-push-view/
     ;; (global-set-key (kbd "s-v") 'ivy-push-view)
     ;; delete view, delete many views at once by pressing C-M-m[M-RET] (ivy-call)
     ;; (global-set-key (kbd "s-V") 'ivy-pop-view)
-    (paloryemacs/set-leader-keys "rl" 'ivy-resume))
+    (paloryemacs/set-leader-keys
+      "fr" 'counsel-recentf
+      "rl" 'ivy-resume))
   :config
   (progn
     (define-key ivy-minibuffer-map (kbd "C-w") 'ivy-occur)
     (define-key ivy-minibuffer-map [escape] 'minibuffer-keyboard-quit)
     (define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line)
     (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-previous-line)
+    (global-set-key (kbd "C-c C-r") 'ivy-resume)
+    (global-set-key [f6] 'ivy-resume)
+
+    (evil-make-overriding-map ivy-occur-mode-map 'normal)
+    (paloryemacs/set-leader-keys-for-major-mode 'ivy-occur-grep-mode
+      "w" 'ivy-wgrep-change-to-wgrep-mode)
 
     (use-package ivy-rich
       :init
@@ -299,8 +307,6 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 ;;; swiper
 (global-set-key "\C-s" 'swiper)
 (global-set-key "\C-r" 'swiper)
-(global-set-key (kbd "C-c C-r") 'ivy-resume)
-(global-set-key [f6] 'ivy-resume)
 
 
 (defun paloryemacs/swiper-dwim (arg)

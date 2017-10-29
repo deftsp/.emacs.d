@@ -559,6 +559,7 @@ it marks the next ARG lines after the ones already marked."
 (with-eval-after-load "hydra"
   (defhydra hydra-toggle (:color blue)
     "
+_`_ evil-visual-mark-mode:             %`evil-visual-mark-mode
 _a_ abbrev-mode:                       %`abbrev-mode
 _d_ debug-on-error:                    %`debug-on-error
 _f_ auto-fill-mode:                    %`auto-fill-function
@@ -572,6 +573,7 @@ _t_ truncate-lines:                    %`truncate-lines
 _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespace-mode)
 
 "
+    ("`" evil-visual-mark-mode "abbrev")
     ("a" abbrev-mode "abbrev")
     ("d" toggle-debug-on-error "debug")
     ("f" auto-fill-mode "fill")
