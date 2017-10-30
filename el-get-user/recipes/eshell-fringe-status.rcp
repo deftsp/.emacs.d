@@ -1,0 +1,4 @@
+(:name eshell-fringe-status
+       :type github
+       :pkgname "ryuslash/eshell-fringe-status"
+       :description "Show last status in fringe")

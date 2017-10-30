@@ -321,7 +321,7 @@ kill internal buffers too."
         '((comint-mode               . insert)
           (compilation-mode          . emacs)
           (diff-mode                 . emacs)
-          (eshell-mode               . emacs)
+          (eshell-mode               . insert)
           (eww-mode                  . emacs)
           (helm-grep-mode            . emacs)
           (ibuffer-mode              . normal)

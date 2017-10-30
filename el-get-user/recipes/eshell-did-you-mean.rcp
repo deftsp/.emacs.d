@@ -1,0 +1,5 @@
+(:name eshell-did-you-mean
+       :type github
+       :description "command not found (\"did you mean…\" feature) in Eshell"
+       :pkgname "xuchunyang/eshell-did-you-mean"
+       :depends (cl-lib))

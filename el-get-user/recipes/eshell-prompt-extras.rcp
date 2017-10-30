@@ -1,0 +1,4 @@
+(:name eshell-prompt-extras
+       :type github
+       :description "Display extra information for your eshell prompt."
+       :pkgname "kaihaosw/eshell-prompt-extras")

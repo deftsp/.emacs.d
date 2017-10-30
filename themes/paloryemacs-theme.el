@@ -357,6 +357,13 @@
    `(diff-hl-delete ((t (:foreground ,yellow :background ,yellow))))
    `(diff-hl-unknown ((t (:foreground)) ,violet :background ,violet))
 
+   ;; eshell-prompt-extras
+   `(epe-symbol-face ((t (:foreground "#d01ce2"))))
+   `(epe-user-face ((t (:foreground "#648fc3"))))
+   `(epe-host-face ((t (:foreground "#648fc3"))))
+   `(epe-time-face ((t (:foreground "#e2d282"))))
+   `(epe-dir-face ((t (:foreground "#94bff3"))))
+
    ;; structured-haskell-mode
    '(shm-current-face ((t (:background "#222222"))))
    '(shm-quarantine-face ((t (:background "#262230"))))
