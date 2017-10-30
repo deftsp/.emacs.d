@@ -1176,8 +1176,8 @@ _h_tml    ^ ^        _A_SCII:
                             additional)))
 
 
-
 (use-package org-brain
+  :defer t
   :init
   (setq org-brain-path (expand-file-name "brain" org-directory))
   (paloryemacs/set-leader-keys "aob" 'org-brain-visualize)
