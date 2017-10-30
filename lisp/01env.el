@@ -193,7 +193,7 @@
 (when (eq system-type 'darwin)
   (setenv "INFOPATH" (concat (expand-file-name "~/share/info:") (getenv "INFOPATH"))))
 
-(defconst paloryemacs/cache-directory (concat user-emacs-directory "caches/")
+(defconst paloryemacs/cache-directory (concat user-emacs-directory "cache/")
   "cache files directory")
 
 ;;; preset variables
