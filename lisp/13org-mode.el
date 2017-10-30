@@ -302,7 +302,8 @@ to `reorganize-frame', otherwise set to `other-frame'."
          :kill-buffer t)
         ("d" "Drill" entry (file+headline "~/org/drill/playground.org" "Pond")
          "* Q: %?       :drill:\n\n** A:\n"
-         :kill-buffer t)
+         :kill-buffer t
+         :empty-lines 1)
         ("p" "Phone call" entry (file+headline "~/org/GTD.org" "Inbox")
          "* PHONE %? :PHONE:\n  %U" :clock-in t :clock-resume t)
         ("r" "Remind" entry (file+headline "~/org/GTD.org" "Remind")
