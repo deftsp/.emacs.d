@@ -12,7 +12,6 @@
 ;;; Code:
 ;; (setq x-use-underline-position-properties nil)
 
-
 ;;; tumashu/cnfonts;; http://zhuoqiang.me/torture-emacs.html
 ;; http://baohaojun.github.io/perfect-emacs-chinese-font.html
 ;; https://github.com/tumashu/cnfonts
@@ -22,6 +21,7 @@
   :init
   (progn
     (setq cnfonts-verbose nil)
+    (setq cnfonts-use-face-font-rescale t)
     (setq cnfonts-profiles '("program" "org-mode" "read-book")))
   :config
   (progn
@@ -47,16 +47,50 @@
           (redisplay t)
           (cnfonts-message t cnfonts--minibuffer-echo-string))))
 
+
     (defun paloryemacs/cnfonts-set-symbol-fonts (fontsizes-list)
-      ;; (set-fontset-font t 'symbol "Inconsolata" nil 'append)
-      ;; (set-fontset-font t 'symbol "Symbola" nil 'append)
-      ;; (set-fontset-font t 'unicode "Segoe UI Emoji" nil 'append)
-      ;; (set-fontset-font t 'unicode "STIX" nil 'append)
-      (set-fontset-font t 'symbol "DejaVu Sans Mono"))
+      (let* ((fontname "Knack Nerd Font")
+             (fontsize (nth 0 fontsizes-list))
+             (fontspec (font-spec :name fontname
+                                  :size fontsize
+                                  :weight 'normal
+                                  :slant 'normal)))
+        (if (cnfonts--fontspec-valid-p fontspec)
+            (set-fontset-font "fontset-default" 'symbol fontspec nil 'append)
+          (message "字体 %S 不存在！" fontname))))
 
     (add-hook 'cnfonts-set-font-finish-hook 'paloryemacs/cnfonts-set-symbol-fonts)
-    (cnfonts-enable)))
 
+    ;; https://nerdfonts.com/
+    ;; https://github.com/ryanoasis/nerd-fonts
+    (defun paloryemacs/cnfonts-set-extra-fonts (fontsizes-list)
+      (let* ((fontname "Knack Nerd Font")
+             (fontsize (nth 0 fontsizes-list)) ; index 1 for chinese font
+             (fontspec (font-spec :name fontname
+                                  :size fontsize
+                                  :weight 'normal
+                                  :slant 'normal)))
+        (if (cnfonts--fontspec-valid-p fontspec)
+            (mapc
+             (lambda (range)
+               (set-fontset-font "fontset-default"
+                                 range
+                                 fontspec nil 'prepend))
+             '((#xe5fa . #xe62b) ; Seti-UI + Custom
+               (#xe700 . #xe7cf) ; Devicons
+               (#xeffe . #xf2e9) ; Font Awesome
+               (#xe200 . #xe2a9) ; Font Awesome Extension
+               (#xf400 . #xf67c) ; Octicons
+               (#xe0a0 . #xe0d7) ; Powerline Extra Symbols
+               (#x23ed . #x2b5c) ; IEC Power Symbols
+               (#xf300 . #xf317) ; Font Linux
+               (#x2500 . #x257f) ; ┌ └
+               ))
+          (message "字体 %S 不存在！" fontname))))
+
+    (add-hook 'cnfonts-set-font-finish-hook 'paloryemacs/cnfonts-set-extra-fonts)
+
+    (cnfonts-enable)))
 
 
 ;; (defhydra hydra-zoom ()

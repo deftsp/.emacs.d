@@ -69,6 +69,18 @@ SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
                  shell-default-shell)))
     (call-interactively (intern (format "paloryemacs/shell-pop-%S" shell)))))
 
+(defun ansi-term-handle-close ()
+  "Close current term buffer when `exit' from term buffer."
+  (when (ignore-errors (get-buffer-process (current-buffer)))
+    (set-process-sentinel (get-buffer-process (current-buffer))
+                          (lambda (proc change)
+                            (when (string-match "\\(finished\\|exited\\)"
+                                                change)
+                              (kill-buffer (process-buffer proc))
+                              (when (> (count-windows) 1)
+                                (delete-window)))))))
+
+
 (use-package shell-pop
   :defer t
   :init
@@ -84,7 +96,6 @@ SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
     (make-shell-pop-command ansi-term shell-pop-term-shell)
 
     (add-hook 'term-mode-hook 'ansi-term-handle-close)
-    (add-hook 'term-mode-hook (lambda () (linum-mode -1)))
 
     (paloryemacs/set-leader-keys
       "'"   'paloryemacs/default-pop-shell
@@ -174,9 +185,11 @@ is achieved by adding the relevant text properties."
   "Face of delimiter in prompt."
   :group 'epe)
 
+;; ┌─
+;; └─>
 (defun epe-theme-palory ()
   "A eshell-prompt theme with full path, smiliar to oh-my-zsh theme."
-  (setq eshell-prompt-regexp "^[^#\nλ]* λ[#]* ")
+  (setq eshell-prompt-regexp "^\n[^#\n ]*.*\n.* λ[#]* ")
   (concat
    (if (epe-remote-p)
        (progn
@@ -186,7 +199,7 @@ is achieved by adding the relevant text properties."
 	      (epe-colorize-with-face (epe-remote-host) 'epe-host-face)))
      (progn
        (concat
-        (epe-colorize-with-face (format-time-string "%H:%M:%S" (current-time)) 'epe-time-face)
+        (epe-colorize-with-face (format-time-string "\n%H:%M:%S" (current-time)) 'epe-time-face)
         " "
 	    (epe-colorize-with-face (user-login-name) 'epe-user-face)
 	    (epe-colorize-with-face "@" 'epe-host-face)
@@ -274,6 +287,10 @@ is achieved by adding the relevant text properties."
       (mapc (lambda (x) (push x eshell-visual-commands))
             '("el" "elinks" "htop" "less" "ssh" "tmux" "top"))
 
+      (setq eshell-visual-subcommands
+            '(("git" "log" "diff" "show"
+               "l" "lol" "d" "dc") ; aliases
+              ("sudo" "vi" "visudo")))
       ;; automatically truncate buffer after output
       (when (boundp 'eshell-output-filter-functions)
         (push 'eshell-truncate-buffer eshell-output-filter-functions))

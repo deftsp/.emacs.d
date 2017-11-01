@@ -43,56 +43,59 @@
 ;; decimal output using `o d' and you'll find that 0222 is 146, the "right single quotation mark" mentioned on Jukka's
 ;; page.
 
-;; (standard-display-ascii ?\t "^I")
-(standard-display-ascii ?\15 "")        ; I hate "^M"
-;; (standard-display-ascii ?\74 "‹") ;; use unicode to display this symbol
-;; (standard-display-ascii ?\76 "›")
-
 (when (fboundp 'decode-coding-string)
+  ;; (standard-display-ascii ?\t "^I")
+  (standard-display-ascii ?\15 "")        ; I hate "^M"
+  ;; (standard-display-ascii ?\74 "‹") ;; use unicode to display this symbol
+  ;; (standard-display-ascii ?\76 "›")
+
+
   ;; (standard-display-ascii ?\200 (decode-coding-string "\244" 'latin-9))
-  (standard-display-ascii ?λ (decode-coding-string "\xEB" 'greek-iso-8bit)))
+  (standard-display-ascii ?λ (decode-coding-string "\xEB" 'greek-iso-8bit))
+
+  ;; (standard-display-ascii ?\200 (vector (decode-char 'ucs #x253c)))
+  ;; (standard-display-ascii ?\201 (vector (decode-char 'ucs #x251c)))
+  ;; (standard-display-ascii ?\202 (vector (decode-char 'ucs #x252c)))
+  ;; (standard-display-ascii ?\203 (vector (decode-char 'ucs #x250c)))
+  ;; (standard-display-ascii ?\204 (vector (decode-char 'ucs #x2524)))
+  ;; (standard-display-ascii ?\205 (vector (decode-char 'ucs #x2502)))
+  ;; (standard-display-ascii ?\206 (vector (decode-char 'ucs #x2510)))
+  ;; (standard-display-ascii ?\210 (vector (decode-char 'ucs #x2534)))
+  ;; (standard-display-ascii ?\211 (vector (decode-char 'ucs #x2514)))
+  ;; (standard-display-ascii ?\212 (vector (decode-char 'ucs #x2500)))
+  ;; (standard-display-ascii ?\214 (vector (decode-char 'ucs #x2518)))
+
+  (standard-display-ascii ?\221 "\`")
+  (standard-display-ascii ?\222 "\'")
+  (standard-display-ascii ?\223 "\"")
+  (standard-display-ascii ?\224 "\"")
+  (standard-display-ascii ?\225 "\*")
+  (standard-display-ascii ?\226 "-")
+  (standard-display-ascii ?\227 "--")     ; long dash
+
+  ;; (standard-display-ascii ?\240  [? ])    ;  non-breaking space
+  (standard-display-ascii ?\251 "©")      ; \251 copyright,  [?(?C?)]
+  ;; (standard-display-ascii ?\256  [?(?R?)])  ; registered [?(?R?)]
+  ;; (standard-display-ascii ?\267  [?*])    ; center dot
+  ;; (standard-display-ascii ?\351  [?e?\']) ; \351 e'
+  ;; (standard-display-ascii ?\200 [15])
+  ;; (standard-display-ascii ?\201 [21])
+  ;; (standard-display-ascii ?\202 [24])
+  ;; (standard-display-ascii ?\203 [13])
+  ;; (standard-display-ascii ?\204 [22])
+  ;; (standard-display-ascii ?\205 [25])
+  ;; (standard-display-ascii ?\206 [12])
+  ;; (standard-display-ascii ?\210 [23])
+  ;; (standard-display-ascii ?\211 [14])
+  ;; (standard-display-ascii ?\212 [18])
+  ;; (standard-display-ascii ?\214 [11])
+  ;; (standard-display-ascii ?\222 [?\'])
+  ;; (standard-display-ascii ?\223 [?\"])
+  ;; (standard-display-ascii ?\224 [?\"])
+  ;; (standard-display-ascii ?\227 " -- ")
+  )
 
 
-(standard-display-ascii ?\200 (vector (decode-char 'ucs #x253c)))
-(standard-display-ascii ?\201 (vector (decode-char 'ucs #x251c)))
-(standard-display-ascii ?\202 (vector (decode-char 'ucs #x252c)))
-(standard-display-ascii ?\203 (vector (decode-char 'ucs #x250c)))
-(standard-display-ascii ?\204 (vector (decode-char 'ucs #x2524)))
-(standard-display-ascii ?\205 (vector (decode-char 'ucs #x2502)))
-(standard-display-ascii ?\206 (vector (decode-char 'ucs #x2510)))
-(standard-display-ascii ?\210 (vector (decode-char 'ucs #x2534)))
-(standard-display-ascii ?\211 (vector (decode-char 'ucs #x2514)))
-(standard-display-ascii ?\212 (vector (decode-char 'ucs #x2500)))
-(standard-display-ascii ?\214 (vector (decode-char 'ucs #x2518)))
-
-(standard-display-ascii ?\221 "\`")
-(standard-display-ascii ?\222 "\'")
-(standard-display-ascii ?\223 "\"")
-(standard-display-ascii ?\224 "\"")
-(standard-display-ascii ?\225 "\*")
-(standard-display-ascii ?\226 "-")
-(standard-display-ascii ?\227 "--")     ; long dash
-
-;; (standard-display-ascii ?\240  [? ])    ;  non-breaking space
-(standard-display-ascii ?\251 "©")      ; \251 copyright,  [?(?C?)]
-;; (standard-display-ascii ?\256  [?(?R?)])  ; registered [?(?R?)]
-;; (standard-display-ascii ?\267  [?*])    ; center dot
-;; (standard-display-ascii ?\351  [?e?\']) ; \351 e'
-;; (standard-display-ascii ?\200 [15])
-;; (standard-display-ascii ?\201 [21])
-;; (standard-display-ascii ?\202 [24])
-;; (standard-display-ascii ?\203 [13])
-;; (standard-display-ascii ?\204 [22])
-;; (standard-display-ascii ?\205 [25])
-;; (standard-display-ascii ?\206 [12])
-;; (standard-display-ascii ?\210 [23])
-;; (standard-display-ascii ?\211 [14])
-;; (standard-display-ascii ?\212 [18])
-;; (standard-display-ascii ?\214 [11])
-;; (standard-display-ascii ?\222 [?\'])
-;; (standard-display-ascii ?\223 [?\"])
-;; (standard-display-ascii ?\224 [?\"])
-;; (standard-display-ascii ?\227 " -- ")
 
 
 
