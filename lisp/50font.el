@@ -10,7 +10,14 @@
 ;;
 
 ;;; Code:
+;; TODO: Following code does not works in macOS.
+;; (set-fontset-font "fontset-default"
+;;                   (cons (decode-char 'ucs #x2500)  (decode-char 'ucs #x257F))
+;;                   (font-spec :name "DejaVu Sans Mono:" :registry "iso10646-1"))
 ;; (setq x-use-underline-position-properties nil)
+
+;;; Programming fonts
+;; https://github.com/ProgrammingFonts/ProgrammingFonts
 
 ;;; tumashu/cnfonts;; http://zhuoqiang.me/torture-emacs.html
 ;; http://baohaojun.github.io/perfect-emacs-chinese-font.html

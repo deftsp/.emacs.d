@@ -3,6 +3,8 @@
 ;;; Commentary:
 ;; Emacs will load this file first than other init files.
 
+
+;; see also color-theme-buffer-local from https://github.com/vic/color-theme-buffer-local
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (when (display-graphic-p)
   (load-theme 'paloryemacs t))

@@ -194,9 +194,10 @@ is achieved by adding the relevant text properties."
              (not (eq (point) (point-max))))
     (end-of-buffer)))
 
+;; http://www.modernemacs.com/post/custom-eshell/
 (defun epe-theme-palory ()
   "A eshell-prompt theme with full path, smiliar to oh-my-zsh theme."
-  (setq eshell-prompt-regexp "^\n©°©¤[^#\n ]*.*\n.*©¸©¤.* ¦Ë[#]* ")
+  (setq eshell-prompt-regexp "^\nâ”Œâ”€.*\n.* Î»[#]* ")
   (concat
    (if (epe-remote-p)
        (progn
