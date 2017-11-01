@@ -20,9 +20,9 @@
 (use-package cnfonts
   :init
   (progn
-    (setq cnfonts-verbose nil)
-    (setq cnfonts-use-face-font-rescale t)
-    (setq cnfonts-profiles '("program" "org-mode" "read-book")))
+    (setq cnfonts-verbose nil
+          cnfonts-use-face-font-rescale nil ; not work on macOS
+          cnfonts-profiles '("program" "org-mode" "read-book")))
   :config
   (progn
     (when window-system

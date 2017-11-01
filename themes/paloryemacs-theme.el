@@ -358,11 +358,15 @@
    `(diff-hl-unknown ((t (:foreground)) ,violet :background ,violet))
 
    ;; eshell-prompt-extras
-   `(epe-symbol-face ((t (:foreground "#d01ce2"))))
-   `(epe-user-face ((t (:foreground "#648fc3"))))
-   `(epe-host-face ((t (:foreground "#648fc3"))))
-   `(epe-time-face ((t (:foreground "#e2d282"))))
-   `(epe-dir-face ((t (:foreground "#94bff3"))))
+   `(paloryemacs/eshell-base-face ((t (:foreground ,base0 :background nil :font "Source Code Pro" :size 13))))
+   `(epe-symbol-face ((t (:foreground "#d01ce2" :inherit paloryemacs/eshell-base-face))))
+   `(epe-user-face ((t (:foreground "#648fc3" :inherit paloryemacs/eshell-base-face))))
+   `(epe-host-face ((t (:foreground "#648fc3" :inherit paloryemacs/eshell-base-face))))
+   `(epe-time-face ((t (:foreground "#e2d282" :inherit paloryemacs/eshell-base-face))))
+   `(epe-dir-face ((t (:foreground "#94bff3" :inherit paloryemacs/eshell-base-face))))
+   `(epe-venv-face ((t (:foreground "#dca3a3" :inherit paloryemacs/eshell-base-face))))
+   `(epe-git-face ((t (:foreground "#22ccee" :inherit paloryemacs/eshell-base-face))))
+   `(epe-delimiter-face ((t (:foreground ,base1 :inherit paloryemacs/eshell-base-face))))
 
    ;; structured-haskell-mode
    '(shm-current-face ((t (:background "#222222"))))

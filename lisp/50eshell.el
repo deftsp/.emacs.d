@@ -69,6 +69,34 @@ SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
                  shell-default-shell)))
     (call-interactively (intern (format "paloryemacs/shell-pop-%S" shell)))))
 
+
+(defface paloryemacs/eshell-base-face
+  '((t :foreground "black"
+       :background "aquamarine"
+       :font "Knack Nerd Font"))
+  "Base face for shell."
+  :group 'eshell-prompt)
+
+(defface epe-user-face
+  '((t :inherit paloryemacs/eshell-base-face :foreground "red"))
+  "Face of user in prompt."
+  :group 'eshell-prompt)
+
+(defface epe-host-face
+  '((t :inherit paloryemacs/eshell-base-face  :foreground "blue"))
+  "Face of host in prompt."
+  :group 'eshell-prompt)
+
+(defface epe-time-face
+  '((t :inherit paloryemacs/eshell-base-face :foreground "yellow"))
+  "Face of time in prompt."
+  :group 'eshell-prompt)
+
+(defface epe-delimiter-face
+  '((t :inherit paloryemacs/eshell-base-face  :foreground "yellow"))
+  "Face of delimiter in prompt."
+  :group 'eshell-prompt)
+
 (defun ansi-term-handle-close ()
   "Close current term buffer when `exit' from term buffer."
   (when (ignore-errors (get-buffer-process (current-buffer)))
@@ -124,6 +152,7 @@ is achieved by adding the relevant text properties."
 (defun paloryemacs/eshell-mode-init ()
   (set (make-local-variable 'scroll-margin) 0)
   (setq pcomplete-cycle-completions nil)
+  (buffer-face-set 'paloryemacs/eshell-base-face)
   (unless shell-enable-smart-eshell
     ;; we don't want auto-jump to prompt when smart eshell is enabled.
     ;; Idea: maybe we could make auto-jump smarter and jump only if
@@ -165,31 +194,9 @@ is achieved by adding the relevant text properties."
              (not (eq (point) (point-max))))
     (end-of-buffer)))
 
-(defface epe-user-face
-  '((t :foreground "red"))
-  "Face of user in prompt."
-  :group 'epe)
-
-(defface epe-host-face
-  '((t :foreground "blue"))
-  "Face of host in prompt."
-  :group 'epe)
-
-(defface epe-time-face
-  '((t :foreground "yellow"))
-  "Face of time in prompt."
-  :group 'epe)
-
-(defface epe-delimiter-face
-  '((t :foreground "yellow"))
-  "Face of delimiter in prompt."
-  :group 'epe)
-
-;; â”Œâ”€
-;; â””â”€>
 (defun epe-theme-palory ()
   "A eshell-prompt theme with full path, smiliar to oh-my-zsh theme."
-  (setq eshell-prompt-regexp "^\n[^#\n ]*.*\n.* Î»[#]* ")
+  (setq eshell-prompt-regexp "^\n©°©¤[^#\n ]*.*\n.*©¸©¤.* ¦Ë[#]* ")
   (concat
    (if (epe-remote-p)
        (progn
@@ -199,8 +206,9 @@ is achieved by adding the relevant text properties."
 	      (epe-colorize-with-face (epe-remote-host) 'epe-host-face)))
      (progn
        (concat
-        (epe-colorize-with-face (format-time-string "\n%H:%M:%S" (current-time)) 'epe-time-face)
-        " "
+        (epe-colorize-with-face  "\nâ”Œâ”€" 'epe-delimiter-face)
+        (epe-colorize-with-face (format-time-string "%H:%M:%S" (current-time)) 'epe-time-face)
+        (epe-colorize-with-face  " " 'epe-delimiter-face)
 	    (epe-colorize-with-face (user-login-name) 'epe-user-face)
 	    (epe-colorize-with-face "@" 'epe-host-face)
 	    (epe-colorize-with-face (system-name) 'epe-host-face))))
@@ -208,6 +216,7 @@ is achieved by adding the relevant text properties."
     (epe-colorize-with-face ":" 'epe-dir-face)
     (epe-colorize-with-face (concat (epe-fish-path (eshell/pwd))) 'epe-dir-face)
     (epe-colorize-with-face  "\n" 'epe-delimiter-face))
+   (epe-colorize-with-face  "â””â”€" 'epe-delimiter-face)
    (when epe-show-python-info
      (when (fboundp 'epe-venv-p)
        (when (and (epe-venv-p) venv-current-name)
@@ -409,5 +418,8 @@ directory to make multiple eshell windows easier."
 (defun eshell/dired () (dired (eshell/pwd)))
 (defalias 'eshell/emacs 'find-file)
 (defalias 's 'magit-status)
+
+
+
 
 (provide '50eshell)
