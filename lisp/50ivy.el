@@ -20,7 +20,7 @@
   (progn
     (global-set-key (kbd "s-g") 'counsel-rg)
     (paloryemacs/set-leader-keys
-      dotpaloryemacs-emacs-command-key 'counsel-M-x
+      dotpaloryemacs-emacs-command-key 'execute-extended-command
       ;; files
       "ff"  'counsel-find-file
       "fel" 'counsel-find-library
@@ -50,6 +50,8 @@
           (string-join paloryemacs/ignore-buffer-or-file-regexp "\\|"))
     (define-key counsel-find-file-map (kbd "C-h") 'counsel-up-directory)
     ;; remaps built-in commands that have a counsel replacement
+    ;; do not use counsel-M-x for now
+    (define-key counsel-mode-map (vector 'remap 'execute-extended-command) nil)
     (counsel-mode +1)))
 
 (use-package ivy
