@@ -199,7 +199,7 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "?"   'counsel-descbinds
   "hdb" 'describe-bindings
   "hdc" 'describe-char
-  "hdf" 'describe-function
+  "hdf" 'counsel-describe-function
   "hdF" 'counsel-describe-face
   "hi"  'counsel-info-lookup-symbol
   "hdm" 'describe-mode
@@ -209,7 +209,7 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "hdP" 'configuration-layer/describe-package
   ;; "hds" 'spacemacs/describe-system-info
   "hdt" 'describe-theme
-  "hdv" 'describe-variable
+  "hdv" 'counsel-describe-variable
   ;; "hI"  'spacemacs/report-issue
   "hn"  'view-emacs-news)
 

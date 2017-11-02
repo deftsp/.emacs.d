@@ -147,11 +147,11 @@ Requires smartparens because all movement is done using `sp-forward-symbol'."
       ","  'lisp-state-toggle-lisp-state
       "tb" 'paloryemacs/ert-run-tests-buffer
       "tq" 'ert
-      "f" 'describe-function/with-ido
+      "f" 'describe-function
       "k" 'describe-key
       "hh" 'elisp-slime-nav-describe-elisp-thing-at-point
       "gg" 'elisp-slime-nav-find-elisp-thing-at-point
-      "v" 'describe-variable/with-ido)))
+      "v" 'describe-variable)))
 
 (paloryemacs/init-emacs-lisp)
 

@@ -61,6 +61,7 @@
 (require '50haskell-emacs)
 (require '50hideshow)
 (require '50input-method)
+(require '50ivy)
 (require '50javascript)
 (require '50key-chord)
 (require '50key-bindings)
@@ -113,7 +114,7 @@
 ;; (require '52emms) ; do not use it any more
 ;; (require '52icicles)
 (require '52evil-mode)
-(require '52ido)
+;; (require '52ido)
 
 (require '60session)
 ;; (require '62winring)
