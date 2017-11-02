@@ -263,96 +263,99 @@ is achieved by adding the relevant text properties."
 
     (autoload 'eshell-delchar-or-maybe-eof "em-rebind")
     (add-hook 'eshell-after-prompt-hook 'paloryemacs//protect-eshell-prompt)
-    (add-hook 'eshell-mode-hook 'paloryemacs/eshell-mode-init)
-    :config
-    (progn
-      ;; Work around bug in eshell's preoutput-filter code.
-      ;; Eshell doesn't call preoutput-filter functions in the context of the eshell
-      ;; buffer. This breaks the xterm color filtering when the eshell buffer is updated
-      ;; when it's not currently focused.
-      ;; To remove if/when fixed upstream.
-      (defun eshell-output-filter@paloryemacs-with-buffer (fn process string)
-        (let ((proc-buf (if process (process-buffer process)
-                          (current-buffer))))
-          (when proc-buf
-            (with-current-buffer proc-buf
-              (funcall fn process string)))))
-      (advice-add
-       #'eshell-output-filter
-       :around
-       #'eshell-output-filter@paloryemacs-with-buffer)
+    (add-hook 'eshell-mode-hook 'paloryemacs/eshell-mode-init))
+  :config
+  (progn
+    ;; Work around bug in eshell's preoutput-filter code.
+    ;; Eshell doesn't call preoutput-filter functions in the context of the eshell
+    ;; buffer. This breaks the xterm color filtering when the eshell buffer is updated
+    ;; when it's not currently focused.
+    ;; To remove if/when fixed upstream.
+    (defun eshell-output-filter@paloryemacs-with-buffer (fn process string)
+      (let ((proc-buf (if process (process-buffer process)
+                        (current-buffer))))
+        (when proc-buf
+          (with-current-buffer proc-buf
+            (funcall fn process string)))))
+    (advice-add
+     #'eshell-output-filter
+     :around
+     #'eshell-output-filter@paloryemacs-with-buffer)
 
-      (require 'esh-opt)
+    (require 'esh-opt)
 
-      ;; quick commands
-      (defalias 's 'magit-status)
-      (require 'em-alias)
-      (eshell/alias "e" "find-file $1")
-      (eshell/alias "ff" "find-file $1")
-      (eshell/alias "emacs" "find-file $1")
-      (eshell/alias "ee" "find-file-other-window $1")
-      (eshell/alias "gd" "magit-diff-unstaged")
-      (eshell/alias "gds" "magit-diff-staged")
-      (eshell/alias "d" "dired $1")
+    ;; quick commands
+    (defalias 's 'magit-status)
+    (require 'em-alias)
+    (require 'esh-io)
+    (eshell/alias "e" "find-file $1")
+    (eshell/alias "ff" "find-file $1")
+    (eshell/alias "emacs" "find-file $1")
+    (eshell/alias "ee" "find-file-other-window $1")
+    (eshell/alias "gd" "magit-diff-unstaged")
+    (eshell/alias "gds" "magit-diff-staged")
+    (eshell/alias "d" "dired $1")
 
-      ;; The 'ls' executable requires the Gnu version on the Mac
-      (let ((ls (if (file-exists-p "/usr/local/bin/gls")
-                    "/usr/local/bin/gls"
-                  "/bin/ls")))
-        (eshell/alias "ll" (concat ls " -AlohG --color=always")))
+    ;; The 'ls' executable requires the Gnu version on the Mac
+    (let ((ls (if (file-exists-p "/usr/local/bin/gls")
+                  "/usr/local/bin/gls"
+                "/bin/ls")))
+      (eshell/alias "ll" (concat ls " -AlohG --color=always")))
 
-      ;; don't pause the output through the $PAGER variable
-      (setenv "PAGER" "cat")
+    ;; don't pause the output through the $PAGER variable
+    (setenv "PAGER" "cat")
 
-      ;; support `em-smart'
-      (when shell-enable-smart-eshell
-        (require 'em-smart)
-        (setq eshell-where-to-jump 'begin
-              eshell-review-quick-commands nil
-              eshell-smart-space-goes-to-end t)
-        (add-hook 'eshell-mode-hook 'eshell-smart-initialize))
+    ;; support `em-smart'
+    (when shell-enable-smart-eshell
+      (require 'em-smart)
+      (setq eshell-where-to-jump 'begin
+            eshell-review-quick-commands nil
+            eshell-smart-space-goes-to-end t)
+      (add-hook 'eshell-mode-hook 'eshell-smart-initialize))
 
-      ;; Visual commands
-      (require 'em-term)
-      ;; Eshell would get somewhat confused if I ran the following commands
-      ;; directly through the normal Elisp library, as these need the better
-      ;; handling of ansiterm
-      (mapc (lambda (x) (push x eshell-visual-commands))
-            '("el" "elinks" "htop" "less" "ssh" "tmux" "top" "tail"))
+    ;; Visual commands
+    (require 'em-term)
+    ;; Eshell would get somewhat confused if I ran the following commands
+    ;; directly through the normal Elisp library, as these need the better
+    ;; handling of ansiterm
+    (mapc (lambda (x) (push x eshell-visual-commands))
+          '("el" "elinks" "htop" "less" "ssh" "tmux" "top" "tail"))
 
-      (setq eshell-visual-subcommands
-            '(("git" "log" "diff" "show"
-               "l" "lol" "d" "dc") ; aliases
-              ("sudo" "vi" "visudo")))
-      ;; automatically truncate buffer after output
-      (when (boundp 'eshell-output-filter-functions)
-        (push 'eshell-truncate-buffer eshell-output-filter-functions))
+    (setq eshell-visual-subcommands
+          '(("git" "log" "diff" "show"
+             "l" "lol" "d" "dc") ; aliases
+            ("sudo" "vi" "visudo")))
+    ;; automatically truncate buffer after output
+    (when (boundp 'eshell-output-filter-functions)
+      (push 'eshell-truncate-buffer eshell-output-filter-functions))
 
-      ;; These don't work well in normal state
-      ;; due to evil/emacs cursor incompatibility
-      (with-eval-after-load 'evil
-        (evil-define-key 'insert eshell-mode-map
-          (kbd "C-k") 'eshell-previous-matching-input-from-input
-          (kbd "C-j") 'eshell-next-matching-input-from-input))
+    ;; These don't work well in normal state
+    ;; due to evil/emacs cursor incompatibility
+    (with-eval-after-load 'evil
+      (evil-define-key 'insert eshell-mode-map
+        (kbd "C-k") 'eshell-previous-matching-input-from-input
+        (kbd "C-j") 'eshell-next-matching-input-from-input))
 
-      (use-package eshell-autojump
-        :defer t
-        :init
-        (with-eval-after-load 'eshell
-          (require 'eshell-autojump)))
+    (use-package eshell-autojump)
 
-      (use-package eshell-did-you-mean
-        :config
-        (eshell-did-you-mean-setup))
+    (use-package eshell-prompt-extras
+      :init
+      (setq eshell-highlight-prompt nil
+            eshell-prompt-function 'epe-theme-palory)  )
 
-      (use-package eshell-fringe-status
-        :init
-        (add-hook 'eshell-mode-hook 'eshell-fringe-status-mode))
+    (use-package eshell-fringe-status
+      :defer t
+      :commands (eshell-fringe-status-mode)
+      :init
+      (add-hook 'eshell-mode-hook 'eshell-fringe-status-mode))))
 
-      (use-package eshell-prompt-extras
-        :init
-        (setq eshell-highlight-prompt nil
-              eshell-prompt-function 'epe-theme-palory)))))
+(use-package esh-mode
+  :defer t
+  :config
+  (progn
+    (use-package eshell-did-you-mean
+      :config
+      (eshell-did-you-mean-setup))))
 
 (use-package xterm-color
   :init
