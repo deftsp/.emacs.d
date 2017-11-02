@@ -3,6 +3,8 @@
 ;; Copyright (C) 2008  Shihpin Tseng
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
+;; https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
+
 (defvar shell-default-shell 'eshell
   "Default shell to use in Paloryemacs. Possible values are `eshell', `shell',
 `term' and `ansi-term'.")
@@ -163,9 +165,8 @@ is achieved by adding the relevant text properties."
   (define-key eshell-mode-map (kbd "C-u") 'eshell-kill-input)
   (define-key eshell-mode-map (kbd "C-a") 'paloryemacs/eshell-maybe-bol)
   ;; Caution! this will erase buffer's content at C-l
-  (define-key eshell-mode-map (kbd "C-l") 'paloryemacs/eshell-clear-keystroke)
-  ;; (define-key eshell-mode-map (kbd "C-d") 'paloryemacs/eshell-delchar-or-exit)
-  (define-key eshell-mode-map (kbd "C-d") 'eshell-delchar-or-maybe-eof))
+  (define-key eshell-mode-map (kbd "C-d") 'eshell-delchar-or-maybe-eof)
+  (define-key eshell-mode-map (kbd "C-l") 'paloryemacs/eshell-clear-keystroke))
 
 (defun paloryemacs/init-eshell-xterm-color ()
   "Initialize xterm coloring for eshell"
@@ -244,9 +245,13 @@ is achieved by adding the relevant text properties."
   (progn
     (setq eshell-error-if-no-glob t
           eshell-history-size 500
+          eshell-save-history-on-exit t
+          eshell-scroll-to-bottom-on-input 'all
           ;; auto truncate after 20k lines
           eshell-buffer-maximum-lines 20000
           eshell-hist-ignoredups t
+          eshell-prefer-lisp-functions nil
+          eshell-destroy-buffer-when-process-dies nil
           ;; buffer shorthand -> echo foo > #'buffer
           ;; eshell-buffer-shorthand t ; seem removed in Emacs26
           ;; my prompt is easy enough to see
@@ -279,9 +284,24 @@ is achieved by adding the relevant text properties."
 
       (require 'esh-opt)
 
-      ;; ;; quick commands
-      (defalias 'eshell/e 'find-file-other-window)
-      (defalias 'eshell/d 'dired)
+      ;; quick commands
+      (defalias 's 'magit-status)
+      (require 'em-alias)
+      (eshell/alias "e" "find-file $1")
+      (eshell/alias "ff" "find-file $1")
+      (eshell/alias "emacs" "find-file $1")
+      (eshell/alias "ee" "find-file-other-window $1")
+      (eshell/alias "gd" "magit-diff-unstaged")
+      (eshell/alias "gds" "magit-diff-staged")
+      (eshell/alias "d" "dired $1")
+
+      ;; The 'ls' executable requires the Gnu version on the Mac
+      (let ((ls (if (file-exists-p "/usr/local/bin/gls")
+                    "/usr/local/bin/gls"
+                  "/bin/ls")))
+        (eshell/alias "ll" (concat ls " -AlohG --color=always")))
+
+      ;; don't pause the output through the $PAGER variable
       (setenv "PAGER" "cat")
 
       ;; support `em-smart'
@@ -294,8 +314,11 @@ is achieved by adding the relevant text properties."
 
       ;; Visual commands
       (require 'em-term)
+      ;; Eshell would get somewhat confused if I ran the following commands
+      ;; directly through the normal Elisp library, as these need the better
+      ;; handling of ansiterm
       (mapc (lambda (x) (push x eshell-visual-commands))
-            '("el" "elinks" "htop" "less" "ssh" "tmux" "top"))
+            '("el" "elinks" "htop" "less" "ssh" "tmux" "top" "tail"))
 
       (setq eshell-visual-subcommands
             '(("git" "log" "diff" "show"
@@ -340,23 +363,6 @@ is achieved by adding the relevant text properties."
           (remove 'ansi-color-process-output comint-output-filter-functions))
     (add-hook 'eshell-mode-hook 'paloryemacs/init-eshell-xterm-color)))
 
-(defun paloryemacs/eshell-delchar-or-exit (arg)
-  (interactive "P")
-  (let ((cur-point (point))
-        (delchar-flag t))
-    (save-excursion
-      (eshell-bol)
-      (when (and (= cur-point (point))
-                 (= cur-point (point-max)))
-        (setq delchar-flag nil)))
-    (if delchar-flag
-        (delete-char (if (null arg) 1 arg) (if (null arg) nil t))
-      (eshell-bol)
-      (insert "exit")
-      (eshell-send-input)
-      (delete-window))))
-
-
 ;; C-a to beginning of command line or beginning of line?
 ;; I use the following code. It makes C-a go to the beginning of the command line, unless it is already there, in which
 ;; case it goes to the beginning of the line. So if you are at the end of the command line and want to go to the real
@@ -395,18 +401,71 @@ directory to make multiple eshell windows easier."
   "ls -ltr alias"
   (eshell/ls "-ltr" args))
 
-(defun eshell/ll (&rest args)
-  "ls -alh alias"
-  (eshell/ls "-alh" args))
+;; (defun eshell/ll (&rest args)
+;;   "ls -alh alias"
+;;   (eshell/ls "-alh" args))
 
 (defun eshell/lla (&rest args)
   "ls -lA alias"
   (eshell/ls "-lA" args))
 
+(defun eshell/lld (&rest args)
+  "ls -lA alias"
+  (eshell/ls "-ld" *(/)))
+
+
 ;; This is an eshell alias
 (defun eshell/clear ()
   (let ((inhibit-read-only t))
     (erase-buffer)))
+
+(defun eshell/gst (&rest args)
+  (magit-status (pop args) nil)
+  (eshell/echo))   ;; The echo command suppresses output
+
+(defun eshell/f (filename &optional dir try-count)
+  "Searches for files matching FILENAME in either DIR or the
+current directory. Just a typical wrapper around the standard
+`find' executable.
+
+Since any wildcards in FILENAME need to be escaped, this wraps the shell command.
+
+If not results were found, it calls the `find' executable up to
+two more times, wrapping the FILENAME pattern in wildcat
+matches. This seems to be more helpful to me."
+  (let* ((cmd (concat
+               (executable-find "find")
+               " " (or dir ".")
+               "      -not -path '*/.git*'"
+               " -and -not -path '*node_modules*'"
+               " -and -not -path '*classes*'"
+               " -and "
+               " -type f -and "
+               "-iname '" filename "'"))
+         (results (shell-command-to-string cmd)))
+
+    (if (not (s-blank-str? results))
+        results
+      (cond
+       ((or (null try-count) (= 0 try-count))
+        (eshell/f (concat filename "*") dir 1))
+       ((or (null try-count) (= 1 try-count))
+        (eshell/f (concat "*" filename) dir 2))
+       (t "")))))
+
+
+(defun eshell/ef (filename &optional dir)
+  "Searches for the first matching filename and loads it into a
+file to edit."
+  (let* ((files (eshell/f filename dir))
+         (file (car (s-split "\n" files))))
+    (find-file file)))
+
+(defun eshell/find (&rest args)
+  "Wrapper around the ‘find’ executable."
+  (let ((cmd (concat "find " (string-join args))))
+    (shell-command-to-string cmd)))
+
 
 ;; This is a key-command
 (defun paloryemacs/eshell-clear-keystroke ()
@@ -415,12 +474,37 @@ directory to make multiple eshell windows easier."
   (eshell/clear)
   (eshell-send-input))
 
-
 (defun eshell/dired () (dired (eshell/pwd)))
-(defalias 'eshell/emacs 'find-file)
-(defalias 's 'magit-status)
 
+;;; Predicate Filters and Modifiers
 
+;; The T predicate filter allows me to limit file results that have
+;; have internal org-mode tags. For instance, files that have a
+;; #+TAGS: header with a mac label will be given to the grep
+;; function:
 
+;; $ grep brew *.org(T'mac')
+(defun eshell-org-file-tags ()
+  "Helps the eshell parse the text the point is currently on,
+looking for parameters surrounded in single quotes. Returns a
+function that takes a FILE and returns nil if the file given to
+it doesn't contain the org-mode #+TAGS: entry specified."
+
+  (if (looking-at "'\\([^)']+\\)'")
+      (let* ((tag (match-string 1))
+             (reg (concat "^#\\+TAGS:.* " tag "\\b")))
+        (goto-char (match-end 0))
+
+        `(lambda (file)
+           (with-temp-buffer
+             (insert-file-contents file)
+             (re-search-forward ,reg nil t 1))))
+    (error "The `T' predicate takes an org-mode tag value in single quotes.")))
+
+;; Note: We can’t add it to the list until after we start our first eshell
+;; session, so we just add it to the eshell-pred-load-hook which is sufficient.
+(add-hook 'eshell-pred-load-hook
+          (lambda ()
+            (add-to-list 'eshell-predicate-alist '(?T . (eshell-org-file-tags)))))
 
 (provide '50eshell)
