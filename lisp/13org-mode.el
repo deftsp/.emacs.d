@@ -190,8 +190,8 @@ to `reorganize-frame', otherwise set to `other-frame'."
 ;; (paloryemacs/update-org-agenda-window-setup)
 
 (when window-system
-  ;; … ↴, ⬎, ⤷, and ⋱.
-  (setq org-ellipsis " ⤵"))
+  ;; … ↴, ⬎, ⤷, ⤵, ▼ and ⋱.
+  (setq org-ellipsis " ◦◦◦ "))
 
 (with-eval-after-load "org"
   (org-defkey org-mode-map (kbd "C-c C-x t") 'paloryemacs/org-clock-summary-today-by-tags)
@@ -352,18 +352,18 @@ to `reorganize-frame', otherwise set to `other-frame'."
          :section-numbers nil
          :table-of-contents nil
          :style "<link rel=\"stylesheet\"
-                       href=\"common.css\" type=\"text/css\"/>"
+         href=\"common.css\" type=\"text/css\"/>"
          :preamble "<div class=\"menu\" style=\"float: right;\"> <a href=\"./index.html\">Home</a> - <a href=\"./PageIndex.html\">Index</a> </div>"
          :postamble "<font color=\"white\">&copy; 2005 - 2009 Shihpin Tseng. All Rights Reserved.</font>"
 
          :auto-postamble nil
          :auto-preamble t)
 
-        ("other"
-         :base-directory "~/Lab/notebook/"
-         :base-extension "css\\|el"
-         :publishing-directory "/ssh:user@host:~/html/other/")
-        ("homepage" :components ("orgfiles"))))
+  ("other"
+   :base-directory "~/Lab/notebook/"
+   :base-extension "css\\|el"
+   :publishing-directory "/ssh:user@host:~/html/other/")
+  ("homepage" :components ("orgfiles"))))
 
 
 (setq org-export-html-style-default "")
