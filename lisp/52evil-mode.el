@@ -558,7 +558,7 @@ to replace the symbol under cursor"
   ;; bind evil-jump-out-args
   ;; (define-key evil-normal-state-map "K" 'evil-jump-out-args)
   ;; (key-chord-define evil-normal-state-map "hl" 'evil-jump-out-args)
-  (define-key evil-normal-state-map "gk" 'evil-jump-out-args)
+  ;; (define-key evil-normal-state-map "gk" 'evil-jump-out-args)
   )
 
 ;;; git-timemachine
