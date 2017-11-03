@@ -890,26 +890,6 @@ to replace the symbol under cursor"
   (use-package evil-ediff))
 
 
-;;; sexp motion
-(with-eval-after-load 'evil
-  (evil-define-motion evil-sp-forward-sexp (count)
-    (sp-forward-sexp count))
-
-  (evil-define-motion evil-sp-backward-sexp (count)
-    (sp-backward-sexp count))
-
-  (evil-define-motion evil-sp-up-sexp (count)
-    (sp-up-sexp count))
-
-  (evil-define-motion evil-sp-backward-up-sexp (count)
-    (sp-backward-up-sexp count))
-
-  (evil-define-motion evil-sp-down-sexp (count)
-    (sp-down-sexp count))
-
-  (define-key evil-motion-state-map "e" 'evil-sp-forward-sexp)
-  (define-key evil-motion-state-map "E" 'evil-sp-backward-sexp))
-
 ;;; sexp text object
 (with-eval-after-load 'evil
   ;; think at point
@@ -925,6 +905,23 @@ if COUNT is negative. "
       (if (> dir 0)
           (thing-at-point--end-of-sexp)
         (thing-at-point--beginning-of-sexp))))
+
+  (evil-define-motion evil-thingatpt-forward-sexp-end (count)
+    :type inclusive
+    (let ((thing 'evil-thingatpt-sexp)
+          (count (or count 1)))
+      (evil-signal-at-bob-or-eob count)
+      (evil-forward-end thing count)))
+
+  (evil-define-motion evil-thingatpt-backward-sexp-begin (count)
+    :type exclusive
+    (let ((thing 'evil-thingatpt-sexp)
+          (count (or count 1)))
+      (evil-signal-at-bob-or-eob count)
+      (evil-backward-beginning thing count)))
+
+  (define-key evil-motion-state-map "e" 'evil-thingatpt-forward-sexp-end)
+  (define-key evil-motion-state-map "E" 'evil-thingatpt-backward-sexp-begin)
 
   (evil-define-text-object evil-a-sexp (count &optional beg end type)
     (evil-select-an-object 'evil-thingatpt-sexp beg end type count))
