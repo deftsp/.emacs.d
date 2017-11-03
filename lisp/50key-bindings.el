@@ -74,7 +74,7 @@
   "fj"  'dired-jump
   "dp"  'dash-at-point
   "dP"  'dash-at-point-with-docset
-  "ff"  'find-file-at-point             ; counsel-file-file
+  "ff"  'counsel-find-file       ; find-file-at-point
   "fel" 'counsel-find-library
   "fL"  'counsel-locate
   "fb"  'counsel-bookmark

@@ -28,6 +28,4 @@
   (ffap-bindings))
 
 
-
-
 (provide '50ffap)
