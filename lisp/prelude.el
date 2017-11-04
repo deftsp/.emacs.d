@@ -24,6 +24,7 @@ emacs.")
   "Major mode leader key is a shortcut key which is the equivalent of
  pressing `<leader> m`. Set it to `nil` to disable it.")
 
+;; in terminal C-m is RET, M-Ret is C-M-m
 (defvar dotpaloryemacs-major-mode-emacs-leader-key "C-M-m"
   "Major mode leader key accessible in `emacs state' and `insert state'")
 

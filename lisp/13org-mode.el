@@ -875,9 +875,15 @@ Will work on both org-mode and any mode that accepts plain html."
     ;; Multi-purpose keys
     (or dotpaloryemacs-major-mode-leader-key ",") 'org-ctrl-c-ctrl-c
     "*" 'org-ctrl-c-star
-    "RET" 'org-ctrl-c-ret
     "-" 'org-ctrl-c-minus
     "#" 'org-update-statistics-cookies
+    ;; https://github.com/Somelauw/evil-org-mode/issues/21
+    "RET" 'org-ctrl-c-ret
+    ;; https://github.com/syl20bnr/spacemacs/issues/9603
+    ;; M-RET is a core Spacemacs key binding and also a limitation of it, in terminal C-m is RET
+    "M-RET" 'org-meta-return
+    ;; attachments
+    "A" 'org-attach
     ;; insertion
     "id" 'org-insert-drawer
     "ie" 'org-set-effort
