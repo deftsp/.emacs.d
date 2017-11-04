@@ -196,10 +196,7 @@ recover evil state to it, otherwiser change to evil-emacs-state."
   (define-key evil-motion-state-map (kbd "TAB") 'indent-for-tab-command)
 
   (define-key evil-normal-state-map "gL" 'org-mac-grab-link)
-  (define-key evil-normal-state-map "gb" 'switch-to-buffer)
-  (define-key evil-normal-state-map "gt" 'hydra-toggle/body)
   (define-key evil-normal-state-map (kbd "gD") 'paloryemacs/jump-to-definition-other-window)
-
   (define-key evil-normal-state-map (kbd "gd") 'paloryemacs/jump-to-definition)
 
   ;; (define-key evil-normal-state-map "b" 'backward-word)
@@ -342,7 +339,7 @@ kill internal buffers too."
           (grep-mode                 . evilified)
           (haskell-error-mode        . emacs)
           (haskell-interactive-mode  . insert)
-          (Info-mode                 . emacs)
+          (Info-mode                 . evilified)
           (message-mode              . emacs)
           (nrepl-mode                . insert)
           (weibo-timeline-mode       . emacs)

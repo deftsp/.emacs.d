@@ -1,0 +1,5 @@
+(:name evil-special-modes
+       :description "Make Emacs official special modes more Evil"
+       :type github
+       :pkgname "Ambrevar/evil-special-modes"
+       :depends (evil))

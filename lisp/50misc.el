@@ -901,17 +901,30 @@ This command is to be used interactively."
 (global-set-key (kbd "C-c f R") 'paloryemacs/move-buffer-and-file)
 
 ;;; info
-;; make sure info dir in `Info-directory-list' add to `Info-directory-list'
-(mapc (lambda (p) (add-to-list 'Info-directory-list p t)) Info-default-directory-list)
-(add-to-list 'Info-additional-directory-list "~/share/info")
-
-(use-package info+
-  :defer t
+(use-package info
   :init
   (progn
-    (with-eval-after-load 'info
-      (require 'info+))
-    (setq Info-fontify-angle-bracketed-flag nil)))
+    ;; make sure info dir in `Info-directory-list' add to `Info-directory-list'
+    (mapc (lambda (p) (add-to-list 'Info-directory-list p t)) Info-default-directory-list)
+    (add-to-list 'Info-additional-directory-list "~/share/info"))
+  :config
+  (progn
+    (with-eval-after-load 'evil-evilified-state
+      (evilified-state-evilify Info-mode Info-mode-map
+        (kbd "/")   'Info-search
+        (kbd "gh")  'Info-help
+        (kbd "n")   'Info-next
+        (kbd "p")   'Info-prev
+        (kbd "N")   'Info-prev))
+    (use-package info+
+      :init
+      (progn
+        (setq Info-breadcrumbs-in-header-flag t
+              Info-breadcrumbs-in-mode-line-mode nil))
+      (progn
+        (with-eval-after-load 'info
+          (require 'info+))
+        (setq Info-fontify-angle-bracketed-flag nil)))))
 
 ;; (defun find-subdirs-containing (dir pattern)
 ;;   "Return a list of all deep subdirectories of DIR that contain
