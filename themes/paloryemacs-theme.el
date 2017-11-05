@@ -358,7 +358,7 @@
    `(diff-hl-unknown ((t (:foreground)) ,violet :background ,violet))
 
    ;; eshell-prompt-extras
-   `(paloryemacs/eshell-base-face ((t (:foreground ,base0 :background nil :font "Source Code Pro" :size 13))))
+   `(paloryemacs/eshell-base-face ((t (:foreground ,base0 :background nil :font "mplus Nerd Font" :size 13))))
    `(epe-symbol-face ((t (:foreground "#d01ce2" :inherit paloryemacs/eshell-base-face))))
    `(epe-user-face ((t (:foreground "#648fc3" :inherit paloryemacs/eshell-base-face))))
    `(epe-host-face ((t (:foreground "#648fc3" :inherit paloryemacs/eshell-base-face))))
