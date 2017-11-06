@@ -14,8 +14,11 @@
 ;; vc.*face inherit the face of mode-line, it cause powerline-vc can not change
 ;; it's background and foreground. Defining vc-state-base-face not to inherit
 ;; will slove that.
-(require 'powerline nil t)
 (require 's)
+(use-package powerline
+  :init
+  (setq powerline-text-scale-factor 0.8
+        powerline-height 20))
 
 (defvar powerline-git-state-mark-modeline t
   "When t git state mark on will work with powrline instead of in the front of
