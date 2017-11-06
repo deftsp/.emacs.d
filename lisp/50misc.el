@@ -916,6 +916,9 @@ This command is to be used interactively."
         "e"          'Info-scroll-down
         (kbd "C-i")  'Info-history-forward
         (kbd "C-o")  'Info-history-back
+        "f"  'Info-history-forward
+        "b"  'Info-history-back
+        "F"          'Info-follow-reference
         "/"          'Info-search
         "gh"         'Info-help
         "gn"         'Info-goto-node
