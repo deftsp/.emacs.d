@@ -912,8 +912,8 @@ This command is to be used interactively."
     (with-eval-after-load 'evil-evilified-state
       (evilified-state-evilify Info-mode Info-mode-map
         "D"          'Info-directory
-        "d"          'Info-scroll-up
-        "e"          'Info-scroll-down
+        "d"          'Info-scroll-down
+        "e"          'Info-scroll-up
         (kbd "C-i")  'Info-history-forward
         (kbd "C-o")  'Info-history-back
         "f"  'Info-history-forward
