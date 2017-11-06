@@ -1,0 +1,4 @@
+(:name dim
+       :type github
+       :description "Change mode-line names of major/minor modes"
+       :pkgname "alezost/dim.el")

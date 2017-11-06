@@ -14,7 +14,7 @@
 ;; vc.*face inherit the face of mode-line, it cause powerline-vc can not change
 ;; it's background and foreground. Defining vc-state-base-face not to inherit
 ;; will slove that.
-(require 's)
+
 (use-package powerline
   :init
   (setq powerline-text-scale-factor 0.8
@@ -157,11 +157,22 @@ mouse-1: Display Line and Column Mode Menu")
   (let ((vc-mark (char-to-string #xe0a0)))
     (if (and buffer-file-name vc-mode)
         (if (and window-system (not powerline-gui-use-vcs-glyph))
-            (format " %s %s: %s"
-                    vc-mark
-                    (vc-backend buffer-file-name)
-                    (s-left 7 (vc-working-revision buffer-file-name)))
-          (format-mode-line '(vc-mode vc-mode)))
+            (let ((backend (vc-backend buffer-file-name))
+                  ;; (short-rev (substring (vc-working-revision buffer-file-name) 0 7))
+                  (state (pcase (vc-state (buffer-file-name))
+                           (`up-to-date "○")
+                           (`edited "±")
+                           (`added "+")
+                           (`unregistered "?")
+                           (`removed "D")
+                           (`needs-merge "M")
+                           (`needs-update "U")
+                           (`ignored "I")
+                           (_ "Unk"))))
+              (when (string= "Git" backend)
+                (setq backend (char-to-string #xf1d2)))
+              (format " %s %s: %s" vc-mark backend state))
+          (format-mode-line '(vc-mode vc-mode))  )
       (format " %s untracked " vc-mark))))
 
 (defface powerline-evil-insert-face
@@ -316,124 +327,146 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
   #("%]" 0 2
     (help-echo "Recursive edit, type C-M-c to get out")))
 
+(defun paloryemacs/beautify-major-mode-name (name)
+  (cond ((string= name "Emacs-Lisp") "EL")
+        ((string= name "Lisp Interaction") "IEL")
+        ((string= name "IELM") "EL>")
+        (t name)))
+
+
+(defpowerline paloryemacs/powerline-major-mode
+  (propertize (format-mode-line (paloryemacs/beautify-major-mode-name mode-name))
+              'mouse-face 'mode-line-highlight
+              'help-echo "Major mode\n\ mouse-1: Display major mode menu\n\ mouse-2: Show help for major mode\n\ mouse-3: Toggle minor modes"
+              'local-map (let ((map (make-sparse-keymap)))
+                           (define-key map [mode-line down-mouse-1]
+                             `(menu-item ,(purecopy "Menu Bar") ignore
+                                         :filter (lambda (_) (mouse-menu-major-mode-map))))
+                           (define-key map [mode-line mouse-2] 'describe-mode)
+                           (define-key map [mode-line down-mouse-3] mode-line-mode-menu)
+                           map)))
+
+
+
 (defvar powerline-git-state-mark "" "git state mode line mark.")
 (defpowerline powerline-git-state-mark
   powerline-git-state-mark)
 
+(defun paloryemacs/setup-powerline-evil-theme ()
+  "Setup the powerline evil mode-line."
+  (interactive)
+  (setq-default mode-line-format '("%e" (:eval (paloryemacs/powerline-evil-theme)))))
+
+
 (defun paloryemacs/powerline-evil-theme ()
   "Setup the default mode-line."
   (interactive)
-  (setq-default
-   mode-line-format
-   '("%e"
-     (:eval
-      (let* ((active (powerline-selected-window-active))
-             (mode-line (if active 'mode-line 'mode-line-inactive))
-             (face1 (if active 'powerline-active1 'powerline-inactive1))
-             (face2 (if active 'powerline-active2 'powerline-inactive2))
-             (face3 (if active 'powerline-active3 'powerline-inactive2))
-             (vc-face (if active 'powerline-vc-face 'powerline-inactive2))
-             (workgroups-face (if active 'powerline-workgroups-face 'powerline-inactive2))
-             (ace-window-path-face (if active
-                                       'powerline-ace-window-path-face
-                                     'powerline-inactive2))
-             (anzu-face (if active 'powerline-anzu-face 'powerline-inactive2))
-             (buffer-id-face (if active 'powerline-buffer-id-face 'powerline-inactive1))
-             (which-func-face (if active 'which-func 'powerline-inactive1))
-             (file-base-info-face (if active
-                                      'powerline-file-base-info-face
-                                    'powerline-inactive2))
-             (evil-face (powerline-evil-face active))
-             (zigzag-right (intern (format "powerline-zigzag-%s"
-                                           (cdr powerline-default-separator-dir))))
-             (separator-left (intern (format "powerline-%s-%s"
-                                             powerline-default-separator
-                                             (car powerline-default-separator-dir))))
-             (separator-right (intern (format "powerline-%s-%s"
-                                              powerline-default-separator
-                                              (cdr powerline-default-separator-dir))))
-             (lhs `(,(powerline-ace-window-path ace-window-path-face 'r)
-                    ,(funcall zigzag-right ace-window-path-face evil-face)
-                    ,(powerline-evil-tag evil-face)
-                    ,@(let ((anzu-info (powerline-anzu anzu-face 'l))
-                            (vc-info (paloryemacs/powerline-vc vc-face 'r)))
+  (let* ((active (powerline-selected-window-active))
+         (mode-line (if active 'mode-line 'mode-line-inactive))
+         (face1 (if active 'powerline-active1 'powerline-inactive1))
+         (face2 (if active 'powerline-active2 'powerline-inactive2))
+         (face3 (if active 'powerline-active3 'powerline-inactive2))
+         (vc-face (if active 'powerline-vc-face 'powerline-inactive2))
+         (workgroups-face (if active 'powerline-workgroups-face 'powerline-inactive2))
+         (ace-window-path-face (if active
+                                   'powerline-ace-window-path-face
+                                 'powerline-inactive2))
+         (anzu-face (if active 'powerline-anzu-face 'powerline-inactive2))
+         (buffer-id-face (if active 'powerline-buffer-id-face 'powerline-inactive1))
+         (which-func-face (if active 'which-func 'powerline-inactive1))
+         (file-base-info-face (if active
+                                  'powerline-file-base-info-face
+                                'powerline-inactive2))
+         (evil-face (powerline-evil-face active))
+         (zigzag-right (intern (format "powerline-zigzag-%s"
+                                       (cdr powerline-default-separator-dir))))
+         (separator-left (intern (format "powerline-%s-%s"
+                                         powerline-default-separator
+                                         (car powerline-default-separator-dir))))
+         (separator-right (intern (format "powerline-%s-%s"
+                                          powerline-default-separator
+                                          (cdr powerline-default-separator-dir))))
+         (lhs `(,(powerline-ace-window-path ace-window-path-face 'r)
+                ,(funcall zigzag-right ace-window-path-face evil-face)
+                ,(powerline-evil-tag evil-face)
+                ,@(let ((anzu-info (powerline-anzu anzu-face 'l))
+                        (vc-info (paloryemacs/powerline-vc vc-face 'r)))
 
-                        (cond ((and anzu-info vc-info)
-                               (list (funcall separator-left evil-face anzu-face)
-                                     anzu-info
-                                     (powerline-raw " " anzu-face)
-                                     (funcall separator-left anzu-face vc-face)
-                                     vc-info
-                                     (powerline-git-state-mark vc-face)
-                                     (funcall separator-left vc-face file-base-info-face)))
-                              ((and anzu-info (not vc-info))
-                               (list (funcall separator-left evil-face anzu-face)
-                                     anzu-info
-                                     (powerline-raw " " anzu-face)
-                                     (funcall separator-left anzu-face file-base-info-face)))
-                              ((and (not anzu-info) vc-info)
-                               (list (funcall separator-left evil-face vc-face)
-                                     vc-info
-                                     (powerline-git-state-mark vc-face)
-                                     (funcall separator-left vc-face file-base-info-face)))
-                              ((and (not anzu-info) (not vc-info))
-                               (list (funcall separator-left
-                                              evil-face
-                                              file-base-info-face)))))
-                    ,(powerline-raw mode-line-front-space file-base-info-face)
-                    ,(paloryemacs/powerline-client file-base-info-face)
-                    ,(paloryemacs/powerline-remote file-base-info-face)
-                    ,(paloryemacs/powerline-frame-id file-base-info-face)
-                    ,(powerline-raw mode-line-mule-info file-base-info-face)
-                    ,(paloryemacs/mode-line-modified file-base-info-face)
-                    ,(paloryemacs/powerline-position file-base-info-face)
-                    ,(funcall separator-left file-base-info-face buffer-id-face)
-                    ,(powerline-buffer-id buffer-id-face 'l)
+                    (cond ((and anzu-info vc-info)
+                           (list (funcall separator-left evil-face anzu-face)
+                                 anzu-info
+                                 (powerline-raw " " anzu-face)
+                                 (funcall separator-left anzu-face vc-face)
+                                 vc-info
+                                 (powerline-git-state-mark vc-face)
+                                 (funcall separator-left vc-face file-base-info-face)))
+                          ((and anzu-info (not vc-info))
+                           (list (funcall separator-left evil-face anzu-face)
+                                 anzu-info
+                                 (powerline-raw " " anzu-face)
+                                 (funcall separator-left anzu-face file-base-info-face)))
+                          ((and (not anzu-info) vc-info)
+                           (list (funcall separator-left evil-face vc-face)
+                                 vc-info
+                                 (powerline-git-state-mark vc-face)
+                                 (funcall separator-left vc-face file-base-info-face)))
+                          ((and (not anzu-info) (not vc-info))
+                           (list (funcall separator-left
+                                          evil-face
+                                          file-base-info-face)))))
+                ,(powerline-raw mode-line-front-space file-base-info-face)
+                ,(paloryemacs/powerline-client file-base-info-face)
+                ,(paloryemacs/powerline-remote file-base-info-face)
+                ,(paloryemacs/powerline-frame-id file-base-info-face)
+                ,(powerline-raw mode-line-mule-info file-base-info-face)
+                ,(paloryemacs/mode-line-modified file-base-info-face)
+                ,(paloryemacs/powerline-position file-base-info-face)
+                ,(funcall separator-left file-base-info-face buffer-id-face)
+                ,(powerline-buffer-id buffer-id-face 'l)
 
-                    ,(powerline-raw ":" buffer-id-face)
-                    ,@(when (and (boundp 'which-function-mode) which-function-mode)
-                        (list (powerline-which-func which-func-face 'l)
-                              (powerline-raw " " which-func-face)))
+                ,(powerline-raw ":" buffer-id-face)
+                ,@(when (and (boundp 'which-function-mode) which-function-mode)
+                    (list (powerline-which-func which-func-face 'l)
+                          (powerline-raw " " which-func-face)))
 
-                    ,(funcall separator-left buffer-id-face face2)
+                ,(funcall separator-left buffer-id-face face2)
 
-                    ,(when (bound-and-true-p nyan-mode)
-                       (powerline-raw (list (nyan-create) face2 'l)))
+                ,(when (bound-and-true-p nyan-mode)
+                   (powerline-raw (list (nyan-create) face2 'l)))
 
-                    ,(powerline-raw " " face2)
-                    ,(powerline-raw " " face2)
-                    ,(powerline-recursive-left face2)
-                    ,(powerline-major-mode face2)
-                    ,(powerline-process face2)
-                    ,(powerline-minor-modes face2 'l)
-                    ,(powerline-narrow face2 'l)
-                    ,(powerline-recursive-right face2)
-                    ,(powerline-raw "  " face2)
-                    ,(funcall separator-left face2 face2)))
-             (rhs (list
-                   (funcall separator-right face2 workgroups-face)
-                   (powerline-workgroup workgroups-face)
-                   (powerline-raw " "  workgroups-face)
+                ,(powerline-raw " " face2)
+                ,(powerline-raw " " face2)
+                ,(powerline-recursive-left face2)
+                ,(paloryemacs/powerline-major-mode face2)
+                ,(powerline-process face2)
+                ,(powerline-minor-modes face2 'l)
+                ,(powerline-narrow face2 'l)
+                ,(powerline-recursive-right face2)
+                ,(powerline-raw "  " face2)
+                ,(funcall separator-left face2 face2)))
+         (rhs (list
+               (funcall separator-right face2 workgroups-face)
+               (powerline-workgroup workgroups-face)
+               (powerline-raw " "  workgroups-face)
 
-                   (funcall separator-right workgroups-face face1)
-                   (powerline-raw "  " face1)
-                   (powerline-raw global-mode-string face1 'r)
-                   (powerline-raw " " face1)
-                   (funcall separator-right face1 face2)
-                   (paloryemacs/powerline-file-size face2 'r)
-                   (when powerline-display-hud (powerline-hud face2 face1)))))
-        (concat (powerline-render lhs)
-                (powerline-fill face2 (powerline-width rhs))
-                (powerline-render rhs)))))))
-
+               (funcall separator-right workgroups-face face1)
+               (powerline-raw "  " face1)
+               (powerline-raw global-mode-string face1 'r)
+               (powerline-raw " " face1)
+               (funcall separator-right face1 face2)
+               (paloryemacs/powerline-file-size face2 'r)
+               (when powerline-display-hud (powerline-hud face2 face1)))))
+    (concat (powerline-render lhs)
+            (powerline-fill face2 (powerline-width rhs))
+            (powerline-render rhs))))
 
 (with-eval-after-load 'powerline-themes
   ;; (setq powerline-default-separator 'utf-8) ; 'arrow
-  (paloryemacs/powerline-evil-theme))
+  (paloryemacs/setup-powerline-evil-theme))
 
 (defun paloryemacs/force-update-mode-line  ()
   (interactive)
-  (paloryemacs/powerline-evil-theme)
+  (paloryemacs/setup-powerline-evil-theme)
   (powerline-reset)
   (force-mode-line-update t)
   (let* ((buf (current-buffer))

@@ -36,7 +36,7 @@ emacs.")
 (defvar paloryemacs/default-cnfonts-profile-name "program"
   "Default cnfonts profile name used by chinse-font-setup.")
 
-(defvar paloryemacs/default-cnfonts-fontsize-step 4
+(defvar paloryemacs/default-cnfonts-fontsize-step 6
   "Default cnfonts fontsize step used by chinse-font-setup.")
 
 

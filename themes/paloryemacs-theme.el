@@ -60,9 +60,9 @@
    ;; mode-line
    '(mode-line-buffer-id ((t (:foreground "#90377d"))))
    '(mode-line-emphasis ((t (:foreground "Magenta"))))
-   `(mode-line ((t (:foreground ,base1 :background ,base02 :box nil :font "DejaVu Sans Mono for Powerline-12"))))
-   `(mode-line-inactive ((t (:foreground ,base0  :background ,base03 :box nil :font "DejaVu Sans Mono for Powerline-12"))))
-   '(mode-line-highlight ((t (:box nil))))
+   `(mode-line ((t (:foreground ,base1 :background ,base02 :box nil :height 1.0 :family "mplus Nerd Font"))))
+   `(mode-line-inactive ((t (:inherit 'mode-line :foreground ,base0  :background ,base03))))
+   `(mode-line-highlight ((t (:inherit 'mode-line :background ,base01 :foreground ,base2))))
 
    '(minibuffer-prompt ((t (:foreground "chartreuse2" :weight bold))))
    `(fringe ((t (:foreground "green" :background ,base02))))

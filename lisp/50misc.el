@@ -911,15 +911,17 @@ This command is to be used interactively."
   (progn
     (with-eval-after-load 'evil-evilified-state
       (evilified-state-evilify Info-mode Info-mode-map
-        "D"      'Info-directory
-        "d"      'Info-scroll-up
-        "e"      'Info-scroll-down
-        "/"      'Info-search
-        "gh"     'Info-help
-        "gn"     'Info-goto-node
-        "n"      'Info-next
-        "p"      'Info-prev
-        "N"      'Info-prev))
+        "D"          'Info-directory
+        "d"          'Info-scroll-up
+        "e"          'Info-scroll-down
+        (kbd "C-i")  'Info-history-forward
+        (kbd "C-o")  'Info-history-back
+        "/"          'Info-search
+        "gh"         'Info-help
+        "gn"         'Info-goto-node
+        "n"          'Info-next
+        "p"          'Info-prev
+        "N"          'Info-prev))
     (use-package info+
       :init
       (progn

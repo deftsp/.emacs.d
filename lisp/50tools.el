@@ -1241,6 +1241,7 @@ inputting math (Unicode) symbols." t))
     (with-eval-after-load "highlight-symbol"
       (diminish 'highlight-symbol-mode))))
 
+
 ;;; goto last change
 (global-set-key (kbd "C-x C-/") 'goto-last-change)
 
