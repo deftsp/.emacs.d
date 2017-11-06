@@ -328,11 +328,12 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
     (help-echo "Recursive edit, type C-M-c to get out")))
 
 (defun paloryemacs/beautify-major-mode-name (name)
-  (cond ((string= name "Emacs-Lisp") "EL")
-        ((string= name "Lisp Interaction") "IEL")
-        ((string= name "IELM") "EL>")
-        (t name)))
-
+  (if (stringp name)
+      (cond ((string= name "Emacs-Lisp") "EL")
+            ((string= name "Lisp Interaction") "IEL")
+            ((string= name "IELM") "EL>")
+            (t name))
+    name))
 
 (defpowerline paloryemacs/powerline-major-mode
   (propertize (format-mode-line (paloryemacs/beautify-major-mode-name mode-name))
