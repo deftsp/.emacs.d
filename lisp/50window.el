@@ -9,6 +9,60 @@
       window-min-height 4               ; Let's not have too-tiny windows.
       mouse-autoselect-window nil)
 
+;; from https://gist.github.com/3402786
+(defun paloryemacs/toggle-maximize-buffer ()
+  "Maximize buffer"
+  (interactive)
+  (if (and (= 1 (length (window-list)))
+           (assoc ?_ register-alist))
+      (jump-to-register ?_)
+    (progn
+      (window-configuration-to-register ?_)
+      (delete-other-windows))))
+
+;; originally from magnars and modified by ffevotte for dedicated windows
+;; support, it has quite diverged by now
+(defun paloryemacs/rotate-windows-forward (count)
+  "Rotate each window forwards.
+A negative prefix argument rotates each window backwards.
+Dedicated (locked) windows are left untouched."
+  (interactive "p")
+  (let* ((non-dedicated-windows (cl-remove-if 'window-dedicated-p (window-list)))
+         (states (mapcar #'window-state-get non-dedicated-windows))
+         (num-windows (length non-dedicated-windows))
+         (step (+ num-windows count)))
+    (if (< num-windows 2)
+        (error "You can't rotate a single window!")
+      (dotimes (i num-windows)
+        (window-state-put
+         (elt states i)
+         (elt non-dedicated-windows (% (+ step i) num-windows)))))))
+
+(defun paloryemacs/rotate-windows-backward (count)
+  "Rotate each window backwards.
+Dedicated (locked) windows are left untouched."
+  (interactive "p")
+  (spacemacs/rotate-windows-forward (* -1 count)))
+
+;; https://tsdh.wordpress.com/2007/03/28/deleting-windows-vertically-or-horizontally/
+(defun paloryemacs/maximize-horizontally ()
+  "Delete all windows left or right of the current window."
+  (interactive)
+  (require 'windmove)
+  (save-excursion
+    (while (condition-case nil (windmove-left) (error nil))
+      (delete-window))
+    (while (condition-case nil (windmove-right) (error nil))
+      (delete-window))))
+
+(defun paloryemacs/delete-window (&optional arg)
+  "Delete the current window.
+If the universal prefix argument is used then kill the buffer too."
+  (interactive "P")
+  (if (equal '(4) arg)
+      (kill-buffer-and-window)
+    (delete-window)))
+
 ;;; key binding
 (global-set-key (kbd"C-x x") 'delete-window)
 (when window-system
@@ -314,11 +368,29 @@
 
 ;;; popwin
 ;; https://github.com/m2ym/popwin-el
-;; (require 'popwin nil t)
-;; (eval-after-load "popwin"
-;;   ;; (global-set-key (kbd "C-z") popwin:keymap)
-;;   ;; (add-to-list 'popwin:special-display-config)
-;;   (popwin-mode 1))
+(use-package popwin
+  :config
+  (progn
+    ;; (global-set-key (kbd "C-z") popwin:keymap)
+    (popwin-mode +1)
+    (paloryemacs/set-leader-keys "wpm" 'popwin:messages)
+    (paloryemacs/set-leader-keys "wpp" 'popwin:close-popup-window)
+
+    ;; don't use default value but manage it ourselves
+    (setq popwin:special-display-config nil)
+
+    ;; buffers that we manage
+    (push '("*Help*"                 :dedicated t :position bottom :stick t :noselect t   :height 0.4) popwin:special-display-config)
+    (push '("*compilation*"          :dedicated t :position bottom :stick t :noselect t   :height 0.4) popwin:special-display-config)
+    (push '("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil            ) popwin:special-display-config)
+    (push '("*Async Shell Command*"  :dedicated t :position bottom :stick t :noselect nil            ) popwin:special-display-config)
+    (push '(" *undo-tree*"           :dedicated t :position right  :stick t :noselect nil :width   60) popwin:special-display-config)
+    (push '("*undo-tree Diff*"       :dedicated t :position bottom :stick t :noselect nil :height 0.3) popwin:special-display-config)
+    (push '("*ert*"                  :dedicated t :position bottom :stick t :noselect nil            ) popwin:special-display-config)
+    (push '("*grep*"                 :dedicated t :position bottom :stick t :noselect nil            ) popwin:special-display-config)
+    (push '("*nosetests*"            :dedicated t :position bottom :stick t :noselect nil            ) popwin:special-display-config)
+    (push '("^\*WoMan.+\*$" :regexp t             :position bottom                                   ) popwin:special-display-config)))
+
 
 (defun paloryemacs/switch-to-minibuffer-window ()
   "switch to minibuffer window (if active)"

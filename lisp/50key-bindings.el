@@ -219,8 +219,8 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "w2"  (kbd "C-x 2")
   "w3"  "\C-x3"
   "wb"  'paloryemacs/switch-to-minibuffer-window
-  ;; "wd"  'spacemacs/delete-window
-  ;; "wt"  'spacemacs/toggle-current-window-dedication
+  "wd"  'paloryemacs/delete-window
+  "wt"  'paloryemacs/toggle-current-window-dedication
   "wf"  'follow-mode
   "wF"  'make-frame
   "wH"  'evil-window-move-far-left
@@ -239,12 +239,14 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "w <S-right>"  'evil-window-move-far-right
   "wl"  'evil-window-right
   "w <right>"  'evil-window-right
-  ;; "wm"  'spacemacs/toggle-maximize-buffer
+  "wm"  'spacemacs/toggle-maximize-buffer
   ;; "wc"  'spacemacs/toggle-centered-buffer-mode
   ;; "wC"  'spacemacs/centered-buffer-mode-full-width
   "wo"  'other-frame
-  ;; "wr"  'spacemacs/rotate-windows
-  ;; "wR"  'spacemacs/rotate-windows-backward
+  "wpm" 'popwin:messages
+  "wpp" 'popwin:close-popup-window
+  "wr"  'paloryemacs/rotate-windows-forward
+  "wR"  'paloryemacs/rotate-windows-backward
   "ws"  'split-window-below
   "wS"  'split-window-below-and-focus
   "w-"  'split-window-below
@@ -255,8 +257,7 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "ww"  'other-window
   "w/"  'split-window-right
   "w="  'balance-windows
-  ;; "w_"  'spacemacs/maximize-horizontally
-  )
+  "w_"  'paloryemacs/maximize-horizontally)
 
 (defun paloryemacs/global-set-keys (&rest keycommands)
   "Register keys to commands."
