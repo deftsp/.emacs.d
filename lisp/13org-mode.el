@@ -140,6 +140,11 @@
       org-startup-with-inline-images t
       org-image-actual-width nil
       org-ctrl-k-protect-subtree t ; give a query for delete
+      ;; add more org level face
+      ;; org-n-level-faces at most 8, if less than 8, then level-1 face gets
+      ;; re-used level N+1 etc.
+      ;; (add-to-list 'org-level-faces 'paloryemacs/org-level-9)
+      ;; (setq org-n-level-faces (length org-level-faces)))
       ;; org-catch-invisible-edits 'smart
       ;; org-startup-indented t
       ;; Default target for storing notes. Used as a fall back file for org-capture.el, for templates that do not
@@ -1183,6 +1188,19 @@ _h_tml    ^ ^        _A_SCII:
                             todo
                             additional)))
 
+
+(use-package org-bullets
+  :defer t
+  :init
+  (setq org-bullets-face-name nil)
+  ;; http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters
+  ;; https://zhangda.wordpress.com/2016/02/15/configurations-for-beautifying-emacs-org-mode/
+  ;; "⬢" "⭓" "■"
+  ;; "◉" "◎" "⚫" "○" "►" "◇"
+  ;; "✺" "✹" "✸" "✷" "✶" "✭" "✦" "■" "▼" "●"
+  (setq org-bullets-bullet-list
+        '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷"))
+  (add-hook 'org-mode-hook 'org-bullets-mode))
 
 (use-package org-brain
   :defer t

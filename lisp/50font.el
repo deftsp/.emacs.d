@@ -54,9 +54,8 @@
           (redisplay t)
           (cnfonts-message t cnfonts--minibuffer-echo-string))))
 
-
     (defun paloryemacs/cnfonts-set-symbol-fonts (fontsizes-list)
-      (let* ((fontname "Knack Nerd Font")
+      (let* ((fontname "MesloLGS Nerd Font")
              (fontsize (nth 0 fontsizes-list))
              (fontspec (font-spec :name fontname
                                   :size fontsize
@@ -70,8 +69,9 @@
 
     ;; https://nerdfonts.com/
     ;; https://github.com/ryanoasis/nerd-fonts
+    ;; https://hyper-db.de/monopedia/wiki/index.php?title=Unicode_font#2580-2DFF
     (defun paloryemacs/cnfonts-set-extra-fonts (fontsizes-list)
-      (let* ((fontname "Knack Nerd Font")
+      (let* ((fontname "MesloLGS Nerd Font")
              (fontsize (nth 0 fontsizes-list)) ; index 1 for chinese font
              (fontspec (font-spec :name fontname
                                   :size fontsize
@@ -80,6 +80,7 @@
         (if (cnfonts--fontspec-valid-p fontspec)
             (mapc
              (lambda (range)
+               ;; it not work
                (set-fontset-font "fontset-default"
                                  range
                                  fontspec nil 'prepend))
@@ -92,6 +93,7 @@
                (#x23ed . #x2b5c) ; IEC Power Symbols
                (#xf300 . #xf317) ; Font Linux
                (#x2500 . #x257f) ; ┌ └
+               (#x2700 . #x27bf)
                ))
           (message "字体 %S 不存在！" fontname))))
 
