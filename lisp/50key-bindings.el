@@ -120,16 +120,16 @@
   "ec" 'flycheck-clear
   "eh" 'flycheck-describe-checker
   "el" 'flycheck-list-errors
-  "eL" 'spacemacs/goto-flycheck-error-list
+  "eL" 'paloryemacs/goto-flycheck-error-list
   "es" 'flycheck-select-checker
   "eS" 'flycheck-set-checker-executable
   "ev" 'flycheck-verify-setup
 
   "ef"  'flycheck-mode
 
-  "en" 'spacemacs/next-error
-  "eN" 'spacemacs/previous-error
-  "ep" 'spacemacs/previous-error)
+  "en" 'paloryemacs/next-error
+  "eN" 'paloryemacs/previous-error
+  "ep" 'paloryemacs/previous-error)
 
 
 (paloryemacs/set-leader-keys

@@ -139,6 +139,8 @@
       org-log-done 'time
       org-startup-with-inline-images t
       org-image-actual-width nil
+      org-ctrl-k-protect-subtree t ; give a query for delete
+      ;; org-catch-invisible-edits 'smart
       ;; org-startup-indented t
       ;; Default target for storing notes. Used as a fall back file for org-capture.el, for templates that do not
       ;; specify a target file.

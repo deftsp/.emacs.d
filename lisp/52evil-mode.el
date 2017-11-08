@@ -329,7 +329,7 @@ kill internal buffers too."
           (inferior-emacs-lisp-mode  . emacs)
           (inf-ruby-mode             . emacs)
           (log-edit-mode             . emacs)
-          (flycheck-error-list-mode  . emacs)
+          (flycheck-error-list-mode  . evilified)
           (fundamental-mode          . normal)
           (erc-mode                  . emacs)
           (git-commit-mode           . insert)
