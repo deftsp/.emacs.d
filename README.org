@@ -21,3 +21,9 @@
    - [[http://sachachua.com/blog/][sacha chua]]
 
    To be continued ...
+** License
+   The license is GPLv3 for all parts specific to Paloryemacs, this includes:
+
+   the initialization and core files
+   the documentation
+   For the packages shipped in this repository you can refer to the files header.
