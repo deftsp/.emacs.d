@@ -95,6 +95,7 @@
    `(powerline-vc-face ((t (:background ,base01 :foreground "#f4bb66" :inherit mode-line))))
    `(powerline-workgroups-face ((t (:background "#778899" :foreground "#0a3540" :inherit mode-line))))
    `(powerline-ace-window-path-face ((t (:background "#174652" :foreground "#0a3540" :inherit mode-line))))
+   `(powerline-winum-number-face ((t (:background "#174652" :foreground "#0a3540" :inherit mode-line))))
    `(powerline-mode-line-modified-face ((t (:foreground "#ee1280" :background unspecified))))
 
    ;; evil-snipe
@@ -300,6 +301,9 @@
    ;; ace-window-mode-line
    '(aw-leading-char-face ((t (:foreground "red" :height 9.0))))
    '(aw-mode-line-face ((t (:foreground "violet" :background unspecified))))
+
+   ;; winum
+   '(winum-face ((t (:foreground "violet" :background unspecified))))
 
    ;; company-mode
    `(company-tooltip ((t (:background ,base01 :foreground "#dfdfdf"))))

@@ -31,7 +31,12 @@ the modeline")
 
 (defface powerline-ace-window-path-face
   '((t (:background "#174652" :foreground "#0a3540")))
-  "Powerline ace window path face."
+  "powerline ace window path face."
+  :group 'powerline)
+
+(defface powerline-winum-number-face
+  '((t (:background "#174652" :foreground "#0a3540")))
+  "powerline winum number face."
   :group 'powerline)
 
 (defface powerline-vc-face
@@ -152,6 +157,13 @@ mouse-1: Display Line and Column Mode Menu")
 
 (defpowerline powerline-ace-window-path
   (window-parameter (selected-window) 'ace-window-path))
+
+(defpowerline powerline-winum-number
+  (let* ((n (winum-get-number))
+         (s (if (numberp n)
+                (int-to-string n)
+              "")))
+    (propertize (concat " #" s) 'face 'winum-face)))
 
 (defpowerline paloryemacs/powerline-vc
   (let ((vc-mark (char-to-string #xe0a0)))
@@ -372,6 +384,9 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
          (ace-window-path-face (if active
                                    'powerline-ace-window-path-face
                                  'powerline-inactive2))
+         (winum-number-face (if active
+                                'powerline-winum-number-face
+                              'powerline-inactive2))
          (anzu-face (if active 'powerline-anzu-face 'powerline-inactive2))
          (buffer-id-face (if active 'powerline-buffer-id-face 'powerline-inactive1))
          (which-func-face (if active 'which-func 'powerline-inactive1))
@@ -387,7 +402,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
          (separator-right (intern (format "powerline-%s-%s"
                                           powerline-default-separator
                                           (cdr powerline-default-separator-dir))))
-         (lhs `(,(powerline-ace-window-path ace-window-path-face 'r)
+         (lhs `(,(powerline-winum-number winum-number-face 'r)
                 ,(funcall zigzag-right ace-window-path-face evil-face)
                 ,(powerline-evil-tag evil-face)
                 ,@(let ((anzu-info (powerline-anzu anzu-face 'l))

@@ -64,9 +64,6 @@
 
 
 (paloryemacs/set-leader-keys
-  "1"   'delete-other-windows
-  "2"   (kbd "C-x 2")
-  "3"   "\C-x3"
   ;; ";" "cc" "ci", "cl", "cp", "cr", "ct", "cy" and "cv" are used by evil-nerd-commenter
   "au"  'undo-tree-visualize
   "cs"  'paloryemacs/evil-change-symbol-in-defun

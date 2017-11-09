@@ -137,7 +137,7 @@
     (setq wg-mode-line-display-on (not (featurep 'powerline))
           wg-modeline-string "")
     (setq wg-flag-modified t)                 ; Display modified flags as well
-    (setq wg-mode-line-decor-left-brace "♯"
+    (setq wg-mode-line-decor-left-brace "#" ; "♯"
           wg-mode-line-decor-right-brace ""
           wg-mode-line-decor-divider ":"))
   :config
