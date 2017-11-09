@@ -25,7 +25,8 @@
 ;;; base on zenburn and solarized
 ;; https://github.com/bbatsov/zenburn-emacs/blob/master/zenburn-theme.el and
 ;; https://github.com/sellout/emacs-color-theme-solarized
-;; see also https://github.com/purcell/color-theme-sanityinc-solarized
+;; https://github.com/bbatsov/solarized-emacs
+;; https://github.com/purcell/color-theme-sanityinc-solarized
 
 ;; the easy way to get following vlaue is: `customize face' => Apply and save => copy and paste
 ;; Likes "#032238"
@@ -71,6 +72,8 @@
 
    ;; the split line of two window
    `(vertical-border ((t (:foreground ,base02))))
+
+   `(variable-pitch ((t (:family "DejaVu Sans"))))
 
    ;; powerline
    `(powerline-active1 ((t (:background "#6b6b6b" :foreground "#fefefe" :inherit mode-line))))
@@ -162,16 +165,17 @@
    '(org-headline-done ((t (:strike-through t))))
    '(org-done ((t (:strike-through t))))
    `(org-hide ((t (:foreground ,base03))))
-   '(org-level-1 ((t (:foreground "lightcoral"))))
-   '(org-level-2 ((t (:foreground "dodgerblue2"))))
-   '(org-level-3 ((t (:foreground "darkolivegreen2"))))
-   '(org-level-4 ((t (:foreground "lightsteelblue"))))
-   '(org-level-5 ((t (:foreground "cyan4"))))
-   '(org-level-6 ((t (:foreground "Aquamarine"))))
-   '(org-level-7 ((t (:foreground "LightSteelBlue"))))
-   '(org-level-8 ((t (:foreground "LightSalmon"))))
-   '(org-date ((t (:foreground "#3cdeef"))))
-   '(org-link ((t (:foreground "#e2d282" :underline t))))
+   '(org-level-1 ((t (:inherit outline-1   :foreground "#1e90ff" :weight normal :height 1.0))))
+   '(org-level-2 ((t (:inherit org-level-1 :foreground "#7ad224" :height 1.0))))
+   '(org-level-3 ((t (:inherit org-level-1 :foreground "#dfaf8f"))))
+   '(org-level-4 ((t (:inherit org-level-1 :foreground "#8cd0d3"))))
+   '(org-level-5 ((t (:inherit org-level-1 :foreground "#8fb28f"))))
+   '(org-level-6 ((t (:inherit org-level-1 :foreground "#dca3a3"))))
+   '(org-level-7 ((t (:inherit org-level-1 :foreground "#94bff3"))))
+   '(org-level-8 ((t (:inherit org-level-1 :foreground "#f0dfaf"))))
+   '(org-level-9 ((t (:inherit org-level-1 :foreground "#93e0e3"))))
+   '(org-date ((t (:foreground "#00bfee"))))
+   '(org-link ((t (:inherit link :foreground "#e2d282" :underline t :weight normal))))
    '(org-habit-alert-face ((t (:foreground "#228822" :background "gold"))))
    `(org-agenda-structure ((t (:foreground "LightGoldenrod" :background ,base02))))
    '(org-scheduled ((t (:foreground "#8abeb2"))))
@@ -447,5 +451,6 @@
 ;; indent-tabs-mode: nil
 ;; eval: (when (require 'rainbow-mode nil t) (rainbow-mode 1))
 ;; eval: (when (require 'hexcolor-mode nil t) (hexcolor-mode 1))
+;; eval: (auto-fill-mode -1)
 ;; End:
 ;;; paloryemacs-theme.el ends here.
