@@ -365,16 +365,50 @@ to `reorganize-frame', otherwise set to `other-frame'."
 
          :auto-postamble nil
          :auto-preamble t)
-
-  ("other"
-   :base-directory "~/Lab/notebook/"
-   :base-extension "css\\|el"
-   :publishing-directory "/ssh:user@host:~/html/other/")
-  ("homepage" :components ("orgfiles"))))
+        ("reference-card"
+         :base-directory "~/org/reference-card/"
+         :base-extension "org"
+         :publishing-function org-latex-publish-to-pdf
+         :publishing-directory "~/org/reference-card/")
+        ("other"
+         :base-directory "~/Lab/notebook/"
+         :base-extension "css\\|el"
+         :publishing-directory "/ssh:user@host:~/html/other/")
+        ("homepage" :components ("orgfiles"))))
 
 
 (setq org-export-html-style-default "")
 (setq org-publish-timestamp-directory "~/.org-timestamps/")
+
+;; https://github.com/tumashu/ox-latex-chinese
+(use-package ox-latex
+  :defer t
+  :init
+  (setq org-latex-pdf-process
+        '("xelatex -interaction nonstopmode -output-directory %o %f"
+          "bibtex %b"
+          "xelatex -interaction nonstopmode -output-directory %o %f"
+          "xelatex -interaction nonstopmode -output-directory %o %f"))
+  (setq org-latex-listings t)
+  (setq org-export-latex-listings t)
+  :config
+  (add-to-list 'org-latex-packages-alist
+               '(("AUTO" "inputenc" t)))
+
+  ;; https://github.com/tsdye/org-article
+  ;; $ cp org-article.cls ~/Library/texmf/tex/latex/
+  ;; $ kpsewhich org-article.cls
+  (add-to-list 'org-latex-classes
+               '("org-article"
+                 "\\documentclass{org-article}
+                  [NO-DEFAULT-PACKAGES]
+                  [PACKAGES]
+                  [EXTRA]"
+                 ("\\section{%s}" . "\\section*{%s}")
+                 ("\\subsection{%s}" . "\\subsection*{%s}")
+                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
+                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
 
 ;;; link
 (setq org-link-abbrev-alist
@@ -577,65 +611,65 @@ Headline^^            Visit entry^^               Filter^^                    Da
 ^^                    ^^                          ^^                          ^^                   ^^                   [_vr_] reset       ^^             ^^
 [_q_] quit
 "
-      ;; Entry
-      ("h:" org-agenda-set-tags)
-      ("hA" org-agenda-archive-default)
-      ("hk" org-agenda-kill)
-      ("hp" org-agenda-priority)
-      ("hR" org-agenda-refile)
-      ("ht" org-agenda-todo)
+  ;; Entry
+  ("h:" org-agenda-set-tags)
+  ("hA" org-agenda-archive-default)
+  ("hk" org-agenda-kill)
+  ("hp" org-agenda-priority)
+  ("hR" org-agenda-refile)
+  ("ht" org-agenda-todo)
 
-      ;; Visit entry
-      ("SPC" org-agenda-show-and-scroll-up)
-      ("<tab>" org-agenda-goto :exit t)
-      ("TAB" org-agenda-goto :exit t)
-      ("RET" org-agenda-switch-to :exit t)
-      ("o"   link-hint-open-link :exit t)
+  ;; Visit entry
+  ("SPC" org-agenda-show-and-scroll-up)
+  ("<tab>" org-agenda-goto :exit t)
+  ("TAB" org-agenda-goto :exit t)
+  ("RET" org-agenda-switch-to :exit t)
+  ("o"   link-hint-open-link :exit t)
 
-      ;; Date
-      ("ds" org-agenda-schedule)
-      ("dd" org-agenda-deadline)
-      ("dt" org-agenda-date-prompt)
-      ("+" org-agenda-do-date-later)
-      ("-" org-agenda-do-date-earlier)
+  ;; Date
+  ("ds" org-agenda-schedule)
+  ("dd" org-agenda-deadline)
+  ("dt" org-agenda-date-prompt)
+  ("+" org-agenda-do-date-later)
+  ("-" org-agenda-do-date-earlier)
 
-      ;; View
-      ("vd" org-agenda-day-view)
-      ("vw" org-agenda-week-view)
-      ("vt" org-agenda-fortnight-view)
-      ("vm" org-agenda-month-view)
-      ("vy" org-agenda-year-view)
-      ("vn" org-agenda-later)
-      ("vp" org-agenda-earlier)
-      ("vr" org-agenda-reset-view)
+  ;; View
+  ("vd" org-agenda-day-view)
+  ("vw" org-agenda-week-view)
+  ("vt" org-agenda-fortnight-view)
+  ("vm" org-agenda-month-view)
+  ("vy" org-agenda-year-view)
+  ("vn" org-agenda-later)
+  ("vp" org-agenda-earlier)
+  ("vr" org-agenda-reset-view)
 
-      ;; Toggle mode
-      ("tf" org-agenda-follow-mode)
-      ("tl" org-agenda-log-mode)
-      ("ta" org-agenda-archives-mode)
-      ("tr" org-agenda-clockreport-mode)
-      ("td" org-agenda-toggle-diary)
+  ;; Toggle mode
+  ("tf" org-agenda-follow-mode)
+  ("tl" org-agenda-log-mode)
+  ("ta" org-agenda-archives-mode)
+  ("tr" org-agenda-clockreport-mode)
+  ("td" org-agenda-toggle-diary)
 
-      ;; Filter
-      ("ft" org-agenda-filter-by-tag)
-      ("fr" org-agenda-filter-by-tag-refine)
-      ("fc" org-agenda-filter-by-category)
-      ("fh" org-agenda-filter-by-top-headline)
-      ("fx" org-agenda-filter-by-regexp)
-      ("fd" org-agenda-filter-remove-all)
+  ;; Filter
+  ("ft" org-agenda-filter-by-tag)
+  ("fr" org-agenda-filter-by-tag-refine)
+  ("fc" org-agenda-filter-by-category)
+  ("fh" org-agenda-filter-by-top-headline)
+  ("fx" org-agenda-filter-by-regexp)
+  ("fd" org-agenda-filter-remove-all)
 
-      ;; Clock
-      ("cI" org-agenda-clock-in :exit t)
-      ("cj" org-agenda-clock-goto :exit t)
-      ("cO" org-agenda-clock-out)
-      ("cq" org-agenda-clock-cancel)
+  ;; Clock
+  ("cI" org-agenda-clock-in :exit t)
+  ("cj" org-agenda-clock-goto :exit t)
+  ("cO" org-agenda-clock-out)
+  ("cq" org-agenda-clock-cancel)
 
-      ;; Other
-      ("<escape>" nil :exit t)
-      ("q" nil :exit t)
-      ("gr" org-agenda-redo)
-      ("." org-agenda-goto-today)
-      ("gd" org-agenda-goto-date))
+  ;; Other
+  ("<escape>" nil :exit t)
+  ("q" nil :exit t)
+  ("gr" org-agenda-redo)
+  ("." org-agenda-goto-today)
+  ("gd" org-agenda-goto-date))
 
 
 (defun paloryemacs/org-agenda-mode-init ()
@@ -911,7 +945,12 @@ Will work on both org-mode and any mode that accepts plain html."
     "xr" (paloryemacs|org-emphasize paloryemacs/org-clear ? )
     "xs" (paloryemacs|org-emphasize paloryemacs/org-strike-through ?+)
     "xu" (paloryemacs|org-emphasize paloryemacs/org-underline ?_)
-    "xv" (paloryemacs|org-emphasize paloryemacs/org-verbose ?=))
+    "xv" (paloryemacs|org-emphasize paloryemacs/org-verbose ?=)
+
+    "px" 'org-publish
+    "pp" 'org-publish-current-project
+    "pf" 'org-publish-current-file
+    "pa" 'org-publish-all)
 
   ;; Add global evil-leader mappings. Used to access org-agenda
   ;; functionalities – and a few others commands – from any other mode.
