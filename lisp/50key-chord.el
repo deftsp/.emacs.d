@@ -62,7 +62,7 @@
   (key-chord-define-global "bf" 'ibuffer)
   (key-chord-define-global "cx" ctl-x-map)
 
-  (key-chord-define-global "jk" 'company-complete)
+  ;; (key-chord-define-global "jk" 'company-complete)
 
   ;; (key-chord-define-global "jc" 'avy-goto-char)
   (key-chord-define-global "jc" 'avy-goto-char-timer)

@@ -890,62 +890,42 @@ such character is found, following options are shown:
 (global-set-key (kbd "C-x r M-k") 'kill-save-rectangle)
 
 ;; avy
-(with-eval-after-load "avy"
-  (setq avy-background nil)
-  (setq avy-all-windows t)
-  (setq avy-case-fold-search nil)
-  (setq avy-timeout-seconds 0.6)
-  (setq avy-keys
-        (nconc (loop for i from ?a to ?z collect i)
-               (loop for i from ?A to ?Z collect i)
-               (loop for i from ?\! to ?\@ collect i)
-               (loop for i from ?\[ to ?\` collect i)
-               (loop for i from ?\{ to ?\~ collect i)))
-  (setq avy-keys-alist
-        `((avy-goto-word-1 . ,(nconc (loop for i from ?a to ?z collect i)
-                                     (loop for i from ?A to ?Z collect i)))))
-  (setq avy-style 'at)
-  (setq avy-styles-alist '((avy-goto-char-2 . post))))
-
-
-;;; ace jump
-;; 'C-c SPC' is used by Org mode
-;; gud-break is bound to C-c C-b, C-x SPC, C-x C-a C-b.
-;; both of 'M-g M-g' and 'M-g g' are bound to goto-line
-;; both 'M-j' and 'C-M-j' are bind to `indent-new-comment-line'
-(eval-after-load "ace-jump-mode"
-  '(progn
-     (setq ace-jump-mode-case-fold nil
-           ace-jump-word-mode-use-query-char t
-           ace-jump-mode-move-keys
-           (nconc (loop for i from ?a to ?z collect i)
-                  (loop for i from ?A to ?Z collect i)
-                  (loop for i from ?\! to ?\@ collect i)
-                  (loop for i from ?\[ to ?\` collect i)
-                  (loop for i from ?\{ to ?\~ collect i)))
-     (ace-jump-mode-enable-mark-sync)
-     ;; after enable ace jump mode mark sync, use `C-u C-SPC' is enough
-     ;; (define-key global-map (kbd "C-x SPC") 'ace-jump-mode-pop-mark)
-     ;; (define-key global-map (kbd "M-g M-g") 'ace-jump-mode)
-     (define-key global-map (kbd "M-SPC") 'ace-jump-mode)))
-
-;; (defun paloryemacs/ace-jump-to-char ()
-;;   (call-interactively 'ace-jump-char-mode))
-
-;; (defun paloryemacs/ace-jump-mode ()
-;;   (ace-jump-mode 8))
+(use-package avy
+  :defer t
+  :init
+  (progn
+    (setq avy-background nil)
+    (setq avy-all-windows t)
+    (setq avy-case-fold-search nil)
+    (setq avy-timeout-seconds 0.6)
+    (setq avy-keys
+          (nconc (loop for i from ?a to ?z collect i)
+                 (loop for i from ?A to ?Z collect i)
+                 (loop for i from ?\! to ?\@ collect i)
+                 (loop for i from ?\[ to ?\` collect i)
+                 (loop for i from ?\{ to ?\~ collect i)))
+    (setq avy-keys-alist
+          `((avy-goto-word-1 . ,(nconc (loop for i from ?a to ?z collect i)
+                                       (loop for i from ?A to ?Z collect i)))))
+    (setq avy-style 'at)
+    (setq avy-styles-alist '((avy-goto-char-2 . post)))))
 
 ;;; ace-isearch
+;; L := the length of input query string during isearch
+;; L = 1 : ace-jump-mode or avy
+;; 1 < L < 6 : isearch
+;; L >= 6 : helm-swoop or swiper
 ;; https://github.com/tam17aki/ace-isearch
-(require 'ace-isearch nil t)
-(with-eval-after-load "ace-isearch"
-  (global-ace-isearch-mode +1)
-  (setq ace-isearch-input-length 5
-        ace-isearch-input-idle-delay 0.5
-        ace-isearch-submode 'ace-jump-char-mode
-        ace-isearch-use-ace-jump 'printing-char)
-
-  (ace-isearch-set-ace-jump-after-isearch-exit t))
+(use-package ace-isearch
+  :init
+  (setq ace-isearch-function 'avy-goto-word-1
+        ace-isearch-input-length 5
+        ace-isearch-jump-delay 0.25
+        ace-isearch-use-jump 'printing-char)
+  (setq ace-isearch-function-from-isearch 'ace-isearch-swiper-from-isearch)
+  :config
+  (define-key isearch-mode-map (kbd "C-'") 'ace-isearch-jump-during-isearch)
+  (global-ace-isearch-mode +1))
 
 ;;; ace-link
 ;; bind ace-link-info and ace-link-help to o in their respective modes.

@@ -5,6 +5,28 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+;;; evil special map
+;; evil-normal-state-map
+;; evil-insert-state-map
+;; evil-visual-state-map
+;; evil-emacs-state-map
+;; evil-motion-state-map
+;; evil-replace-state-map
+;; evil-operator-state-map
+;; evil-operator-shortcut-map
+;; evil-read-key-map
+;; evil-outer-text-objects-map
+;; evil-inner-text-objects-map
+;; evil-ex-completion-map
+;; minibuffer-local-map
+;; minibuffer-local-ns-map
+;; minibuffer-local-completion-map
+;; minibuffer-local-must-match-map
+;; minibuffer-local-isearch-map
+;; minibuffer-local-completion-map
+;; minibuffer-local-must-match-map
+;; minibuffer-local-isearch-map
+
 ;; `C-M-x' on a defface expression reinitializes the face according to the
 ;; defface specification.
 
@@ -123,136 +145,127 @@ recover evil state to it, otherwiser change to evil-emacs-state."
 ;; Note: the defadvice to keyboard-quit will not work when execute read-key-sequence
 
 ;;; escape dwim
-(defun paloryemacs/escape-dwim ()
+(defun paloryemacs/keyboard-escape-quit ()
+  "Enhanced Edition of the build-in function `keyboard-escape-quit`."
   (interactive)
-  (if (and delete-selection-mode transient-mark-mode mark-active)
-      (setq deactivate-mark t))
+  (when (and delete-selection-mode transient-mark-mode mark-active)
+    (setq deactivate-mark t))
   (when (get-buffer "*Completions*") (delete-windows-on "*Completions*"))
-  (cond ((minibuffer-window-active-p (selected-window))
-         (abort-recursive-edit))
+  (cond ((eq last-command 'mode-exited) nil)
+	    ((region-active-p)
+	     (deactivate-mark))
+        ((and delete-selection-mode transient-mark-mode mark-active)
+         (setq deactivate-mark t))
+	    ((> (minibuffer-depth) 0) ; (minibuffer-window-active-p (selected-window))
+	     (abort-recursive-edit))
+	    (current-prefix-arg nil)
+	    ((> (recursion-depth) 0)
+	     (exit-recursive-edit))
+	    (buffer-quit-function
+	     (funcall buffer-quit-function))
+	    ((string-match "^ \\*" (buffer-name (current-buffer)))
+	     (bury-buffer))
+        ((get-buffer "*Completions*")
+         (delete-windows-on "*Completions*"))
         ((or (memq major-mode '(Info-mode org-agenda-mode help-mode))
              paloryemacs--saved-evil-state)
          (keyboard-quit))
+        ((and (fboundp 'evil-mode) evil-mode (eq evil-state 'emacs))
+         (evil-exit-emacs-state))
+        ((and (fboundp 'evil-mode) evil-mode (eq evil-state 'lispy))
+         (let ((binding (key-binding (kbd "C-g"))))
+           (if binding (call-interactively binding)
+             (keyboard-quit))))
         ((and (fboundp 'evil-mode) evil-mode)
-         (cond ((eq evil-state 'emacs) (evil-exit-emacs-state))
-               ((eq evil-state 'lispy)
-                (let ((binding (key-binding (kbd "C-g"))))
-                  (if binding (call-interactively binding)
-                    (keyboard-quit))))
-               (t (let ((binding (key-binding [escape])))
-                    (if binding (call-interactively binding)
-                      (keyboard-quit))))))
+         (let ((binding (key-binding [escape])))
+           (if binding (call-interactively binding)
+             (keyboard-quit))))
+        ((not (one-window-p t))
+         (delete-other-windows))
         (t (keyboard-quit))))
 
 (defun paloryemacs/company-abort-then-escape-dwim ()
   (interactive)
   (company-abort)
-  (paloryemacs/escape-dwim))
-
+  (paloryemacs/keyboard-escape-quit))
 
 ;;; use Karabiner to remap simultaneous key presses [D+F] to Escape
-;; (key-chord-define-global "df" 'paloryemacs/escape-dwim)
+;; (key-chord-define-global "df" 'paloryemacs/keyboard-escape-quit)
+;; (key-chord-define-global "df" [escape])
 ;; (with-eval-after-load 'company
 ;;   (key-chord-define company-active-map "df" 'paloryemacs/company-abort-then-escape-dwim))
 
-;;; 'imap fd <ESC>' equivalent
-;; (key-chord-define-global "df" [escape])
-;; (key-chord-define evil-normal-state-map       "df" 'paloryemacs/escape-dwim)
-;; (key-chord-define evil-insert-state-map       "df" 'paloryemacs/escape-dwim)
-;; (key-chord-define evil-visual-state-map       "df" 'paloryemacs/escape-dwim)
-;; (key-chord-define evil-emacs-state-map        "df" 'paloryemacs/escape-dwim)
-;; (key-chord-define evil-motion-state-map       "df" 'paloryemacs/escape-dwim)
-;; (key-chord-define evil-replace-state-map      "df" 'paloryemacs/escape-dwim)
-;; (key-chord-define evil-operator-state-map     "df" 'paloryemacs/escape-dwim)
-;; (key-chord-define evil-operator-shortcut-map  "df" 'keyboard-quit)
-;; (key-chord-define evil-read-key-map           "df" 'paloryemacs/escape-dwim)
-;; (key-chord-define evil-outer-text-objects-map "df" 'paloryemacs/escape-dwim)
-;; (key-chord-define evil-inner-text-objects-map "df" 'paloryemacs/escape-dwim)
-;; (key-chord-define evil-ex-completion-map      "df" 'paloryemacs/escape-dwim)
-
-;; (key-chord-define minibuffer-local-map            "df" 'paloryemacs/minibuffer-keyboard-quit)
-;; (key-chord-define minibuffer-local-ns-map         "df" 'paloryemacs/minibuffer-keyboard-quit)
-;; (key-chord-define minibuffer-local-completion-map "df" 'paloryemacs/minibuffer-keyboard-quit)
-;; (key-chord-define minibuffer-local-must-match-map "df" 'paloryemacs/minibuffer-keyboard-quit)
-;; (key-chord-define minibuffer-local-isearch-map    "df" 'paloryemacs/minibuffer-keyboard-quit)
-
-(define-key minibuffer-local-map [escape] 'paloryemacs/escape-dwim)
-;; (define-key minibuffer-local-ns-map [escape] 'paloryemacs/minibuffer-keyboard-quit)
-;; (define-key minibuffer-local-completion-map [escape] 'paloryemacs/minibuffer-keyboard-quit)
-;; (define-key minibuffer-local-must-match-map [escape] 'paloryemacs/minibuffer-keyboard-quit)
-;; (define-key minibuffer-local-isearch-map [escape] 'paloryemacs/minibuffer-keyboard-quit)
 
 ;;;
-(with-eval-after-load 'evil
-  (define-key evil-normal-state-map (kbd "C-o") 'paloryemacs/open-line-with-indent) ; default evil-jump-backward
-
-  ;; (defun paloryemacs/evil-undefine ()
-  ;;   (interactive)
-  ;;   (let (evil-mode-map-alist)
-  ;;     (call-interactively (key-binding (this-command-keys)))))
-  ;; make sure that Evil's normal state never touches TAB, just wire this fall-through binding
-  ;; (define-key evil-normal-state-map (kbd "TAB") 'paloryemacs/evil-undefine)
-  (define-key evil-normal-state-map (kbd "TAB") 'indent-for-tab-command)
-  (define-key evil-motion-state-map (kbd "TAB") 'indent-for-tab-command)
-
-  (define-key evil-normal-state-map "gL" 'org-mac-grab-link)
-  (define-key evil-normal-state-map (kbd "gD") 'paloryemacs/jump-to-definition-other-window)
-  (define-key evil-normal-state-map (kbd "gd") 'paloryemacs/jump-to-definition)
-
-  ;; (define-key evil-normal-state-map "b" 'backward-word)
-  ;; (define-key evil-normal-state-map "w" 'forward-word)
-  (define-key evil-visual-state-map "Q" "gq")
-  (define-key evil-normal-state-map "Q" "gqap")
-  ;; (define-key evil-normal-state-map "S" "vabsba")
-  ;; (define-key evil-normal-state-map "s" "gv")
-
-  ;; (evil-define-key 'visual surround-mode-map "S" "sba")
-  (define-key evil-normal-state-map "+" 'evil-numbers/inc-at-pt) ; default `evil-next-line-first-non-blank'
-  (define-key evil-normal-state-map "-" 'evil-numbers/dec-at-pt) ; default `evil-previous-line-first-non-blank'
-
-  (define-key evil-normal-state-map (kbd "C-e") 'evil-end-of-line)
-
-  ;; (define-key evil-motion-state-map "v" 'evil-visual-block)
-  ;; make it easy to switch to visual-char mode from visual-block mode
-  ;; (define-key evil-visual-state-map "v" 'evil-visual-char)
-
-  ;; q is being used at many places to close things, and sometimes it so happens that evil mode is turned on in that
-  ;; window at the same time, which results in recording a macro instead of closing the window.
-  (define-key evil-normal-state-map (kbd "q") nil) ; `q' is binded to `evil-record-macro'
-
-  (define-key evil-operator-state-map "l" 'evil-avy-goto-line)
-  (define-key evil-operator-state-map "z" 'evil-avy-goto-char-2)
-
-  (setq evil-disable-insert-state-bindings t)
-  ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
-  (define-key evil-insert-state-map "\C-v" nil)
-  (define-key evil-insert-state-map "\C-k" nil)
-  (define-key evil-insert-state-map "\C-o" nil)
-  (define-key evil-insert-state-map "\C-r" nil)
-  (define-key evil-insert-state-map "\C-y" nil)
-  (define-key evil-insert-state-map "\C-e" nil)
-  (define-key evil-insert-state-map "\C-n" nil)
-  (define-key evil-insert-state-map "\C-p" nil)
-  (define-key evil-insert-state-map "\C-x\C-n" nil)
-  (define-key evil-insert-state-map "\C-x\C-p" nil)
-  (define-key evil-insert-state-map "\C-t" nil)
-  (define-key evil-insert-state-map "\C-d" nil)
-  (define-key evil-insert-state-map "\C-a" nil)
-  (define-key evil-insert-state-map "\C-w" nil)
-  (define-key evil-insert-state-map [remap newline] nil)
-  (define-key evil-insert-state-map [remap newline-and-indent] nil))
+(defun paloryemacs/evil-undefine ()
+  (interactive)
+  (let (evil-mode-map-alist)
+    (call-interactively (key-binding (this-command-keys)))))
 
 (use-package general
-  :defer 3
+  :init
+  (progn
+    (setq general-default-keymaps 'evil-normal-state-map))
   :config
-  (general-evil-setup)
-  (general-omap
-   :prefix "SPC"
-   "." 'evil-avy-goto-word-or-subword-1
-   "l" 'evil-avy-goto-line
-   "c" 'evil-avy-goto-char
-   "SPC" 'evil-avy-goto-subword-0
-   "w" 'evil-avy-goto-subword-0))
+  (progn
+    (general-evil-setup)
+    (general-nmap
+     "H"    "^"
+     "TAB" 'indent-for-tab-command
+     ;; make sure that Evil's normal state never touches TAB, just wire this fall-through binding
+     ;; "TAB" 'paloryemacs/evil-undefine
+     "C-o" 'paloryemacs/open-line-with-indent '; default evil-jump-backward
+     "gL"  'org-mac-grab-link
+     "gd"  'paloryemacs/jump-to-definition
+     "gD"  'paloryemacs/jump-to-definition-other-window
+     "Q" "gqap"
+     ;; "s" "gvfd"
+     ;; "S" "vabsba"
+     "+" 'evil-numbers/inc-at-pt ; default `evil-next-line-first-non-blank'
+     "-" 'evil-numbers/dec-at-pt ; default `evil-previous-line-first-non-blank'
+     ;; "C-e" 'evil-end-of-line
+
+     ;; q is being used at many places to close things, and sometimes it so
+     ;; happens that evil mode is turned on in that window at the same time,
+     ;; which results in recording a macro instead of closing the window.
+     "q" nil ; `q' is binded to `evil-record-macro'
+     )
+
+    (general-mmap
+     "TAB" 'indent-for-tab-command
+     "C-v" nil)
+
+    (general-vmap
+     "Q" "gq"
+     "v" 'evil-visual-block ; make it easy to switch to visual-char-block mode from visual-char
+     )
+
+    (general-imap
+     "C-v" nil
+     "C-k" nil
+     "C-o" nil
+     "C-r" nil
+     "C-y" nil
+     "C-e" nil
+     "C-n" nil
+     "C-p" nil
+     "C-x C-n" nil
+     "C-x C-p" nil
+     "C-t" nil
+     "C-d" nil
+     "C-a" nil
+     "C-w" nil
+     [remap newline] nil
+     [remap newline-and-indent] nil)
+
+    (general-omap
+     :prefix "SPC"
+     "." 'evil-avy-goto-word-or-subword-1
+     "l" 'evil-avy-goto-line
+     "c" 'evil-avy-goto-char
+     "z" 'evil-avy-goto-char-2
+     "SPC" 'evil-avy-goto-subword-0
+     "w" 'evil-avy-goto-subword-0)))
 
 ;; (with-eval-after-load "workgroups2"
 ;;   (defun paloryemacs/activate-all-major-mode-leader ()
@@ -353,7 +366,8 @@ kill internal buffers too."
         do (evil-set-initial-state mode state)))
 
 (defun paloryemacs/evil-init ()
-  (setq evil-move-cursor-back nil
+  (setq evil-disable-insert-state-bindings nil
+        evil-move-cursor-back nil
         evil-want-visual-char-semi-exclusive t
         evil-want-C-i-jump nil
         evil-cross-lines t
@@ -363,14 +377,44 @@ kill internal buffers too."
 
 (use-package evil
   :init
-  (paloryemacs/evil-init)
+  (progn
+    (paloryemacs/evil-init))
   :config
-  (use-package evil-evilified-state)
-  (paloryemacs/evil-set-initial-state))
+  (progn
+    ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
+    (use-package evil-evilified-state)
+    (paloryemacs/evil-set-initial-state)
+    (dolist (m (list minibuffer-local-map
+                     minibuffer-local-ns-map
+                     minibuffer-local-completion-map
+                     minibuffer-local-must-match-map
+                     minibuffer-local-isearch-map))
+      ;; 'paloryemacs/keyboard-escape-quit
+      (define-key m (kbd "<escape>") 'keyboard-escape-quit))
+
+    ;; alternate binding to search next occurrence with isearch without
+    ;; exiting isearch
+    (define-key isearch-mode-map (kbd "S-<return>") 'isearch-repeat-forward)
+    (define-key isearch-mode-map (kbd "M-S-<return>") 'isearch-repeat-backward)
+    ;; Escape from isearch-mode("/" and "?" in evil-mode) like vim
+    (define-key isearch-mode-map (kbd "<escape>") 'isearch-cancel)))
 
 ;;; enable evil mode
 (when (fboundp 'evil-mode)
   (evil-mode +1))
+
+(use-package evil-escape
+  :defer t
+  :init
+  ;; use key-chord instead evil-escape's key sequence
+  ;; (setq-default evil-escape-key-sequence "jk")
+  ;; (setq-default evil-escape-delay 0.08)
+  (setq evil-escape-unordered-key-sequence t)
+  (global-set-key (kbd "C-c C-g") 'evil-escape)
+  :chords (("jk" . evil-escape))
+  :config
+  (progn
+    (evil-escape-mode +1)))
 
 ;;; evil-surround
 (use-package evil-surround
@@ -445,18 +489,63 @@ kill internal buffers too."
   :defer t
   :commands evilnc-comment-operator
   :init
-  (define-key evil-normal-state-map "gc" 'evilnc-comment-operator)
-  (define-key evil-normal-state-map "gy" 'evilnc-copy-and-comment-lines)
-  (paloryemacs/set-leader-keys
-    ";"   'evilnc-comment-operator
-    "ci" 'evilnc-comment-or-uncomment-lines
-    "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
-    "ll" 'evilnc-quick-comment-or-uncomment-to-the-line
-    "cc" 'evilnc-copy-and-comment-lines
-    "cp" 'evilnc-comment-or-uncomment-paragraphs
-    "cr" 'comment-or-uncomment-region
-    "cv" 'evilnc-toggle-invert-comment-line-by-line
-    "."  'evilnc-copy-and-comment-operator))
+  (progn
+    ;; double all the commenting functions so that the inverse operations
+    ;; can be called without setting a flag
+    (defun paloryemacs/comment-or-uncomment-lines-inverse (&optional arg)
+      (interactive "p")
+      (let ((evilnc-invert-comment-line-by-line t))
+        (evilnc-comment-or-uncomment-lines arg)))
+
+    (defun paloryemacs/comment-or-uncomment-lines (&optional arg)
+      (interactive "p")
+      (let ((evilnc-invert-comment-line-by-line nil))
+        (evilnc-comment-or-uncomment-lines arg)))
+
+    (defun paloryemacs/copy-and-comment-lines-inverse (&optional arg)
+      (interactive "p")
+      (let ((evilnc-invert-comment-line-by-line t))
+        (evilnc-copy-and-comment-lines arg)))
+
+    (defun paloryemacs/copy-and-comment-lines (&optional arg)
+      (interactive "p")
+      (let ((evilnc-invert-comment-line-by-line nil))
+        (evilnc-copy-and-comment-lines arg)))
+
+    (defun paloryemacs/quick-comment-or-uncomment-to-the-line-inverse
+        (&optional arg)
+      (interactive "p")
+      (let ((evilnc-invert-comment-line-by-line t))
+        (evilnc-comment-or-uncomment-to-the-line arg)))
+
+    (defun paloryemacs/quick-comment-or-uncomment-to-the-line (&optional arg)
+      (interactive "p")
+      (let ((evilnc-invert-comment-line-by-line nil))
+        (evilnc-comment-or-uncomment-to-the-line arg)))
+
+    (defun paloryemacs/comment-or-uncomment-paragraphs-inverse (&optional arg)
+      (interactive "p")
+      (let ((evilnc-invert-comment-line-by-line t))
+        (evilnc-comment-or-uncomment-paragraphs arg)))
+
+    (defun paloryemacs/comment-or-uncomment-paragraphs (&optional arg)
+      (interactive "p")
+      (let ((evilnc-invert-comment-line-by-line nil))
+        (evilnc-comment-or-uncomment-paragraphs arg)))
+
+
+    (define-key evil-normal-state-map "gc" 'evilnc-comment-operator)
+    (define-key evil-normal-state-map "gy" 'evilnc-copy-and-comment-lines)
+    (paloryemacs/set-leader-keys
+      ";"  'evilnc-comment-operator
+      "cl" 'paloryemacs/comment-or-uncomment-lines
+      "cL" 'paloryemacs/comment-or-uncomment-lines-inverse
+      "cp" 'paloryemacs/comment-or-uncomment-paragraphs
+      "cP" 'paloryemacs/comment-or-uncomment-paragraphs-inverse
+      "ct" 'paloryemacs/quick-comment-or-uncomment-to-the-line
+      "cT" 'paloryemacs/quick-comment-or-uncomment-to-the-line-inverse
+      "cy" 'paloryemacs/copy-and-comment-lines
+      "cY" 'paloryemacs/copy-and-comment-lines-inverse)))
 
 ;;; evil-indent-plus wihch replace evil-indent-textobject
 (use-package evil-indent-plus
@@ -537,26 +626,28 @@ to replace the symbol under cursor"
 
 ;;; evil-args
 (use-package evil-args
-  :defer 3
+  :defer t
   :init
   ;; evil-args-openers
   ;; evil-args-closers
   ;; evil-args-delimiters
-  ;; bind evil-args text objects
-  (define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
-  (define-key evil-outer-text-objects-map "a" 'evil-outer-arg)
+  (progn
+    (with-eval-after-load 'evil
+      ;; bind evil-args text objects
+      (define-key evil-inner-text-objects-map "a" 'evil-inner-arg)
+      (define-key evil-outer-text-objects-map "a" 'evil-outer-arg)
 
-  ;; bind evil-forward/backward-args
-  (define-key evil-normal-state-map "L" 'evil-forward-arg)
-  (define-key evil-normal-state-map "H" 'evil-backward-arg)
-  (define-key evil-motion-state-map "L" 'evil-forward-arg)
-  (define-key evil-motion-state-map "H" 'evil-backward-arg)
+      ;; bind evil-forward/backward-args
+      ;; (define-key evil-normal-state-map "L" 'evil-forward-arg)
+      ;; (define-key evil-normal-state-map "H" 'evil-backward-arg)
+      ;; (define-key evil-motion-state-map "L" 'evil-forward-arg)
+      ;; (define-key evil-motion-state-map "H" 'evil-backward-arg)
 
-  ;; bind evil-jump-out-args
-  ;; (define-key evil-normal-state-map "K" 'evil-jump-out-args)
-  ;; (key-chord-define evil-normal-state-map "hl" 'evil-jump-out-args)
-  ;; (define-key evil-normal-state-map "gk" 'evil-jump-out-args)
-  )
+      ;; bind evil-jump-out-args
+      ;; (define-key evil-normal-state-map "K" 'evil-jump-out-args)
+      ;; (key-chord-define evil-normal-state-map "hl" 'evil-jump-out-args)
+      ;; (define-key evil-normal-state-map "gk" 'evil-jump-out-args)
+      )))
 
 ;;; git-timemachine
 (with-eval-after-load 'evil

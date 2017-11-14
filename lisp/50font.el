@@ -24,6 +24,31 @@
 ;; https://github.com/tumashu/cnfonts
 ;; Avoiding use the font with its name contain '-'.
 ;; https://github.com/tumashu/cnfonts/issues/11
+
+;;; line spacing
+;; (setq line-spacing nil)
+;; (defun paloryemacs/toggle-line-spacing ()
+;;   "Toggle line spacing between 1 and 5 pixels."
+;;   (interactive)
+;;   (if (eq line-spacing 1)
+;;       (setq-default line-spacing 5)
+;;       (setq-default line-spacing 1)))
+
+
+(defun paloryemacs/toggle-operator-composition-mode ()
+  (interactive)
+  (when (fboundp 'mac-auto-operator-composition-mode)
+    (if mac-auto-operator-composition-mode
+        (mac-auto-operator-composition-mode -1)
+      (mac-auto-operator-composition-mode))))
+(defalias 'paloryemacs/toggle-ligature 'paloryemacs/toggle-operator-composition-mode)
+
+(use-package mac-win
+  :init
+  (setq mac-auto-operator-composition-characters
+        "!\"#$%&'()*+,-./:;<=>?@[]^_`{|}~"))
+
+
 (use-package cnfonts
   :init
   (progn
@@ -86,6 +111,19 @@
     ;; (#xFF00 #xFFEF)                    ; Halfwidth and Fullwidth Form
 
     ;; Note: the final choosed font to display a char, decided by face or fontset
+
+    ;; https://github.com/rolandwalker/unicode-fonts
+    ;; On the assumption that an extended Latin font such as Monaco,
+    ;; Consolas, or DejaVu Sans Mono is already being used for the default
+    ;; face, no separate mappings are provided for the following Unicode
+    ;; blocks:
+    ;;
+    ;;     Basic Latin
+    ;;     Latin Extended Additional
+    ;;     Latin Extended-A
+    ;;     Latin Extended-B
+    ;;     Latin-1 Supplement
+    ;;     Spacing Modifier Letters
     (defun paloryemacs/cnfonts-set-extra-fonts (fontsizes-list)
       (mapc
        (lambda (l)
@@ -105,6 +143,8 @@
                              target
                              fontspec nil 'prepend)))
        '(((target . symbol))
+         ;; Note: "« »" not coverd by mplus Nerd Font
+         ;; ((target . (#x0080 . #x00ff))) ; Latin-1 Supplement,   see above comment
          ((target . (#xe5fa . #xe62b))) ; Seti-UI + Custom
          ((target . (#xe700 . #xe7cf))) ; Devicons
          ((target . (#xeffe . #xf2e9))) ; Font Awesome
@@ -118,8 +158,6 @@
          ;; "☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷"
          ((target . (#x2600 . #x26ff))
           (fontname . "FreeMono")
-          ;; (fontname . "WenQuanYi Zen Hei Mono")
-          ;; (fontname . "Arial Unicode MS")
           (fontsize-index . 0))
          ((target . (#x2700 . #x27bf))) ; Dingbats
          )))

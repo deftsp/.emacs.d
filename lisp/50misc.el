@@ -556,15 +556,6 @@ vi style of % jumping to matching brace."
 (put 'scroll-left 'disabled nil)
 (put 'rmail 'disabled t)
 
-;;; line spacing
-;; (setq line-spacing 5)
-;; (defun toggle-line-spacing ()
-;;   "Toggle line spacing between 1 and 5 pixels."
-;;   (interactive)
-;;   (if (eq line-spacing 1)
-;;       (setq-default line-spacing 5)
-;;       (setq-default line-spacing 1)))
-
 ;;; fvwm
 (use-package fvwm-mode
   :defer t

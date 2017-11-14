@@ -157,6 +157,59 @@
   "bml" 'buf-move-right)
 
 
+(defun paloryemacs/move-buffer-to-window (windownum follow-focus-p)
+  "Moves a buffer to a window, using the spacemacs numbering. follow-focus-p
+   controls whether focus moves to new window (with buffer), or stays on
+   current"
+  (interactive)
+  (let ((b (current-buffer))
+        (w1 (selected-window))
+        (w2 (winum-get-window-by-number windownum)))
+    (unless (eq w1 w2)
+      (set-window-buffer w2 b)
+      (switch-to-prev-buffer)
+      (unrecord-window-buffer w1 b)))
+  (when follow-focus-p (select-window (winum-get-window-by-number windownum))))
+
+
+(defun paloryemacs/swap-buffers-to-window (windownum follow-focus-p)
+  "Swaps visible buffers between active window and selected window.
+   follow-focus-p controls whether focus moves to new window (with buffer), or
+   stays on current"
+  (interactive)
+  (let* ((b1 (current-buffer))
+         (w1 (selected-window))
+         (w2 (winum-get-window-by-number windownum))
+         (b2 (window-buffer w2)))
+    (unless (eq w1 w2)
+      (set-window-buffer w1 b2)
+      (set-window-buffer w2 b1)
+      (unrecord-window-buffer w1 b1)
+      (unrecord-window-buffer w2 b2)))
+  (when follow-focus-p (winum-select-window-by-number windownum)))
+
+
+(dotimes (i 9)
+  (let ((n (+ i 1)))
+    (eval `(defun ,(intern (format "buffer-to-window-%s" n)) (&optional arg)
+             ,(format "Move buffer to the window with number %i." n)
+             (interactive "P")
+             (if arg
+                 (paloryemacs/swap-buffers-to-window ,n t)
+               (paloryemacs/move-buffer-to-window ,n t))))
+    (eval `(defun ,(intern (format "move-buffer-window-no-follow-%s" n)) ()
+             (interactive)
+             (paloryemacs/move-buffer-to-window ,n nil)))
+    (eval `(defun ,(intern (format "swap-buffer-window-no-follow-%s" n)) ()
+             (interactive)
+             (paloryemacs/swap-buffers-to-window ,n nil)))))
+
+(dotimes (i 9)
+  (let ((n (+ i 1)))
+    (paloryemacs/set-leader-keys
+      (format "b%i" n)
+      (intern (format "buffer-to-window-%s" n)))))
+
 (defun paloryemacs/switch-to-messages-buffer (&optional arg)
   "Switch to the `*Messages*' buffer.
 if prefix argument ARG is given, switch to it in an other, possibly new window."
@@ -562,6 +615,7 @@ _d_ debug-on-error:                    %`debug-on-error
 _f_ auto-fill-mode:                    %`auto-fill-function
 _n_ narrow-or-widen-dwim:              %(buffer-narrowed-p)
 _g_ golden-ratio-mode:                 %`golden-ratio-mode
+_i_ aggressive-indent-mode:            %`aggressive-indent-mode
 _G_ debug-on-quit:                     %`debug-on-quit
 _r_ read-only-mode:                    %`buffer-read-only
 _s_ rainbow-delimiters-string-color    %`--paloryemacs/rainbow-delimiters-strong-color
@@ -576,6 +630,7 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
     ("f" auto-fill-mode "fill")
     ("n" paloryemacs/narrow-or-widen-dwim "narrow<->widen")
     ("g" golden-ratio-mode "golden-ratio")
+    ("i" aggressive-indent-mode "aggressive-indent")
     ("G" toggle-debug-on-quit "debug-quit")
     ("o" paloryemacs/replace-charset-to-oem "char->oem")
     ("p" smartparens-mode "smartparens")
