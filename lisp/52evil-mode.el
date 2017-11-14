@@ -202,6 +202,7 @@ recover evil state to it, otherwiser change to evil-emacs-state."
   (let (evil-mode-map-alist)
     (call-interactively (key-binding (this-command-keys)))))
 
+;; https://github.com/noctuid/general.el
 (use-package general
   :init
   (progn
@@ -259,13 +260,12 @@ recover evil state to it, otherwiser change to evil-emacs-state."
      [remap newline-and-indent] nil)
 
     (general-omap
-     :prefix "SPC"
      "." 'evil-avy-goto-word-or-subword-1
      "l" 'evil-avy-goto-line
      "c" 'evil-avy-goto-char
      "z" 'evil-avy-goto-char-2
      "SPC" 'evil-avy-goto-subword-0
-     "w" 'evil-avy-goto-subword-0)))
+     ",w" 'evil-avy-goto-subword-0)))
 
 ;; (with-eval-after-load "workgroups2"
 ;;   (defun paloryemacs/activate-all-major-mode-leader ()
@@ -711,12 +711,6 @@ to replace the symbol under cursor"
   (evil-define-key 'motion occur-mode-map (kbd "<return>") 'occur-mode-goto-occurrence)
   (evil-define-key 'motion occur-mode-map (kbd "RET") 'occur-mode-goto-occurrence))
 
-
-;; evil-escape
-;; (setq-default evil-escape-key-sequence "fd") 'must be set before requiring evil-escape.
-;; (setq-default evil-escape-delay 0.1)
-;; (evil-escape-mode +1)
-
 ;; evil-snipe
 ;; https://github.com/hlissner/evil-snipe
 
@@ -724,9 +718,7 @@ to replace the symbol under cursor"
 ;; evil-snipe-S, respectively. In operator mode, snipe is bound to z/Z and x/X
 ;; (exclusive). The last snipe can be repeated with s/S after a successful snipe
 ;; (or with s+RET).
-
 (defvar paloryemacs/evil-snipe-enable-alternate-f-and-t-behaviors t)
-
 (use-package evil-snipe
   :defer 3
   :init
