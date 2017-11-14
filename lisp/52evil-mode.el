@@ -720,21 +720,25 @@ to replace the symbol under cursor"
 ;; (or with s+RET).
 (defvar paloryemacs/evil-snipe-enable-alternate-f-and-t-behaviors t)
 (use-package evil-snipe
-  :defer 3
   :init
-  (setq evil-snipe-scope 'whole-buffer
-        evil-snipe-smart-case t)
+  (progn
+    (setq evil-snipe-scope 'whole-buffer
+          evil-snipe-enable-highlight t
+          evil-snipe-enable-incremental-highlight t
+          evil-snipe-auto-disable-substitute t
+          evil-snipe-show-prompt t
+          evil-snipe-smart-case t))
   :config
-  (push '(?\[ "[[{(]") evil-snipe-aliases)
-  (if paloryemacs/evil-snipe-enable-alternate-f-and-t-behaviors
-      (progn
-        (setq evil-snipe-repeat-scope 'whole-buffer)
-        (evil-snipe-override-mode +1) ; replaces evil-mode's f/F/t/T/;/, with snipe
-        (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
-        (add-hook 'git-rebase-mode-hook 'turn-off-evil-snipe-override-mode))
+  (with-eval-after-load 'evil
+    (push '(?\[ "[[{(]") evil-snipe-aliases)
     (evil-snipe-mode +1)
-    (add-hook 'magit-mode-hook 'turn-off-evil-snipe-mode)
-    (add-hook 'git-rebase-mode-hook 'turn-off-evil-snipe-mode)))
+    (when paloryemacs/evil-snipe-enable-alternate-f-and-t-behaviors
+      (setq evil-snipe-repeat-scope 'whole-buffer)
+      (evil-snipe-override-mode +1) ; replaces evil-mode's f/F/t/T/;/, with snipe
+      (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
+      (add-hook 'magit-mode-hook 'turn-off-evil-snipe-mode)
+      (add-hook 'git-rebase-mode-hook 'turn-off-evil-snipe-override-mode)
+      (add-hook 'git-rebase-mode-hook 'turn-off-evil-snipe-mode))))
 
 
 (use-package evil-find-char-pinyin
