@@ -230,11 +230,17 @@ recover evil state to it, otherwiser change to evil-emacs-state."
      ;; happens that evil mode is turned on in that window at the same time,
      ;; which results in recording a macro instead of closing the window.
      "q" nil ; `q' is binded to `evil-record-macro'
+     ;; "s" nil ; default `evil-substitute' remove default binding so I can override it
+     ;; "S" nil ; default `evil-change-whole-line' remove default binding so I can override it
      )
 
     (general-mmap
      "TAB" 'indent-for-tab-command
-     "C-v" nil)
+     "C-v" nil
+     ;; reserved for evil-snipe
+     ;; "s" 'evil-avy-goto-char-timer
+     ;; "S" 'evil-avy-goto-word-or-subword-1
+     )
 
     (general-vmap
      "Q" "gq"
@@ -263,9 +269,20 @@ recover evil state to it, otherwiser change to evil-emacs-state."
      "." 'evil-avy-goto-word-or-subword-1
      "l" 'evil-avy-goto-line
      "c" 'evil-avy-goto-char
-     "z" 'evil-avy-goto-char-2
-     "SPC" 'evil-avy-goto-subword-0
+     "SPC" 'evil-avy-goto-char-timer
      ",w" 'evil-avy-goto-subword-0)))
+
+;; (use-package evil-easymotion
+;;   :config
+;;   (evilem-default-keybindings ""))
+
+;; https://github.com/louy2/evil-avy
+;; (use-package evil-avy
+;;   :defer t
+;;   :init
+;;   (setq evil-avy-default-function 'avy-goto-char-timer)
+;;   (with-eval-after-load 'evil
+;;     (evil-avy-mode +1)))
 
 ;; (with-eval-after-load "workgroups2"
 ;;   (defun paloryemacs/activate-all-major-mode-leader ()

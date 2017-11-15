@@ -1,0 +1,5 @@
+(:name evil-avy
+       :type github
+       :description "set-based completion"
+       :pkgname "louy2/evil-avy"
+       :depends (avy evil))

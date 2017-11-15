@@ -1,0 +1,5 @@
+(:name evil-easymotion
+       :type github
+       :description "A port of vim's easymotion to emacs"
+       :pkgname "PythonNut/evil-easymotion"
+       :depends (avy cl-lib))
