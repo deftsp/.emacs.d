@@ -177,16 +177,6 @@ is achieved by adding the relevant text properties."
               (remove 'eshell-handle-ansi-color
                       eshell-output-filter-functions)))
 
-(defun paloryemacs//eshell-switch-company-frontend ()
-  "Sets the company frontend to `company-preview-frontend' in e-shell mode."
-  (require 'company)
-  (setq-local company-frontends '(company-preview-frontend)))
-
-(with-eval-after-load 'company
-  (add-hook 'eshell-mode-hook 'paloryemacs/company-eshell-mode-setup)
-  (defun paloryemacs/company-eshell-mode-setup ()
-    (let ((backends paloryemacs/company-common-backends))
-      (setq-local company-backends backends))))
 
 (defun paloryemacs//eshell-auto-end ()
   "Move point to end of current prompt when switching to insert state."
@@ -509,5 +499,56 @@ it doesn't contain the org-mode #+TAGS: entry specified."
 (add-hook 'eshell-pred-load-hook
           (lambda ()
             (add-to-list 'eshell-predicate-alist '(?T . (eshell-org-file-tags)))))
+
+;; http://whyarethingsthewaytheyare.com/fishlike-autosuggestions-in-eshell/
+;; hit RET to accept the autosuggest, or you can bind a key of your choosing in company-active-map
+(defun company-eshell-autosuggest-candidates (prefix)
+  (let* ((history
+          (delete-dups
+           (mapcar (lambda (str)
+                     (string-trim (substring-no-properties str)))
+                   (ring-elements eshell-history-ring))))
+         (most-similar (cl-find-if
+                        (lambda (str)
+                          (string-prefix-p prefix str))
+                        history)))
+    (when most-similar
+      `(,most-similar))))
+
+(defun company-eshell-autosuggest--prefix ()
+  (let ((prefix
+         (string-trim-left
+          (save-excursion
+            (buffer-substring-no-properties
+             (progn
+               (eshell-bol)
+               (point))
+             (progn
+               (end-of-line)
+               (point))))
+          )))
+    (if (not (string-empty-p prefix))
+        prefix
+      'stop)))
+
+(defun company-eshell-autosuggest (command &optional arg &rest ignored)
+  (interactive (list 'interactive))
+  (cl-case command
+    (interactive (company-begin-backend 'company-eshell))
+    (prefix (and (eq major-mode 'eshell-mode)
+                 (company-eshell-autosuggest--prefix)))
+    (candidates (company-eshell-autosuggest-candidates arg))))
+
+(with-eval-after-load 'company
+  (defun setup-eshell-autosuggest ()
+    (setq-local company-backends '(company-eshell-autosuggest))
+    (setq-local company-frontends '(company-preview-frontend)))
+
+  (add-hook 'eshell-mode-hook 'paloryemacs/company-eshell-mode-setup)
+  (defun paloryemacs/company-eshell-mode-setup ()
+    (setq-local company-backends '(company-eshell-autosuggest))
+    (setq-local company-frontends '(company-preview-frontend))))
+
+
 
 (provide '50eshell)
