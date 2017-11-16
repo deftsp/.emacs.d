@@ -70,6 +70,10 @@
    `(region ((t (:foreground unspecified :background "#244252"))))
    '(secondary-selection ((t (:foreground unspecified :background "#485c60"))))
 
+   ;; minibuffer-line
+   `(minibuffer-line ((t (:inherit 'mode-line-inactive :foreground ,base0 :background ,base03))))
+
+
    ;; the split line of two window
    `(vertical-border ((t (:foreground ,base02))))
 
@@ -188,8 +192,7 @@
    '(org-block-begin-line ((t (:background "#30424e"))))
    '(org-block-end-line ((t (:background "#30424e"))))
    '(org-ellipsis ((t (:underline nil :foreground "#c5e666" :background unspecified))))
-
-
+   '(org-mode-line-clock ((t (:background nil :foreground "#268bd2"))))
 
    '(warning ((t (:foreground "VioletRed" :weight bold))))
 

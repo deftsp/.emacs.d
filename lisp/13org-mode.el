@@ -336,11 +336,27 @@ to `reorganize-frame', otherwise set to `other-frame'."
 ;;; clock
 ;; To save the clock history across Emacs sessions
 (global-set-key (kbd "C-S-g") 'org-clock-goto) ; jump to current task from anywhere
-(setq org-clock-persist 'history)
+(setq org-clock-clocked-in-display nil)
+;; Save the running clock and all clock history when exiting Emacs, load it on startup
+(setq org-clock-persist t)
 (setq org-clock-idle-time 15)
 (setq org-clock-into-drawer t)
-(with-eval-after-load "org"
-  (org-clock-persistence-insinuate))
+(setq org-clock-in-resume t)
+;; Do not prompt to resume an active clock, just resume it
+(setq org-clock-persist-query-resume nil)
+(setq org-clock-out-remove-zero-time-clocks t)
+;; Change tasks to whatever when clocking in
+;; (setq org-clock-in-switch-to-state "NEXT")
+;; Clock out when moving task to a done state
+(setq org-clock-out-when-done t)
+;; Enable auto clock resolution for finding open clocks
+(setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
+;; Include current clocking task in clock reports
+(setq org-clock-report-include-clocking-task t)
+;; use pretty things for the clocktable
+(setq org-pretty-entities t)
+(org-clock-persistence-insinuate)
+
 
 ;;; org-publish
 (setq org-publish-project-alist

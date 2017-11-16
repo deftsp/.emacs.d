@@ -68,6 +68,7 @@
 (require '50major-modes)
 (require '50lua)
 (require '50maxima)
+(require '50minibuffer-line)
 (require '50misc)
 (require '50mmm-mode)
 ;; (require '50mode-line)
