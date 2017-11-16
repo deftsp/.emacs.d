@@ -1241,11 +1241,10 @@ inputting math (Unicode) symbols." t))
           which-key-popup-type 'minibuffer
           which-key-max-description-length 32
           which-key-echo-keystrokes 0.02
-          which-key-allow-evil-operators t
           which-key-idle-delay 0.8
           which-key-sort-order 'which-key-key-order-alpha
           which-key-allow-evil-operators t
-          which-key-show-operator-state-maps t))
+          which-key-show-operator-state-maps nil))
   :config
   (progn
     (add-to-list 'which-key-replacement-alist '(("TAB" . nil) . ("↹" . nil)))
