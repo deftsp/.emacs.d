@@ -6,7 +6,7 @@
 ;; Keywords:
 
 (setq switch-to-buffer-preserve-window-point t
-      window-min-height 4               ; Let's not have too-tiny windows.
+      window-min-height 20               ; Let's not have too-tiny windows.
       mouse-autoselect-window nil)
 
 ;; from https://gist.github.com/3402786
