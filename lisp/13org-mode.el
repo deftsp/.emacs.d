@@ -367,112 +367,111 @@
 
     (add-hook 'org-agenda-mode-hook 'paloryemacs/org-agenda-mode-init)
 
-    (with-eval-after-load 'org-agenda
-      ;; Agenda clock report
-      ;;  v R to toggle it. In evilify state, use C-v R
-      (setq org-agenda-clockreport-parameter-plist
-            '(:link t :maxlevel 6 :fileskip0 t :compact t :narrow 60 :score 0))
-      (setq org-agenda-clock-consistency-checks
-            '(:max-duration "4:00" :min-duration 0 :max-gap 0 :gap-ok-around ("4:00")))
+    ;; Agenda clock report
+    ;;  v R to toggle it. In evilify state, use C-v R
+    (setq org-agenda-clockreport-parameter-plist
+          '(:link t :maxlevel 6 :fileskip0 t :compact t :narrow 60 :score 0))
+    (setq org-agenda-clock-consistency-checks
+          '(:max-duration "4:00" :min-duration 0 :max-gap 0 :gap-ok-around ("4:00")))
 
-      ;; Place tags close to the right-hand side of the window
-      (add-hook 'org-agenda-finalize-hook 'paloryemacs/org-agenda-adjust-tags-column)
-      (defun paloryemacs/org-agenda-adjust-tags-column ()
-        "Put the agenda tags by the right border of the agenda window."
-        (setq org-agenda-tags-column (- 10 (window-text-width)))
-        (org-agenda-align-tags))
+    ;; Place tags close to the right-hand side of the window
+    (add-hook 'org-agenda-finalize-hook 'paloryemacs/org-agenda-adjust-tags-column)
+    (defun paloryemacs/org-agenda-adjust-tags-column ()
+      "Put the agenda tags by the right border of the agenda window."
+      (setq org-agenda-tags-column (- 10 (window-text-width)))
+      (org-agenda-align-tags))
 
-      ;; evilify agenda mode
-      (org-defkey org-agenda-mode-map "|" nil) ;'org-agenda-filter-remove-all
-      (org-defkey org-agenda-mode-map "\\" nil) ;'org-agenda-query-not-cmd
-      (org-defkey org-agenda-mode-map (kbd "C-n") nil)
-      (org-defkey org-agenda-mode-map (kbd "G") nil) ;'org-agenda-toggle-time-grid
-      (with-eval-after-load "evil-evilified-state"
-        (evilified-state-evilify-map org-agenda-mode-map
-          :mode org-agenda-mode
-          :bindings
-          (kbd "C-h") nil
-          "j" 'org-agenda-next-line
-          "k" 'org-agenda-previous-line
-          (kbd "M-j") 'org-agenda-next-item
-          (kbd "M-k") 'org-agenda-previous-item
-          (kbd "M-h") 'org-agenda-earlier
-          (kbd "M-l") 'org-agenda-later
-          (kbd "gd")  'org-agenda-toggle-time-grid
-          (kbd "gr")  'org-agenda-redo
-          (kbd "M-RET") 'org-agenda-show-and-scroll-up
-          (kbd "M-SPC") 'paloryemacs/org-agenda/body))
+    ;; evilify agenda mode
+    (org-defkey org-agenda-mode-map "|" nil) ;'org-agenda-filter-remove-all
+    (org-defkey org-agenda-mode-map "\\" nil) ;'org-agenda-query-not-cmd
+    (org-defkey org-agenda-mode-map (kbd "C-n") nil)
+    (org-defkey org-agenda-mode-map (kbd "G") nil) ;'org-agenda-toggle-time-grid
+    (with-eval-after-load "evil-evilified-state"
+      (evilified-state-evilify-map org-agenda-mode-map
+        :mode org-agenda-mode
+        :bindings
+        (kbd "C-h") nil
+        "j" 'org-agenda-next-line
+        "k" 'org-agenda-previous-line
+        (kbd "M-j") 'org-agenda-next-item
+        (kbd "M-k") 'org-agenda-previous-item
+        (kbd "M-h") 'org-agenda-earlier
+        (kbd "M-l") 'org-agenda-later
+        (kbd "gd")  'org-agenda-toggle-time-grid
+        (kbd "gr")  'org-agenda-redo
+        (kbd "M-RET") 'org-agenda-show-and-scroll-up
+        (kbd "M-SPC") 'paloryemacs/org-agenda/body))
 
-      (dolist (prefix '(("mC" . "clocks")
-                        ("md" . "dates")
-                        ("mi" . "insert")
-                        ("ms" . "trees/subtrees")))
-        (paloryemacs/declare-prefix-for-mode 'org-agenda-mode
-                                             (car prefix) (cdr prefix)))
+    (dolist (prefix '(("mC" . "clocks")
+                      ("md" . "dates")
+                      ("mi" . "insert")
+                      ("ms" . "trees/subtrees")))
+      (paloryemacs/declare-prefix-for-mode 'org-agenda-mode
+                                           (car prefix) (cdr prefix)))
 
-      (paloryemacs/set-leader-keys-for-major-mode 'org-agenda-mode
-        "a" 'org-agenda
-        "ie" 'org-agenda-set-effort
-        "ip" 'org-agenda-set-property
-        "it" 'org-agenda-set-tags
-        "sr" 'org-agenda-refile
+    (paloryemacs/set-leader-keys-for-major-mode 'org-agenda-mode
+      "a" 'org-agenda
+      "ie" 'org-agenda-set-effort
+      "ip" 'org-agenda-set-property
+      "it" 'org-agenda-set-tags
+      "sr" 'org-agenda-refile
 
-        ;; Entry
-        "h:" 'org-agenda-set-tags
-        "hA" 'org-agenda-archive-default
-        "hk" 'org-agenda-kill
-        "hp" 'org-agenda-priority
-        "hr" 'org-agenda-refile
-        "ht" 'org-agenda-todo
+      ;; Entry
+      "h:" 'org-agenda-set-tags
+      "hA" 'org-agenda-archive-default
+      "hk" 'org-agenda-kill
+      "hp" 'org-agenda-priority
+      "hr" 'org-agenda-refile
+      "ht" 'org-agenda-todo
 
-        ;; Visit entry
-        "SPC" 'org-agenda-show-and-scroll-up
-        "<tab>" 'org-agenda-goto
-        "TAB" 'org-agenda-goto
-        "RET" 'org-agenda-switch-to
-        "o"   'link-hint-open-link
+      ;; Visit entry
+      "SPC" 'org-agenda-show-and-scroll-up
+      "<tab>" 'org-agenda-goto
+      "TAB" 'org-agenda-goto
+      "RET" 'org-agenda-switch-to
+      "o"   'link-hint-open-link
 
-        ;; Date
-        "ds" 'org-agenda-schedule
-        "dd" 'org-agenda-deadline
-        "dt" 'org-agenda-date-prompt
-        "+" 'org-agenda-do-date-later
-        "-" 'org-agenda-do-date-earlier
+      ;; Date
+      "ds" 'org-agenda-schedule
+      "dd" 'org-agenda-deadline
+      "dt" 'org-agenda-date-prompt
+      "+" 'org-agenda-do-date-later
+      "-" 'org-agenda-do-date-earlier
 
-        ;; View
-        "vd" 'org-agenda-day-view
-        "vw" 'org-agenda-week-view
-        "vt" 'org-agenda-fortnight-view
-        "vm" 'org-agenda-month-view
-        "vy" 'org-agenda-year-view
-        "vn" 'org-agenda-later
-        "vp" 'org-agenda-earlier
-        "vr" 'org-agenda-reset-view
+      ;; View
+      "vd" 'org-agenda-day-view
+      "vw" 'org-agenda-week-view
+      "vt" 'org-agenda-fortnight-view
+      "vm" 'org-agenda-month-view
+      "vy" 'org-agenda-year-view
+      "vn" 'org-agenda-later
+      "vp" 'org-agenda-earlier
+      "vr" 'org-agenda-reset-view
 
-        ;; Toggle mode
-        "tf" 'org-agenda-follow-mode
-        "tl" 'org-agenda-log-mode
-        "ta" 'org-agenda-archives-mode
-        "tr" 'org-agenda-clockreport-mode
-        "td" 'org-agenda-toggle-diary
+      ;; Toggle mode
+      "tf" 'org-agenda-follow-mode
+      "tl" 'org-agenda-log-mode
+      "ta" 'org-agenda-archives-mode
+      "tr" 'org-agenda-clockreport-mode
+      "td" 'org-agenda-toggle-diary
 
-        ;; Filter
-        "ft" 'org-agenda-filter-by-tag
-        "fr" 'org-agenda-filter-by-tag-refine
-        "fc" 'org-agenda-filter-by-category
-        "fh" 'org-agenda-filter-by-top-headline
-        "fx" 'org-agenda-filter-by-regexp
-        "fd" 'org-agenda-filter-remove-all
+      ;; Filter
+      "ft" 'org-agenda-filter-by-tag
+      "fr" 'org-agenda-filter-by-tag-refine
+      "fc" 'org-agenda-filter-by-category
+      "fh" 'org-agenda-filter-by-top-headline
+      "fx" 'org-agenda-filter-by-regexp
+      "fd" 'org-agenda-filter-remove-all
 
-        ;; Clock
-        "ci" 'org-agenda-clock-in
-        "cj" 'org-agenda-clock-goto
-        "co" 'org-agenda-clock-out
-        "cq" 'org-agenda-clock-cancel
+      ;; Clock
+      "ci" 'org-agenda-clock-in
+      "cj" 'org-agenda-clock-goto
+      "co" 'org-agenda-clock-out
+      "cq" 'org-agenda-clock-cancel
 
-        "gr" 'org-agenda-redo
-        "." 'org-agenda-goto-today
-        "gd" 'org-agenda-goto-date))))
+      "gr" 'org-agenda-redo
+      "." 'org-agenda-goto-today
+      "gd" 'org-agenda-goto-date)))
 
 ;;;
 (defun paloryemacs/update-org-agenda-window-setup ()
