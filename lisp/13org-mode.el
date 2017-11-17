@@ -93,7 +93,7 @@
                                      (:startgroup . nil) ("business" . ?B) ("personal" . ?P) (:endgroup . nil)
                                      ("drill"   . ?d)
                                      ("hacking" . ?H)
-                                     ("exercise". ?e)
+                                     ("exercise". ?E)
                                      ("mail"    . ?M)
                                      ("movie"   . nil)
                                      ("misc"    . ?m)
@@ -329,6 +329,61 @@
         (org-eval-in-calendar '(calendar-forward-year 1))))))
 
 
+;; https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html
+(defun paloryemacs/org-agenda-skip-subtree-if-priority (priority)
+  "Skip an agenda subtree if it has a priority of PRIORITY.
+PRIORITY may be one of the characters ?A, ?B, or ?C."
+  (let ((subtree-end (save-excursion (org-end-of-subtree t)))
+        (pri-value (* 1000 (- org-lowest-priority priority)))
+        (pri-current (org-get-priority (thing-at-point 'line t))))
+    (if (= pri-value pri-current)
+        subtree-end
+      nil)))
+
+
+(defun paloryemacs/org-agenda-skip-subtree-if-habit ()
+  "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
+  (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+    (if (string= (org-entry-get nil "STYLE") "habit")
+        subtree-end
+      nil)))
+
+(defun paloryemacs/org-agenda-skip-subtree-if-not-habit ()
+  "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
+  (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+    (if (string= (org-entry-get nil "STYLE") "habit")
+        nil
+      subtree-end)))
+
+
+;; https://github.com/jwiegley/dot-emacs/blob/master/dot-org.el
+(defun paloryemacs/org-todo-age-time (&optional pos)
+  (let ((stamp (org-entry-get (or pos (point)) "CREATED" t)))
+    (when stamp
+      (time-subtract (current-time)
+                     (org-time-string-to-time
+                      stamp)))))
+
+(defun paloryemacs/org-todo-age (&optional pos)
+  (let* ((age-time (paloryemacs/org-todo-age-time pos))
+         (days (if age-time (time-to-number-of-days age-time) nil)))
+    (cond ((null days) "Unk")
+          ((< days 1)   "today")
+          ((< days 7)   (format "%dd" days))
+          ((< days 30)  (format "%.1fw" (/ days 7.0)))
+          ((< days 358) (format "%.1fM" (/ days 30.0)))
+          (t            (format "%.1fY" (/ days 365.0))))))
+
+
+(defun paloryemacs/org-compare-todo-age (a b)
+  (let ((time-a (paloryemacs/org-todo-age-time (get-text-property 0 'org-hd-marker a)))
+        (time-b (paloryemacs/org-todo-age-time (get-text-property 0 'org-hd-marker b))))
+    (cond ((null time-a) -1)
+          ((null time-b) 1)
+          ((and (null time-a) (null time-b)) 1)
+          (t (if (time-less-p time-a time-b)
+                 -1
+               (if (equal time-a time-b) 0 1))))))
 
 (use-package org-agenda
   :defer t
