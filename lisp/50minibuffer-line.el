@@ -16,7 +16,7 @@
 
 (defun paloryemacs/minibuffer-line-main ()
   (let* ((rml `(:eval (if (and (boundp 'org-mode-line-string)
-                               org-mode-line-string)
+                               (> (length org-mode-line-string) 0))
                           (concat
                            (propertize "CLOCK:" 'face font-lock-comment-face)
                            org-mode-line-string)

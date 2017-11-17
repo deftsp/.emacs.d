@@ -16,6 +16,13 @@
 
 (use-package use-package-chords)
 
+(use-package evil-evilified-state
+  :config
+  (progn
+    (define-key evil-evilified-state-map-original [escape] 'evil-force-evilified-state)))
+
+
+
 (defmacro paloryemacs-with-timer (title &rest forms)
   "Run the given FORMS, counting the elapsed time.
 A message including the given TITLE and the corresponding elapsed

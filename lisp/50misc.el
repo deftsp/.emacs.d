@@ -1054,8 +1054,6 @@ This command is to be used interactively."
 (use-package evil-evilified-state
   :config
   (progn
-    (define-key evil-evilified-state-map [escape] 'evil-force-evilified-state)
-
     (evilified-state-evilify bookmark-bmenu-mode bookmark-bmenu-mode-map
       (kbd "v")   'bookmark-bmenu-select
       (kbd "L")   'bookmark-bmenu-load)))

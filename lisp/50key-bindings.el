@@ -58,9 +58,15 @@
 
 
 ;; SPC o and SPC m o are reserved for the user
+;; SPC m is reserved for the current major mode. Three keys bindings are not an
+;; issue (ie. SPC m h d) since SPC m can be accessed via ​,​.
 (paloryemacs/set-leader-keys
   "oa" 'org-agenda
-  "oc" 'org-capture)
+  ;; "oc" 'org-capture
+  "oci"   'org-clock-in
+  "oco"   'org-clock-out
+  "ocg"   'org-clock-goto
+  "occ" 'org-clock-cancel)
 
 
 (paloryemacs/set-leader-keys

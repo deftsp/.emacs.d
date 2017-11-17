@@ -9,6 +9,7 @@
 
 (require 'prelude)
 (require '01env)
+(require '03frame)
 (require '12el-get)
 
 (require '02utils)
@@ -53,7 +54,6 @@
 (require '50filecache)
 (require '50ftp)
 (require '50font)
-(require '50frame)
 (require '50gdb)
 (require '50go)
 (require '50hammerspoon)
