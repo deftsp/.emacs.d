@@ -276,8 +276,9 @@ mouse-1: Display Line and Column Mode Menu")
           (active 'powerline-active1)
           (t 'powerline-inactive1))))
 
+
 (defpowerline powerline-evil-tag
-  (if (and (boundp 'evil-mode) evil-mode)
+  (if (and (boundp 'evil-mode) evil-mode evil-mode-line-tag)
       (let* ((raw-text (strip-text-properties evil-mode-line-tag))
              (raw-tag (replace-regexp-in-string "[<> «»]" "" raw-text)))
         (cond
@@ -287,7 +288,7 @@ mouse-1: Display Line and Column Mode Menu")
           (concat "-" raw-tag "-"))
          (t
           (concat " " raw-tag " "))))
-    " NIL "))
+    " Unk "))
 
 
 (defpowerline paloryemacs/powerline-client
