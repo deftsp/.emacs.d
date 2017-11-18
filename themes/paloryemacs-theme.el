@@ -66,7 +66,7 @@
    `(mode-line-highlight ((t (:inherit 'mode-line :background ,base01 :foreground ,base2))))
 
    '(minibuffer-prompt ((t (:foreground "chartreuse2" :weight bold))))
-   `(fringe ((t (:foreground "green" :background ,base02))))
+   `(fringe ((t (:foreground "#00cbcb" :background ,base02))))
    `(region ((t (:foreground unspecified :background "#244252"))))
    '(secondary-selection ((t (:foreground unspecified :background "#485c60"))))
 
@@ -233,7 +233,7 @@
    `(flx-highlight-face ((t (:foreground "#f1ed22" :background ,base02 :weight bold :underline nil))))
 
    ;; anything
-   '(anything-ff-directory ((t (:background "222222"))))
+   '(anything-ff-directory ((t (:background "#222222"))))
 
    ;; helm
    `(helm-selection ((t (:background ,base01 :foreground unspecified))))

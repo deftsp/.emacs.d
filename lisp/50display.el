@@ -20,7 +20,9 @@
                               (left . 0)
                               (alpha . (96 . 90)) ; first number is for the active window and the second for the inactive
                               (mouse-color . "gray80")
-                              (right-fringe . 0) ; do not show right fringe
+                              ;; http://emacsredux.com/blog/2015/01/18/customizing-the-fringes/
+                              (left-fringe . 8) ; default width (8 pixels).
+                              (right-fringe . 8)
                               (scroll-bar-background . "#80abb6")
                               ;; (scroll-bar-width . 12)
                               ;; (vertical-scroll-bars . right)
