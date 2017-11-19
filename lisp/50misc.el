@@ -162,6 +162,7 @@
 ;; (modify-syntax-entry ?' "." text-mode-syntax-table)
 
 ;;; turncate
+(set-default 'truncate-lines t)
 (setq truncate-partial-width-windows 50) ;; truncate lines in all windows less than full frame wide.
 
 ;; visual-line-mode is a new addition that is set on by default. It is something of a replacement
@@ -169,6 +170,8 @@
 ;; it wraps to whatever your screen is, so if you are using longlines-mode you should switch to
 ;; using visual-line-mode. C-n and C-p will move by visual lines, which may screw up some macros,
 ;; but mostly it seems to work quite well.
+
+;; in evil mode, use gj gk to move respecting to visual line
 (setq visual-line-fringe-indicators (quote (left-curly-arrow right-curly-arrow)))
 ;; (global-visual-line-mode +1)
 
