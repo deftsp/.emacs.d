@@ -3,14 +3,10 @@
 ;;; Commentary:
 ;; Emacs will load this file first than other init files.
 
-
-;; see also color-theme-buffer-local from https://github.com/vic/color-theme-buffer-local
-(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-(when (display-graphic-p)
-  (load-theme 'paloryemacs t))
-
-;; always load the newer one between .el and .elc
-(setq load-prefer-newer t)
+;;; LANG
+(setenv "LANG" (or (getenv "LANG") "en_US.UTF-8"))
+(setenv "LC_CTYPE" (or (getenv "LC_CTYPE") "en_US.UTF-8"))
+(set-language-environment 'UTF-8) ; Chinese-GB, English
 
 ;;; ENV
 ;; (setenv "SBCL_HOME" "/usr/lib/sbcl")
@@ -18,11 +14,36 @@
 ;; this gives matlab access to the X11 windowing system, so I can see figures, etc.
 ;; (setenv "DISPLAY" ":0.0")
 
+;;; coding system
+(setq default-process-coding-system '(utf-8-unix . utf-8-unix))
+(defun paloryemacs/set-coding-system (coding)
+  (prefer-coding-system coding) ; default coding system for subprocess I/O
+  (set-clipboard-coding-system coding) ; 'ctext
+  (set-selection-coding-system coding)
+  (set-file-name-coding-system coding)
+  (set-keyboard-coding-system coding)
+  (set-default-coding-systems coding)
+  (set-terminal-coding-system coding)
+  (set-buffer-file-coding-system coding)
+  (setq locale-coding-system coding)
+  (setq org-export-coding-system coding)
+  (set-charset-priority 'unicode)
+  (add-to-list 'process-coding-system-alist `("git" . ,coding))
+  (add-to-list 'auto-coding-alist `("COMMIT_EDITMSG" . ,coding)))
 
+(paloryemacs/set-coding-system 'utf-8)
 
-;;; LANG
-(setenv "LANG" (or (getenv "LANG") "en_US.UTF-8"))
-(setenv "LC_CTYPE" (or (getenv "LC_CTYPE") "en_US.UTF-8"))
+(set-input-method nil)
+
+;; (add-to-list 'process-environment "LOCALE=C")
+
+;; nfo is ascii file with cp437
+(modify-coding-system-alist 'file "\\.nfo\\'" 'cp437)
+
+(when (< emacs-major-version 23)
+  (define-coding-system-alias 'gb18030 'gb2312)
+  (define-coding-system-alias 'x-gbk 'gb2312)
+  (define-coding-system-alias 'gbk 'gb2312))
 
 ;; http://www.unicode.org/Public/UNIDATA/EastAsianWidth.txt
 ;; http://d.hatena.ne.jp/khiker/20110327/emacs_cjkamb
@@ -32,14 +53,13 @@
 ;; changes specific characters' `char-width'.(like § or λ) It might occur that
 ;; actual width and char-width are different and it can not be calculate length
 ;; of string from other extension packages.
-(set-language-environment "English")
 
 ;; Test example:
 ;; (set-language-environment "Chinese-GB")
 ;; (char-width ?“)                        ; => 2 (#o2, #x2)
 
 ;; (set-language-environment "English")
-;; (set-language-environment 'utf-8)
+;; (set-language-environment 'UTF-8)
 ;; (char-width ?“)                        ; => 1 (#o1, #x1)
 
 ;; cjk-char-width-table-list
@@ -126,38 +146,6 @@
 
 (set-east-asian-ambiguous-width 2)
 
-;;; coding system
-(defun paloryemacs/set-coding-system (coding)
-  (prefer-coding-system coding) ; default coding system for subprocess I/O
-  (set-clipboard-coding-system coding) ; 'ctext
-  (set-selection-coding-system coding)
-  (set-file-name-coding-system coding)
-  (set-keyboard-coding-system coding)
-  (set-default-coding-systems coding)
-  (set-terminal-coding-system coding)
-  (set-buffer-file-coding-system coding)
-  (setq locale-coding-system coding)
-  (add-to-list 'process-coding-system-alist `("git" . ,coding))
-  (add-to-list 'auto-coding-alist `("COMMIT_EDITMSG" . ,coding)))
-
-(paloryemacs/set-coding-system 'utf-8)
-
-(set-input-method nil)
-
-;; (add-to-list 'process-environment "LOCALE=C")
-
-;; nfo is ascii file with cp437
-(modify-coding-system-alist 'file "\\.nfo\\'" 'cp437)
-
-(when (< emacs-major-version 23)
-  (define-coding-system-alias 'gb18030 'gb2312)
-  (define-coding-system-alias 'x-gbk 'gb2312)
-  (define-coding-system-alias 'gbk 'gb2312))
-
-;; (when (> emacs-major-version 22)
-;;   (define-coding-system-alias 'gb2312 'gbk)
-;;   (define-coding-system-alias 'x-gbk 'gbk))
-
 ;;; modifier
 (cl-case system-type
   (darwin
@@ -202,5 +190,10 @@
 ;; `org-replace-disputed-keys' must be set before org.el is loaded, it seems some pacakge install by el-get will load
 ;; org.el, so just preset it.
 (setq org-replace-disputed-keys t)
+
+;; see also color-theme-buffer-local from https://github.com/vic/color-theme-buffer-local
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+(when (display-graphic-p)
+  (load-theme 'paloryemacs t))
 
 (provide '01env)

@@ -10,6 +10,9 @@
 (defvar paloryemacs-gc-cons-threshold 100000000)
 (setq gc-cons-threshold (max paloryemacs-gc-cons-threshold gc-cons-threshold)) ; 100MB
 
+;; always load the newer one between .el and .elc
+(setq load-prefer-newer t)
+
 ;; http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
 (defun paloryemacs-minibuffer-setup-hook ()
   (setq gc-cons-threshold most-positive-fixnum))
