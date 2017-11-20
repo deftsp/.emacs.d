@@ -511,7 +511,7 @@ vi style of % jumping to matching brace."
 ;;     (setq-default show-trailing-whitespace t))
 ;; make whitespace-mode use just basic coloring
 (use-package whitespace
-  :defer 3
+  :defer t
   :init
   (progn
     (setq whitespace-style (quote (face spaces lines-tail tabs trailing newline space-mark tab-mark newline-mark)))

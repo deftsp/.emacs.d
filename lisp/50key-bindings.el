@@ -57,16 +57,37 @@
   'universal-argument-more)
 
 
+(defun paloryemacs/org-clock-in ()
+  "Start the clock on the current item.
+
+If necessary, clock-out of the currently active clock.
+
+offer a list of recently clocked tasks to clock into. "
+  (interactive)
+  (let ((current-prefix-arg '(4))) ; C-u
+    (call-interactively 'org-clock-in))  )
+
 ;; SPC o and SPC m o are reserved for the user
 ;; SPC m is reserved for the current major mode. Three keys bindings are not an
 ;; issue (ie. SPC m h d) since SPC m can be accessed via ​,​.
 (paloryemacs/set-leader-keys
   "oa" 'org-agenda
   ;; "oc" 'org-capture
-  "oci"   'org-clock-in
-  "oco"   'org-clock-out
+  "occ"   'org-clock-cancel
+  "oce"   'org-clock-modify-effort-estimate
+  "oci"   'org-clock-in-last
+  "ocI"   'paloryemacs/org-clock-in
+  "ocj"   'org-clock-jump-to-current-clock
   "ocg"   'org-clock-goto
-  "occ" 'org-clock-cancel)
+  "oco"   'org-clock-out
+  "ocr"   'org-resolve-clocks
+  "ocx"   'org-clock-in-last
+  "ocz"   'org-resolve-clocks
+
+  "ops"   'profiler-start
+  "opS"   'profiler-stop
+  "opr"   'profiler-report)
+
 
 
 (paloryemacs/set-leader-keys

@@ -48,6 +48,8 @@
           ;; org-startup-indented t
           ;; Default target for storing notes. Used as a fall back file for org-capture.el, for templates that do not
           ;; specify a target file.
+          org-fontify-emphasized-text t
+          org-fontify-done-headline t
           org-default-notes-file (concat org-directory "/notes.org")
           org-fast-tag-selection-single-key (quote expert)
           org-reverse-note-order t
@@ -55,23 +57,33 @@
           org-return-follows-link t
           org-startup-folded t
           org-startup-truncated t
+          org-blank-before-new-entry '((heading . t) (plain-list-item . auto))
           org-time-stamp-rounding-minutes (quote (0 5))
+          org-pretty-entities nil ; use pretty things for the clocktable
           org-display-internal-link-with-indirect-buffer nil)
     (when window-system
       ;; … ↴, ⬎, ⤷, ⤵, ▼ and ⋱.
       (setq org-ellipsis " ◦◦◦ "))
+    ;; global Effort estimate values
+    (setq org-global-properties
+          '(("Effort_ALL" .
+             "0:15 0:30 0:45 1:00 2:00 3:00 4:00 5:00 6:00 0:00")))
+    ;;        1    2    3    4    5    6    7    8    9    0
+    ;; These are the hotkeys ^^
 
+    ;; Set default column view headings: Task Priority Effort Clock_Summary
+    (setq org-columns-default-format "%50ITEM(Task) %2PRIORITY %10Effort(Effort){:} %10CLOCKSUM")
     (setq org-use-fast-todo-selection t
           ;; `!' for a timestamp, `@' for a note with timestamp
           ;; `/!' means that in addition to the note taken when entering the state,
           ;; a timestamp should be recorded when leaving the WAIT state, if and only if the
           ;; target state does not configure logging for entering it.
-          org-todo-keywords '((sequence "TODO(t)" "STARTED(s)" "DELEGATED(l)" "APPT(a)" "|" "DONE(d)" "DEFERRED(f)" "CANCELLED(c@)")
+          org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "DELEGATED(l)" "APPT(a)" "|" "DONE(d)" "DEFERRED(f)" "CANCELLED(c@)")
                               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
                               (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
                               (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))
           org-todo-keyword-faces (quote (("TODO"      . (:foreground "red"          :weight bold))
-                                         ("STARTED"   . (:foreground "hot pink"     :weight bold))
+                                         ("NEXT"      . (:foreground "cyan"         :weight bold))
                                          ("WAITING"   . (:foreground "orange"       :weight bold))
                                          ("SOMEDAY"   . (:foreground "magenta"      :weight bold))
                                          ("DONE"      . (:foreground "forest green" :weight bold :strike-through t))
@@ -112,6 +124,7 @@
     (add-to-list 'org-modules 'org-man)
     (add-to-list 'org-modules 'org-eval)
     (add-to-list 'org-modules 'org-panel)
+    (add-to-list 'org-modules 'org-expiry)
     (add-to-list 'org-modules 'org-toc)
     (add-to-list 'org-modules 'org-drill)
     ;; https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org
@@ -134,6 +147,15 @@
     ;; expands the files in the directories individually
     (org-defkey org-mode-map (kbd "C-c [") 'undefined)
     (org-defkey org-mode-map (kbd "C-c ]") 'undefined)
+
+    (setq org-structure-template-alist nil)
+    (add-to-list 'org-structure-template-alist
+                 '("p" ":PROPERTIES:\n?\n:END:"))
+    (add-to-list 'org-structure-template-alist
+                 `("eh" ,(concat ":EXPORT_FILE_NAME: ?\n"
+                                 ":EXPORT_TITLE:\n"
+                                 ":EXPORT_OPTIONS: toc:nil html-postamble:nil num:nil")))
+
 
     (defmacro paloryemacs|org-emphasize (fname char)
       "Make function for setting the emphasis in org mode"
@@ -163,6 +185,8 @@
       "Ci" 'org-clock-in
       "Co" 'org-clock-out
       "Cr" 'org-resolve-clocks
+      "Cd" 'org-clock-display ; C-c C-x C-d
+
       "dd" 'org-deadline
       "ds" 'org-schedule
       "dt" 'org-time-stamp
@@ -330,6 +354,20 @@
 
 
 ;; https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html
+
+;; the “lowest priority” is the upper bounding ASCII value of the letters
+;; used, such that the difference of that value and the entry’s priority letter
+;; value multiplied by 1,000 is the numeric priority.
+
+;; The default “lowest priority” value is 67, and the ASCII value of “A” is
+;; 65, so the numeric value of priority “A” is 2,000, “B” (ASCII value 66)
+;; is 1,000, and “C” (ASCII value 67) is 0.
+
+;; For whatever reason, there are no internal Org functions to easily extract
+;; just the priority letter, but I wanted my function to accept the letter
+;; rather than the numeric value so I just convert that to its corresponding
+;; number and use org-get-priority to compare the entry’s value to the given
+;; one.
 (defun paloryemacs/org-agenda-skip-subtree-if-priority (priority)
   "Skip an agenda subtree if it has a priority of PRIORITY.
 PRIORITY may be one of the characters ?A, ?B, or ?C."
@@ -340,6 +378,16 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
         subtree-end
       nil)))
 
+
+(defun paloryemacs/org-agenda-skip-subtree-if-not-priority (priority)
+  "Skip an agenda subtree if it don't have a priority of PRIORITY.
+PRIORITY may be one of the characters ?A, ?B, or ?C."
+  (let ((subtree-end (save-excursion (org-end-of-subtree t)))
+        (pri-value (* 1000 (- org-lowest-priority priority)))
+        (pri-current (org-get-priority (thing-at-point 'line t))))
+    (if (= pri-value pri-current)
+        nil
+      subtree-end)))
 
 (defun paloryemacs/org-agenda-skip-subtree-if-habit ()
   "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
@@ -385,6 +433,134 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                  -1
                (if (equal time-a time-b) 0 1))))))
 
+(defun paloryemacs/set-org-agenda-custom-commands ()
+  ;; Use tags-todo like this (tags-todo "+PRIORITY={A}") will be very slow,
+  ;; however add more restricts, like CATEGORY, it works fine
+
+  ;; http://orgmode.org/manual/Matching-tags-and-properties.html
+  ;; https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html
+  (setq org-agenda-custom-commands
+        `(("A" "Today's Priority #A Tasks" agenda ""
+           ((org-agenda-entry-types '(:scheduled))
+            (org-agenda-span 'day)
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp "\\=.*\\[#A\\]"))
+            (org-agenda-overriding-header "Today's Priority #A Tasks: ")))
+
+          ("b" "Today's Priority #A and #B tasks" agenda ""
+           ((org-agenda-entry-types '(:scheduled))
+            (org-agenda-span 'day)
+            (org-agenda-overriding-header "Today's priority #A and #B Tasks: ")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp "\\=.*\\[#C\\]"))))
+
+          ("c" "Appointment Calendar" agenda ""
+           ((org-agenda-overriding-header "Appointment Calendar")
+            (org-agenda-sorting-strategy '(time-up))
+            (org-agenda-span 14)
+            (org-agenda-regexp-filter-preset '("+APPT"))))
+
+          ;; ("c" todo "DONE|DEFERRED|CANCELLED") ; not include scheduled TODO entiries
+
+          ;; ("d" todo "DELEGATED")
+          ("D" "Done Tasks" tags "TODO=\"DONE\""
+           ((org-agenda-overriding-header "Done Tasks")))
+
+          ("d" "Daily agenda and all TODOs"
+           ((tags "+PRIORITY=\"A\"+CATEGORY={Task\\|Project}"
+                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
+                   (org-agenda-overriding-header "High-priority Unfinished Tasks:")))
+            (agenda "" ((org-agenda-span 'day)
+                        (org-agenda-sorting-strategy '(habit-down
+                                                       priority-down
+                                                       time-up
+                                                       todo-state-down
+                                                       effort-up
+                                                       category-keep))))
+            (alltodo ""
+                     ((org-agenda-skip-function '(or (paloryemacs/org-agenda-skip-subtree-if-habit)
+                                                     (paloryemacs/org-agenda-skip-subtree-if-priority ?A)
+                                                     (org-agenda-skip-entry-if 'scheduled 'deadline)))
+                      (org-agenda-overriding-header "ALL Normal Priority Tasks:"))))
+           ;; ((org-agenda-compact-blocks t))
+           ((org-agenda-block-separator ?-)))
+
+          ;; ("d" "Deadlined tasks" tags "TODO<>\"\"&TODO<>{DONE\\|CANCELED\\|NOTE\\|PROJECT}"
+          ;;  ((org-agenda-overriding-header "Deadlined tasks: ")
+          ;;   (org-agenda-skip-function '(org-agenda-skip-entry-if 'notdeadline))
+          ;;   (org-agenda-sorting-strategy '(category-up))))
+
+          ("e" "Emacs Tasks" tags "emacs&LEVEL<=2"
+           ((org-agenda-overriding-header "Emacs Tasks")))
+
+          ;; ;; to create a sparse tree (again: current buffer only) with all entries containing the word `FIXME'.
+          ("f" occur-tree "\\<FIXME\\>")
+
+          ;; ("g" "GeekTool Agenda"
+          ;;  ((agenda ""))
+          ;;  ((org-agenda-todo-keyword-format "%-11s")
+          ;;   (org-agenda-prefix-format "  %-10T%?-16t% s")
+          ;;   (org-agenda-show-inherited-tags nil)
+          ;;   (org-agenda-remove-tags 'prefix)
+          ;;   (org-agenda-tags-column 70))
+          ;;  (,(concat org-directory  "/Agenda.txt")))
+
+          ("h" "Habits" tags-todo "TODO<>\"\""
+           ((org-agenda-overriding-header "Habits")
+            (org-agenda-entry-types '(:scheduled))
+            (org-agenda-skip-function '(or (org-agenda-skip-entry-if 'notscheduled)
+                                           (paloryemacs/org-agenda-skip-subtree-if-not-habit)))
+            (org-agenda-sorting-strategy
+             '(todo-state-down effort-up category-keep))))
+          ("O" "All TODOs" tags "TODO<>\"\"" ((org-agenda-overriding-header "All TODOs")))
+          ;; ("p" tags "+project-TODO=\"DONE\"-TODO=\"CANCELLED\"")
+
+          ("r" "Uncategorized items" tags "CATEGORY=\"Inbox\"&LEVEL=2"
+           ((org-agenda-overriding-header "Uncategorized items")))
+          ("S" "Scheduled tasks" tags "TODO<>\"\"&TODO<>{APPT\\|DONE\\|CANCELED\\|NOTE}"
+           ((org-agenda-overriding-header "Scheduled tasks: ")
+            (org-agenda-skip-function '(or (paloryemacs/org-agenda-skip-subtree-if-habit)
+                                           ;; (org-agenda-skip-entry-if 'notregexp "\\=.*\\[#A\\]")
+                                           (org-agenda-skip-entry-if 'notscheduled)))
+            (org-agenda-sorting-strategy '(category-up))))
+
+          ("u" "Unscheduled tasks" tags "TODO<>\"\"&TODO<>{DONE\\|CANCELED\\|NOTE}"
+           ((org-agenda-overriding-header "Unscheduled tasks: ")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if
+                                        'scheduled
+                                        'deadline
+                                        'timestamp
+                                        'regexp
+                                        "\\* \\(DEFERRED\\|SOMEDAY\\)"))
+            (org-agenda-sorting-strategy '(user-defined-up))
+            (org-agenda-prefix-format "%-11c%5(paloryemacs/org-todo-age) ")))
+
+          ;; ("u" alltodo "Unscheduled TODO entries"
+          ;;  ((org-agenda-skip-function
+          ;;    '(org-agenda-skip-entry-if 'scheduled 'deadline 'regexp "<[^>\n]+>"))
+          ;;   (org-agenda-overriding-header "Unscheduled TODO entries: ")))
+
+          ("U" "Deferred tasks" tags "TODO=\"DEFERRED\""
+           ((org-agenda-overriding-header "Deferred tasks:")
+            (org-agenda-sorting-strategy '(user-defined-up))
+            (org-agenda-prefix-format "%-11c%5(paloryemacs/org-todo-age) ")))
+
+
+          ;; ("w" todo "WAITING" )
+          ;; ("W" todo-tree "WAITING")
+          ("w" "Unscheduled work-related tasks" tags "TODO<>\"\"&TODO<>{DONE\\|CANCELED\\|NOTE}"
+           ((org-agenda-overriding-header "Unscheduled work-related tasks")
+            (org-agenda-sorting-strategy '(todo-state-up priority-down category-up))
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline 'timestamp))
+            (org-agenda-prefix-format "%-11c%5(paloryemacs/org-todo-age) ")))
+
+          ("W" "Waiting/delegated tasks" tags "TODO=\"WAITING\"|TODO=\"DELEGATED\""
+           ((org-agenda-overriding-header "Waiting/delegated tasks:")
+            (org-agenda-sorting-strategy '(todo-state-up priority-down category-up))))
+
+          ("Y" "Someday tasks" tags "TODO=\"SOMEDAY\""
+           ((org-agenda-overriding-header "Someday tasks:")
+            (org-agenda-sorting-strategy '(user-defined-up))
+            (org-agenda-prefix-format "%-11c%5(paloryemacs/org-todo-age) "))))))
+
 (use-package org-agenda
   :defer t
   :init
@@ -398,6 +574,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           ;; org-agenda-use-tag-inheritance nil ; set this on a per-command in org-agenda-custom-commands
           org-agenda-show-all-dates t
           org-agenda-span 'week
+          org-agenda-start-with-log-mode nil
+          org-agenda-start-with-clockreport-mode nil
+          org-agenda-view-columns-initially nil
           ;; exclude scheduled items from the global TODO list.
           org-agenda-todo-ignore-scheduled t
           org-agenda-skip-scheduled-if-done t
@@ -413,7 +592,31 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           org-agenda-repeating-timestamp-show-all nil
           org-agenda-use-time-grid nil
           org-agenda-show-future-repeats 'next
-          org-agenda-prefer-last-repeat nil))
+          org-agenda-prefer-last-repeat nil)
+
+    (setq org-agenda-prefix-format
+          '((agenda . " %i %-12:c%-12t% s")
+            (todo . " %i %-12:c")
+            (tags . " %i %-12:c")
+            (search . " %i %-12:c")))
+
+    ;; (setq org-agenda-deadline-leaders '("!D!: " "D%2d: " "")) ; default ("Deadline:  " "In %3d d.: " "%2d d. ago: ")
+    ;; (setq org-agenda-scheduled-leaders '("Scheduled: " "Sched.%2dx: ")) ; default ("Scheduled: " "Sched.%2dx: ")
+    ;; (setq org-agenda-category-icon-alist
+    ;;       '(("Visitors" "~/.emacs.d/icons/org/visitors.png" nil nil :ascent center)
+    ;;         ("\\(Party\\|Celeb\\)" "~/.emacs.d/icons/org/party.png" nil nil :ascent center)
+    ;;         ("Org" "~/.emacs.d/icons/org/org.png" nil nil :ascent center)
+    ;;         ("Medical" "~/.emacs.d/icons/org/medical.png" nil nil :ascent center)
+    ;;         ("Music" "~/.emacs.d/icons/org/music.png" nil nil :ascent center)
+    ;;         ("Trip" "~/.emacs.d/icons/org/trip.png" nil nil :ascent center)
+    ;;         ("Train" "~/.emacs.d/icons/org/train.png" nil nil :ascent center)
+    ;;         ("Anniv" "~/.emacs.d/icons/org/anniversary.png" nil nil :ascent center)
+    ;;         ("Debian" "~/.emacs.d/icons/org/debian.png" nil nil :ascent center)
+    ;;         ("Plants" "~/.emacs.d/icons/org/tree.png" nil nil :ascent center)
+    ;;         ("Reading" "~/.emacs.d/icons/org/book.png" nil nil :ascent center)
+    ;;         ("\\(Holidays\\|Vacation\\)" "~/.emacs.d/icons/org/holidays.png" nil nil :ascent center)
+    ;;         (".*" '(space . (:width (16))))))
+    (paloryemacs/set-org-agenda-custom-commands))
   :config
   (progn
     (defun paloryemacs/org-agenda-mode-init ()
@@ -436,11 +639,64 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       (setq org-agenda-tags-column (- 10 (window-text-width)))
       (org-agenda-align-tags))
 
+    ;; https://blog.aaronbieber.com/2016/09/25/agenda-interactions-primer.html
+
+    ;; Pressing c by itself to open my default capture command, which is a TODO
+    ;; entry (the shortcut key is “a” and that is passed to org-capture). If I
+    ;; use a prefix (by pressing C-u c), it will open the default (“vanilla”)
+    ;; Org Mode capture dialog, prompting me to pick a capture type, where I can
+    ;; choose my “note” type or others I have developed.
+    (defun paloryemacs/org-agenda-capture (&optional vanilla)
+      "Capture a task in agenda mode, using the date at point.
+
+If VANILLA is non-nil, run the standard `org-capture'."
+      (interactive "P")
+      (if vanilla
+          (org-capture)
+        (let ((org-overriding-default-time (org-get-cursor-date)))
+          (org-capture nil "a"))))
+
+    ;; "c" default bind to 'org-agenda-goto-calendar
+    (define-key org-agenda-mode-map "c" 'paloryemacs/org-agenda-capture)
+
+
     ;; evilify agenda mode
     (org-defkey org-agenda-mode-map "|" nil) ;'org-agenda-filter-remove-all
     (org-defkey org-agenda-mode-map "\\" nil) ;'org-agenda-query-not-cmd
     (org-defkey org-agenda-mode-map (kbd "C-n") nil)
     (org-defkey org-agenda-mode-map (kbd "G") nil) ;'org-agenda-toggle-time-grid
+
+    ;; https://blog.aaronbieber.com/2016/09/25/agenda-interactions-primer.html
+    (defun paloryemacs/org-agenda-next-header ()
+      "Jump to the next header in an agenda series."
+      (interactive)
+      (paloryemacs/-org-agenda-goto-header))
+
+    (defun paloryemacs/org-agenda-previous-header ()
+      "Jump to the previous header in an agenda series."
+      (interactive)
+      (paloryemacs/-org-agenda-goto-header t))
+
+    (defun paloryemacs/-org-agenda-goto-header (&optional backwards)
+      "Find the next agenda series header forwards or BACKWARDS."
+      (let ((pos (save-excursion
+                   (goto-char (if backwards
+                                  (line-beginning-position)
+                                (line-end-position)))
+                   (let* ((find-func (if backwards
+                                         'previous-single-property-change
+                                       'next-single-property-change))
+                          (end-func (if backwards
+                                        'max
+                                      'min))
+                          (all-pos-raw (list (funcall find-func (point) 'org-agenda-structural-header)
+                                             (funcall find-func (point) 'org-agenda-date-header)))
+                          (all-pos (cl-remove-if-not 'numberp all-pos-raw))
+                          (prop-pos (if all-pos (apply end-func all-pos) nil)))
+                     prop-pos))))
+        (if pos (goto-char pos))
+        (if backwards (goto-char (line-beginning-position)))))
+
     (with-eval-after-load "evil-evilified-state"
       (evilified-state-evilify-map org-agenda-mode-map
         :mode org-agenda-mode
@@ -448,6 +704,10 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
         (kbd "C-h") nil
         "j" 'org-agenda-next-line
         "k" 'org-agenda-previous-line
+
+        "J" 'paloryemacs/org-agenda-next-header  ; org-agenda-goto-date
+        "K" 'paloruemacs/org-agenda-previous-header ; org-agenda-capture
+
         (kbd "M-j") 'org-agenda-next-item
         (kbd "M-k") 'org-agenda-previous-item
         (kbd "M-h") 'org-agenda-earlier
@@ -556,10 +816,28 @@ to `reorganize-frame', otherwise set to `other-frame'."
 ;; find all 'CANCELLED' items. C-c < t then N r
 (setq org-archive-location "%s_archive::")
 
+;; http://ivanmalison.github.io/dotfiles/#org
+(defun paloryemacs/org-archive-if (condition-function)
+  (if (funcall condition-function)
+      (let ((next-point-marker
+             (save-excursion (org-forward-heading-same-level 1) (point-marker))))
+        (org-archive-subtree)
+        (setq org-map-continue-from (marker-position next-point-marker)))))
+
+(defun paloryemacs/org-archive-if-completed ()
+  (interactive)
+  (paloryemacs/org-archive-if 'org-entry-is-done-p))
+
+(defun paloryemacs/org-archive-completed-in-buffer ()
+  (interactive)
+  (org-map-entries 'paloryemacs/org-archive-if-completed))
+
+
 ;;; Priority
 ;; Note: `org-priority-faces' default to `nil' and if it is `nil' when mouse
 ;; over the agenda item, it cause tons of Invalid face reference: nil in
 ;; *Message* buffer. see also `org-agenda-fontify-priorities'
+;; The entry default to B when no priority specified
 (setq org-priority-faces
       '((?A . (:foreground "#ff40ff" :weight bold))
         (?B . (:foreground "#00f900" :weight bold))
@@ -571,20 +849,16 @@ to `reorganize-frame', otherwise set to `other-frame'."
       org-habit-following-days 7
       org-habit-graph-column 90)
 
-;;; org-expiry
-(setq org-expiry-inactive-timestamps t)
-
 ;;; refile
-(setq org-refile-use-outline-path t ; use full outline paths for refile targets
-      org-outline-path-complete-in-steps nil ; targets complete directly with IDO
+(setq org-refile-use-outline-path 'file ; use full outline paths for refile targets
+      ;; don't complete in steps, use org to generate all of the possible
+      ;; completions and present them at once.
+      org-outline-path-complete-in-steps nil
       ;; Allow refile to create parent tasks with confirmation
       org-refile-allow-creating-parent-nodes 'confirm
       ;; targets include this file and any file contributing to the agenda - up to 9 levels deep
       org-refile-targets '((nil :maxlevel . 9)
                            (org-agenda-files :maxlevel . 9))
-      org-blank-before-new-entry '((heading . t)
-                                   (plain-list-item . auto))
-
       org-refile-use-cache nil)
 
 ;; Refile settings
@@ -611,6 +885,7 @@ to `reorganize-frame', otherwise set to `other-frame'."
 
 ;;;; Capture
 (use-package org-capture
+  :defer t
   :init
   (progn
     (define-key global-map (kbd "C-c c") 'org-capture)
@@ -623,23 +898,40 @@ to `reorganize-frame', otherwise set to `other-frame'."
         (find-file p)
         (goto-char (point-min))))
 
+    (defun paloryemacs/find-memo-file ()
+      "Find today's trading journal."
+      (let ((p (concat org-directory
+                       (format-time-string
+                        "/Memo/%Y%m%d.org"))))
+        (find-file p)
+        (goto-char (point-min))))
+
+
     (setq org-capture-templates
-          '(("t" "Todo" entry (file+headline "~/org/GTD.org" "Inbox")
-             "* TODO %?\n  %i%u"
+          '(("a" "Add Task" entry
+             (file+headline "~/org/GTD.org" "Tasks")
+             "* TODO %?\n SCHEDULED: %t \n  :PROPERTIES:\n :ID: %(org-id-new)\n  :CREATED:  %U\n  :END:"
+             :prepend t)
+
+            ("t" "Todo" entry (file+headline "~/org/GTD.org" "Inbox")
+             "* TODO %?\n  :PROPERTIES:\n :ID: %(org-id-new)\n  :CREATED:  %U\n  :END:"
+             :prepend t
              :kill-buffer t)
             ("T" "Trading Journal" plain (function paloryemacs/find-today-trading-journal)
              "* %U\n  %i%?"
              :prepend t
              :unnarrowed nil
              :kill-buffer t)
-            ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
-             "* %?\n  %i\n  %U\n"
-             :kill-buffer t)
-            ("J" "Journal with Annotation" entry (file+olp+datetree "~/org/journal.org")
-             "* %?\n  %U\n  %i\n  %a"
-             :kill-buffer t)
-            ("m" "Memo" plain (file (concat org-directory (format-time-string "/%Y%m%d-%H%M%S.org")))
-             "* MEMO <%<%Y-%m-%d>> %?\n   %i\n  %a\n\n"
+            ;; use org-journal now
+            ;; http://www.howardism.org/Technical/Emacs/journaling-org.html
+            ;; ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
+            ;;  "* %?\n  %i\n  %U\n"
+            ;;  :kill-buffer t)
+            ;; ("J" "Journal with Annotation" entry (file+olp+datetree "~/org/journal.org")
+            ;;  "* %?\n  %U\n  %i\n  %a"
+            ;;  :kill-buffer t)
+            ("m" "Memo" plain #'paloryemacs/find-memo-file
+             "* %T\n  %?\n  %a\n\n"
              :prepend t
              :unnarrowed t
              :kill-buffer t)
@@ -648,12 +940,13 @@ to `reorganize-frame', otherwise set to `other-frame'."
              :kill-buffer t
              :empty-lines 1)
             ("p" "Phone call" entry (file+headline "~/org/GTD.org" "Inbox")
-             "* PHONE %? :PHONE:\n  %U" :clock-in t :clock-resume t)
+             "* PHONE %? :PHONE:\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :END:"
+             :clock-in t
+             :clock-resume t)
             ("r" "Remind" entry (file+headline "~/org/GTD.org" "Remind")
-             "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n\n  %U\n\n")
+             "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :END:\n\n")
             ("h" "Habit" entry (file+headline "~/org/GTD.org" "Habit")
-             "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n  :STYLE: habit \n  :REPEAT_TO_STATE: NEXT\n  :END:\n\n  %U\n")))
-    )
+             "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :STYLE: habit\n  :REPEAT_TO_STATE: NEXT\n  :END:\n\n  "))))
   :config
   (progn
     (paloryemacs/set-leader-keys-for-minor-mode 'org-capture-mode
@@ -664,7 +957,28 @@ to `reorganize-frame', otherwise set to `other-frame'."
       "r" 'org-capture-refile)))
 
 
+(use-package org-expiry
+  :defer t
+  :init
+  (progn
+    (setq org-expiry-created-property-name "CREATED"
+          org-expiry-inactive-timestamps   t)))
+
+;; http://www.ideaio.ch/posts/my-gtd-system-with-org-mode.html
+(defun paloryemacs/insert-created-timestamp()
+  "Insert a CREATED property using org-expiry.el for TODO entries"
+  (org-expiry-insert-created)
+  (org-back-to-heading)
+  (org-end-of-line)
+  (insert " "))
+
 ;;; work with appt
+;; If you delete an appointment from your Org agenda file, the corresponding
+;; alert is not deleted.
+;; (defadvice org-agenda-to-appt (before wickedcool activate)
+;;   "Clear the appt-time-msg-list."
+;;   (setq appt-time-msg-list nil))
+
 (defun paloryemacs/org-agenda-to-appt ()
   (setq appt-time-msg-list nil)
   ;; Dangerous!!! do not use `appt-add', this might remove entries added by `appt-add' manually.
@@ -675,20 +989,25 @@ to `reorganize-frame', otherwise set to `other-frame'."
 ;; update appt each time agenda opened
 (add-hook 'org-agenda-finalize-hook 'paloryemacs/org-agenda-to-appt)
 
-;;;
-(setq org-fontify-emphasized-text t
-      org-fontify-done-headline t)
-
 ;;; clock
 (use-package org-clock
   :defer t
   :init
+  ;; TODO: call `org-resolve-clocks' when emacs startup
   (progn
     ;; To save the clock history across Emacs sessions
     (global-set-key (kbd "C-S-g") 'org-clock-goto) ; jump to current task from anywhere
     (setq org-clock-clocked-in-display nil)
+    (setq org-clock-history-length 20)
     ;; Save the running clock and all clock history when exiting Emacs, load it on startup
     (setq org-clock-persist t)
+    ;; If idle for more than 15 minutes, resolve the things by asking what to do
+    ;; with the clock time
+    ;; k 	keep some or all minutes and stay clocked in
+    ;; K 	keep some or all minutes and clock out
+    ;; s 	keep 0 minutes, and subtract some amount from the clock, clocking back in
+    ;; S 	keep 0 minutes, subtract some amount from the clock, and clock out
+    ;; C 	cancel the clock altogether
     (setq org-clock-idle-time 15)
     (setq org-clock-into-drawer t)
     (setq org-clock-in-resume t)
@@ -696,15 +1015,13 @@ to `reorganize-frame', otherwise set to `other-frame'."
     (setq org-clock-persist-query-resume nil)
     (setq org-clock-out-remove-zero-time-clocks t)
     ;; Change tasks to whatever when clocking in
-    ;; (setq org-clock-in-switch-to-state "NEXT")
+    (setq org-clock-in-switch-to-state "NEXT")
     ;; Clock out when moving task to a done state
     (setq org-clock-out-when-done t)
     ;; Enable auto clock resolution for finding open clocks
     (setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
     ;; Include current clocking task in clock reports
     (setq org-clock-report-include-clocking-task t)
-    ;; use pretty things for the clocktable
-    (setq org-pretty-entities t)
     (org-clock-persistence-insinuate)))
 
 ;;; org-publish
@@ -786,9 +1103,6 @@ to `reorganize-frame', otherwise set to `other-frame'."
    "file"
    :face (lambda (path) (if (file-exists-p path) 'org-link 'org-warning))))
 
-;;; org-mac-link
-
-
 ;; keybinding conflicts with icicles keys
 ;; (org-defkey org-mode-map (kbd "C-c C-'") 'org-edit-special)
 ;; (define-key org-exit-edit-mode-map (kbd "C-c C-'") 'org-edit-src-exit)
@@ -809,7 +1123,11 @@ to `reorganize-frame', otherwise set to `other-frame'."
           (with-selected-window wind
             (org-agenda-redo)
             (org-fit-window-to-buffer))
-        (call-interactively 'org-agenda-list)))))
+        ;; (call-interactively 'org-agenda-list)
+        (org-agenda nil "d")))))
+
+(with-eval-after-load 'evil
+  (define-key evil-normal-state-map (kbd "S-SPC") 'paloryemacs/jump-to-org-agenda))
 
 ;; every 20 minutes
 (run-with-idle-timer (* 20 60) t 'paloryemacs/jump-to-org-agenda)
@@ -1049,7 +1367,7 @@ Headline^^            Visit entry^^               Filter^^                    Da
   (interactive "P")
   (let* ((timerange-numeric-value (prefix-numeric-value timerange))
          (files (org-add-archive-files (org-agenda-files)))
-         (include-tags '("academic" "english" "learning" "daily" "other" "exercise"))
+         (include-tags '("academic" "english" "learning" "daily" "emacs" "other" "exercise"))
          (tags-time-alist (mapcar (lambda (tag) `(,tag . 0)) include-tags))
          (output-string "")
          (seconds-of-day 86400)
@@ -1211,6 +1529,7 @@ _h_tml    ^ ^        _A_SCII:
 ;; (define-key indent-rigidly-map (kbd "H-l") 'indent-rigidly-right)
 
 ;;; org-journal
+;; https://github.com/bastibe/org-journal
 (use-package org-journal
   :defer t
   :init
@@ -1220,18 +1539,13 @@ _h_tml    ^ ^        _A_SCII:
           org-journal-date-prefix "#+TITLE: "
           org-journal-date-format "%A, %B %d %Y"
           org-journal-time-prefix "* "
-          org-journal-time-format "")
+          org-journal-time-format "%R ")
     (paloryemacs/declare-prefix "aoj" "org-journal")
     (paloryemacs/set-leader-keys
       "aojj" 'org-journal-new-entry
-      "aojs" 'org-journal-search-forever)
-
-    )
+      "aojs" 'org-journal-search-forever))
   :config
   (progn
-
-    ;; paloryemacs-org-journal-map
-    ;; (setq org-journal-map (copy-keymap paloryemacs-org-mode-map))
     (paloryemacs/set-leader-keys-for-major-mode 'org-journal-mode
       "j" 'org-journal-new-entry
       "n" 'org-journal-open-next-entry
@@ -1249,7 +1563,6 @@ _h_tml    ^ ^        _A_SCII:
       "w" 'org-journal-search-calendar-week
       "m" 'org-journal-search-calendar-month
       "y" 'org-journal-search-calendar-year)))
-
 
 ;;; evil surround
 (defun paloryemacs//surround-drawer ()
@@ -1296,6 +1609,68 @@ _h_tml    ^ ^        _A_SCII:
   (setq org-brain-visualize-default-choices 'all)
   (setq org-brain-title-max-length 12))
 
+;; https://github.com/kiwanami/emacs-calfw
+(defun paloryemacs/calfw-calendar ()
+  (interactive)
+  (let ((buf (get-buffer "*cfw-calendar*")))
+    (if buf
+        (pop-to-buffer buf nil)
+      (cfw:open-calendar-buffer
+       :contents-sources
+       (list (cfw:org-create-source "Dark Blue")
+             (cfw:cal-create-source "Dark Orange"))
+       :view 'two-weeks))))
+
+(use-package calfw
+  :bind (("C-c A" . paloryemacs/calfw-calendar))
+  :init
+  (progn
+    (use-package calfw-cal)
+    (use-package calfw-org)
+    ;; (bind-key "M-n" 'cfw:navi-next-month-command cfw:calendar-mode-map)
+    ;; (bind-key "M-p" 'cfw:navi-previous-month-command cfw:calendar-mode-map)
+    )
+  :config
+  (progn
+    (setq cfw:fchar-junction ?╋
+          cfw:fchar-vertical-line ?┃
+          cfw:fchar-horizontal-line ?━
+          cfw:fchar-left-junction ?┣
+          cfw:fchar-right-junction ?┫
+          cfw:fchar-top-junction ?┯
+          cfw:fchar-top-left-corner ?┏
+          cfw:fchar-top-right-corner ?┓)
+    ;; (bind-key "j" 'cfw:navi-goto-date-command cfw:calendar-mode-map)
+    ;; (bind-key "g" 'cfw:refresh-calendar-buffer cfw:calendar-mode-map)
+    ))
+
+(defun paloryemacs/add-created-pro-from-subtree ()
+  (let* ((heading (org-heading-components))
+         (level (nth 0 heading))
+         timestr)
+    (when (> level 1)
+      (save-restriction
+        (org-narrow-to-subtree)
+        (when (re-search-forward (concat
+                                  "^ * \\("
+                                  org-ts-regexp-inactive
+                                  "\\)$")
+                                 nil t)
+          (setq timestr (match-string-no-properties 1))
+          (goto-char (point-at-bol))
+          (kill-line 1)
+          (org-set-property "CREATED" timestr))))))
+
+;; my previous capture template put a timestamp in to the subtree, move it to
+;; property
+(defun paloryemacs/add-created-pro-from-subtree-whole-file ()
+  (interactive)
+  (let ((MATCH t)
+        (SCOPE 'file)
+        (SKIP nil)
+        (spacing nil))
+    (org-map-entries 'paloryemacs/add-created-pro-from-subtree
+                     MATCH SCOPE SKIP)))
 
 (provide '13org-mode)
 
