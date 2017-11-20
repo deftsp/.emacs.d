@@ -148,7 +148,6 @@
     (org-defkey org-mode-map (kbd "C-c [") 'undefined)
     (org-defkey org-mode-map (kbd "C-c ]") 'undefined)
 
-    (setq org-structure-template-alist nil)
     (add-to-list 'org-structure-template-alist
                  '("p" ":PROPERTIES:\n?\n:END:"))
     (add-to-list 'org-structure-template-alist
@@ -908,7 +907,7 @@ to `reorganize-frame', otherwise set to `other-frame'."
 
 
     (setq org-capture-templates
-          '(("a" "Add Task" entry
+          `(("a" "Add Task" entry
              (file+headline "~/org/GTD.org" "Tasks")
              "* TODO %?\n SCHEDULED: %t \n  :PROPERTIES:\n :ID: %(org-id-new)\n  :CREATED:  %U\n  :END:"
              :prepend t)
@@ -943,6 +942,14 @@ to `reorganize-frame', otherwise set to `other-frame'."
              "* PHONE %? :PHONE:\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :END:"
              :clock-in t
              :clock-resume t)
+            ;; work with org-protocol and emacs-mac port have default register to macOS
+            ;; https://github.com/sprig/org-capture-extension
+            ("P" "Protocol Clip" entry (file+headline ,(concat org-directory "/Notes.org") "Inbox")
+             "* %?\n  :PROPERTIES:\n :ID: %(org-id-new)\n  :CREATED:  %U\n :END:\n  Source: %:annotation\n\n  #+BEGIN_QUOTE\n  %i\n  #+END_QUOTE")
+
+	        ("L" "Protocol Link" entry (file+headline ,(concat org-directory "/GTD.org") "Inbox")
+             "* TODO Review %:annotation\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n :END:\n  %?"
+             :prepend t)
             ("r" "Remind" entry (file+headline "~/org/GTD.org" "Remind")
              "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :END:\n\n")
             ("h" "Habit" entry (file+headline "~/org/GTD.org" "Habit")
@@ -1459,6 +1466,10 @@ Will work on both org-mode and any mode that accepts plain html."
       (forward-char -8))))
 
 (use-package org-src
+  :init
+  (progn
+    (setq org-src-preserve-indentation nil)
+    (setq org-edit-src-content-indentation 0))
   :config
   (progn
     (paloryemacs/set-leader-keys-for-minor-mode 'org-src-mode
