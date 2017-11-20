@@ -860,6 +860,15 @@ to `reorganize-frame', otherwise set to `other-frame'."
                            (org-agenda-files :maxlevel . 9))
       org-refile-use-cache nil)
 
+
+;; Exclude DONE state tasks from refile targets
+;; http://doc.norang.ca/org-mode.html
+;; (defun paloryemacs/verify-refile-target ()
+;;   "Exclude todo keywords with a done state from refile targets"
+;;   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
+
+;; (setq org-refile-target-verify-function 'paloryemacs/verify-refile-target)
+
 ;; Refile settings
 ;; Exclude DONE state tasks from refile targets
 (defun paloryemacs/verify-refile-target ()
