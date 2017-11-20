@@ -107,6 +107,7 @@
     (define-key minibuffer-local-map [C-tab] 'paloryemacs/ido-magic-file-cache)
 
     ;; ido-ubiquitous-mode has been instead of by ido-completing-read+
+    ;; https://github.com/DarwinAwardWinner/ido-completing-read-plus
     (use-package ido-completing-read+
       :defer 3
       :init
