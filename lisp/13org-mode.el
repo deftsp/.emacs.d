@@ -1057,7 +1057,8 @@ to `reorganize-frame', otherwise set to `other-frame'."
     (setq org-clock-auto-clock-resolution (quote when-no-clock-is-running))
     ;; Include current clocking task in clock reports
     (setq org-clock-report-include-clocking-task t)
-    (org-clock-persistence-insinuate)))
+    (with-eval-after-load 'org
+      (org-clock-persistence-insinuate))))
 
 ;;; org-publish
 (setq org-publish-project-alist
