@@ -464,23 +464,29 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
            ((org-agenda-overriding-header "Done Tasks")))
 
           ("d" "Daily agenda and all TODOs"
-           ((tags "+PRIORITY=\"A\"+CATEGORY={Task\\|Project}"
-                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
-                   (org-agenda-overriding-header "High-priority Unfinished Tasks:")))
-            (agenda "" ((org-agenda-span 'day)
+           ((agenda "" ((org-agenda-span 'day)
                         (org-agenda-sorting-strategy '(habit-down
-                                                       priority-down
                                                        time-up
+                                                       priority-down
                                                        todo-state-down
                                                        effort-up
                                                        category-keep))))
+            (tags "+PRIORITY=\"A\"+CATEGORY={Task\\|Project}"
+                  (
+                   (org-agenda-skip-function
+                    '(org-agenda-skip-entry-if 'todo 'done))
+
+                   (org-agenda-sorting-strategy '(tag-up priority-down))
+                   ;; (org-agenda-todo-keyword-format "")
+                   (org-agenda-overriding-header "High Priority Unfinished Tasks:")))
+
             (alltodo ""
                      ((org-agenda-skip-function '(or (paloryemacs/org-agenda-skip-subtree-if-habit)
                                                      (paloryemacs/org-agenda-skip-subtree-if-priority ?A)
                                                      (org-agenda-skip-entry-if 'scheduled 'deadline)))
                       (org-agenda-overriding-header "ALL Normal Priority Tasks:"))))
            ;; ((org-agenda-compact-blocks t))
-           ((org-agenda-block-separator ?-)))
+           ((org-agenda-block-separator ?▰)))
 
           ;; ("d" "Deadlined tasks" tags "TODO<>\"\"&TODO<>{DONE\\|CANCELED\\|NOTE\\|PROJECT}"
           ;;  ((org-agenda-overriding-header "Deadlined tasks: ")
@@ -560,6 +566,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
             (org-agenda-sorting-strategy '(user-defined-up))
             (org-agenda-prefix-format "%-11c%5(paloryemacs/org-todo-age) "))))))
 
+
+;; https://www.reddit.com/r/orgmode/comments/6ybjjw/aligned_agenda_view_anyway_to_make_this_more/
 (use-package org-agenda
   :defer t
   :init
@@ -572,12 +580,13 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           org-agenda-inhibit-startup t
           ;; org-agenda-use-tag-inheritance nil ; set this on a per-command in org-agenda-custom-commands
           org-agenda-show-all-dates t
-          org-agenda-span 'week
+          org-agenda-span 'day ; 'week
           org-agenda-start-with-log-mode nil
           org-agenda-start-with-clockreport-mode nil
           org-agenda-view-columns-initially nil
           ;; exclude scheduled items from the global TODO list.
-          org-agenda-todo-ignore-scheduled t
+          org-agenda-todo-ignore-scheduled 'all
+          org-agenda-todo-ignore-with-date t
           org-agenda-skip-scheduled-if-done t
           org-agenda-skip-deadline-if-done t
           org-agenda-skip-timestamp-if-done t
@@ -590,17 +599,27 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           org-agenda-restore-windows-after-quit t
           org-agenda-repeating-timestamp-show-all nil
           org-agenda-use-time-grid nil
+          org-agenda-block-separator ?▰
           org-agenda-show-future-repeats 'next
           org-agenda-prefer-last-repeat nil)
 
-    (setq org-agenda-prefix-format
-          '((agenda . " %i %-12:c%-12t% s")
-            (todo . " %i %-12:c")
-            (tags . " %i %-12:c")
-            (search . " %i %-12:c")))
+    (setq org-agenda-time-grid '((daily today) ; remove-match
+                                 (700 800 1000 1200 1400 1600 1800 2000)
+                                 "......"
+                                 "----------------"))
 
     ;; (setq org-agenda-deadline-leaders '("!D!: " "D%2d: " "")) ; default ("Deadline:  " "In %3d d.: " "%2d d. ago: ")
-    ;; (setq org-agenda-scheduled-leaders '("Scheduled: " "Sched.%2dx: ")) ; default ("Scheduled: " "Sched.%2dx: ")
+    ;; (setq org-agenda-scheduled-leaders '("Scheduled: " "Sched.%2dx: ")) ; default '("Scheduled: " "Sched.%2dx: ")
+    ;; (org-agenda-todo-keyword-format "")
+    (setq org-agenda-prefix-format
+          '(
+            ;; (agenda . " %i %-12:c%-12t% s") ; agenda
+            (agenda  . "  %-12:c%?-12t% s")
+			;; (timeline . "%-9:T%?-2t% s")   ; timeline
+            (todo . " %i %-12:c")           ; todo, alltodo
+            (tags . " %i %-12:c")           ; tags, tags-todo, stuck
+            (search . " %i %-12:c")))       ; search
+
     ;; (setq org-agenda-category-icon-alist
     ;;       '(("Visitors" "~/.emacs.d/icons/org/visitors.png" nil nil :ascent center)
     ;;         ("\\(Party\\|Celeb\\)" "~/.emacs.d/icons/org/party.png" nil nil :ascent center)
@@ -957,7 +976,7 @@ to `reorganize-frame', otherwise set to `other-frame'."
              "* %?\n  :PROPERTIES:\n :ID: %(org-id-new)\n  :CREATED:  %U\n :END:\n  Source: %:annotation\n\n  #+BEGIN_QUOTE\n  %i\n  #+END_QUOTE")
 
 	        ("L" "Protocol Link" entry (file+headline ,(concat org-directory "/GTD.org") "Inbox")
-             "* TODO Review %:annotation\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n :END:\n  %?"
+             "* TODO Review %?%:annotation\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n :END:\n"
              :prepend t)
             ("r" "Remind" entry (file+headline "~/org/GTD.org" "Remind")
              "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :END:\n\n")
@@ -1475,6 +1494,7 @@ Will work on both org-mode and any mode that accepts plain html."
       (forward-char -8))))
 
 (use-package org-src
+  :defer t
   :init
   (progn
     (setq org-src-preserve-indentation nil)
@@ -1642,11 +1662,14 @@ _h_tml    ^ ^        _A_SCII:
        :view 'two-weeks))))
 
 (use-package calfw
+  :defer t
   :bind (("C-c A" . paloryemacs/calfw-calendar))
   :init
   (progn
-    (use-package calfw-cal)
-    (use-package calfw-org)
+    (use-package calfw-cal
+      :defer t)
+    (use-package calfw-org
+      :defer t)
     ;; (bind-key "M-n" 'cfw:navi-next-month-command cfw:calendar-mode-map)
     ;; (bind-key "M-p" 'cfw:navi-previous-month-command cfw:calendar-mode-map)
     )

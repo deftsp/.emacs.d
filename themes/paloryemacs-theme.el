@@ -185,7 +185,7 @@
    `(org-agenda-structure ((t (:foreground "#26bbf8" :background ,base02 :weight bold))))
    '(org-scheduled ((t (:foreground "#8abeb2"))))
    '(org-scheduled-previously ((t (:foreground "#ae799f"))))
-   '(org-scheduled-today ((t (:foreground "#85e676"))))
+   '(org-scheduled-today ((t (:foreground "#9def1f"))))
    '(org-agenda-calendar-sexp ((t (:foreground "MistyRose3"))))
    '(org-agenda-date ((t (:foreground "#36abf2" :weight bold))))
    '(org-agenda-date-today ((t (:foreground "#e8d882" :weight bold))))
