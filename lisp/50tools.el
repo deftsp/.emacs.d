@@ -123,7 +123,6 @@ space and marks next symbol."
 ;; Unicad helps Emacs to guess the correct coding system when opening a file. It's designed to work automatically and
 ;; quietly without user interaction.
 (use-package unicad
-  :defer 4
   :config
   (unicad-enable))
 
