@@ -120,7 +120,7 @@
   :config
   (progn
     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
-    (setq magit-completing-read-function 'magit-ido-completing-read)
+    ;; (setq magit-completing-read-function 'magit-ido-completing-read)
     (add-to-list 'magit-repository-directories "~/.emacs.d") ; C-u C-u M-x magit-status will ignore it
     (add-to-list 'magit-repository-directories "~/opt/emacs")
     ;; optional: this is the evil state that evil-magit will use
