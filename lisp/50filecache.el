@@ -36,9 +36,11 @@
      (mapcar (lambda (str) (add-to-list 'file-cache-filter-regexps str))
              '("\\.svn-base$" "\\.svn" "\\.jar$" "\\.git$" "\\.gz$" "\\.tar$" "\\.rar$" "\\.exe$" "resolv.conf$"))))
 
+;; When the file "~/bin/datafiller" exists, (file-exists-p "~/bin/datafiller/")
+;; => t, but (file-exists-p (file-truename "~/bin/datafiller/")) => nil
 (defun paloryemacs/file-cache-add-this-file ()
   (and buffer-file-name
-       (file-exists-p buffer-file-name)
+       (file-exists-p (file-truename buffer-file-name))
        (file-cache-add-file buffer-file-name)))
 
 (add-hook 'kill-buffer-hook 'paloryemacs/file-cache-add-this-file)
