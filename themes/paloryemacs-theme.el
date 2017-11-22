@@ -189,6 +189,7 @@
    '(org-agenda-calendar-sexp ((t (:foreground "MistyRose3"))))
    '(org-agenda-date ((t (:foreground "#36abf2" :weight bold))))
    '(org-agenda-date-today ((t (:foreground "#e8d882" :weight bold))))
+   '(org-agenda-dimmed-todo-face ((t (:foreground "#778888" :weight bold))))
    '(org-warning ((t (:foreground "#ff6347" :weight bold))))
    '(org-drill-hidden-cloze-face ((t (:foreground "#eeeeee" :background "violet red"))))
    '(org-block ((t (:background "#20323e"))))

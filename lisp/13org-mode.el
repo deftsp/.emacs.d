@@ -60,6 +60,8 @@
           org-blank-before-new-entry '((heading . t) (plain-list-item . auto))
           org-time-stamp-rounding-minutes (quote (0 5))
           org-pretty-entities nil ; use pretty things for the clocktable
+          org-enforce-todo-dependencies t
+          org-enforce-todo-checkbox-dependencies t
           org-display-internal-link-with-indirect-buffer nil)
     (when window-system
       ;; … ↴, ⬎, ⤷, ⤵, ▼ and ⋱.
@@ -127,6 +129,7 @@
     (add-to-list 'org-modules 'org-expiry)
     (add-to-list 'org-modules 'org-toc)
     (add-to-list 'org-modules 'org-drill)
+    (add-to-list 'org-modules 'org-depend)
     ;; https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org
     (use-package evil-org
       :init
