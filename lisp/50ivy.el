@@ -63,7 +63,10 @@
     ;; http://oremacs.com/2016/01/06/ivy-flx/
     ;; let flx (hopefully) sort the matches in a nice way
     (setq ivy-initial-inputs-alist nil)
+    (setq ivy-count-format "[%d/%d] ")
     (setq ivy-use-selectable-prompt t)
+    (setq ivy-height 12)
+    (setq confirm-nonexistent-file-or-buffer t)
     (setq ivy-re-builders-alist
           '((t . ivy--regex-fuzzy)))
 
