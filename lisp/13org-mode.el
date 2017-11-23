@@ -36,6 +36,8 @@
           org-cycle-include-plain-lists t
           org-hide-leading-stars t
           org-log-done 'time
+          org-log-reschedule 'time
+          org-log-redeadline 'time
           org-startup-with-inline-images t
           org-image-actual-width nil
           org-ctrl-k-protect-subtree t ; give a query for delete
@@ -941,50 +943,61 @@ to `reorganize-frame', otherwise set to `other-frame'."
           `(("a" "Add Task" entry
              (file+headline "~/org/GTD.org" "Tasks")
              "* TODO %?\n SCHEDULED: %t \n  :PROPERTIES:\n :ID: %(org-id-new)\n  :CREATED:  %U\n  :END:"
-             :prepend t)
+             :prepend t
+             :empty-lines-after 1)
 
             ("t" "Todo" entry (file+headline "~/org/GTD.org" "Inbox")
              "* TODO %?\n  :PROPERTIES:\n :ID: %(org-id-new)\n  :CREATED:  %U\n  :END:"
              :prepend t
-             :kill-buffer t)
+             :empty-lines-after 1)
             ("T" "Trading Journal" plain (function paloryemacs/find-today-trading-journal)
              "* %U\n  %i%?"
              :prepend t
              :unnarrowed nil
-             :kill-buffer t)
+             :kill-buffer t
+             :empty-lines-after 1)
             ;; use org-journal now
             ;; http://www.howardism.org/Technical/Emacs/journaling-org.html
             ;; ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
-            ;;  "* %?\n  %i\n  %U\n"
-            ;;  :kill-buffer t)
+            ;;  "* %?\n  %i\n  %U"
+            ;;  :kill-buffer t
+            ;;  :empty-lines-after 1)
             ;; ("J" "Journal with Annotation" entry (file+olp+datetree "~/org/journal.org")
             ;;  "* %?\n  %U\n  %i\n  %a"
-            ;;  :kill-buffer t)
+            ;;  :kill-buffer t
+            ;;  :empty-lines-after 1)
             ("m" "Memo" plain #'paloryemacs/find-memo-file
              "* %T\n  %?\n  %a\n\n"
              :prepend t
              :unnarrowed t
-             :kill-buffer t)
+             :kill-buffer t
+             :empty-lines-after 1)
             ("d" "Drill" entry (file+headline "~/org/drill/playground.org" "Pond")
              "* Q: %?       :drill:\n\n** A:\n"
              :kill-buffer t
-             :empty-lines 1)
+             :empty-lines 1
+             :empty-lines-after 1)
             ("p" "Phone call" entry (file+headline "~/org/GTD.org" "Inbox")
              "* PHONE %? :PHONE:\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :END:"
              :clock-in t
-             :clock-resume t)
+             :clock-resume t
+             :empty-lines-after 1)
             ;; work with org-protocol and emacs-mac port have default register to macOS
             ;; https://github.com/sprig/org-capture-extension
             ("P" "Protocol Clip" entry (file+headline ,(concat org-directory "/Notes.org") "Inbox")
-             "* %?\n  :PROPERTIES:\n :ID: %(org-id-new)\n  :CREATED:  %U\n :END:\n  Source: %:annotation\n\n  #+BEGIN_QUOTE\n  %i\n  #+END_QUOTE")
+             "* %?\n  :PROPERTIES:\n :ID: %(org-id-new)\n  :CREATED:  %U\n :END:\n  Source: %:annotation\n\n  #+BEGIN_QUOTE\n  %i\n  #+END_QUOTE"
+             :empty-lines-after 1)
 
 	        ("L" "Protocol Link" entry (file+headline ,(concat org-directory "/GTD.org") "Inbox")
-             "* TODO Review %?%:annotation\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n :END:\n"
-             :prepend t)
+             "* TODO Review %?%:annotation\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n :END:"
+             :prepend t
+             :empty-lines-after 1)
             ("r" "Remind" entry (file+headline "~/org/GTD.org" "Remind")
-             "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :END:\n\n")
+             "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :END:"
+             :empty-lines-after 1)
             ("h" "Habit" entry (file+headline "~/org/GTD.org" "Habit")
-             "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :STYLE: habit\n  :REPEAT_TO_STATE: NEXT\n  :END:\n\n  "))))
+             "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :STYLE: habit\n  :REPEAT_TO_STATE: NEXT\n  :END:"
+             :empty-lines-after 1))))
   :config
   (progn
     (paloryemacs/set-leader-keys-for-minor-mode 'org-capture-mode
