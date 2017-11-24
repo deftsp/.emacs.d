@@ -77,7 +77,7 @@
    ;; the split line of two window
    `(vertical-border ((t (:foreground ,base02))))
 
-   `(variable-pitch ((t (:family "DejaVu Sans"))))
+   `(variable-pitch ((t (:family "Roboto Condensed"))))
 
    ;; powerline
    `(powerline-active1 ((t (:background "#6b6b6b" :foreground "#fefefe" :inherit mode-line))))
@@ -336,6 +336,10 @@
    ;; emms
    '(emms-playlist-selected-face ((t (:foreground "magenta"))))
    '(emms-playlist-track-face ((t (:foreground "SteelBlue2"))))
+
+   ;; elfeed
+   '(elfeed-search-title-face ((t (:foreground "#dddddd"))))
+   '(elfeed-search-unread-title-face ((t (:weight normal))))
 
    ;; volatile highlights
    '(vhl/default-face ((t (:background "#332244"))))

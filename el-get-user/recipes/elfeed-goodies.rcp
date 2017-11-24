@@ -1,0 +1,5 @@
+(:name elfeed-goodies
+       :type github
+       :description "Elfeed goodies"
+       :pkgname "algernon/elfeed-goodies"
+       :depends (popwin powerline elfeed cl-lib noflet ace-jump-mode))

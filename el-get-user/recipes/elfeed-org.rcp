@@ -1,0 +1,5 @@
+(:name elfeed-org
+       :type github
+       :description "Configure elfeed with one or more org-mode files"
+       :pkgname "remyhonig/elfeed-org"
+       :depends (elfeed org-mode dash s))
