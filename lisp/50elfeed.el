@@ -34,9 +34,6 @@
   (bookmark-maybe-load-default-file)
   (bookmark-jump "elfeed-emacs"))
 
-(defalias 'paloryemacs/elfeed-toggle-star
-  (elfeed-expose #'elfeed-search-toggle-all 'star))
-
 (defhydra paloryemacs/hydra-elfeed ()
   "Filter"
   ("c" (elfeed-search-set-filter "@6-months-ago +cs") "cs")
@@ -75,6 +72,9 @@
   (progn
     (setq elfeed-show-entry-switch #'popwin:elfeed-show-entry
           elfeed-show-entry-delete #'popwin:elfeed-kill-buffer)
+
+    (defalias 'paloryemacs/elfeed-toggle-star
+      (elfeed-expose #'elfeed-search-toggle-all 'star))
 
     (use-package elfeed-org
       :init
