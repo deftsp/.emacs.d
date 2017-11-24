@@ -49,7 +49,7 @@
 
 (defun popwin:elfeed-show-entry (buff)
   (popwin:popup-buffer buff
-                       :position 'right
+                       :position 'bottom
                        :width 0.5
                        :dedicated t
                        :noselect t
@@ -57,9 +57,19 @@
 
 (defun popwin:elfeed-kill-buffer ()
   (interactive)
-  (let ((window (get-buffer-window (get-buffer "*elfeed-entry*"))))
-    (kill-buffer (get-buffer "*elfeed-entry*"))
-    (delete-window window)))
+  (let ((buf (get-buffer "*elfeed-entry*"))
+        (win (get-buffer-window (get-buffer "*elfeed-entry*"))))
+    (when buf
+      (kill-buffer buf))
+    (when (not (one-window-p))
+      (delete-window win))))
+
+(defun paloryemacs/elfeed-quit ()
+  (interactive)
+  (let ((win (get-buffer-window "*elfeed-entry*")))
+    (when (not (one-window-p))
+      (delete-window win)))
+  (quit-window))
 
 (use-package elfeed
   :defer t
@@ -76,6 +86,13 @@
     (defalias 'paloryemacs/elfeed-toggle-star
       (elfeed-expose #'elfeed-search-toggle-all 'star))
 
+    (use-package elfeed-show
+      :config
+      (progn
+        (defun paloryemacs/elfeed-show-mode-init ()
+          (setq truncate-lines nil))
+        (add-hook 'elfeed-show-mode-hook 'paloryemacs/elfeed-show-mode-init)))
+
     (use-package elfeed-org
       :init
       (progn
@@ -83,34 +100,42 @@
         (setq rmh-elfeed-org-auto-ignore-invalid-feeds t)
         (elfeed-org)))
 
-    (add-hook 'elfeed-new-entry-hook
-              (elfeed-make-tagger :feed-url "cnbeta\\.com"
-                                  :add '(news)))
-
+    (use-package elfeed-search
+      :config
+      (progn
+        ;; evilify bind it
+        (define-key elfeed-search-mode-map  "G" nil)))
 
     (evilified-state-evilify-map elfeed-search-mode-map
       :mode elfeed-search-mode
       :eval-after-load elfeed-search
       :bindings
-	  "Q"  'paloryemacs/elfeed-save-db-and-bury
+      "Q"  'paloryemacs/elfeed-save-db-and-bury
       "A"  'paloryemacs/elfeed-mark-all-as-read
       "c"  'elfeed-db-compact
       "gr" 'elfeed-update
       "gR" 'elfeed-search-update--force
       "gu" 'elfeed-unjam
       "o"  'elfeed-load-opml
-      "q"  'quit-window
+      "q"  'paloryemacs/elfeed-quit
       "m"  'paloryemacs/elfeed-toggle-star
       "f"  'paloryemacs/hydra-elfeed/body
       "w"  'elfeed-web-start
       "W"  'elfeed-web-stop)
+
     (evilified-state-evilify-map elfeed-show-mode-map
       :mode elfeed-show-mode
       :eval-after-load elfeed-show
       :bindings
       "q" 'quit-window
       (kbd "C-j") 'elfeed-show-next
-      (kbd "C-k") 'elfeed-show-prev)))
+      (kbd "C-k") 'elfeed-show-prev)
+
+
+
+    (add-hook 'elfeed-new-entry-hook
+              (elfeed-make-tagger :feed-url "cnbeta\\.com"
+                                  :add '(news)))))
 
 
 (provide '50elfeed)

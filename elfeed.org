@@ -69,7 +69,7 @@
 *** [[http://www.mikespook.com/feed/][Some reminiscences, some memories]]
 
 * News                                                               :elfeed:
-** [[http://www.cnbeta.com/backend.php?atom][cnBeta.COM]] :ignore:
+** [[http://www.cnbeta.com/backend.php?atom][cnBeta.COM]]
 ** [[http://www.oschina.net/news/rss][开源中国社区最新新闻]] :ignore:
 ** [[http://feeds2.feedburner.com/solidot][Solidot]]
 
@@ -123,7 +123,7 @@
 *** [[http://www.waerfa.com/feed][玩儿法]]
 *** [[http://hi.baidu.com/gliderx/rss][Glider's home]] :ignore:
 *** [[http://macoolife.com/blog/feed/][Mac oo Life]] :ignore:
-*** [[http://feeds.feedburner.com/mactuts][Mactuts+]]
+*** [[http://feeds.feedburner.com/mactuts][Mactuts+]] :ignore:
 
 * EBook                                                               :elfeed:
 ** [[http://www.salttiger.com/feed/][SaltTiger]]                                                          :ebook:
