@@ -103,7 +103,6 @@ offer a list of recently clocked tasks to clock into. "
   "fL"  'counsel-locate
   "fb"  'counsel-bookmark
   "fT"  'hydra-transparency/body
-  "gb"  'magit-blame-mode
   "gl"  'magit-log
   "gs"  'magit-status
   "gC"  'magit-commit

@@ -115,12 +115,26 @@
   :defer t
   :init
   (progn
+    (setq magit-completing-read-function 'ivy-completing-read) ; 'magit-ido-completing-read
+    ;; (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
     (autoload 'magit-grep "magit" "Command for `grep'." t) ; which is not a autload function at 2013.06.25 yet
+    (paloryemacs/declare-prefix "gd" "diff")
+    (paloryemacs/declare-prefix "gf" "file")
+    (paloryemacs/set-leader-keys
+      "gb"  'git-blame
+      "gc"  'magit-clone
+      "gff" 'magit-find-file
+      "gfh" 'magit-log-buffer-file
+      "gi"  'magit-init
+      "gL"  'magit-list-repositories
+      "gm"  'magit-dispatch-popup
+      "gs"  'magit-status
+      "gS"  'magit-stage-file
+      "gU"  'magit-unstage-file)
     (global-set-key (kbd "C-x G") 'magit-status))
   :config
   (progn
     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
-    ;; (setq magit-completing-read-function 'magit-ido-completing-read)
     (add-to-list 'magit-repository-directories "~/.emacs.d") ; C-u C-u M-x magit-status will ignore it
     (add-to-list 'magit-repository-directories "~/opt/emacs")
     ;; optional: this is the evil state that evil-magit will use
