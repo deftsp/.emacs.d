@@ -136,7 +136,7 @@
 ;; for over 23 (checked work in emacs 24)
 (defun set-east-asian-ambiguous-width-23 (width)
   (while (char-table-parent char-width-table)
-         (setq char-width-table (char-table-parent char-width-table)))
+    (setq char-width-table (char-table-parent char-width-table)))
   (let ((table (make-char-table nil)))
     (dolist (range (east-asian-ambiguous-characters))
       (set-char-table-range table range width))
@@ -144,7 +144,8 @@
     (set-char-table-parent table char-width-table)
     (setq char-width-table table)))
 
-(set-east-asian-ambiguous-width 2)
+;; set the language environment to utf-8, no need to set it now
+;; (set-east-asian-ambiguous-width 2)
 
 ;;; modifier
 (cl-case system-type
