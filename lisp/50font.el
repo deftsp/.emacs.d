@@ -5,16 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords: font
 
-
-;;; Commentary:
-;;
-
 ;;; Code:
-;; TODO: Following code does not works in macOS.
-;; (set-fontset-font "fontset-default"
-;;                   (cons (decode-char 'ucs #x2500)  (decode-char 'ucs #x257F))
-;;                   (font-spec :name "DejaVu Sans Mono:" :registry "iso10646-1"))
-;; (setq x-use-underline-position-properties nil)
 
 ;;; Programming fonts
 ;; https://github.com/ProgrammingFonts/ProgrammingFonts
@@ -48,6 +39,19 @@
   (setq mac-auto-operator-composition-characters
         "!\"#$%&'()*+,-./:;<=>?@[]^_`{|}~"))
 
+;; (setq x-use-underline-position-properties nil)
+
+;; https://github.com/tumashu/cnfonts/issues/64
+;; By default, Emacs will try to use the default face’s font for displaying
+;; symbol and punctuation characters, disregarding the fontsets, if the default
+;; font can display the character. Set this to nil to make Emacs honor the
+;; fontsets instead.
+(setq use-default-font-for-symbols nil) ; default is nil
+
+;; Note: when specify the font to "PragmataPro", the ?— will take column and
+;; the char-width is 1. However if the font is "PragmataPro Mono", only takes
+;; one column.
+;; (char-width ?—)
 
 (use-package cnfonts
   :init
