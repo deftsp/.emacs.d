@@ -975,7 +975,6 @@ to `reorganize-frame', otherwise set to `other-frame'."
             ("d" "Drill" entry (file+headline "~/org/drill/playground.org" "Pond")
              "* Q: %?       :drill:\n\n** A:\n"
              :kill-buffer t
-             :empty-lines 1
              :empty-lines-after 1)
             ("p" "Phone call" entry (file+headline "~/org/GTD.org" "Inbox")
              "* PHONE %? :PHONE:\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :END:"
