@@ -212,10 +212,8 @@ recover evil state to it, otherwiser change to evil-emacs-state."
     (general-evil-setup)
     (general-nmap
      "H"    "^"
-     "TAB" 'indent-for-tab-command
      ;; make sure that Evil's normal state never touches TAB, just wire this fall-through binding
      ;; "TAB" 'paloryemacs/evil-undefine
-     "C-o" 'paloryemacs/open-line-with-indent '; default evil-jump-backward
      "gL"  'org-mac-grab-link
      "gd"  'paloryemacs/jump-to-definition
      "gD"  'paloryemacs/jump-to-definition-other-window
@@ -236,11 +234,12 @@ recover evil state to it, otherwiser change to evil-emacs-state."
 
     (general-mmap
      "TAB" 'indent-for-tab-command
-     "C-v" nil
      ;; reserved for evil-snipe
      ;; "s" 'evil-avy-goto-char-timer
      ;; "S" 'evil-avy-goto-word-or-subword-1
-     )
+
+     [C-i] 'evil-jump-forward ; bind evil-jump-forward for GUI only.
+     "C-v" nil)
 
     (general-vmap
      "Q" "gq"
@@ -262,6 +261,7 @@ recover evil state to it, otherwiser change to evil-emacs-state."
      "C-d" nil
      "C-a" nil
      "C-w" nil
+     "C-o" 'paloryemacs/open-line-with-indent
      [remap newline] nil
      [remap newline-and-indent] nil)
 
@@ -386,7 +386,7 @@ kill internal buffers too."
   (setq evil-disable-insert-state-bindings nil
         evil-move-cursor-back nil
         evil-want-visual-char-semi-exclusive t
-        evil-want-C-i-jump nil
+        evil-want-C-i-jump t
         evil-cross-lines t
         ;; evil-highlight-closing-paren-at-point-states nil
         evil-magic 'very-magic))

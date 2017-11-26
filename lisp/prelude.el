@@ -13,7 +13,7 @@
 (defvar dotpaloryemacs-leader-key "SPC"
   "The leader key.")
 
-(defvar dotpaloryemacs-distinguish-gui-tab nil
+(defvar dotpaloryemacs-distinguish-gui-tab t
   "If non nil, distinguish C-i and tab in the GUI version of
 emacs.")
 
