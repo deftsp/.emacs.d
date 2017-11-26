@@ -131,11 +131,13 @@
     (defun paloryemacs/cnfonts-set-extra-fonts (fontsizes-list)
       (mapc
        (lambda (l)
-         (let* ((target (cdr (assoc 'target l)))
+         (let* ((default-font-name "MesloLGS Nerd Font")
+                (target (cdr (assoc 'target l)))
                 (fontname (or (cdr (assoc 'fontname l))
-                              "MesloLGS Nerd Font"))
+                              default-font-name))
                 (fontsize-index (or (cdr (assoc 'fontsize-index l)) 0))
-                (fontsize (nth fontsize-index fontsizes-list))
+                (rescale (or (cdr (assoc 'rescale l)) 1))
+                (fontsize (* rescale (nth fontsize-index fontsizes-list)))
                 (fontspec (font-spec :name fontname
                                      :size fontsize
                                      :weight 'normal
@@ -146,7 +148,8 @@
            (set-fontset-font "fontset-default"
                              target
                              fontspec nil 'prepend)))
-       '(((target . symbol))
+       '(((target . symbol)
+          (rescale . 0.8)) ; not works for some font size
          ;; Note: "« »" not coverd by mplus Nerd Font
          ;; ((target . (#x0080 . #x00ff))) ; Latin-1 Supplement,   see above comment
          ((target . (#xe5fa . #xe62b))) ; Seti-UI + Custom
@@ -158,7 +161,9 @@
          ((target . (#x23ed . #x2b5c))) ; IEC Power Symbols
          ((target . (#xf300 . #xf317))) ; Font Linux
          ((target . (#x2500 . #x257f))) ; ┌ └
-         ((target . (#x25A0 . #x25ff)) (fontname . "Hack")) ; Geometric Shapes,  ◦
+         ((target . (#x25A0 . #x25ff))  ; Geometric Shapes, ▢ ◦
+          (rescale . 0.8)
+          (fontname . "Hack"))
          ;; "☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷"
          ((target . (#x2600 . #x26ff))
           (fontname . "FreeMono")
