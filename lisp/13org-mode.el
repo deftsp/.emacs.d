@@ -483,9 +483,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                                        todo-state-down
                                                        effort-up
                                                        category-keep))))
+            (tags-todo "TODO=\"NEXT\""
+                       ((org-agenda-sorting-strategy '(tag-up priority-down))
+                        (org-agenda-overriding-header "NEXT Tasks:")))
             (tags "+PRIORITY=\"A\"+CATEGORY={Task\\|Project}"
-                  (
-                   (org-agenda-skip-function
+                  ((org-agenda-skip-function
                     '(org-agenda-skip-entry-if 'todo 'done))
 
                    (org-agenda-sorting-strategy '(tag-up priority-down))
