@@ -38,6 +38,8 @@
           org-log-done 'time
           org-log-reschedule 'time
           org-log-redeadline 'time
+          org-log-refile 'time
+          org-log-into-drawer "LOGBOOK"
           org-startup-with-inline-images t
           org-image-actual-width nil
           org-ctrl-k-protect-subtree t ; give a query for delete
@@ -1048,25 +1050,22 @@ to `reorganize-frame', otherwise set to `other-frame'."
 ;; update appt each time agenda opened
 (add-hook 'org-agenda-finalize-hook 'paloryemacs/org-agenda-to-appt)
 
+(use-package org-protocol
+  :config
+  (progn
+    ;; open -g 'org-protocol://hammerspoon?action=org-clock-goto'
+    (defun org-protocol-hammerspoon (data)
+      "Handle event from Hammerspoon"
+      (let* ((action (plist-get data :action)))
+        (cond ((string= action "org-clock-goto")
+               (call-interactively 'org-clock-goto) ))))
+
+    (add-to-list 'org-protocol-protocol-alist
+                 '("handle action from hammerspoon"
+                   :protocol "hammerspoon"
+                   :function org-protocol-hammerspoon))))
+
 ;;; clock
-;; open -g 'org-protocol://hammerspoon?action=org-clock-goto'
-
-(defun org-protocol-hammerspoon (data)
-  "Handle event from Hammerspoon"
-  (let* ((action (plist-get data :action)))
-    (cond ((string= action "org-clock-goto")
-           (call-interactively 'org-clock-goto) ))))
-
-(add-to-list 'org-protocol-protocol-alist
-             '("handle action from hammerspoon"
-               :protocol "hammerspoon"
-               :function org-protocol-hammerspoon))
-
-
-;;
-;;
-
-
 (use-package org-clock
   :defer t
   :init
@@ -1075,7 +1074,7 @@ to `reorganize-frame', otherwise set to `other-frame'."
     ;; To save the clock history across Emacs sessions
     (global-set-key (kbd "C-S-g") 'org-clock-goto) ; jump to current task from anywhere
     (setq org-clock-clocked-in-display nil)
-    (setq org-clock-history-length 20)
+    (setq org-clock-history-length 32)
     ;; Save the running clock and all clock history when exiting Emacs, load it on startup
     (setq org-clock-persist t)
     ;; If idle for more than 15 minutes, resolve the things by asking what to do
@@ -1085,8 +1084,8 @@ to `reorganize-frame', otherwise set to `other-frame'."
     ;; s 	keep 0 minutes, and subtract some amount from the clock, clocking back in
     ;; S 	keep 0 minutes, subtract some amount from the clock, and clock out
     ;; C 	cancel the clock altogether
-    (setq org-clock-idle-time 15)
-    (setq org-clock-into-drawer t)
+    (setq org-clock-idle-time 30)
+    (setq org-clock-into-drawer "CLOCK") ; Have a special :CLOCK: drawer for clocks
     (setq org-clock-in-resume t)
     ;; Do not prompt to resume an active clock, just resume it
     (setq org-clock-persist-query-resume nil)
