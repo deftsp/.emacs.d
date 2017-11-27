@@ -1058,12 +1058,20 @@ to `reorganize-frame', otherwise set to `other-frame'."
 (use-package org-protocol
   :config
   (progn
+    (defun paloryemacs/on-input-source-change-to-chinese ()
+      (when (and (fboundp 'evil-mode)
+                 evil-mode
+                 (eq 'normal evil-state))
+        (call-interactively 'evil-insert)))
+
     ;; open -g 'org-protocol://hammerspoon?action=org-clock-goto'
     (defun org-protocol-hammerspoon (data)
       "Handle event from Hammerspoon"
       (let* ((action (plist-get data :action)))
         (cond ((string= action "org-clock-goto")
-               (call-interactively 'org-clock-goto) ))))
+               (call-interactively 'org-clock-goto))
+              ((string= action "input-source-change-to-chinese")
+               (paloryemacs/on-input-source-change-to-chinese)))))
 
     (add-to-list 'org-protocol-protocol-alist
                  '("handle action from hammerspoon"
