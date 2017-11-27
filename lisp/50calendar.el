@@ -46,21 +46,9 @@
   :config
   (appt-activate +1))
 
-
-;; appointments notification
-;; http://article.gmane.org/gmane.emacs.orgmode/66151
-(defvar paloryemacs/terminal-notifier-bin "terminal-notifier")
-
-(defun paloryemacs/terminal-notification (title msg)
-  (if (executable-find paloryemacs/terminal-notifier-bin)
-      (shell-command (concat paloryemacs/terminal-notifier-bin " -message " msg " -title " title))
-    (message (format "unable to find: %s" paloryemacs/terminal-notifier-bin))))
-
-
 ;; use grow to notification
 ;; (defun paloryemacs/grow-appt-display (min-to-app new-time msg)
 ;;   (growl (format "Appointment in %s minute(s)" min-to-app) msg t))
-
 
 (setq diary-date-forms '((year "/" month "/" day "[^/0-9]"))
       calendar-date-display-form '(year "/" month "/" day)

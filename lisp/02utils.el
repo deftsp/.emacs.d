@@ -60,6 +60,25 @@ The message is always displayed. "
   (message "(Paloryemacs) Warning: %s" (apply 'format msg args)))
 
 
+;; http://article.gmane.org/gmane.emacs.orgmode/66151
+(defvar paloryemacs/terminal-notifier-bin "terminal-notifier")
+
+;; Small terminal icon in title when using -appIcon option. It's the intended
+;; behavior. https://github.com/julienXX/terminal-notifier/issues/131
+(defun paloryemacs/terminal-notification (title msg)
+  (if (executable-find paloryemacs/terminal-notifier-bin)
+      (let* ((icon-path "/Applications/Emacs.app/Contents/Resources/Emacs.icns")
+             (cmd (format "%s -message \"%s\" -title \"%s\" -active org.gnu.Emacs"
+                          paloryemacs/terminal-notifier-bin
+                          msg
+                          title))
+             (cmd-with-icon
+              (if (file-exists-p icon-path)
+                  (concat cmd " -appIcon " "\"" icon-path "\"")
+                cmd)))
+        (shell-command cmd-with-icon))
+    (error (format "unable to find: %s" paloryemacs/terminal-notifier-bin))))
+
 ;; http://oremacs.com/2015/03/05/testing-init-sanity/
 (defun paloryemacs/test-emacs ()
   "Testing your .emacs sanity.

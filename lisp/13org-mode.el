@@ -70,6 +70,11 @@
     (when window-system
       ;; … ↴, ⬎, ⤷, ⤵, ▼ and ⋱.
       (setq org-ellipsis " ◦◦◦ "))
+
+    (when (fboundp 'paloryemacs/terminal-notification)
+      (setq org-show-notification-handler
+            (lambda (msg) (paloryemacs/terminal-notification nil msg))))
+
     ;; global Effort estimate values
     (setq org-global-properties
           '(("Effort_ALL" .
@@ -1073,7 +1078,8 @@ to `reorganize-frame', otherwise set to `other-frame'."
   (progn
     ;; To save the clock history across Emacs sessions
     (global-set-key (kbd "C-S-g") 'org-clock-goto) ; jump to current task from anywhere
-    (setq org-clock-clocked-in-display nil)
+    (setq org-clock-sound "~/.emacs.d/ni.wav")
+    (setq org-clock-clocked-in-display 'mode-line)
     (setq org-clock-history-length 32)
     ;; Save the running clock and all clock history when exiting Emacs, load it on startup
     (setq org-clock-persist t)
@@ -1106,20 +1112,33 @@ to `reorganize-frame', otherwise set to `other-frame'."
       (let ((text (if (and (boundp 'org-mode-line-string)
                            org-mode-line-string
                            (fboundp' org-clocking-p)
+                           (memq 'org-mode-line-string global-mode-string)
                            (org-clocking-p))
                       (substring-no-properties org-mode-line-string)
                     "Nothing !!!")))
         (paloryemacs/open-hammerspoon-url
          "org_clock_update"
          "agenda_next_info"
-         text)))
+         text
+         "task_overrun"
+         (if org-clock-task-overrun "true" "false"))))
+
+
+    (advice-add 'org-clock-update-mode-line :after #'paloryemacs/update-hammerspoon-org-clock-bar)
+    (advice-remove 'org-clock-update-mode-line #'paloryemacs//update-hammerspoon-org-clock-bar)
 
     (defun paloryemacs/org-clock-force-mode-line-update ()
       (setq org-mode-line-string nil)
       (org-clock-update-mode-line)
       (paloryemacs/update-hammerspoon-org-clock-bar))
 
-    (add-hook 'org-clock-in-hook 'paloryemacs/org-clock-force-mode-line-update)
+    ;; org-clock-in will call `org-clock-update-mode-line'
+    ;; (add-hook 'org-clock-in-hook 'paloryemacs/org-clock-force-mode-line-update)
+
+    ;; `org-clock-cancel' and `org-clock-out' remove the `org-mode-line-string'
+    ;; from `global-mode-string' then call `force-mode-line-update' instead of
+    ;; `org-clock-update-mode-line' which have been advice to update hammerspoon
+    ;; org_clock_bar
     (add-hook 'org-clock-cancel-hook 'paloryemacs/org-clock-force-mode-line-update)
     (add-hook 'org-clock-out-hook 'paloryemacs/org-clock-force-mode-line-update)))
 
