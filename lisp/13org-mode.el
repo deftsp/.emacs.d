@@ -87,7 +87,7 @@
                               (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
                               (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))
           org-todo-keyword-faces (quote (("TODO"      . (:foreground "red"          :weight bold))
-                                         ("NEXT"      . (:foreground "cyan"         :weight bold))
+                                         ("NEXT"      . (:foreground "#d33682"         :weight bold))
                                          ("WAITING"   . (:foreground "orange"       :weight bold))
                                          ("SOMEDAY"   . (:foreground "magenta"      :weight bold))
                                          ("DONE"      . (:foreground "forest green" :weight bold :strike-through t))
@@ -1029,6 +1029,15 @@ to `reorganize-frame', otherwise set to `other-frame'."
 ;;   "Clear the appt-time-msg-list."
 ;;   (setq appt-time-msg-list nil))
 
+(defun paloryemacs//quiet-no-event-message (orig-fun &rest args)
+  "Do annoy me when no event"
+  (paloryemacs/with-suppress-message "No event to add"
+    (apply orig-fun args)))
+
+(advice-add 'org-agenda-to-appt :around #'paloryemacs//quiet-no-event-message)
+;; (advice-remove 'org-agenda-to-appt #'paloryemacs//quiet-no-event-message)
+
+
 (defun paloryemacs/org-agenda-to-appt ()
   (setq appt-time-msg-list nil)
   ;; Dangerous!!! do not use `appt-add', this might remove entries added by `appt-add' manually.
@@ -1040,6 +1049,24 @@ to `reorganize-frame', otherwise set to `other-frame'."
 (add-hook 'org-agenda-finalize-hook 'paloryemacs/org-agenda-to-appt)
 
 ;;; clock
+;; open -g 'org-protocol://hammerspoon?action=org-clock-goto'
+
+(defun org-protocol-hammerspoon (data)
+  "Handle event from Hammerspoon"
+  (let* ((action (plist-get data :action)))
+    (cond ((string= action "org-clock-goto")
+           (call-interactively 'org-clock-goto) ))))
+
+(add-to-list 'org-protocol-protocol-alist
+             '("handle action from hammerspoon"
+               :protocol "hammerspoon"
+               :function org-protocol-hammerspoon))
+
+
+;;
+;;
+
+
 (use-package org-clock
   :defer t
   :init
@@ -1073,7 +1100,29 @@ to `reorganize-frame', otherwise set to `other-frame'."
     ;; Include current clocking task in clock reports
     (setq org-clock-report-include-clocking-task t)
     (with-eval-after-load 'org
-      (org-clock-persistence-insinuate))))
+      (org-clock-persistence-insinuate)))
+  :config
+  (progn
+    (defun paloryemacs/update-hammerspoon-org-clock-bar ()
+      (let ((text (if (and (boundp 'org-mode-line-string)
+                           org-mode-line-string
+                           (fboundp' org-clocking-p)
+                           (org-clocking-p))
+                      (substring-no-properties org-mode-line-string)
+                    "Nothing !!!")))
+        (paloryemacs/open-hammerspoon-url
+         "org_clock_update"
+         "agenda_next_info"
+         text)))
+
+    (defun paloryemacs/org-clock-force-mode-line-update ()
+      (setq org-mode-line-string nil)
+      (org-clock-update-mode-line)
+      (paloryemacs/update-hammerspoon-org-clock-bar))
+
+    (add-hook 'org-clock-in-hook 'paloryemacs/org-clock-force-mode-line-update)
+    (add-hook 'org-clock-cancel-hook 'paloryemacs/org-clock-force-mode-line-update)
+    (add-hook 'org-clock-out-hook 'paloryemacs/org-clock-force-mode-line-update)))
 
 ;;; org-publish
 (setq org-publish-project-alist
@@ -1730,6 +1779,8 @@ _h_tml    ^ ^        _A_SCII:
         (spacing nil))
     (org-map-entries 'paloryemacs/add-created-pro-from-subtree
                      MATCH SCOPE SKIP)))
+
+
 
 (provide '13org-mode)
 

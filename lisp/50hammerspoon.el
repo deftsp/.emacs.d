@@ -18,7 +18,8 @@
             (setq url (concat url "?" querys)))
 
         (error "illegal hammerspoon params")))
-    (shell-command (format "open -g \"%s\"" url))))
+    (paloryemacs/with-suppress-message "Shell command succeeded with"
+      (shell-command (format "open -g \"%s\"" url)))))
 
 (defun paloryemacs/notify-hammerspoon-did-init ()
   (paloryemacs/open-hammerspoon-url "emacs_did_init"))

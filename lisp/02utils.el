@@ -22,6 +22,23 @@
     (define-key evil-evilified-state-map-original [escape] 'evil-force-evilified-state)))
 
 
+;; Michael Hoffman at the comment of
+;; http://endlessparentheses.com/understanding-letf-and-how-it-replaces-flet.html
+
+(defalias 'paloryemacs/message-orig (symbol-function 'message))
+
+;; Unfortunately this isn't re-entrant, so if you stack uses of
+;; with-suppress-message I think only the innermost regexes will still be
+;; suppressed. The this-fn of noflet would be nice but I use this very early in
+;; my emacs startup so I wouldn't necessarily have access to it.
+(defmacro paloryemacs/with-suppress-message (regex &rest body)
+  "Suppress any `message' starting with REGEX when executing BODY."
+  (declare (indent 1))
+  `(cl-letf (((symbol-function 'message)
+              (lambda (format-string &rest args)
+                (unless (string-match-p ,regex format-string)
+                  (apply 'paloryemacs/message-orig format-string args)))))
+     ,@body))
 
 (defmacro paloryemacs-with-timer (title &rest forms)
   "Run the given FORMS, counting the elapsed time.
