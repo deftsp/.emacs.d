@@ -1346,9 +1346,6 @@ inputting math (Unicode) symbols." t))
     (define-key global-map (kbd "M-g x") 'dumb-jump-go-prefer-external)
     (define-key global-map (kbd "M-g o") 'dumb-jump-go-prefer-external-other-window)))
 
-;;; syntactic-close
-(global-set-key (kbd ")") 'syntactic-close)
-
 
 ;;; nyan-mode
 ;; https://github.com/TeMPOraL/nyan-mode
