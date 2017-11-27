@@ -242,9 +242,9 @@ recover evil state to it, otherwiser change to evil-emacs-state."
      "C-v" nil)
 
     (general-vmap
-     "Q" "gq"
+     ")"  "S)"
      "v" 'evil-visual-block ; make it easy to switch to visual-char-block mode from visual-char
-     )
+     "Q" "gq")
 
     (general-imap
      "C-v" nil
