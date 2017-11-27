@@ -451,31 +451,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   ;; http://orgmode.org/manual/Matching-tags-and-properties.html
   ;; https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html
   (setq org-agenda-custom-commands
-        `(("A" "Today's Priority #A Tasks" agenda ""
-           ((org-agenda-entry-types '(:scheduled))
-            (org-agenda-span 'day)
-            (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp "\\=.*\\[#A\\]"))
-            (org-agenda-overriding-header "Today's Priority #A Tasks: ")))
-
-          ("b" "Today's Priority #A and #B tasks" agenda ""
-           ((org-agenda-entry-types '(:scheduled))
-            (org-agenda-span 'day)
-            (org-agenda-overriding-header "Today's priority #A and #B Tasks: ")
-            (org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp "\\=.*\\[#C\\]"))))
-
-          ("c" "Appointment Calendar" agenda ""
-           ((org-agenda-overriding-header "Appointment Calendar")
-            (org-agenda-sorting-strategy '(time-up))
-            (org-agenda-span 14)
-            (org-agenda-regexp-filter-preset '("+APPT"))))
-
-          ;; ("c" todo "DONE|DEFERRED|CANCELLED") ; not include scheduled TODO entiries
-
-          ;; ("d" todo "DELEGATED")
-          ("D" "Done Tasks" tags "TODO=\"DONE\""
-           ((org-agenda-overriding-header "Done Tasks")))
-
-          ("d" "Daily agenda and all TODOs"
+        `((" " "Daily agenda and all TODOs"
            ((agenda "" ((org-agenda-span 'day)
                         (org-agenda-sorting-strategy '(habit-down
                                                        time-up
@@ -501,11 +477,33 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                       (org-agenda-overriding-header "ALL Normal Priority Tasks:"))))
            ;; ((org-agenda-compact-blocks t))
            ((org-agenda-block-separator ?▰)))
+          ("A" "Today's Priority #A Tasks" agenda ""
+           ((org-agenda-entry-types '(:scheduled))
+            (org-agenda-span 'day)
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'notregexp "\\=.*\\[#A\\]"))
+            (org-agenda-overriding-header "Today's Priority #A Tasks: ")))
 
-          ;; ("d" "Deadlined tasks" tags "TODO<>\"\"&TODO<>{DONE\\|CANCELED\\|NOTE\\|PROJECT}"
-          ;;  ((org-agenda-overriding-header "Deadlined tasks: ")
-          ;;   (org-agenda-skip-function '(org-agenda-skip-entry-if 'notdeadline))
-          ;;   (org-agenda-sorting-strategy '(category-up))))
+          ("b" "Today's Priority #A and #B tasks" agenda ""
+           ((org-agenda-entry-types '(:scheduled))
+            (org-agenda-span 'day)
+            (org-agenda-overriding-header "Today's priority #A and #B Tasks: ")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp "\\=.*\\[#C\\]"))))
+
+          ("c" "Appointment Calendar" agenda ""
+           ((org-agenda-overriding-header "Appointment Calendar")
+            (org-agenda-sorting-strategy '(time-up))
+            (org-agenda-span 14)
+            (org-agenda-regexp-filter-preset '("+APPT"))))
+
+          ;; ("c" todo "DONE|DEFERRED|CANCELLED") ; not include scheduled TODO entiries
+
+          ("D" "Done Tasks" tags "TODO=\"DONE\""
+           ((org-agenda-overriding-header "Done Tasks")))
+
+          ("d" "Deadlined tasks" tags "TODO<>\"\"&TODO<>{DONE\\|CANCELED\\|NOTE\\|PROJECT}"
+           ((org-agenda-overriding-header "Deadlined Tasks: ")
+            (org-agenda-skip-function '(org-agenda-skip-entry-if 'notdeadline))
+            (org-agenda-sorting-strategy '(category-up))))
 
           ("e" "Emacs Tasks" tags "emacs&LEVEL<=2"
            ((org-agenda-overriding-header "Emacs Tasks")))
@@ -1244,7 +1242,7 @@ to `reorganize-frame', otherwise set to `other-frame'."
             (org-agenda-redo)
             (org-fit-window-to-buffer))
         ;; (call-interactively 'org-agenda-list)
-        (org-agenda nil "d")))))
+        (org-agenda nil " ")))))
 
 (with-eval-after-load 'evil
   (define-key evil-normal-state-map (kbd "S-SPC") 'paloryemacs/jump-to-org-agenda))
