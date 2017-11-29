@@ -161,11 +161,12 @@ mouse-1: Display Line and Column Mode Menu")
   (window-parameter (selected-window) 'ace-window-path))
 
 (defpowerline powerline-winum-number
-  (let* ((n (if (fboundp 'winum-get-number) (winum-get-number) nil))
-         (s (if (numberp n)
-                (int-to-string n)
-              "")))
-    (propertize (concat " #" s) 'face 'winum-face)))
+  (if (and (fboundp 'winum-mode) winum-mode)
+      (let* ((n (winum-get-number))
+             (s (if (numberp n) (int-to-string n) "")))
+        (propertize (concat " #" s) 'face 'winum-face))
+    "##"))
+
 
 (defpowerline paloryemacs/powerline-vc
   (let ((vc-mark (char-to-string #xe0a0)))
