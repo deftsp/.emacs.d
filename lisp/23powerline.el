@@ -17,8 +17,10 @@
 
 (use-package powerline
   :init
-  (setq powerline-text-scale-factor 0.8
-        powerline-height 20))
+  (progn
+    (setq powerline-text-scale-factor 0.8
+          ;; powerline-default-separator 'utf-8 ; 'arrow
+          powerline-height 20)))
 
 (defvar powerline-git-state-mark-modeline t
   "When t git state mark on will work with powrline instead of in the front of
@@ -159,7 +161,7 @@ mouse-1: Display Line and Column Mode Menu")
   (window-parameter (selected-window) 'ace-window-path))
 
 (defpowerline powerline-winum-number
-  (let* ((n (winum-get-number))
+  (let* ((n (if (fboundp 'winum-get-number) (winum-get-number) nil))
          (s (if (numberp n)
                 (int-to-string n)
               "")))
@@ -278,7 +280,7 @@ mouse-1: Display Line and Column Mode Menu")
 
 
 (defpowerline powerline-evil-tag
-  (if (and (boundp 'evil-mode) evil-mode evil-mode-line-tag)
+  (if (and (boundp 'evil-mode) evil-mode)
       (let* ((raw-text (strip-text-properties evil-mode-line-tag))
              (raw-tag (replace-regexp-in-string "[<> «»]" "" raw-text)))
         (cond
@@ -477,8 +479,8 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
             (powerline-fill face2 (powerline-width rhs))
             (powerline-render rhs))))
 
-(with-eval-after-load 'powerline-themes
-  ;; (setq powerline-default-separator 'utf-8) ; 'arrow
+(use-package powerline-themes
+  :config
   (paloryemacs/setup-powerline-evil-theme))
 
 (defun paloryemacs/force-update-mode-line  ()
