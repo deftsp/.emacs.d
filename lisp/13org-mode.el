@@ -148,6 +148,10 @@
       (progn
         (evil-org-set-key-theme '(navigation textobjects todo additional))))
 
+    (use-package org-download
+      :config
+      (org-download-enable))
+
     (defun paloryemacs/org-mode-init ()
       (display-line-numbers-mode -1))
 
@@ -1061,6 +1065,8 @@ to `reorganize-frame', otherwise set to `other-frame'."
     (defun paloryemacs/on-input-source-change-to-chinese ()
       (when (and (fboundp 'evil-mode)
                  evil-mode
+                 (not (minibufferp))
+                 (not isearch-mode)
                  (eq 'normal evil-state))
         (call-interactively 'evil-insert)))
 
