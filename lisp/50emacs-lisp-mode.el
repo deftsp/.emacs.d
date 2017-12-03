@@ -25,9 +25,9 @@
      ))
 
 (defun paloryemacs/emacs-lisp-mode-init ()
-  (turn-on-eldoc-mode)
-  (set (make-local-variable 'lisp-indent-function)
-	   'common-lisp-indent-function))
+  ;; (set (make-local-variable 'lisp-indent-function)
+  ;;      'common-lisp-indent-function)
+  (turn-on-eldoc-mode))
 
 (add-hook 'emacs-lisp-mode-hook 'paloryemacs/emacs-lisp-mode-init)
 
