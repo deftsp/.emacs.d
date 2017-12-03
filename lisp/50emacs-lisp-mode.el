@@ -24,7 +24,13 @@
      ;;  'paredit-close-round)
      ))
 
-(add-hook 'emacs-lisp-mode-hook 'turn-on-eldoc-mode)
+(defun paloryemacs/emacs-lisp-mode-init ()
+  (turn-on-eldoc-mode)
+  (set (make-local-variable 'lisp-indent-function)
+	   'common-lisp-indent-function))
+
+(add-hook 'emacs-lisp-mode-hook 'paloryemacs/emacs-lisp-mode-init)
+
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
 ;; (add-hook 'rcirc-mode-hook 'turn-on-eldoc-mode)
