@@ -736,7 +736,8 @@ that was stored with paloryemacs/point-to-register."
 (defun paloryemacs/replace-charset-to-oem (start end)
   (interactive "r")
   (save-excursion
-    (format-replace-strings '(("’"   .   "'")
+    (format-replace-strings '(("　"  .   " ")
+                              ("’"   .   "'")
                               ("′"   .   "'")
                               ("‘"   .   "'")
                               ("…"   .   "...")

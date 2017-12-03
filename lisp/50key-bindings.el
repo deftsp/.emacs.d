@@ -658,7 +658,6 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
     ("g" golden-ratio-mode "golden-ratio")
     ("i" aggressive-indent-mode "aggressive-indent")
     ("G" toggle-debug-on-quit "debug-quit")
-    ("o" paloryemacs/replace-charset-to-oem "char->oem")
     ("p" smartparens-mode "smartparens")
     ("C-p" smartparens-global-mode "global smartparens")
     ("r" dired-toggle-read-only "read only") ; generalized version of `read-only-mode'.
@@ -740,6 +739,7 @@ undo-tree-_u_ndo undo-tree-_r_edo
    ("G" hydra-git-gutter/body "git gutter")
    ("h" hydra-apropos/body "apropos")
    ("j" dired-jump "dired jump")
+   ("o" paloryemacs/replace-charset-to-oem "char->oem")
    ("p" hydra-projectile/body nil)
    ("s" paloryemacs/switch-to-scratch nil)
    ("t" hydra-toggle/body "toggle")

@@ -79,21 +79,23 @@
 ;; do not warning me, I like delay set it.
 (setq python-shell-prompt-detect-failure-warning nil)
 
-(with-eval-after-load "python"
-  (setq python-indent-guess-indent-offset nil
-        python-indent-offset 4)
-
-  ;; (if (executable-find "ipython")
-  ;;     (setq python-shell-interpreter "ipython"
-  ;;           python-shell-prompt-regexp "In \\[[0-9]+\\]: "
-  ;;           python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
-  ;;           python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
-  ;;           python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
-  ;;           python-shell-completion-string-code
-  ;;           "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
-  ;;   (setq python-shell-interpreter "python"))
-  )
-
+(use-package python
+  :defer t
+  :init
+  (progn
+    (setq python-indent-guess-indent-offset nil
+          python-indent-offset 4)
+    (setq python-shell-completion-native-enable nil)
+    ;; (if (executable-find "ipython")
+    ;;     (setq python-shell-interpreter "ipython"
+    ;;           python-shell-prompt-regexp "In \\[[0-9]+\\]: "
+    ;;           python-shell-prompt-output-regexp "Out\\[[0-9]+\\]: "
+    ;;           python-shell-completion-setup-code "from IPython.core.completerlib import module_completion"
+    ;;           python-shell-completion-module-string-code "';'.join(module_completion('''%s'''))\n"
+    ;;           python-shell-completion-string-code
+    ;;           "';'.join(get_ipython().Completer.all_completions('''%s'''))\n")
+    ;;   (setq python-shell-interpreter "python"))
+    ))
 
 (put 'project-venv-name 'safe-local-variable 'stringp)
 
