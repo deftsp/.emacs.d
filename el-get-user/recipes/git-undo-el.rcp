@@ -1,0 +1,4 @@
+(:name git-undo-el
+       :description "A command for Emacs to regress or \"undo\" a region back through its Git history"
+       :type github
+       :pkgname "jwiegley/git-undo-el")
