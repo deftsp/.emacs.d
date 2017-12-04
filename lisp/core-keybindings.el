@@ -1,16 +1,15 @@
-;;; core-keybindings.el --- Spacemacs Core File
+;;; core-keybindings.el --- Paloryemacs Core File
 ;;
 ;; Copyright (c) 2012-2017 Sylvain Benner & Contributors
 ;;
 ;; Author: Sylvain Benner <sylvain.benner@gmail.com>
-;; URL: https://github.com/syl20bnr/spacemacs
+;; URL: https://github.com/syl20bnr/paloryemacs
 ;;
 ;; This file is not part of GNU Emacs.
 ;;
 ;;; License: GPLv3
 
 ;; (require 'core-funcs)
-(require 'which-key)
 
 (defvar paloryemacs/prefix-titles nil
   "alist for mapping command prefixes to long names.")
@@ -55,9 +54,10 @@ LONG-NAME if given is stored in `paloryemacs/prefix-titles'."
                                  (kbd full-prefix-emacs))))
     ;; define the prefix command only if it does not already exist
     (unless long-name (setq long-name name))
-    (which-key-declare-prefixes
+    (which-key-add-key-based-replacements
       full-prefix-emacs (cons name long-name)
       full-prefix (cons name long-name))))
+(put 'paloryemacs/declare-prefix 'lisp-indent-function 'defun)
 
 (defun paloryemacs/declare-prefix-for-mode (mode prefix name &optional long-name)
   "Declare a prefix PREFIX. MODE is the mode in which this prefix command should
@@ -74,14 +74,15 @@ used as the prefix command."
                   " " (substring prefix 1))))
     (unless long-name (setq long-name name))
     (let ((prefix-name (cons name long-name)))
-      (which-key-declare-prefixes-for-mode mode
+      (which-key-add-major-mode-key-based-replacements mode
         full-prefix-emacs prefix-name
         full-prefix prefix-name)
       (when (and is-major-mode-prefix dotpaloryemacs-major-mode-leader-key)
-        (which-key-declare-prefixes-for-mode mode major-mode-prefix prefix-name))
+        (which-key-add-major-mode-key-based-replacements mode major-mode-prefix prefix-name))
       (when (and is-major-mode-prefix dotpaloryemacs-major-mode-emacs-leader-key)
-        (which-key-declare-prefixes-for-mode
+        (which-key-add-major-mode-key-based-replacements
           mode major-mode-prefix-emacs prefix-name)))))
+(put 'paloryemacs/declare-prefix-for-mode 'lisp-indent-function 'defun)
 
 (defun paloryemacs/set-leader-keys (key def &rest bindings)
   "Add KEY and DEF as key bindings under
@@ -104,6 +105,8 @@ pairs. For example,
     (setq key (pop bindings) def (pop bindings))))
 (put 'paloryemacs/set-leader-keys 'lisp-indent-function 'defun)
 
+(defalias 'evil-leader/set-key 'paloryemacs/set-leader-keys)
+
 (defun paloryemacs//acceptable-leader-p (key)
   "Return t if key is a string and non-empty."
   (and (stringp key) (not (string= key ""))))
@@ -119,15 +122,13 @@ minor-mode, the third argument should be non nil."
                     dotpaloryemacs-major-mode-leader-key))
          (leader2 (when (paloryemacs//acceptable-leader-p
                          dotpaloryemacs-leader-key)
-                    (concat dotpaloryemacs-leader-key
-                            (unless minor " m"))))
+                    (concat dotpaloryemacs-leader-key " m")))
          (emacs-leader1 (when (paloryemacs//acceptable-leader-p
                                dotpaloryemacs-major-mode-emacs-leader-key)
                           dotpaloryemacs-major-mode-emacs-leader-key))
          (emacs-leader2 (when (paloryemacs//acceptable-leader-p
                                dotpaloryemacs-emacs-leader-key)
-                          (concat dotpaloryemacs-emacs-leader-key
-                                  (unless minor " m"))))
+                          (concat dotpaloryemacs-emacs-leader-key " m")))
          (leaders (delq nil (list leader1 leader2)))
          (emacs-leaders (delq nil (list emacs-leader1 emacs-leader2))))
     (or (boundp prefix)
@@ -154,6 +155,10 @@ they are in `paloryemacs/set-leader-keys'."
         (define-key (symbol-value map) (kbd key) def)
         (setq key (pop bindings) def (pop bindings))))))
 (put 'paloryemacs/set-leader-keys-for-major-mode 'lisp-indent-function 'defun)
+
+(defalias
+  'evil-leader/set-key-for-mode
+  'paloryemacs/set-leader-keys-for-major-mode)
 
 (defun paloryemacs/set-leader-keys-for-minor-mode (mode key def &rest bindings)
   "Add KEY and DEF as key bindings under
