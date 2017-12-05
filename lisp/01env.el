@@ -84,6 +84,7 @@
    (setq w32-pass-lwindow-to-system nil
          w32-pass-rwindow-to-system nil
          w32-pass-apps-to-system nil
+         mac-pass-command-to-system t
          ;; Left Windows key
          w32-lwindow-modifier 'super
          ;; Right Windows key
