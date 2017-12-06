@@ -1060,6 +1060,7 @@ to `reorganize-frame', otherwise set to `other-frame'."
 (add-hook 'org-agenda-finalize-hook 'paloryemacs/org-agenda-to-appt)
 
 (use-package org-protocol
+  :defer t
   :config
   (progn
     (defun paloryemacs/on-input-source-change-to-chinese ()
