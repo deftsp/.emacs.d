@@ -61,7 +61,7 @@
           org-return-follows-link t
           org-startup-folded t
           org-startup-truncated t
-          org-blank-before-new-entry '((heading . t) (plain-list-item . auto))
+          org-blank-before-new-entry '((heading . auto) (plain-list-item . auto))
           org-time-stamp-rounding-minutes (quote (0 5))
           org-pretty-entities nil ; use pretty things for the clocktable
           org-enforce-todo-dependencies t
