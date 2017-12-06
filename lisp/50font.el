@@ -57,6 +57,7 @@
   :init
   (progn
     (setq cnfonts-verbose nil
+          cnfonts-default-step paloryemacs/default-cnfonts-fontsize-step
           cnfonts-use-face-font-rescale nil ; not work on macOS
           cnfonts-profiles '("program" "org-mode" "read-book")))
   :config
@@ -75,13 +76,10 @@
       (interactive)
       (when (display-graphic-p)
         (let* ((profile-name paloryemacs/default-cnfonts-profile-name)
-               (profile-step paloryemacs/default-cnfonts-fontsize-step)
-               (fontsizes-list (cnfonts--get-fontsizes profile-step)))
+               (profile-step (cnfonts--get-profile-step profile-name))
+               (reset-step (- paloryemacs/default-cnfonts-fontsize-step profile-step)))
           (cnfonts--select-profile profile-name)
-          (cnfonts--set-font fontsizes-list)
-          (cnfonts--save-config-file profile-name profile-step)
-          (redisplay t)
-          (cnfonts-message t cnfonts--minibuffer-echo-string))))
+          (cnfonts--step-fontsize reset-step))))
 
     ;; https://nerdfonts.com/
     ;; https://github.com/ryanoasis/nerd-fonts
