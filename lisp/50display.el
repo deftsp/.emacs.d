@@ -23,7 +23,9 @@
                               ;; http://emacsredux.com/blog/2015/01/18/customizing-the-fringes/
                               (left-fringe . 8) ; default width (8 pixels).
                               (right-fringe . 8)
-                              (scroll-bar-background . "#80abb6")
+                              ;; natural-title-bar https://github.com/railwaycat/homebrew-emacsmacport/wiki/Natural-Title-Bar
+                              ;; defaults write org.gnu.Emacs TransparentTitleBar DARK
+                              ;; (scroll-bar-background . "#80abb6")
                               ;; (scroll-bar-width . 12)
                               ;; (vertical-scroll-bars . right)
                               (vertical-scroll-bars . nil))
