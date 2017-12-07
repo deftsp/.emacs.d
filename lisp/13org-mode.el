@@ -1007,7 +1007,10 @@ to `reorganize-frame', otherwise set to `other-frame'."
              :empty-lines-after 1)
             ("h" "Habit" entry (file+headline "~/org/GTD.org" "Habit")
              "* %?\n  SCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n  :PROPERTIES:\n :ID: %(org-id-new)\n :CREATED:  %U\n  :STYLE: habit\n  :REPEAT_TO_STATE: NEXT\n  :END:"
-             :empty-lines-after 1))))
+             :empty-lines-after 1)
+            ("w" "Web page" entry
+             (file "~/org/Pages.org")
+             "* %a :website:\n  :PROPERTIES:\n  :ID: %(org-id-new)\n  :CREATED:  %U\n  :END:\n %?\n\n%:initial"))))
   :config
   (progn
     (paloryemacs/set-leader-keys-for-minor-mode 'org-capture-mode
@@ -1060,9 +1063,12 @@ to `reorganize-frame', otherwise set to `other-frame'."
 (add-hook 'org-agenda-finalize-hook 'paloryemacs/org-agenda-to-appt)
 
 (use-package org-protocol
-  :defer t
+  :defer 3
   :config
   (progn
+    ;; https://github.com/alphapapa/org-protocol-capture-html
+    (use-package org-protocol-capture-html)
+
     (defun paloryemacs/on-input-source-change-to-chinese ()
       (when (and (fboundp 'evil-mode)
                  evil-mode
@@ -1081,9 +1087,10 @@ to `reorganize-frame', otherwise set to `other-frame'."
                (paloryemacs/on-input-source-change-to-chinese)))))
 
     (add-to-list 'org-protocol-protocol-alist
-                 '("handle action from hammerspoon"
+                 '("Handle action from hammerspoon"
                    :protocol "hammerspoon"
                    :function org-protocol-hammerspoon))))
+
 
 ;;; clock
 (use-package org-clock
