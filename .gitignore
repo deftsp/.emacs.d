@@ -94,5 +94,5 @@ haskell-emacs-exts/
 /org-clock-save.el
 flycheck_*.el
 network-security.data
-
 vimish-fold/
+request/
