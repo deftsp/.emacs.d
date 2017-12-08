@@ -50,38 +50,40 @@
     (setq he-expand-list (sort
                           (all-completions he-search-string 'tags-complete-tag) 'string-lessp)))
   (while (and he-expand-list
-            (he-string-member (car he-expand-list) he-tried-table))
+              (he-string-member (car he-expand-list) he-tried-table))
     (setq he-expand-list (cdr he-expand-list)))
   (if (null he-expand-list)
       (progn
         (when old (he-reset-string))
         ())
-      (he-substitute-string (car he-expand-list))
-      (setq he-expand-list (cdr he-expand-list))
-      t))
+    (he-substitute-string (car he-expand-list))
+    (setq he-expand-list (cdr he-expand-list))
+    t))
 
 
 ;; The list of expansion functions tried in order by `hippie-expand'.
-(autoload 'senator-try-expand-semantic "senator")
 (setq hippie-expand-try-functions-list
-      '(;; senator-try-expand-semantic        ; prefer senatro
-        try-expand-all-abbrevs             ; Try to expand word before point according to all abbrev tables.
-        try-expand-dabbrev-visible         ; Try to expand word "dynamically", searching visible window parts.
+      '(yas-hippie-try-expand              ; Try to expand yasnippet snippets based on prefix
         try-expand-dabbrev                 ; Try to expand word "dynamically", searching the current buffer.
+        ;; try-expand-dabbrev-visible         ; Try to expand word "dynamically", searching visible window parts.
         try-expand-dabbrev-all-buffers     ; Tries to expand word "dynamically", searching all other buffers.
+        try-expand-all-abbrevs             ; Try to expand word before point according to all abbrev tables.
         try-expand-dabbrev-from-kill       ; Try to expand word "dynamically", searching the kill ring.
-        try-complete-lisp-symbol-partially ; Try to complete as an Emacs Lisp symbol, as many characters as unique.
-        try-complete-lisp-symbol           ; Try to complete word as an Emacs Lisp symbol.
-        try-complete-file-name             ; Try to complete text as a file name.
         try-complete-file-name-partially   ; Try to complete text as a file name, as many characters as unique.
+        try-complete-file-name             ; Try to complete text as a file name.
         try-expand-line                    ; Try to complete the current line to an entire line in the buffer.
         try-expand-line-all-buffers        ; Try to complete the current line, searching all other buffers.
         try-expand-list                    ; Try to complete the current beginning of a list.
         try-expand-list-all-buffers        ; Try to complete the current list, searching all other buffers.
+        try-complete-lisp-symbol-partially ; Try to complete as an Emacs Lisp symbol, as many characters as unique.
+        try-complete-lisp-symbol           ; Try to complete word as an Emacs Lisp symbol.
+        ;; senator-try-expand-semantic        ; prefer senatro
         ;; try-expand-tag
         ;; ispell-complete-word               ; Try to complete the word before or under point
         ;; Try to complete text with something from the kill ring.
         try-expand-whole-kill))
+
+(autoload 'senator-try-expand-semantic "senator")
 
 ;;; input inc, prompt inut file name.
 (use-package abbrev
@@ -250,5 +252,37 @@
 ;; (eval-after-load "icomplete" '(progn (require 'icomplete+)))
 ;; (setq icomplete-prospects-height 1)
 
+(use-package yasnippet
+  :defer 5
+  :commands (yas-global-mode yas-minor-mode)
+  :init
+  (progn
+    (setq yas-triggers-in-field t
+          yas-wrap-around-region t
+          helm-yas-display-key-on-candidate t)
+    (setq yas-prompt-functions '(yas-completing-prompt))
+    ;; disable yas minor mode map
+    ;; use hippie-expand instead
+    (setq yas-minor-mode-map (make-sparse-keymap))
+    ;; this makes it easy to get out of a nested expansion
+    (define-key yas-minor-mode-map (kbd "M-s-/") 'yas-next-field)
+    (setq yas-snippet-dirs
+          (list (expand-file-name "~/.emacs.d/snippets")
+                ;; ,(expand-file-name "~/.emacs.d/site-lisp/yasnippet-go")
+                'yas-installed-snippets-dir))) :config
+  (progn
+    ;; (defun yas-advise-indent-function (function-symbol)
+    ;;   (eval `(defadvice ,function-symbol (around yas-try-expand-first activate)
+    ;;            ,(format
+    ;;              "Try to expand a snippet before point, then call `%s' as usual"
+    ;;              function-symbol)
+    ;;            (let ((yas/fallback-behavior nil))
+    ;;              (unless (and (interactive-p)
+    ;;                           (yas/expand))
+    ;;                ad-do-it)))))
+
+    ;; (yas-advise-indent-function 'org-cycle)
+
+    (yas-global-mode +1)))
 
 (provide '50completion)

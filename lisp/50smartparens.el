@@ -98,6 +98,9 @@
      (t
       (insert-char ?\))))))
 
+(defvar paloryemacs--smartparens-enabled-initially t
+  "Stored whether smartparens is originally enabled or not.")
+
 (use-package smartparens
   :defer t
   :commands (sp-split-sexp sp-newline sp-up-sexp smartparens-global-mode)
@@ -118,6 +121,28 @@
   :config
   (progn
     (require 'smartparens-config)
+
+    (defun paloryemacs//smartparens-disable-before-expand-snippet ()
+      "Handler for `yas-before-expand-snippet-hook'.
+Disable smartparens and remember its initial state."
+      ;; Remember the initial smartparens state only once, when expanding a top-level snippet.
+      (setq paloryemacs--smartparens-enabled-initially smartparens-mode)
+      (when smartparens-mode
+        (smartparens-mode -1)))
+
+
+    (defun paloryemacs//smartparens-restore-after-exit-snippet ()
+      "Handler for `yas-after-exit-snippet-hook'.
+ Restore the initial state of smartparens."
+      (when paloryemacs--smartparens-enabled-initially
+        (smartparens-mode +1)))
+
+    (with-eval-after-load 'yasnippet
+      (add-hook 'yas-before-expand-snippet-hook
+                #'paloryemacs//smartparens-disable-before-expand-snippet)
+      (add-hook 'yas-after-exit-snippet-hook
+                #'paloryemacs//smartparens-restore-after-exit-snippet))
+
     (add-to-list 'sp-ignore-modes-list 'haskell-mode)
     ;; (define-key evil-insert-state-map ")" 'paloryemacs/smart-closing-parenthesis)
     (paloryemacs//adaptive-smartparent-pair-overlay-face)

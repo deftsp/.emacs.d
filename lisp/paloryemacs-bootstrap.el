@@ -110,7 +110,6 @@
 (require '50web-mode)
 (require '50window)
 (require '50xcode)
-(require '50yasnippet)
 (require '51CommonLispTemplates)
 ;; (require '51helm)
 

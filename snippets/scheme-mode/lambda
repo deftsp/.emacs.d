@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# key: lambda
-# contributor: Shihpin Tseng
-# name: lambda
-# --
-(lambda ($0)
-  )

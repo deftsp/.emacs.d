@@ -399,6 +399,7 @@ kill internal buffers too."
   :config
   (progn
     ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
+    (define-key evil-insert-state-map [remap evil-complete-previous] 'hippie-expand)
     (use-package evil-evilified-state)
     (paloryemacs/evil-set-initial-state)
     (dolist (m (list minibuffer-local-map
