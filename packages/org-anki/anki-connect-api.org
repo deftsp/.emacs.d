@@ -1,0 +1,22 @@
+
+
+* Gets the complete list of deck names for the current user.
+  #+BEGIN_SRC http :pretty
+  POST http://127.0.0.1:8765
+  Content-Type: application/json
+
+  {
+    "action": "deckNames",
+    "version": 5
+  }
+  #+END_SRC
+
+  #+RESULTS:
+  : {
+  :   "result": [
+  :     "Default",
+  :     "Sigma",
+  :     "Inbox"
+  :   ],
+  :   "error": null
+  : }

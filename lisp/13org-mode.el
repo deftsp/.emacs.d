@@ -64,6 +64,7 @@
           org-blank-before-new-entry '((heading . auto) (plain-list-item . auto))
           org-time-stamp-rounding-minutes (quote (0 5))
           org-pretty-entities nil ; use pretty things for the clocktable
+          org-src-fontify-natively t
           org-enforce-todo-dependencies t
           org-enforce-todo-checkbox-dependencies t
           org-display-internal-link-with-indirect-buffer nil)
@@ -1013,6 +1014,12 @@ to `reorganize-frame', otherwise set to `other-frame'."
              "* %a :website:\n  :PROPERTIES:\n  :ID: %(org-id-new)\n  :CREATED:  %U\n  :END:\n %?\n\n%:initial"))))
   :config
   (progn
+    ;; ",k" not work some time, call `evil-normalize-keymaps' to force refresh
+    (defun paloryemacs//org-capture-mode-init ()
+      (evil-normalize-keymaps))
+
+    (add-hook 'org-capture-mode-hook 'paloryemacs//org-capture-mode-init)
+
     (paloryemacs/set-leader-keys-for-minor-mode 'org-capture-mode
       dotpaloryemacs-major-mode-leader-key 'org-capture-finalize
       "a" 'org-capture-kill
@@ -1089,7 +1096,18 @@ to `reorganize-frame', otherwise set to `other-frame'."
     (add-to-list 'org-protocol-protocol-alist
                  '("Handle action from hammerspoon"
                    :protocol "hammerspoon"
-                   :function org-protocol-hammerspoon))))
+                   :function org-protocol-hammerspoon))
+
+    (defun org-protocol-org-anki (data)
+      (let* ((body (plist-get data :body)))
+        (if (> (length body) 0)
+            (org-anki-new-capture data)
+          (error "The capture body is empty"))))
+
+    (add-to-list 'org-protocol-protocol-alist
+                 '("org-anki"
+                   :protocol "org-anki"
+                   :function org-protocol-org-anki))))
 
 
 ;;; clock
@@ -1285,7 +1303,6 @@ to `reorganize-frame', otherwise set to `other-frame'."
 ;;; Embed source code and babel
 ;; fontify code in code blocks
 (with-eval-after-load "org"
-  (setq org-src-fontify-natively t)
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
@@ -1300,14 +1317,14 @@ to `reorganize-frame', otherwise set to `other-frame'."
      (shell . t)
      (org . t)
      (plantuml . t)
+     (http . t)
      (latex . t)))
   ;; give us some hint we are running
   (defadvice org-babel-execute-src-block (around progress nil activate)
-    (set-face-attribute
-     'org-block nil :background "LightSteelBlue")
+    (set-face-attribute 'org-block nil :background "LightSteelBlue")
     (message "Running your code block")
     ad-do-it
-    (set-face-attribute 'org-block nil :background "gray")
+    (set-face-attribute 'org-block nil :background "#002b36")
     (message "Done with code block")))
 
 ;; stop emacs asking for confirmation
@@ -1708,6 +1725,20 @@ _h_tml    ^ ^        _A_SCII:
       "w" 'org-journal-search-calendar-week
       "m" 'org-journal-search-calendar-month
       "y" 'org-journal-search-calendar-year)))
+
+(with-eval-after-load 'org
+  (use-package org-anki
+    :config
+    (progn
+      (with-eval-after-load 'evil
+        (evil-define-key 'normal org-anki-mode-map "gr" 'org-anki-refresh-buffer))
+      org-anki-refresh-buffer
+      (paloryemacs/set-leader-keys-for-major-mode 'org-anki-mode
+        dotpaloryemacs-major-mode-leader-key 'org-anki-send-capture-and-quit
+        "r" 'org-anki-refresh
+        "k" 'org-anki-quit
+        "a" 'org-anki-add-word)
+      (set-keymap-parent paloryemacs-org-anki-mode-map paloryemacs-org-mode-map))))
 
 ;;; evil surround
 (defun paloryemacs//surround-drawer ()
