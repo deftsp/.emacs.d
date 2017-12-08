@@ -198,6 +198,9 @@
                              (funcall callback data-value)
                            (message message-value)))))))
 
+(defun org-anki-get-src-block (header level sexp)
+  (format "%s %s\n  #+BEGIN_SRC emacs-lisp :results value\n  \
+%s\n  #+END_SRC\n" (make-string level ?*) header sexp))
 
 (defun org-anki-new-capture (data)
   (let ((buf (get-buffer-create "*org-anki*")))
@@ -206,7 +209,10 @@
       (setq org-anki--capture-data data)
       (setq org-anki--context (plist-get data :body))
       (erase-buffer)
-      (insert (format  "* Context\n  %s\n\n" org-anki--context)))
+      (insert "#+STARTUP: content\n\n")
+      (insert (org-anki-get-src-block "Context" 1 'org-anki--context))
+      (org-anki-refresh-buffer)
+      (goto-char (point-max)))
     (popwin:popup-buffer buf
                          :dedicated t
                          :stick t
@@ -242,7 +248,7 @@
       (setq org-anki--word word)
       (goto-char (point-max))
       (org-anki-get-word-definition
-       word
+       org-anki--word
        (lambda (data-value)
          ;; (setq test-data-value data-value)
          (let ((pronunciation (assoc-default 'pronunciation data-value))
@@ -254,12 +260,27 @@
            (setq org-anki--audio-url us-audio)
            (setq org-anki--audio-name (format "shanbay-%s-%s.mp3" audio-name (org-id-uuid)))
 
-           (insert (format "* %s\n"  word))
            (setq org-anki--definitions nil)
            (org-anki--append-definition en-definitions)
            (org-anki--append-definition definition)
-           (insert (format "%s [%s]\n" pronunciation us-audio))
-           (insert (format "%s\n" org-anki--definitions))))
+           (setq org-anki--context
+                 (s-replace org-anki--word
+                            (concat "<span class=\"keyword\">"
+                                    org-anki--word
+                                    "</span>")
+                            org-anki--context))
+
+           (goto-char (point-max))
+           (insert "* Word\n")
+           (insert (format "** %s\n" org-anki--word))
+           (insert (org-anki-get-src-block
+                    "Pronunciation" 3
+                    '(format \"[%s] [%s]\" org-anki--pronunciation org-anki--audio-url)))
+
+           (insert (org-anki-get-src-block
+                    "Definitions" 3 'org-anki--definitions))
+           (org-anki-refresh-buffer)
+           (goto-char (point-max))))
        t))))
 
 (defun org-anki-quit ()
@@ -288,17 +309,25 @@
 
 (defun org-anki-refresh-buffer ()
   (interactive)
+  (save-excursion
+    (goto-char (point-min))
+    (condition-case err
+        (while t
+          (org-babel-next-src-block)
+          (org-babel-execute-maybe)  )
+      (user-error
+       (if (string= "No further code blocks" (cadr err))
+           (message "Refresh Done")
+         (message "Unknown user-error: %s" (error-message-string err)))))
+    (org-hide-block-all)))
 
-  (org-babel-execute-maybe))
-
-
-(bind-key
- "s-t"
- (lambda ()
-   (interactive)
-   (org-anki-new-capture '(:url "https://jsonformatter.curiousconcept.com/"
-                           :title "JSON Formatter & Validator"
-                           :body "The JSON Formatter was created to help with debugging."))))
+;; (bind-key
+;;  "s-t"
+;;  (lambda ()
+;;    (interactive)
+;;    (org-anki-new-capture '(:url "https://jsonformatter.curiousconcept.com/"
+;;                            :title "JSON Formatter & Validator"
+;;                            :body "The JSON Formatter was created to help with debugging."))))
 
 
 
