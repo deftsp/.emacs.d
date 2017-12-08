@@ -1,6 +1,6 @@
 (:name request
        :description "Easy HTTP request for Emacs Lisp"
        :type github
-       :pkgname "tkf/emacs-request"
+       :pkgname "abingham/emacs-request"
        :depends (deferred)
        :provide (request-deferred))
