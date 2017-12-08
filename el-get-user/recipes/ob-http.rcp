@@ -1,0 +1,5 @@
+(:name ob-http
+       :type github
+       :description "http request in org-mode babel"
+       :pkgname "zweifisch/ob-http"
+       :depends (s cl-lib))
