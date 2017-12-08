@@ -85,6 +85,7 @@
 (require '50perl)
 (require '50printing)
 (require '50python-mode)
+(require '50restclient)
 (require '50ruby)
 (require '50sawfish)
 (require '50scheme)
