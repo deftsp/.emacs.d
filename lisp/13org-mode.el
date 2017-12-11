@@ -165,6 +165,11 @@
     (org-defkey org-mode-map (kbd "C-c [") 'undefined)
     (org-defkey org-mode-map (kbd "C-c ]") 'undefined)
 
+    (define-key org-mode-map (kbd "s-j") #'org-babel-next-src-block)
+    (define-key org-mode-map (kbd "s-k") #'org-babel-previous-src-block)
+
+    (org-defkey org-mode-map (kbd "s-b") org-babel-map)
+
     (add-to-list 'org-structure-template-alist
                  '("p" ":PROPERTIES:\n?\n:END:"))
     (add-to-list 'org-structure-template-alist
@@ -1732,7 +1737,6 @@ _h_tml    ^ ^        _A_SCII:
     (progn
       (with-eval-after-load 'evil
         (evil-define-key 'normal org-anki-mode-map "gr" 'org-anki-refresh-buffer))
-      org-anki-refresh-buffer
       (paloryemacs/set-leader-keys-for-major-mode 'org-anki-mode
         dotpaloryemacs-major-mode-leader-key 'org-anki-send-capture-and-quit
         "r" 'org-anki-refresh

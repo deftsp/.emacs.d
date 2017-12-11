@@ -21,6 +21,10 @@
 ;;; Commentary:
 ;; Work with AnkiConnect(https://foosoft.net/projects/anki-connect/)
 ;;
+;; TODO: 1. When add two words, create two cards separately
+;;       2. Add new item from region
+;;       3. Support cloze type card
+;;       4. Use card types to get field instead of hard-coded
 
 ;;; Code:
 (require 'dash)
@@ -52,7 +56,8 @@
 (defvar-local org-anki--pronunciation nil)
 (defvar-local org-anki--audio-name nil)
 (defvar-local org-anki--audio-url nil)
-(defvar-local org-anki--definitions nil)
+(defvar-local org-anki--en-definition nil)
+(defvar-local org-anki--cn-definition nil)
 
 ;; NOTE: the origin https://github.com/tkf/emacs-request have problem when the
 ;; json boy have UTF-8 character use https://github.com/abingham/emacs-request
@@ -161,7 +166,8 @@
          (fields `(:Context ,org-anki--context
                    :Phonetic ,org-anki--pronunciation
                    :Word ,word-field
-                   :Definitions ,org-anki--definitions))
+                   :EN-Definition ,org-anki--en-definition
+                   :CN-Definition ,org-anki--cn-definition))
          (note `(:deckName ,deck :modelName ,model :fields ,fields)))
     (when org-anki--audio-url
       (let ((l `(:audio (:url ,org-anki--audio-url :filename ,org-anki--audio-name :fields "Word"))))
@@ -198,9 +204,15 @@
                              (funcall callback data-value)
                            (message message-value)))))))
 
-(defun org-anki-get-src-block (header level sexp)
-  (format "%s %s\n  #+BEGIN_SRC emacs-lisp :results value\n  \
-%s\n  #+END_SRC\n" (make-string level ?*) header sexp))
+(defun org-anki-insert-src-block (name level sexp &optional header)
+  (let ((title (if header (if (stringp header) header name) nil))
+        (indent (make-string level ? )))
+    (when title
+      (insert (format "%s %s\n" (make-string level ?*) title)))
+    (insert (format "%s#+NAME: %s\n" indent name))
+    (insert (format "%s#+BEGIN_SRC emacs-lisp :results value\n" indent))
+    (insert (format "%s%s\n" indent sexp))
+    (insert (concat indent  "#+END_SRC\n"))))
 
 (defun org-anki-new-capture (data)
   (let ((buf (get-buffer-create "*org-anki*")))
@@ -210,7 +222,7 @@
       (setq org-anki--context (plist-get data :body))
       (erase-buffer)
       (insert "#+STARTUP: content\n\n")
-      (insert (org-anki-get-src-block "Context" 1 'org-anki--context))
+      (org-anki-insert-src-block "Context" 1 'org-anki--context t)
       (org-anki-refresh-buffer)
       (goto-char (point-max)))
     (popwin:popup-buffer buf
@@ -220,23 +232,22 @@
                          :position 'bottom
                          :height 0.6)))
 
-(defun org-anki--append-definition (definitions)
+(defun org-anki--span-wrap (s keyword)
+  (format "<span class=\"%s\">%s</span>" keyword s))
+
+(defun org-anki--render-definition (definitions)
   (let (collect)
     (if (listp definitions)
         (-map
          (lambda (e)
-           (push (format "%s %s "
+           (push (format "%s. %s"
                          (car e)
-                         (mapconcat 'identity (append (cdr e)) " "))
+                         (s-join "; " (append (cdr e))))
                  collect))
          definitions)
-      (push (s-replace "\n" " " (s-trim definitions)) collect))
+      (push (s-replace "\n" "; " (s-trim definitions)) collect))
 
-    (setq org-anki--definitions
-          (concat
-           org-anki--definitions
-           "\n"
-           (mapconcat 'identity collect " ")))))
+    (s-join "\n" collect)))
 
 
 (defun org-anki-add-word ()
@@ -250,19 +261,20 @@
       (org-anki-get-word-definition
        org-anki--word
        (lambda (data-value)
-         ;; (setq test-data-value data-value)
+         (setq test-data-value data-value)
          (let ((pronunciation (assoc-default 'pronunciation data-value))
                (us-audio (assoc-default 'us_audio data-value))
                (audio-name (assoc-default 'audio_name data-value))
-               (en-definitions (assoc-default 'en_definitions data-value))
-               (definition (assoc-default 'definition data-value)))
+               (en-definition (assoc-default 'en_definitions data-value))
+               (cn-definition (assoc-default 'definition data-value)))
            (setq org-anki--pronunciation pronunciation)
            (setq org-anki--audio-url us-audio)
            (setq org-anki--audio-name (format "shanbay-%s-%s.mp3" audio-name (org-id-uuid)))
 
-           (setq org-anki--definitions nil)
-           (org-anki--append-definition en-definitions)
-           (org-anki--append-definition definition)
+           (setq org-anki--en-definition
+                 (org-anki--render-definition en-definition))
+           (setq org-anki--cn-definition
+                 (org-anki--render-definition cn-definition))
            (setq org-anki--context
                  (s-replace org-anki--word
                             (concat "<span class=\"keyword\">"
@@ -273,12 +285,17 @@
            (goto-char (point-max))
            (insert "* Word\n")
            (insert (format "** %s\n" org-anki--word))
-           (insert (org-anki-get-src-block
-                    "Pronunciation" 3
-                    '(format \"[%s] [%s]\" org-anki--pronunciation org-anki--audio-url)))
+           (org-anki-insert-src-block
+            "Pronunciation" 3
+            '(format \"[%s] [%s]\"
+                     org-anki--pronunciation
+                     org-anki--audio-url)
+            t)
 
-           (insert (org-anki-get-src-block
-                    "Definitions" 3 'org-anki--definitions))
+           (org-anki-insert-src-block
+            "Definitions" 3 '(format "\"%s\n%s\""
+                                     org-anki--en-definition
+                                     org-anki--cn-definition) t)
            (org-anki-refresh-buffer)
            (goto-char (point-max))))
        t))))
@@ -327,7 +344,7 @@
 ;;    (interactive)
 ;;    (org-anki-new-capture '(:url "https://jsonformatter.curiousconcept.com/"
 ;;                            :title "JSON Formatter & Validator"
-;;                            :body "The JSON Formatter was created to help with debugging."))))
+;;                            :body "Germans have the ability to be brutally frank and Chancellor Merkel is nothing if not frank."))))
 
 
 
