@@ -167,7 +167,7 @@
       "ee" 'skewer-css-eval-current-declaration
       "ex" 'skewer-css-eval-current-rule
       "eb" 'skewer-css-eval-buffer
-      "ec" 'skewer-css-clean-all)))
+      "ec" 'skewer-css-clear-all)))
 
 (provide '50web)
 ;;; 50web.el ends here
