@@ -376,6 +376,7 @@ kill internal buffers too."
           (weibo-post-mode           . emacs)
           (sr-mode                   . emacs)
           (shell-mode                . emacs)
+          (skewer-clients-mode       . evilified)
           (term-mode                 . emacs)
           (tuareg-interactive-mode   . insert)
           (speedbar-mode             . emacs)
