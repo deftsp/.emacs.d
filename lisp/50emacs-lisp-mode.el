@@ -73,6 +73,9 @@
 ;;             (when buffer-file-name
 ;;               (add-hook 'after-save-hook 'byte-compile-visited-file nil t))))
 
+;; https://github.com/Wilfred/elisp-refs
+(use-package elisp-refs
+  :defer t)
 
 (font-lock-add-keywords
  'emacs-lisp-mode
