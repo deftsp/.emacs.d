@@ -7,6 +7,9 @@
 ;;; Commentary:
 ;;; Code:
 
+(paloryemacs|define-jump-handlers emacs-lisp-mode)
+(paloryemacs|define-jump-handlers lisp-interaction-mode)
+
 ;;; tooltip-help
 ;; (require 'tooltip-help)
 ;; (define-key emacs-lisp-mode-map (kbd "<f1>") 'th-show-help)
@@ -42,12 +45,22 @@
 ;; (add-hook 'emacs-lisp-mode-hook '(lambda () (modify-syntax-entry ?- "w")))
 ;; (modify-syntax-entry ?- "w" emacs-lisp-mode-syntax-table)
 
-
 ;;; elisp-slime-nav
 ;; install with el-get
 ;; Elisp go-to-definition with M-. and back again with M-,
-(add-hook 'emacs-lisp-mode-hook 'turn-on-elisp-slime-nav-mode)
-(eval-after-load 'elisp-slime-nav '(diminish 'elisp-slime-nav-mode))
+(use-package elisp-slime-nav
+  :defer t
+  :diminish elisp-slime-nav-mode
+  :init
+  (progn
+    (add-hook 'emacs-lisp-mode-hook 'turn-on-elisp-slime-nav-mode)
+    (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
+      (paloryemacs/declare-prefix-for-mode mode "mg" "find-symbol")
+      (paloryemacs/declare-prefix-for-mode mode "mh" "help")
+      (paloryemacs/set-leader-keys-for-major-mode mode
+        "hh" 'elisp-slime-nav-describe-elisp-thing-at-point)
+      (let ((jumpl (intern (format "paloryemacs-jump-handlers-%S" mode))))
+        (add-to-list jumpl 'elisp-slime-nav-find-elisp-thing-at-point)))))
 
 ;;; auto compile el file
 ;; (defun byte-compile-visited-file ()
@@ -87,15 +100,6 @@
 
 
 (add-hook 'emacs-lisp-mode-hook 'paloryemacs/imenu-elisp-init)
-
-;;;
-(paloryemacs|define-jump-handlers emacs-lisp-mode)
-(paloryemacs|define-jump-handlers lisp-interaction-mode)
-
-
-(dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
-  (let ((jumpl (intern (format "paloryemacs-jump-handlers-%S" mode))))
-    (add-to-list jumpl 'elisp-slime-nav-find-elisp-thing-at-point)))
 
 ;; Idea from http://www.reddit.com/r/emacs/comments/312ge1/i_created_this_function_because_i_was_tired_of/
 (defun paloryemacs/eval-current-form ()
@@ -163,7 +167,6 @@ Requires smartparens because all movement is done using `sp-forward-symbol'."
       "v" 'describe-variable)))
 
 (paloryemacs/init-emacs-lisp)
-
 
 
 
