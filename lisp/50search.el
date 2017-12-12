@@ -16,7 +16,6 @@
 ;;; Start `query-replace' with string to replace from last search string.
 ;; C-s SOMETHING M-% SOMEOTHERS
 
-(setq grep-find-use-xargs 'exec) ; invoke find and grep with `find -exec {} ;'
 
 ;;; M-x rgrep or grep-find
 ;; location resulte with `C-x `M-g n' `M-g p' `M-g'  `C-c C-c'.
@@ -123,7 +122,7 @@
     (occur
      (if isearch-regexp
          isearch-string
-         (regexp-quote isearch-string)))))
+       (regexp-quote isearch-string)))))
 
 (define-key isearch-mode-map (kbd "C-o") 'isearch-occur)
 
@@ -143,7 +142,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
         (save-excursion
           (beginning-of-buffer)
           (query-replace-regexp reg replace)))
-      (message "Not in a re-builder buffer!")))
+    (message "Not in a re-builder buffer!")))
 
 (eval-after-load "re-builder"
   '(define-key reb-mode-map "\C-c\M-%" 'paloryemacs/reb-query-replace-this-regxp))
@@ -223,20 +222,24 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 (with-eval-after-load 'wgrep
   (define-key grep-mode-map (kbd "C-c C-c") 'wgrep-finish-edit))
 
-(with-eval-after-load "evil-evilified-state"
-  (use-package grep
-    :defer 3
-    :config
-    (progn
-      ;; bind the keys like wdired
-      (define-key grep-mode-map
-        (kbd "C-x C-q") 'wgrep-change-to-wgrep-mode)
+(use-package grep
+  :defer t
+  :init
+  (progn
+    ;; NOTE: set to exec will cause `xref-find-references' very slow
+    ;; invoke find and grep with `find -exec {} ;'
+    ;; (setq grep-find-use-xargs 'exec)
+    )
+  :config
+  (progn
+    ;; bind the keys like wdired
+    (define-key grep-mode-map (kbd "C-x C-q") 'wgrep-change-to-wgrep-mode)
+    (with-eval-after-load "evil-evilified-state"
       (evilified-state-evilify grep-mode grep-mode-map
         (kbd "n")   nil
         (kbd "p")   nil
         (kbd "h")   nil
         (kbd "l")   nil))))
-
 
 ;; ace-pinyin
 (use-package ace-pinyin
