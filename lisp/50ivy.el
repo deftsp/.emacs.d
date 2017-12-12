@@ -105,6 +105,11 @@
       :config
       (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer))))
 
+(use-package ivy-xref
+  :defer t
+  :init
+  (progn
+    (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)))
 
 (global-set-key (kbd "s-v") 'hydra-view/body)
 (defhydra hydra-view (:color blue :hint nil)

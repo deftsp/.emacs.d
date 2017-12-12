@@ -1,0 +1,5 @@
+(:name elisp-refs
+ :type github
+ :pkgname "Wilfred/elisp-refs"
+ :description "find callers of elisp functions or macros"
+ :depends (dash f list-utils loop s))

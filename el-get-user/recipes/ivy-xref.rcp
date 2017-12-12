@@ -1,0 +1,5 @@
+(:name ivy-xref
+ :description "Ivy interface for xref results"
+ :type github
+ :pkgname "alexmurray/ivy-xref"
+ :depends (swiper))
