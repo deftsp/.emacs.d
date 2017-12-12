@@ -169,5 +169,39 @@
       "eb" 'skewer-css-eval-buffer
       "ec" 'skewer-css-clear-all)))
 
+
+(use-package json-mode
+  :defer t)
+
+(use-package json-snatcher
+  :defer t
+  :init
+  (paloryemacs/set-leader-keys-for-major-mode 'json-mode
+    "hp" 'jsons-print-path))
+
+;; https://github.com/yasuyk/web-beautify
+(use-package web-beautify
+  :defer t
+  :init
+  (progn
+    (paloryemacs/set-leader-keys-for-major-mode 'js2-mode
+      "=" 'web-beautify-js)
+    (paloryemacs/set-leader-keys-for-major-mode 'json-mode
+      "=" 'web-beautify-js)
+    (paloryemacs/set-leader-keys-for-major-mode 'web-mode
+      "=" 'web-beautify-html)
+    (paloryemacs/set-leader-keys-for-major-mode 'css-mode
+      "=" 'web-beautify-css)))
+
+;; Live evaluation of JS buffer change.
+(use-package livid-mode
+  :commands (livid-mode)
+  :defer t
+  :init
+  (progn
+    (with-eval-after-load 'js2-mode
+      (paloryemacs/set-leader-keys-for-major-mode 'js2-mode
+        "sa" 'livid-mode))))
+
 (provide '50web)
 ;;; 50web.el ends here

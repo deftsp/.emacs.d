@@ -1,0 +1,4 @@
+(:name web-beautify
+ :type github
+ :pkgname "yasuyk/web-beautify"
+ :description "Format HTML, CSS and JavaScript/JSON")

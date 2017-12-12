@@ -1,0 +1,5 @@
+(:name livid-mode
+ :type github
+ :description "Live browser eval of JavaScript every time a buffer changes"
+ :pkgname "pandeiro/livid-mode"
+ :depends (skewer-mode s))
