@@ -244,8 +244,9 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
     ;; in the current virtualenv path, here we set VIRTUAL_ENV as true path
     ;; instead of the link.
     (defun paloryemacs//chase-virtualenv-root-path ()
-      (setq python-shell-virtualenv-root
-            (file-truename python-shell-virtualenv-root)))
+      (when python-shell-virtualenv-root
+        (setq python-shell-virtualenv-root
+              (file-truename python-shell-virtualenv-root))))
     (advice-add 'python-shell-calculate-process-environment
                 :before #'paloryemacs//chase-virtualenv-root-path)
     ;; (advice-remove 'python-shell-calculate-process-environment
