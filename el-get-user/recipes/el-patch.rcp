@@ -1,0 +1,4 @@
+(:name el-patch
+ :description "Future-proof your Emacs Lisp customizations!"
+ :type github
+ :pkgname "raxod502/el-patch")

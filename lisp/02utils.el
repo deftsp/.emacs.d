@@ -16,6 +16,8 @@
 
 (use-package use-package-chords)
 
+(use-package el-patch)
+
 (use-package evil-evilified-state
   :config
   (progn
