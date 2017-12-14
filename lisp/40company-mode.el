@@ -88,7 +88,7 @@
 (add-hook 'python-mode-hook 'paloryemacs/company-python-mode-setup)
 (defun paloryemacs/company-python-mode-setup ()
   (let ((backends paloryemacs/company-prog-common-backends))
-    (push 'company-ropemacs backends)
+    ;; (push 'company-ropemacs backends)
     (push 'company-anaconda backends)
     (set (make-local-variable 'company-backends) backends)))
 

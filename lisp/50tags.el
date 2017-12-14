@@ -72,14 +72,14 @@
   :init (progn
           (defun paloryemacs//turn-counsel-gtags-mode-on ()
             (counsel-gtags-mode +1))
-          (add-hook 'c-mode-common-hook 'paloryemacs//turn-counsel-gtags-mode-on)
-          (add-hook 'python-mode-hook 'paloryemacs//turn-counsel-gtags-mode-on))
+          (add-hook 'c++-mode-hook 'counsel-gtags-mode)
+          (add-hook 'c-mode-common-hook 'paloryemacs//turn-counsel-gtags-mode-on))
   :config (progn
             ;; (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
             ;; (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
             ;; (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
-            ;; (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-pop-stack)
-            (dolist (mode '(python-mode c-mode))
+            ;; (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
+            (dolist (mode '(c-mode c++-mode))
               (paloryemacs/set-leader-keys-for-major-mode mode
                 "gc" 'counsel-gtags-create-tags
                 "gd" 'counsel-gtags-dwim
