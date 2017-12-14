@@ -369,6 +369,7 @@ kill internal buffers too."
           (grep-mode                 . evilified)
           (haskell-error-mode        . emacs)
           (haskell-interactive-mode  . insert)
+          (helpful-mode              . motion)
           (Info-mode                 . evilified)
           (message-mode              . emacs)
           (nrepl-mode                . insert)

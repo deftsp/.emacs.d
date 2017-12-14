@@ -101,22 +101,6 @@ space and marks next symbol."
   :defer t
   :commands (uptimes uptimes-this))
 
-;;; recentf
-(use-package recentf
-  :init
-  (progn
-    (setq recentf-max-saved-items 500)
-    (setq recentf-max-menu-items 10)
-    (setq recentf-auto-cleanup 'never) ; To protect tramp
-    )
-  :config
-  (progn
-    (add-to-list 'recentf-keep 'file-remote-p) ; the remote connection is NOT opened
-    (add-to-list 'recentf-exclude "^/su:")
-    (add-to-list 'recentf-exclude "^/sudo:")
-    (add-to-list 'recentf-exclude "\\.gpg$")
-    (recentf-mode +1)))
-
 ;;; unicad
 ;; https://www.emacswiki.org/emacs/Unicad
 ;; Unicad is short for Universal Charset Auto Detector. It is an Emacs-Lisp port of Mozilla Universal Charset Detector.

@@ -5,9 +5,45 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+;;; recentf
+(use-package recentf
+  :init
+  (progn
+    (setq recentf-save-file "~/.emacs.d/recentf")
+    (setq recentf-max-saved-items 500)
+    (setq recentf-max-menu-items 10)
+    (setq recentf-auto-cleanup 'never) ; To protect tramp
+    )
+  :config
+  (progn
+    (defun paloryemacs//recentf-track-file-ensure-no-properties (old-function &rest arguments)
+      (and buffer-file-name
+           (recentf-add-file (substring-no-properties buffer-file-name)))
+      ;; Must return nil because it is run from `write-file-functions'.
+      nil)
+
+    (advice-add #'recentf-track-opened-file :around #'paloryemacs//recentf-track-file-ensure-no-properties)
+
+    (add-to-list 'recentf-keep 'file-remote-p) ; the remote connection is NOT opened
+    (add-to-list 'recentf-exclude "^/su:")
+    (add-to-list 'recentf-exclude "^/sudo:")
+    (add-to-list 'recentf-exclude "\\.gpg$")
+    (recentf-mode +1)))
+
 ;;; when open a file, point goes to the last place
-(if (fboundp 'save-place-mode)
-    (save-place-mode +1))
+(use-package saveplace
+  :config
+  (progn
+    (defun paloryemacs//save-place-to-alist-ensure-no-properties ()
+      (when buffer-file-name
+        (setq buffer-file-name
+              (substring-no-properties buffer-file-name))))
+
+    (advice-add 'save-place-to-alist :before
+                #'paloryemacs//save-place-to-alist-ensure-no-properties)
+
+    (save-place-mode +1)))
+
 
 ;; hisotry save file
 (setq history-length 250
