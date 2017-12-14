@@ -41,6 +41,7 @@
 (require '50dictionary)
 (require '50dired)
 (require '50display)
+(require '50docker)
 (require '50elfeed)
 (require '50gnus)
 (require '50ediff)
