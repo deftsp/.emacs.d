@@ -21,14 +21,15 @@
 ;;; Commentary:
 ;; Work with AnkiConnect(https://foosoft.net/projects/anki-connect/)
 ;;
-;; TODO: 1. When add two words, create two cards separately
-;;       2. Add new item from region
-;;       3. Support cloze type card
-;;       4. Use card types to get field instead of hard-coded
+;; TODO:
+;; - Support cloze type card
+;; - Use card types to get field instead of hard-coded
+;; - Interactive change context style for code like content
 
 ;;; Code:
 (require 'dash)
 (require 's)
+(require 'ht)
 (require 'request)
 (require 'json)
 (require 'popwin)
@@ -52,12 +53,7 @@
 
 (defvar-local org-anki--capture-data nil)
 (defvar-local org-anki--context nil)
-(defvar-local org-anki--word nil)
-(defvar-local org-anki--pronunciation nil)
-(defvar-local org-anki--audio-name nil)
-(defvar-local org-anki--audio-url nil)
-(defvar-local org-anki--en-definition nil)
-(defvar-local org-anki--cn-definition nil)
+(defvar-local org-anki--entity-alist nil)
 
 ;; NOTE: the origin https://github.com/tkf/emacs-request have problem when the
 ;; json boy have UTF-8 character use https://github.com/abingham/emacs-request
@@ -156,30 +152,40 @@
        [,note])
      t)))
 
-;; ("org-anki-capture" "Context" "Phonetic" "Word" "Definitions")
+
 (defun org-anki-create-capture-card (&optional deck model)
-  (let* ((deck (or deck "Inbox"))
-         (model (or model "org-anki-capture"))
-         (word-field (if org-anki--audio-url
-                         (format "%s [sound:%s]" org-anki--word org-anki--audio-name)
-                       org-anki--word))
-         (fields `(:Context ,org-anki--context
-                   :Phonetic ,org-anki--pronunciation
-                   :Word ,word-field
-                   :EN-Definition ,org-anki--en-definition
-                   :CN-Definition ,org-anki--cn-definition))
-         (note `(:deckName ,deck :modelName ,model :fields ,fields)))
-    (when org-anki--audio-url
-      (let ((l `(:audio (:url ,org-anki--audio-url :filename ,org-anki--audio-name :fields "Word"))))
-        (setq note (append note l))))
-    ;; (setq test-note note)
+  (let ((deck (or deck "Inbox"))
+        (model (or model "org-anki-capture"))
+        notes)
+    (dolist (entity org-anki--entity-alist)
+      (let* ((word (assoc-default 'word entity))
+             (pronunciation (assoc-default 'pronunciation entity))
+             (audio-url (assoc-default 'audio-url entity))
+             (audio-name (assoc-default 'audio-name entity))
+             (en-definition (assoc-default 'en-definition entity))
+             (cn-definition (assoc-default 'cn-definition entity))
+             (word-field (if audio-url
+                             (format "%s [sound:%s]" word audio-name)
+                           word))
+             (fields `(:Context ,(org-anki--render-context
+                                  org-anki--context word)
+                       :Phonetic ,pronunciation
+                       :Word ,word-field
+                       :EN-Definition ,en-definition
+                       :CN-Definition ,cn-definition))
+             (note `(:deckName ,deck :modelName ,model :fields ,fields)))
+        (when audio-url
+          (let ((l `(:audio (:url ,audio-url :filename ,audio-name :fields "Word"))))
+            (setq note (append note l))))
+
+        (push note notes)))
+
+    ;; (setq test-note `(:notes ,(vconcat notes)))
     (org-anki-request
      (lambda (ret) (message "Create capture card with response: %S" ret))
      "addNotes"
-     `(:notes
-       [,note])
-     t)
-    ))
+     `(:notes ,(vconcat notes))
+     t)))
 
 (defun org-anki--get-file-name (word)
   (format "yudao-%s-%s.mp3" word (org-id-uuid)))
@@ -214,15 +220,28 @@
     (insert (format "%s%s\n" indent sexp))
     (insert (concat indent  "#+END_SRC\n"))))
 
-(defun org-anki-new-capture (data)
+(defun org-anki-capture-protocol (data)
+  (setq org-anki--capture-data data)
+  (org-anki--create-popup-buffer (plist-get data :body)))
+
+(defun org-anki-capture-region (&optional start end)
+  (interactive "r")
+  (let ((context (if (use-region-p)
+                     (buffer-substring-no-properties start end)
+                   (read-string "Context: "))))
+    (org-anki--create-popup-buffer context)))
+
+(defun org-anki--create-popup-buffer (context)
   (let ((buf (get-buffer-create "*org-anki*")))
     (with-current-buffer buf
       (org-anki-mode)
-      (setq org-anki--capture-data data)
-      (setq org-anki--context (plist-get data :body))
       (erase-buffer)
+      (setq org-anki--context context)
       (insert "#+STARTUP: content\n\n")
       (org-anki-insert-src-block "Context" 1 'org-anki--context t)
+      (insert "* Entities\n")
+      (org-anki-insert-src-block "Entities" 1
+                                 '(org-anki--pretty-entity-alist))
       (org-anki-refresh-buffer)
       (goto-char (point-max)))
     (popwin:popup-buffer buf
@@ -249,6 +268,21 @@
 
     (s-join "\n" collect)))
 
+(defun org-anki--render-context (context word)
+  (s-replace word
+             (concat "<span class=\"keyword\">"
+                     word
+                     "</span>")
+             context))
+
+(defun org-anki--pretty-entity-alist ()
+  (s-join "\n\n-------\n\n"
+          (-map
+           (lambda (l)
+             (s-join "\n"
+                     (-map (lambda (kv)
+                             (format "%s: %s" (car kv) (cdr kv))) l)))
+           org-anki--entity-alist)))
 
 (defun org-anki-add-word ()
   (interactive)
@@ -256,46 +290,28 @@
          (words (-uniq (s-split-words (downcase org-anki--context))))
          (word (completing-read "Choose Word: " words)))
     (with-current-buffer buf
-      (setq org-anki--word word)
       (goto-char (point-max))
       (org-anki-get-word-definition
-       org-anki--word
+       word
        (lambda (data-value)
          (setq test-data-value data-value)
          (let ((pronunciation (assoc-default 'pronunciation data-value))
                (us-audio (assoc-default 'us_audio data-value))
                (audio-name (assoc-default 'audio_name data-value))
                (en-definition (assoc-default 'en_definitions data-value))
-               (cn-definition (assoc-default 'definition data-value)))
-           (setq org-anki--pronunciation pronunciation)
-           (setq org-anki--audio-url us-audio)
-           (setq org-anki--audio-name (format "shanbay-%s-%s.mp3" audio-name (org-id-uuid)))
+               (cn-definition (assoc-default 'definition data-value))
+               entity)
+           (setq entity
+                 `((word          . ,word)
+                   (pronunciation . ,pronunciation)
+                   (audio-url     . ,us-audio)
+                   (audio-name    . ,(format "shanbay-%s-%s.mp3"
+                                             audio-name
+                                             (org-id-uuid)))
+                   (en-definition . ,(org-anki--render-definition en-definition))
+                   (cn-definition . ,(org-anki--render-definition cn-definition))))
 
-           (setq org-anki--en-definition
-                 (org-anki--render-definition en-definition))
-           (setq org-anki--cn-definition
-                 (org-anki--render-definition cn-definition))
-           (setq org-anki--context
-                 (s-replace org-anki--word
-                            (concat "<span class=\"keyword\">"
-                                    org-anki--word
-                                    "</span>")
-                            org-anki--context))
-
-           (goto-char (point-max))
-           (insert "* Word\n")
-           (insert (format "** %s\n" org-anki--word))
-           (org-anki-insert-src-block
-            "Pronunciation" 3
-            '(format \"[%s] [%s]\"
-                     org-anki--pronunciation
-                     org-anki--audio-url)
-            t)
-
-           (org-anki-insert-src-block
-            "Definitions" 3 '(format "\"%s\n%s\""
-                                     org-anki--en-definition
-                                     org-anki--cn-definition) t)
+           (push entity org-anki--entity-alist)
            (org-anki-refresh-buffer)
            (goto-char (point-max))))
        t))))
@@ -336,7 +352,8 @@
        (if (string= "No further code blocks" (cadr err))
            (message "Refresh Done")
          (message "Unknown user-error: %s" (error-message-string err)))))
-    (org-hide-block-all)))
+    ;; (org-hide-block-all)
+    ))
 
 ;; (bind-key
 ;;  "s-t"

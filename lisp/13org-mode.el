@@ -1106,7 +1106,7 @@ to `reorganize-frame', otherwise set to `other-frame'."
     (defun org-protocol-org-anki (data)
       (let* ((body (plist-get data :body)))
         (if (> (length body) 0)
-            (org-anki-new-capture data)
+            (org-anki-capture-protocol data)
           (error "The capture body is empty"))))
 
     (add-to-list 'org-protocol-protocol-alist
@@ -1735,6 +1735,7 @@ _h_tml    ^ ^        _A_SCII:
   (use-package org-anki
     :config
     (progn
+      (bind-key "s-c" 'org-anki-capture-region)
       (with-eval-after-load 'evil
         (evil-define-key 'normal org-anki-mode-map "gr" 'org-anki-refresh-buffer))
       (paloryemacs/set-leader-keys-for-major-mode 'org-anki-mode
