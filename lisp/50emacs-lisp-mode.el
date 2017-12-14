@@ -171,7 +171,17 @@ Requires smartparens because all movement is done using `sp-forward-symbol'."
 
 (paloryemacs/init-emacs-lisp)
 
-
+(use-package helpful
+  :defer t
+  :commands (helpful-callable helpful-variable helpful-key helpful-at-point)
+  :init
+  (progn
+    (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
+      (paloryemacs/set-leader-keys-for-major-mode mode
+        "hf" 'helpful-callable
+        "hv" 'helpful-variable
+        "hk" 'helpful-key
+        "h." 'helpful-at-point))))
 
 ;;; elisp keywords aligned
 ;; https://github.com/Fuco1/.emacs.d

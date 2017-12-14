@@ -1,0 +1,5 @@
+(:name shut-up
+ :description "Shut up would you!"
+ :type github
+ :pkgname "cask/shut-up"
+ :depends (cl-lib))
