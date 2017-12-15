@@ -1269,6 +1269,21 @@ inputting math (Unicode) symbols." t))
     (push '((nil . "buffer-to-window-[2-9]") . t)
           which-key-replacement-alist)
 
+    ;; rename the wg-switch-to-workgroup-at-index-0 entry, to 0..9
+    (push '(("\\(.*\\)0" . "wg-switch-to-workgroup-at-index-0") .
+            ("\\10..9" . "switch to workgroup 0..9"))
+          which-key-replacement-alist)
+
+    ;; hide the "[1-9] -> buffer-to-window-[2-9]" entries
+    (push '((nil . "wg-switch-to-workgroup-at-index-[1-9]") . t)
+          which-key-replacement-alist)
+
+
+    ;; hide the "[2-9] -> buffer-to-window-[2-9]" entries
+    (push '((nil . "buffer-to-window-[2-9]") . t)
+          which-key-replacement-alist)
+
+
     ;; SPC k- lisp
     ;; rename "1 .. 9 -> digit-argument" to "1..9 -> digit-argument"
     (push '(("\\(.*\\)1 .. 9" . "evil-lisp-state-digit-argument") .
