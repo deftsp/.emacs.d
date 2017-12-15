@@ -160,12 +160,37 @@ mouse-1: Display Line and Column Mode Menu")
 (defpowerline powerline-ace-window-path
   (window-parameter (selected-window) 'ace-window-path))
 
+(defun paloryemacs--unicode-number (str)
+  "Return a nice unicode representation of a single-digit number STR."
+  (cond
+   ;; "☰" 0
+   ((string= "1" str) "☱")
+   ((string= "2" str) "☲")
+   ((string= "3" str) "☳")
+   ((string= "4" str) "☴")
+   ((string= "5" str) "☵")
+   ((string= "6" str) "☶")
+   ((string= "7" str) "☷")
+   ((string= "8" str) "➑")
+   ((string= "9" str) "➒")
+   ((string= "10" str) "➓")
+   (t str)))
+
 (defpowerline powerline-winum-number
   (if (and (fboundp 'winum-mode) winum-mode)
       (let* ((n (winum-get-number))
              (s (if (numberp n) (int-to-string n) "")))
-        (propertize (concat " #" s) 'face 'winum-face))
-    "##"))
+        (propertize (concat "  " (paloryemacs--unicode-number s))
+                    'face 'winum-face))
+    "#"))
+
+
+;; (defpowerline powerline-winum-number
+;;   (if (and (fboundp 'winum-mode) winum-mode)
+;;       (let* ((n (winum-get-number))
+;;              (s (if (numberp n) (int-to-string n) "")))
+;;         (propertize (concat " #" s) 'face 'winum-face))
+;;     "##"))
 
 
 (defpowerline paloryemacs/powerline-vc

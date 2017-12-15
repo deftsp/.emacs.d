@@ -310,7 +310,7 @@
    '(aw-mode-line-face ((t (:foreground "violet" :background unspecified))))
 
    ;; winum
-   '(winum-face ((t (:foreground "violet" :background unspecified))))
+   '(winum-face ((t (:foreground "violet" :background unspecified  :family "FreeMono"))))
 
    ;; company-mode
    `(company-tooltip ((t (:background ,base01 :foreground "#dfdfdf"))))
