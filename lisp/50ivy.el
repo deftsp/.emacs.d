@@ -16,6 +16,7 @@
 
 
 (use-package counsel
+  :diminish counsel-mode
   :init
   (progn
     (global-set-key (kbd "s-g") 'counsel-rg)
@@ -56,6 +57,7 @@
 
 (use-package ivy
   :defer t
+  :diminish ivy-mode
   :init
   (progn
     (setq ivy-display-style 'fancy)

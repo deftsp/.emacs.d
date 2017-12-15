@@ -254,6 +254,7 @@
 
 (use-package yasnippet
   :defer 5
+  :diminish (yas-minor-mode . "") " Y"
   :commands (yas-global-mode yas-minor-mode)
   :init
   (progn

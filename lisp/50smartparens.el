@@ -103,6 +103,7 @@
 
 (use-package smartparens
   :defer t
+  :diminish (smartparens-mode . "")
   :commands (sp-split-sexp sp-newline sp-up-sexp smartparens-global-mode)
   :init
   (progn

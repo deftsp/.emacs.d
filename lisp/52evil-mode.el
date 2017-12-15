@@ -764,6 +764,7 @@ to replace the symbol under cursor"
 
 (use-package evil-find-char-pinyin
   :defer 3
+  :diminish evil-find-char-pinyin-mode
   :init
   (setq evil-find-char-pinyin-only-simplified t)
   :config

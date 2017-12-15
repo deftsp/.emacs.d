@@ -900,15 +900,18 @@ such character is found, following options are shown:
 ;; L >= 6 : helm-swoop or swiper
 ;; https://github.com/tam17aki/ace-isearch
 (use-package ace-isearch
+  :diminish ace-isearch-mode
   :init
-  (setq ace-isearch-function 'avy-goto-word-1
-        ace-isearch-input-length 5
-        ace-isearch-jump-delay 0.25
-        ace-isearch-use-jump 'printing-char)
-  (setq ace-isearch-function-from-isearch 'ace-isearch-swiper-from-isearch)
+  (progn
+    (setq ace-isearch-function 'avy-goto-word-1
+          ace-isearch-input-length 5
+          ace-isearch-jump-delay 0.25
+          ace-isearch-use-jump 'printing-char)
+    (setq ace-isearch-function-from-isearch 'ace-isearch-swiper-from-isearch))
   :config
-  (define-key isearch-mode-map (kbd "C-'") 'ace-isearch-jump-during-isearch)
-  (global-ace-isearch-mode +1))
+  (progn
+    (define-key isearch-mode-map (kbd "C-'") 'ace-isearch-jump-during-isearch)
+    (global-ace-isearch-mode +1)))
 
 ;;; ace-link
 ;; bind ace-link-info and ace-link-help to o in their respective modes.
@@ -1148,11 +1151,9 @@ inputting math (Unicode) symbols." t))
   :config
   (progn
     (with-eval-after-load "abbrev"
-      (diminish 'abbrev-mode " Abv"))
+      (diminish 'abbrev-mode "")) ; " Abv"
     (with-eval-after-load "subword"
       (diminish 'subword-mode " sw"))
-    (with-eval-after-load "yasnippet"
-      (diminish 'yas-minor-mode " Y"))
     (with-eval-after-load "paredit"
       (diminish 'paredit-mode " π"))
     (with-eval-after-load "eldoc"
@@ -1169,8 +1170,6 @@ inputting math (Unicode) symbols." t))
       (diminish 'auto-complete-mode))
     (with-eval-after-load "golden-ratio"
       (diminish 'golden-ratio-mode " φ"))
-    (with-eval-after-load "smartparens"
-      (diminish 'smartparens-mode " p"))
     (with-eval-after-load "evil-lispy"
       (diminish 'evil-lispy-mode))
     (with-eval-after-load "company"
@@ -1189,8 +1188,6 @@ inputting math (Unicode) symbols." t))
       (diminish 'evil-goggles-mode))
     (with-eval-after-load "which-key"
       (diminish 'which-key-mode))
-    (with-eval-after-load "aggressive-indent"
-      (diminish 'aggressive-indent-mode " I"))
     (with-eval-after-load "evil-vimish-fold"
       (diminish 'evil-vimish-fold-mode))
     (with-eval-after-load "autorevert"

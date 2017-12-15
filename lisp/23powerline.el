@@ -322,18 +322,21 @@ mouse-1: Display Line and Column Mode Menu")
     ""))
 
 
+(defvar paloryemacs/powerline-max-which-fun-length 32)
 (defpowerline powerline-which-func
-  (propertize
-   (replace-regexp-in-string "%" "%%"
-                             (or
-                              (gethash
-                               (selected-window)
-                               which-func-table)
-                              which-func-unknown))
-   'mouse-face 'mode-line-highlight
-   'help-echo "mouse-1: go to beginning\n\
+  (let ((s (replace-regexp-in-string
+            "%" "%%"
+            (or
+             (gethash
+              (selected-window)
+              which-func-table)
+             which-func-unknown))))
+    (propertize
+     (truncate-string-to-width s paloryemacs/powerline-max-which-fun-length nil nil "…")
+     'mouse-face 'mode-line-highlight
+     'help-echo "mouse-1: go to beginning\n\
 mouse-2: toggle rest visibility\nmouse-3: go to end"
-   'local-map which-func-keymap))
+     'local-map which-func-keymap)))
 
 (defpowerline powerline-recursive-left
   #("%[" 0 2
