@@ -188,7 +188,27 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
       (advice-add func :after 'paloryemacs/python-setup-everything))
     (paloryemacs/set-leader-keys-for-major-mode 'python-mode
       "vu" 'pyenv-mode-unset
-      "vs" 'pyenv-mode-set)))
+      "vs" 'pyenv-mode-set))
+  :config
+  (progn
+    ;; For a venv named 'venv3.6.2' located at '~/.pyenv/versions/venv3.6.2'
+    ;; which is linked to '~/.pyenv/versions/3.6.2/envs/venv',
+    ;; `python-shell-calculate-process-environment' will set VIRTUAL_ENV to
+    ;; '~/.pyenv/versions/venv3.6.2'. But the function init_virtualenv in
+    ;; interactiveshell.py (in IPython source) don't accept the virtualenv path
+    ;; as link, and emit warning. Here we advice `pyenv-mode-full-path' to
+    ;; return the true path instead of link.
+
+    ;; See also
+    ;; https://github.com/pyenv/pyenv-virtualenv/issues/113
+    ;; https://github.com/ipython/ipython/issues/9774
+    ;; https://github.com/ipython/ipython/pull/5939
+    (defun paloryemacs//chase-virtualenv-root (p)
+      (file-truename p))
+    ;; (advice-remove 'pyenv-mode-full-path
+    ;;                #'paloryemacs//chase-virtualenv-root)
+    (advice-add 'pyenv-mode-full-path
+                :filter-return #'paloryemacs//chase-virtualenv-root)))
 
 (use-package pyvenv
   :defer t
@@ -236,22 +256,6 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
     (setq python-shell-completion-native-enable nil))
   :config
   (progn
-    ;; For the venv named 'venv3.6.2' at '~/.pyenv/versions/venv3.6.2' which is
-    ;; linked to '~/.pyenv/versions/3.6.2/envs/venv',
-    ;; `python-shell-calculate-process-environment' will set VIRTUAL_ENV to
-    ;; '~/.pyenv/versions/venv3.6.2'. But the function init_virtualenv in
-    ;; interactiveshell.py (in ipython source) don't think the virtualenv path
-    ;; in the current virtualenv path, here we set VIRTUAL_ENV as true path
-    ;; instead of the link.
-    (defun paloryemacs//chase-virtualenv-root-path ()
-      (when python-shell-virtualenv-root
-        (setq python-shell-virtualenv-root
-              (file-truename python-shell-virtualenv-root))))
-    (advice-add 'python-shell-calculate-process-environment
-                :before #'paloryemacs//chase-virtualenv-root-path)
-    ;; (advice-remove 'python-shell-calculate-process-environment
-    ;;                #'paloryemacs//chase-virtualenv-root-path)
-
     (paloryemacs//python-setup-shell) ; slow
     (paloryemacs/declare-prefix-for-mode 'python-mode "mc" "execute")
     (paloryemacs/declare-prefix-for-mode 'python-mode "md" "debug")
