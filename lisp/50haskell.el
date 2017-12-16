@@ -9,9 +9,12 @@
 ;; (add-to-list 'Info-default-directory-list "~/.emacs.d/site-lisp/haskell-mode/")
 ;; (require 'haskell-mode-autoloads)
 ;; dante: https://github.com/jyp/dante, a fork of Intero mode.
+
+(setq haskell-modes '(haskell-mode literate-haskell-mode))
+
 (defvar paloryemacs/haskell-completion-backend 'ghc-mod
   "Completion backend used by company.
-Available options are `intero', `ghc-mod'. ")
+Available options are `ghci', `intero', `dante', and `ghc-mod'")
 
 ;; do not use it, since it doesn't play with well with evil.
 (defvar paloryemacs/use-structured-haskell-mode nil)
@@ -47,62 +50,178 @@ Available options are `intero', `ghc-mod'. ")
 (defvar paloryemacs/haskell-mode-key-chord-map nil
   "Keymap for key chord prefix commands in haskell mode.")
 
-(with-eval-after-load "haskell-mode"
-  (setq haskell-process-log t
-        haskell-font-lock-symbols nil ; disabled because it will casue alignment problem
-        haskell-process-path-cabal (expand-file-name "~/.cabal/bin/cabal")
-        haskell-stylish-on-save nil ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
-        ;; Better import handling
-        haskell-process-suggest-remove-import-lines t
-        haskell-process-auto-import-loaded-modules t
-        haskell-process-args-stack-ghci '("--ghci-options=-ferror-spans")
-        haskell-interactive-popup-errors  nil
-        haskell-notify-p t)
+(use-package haskell-mode
+  :defer t
+  :init
+  (progn
 
-  (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
+    (setq haskell-process-log t
+          haskell-font-lock-symbols nil ; disabled because it will casue alignment problem
+          haskell-process-path-cabal (expand-file-name "~/.cabal/bin/cabal")
+          haskell-stylish-on-save nil ; or use M-x haskell-mode-stylish-buffer to call `stylish-haskell'
+          ;; Better import handling
+          haskell-process-suggest-remove-import-lines t
+          haskell-process-auto-import-loaded-modules t
+          haskell-process-args-stack-ghci '("--ghci-options=-ferror-spans")
+          haskell-interactive-popup-errors  nil
+          haskell-notify-p t)
 
-  ;; use stack instead cabal
-  (setq haskell-compile-cabal-build-command "stack build")
-  (setq haskell-process-type 'auto) ; alternative: cabal-repl or cabal-dev
+    (add-hook 'haskell-mode-hook 'imenu-add-menubar-index)
+    (add-hook 'haskell-mode-hook 'turn-on-haskell-decl-scan)
+
+    ;; use stack instead cabal
+    (setq haskell-compile-cabal-build-command "stack build")
+    ;; alternative: cabal-repl or cabal-dev
+    (setq haskell-process-type 'auto))
+  :config
+  (progn
+    (dolist (mode haskell-modes)
+      (paloryemacs/declare-prefix-for-mode 'haskell-mode "mg" "haskell/navigation")
+      (paloryemacs/declare-prefix-for-mode 'haskell-mode "ms" "haskell/repl")
+      (paloryemacs/declare-prefix-for-mode 'haskell-mode "mc" "haskell/cabal")
+      (paloryemacs/declare-prefix-for-mode 'haskell-mode "mh" "haskell/documentation")
+      (paloryemacs/declare-prefix-for-mode 'haskell-mode "md" "haskell/debug")
+      (paloryemacs/declare-prefix-for-mode 'haskell-mode "mr" "haskell/refactor"))
+
+    (paloryemacs/declare-prefix-for-mode 'haskell-interactive-mode "ms" "haskell/repl")
+    (paloryemacs/declare-prefix-for-mode 'haskell-cabal-mode "ms" "haskell/repl")
+    (paloryemacs/declare-prefix-for-mode 'intero-repl-mode "ms" "haskell/repl")
+
+    (defun paloryemacs/haskell-process-do-type-on-prev-line ()
+      (interactive)
+      (haskell-process-do-type 1))
+
+    (paloryemacs/set-leader-keys-for-major-mode 'haskell-mode
+      "gg"  'haskell-mode-jump-to-def-or-tag
+
+      "gi"  'haskell-navigate-imports
+      "gl"  'haskell-mode-goto-loc
+
+      "F"   'haskell-mode-stylish-buffer
+
+      "sb"  'haskell-process-load-file
+      "sc"  'haskell-interactive-mode-clear
+      "ss"  'paloryemacs/haskell-interactive-bring
+      "sS"  'haskell-interactive-switch
+
+      "se"  'hasky-stack-execute
+
+      "ca"  'haskell-process-cabal
+      "cb"  'haskell-process-cabal-build
+      "cc"  'haskell-compile
+      "cv"  'haskell-cabal-visit-file
+
+      "hd"  'inferior-haskell-find-haddock
+      "hh"  'hoogle
+      "hH"  'haskell-hoogle-lookup-from-local
+      "hi"  'haskell-process-do-info
+      "ht"  'haskell-process-do-type
+      "hT"  'haskell-intero/insert-type
+      "hT"  'paloryemacs/haskell-process-do-type-on-prev-line
+      "hy"  'hayoo
+
+      "da"  'haskell-debug/abandon
+      "db"  'haskell-debug/break-on-function
+      "dB"  'haskell-debug/delete
+      "dc"  'haskell-debug/continue
+      "dd"  'haskell-debug
+      "dn"  'haskell-debug/next
+      "dN"  'haskell-debug/previous
+      ;; "dp"  'haskell-debug/previous
+      "dr"  'haskell-debug/refresh
+      "ds"  'haskell-debug/step
+      "dt"  'haskell-debug/trace
+
+      "E"    #'hasky-extensions
+      "U"   'haskell-mode-find-uses
+      "rb" 'hlint-refactor-refactor-buffer
+      "rr" 'hlint-refactor-refactor-at-point)
+
+    (evilified-state-evilify haskell-debug-mode haskell-debug-mode-map
+      "RET" 'haskell-debug/select
+      "a" 'haskell-debug/abandon
+      "b" 'haskell-debug/break-on-function
+      "c" 'haskell-debug/continue
+      "d" 'haskell-debug/delete
+      "n" 'haskell-debug/next
+      "N" 'haskell-debug/previous
+      "p" 'haskell-debug/previous
+      "r" 'haskell-debug/refresh
+      "s" 'haskell-debug/step
+      "t" 'haskell-debug/trace)
+
+    ;; Switch back to editor from REPL
+    (paloryemacs/set-leader-keys-for-major-mode 'haskell-interactive-mode
+      "ss"  'haskell-interactive-switch-back)
+    (paloryemacs/set-leader-keys-for-major-mode 'intero-repl-mode
+      "ss"  'intero-repl-switch-back)
+
+    (paloryemacs/set-leader-keys-for-major-mode 'haskell-cabal
+      "C"  'haskell-compile)
+
+    ;; Cabal-file bindings
+    (paloryemacs/set-leader-keys-for-major-mode 'haskell-cabal-mode
+      ;; "="   'haskell-cabal-subsection-arrange-lines ;; Does a bad job, 'gg=G' works better
+      "d"   'haskell-cabal-add-dependency
+      "b"   'haskell-cabal-goto-benchmark-section
+      "e"   'haskell-cabal-goto-executable-section
+      "t"   'haskell-cabal-goto-test-suite-section
+      "m"   'haskell-cabal-goto-exposed-modules
+      "l"   'haskell-cabal-goto-library-section
+      "n"   'haskell-cabal-next-subsection
+      "p"   'haskell-cabal-previous-subsection
+      "sc"  'haskell-interactive-mode-clear
+      "ss"  'paloryemacs/haskell-interactive-bring
+      "sS"  'haskell-interactive-switch
+      "N"   'haskell-cabal-next-section
+      "P"   'haskell-cabal-previous-section
+      "f"   'haskell-cabal-find-or-create-source-file)
+
+    (with-eval-after-load "evil"
+      ;; Make "RET" behaviour in REPL saner
+      (evil-define-key 'insert haskell-interactive-mode-map
+        (kbd "RET") 'haskell-interactive-mode-return)
+
+      (evil-define-key 'normal haskell-interactive-mode-map
+        (kbd "RET") 'haskell-interactive-mode-return))
 
 
-  (define-key haskell-mode-map (kbd "C-c v c") 'haskell-cabal-visit-file)
+    (define-key haskell-mode-map (kbd "C-c v c") 'haskell-cabal-visit-file)
 
-  (setq paloryemacs/haskell-mode-key-chord-map (make-sparse-keymap))
-  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "e") 'haskell-indent-insert-equal)
-  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "=") 'haskell-indent-insert-equal)
-  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "g") 'haskell-indent-insert-guard)
-  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "|") 'haskell-indent-insert-guard)
-  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "o") 'haskell-indent-insert-otherwise)
-  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "w") 'haskell-indent-insert-where)
-  (define-key paloryemacs/haskell-mode-key-chord-map (kbd ".") 'haskell-indent-align-guards-and-rhs)
-  (define-key paloryemacs/haskell-mode-key-chord-map (kbd ">") 'haskell-indent-put-region-in-literate)
-  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "l") 'paloryemacs/pop-haskell-process-log-buffer)
-  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "y") 'paloryemacs/pop-yesod-devel-buffer)
-  (define-key paloryemacs/haskell-mode-key-chord-map (kbd "u") (lambda () (interactive) (insert "undefined")))
+    (setq paloryemacs/haskell-mode-key-chord-map (make-sparse-keymap))
+    (define-key paloryemacs/haskell-mode-key-chord-map (kbd "e") 'haskell-indent-insert-equal)
+    (define-key paloryemacs/haskell-mode-key-chord-map (kbd "=") 'haskell-indent-insert-equal)
+    (define-key paloryemacs/haskell-mode-key-chord-map (kbd "g") 'haskell-indent-insert-guard)
+    (define-key paloryemacs/haskell-mode-key-chord-map (kbd "|") 'haskell-indent-insert-guard)
+    (define-key paloryemacs/haskell-mode-key-chord-map (kbd "o") 'haskell-indent-insert-otherwise)
+    (define-key paloryemacs/haskell-mode-key-chord-map (kbd "w") 'haskell-indent-insert-where)
+    (define-key paloryemacs/haskell-mode-key-chord-map (kbd ".") 'haskell-indent-align-guards-and-rhs)
+    (define-key paloryemacs/haskell-mode-key-chord-map (kbd ">") 'haskell-indent-put-region-in-literate)
+    (define-key paloryemacs/haskell-mode-key-chord-map (kbd "l") 'paloryemacs/pop-haskell-process-log-buffer)
+    (define-key paloryemacs/haskell-mode-key-chord-map (kbd "y") 'paloryemacs/pop-yesod-devel-buffer)
+    (define-key paloryemacs/haskell-mode-key-chord-map (kbd "u") (lambda () (interactive) (insert "undefined")))
 
-  ;; keymap for documentation
-  (setq paloryemacs/haskell-mode-doc-map (make-sparse-keymap))
-  (define-key paloryemacs/haskell-mode-doc-map (kbd "i") 'haskell-process-do-info) ; inferior-haskell-info
-  (define-key paloryemacs/haskell-mode-doc-map (kbd "C-i") 'haskell-process-do-info)
-  (define-key paloryemacs/haskell-mode-doc-map (kbd "t") 'haskell-process-do-type) ; inferior-haskell-type
-  (define-key paloryemacs/haskell-mode-doc-map (kbd "C-t") 'haskell-process-do-type)
-  (define-key paloryemacs/haskell-mode-doc-map (kbd "a") 'helm-ghc-browse-document)
-  (define-key paloryemacs/haskell-mode-doc-map (kbd "C-a") 'helm-ghc-browse-document)
-  (define-key paloryemacs/haskell-mode-doc-map (kbd "h") 'haskell-hoogle)
-  (define-key paloryemacs/haskell-mode-doc-map (kbd "d") 'inferior-haskell-find-haddock)
-  (define-key paloryemacs/haskell-mode-doc-map (kbd "C-d") 'inferior-haskell-find-haddock))
+    ;; keymap for documentation
+    (setq paloryemacs/haskell-mode-doc-map (make-sparse-keymap))
+    (define-key paloryemacs/haskell-mode-doc-map (kbd "i") 'haskell-process-do-info) ; inferior-haskell-info
+    (define-key paloryemacs/haskell-mode-doc-map (kbd "C-i") 'haskell-process-do-info)
+    (define-key paloryemacs/haskell-mode-doc-map (kbd "t") 'haskell-process-do-type) ; inferior-haskell-type
+    (define-key paloryemacs/haskell-mode-doc-map (kbd "C-t") 'haskell-process-do-type)
+    (define-key paloryemacs/haskell-mode-doc-map (kbd "a") 'helm-ghc-browse-document)
+    (define-key paloryemacs/haskell-mode-doc-map (kbd "C-a") 'helm-ghc-browse-document)
+    (define-key paloryemacs/haskell-mode-doc-map (kbd "h") 'haskell-hoogle)
+    (define-key paloryemacs/haskell-mode-doc-map (kbd "d") 'inferior-haskell-find-haddock)
+    (define-key paloryemacs/haskell-mode-doc-map (kbd "C-d") 'inferior-haskell-find-haddock))
 
-(with-eval-after-load 'flycheck
-  (setq flycheck-ghc-language-extensions '("DeriveFunctor"
-                                           "DeriveDataTypeable"
-                                           "DeriveFoldable"
-                                           "DeriveTraversable"
-                                           "TemplateHaskell"))
-  ;; (require 'flycheck-hdevtools nil t) ; not works with cabal sandbox for now
-  ;; flycheck-haskell: Improved Haskell support for Flycheck
-  (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup))
+  (with-eval-after-load 'flycheck
+    (setq flycheck-ghc-language-extensions '("DeriveFunctor"
+                                             "DeriveDataTypeable"
+                                             "DeriveFoldable"
+                                             "DeriveTraversable"
+                                             "TemplateHaskell"))
+    ;; (require 'flycheck-hdevtools nil t) ; not works with cabal sandbox for now
+    ;; flycheck-haskell: Improved Haskell support for Flycheck
+    (add-hook 'flycheck-mode-hook #'flycheck-haskell-setup)))
 
 ;;; ghc-mod
 ;; install ghc-mod
@@ -126,14 +245,18 @@ Available options are `intero', `ghc-mod'. ")
 ;; (setq ghc-hlint-options '("--ignore=Use camelCase"
 ;;                           "--ignore=Unused LANGUAGE pragma"))
 
-(paloryemacs/declare-prefix-for-mode 'haskell-mode "mg" "haskell/navigation")
-(paloryemacs/declare-prefix-for-mode 'haskell-mode "ms" "haskell/repl")
-(paloryemacs/declare-prefix-for-mode 'haskell-mode "mc" "haskell/cabal")
-(paloryemacs/declare-prefix-for-mode 'haskell-mode "mh" "haskell/documentation")
-(paloryemacs/declare-prefix-for-mode 'haskell-mode "md" "haskell/debug")
-(paloryemacs/declare-prefix-for-mode 'haskell-mode "mr" "haskell/refactor")
-(paloryemacs/declare-prefix-for-mode 'haskell-interactive-mode "ms" "haskell/repl")
-(paloryemacs/declare-prefix-for-mode 'haskell-cabal-mode "ms" "haskell/repl")
+
+(defun paloryemacs-haskell//setup-dante ()
+  (push 'xref-find-definitions spacemacs-jump-handlers)
+  (dante-mode +1)
+  (dolist (mode haskell-modes)
+    (paloryemacs/set-leader-keys-for-major-mode mode
+      "ht" 'dante-type-at
+      "hT" 'spacemacs-haskell//dante-insert-type
+      "hi" 'dante-info
+      "rs" 'dante-auto-fix
+      "se" 'dante-eval-block
+      "sr" 'dante-restart)))
 
 (defun paloryemacs-haskell//setup-intero ()
   (intero-mode +1)
@@ -356,8 +479,8 @@ Available options are `intero', `ghc-mod'. ")
 ;;; Check
 (defun paloryemacs/haskell-check (arg)
   "Check a Haskell file (default current buffer's file).
-if arg is not equal to 1, ignore `haskell-saved-check-command'
-See also`haskell-check'."
+  if arg is not equal to 1, ignore `haskell-saved-check-command'
+  See also`haskell-check'."
   (interactive "p")
   (if (= arg 1)
       (call-interactively 'haskell-check)
@@ -568,102 +691,6 @@ point."
   (let* ((session (haskell-session))
          (buffer (haskell-session-interactive-buffer session)))
     (display-buffer buffer)))
-
-(defun paloryemacs/haskell-process-do-type-on-prev-line ()
-  (interactive)
-  (haskell-process-do-type 1))
-
-(paloryemacs/set-leader-keys-for-major-mode 'haskell-mode
-  "gg"  'haskell-mode-jump-to-def-or-tag
-  "gi"  'haskell-navigate-imports
-  "gl"  'haskell-mode-goto-loc
-
-  "F"   'haskell-mode-stylish-buffer
-
-  "sb"  'haskell-process-load-file
-  "sc"  'haskell-interactive-mode-clear
-  "ss"  'paloryemacs/haskell-interactive-bring
-  "sS"  'haskell-interactive-switch
-
-  "se"  'hasky-stack-execute
-
-  "ca"  'haskell-process-cabal
-  "cb"  'haskell-process-cabal-build
-  "cc"  'haskell-compile
-  "cv"  'haskell-cabal-visit-file
-
-  "hd"  'inferior-haskell-find-haddock
-  "hh"  'hoogle
-  "hH"  'haskell-hoogle-lookup-from-local
-  "hi"  'haskell-process-do-info
-  "ht"  'haskell-process-do-type
-  "hT"  'haskell-intero/insert-type
-  "hT"  'paloryemacs/haskell-process-do-type-on-prev-line
-  "hy"  'hayoo
-
-  "da"  'haskell-debug/abandon
-  "db"  'haskell-debug/break-on-function
-  "dB"  'haskell-debug/delete
-  "dc"  'haskell-debug/continue
-  "dd"  'haskell-debug
-  "dn"  'haskell-debug/next
-  "dN"  'haskell-debug/previous
-  ;; "dp"  'haskell-debug/previous
-  "dr"  'haskell-debug/refresh
-  "ds"  'haskell-debug/step
-  "dt"  'haskell-debug/trace
-
-  "E"    #'hasky-extensions
-  "U"   'haskell-mode-find-uses
-  "rb" 'hlint-refactor-refactor-buffer
-  "rr" 'hlint-refactor-refactor-at-point)
-
-(with-eval-after-load "evil-evilified-state"
-  (evilified-state-evilify haskell-debug-mode haskell-debug-mode-map
-    "RET" 'haskell-debug/select
-    "a" 'haskell-debug/abandon
-    "b" 'haskell-debug/break-on-function
-    "c" 'haskell-debug/continue
-    "d" 'haskell-debug/delete
-    "n" 'haskell-debug/next
-    "N" 'haskell-debug/previous
-    "p" 'haskell-debug/previous
-    "r" 'haskell-debug/refresh
-    "s" 'haskell-debug/step
-    "t" 'haskell-debug/trace))
-
-;; Switch back to editor from REPL
-(paloryemacs/set-leader-keys-for-major-mode 'haskell-interactive-mode
-  "sS"  'haskell-interactive-switch-back)
-
-(paloryemacs/set-leader-keys-for-major-mode 'haskell-cabal
-  "C"  'haskell-compile)
-
-;; Cabal-file bindings
-(paloryemacs/set-leader-keys-for-major-mode 'haskell-cabal-mode
-  ;; "="   'haskell-cabal-subsection-arrange-lines ;; Does a bad job, 'gg=G' works better
-  "d"   'haskell-cabal-add-dependency
-  "b"   'haskell-cabal-goto-benchmark-section
-  "e"   'haskell-cabal-goto-executable-section
-  "t"   'haskell-cabal-goto-test-suite-section
-  "m"   'haskell-cabal-goto-exposed-modules
-  "l"   'haskell-cabal-goto-library-section
-  "n"   'haskell-cabal-next-subsection
-  "p"   'haskell-cabal-previous-subsection
-  "sc"  'haskell-interactive-mode-clear
-  "ss"  'paloryemacs/haskell-interactive-bring
-  "sS"  'haskell-interactive-switch
-  "N"   'haskell-cabal-next-section
-  "P"   'haskell-cabal-previous-section
-  "f"   'haskell-cabal-find-or-create-source-file)
-
-(with-eval-after-load "evil"
-  ;; Make "RET" behaviour in REPL saner
-  (evil-define-key 'insert haskell-interactive-mode-map
-    (kbd "RET") 'haskell-interactive-mode-return)
-
-  (evil-define-key 'normal haskell-interactive-mode-map
-    (kbd "RET") 'haskell-interactive-mode-return))
 
 
 ;; Intero functions
