@@ -117,6 +117,20 @@
      (setq highlight-symbol-idle-delay 1.2)))
 
 
+(use-package highlight-indent-guides
+  :defer t
+  :init
+  (progn
+    (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+    (setq highlight-indent-guides-method 'column) ; 'fill, 'column or 'character
+    (setq highlight-indent-guides-auto-odd-face-perc 6)
+    (setq highlight-indent-guides-auto-even-face-perc 3)
+    (setq highlight-indent-guides-auto-character-face-perc 4)
+    (setq highlight-indent-guides-character ?\|)))
+
+;; (use-package highlight-indentation
+;;   :defer t)
+
 ;;; inset file variable
 ;; insert -*- MODENAME -*- tag
 (defun paloryemacs/insert-file-variable ()

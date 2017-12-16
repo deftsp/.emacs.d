@@ -1,0 +1,4 @@
+(:name highlight-indent-guides
+ :description "Minor mode to highlight indentation"
+ :type github
+ :pkgname "DarthFennec/highlight-indent-guides")
