@@ -7,6 +7,9 @@ private-ede-projects.el
 .DS_Store
 \#*\#
 TAGS
+GPATH
+GRTAGS
+GTAGS
 *customzation*
 bookmarks
 .bm-repository
