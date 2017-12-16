@@ -152,9 +152,10 @@
 
 
 ;;; Run 'save-buffers-kill-emacs' without process-killing query
-(defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
-  "Prevent annoying \"Active processes exist\" query when you quit Emacs."
-  (cl-flet ((process-list () nil)) ad-do-it))
+;; seems not work on emacs26
+;; (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+;;   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+;;   (cl-flet ((process-list () nil)) ad-do-it))
 
 ;;; syntax table
 ;; (modify-syntax-entry ?_ "w")            ; now '_' is not considered a word-delimiter
