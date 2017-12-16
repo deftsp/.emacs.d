@@ -1,11 +1,13 @@
 ;;; 50major-modes.el ---
 
 ;;; imenu
-(with-eval-after-load 'imenu
-  (setq imenu-max-items 40))
-
-(global-set-key (kbd "C-c j") 'counsel-imenu)
-(paloryemacs/set-leader-keys "ji" 'counsel-imenu)
+(use-package imenu
+  :defer t
+  :init
+  (progn
+    (setq imenu-max-items 40)
+    (global-set-key (kbd "C-c j") 'counsel-imenu)
+    (paloryemacs/set-leader-keys "ji" 'counsel-imenu)))
 
 ;;; auto insert the matching closing delimiter
 ;; electric pair mode is a global minor mode
@@ -100,22 +102,17 @@
     (add-hook 'diff-auto-refine-mode-hook 'paloryemacs/turn-off-aggressive-indent-mode)))
 
 ;;; highlight-symbol
-(when (fboundp 'highlight-symbol-mode)
-  (add-hook 'prog-mode-hook (lambda () (highlight-symbol-mode t))))
-
-(eval-after-load "highlight-symbol"
-  '(progn
-     ;; (add-hook 'lisp-mode-hook 'highlight-symbol-mode)
-     ;; (add-hook 'emacs-lisp-mode-hook 'highlight-symbol-mode)
-     ;; (add-hook 'scheme-mode-hook 'highlight-symbol-mode)
-
-     ;; (global-set-key (kbd "M-s j") 'highlight-symbol-at-point)
-     ;; (global-set-key (kbd "M-s *") 'highlight-symbol-next)
-     ;; (global-set-key (kbd "M-s #") 'highlight-symbol-prev)
-     ;; (global-set-key (kbd "C-*") 'highlight-symbol-next)
-     ;; (global-set-key (kbd "C-#") 'highlight-symbol-prev)
-     (setq highlight-symbol-idle-delay 1.2)))
-
+(use-package highlight-symbol
+  :defer t
+  :init
+  (progn
+    (setq highlight-symbol-idle-delay 1.2)
+    ;; (global-set-key (kbd "M-s j") 'highlight-symbol-at-point)
+    ;; (global-set-key (kbd "M-s *") 'highlight-symbol-next)
+    ;; (global-set-key (kbd "M-s #") 'highlight-symbol-prev)
+    ;; (global-set-key (kbd "C-*") 'highlight-symbol-next)
+    ;; (global-set-key (kbd "C-#") 'highlight-symbol-prev)
+    (add-hook 'prog-mode-hook (lambda () (highlight-symbol-mode t)))))
 
 (use-package highlight-indent-guides
   :defer t
