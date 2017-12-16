@@ -171,19 +171,16 @@ so that if the major mode has better support it will use it first."
 (use-package counsel-etags
   :defer t
   :commands (counsel-etags-find-tag-at-point)
-  :init (progn
-          (setq counsel-etags-update-interval 300) ; 300 seconds, OPTIONAL
-          (defun paloryemacs/counsel-etags-add-update-tags-hook ()
-            ;; after-save-hook is a local variable
-            (add-hook 'after-save-hook 'counsel-etags-virtual-update-tags 'append 'local))
-          (add-hook 'prog-mode-hook 'paloryemacs/counsel-etags-add-update-tags-hook)
-          ;; (setq counsel-etags-update-tags-backend
-          ;;       (lambda () (shell-command "find . -type f -iname \"*.[ch]\" | etags -")))
-          )
-  :config
+  :init
   (progn
-    ;; (add-hook 'after-save-hook 'counsel-etags-virtual-update-tags)
-    ))
+    ;; (defun paloryemacs/counsel-etags-add-update-tags-hook ()
+    ;;   ;; after-save-hook is a local variable
+    ;;   (add-hook 'after-save-hook 'counsel-etags-virtual-update-tags 'append 'local))
+    ;; (add-hook 'prog-mode-hook 'paloryemacs/counsel-etags-add-update-tags-hook)
+    ;; (setq counsel-etags-update-tags-backend
+    ;;       (lambda () (shell-command "find . -type f -iname \"*.[ch]\" | etags -")))
+    ;; 300 seconds, OPTIONAL
+    (setq counsel-etags-update-interval 300)))
 
 
 
