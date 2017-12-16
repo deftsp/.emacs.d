@@ -1,0 +1,5 @@
+(:name imenu-list
+ :type github
+ :description "Show imenu entries in a seperate buffer"
+ :pkgname "bmag/imenu-list"
+ :depends (cl-lib))

@@ -180,7 +180,7 @@ mouse-1: Display Line and Column Mode Menu")
   (if (and (fboundp 'winum-mode) winum-mode)
       (let* ((n (winum-get-number))
              (s (if (numberp n) (int-to-string n) "")))
-        (propertize (concat "  " (paloryemacs--unicode-number s))
+        (propertize (concat " " (paloryemacs--unicode-number s))
                     'face 'winum-face))
     "#"))
 

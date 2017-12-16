@@ -32,7 +32,6 @@
 (require 'ht)
 (require 'request)
 (require 'json)
-(require 'popwin)
 
 (eval-when-compile
   (require 'cl))
@@ -244,12 +243,7 @@
                                  '(org-anki--pretty-entity-alist))
       (org-anki-refresh-buffer)
       (goto-char (point-max)))
-    (popwin:popup-buffer buf
-                         :dedicated t
-                         :stick t
-                         :noselect nil
-                         :position 'bottom
-                         :height 0.6)))
+    (pop-to-buffer buf)))
 
 (defun org-anki--span-wrap (s keyword)
   (format "<span class=\"%s\">%s</span>" keyword s))

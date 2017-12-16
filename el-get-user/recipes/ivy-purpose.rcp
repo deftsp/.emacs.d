@@ -1,0 +1,5 @@
+(:name ivy-purpose
+ :description "Ivy Interface for Purpose"
+ :type github
+ :pkgname "bmag/ivy-purpose"
+ :depends (swiper window-purpose))

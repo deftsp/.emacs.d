@@ -423,10 +423,29 @@ If the universal prefix argument is used then kill the buffer too."
     (push '("*nosetests*"            :dedicated t :position bottom :stick t :noselect nil            ) popwin:special-display-config)
     (push '("^\*WoMan.+\*$" :regexp t             :position bottom                                   ) popwin:special-display-config)))
 
+(use-package ivy-purpose
+  :defer t
+  :init
+  (progn
+    (setq purpose-preferred-prompt 'vanilla)
+    (global-set-key [remap purpose-switch-buffer-with-purpose]
+                    #'ivy-purpose-switch-buffer-with-purpose)
+    (global-set-key [remap purpose-switch-buffer-without-purpose]
+                    #'ivy-purpose-switch-buffer-without-purpose)
+    (global-set-key [remap purpose-switch-buffer-with-some-purpose]
+                    #'ivy-purpose-switch-buffer-with-some-purpose)))
+
+;; https://github.com/bmag/emacs-purpose
+(defvar dotpaloryemacs-switch-to-buffer-prefers-purpose nil)
 (use-package window-purpose
   ;; :diminish window-purpose
   :init
   (progn
+    (add-to-list 'purpose-user-mode-purposes '(help-mode . popup))
+    (add-to-list 'purpose-user-mode-purposes '(helpful-mode . popup))
+    (setq purpose-use-default-configuration t)
+    (purpose-compile-user-configuration)
+
     ;; 'r' is for "puRpose" ('w', 'p' are crowded, 'W', 'P' aren't
     ;; comfortable)
     (paloryemacs/set-leader-keys
@@ -439,31 +458,45 @@ If the universal prefix argument is used then kill the buffer too."
     (purpose-mode +1))
   :config
   (progn
-    (use-package window-purpose-x)
     ;; change `switch-to-buffer' display preferences according to
-    ;; `dotspacemacs-switch-to-buffer-prefers-purpose'. This affects actions
-    ;; like `spacemacs/alternate-buffer', and opening buffers from Dired
-    ;; (setcdr (assq 'switch-to-buffer purpose-action-sequences)
-    ;;         (if dotspacemacs-switch-to-buffer-prefers-purpose
-    ;;             '(purpose-display-reuse-window-buffer
-    ;;               purpose-display-reuse-window-purpose
-    ;;               purpose-display-maybe-same-window
-    ;;               purpose-display-maybe-other-window
-    ;;               purpose-display-maybe-other-frame
-    ;;               purpose-display-maybe-pop-up-window
-    ;;               purpose-display-maybe-pop-up-frame)
-    ;;           '(purpose-display-maybe-same-window
-    ;;             purpose-display-reuse-window-buffer
-    ;;             purpose-display-reuse-window-purpose
-    ;;             purpose-display-maybe-other-window
-    ;;             purpose-display-maybe-other-frame
-    ;;             purpose-display-maybe-pop-up-window
-    ;;             purpose-display-maybe-pop-up-frame)))
+    ;; `dotpaloryemacs-switch-to-buffer-prefers-purpose'. This affects actions
+    ;; like `paloryemacs/alternate-buffer', and opening buffers from Dired
+    (setcdr (assq 'switch-to-buffer purpose-action-sequences)
+            (if dotpaloryemacs-switch-to-buffer-prefers-purpose
+                '(purpose-display-reuse-window-buffer
+                  purpose-display-reuse-window-purpose
+                  purpose-display-maybe-same-window
+                  purpose-display-maybe-other-window
+                  purpose-display-maybe-other-frame
+                  purpose-display-maybe-pop-up-window
+                  purpose-display-maybe-pop-up-frame)
+              '(purpose-display-maybe-same-window
+                purpose-display-reuse-window-buffer
+                purpose-display-reuse-window-purpose
+                purpose-display-maybe-other-window
+                purpose-display-maybe-other-frame
+                purpose-display-maybe-pop-up-window
+                purpose-display-maybe-pop-up-frame)))
     ;; overriding `purpose-mode-map' with empty keymap, so it doesn't conflict
     ;; with original `C-x C-f', `C-x b', etc. and `semantic' key bindings.
     (setcdr purpose-mode-map nil)
-    ;; make `golden-ratio-mode' work correctly with Purpose.
-    (purpose-x-golden-ratio-setup)))
+
+    (use-package window-purpose-x
+      :init
+      (progn
+        (setq purpose-x-popwin-position 'bottom
+              purpose-x-popwin-height 0.45))
+      :config
+      (progn
+        (add-to-list 'purpose-x-popwin-major-modes 'helpful-mode)
+        (add-to-list 'purpose-x-popwin-major-modes 'org-anki-mode)
+        (purpose-x-popwin-update-conf)
+        ;; Activate `popwin' emulation.
+        (purpose-x-popwin-setup)
+        (purpose-x-kill-setup)
+        ;; make `golden-ratio-mode' work correctly with Purpose.
+        (purpose-x-golden-ratio-setup)))))
+
 
 (defun paloryemacs/switch-to-minibuffer-window ()
   "switch to minibuffer window (if active)"
