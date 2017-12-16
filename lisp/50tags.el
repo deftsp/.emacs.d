@@ -102,6 +102,7 @@
   :diminish ggtags-mode
   :init
   (progn
+    (setq ggtags-mode-line-project-name nil)
     (setq ggtags-enable-navigation-keys nil)
 
     (defun paloryemacs/ggtags-mode-enable ()
