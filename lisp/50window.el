@@ -441,11 +441,6 @@ If the universal prefix argument is used then kill the buffer too."
   ;; :diminish window-purpose
   :init
   (progn
-    (add-to-list 'purpose-user-mode-purposes '(help-mode . popup))
-    (add-to-list 'purpose-user-mode-purposes '(helpful-mode . popup))
-    (setq purpose-use-default-configuration t)
-    (purpose-compile-user-configuration)
-
     ;; 'r' is for "puRpose" ('w', 'p' are crowded, 'W', 'P' aren't
     ;; comfortable)
     (paloryemacs/set-leader-keys
@@ -458,6 +453,11 @@ If the universal prefix argument is used then kill the buffer too."
     (purpose-mode +1))
   :config
   (progn
+    (add-to-list 'purpose-user-mode-purposes '(help-mode . popup))
+    (add-to-list 'purpose-user-mode-purposes '(helpful-mode . popup))
+    (setq purpose-use-default-configuration t)
+    (purpose-compile-user-configuration)
+
     ;; change `switch-to-buffer' display preferences according to
     ;; `dotpaloryemacs-switch-to-buffer-prefers-purpose'. This affects actions
     ;; like `paloryemacs/alternate-buffer', and opening buffers from Dired
