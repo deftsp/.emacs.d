@@ -132,6 +132,7 @@
   (setq header-line-format
         '((which-func-mode ("" which-func-format " ")))))
 (add-hook 'prog-mode-hook 'paloryemacs/set-header-line-format)
+(add-hook 'org-mode-hook 'paloryemacs/set-header-line-format)
 (which-function-mode +1)
 
 ;;; fringe
