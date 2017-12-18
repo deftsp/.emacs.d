@@ -152,6 +152,54 @@
      t)))
 
 
+;; TODO: the api of anki-connect can not add multiple audios for one note type,
+;; I gave a issue
+;; https://github.com/FooSoft/anki-connect/issues/58
+;; or use Media File Storage to implemented it
+;; (defun org-anki-create-capture-card (&optional deck model)
+;;   (let* ((deck (or deck "Inbox"))
+;;          (model (or model "org-anki-capture"))
+;;          (note-fields)
+;;          (note `(:deckName ,deck :modelName ,model))
+;;          (notes))
+;;     (-map-indexed
+;;      (lambda (index entity)
+;;        (let* ((selected-word (assoc-default 'word entity))
+;;               (pronunciation (assoc-default 'pronunciation entity))
+;;               (audio-url (assoc-default 'audio-url entity))
+;;               (audio-name (assoc-default 'audio-name entity))
+;;               (en-definition (assoc-default 'en-definition entity))
+;;               (cn-definition (assoc-default 'cn-definition entity))
+;;               (word (if audio-url
+;;                         (format "%s [sound:%s]" selected-word audio-name)
+;;                       selected-word))
+;;               (fields
+;;                (list (intern (format ":Context%d"       index))
+;;                      (org-anki--render-context org-anki--context word)
+;;                      (intern (format ":Word%d"          index))
+;;                      word
+;;                      (intern (format ":Phonetic%d"      index))
+;;                      pronunciation
+;;                      (intern (format ":EN-Definition%d" index))
+;;                      en-definition
+;;                      (intern (format ":Word%d"          index))
+;;                      cn-definition)))
+;;          ;; (when audio-url
+;;          ;;   (let ((l `(:audio (:url ,audio-url :filename ,audio-name :fields "Word"))))
+;;          ;;     (setq note (append note l))))
+
+;;          )
+;;        (setq note-fields (append note-fields fields)))
+;;      org-anki--entity-alist)
+;;     (setq note (append note :fields fields))
+;;     (push note notes)
+
+;;     (org-anki-request
+;;      (lambda (ret) (message "Create capture card with response: %S" ret))
+;;      "addNotes"
+;;      `(:notes ,(vconcat notes))
+;;      t)))
+
 (defun org-anki-create-capture-card (&optional deck model)
   (let ((deck (or deck "Inbox"))
         (model (or model "org-anki-capture"))
