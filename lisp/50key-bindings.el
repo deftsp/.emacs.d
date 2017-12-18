@@ -67,6 +67,14 @@ offer a list of recently clocked tasks to clock into. "
   (let ((current-prefix-arg '(4))) ; C-u
     (call-interactively 'org-clock-in))  )
 
+(paloryemacs/set-leader-keys "!" 'shell-command)
+
+;; applications
+(paloryemacs/set-leader-keys
+  "ac" 'calc-dispatch
+  "au"  'undo-tree-visualize)
+
+
 ;; SPC o and SPC m o are reserved for the user
 ;; SPC m is reserved for the current major mode. Three keys bindings are not an
 ;; issue (ie. SPC m h d) since SPC m can be accessed via ​,​.
@@ -92,7 +100,6 @@ offer a list of recently clocked tasks to clock into. "
 
 (paloryemacs/set-leader-keys
   ;; ";" "cc" "ci", "cl", "cp", "cr", "ct", "cy" and "cv" are used by evil-nerd-commenter
-  "au"  'undo-tree-visualize
   "cs"  'paloryemacs/evil-change-symbol-in-defun
   "ch"  'crosshairs-mode
   "fj"  'dired-jump
