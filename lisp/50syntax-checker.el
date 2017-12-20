@@ -13,6 +13,7 @@
   :defer t
   :init
   (progn
+    (setq flycheck-emacs-lisp-load-path 'inherit)
     (when (fboundp 'global-flycheck-mode)
       (add-hook 'after-init-hook #'global-flycheck-mode))
     ;; (set-default 'flycheck-check-syntax-automatically nil)
