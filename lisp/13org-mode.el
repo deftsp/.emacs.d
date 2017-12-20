@@ -100,14 +100,9 @@
     ;; Set default column view headings: Task Priority Effort Clock_Summary
     (setq org-columns-default-format "%50ITEM(Task) %2PRIORITY %10Effort(Effort){:} %10CLOCKSUM")
     (setq org-use-fast-todo-selection t
-          ;; `|` separate finished and unfinished two statuses.
-          ;; `!' for a timestamp, `@' for a note with timestamp
-          ;; `/!' means that in addition to the note taken when entering the state,
-          ;; a timestamp should be recorded when leaving the WAIT state, if and only if the
-          ;; target state does not configure logging for entering it.
           org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "DELEGATED(l)" "APPT(a)" "|" "DONE(d)" "DEFERRED(f)" "CANCELLED(c@)" "FAILED(X@/!)")
                               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "Urgent(u!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
-                              (sequence "REPORT(r)" "BUG(b!)" "ISSUE(i!)" "ERROR(e!)" "FEATURE(f!)" "KNOWNCAUSE(k)" "|" "FIXED(f)" "DONE(d@/!)")
+                              (sequence "REPORT(r)" "BUG(b!)" "ISSUE(i!)" "ERROR(e!)" "FEATURE(f!)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
                               (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))
           org-todo-keyword-faces (quote (("TODO"      . (:foreground "red"          :weight bold))
                                          ("NEXT"      . (:foreground "#d33682"         :weight bold))
