@@ -64,10 +64,24 @@
           org-blank-before-new-entry '((heading . auto) (plain-list-item . auto))
           org-time-stamp-rounding-minutes (quote (0 5))
           org-pretty-entities nil ; use pretty things for the clocktable
+          org-pretty-entities-include-sub-superscripts t
           org-src-fontify-natively t
           org-enforce-todo-dependencies t
           org-enforce-todo-checkbox-dependencies t
+          ;; If there's a region, do some commands it is I'm trying to do to ALL
+          ;; headlines in region, provided that these headlines are of the same
+          ;; level than the first one
+          org-loop-over-headlines-in-active-region 'start-level
           org-display-internal-link-with-indirect-buffer nil)
+    (setq org-script-display
+          '(((raise -0.3)
+             (height 0.7)
+             (:foreground "yellow"))
+            ((raise 0.3)
+             (height 0.7)
+             (:foreground "yellow"))
+            ((raise -0.5))
+            ((raise 0.5))))
     (when window-system
       ;; … ↴, ⬎, ⤷, ⤵, ▼ and ⋱.
       (setq org-ellipsis " ◦◦◦ "))
@@ -86,13 +100,14 @@
     ;; Set default column view headings: Task Priority Effort Clock_Summary
     (setq org-columns-default-format "%50ITEM(Task) %2PRIORITY %10Effort(Effort){:} %10CLOCKSUM")
     (setq org-use-fast-todo-selection t
+          ;; `|` separate finished and unfinished two statuses.
           ;; `!' for a timestamp, `@' for a note with timestamp
           ;; `/!' means that in addition to the note taken when entering the state,
           ;; a timestamp should be recorded when leaving the WAIT state, if and only if the
           ;; target state does not configure logging for entering it.
-          org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "DELEGATED(l)" "APPT(a)" "|" "DONE(d)" "DEFERRED(f)" "CANCELLED(c@)")
-                              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
-                              (sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
+          org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "DELEGATED(l)" "APPT(a)" "|" "DONE(d)" "DEFERRED(f)" "CANCELLED(c@)" "FAILED(X@/!)")
+                              (sequence "WAITING(w@/!)" "HOLD(h@/!)" "Urgent(u!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
+                              (sequence "REPORT(r)" "BUG(b!)" "ISSUE(i!)" "ERROR(e!)" "FEATURE(f!)" "KNOWNCAUSE(k)" "|" "FIXED(f)" "DONE(d@/!)")
                               (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))
           org-todo-keyword-faces (quote (("TODO"      . (:foreground "red"          :weight bold))
                                          ("NEXT"      . (:foreground "#d33682"         :weight bold))
@@ -112,17 +127,95 @@
                                          ("REJECTED"  . (:foreground "forest green" :weight bold))
                                          ("OPEN"      . (:foreground "deep pink"    :weight bold))
                                          ("PROJECT"   . (:foreground "red"          :weight bold))))
+          org-group-tags t
+          org-tag-groups-alist nil
+          org-tag-groups-alist-for-agenda nil
           org-tag-persistent-alist '((:startgroup . nil) ("@office" . ?o) ("@home" . ?h) ("@shopping" . ?s) ("@tennisclub" . ?t) (:endgroup . nil)
                                      (:startgroup . nil) ("online" . ?O) ("offline" . ?F) (:endgroup . nil)
                                      (:startgroup . nil) ("business" . ?B) ("personal" . ?P) (:endgroup . nil)
+                                     (:startgroup . nil)
+                                     ;; Knowledge aspects
+                                     ("knowledge" . nil)
+                                     (:grouptags . nil)
+                                     ("thought" . nil)
+                                     ("strategies")
+                                     ("science") ("engineering") ("finance") ("business") ("economy")
+                                     ("math") ("history") ("politics") ("society") ("philosophy")
+                                     ("psychology") ("literature") ("medicine")
+                                     (:endgroup . nil)
+                                     (:startgroup . nil)
+                                     ("programming")
+                                     (:grouptags . nil)
+                                     ("script")
+                                     ("linux") ("macos") ("bsd") ("windows")
+                                     ("emacs" . ?e)
+                                     ("regexp")
+                                     ("Git" . ?g)
+                                     (:endgroup . nil)
+                                     ("project" . ?p)
                                      ("drill"   . ?d)
                                      ("hacking" . ?H)
+                                     ("reading")
                                      ("exercise". ?E)
                                      ("mail"    . ?M)
                                      ("movie"   . nil)
                                      ("misc"    . ?m)
-                                     ("reading" . ?r))
-          org-tag-alist '(("project" . ?p))))
+                                     ("reading" . ?r)
+                                     ;; Programming Languages
+                                     (:startgroup . nil)
+                                     ("programming-languages" . ?L)
+                                     (:grouptags . nil)
+                                     ("shell") ("bash") ("zsh")
+                                     ("lisp") ("common-lisp") ("emacs-lisp") ("guile") ("scheme")
+                                     ("haskell" . ?L)
+                                     ("ruby") ("python") ("perl") ("php") ("erlang")
+                                     ("c") ("c++") ("go") ("lua") ("rust")
+                                     ("assembly") ("gas") ("nasm") ("intel") ("att")
+                                     ("r") ("processing")
+                                     ("database") ("sql") ("nosql") ("newsql") ("postgresql")
+                                     ("xml") ("json") ("mathml")
+                                     ("octave") ("matlab")
+                                     ("html") ("html5") ("css") ("css3")
+                                     ("javascript") ("coffeescript") ("dart")
+                                     ("ocaml") ("scala") ("verilog") ("julia")
+                                     (:endgroup . nil))
+          org-tag-alist '((:startgroup . nil)
+                          ("types")
+                          (:grouptags . nil)
+                          ;; types
+                          ("wiki") ("org") ("idea")
+                          ("appointment" . ?a) ("meeting" . ?m)
+                          ;; time
+                          ("tomorrow" . ?t) ("future" . ?f)
+                          ;; places
+                          ("company" . ?N) ("home" . ?H) ("Computer" . ?C) ("phone" . ?P)
+                          (:endgroup . nil)
+                          ;; Work
+                          (:startgroup . nil)
+                          ("work" . ?w)
+                          (:grouptags . nil)
+                          ;; Green Town
+                          ("Company" . nil)
+                          (:endgroup . nil))
+          org-tag-faces '(("wiki" :foreground "green yellow")
+                          ("org" :foreground "green yellow")
+                          ("computer" :foreground "green" :background "black")
+                          ("life" :foreground "black" :background "DimGray")
+                          ("program" :foreground "lawn green" :weight bold)
+                          ("linux" :foreground "yellow" :weight bold)
+                          ("mac" :foreground "#444444" :background "black" :weight bold)
+                          ("emacs" :foreground "orange" :weight bold)
+                          ("vim" :foreground "green" :weight bold)
+                          ("reading" :foreground "green" :weight bold)
+                          ("haskell" :foreground "violet" :weight bold)
+                          ("lisp" :foreground "deep pink" :weight bold)
+                          ("ruby" :foreground "red" :weight bold)
+                          ("python" :foreground "yellow" :weight bold)
+                          ("c" :foreground "gold" :weight bold)
+                          ("c++" :foreground "gold" :weight bold)
+                          ("go" :foreground "gold" :weight bold)
+                          ("bash" :foreground "sea green")
+                          ("zsh" :foreground "sea green" :weight bold))))
   :config
   (progn
     (require '50calendar)
@@ -424,6 +517,24 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
         nil
       subtree-end)))
 
+;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
+;; can be use to  only show the first action to be done (or next action) for each project
+;; TODO: test it and add category filter
+;; (defun paloryemacs/org-agenda-skip-all-siblings-but-first ()
+;;   "Skip all but the first non-done entry."
+;;   (let (should-skip-entry)
+;;     (unless (paloryemacs/org-current-is-todo)
+;;       (setq should-skip-entry t))
+;;     (save-excursion
+;;       (while (and (not should-skip-entry) (org-goto-sibling t))
+;;         (when (paloryemacs/org-current-is-todo)
+;;           (setq should-skip-entry t))))
+;;     (when should-skip-entry
+;;       (or (outline-next-heading)
+;;           (goto-char (point-max))))))
+
+(defun paloryemacs/org-current-is-todo ()
+  (string= "TODO" (org-get-todo-state)))
 
 ;; https://github.com/jwiegley/dot-emacs/blob/master/dot-org.el
 (defun paloryemacs/org-todo-age-time (&optional pos)
@@ -484,7 +595,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                      ((org-agenda-skip-function '(or (paloryemacs/org-agenda-skip-subtree-if-habit)
                                                      (paloryemacs/org-agenda-skip-subtree-if-priority ?A)
                                                      (org-agenda-skip-entry-if 'scheduled 'deadline)))
-                      (org-agenda-overriding-header "ALL Normal Priority Tasks:"))))
+                      (org-agenda-overriding-header "ALL Normal Priority Tasks:")
+                      (org-agenda-sorting-strategy '(priority-down
+                                                     category-keep)))))
            ;; ((org-agenda-compact-blocks t))
            ((org-agenda-block-separator ?▰)))
           ("A" "Today's Priority #A Tasks" agenda ""
@@ -622,6 +735,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           org-agenda-repeating-timestamp-show-all nil
           org-agenda-use-time-grid nil
           org-agenda-block-separator ?▰
+          org-agenda-window-frame-fractions '(0.6 . 0.85) ; the min and max height of the agenda window as a fraction of frame height.
           org-agenda-show-future-repeats 'next
           org-agenda-prefer-last-repeat nil)
 
@@ -637,7 +751,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           '(
             ;; (agenda . " %i %-12:c%-12t% s") ; agenda
             (agenda  . "  %-12:c%?-12t% s")
-			;; (timeline . "%-9:T%?-2t% s")   ; timeline
+		    ;; (timeline . "%-9:T%?-2t% s")   ; timeline
             (todo . " %i %-12:c")           ; todo, alltodo
             (tags . " %i %-12:c")           ; tags, tags-todo, stuck
             (search . " %i %-12:c")))       ; search
@@ -762,7 +876,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
                       ("mi" . "insert")
                       ("ms" . "trees/subtrees")))
       (paloryemacs/declare-prefix-for-mode 'org-agenda-mode
-                                           (car prefix) (cdr prefix)))
+        (car prefix) (cdr prefix)))
 
     (paloryemacs/set-leader-keys-for-major-mode 'org-agenda-mode
       "a" 'org-agenda
@@ -897,8 +1011,9 @@ to `reorganize-frame', otherwise set to `other-frame'."
       ;; Allow refile to create parent tasks with confirmation
       org-refile-allow-creating-parent-nodes 'confirm
       ;; targets include this file and any file contributing to the agenda - up to 9 levels deep
-      org-refile-targets '((nil :maxlevel . 9)
-                           (org-agenda-files :maxlevel . 9))
+      org-refile-targets `((nil :maxlevel . 9)
+                           (org-agenda-files :maxlevel . 9)
+                           (,(concat org-directory "/Someday.org") :maxlevel . 9))
       org-refile-use-cache nil)
 
 
@@ -1762,17 +1877,18 @@ _h_tml    ^ ^        _A_SCII:
 (use-package org-bullets
   :defer t
   :init
-  (setq org-bullets-face-name nil)
-  ;; http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters
-  ;; https://zhangda.wordpress.com/2016/02/15/configurations-for-beautifying-emacs-org-mode/
-  ;; "⬢" "⭓" "■"
-  ;; "◉" "◎" "⚫" "○" "►" "◇"
-  ;; "✺" "✹" "✸" "✷" "✶" "✭" "✦" "■" "▼" "●"
-  ;; "⊢" "⋮" "⋱" "⋱" "⋱"
-  ;; "☯"
-  (setq org-bullets-bullet-list
-        '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷"))
-  (add-hook 'org-mode-hook 'org-bullets-mode))
+  (progn
+    (setq org-bullets-face-name nil)
+    ;; http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters
+    ;; https://zhangda.wordpress.com/2016/02/15/configurations-for-beautifying-emacs-org-mode/
+    ;; "⬢" "⭓" "■"
+    ;; "◉" "◎" "⚫" "○" "►" "◇"
+    ;; "✺" "✹" "✸" "✷" "✶" "✭" "✦" "■" "▼" "●"
+    ;; "⊢" "⋮" "⋱" "⋱" "⋱"
+    ;; "☯" "☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷"
+    (setq org-bullets-bullet-list
+          '("☱" "☲" "☳" "☴" "☵" "☶" "☷"))
+    (add-hook 'org-mode-hook 'org-bullets-mode)))
 
 (use-package org-brain
   :defer t
