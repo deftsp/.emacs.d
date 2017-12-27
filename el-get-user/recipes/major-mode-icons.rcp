@@ -1,0 +1,4 @@
+(:name major-mode-icons
+ :description "display icon for major-mode on mode-line."
+ :type github
+ :pkgname "stardiviner/major-mode-icons")

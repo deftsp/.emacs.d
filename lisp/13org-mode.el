@@ -1433,7 +1433,8 @@ to `reorganize-frame', otherwise set to `other-frame'."
      (org . t)
      (plantuml . t)
      (http . t)
-     (latex . t)))
+     (latex . t)
+     (sql . t)))
   ;; give us some hint we are running
   (defadvice org-babel-execute-src-block (around progress nil activate)
     (set-face-attribute 'org-block nil :background "LightSteelBlue")
