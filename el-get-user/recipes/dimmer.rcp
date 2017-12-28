@@ -1,0 +1,4 @@
+(:name dimmer
+ :description "interactively highlight the current-window (by dimming the others)"
+ :type github
+ :pkgname "gonewest818/dimmer.el")

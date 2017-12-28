@@ -497,6 +497,13 @@ If the universal prefix argument is used then kill the buffer too."
         ;; make `golden-ratio-mode' work correctly with Purpose.
         (purpose-x-golden-ratio-setup)))))
 
+(use-package dimmer
+  :init
+  (progn
+    (setq dimmer-percent 0.2))
+  :config
+  (progn
+    (dimmer-activate)))
 
 (defun paloryemacs/switch-to-minibuffer-window ()
   "switch to minibuffer window (if active)"
