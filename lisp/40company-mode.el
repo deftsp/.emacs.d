@@ -13,36 +13,46 @@
 
 (add-hook 'after-init-hook 'global-company-mode)
 
-(with-eval-after-load "company"
-  (setq company-show-numbers t
-        company-clang-insert-arguments nil
-        company-require-match nil ; company-explicit-action-p
-        company-dabbrev-downcase nil
-        company-tooltip-limit 20
-        ;; company-backends (delete 'company-ropemacs company-backends)
-        ;; company-backends (delete 'company-capf company-backends)
-        company-idle-delay 0.2)
+(use-package company
+  :defer t
+  :init
+  (progn
+    (setq company-show-numbers t
+          company-clang-insert-arguments nil
+          company-require-match nil ; company-explicit-action-p
+          company-dabbrev-downcase nil
+          company-tooltip-limit 20
+          ;; company-backends (delete 'company-ropemacs company-backends)
+          ;; company-backends (delete 'company-capf company-backends)
+          company-idle-delay 0.2))
+  :config
+  (progn
+    (define-key company-active-map (kbd "M-j") 'company-select-next)
+    (define-key company-active-map (kbd "M-k") 'company-select-previous)
 
-  (when (fboundp 'company-flx-mode)
-    (setq company-flx-limit 600)
-    (company-flx-mode +1))
+    ;; https://github.com/tj64/outshine/issues/38
+    ;; company-mode explicitly lists all commands which should trigger idle
+    ;; completion. Among this list is self-insert-command, which is rebound to
+    ;; outshine-self-insert-command by outshine.
+    (add-to-list 'company-begin-commands 'outshine-self-insert-command)
+    ;; Enable key-chord "jk" which binded to `company-complete' work,
+    ;; `company-manual-begin' will not begin when `last-command' started with
+    ;; "company-"
+    (add-to-list 'company-begin-commands 'company-complete)
+    (add-to-list 'company-backends 'company-cmake)
 
-  (when (fboundp 'company-quickhelp-mode)
-    (company-quickhelp-mode +1))
+    (use-package company-flx
+      :init
+      (setq company-flx-limit 600)
+      :config
+      (company-flx-mode +1))
 
-  (define-key company-active-map (kbd "M-j") 'company-select-next)
-  (define-key company-active-map (kbd "M-k") 'company-select-previous)
+    (use-package company-quickhelp
+      :config
+      (progn
+        (company-quickhelp-mode +1)
+        (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))))
 
-  ;; https://github.com/tj64/outshine/issues/38
-  ;; company-mode explicitly lists all commands which should trigger idle
-  ;; completion. Among this list is self-insert-command, which is rebound to
-  ;; outshine-self-insert-command by outshine.
-  (add-to-list 'company-begin-commands 'outshine-self-insert-command)
-  ;; Enable key-chord "jk" which binded to `company-complete' work,
-  ;; `company-manual-begin' will not begin when `last-command' started with
-  ;; "company-"
-  (add-to-list 'company-begin-commands 'company-complete)
-  (add-to-list 'company-backends 'company-cmake))
 
 (defvar paloryemacs/company-common-backends
   '(company-capf
