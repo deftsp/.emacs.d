@@ -38,7 +38,7 @@
           org-log-done 'time
           org-log-reschedule 'time
           org-log-redeadline 'time
-          org-log-refile 'time
+          org-log-refile nil ; per-file-basis "#+STARTUP: logrefile"
           org-log-into-drawer "LOGBOOK"
           org-startup-with-inline-images t
           org-image-actual-width nil
