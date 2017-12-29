@@ -276,14 +276,6 @@ recover evil state to it, otherwiser change to evil-emacs-state."
 ;;   :config
 ;;   (evilem-default-keybindings ""))
 
-;; https://github.com/louy2/evil-avy
-;; (use-package evil-avy
-;;   :defer t
-;;   :init
-;;   (setq evil-avy-default-function 'avy-goto-char-timer)
-;;   (with-eval-after-load 'evil
-;;     (evil-avy-mode +1)))
-
 ;; (with-eval-after-load "workgroups2"
 ;;   (defun paloryemacs/activate-all-major-mode-leader ()
 ;;     (dolist (buf (buffer-list))

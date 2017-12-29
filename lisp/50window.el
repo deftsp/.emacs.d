@@ -503,7 +503,7 @@ If the universal prefix argument is used then kill the buffer too."
     (setq dimmer-percent 0.2))
   :config
   (progn
-    (dimmer-activate)))
+    (dimmer-mode +1)))
 
 (defun paloryemacs/switch-to-minibuffer-window ()
   "switch to minibuffer window (if active)"
