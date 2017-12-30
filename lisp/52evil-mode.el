@@ -417,6 +417,7 @@ kill internal buffers too."
 
 (use-package evil-escape
   :commands (evil-escape)
+  :diminish evil-escape-mode
   :defer t
   :init
   ;; use key-chord instead evil-escape's key sequence

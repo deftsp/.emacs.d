@@ -230,6 +230,7 @@
     (add-to-list 'org-modules 'org-depend)
     ;; https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org
     (use-package evil-org
+      :diminish evil-org-mode
       :init
       (progn
         (add-hook 'org-mode-hook 'paloryemacs//evil-org-mode))
