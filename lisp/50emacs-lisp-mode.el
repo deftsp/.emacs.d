@@ -178,9 +178,12 @@ Requires smartparens because all movement is done using `sp-forward-symbol'."
   (progn
     (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
       (paloryemacs/set-leader-keys-for-major-mode mode
+        "hC" 'helpful-command
         "hf" 'helpful-callable
+        "hF" 'helpful-function
         "hv" 'helpful-variable
         "hk" 'helpful-key
+        "hd" 'helpful-at-point
         "h." 'helpful-at-point))))
 
 ;;; elisp keywords aligned
