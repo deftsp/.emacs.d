@@ -231,6 +231,7 @@
     ;; https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org
     (use-package evil-org
       :diminish evil-org-mode
+      :after org
       :init
       (progn
         (add-hook 'org-mode-hook 'paloryemacs//evil-org-mode))
@@ -806,10 +807,6 @@ If VANILLA is non-nil, run the standard `org-capture'."
         (let ((org-overriding-default-time (org-get-cursor-date)))
           (org-capture nil "a"))))
 
-    ;; "c" default bind to 'org-agenda-goto-calendar
-    (define-key org-agenda-mode-map "c" 'paloryemacs/org-agenda-capture)
-
-
     ;; evilify agenda mode
     (org-defkey org-agenda-mode-map "|" nil) ;'org-agenda-filter-remove-all
     (org-defkey org-agenda-mode-map "\\" nil) ;'org-agenda-query-not-cmd
@@ -820,14 +817,14 @@ If VANILLA is non-nil, run the standard `org-capture'."
     (defun paloryemacs/org-agenda-next-header ()
       "Jump to the next header in an agenda series."
       (interactive)
-      (paloryemacs/-org-agenda-goto-header))
+      (paloryemacs//org-agenda-goto-header))
 
     (defun paloryemacs/org-agenda-previous-header ()
       "Jump to the previous header in an agenda series."
       (interactive)
-      (paloryemacs/-org-agenda-goto-header t))
+      (paloryemacs//org-agenda-goto-header t))
 
-    (defun paloryemacs/-org-agenda-goto-header (&optional backwards)
+    (defun paloryemacs//org-agenda-goto-header (&optional backwards)
       "Find the next agenda series header forwards or BACKWARDS."
       (let ((pos (save-excursion
                    (goto-char (if backwards
@@ -852,19 +849,123 @@ If VANILLA is non-nil, run the standard `org-capture'."
         :mode org-agenda-mode
         :bindings
         (kbd "C-h") nil
+        ;; open
+        (kbd "<tab>") 'org-agenda-goto
+        (kbd "<return>") 'org-agenda-switch-to
+        (kbd "S-<return>") 'org-agenda-goto
+        (kbd "M-<return>") 'org-agenda-recenter
+        ;; with ", SPC" to 'org-agenda-show-and-scroll-up
+        (kbd "<delete>") 'org-agenda-show-scroll-down
+        (kbd "<backspace>") 'org-agenda-show-scroll-down
+
+        ;; motion
         "j" 'org-agenda-next-line
         "k" 'org-agenda-previous-line
+        "gj" 'paloryemacs/org-agenda-next-header
+        "gk" 'paloryemacs/org-agenda-previous-header
+        (kbd "C-j") 'org-agenda-next-item
+        (kbd "C-k") 'org-agenda-previous-item
+        (kbd "[") 'org-agenda-earlier ; default to 'org-agenda-manipulate-query-add
+        (kbd "]") 'org-agenda-later ; default to 'org-agenda-manipulate-query-subtract
 
-        "J" 'paloryemacs/org-agenda-next-header  ; org-agenda-goto-date
-        "K" 'paloruemacs/org-agenda-previous-header ; org-agenda-capture
+        ;; manipulation
+        ;; We follow standard org-mode bindings (not org-agenda bindings):
+        ;; <HJKL> change todo items and priorities.
+        ;; M-<jk> drag lines.
+        ;; M-<hl> cannot demote/promote, we use it for "do-date".
+        "J" 'org-agenda-priority-down ; default bind to 'org-agenda-clock-goto
+        "K" 'org-agenda-priority-up
+        "H" 'org-agenda-do-date-earlier
+        "L" 'org-agenda-do-date-later
+        (kbd "M-j") 'org-agenda-drag-line-forward
+        (kbd "M-k") 'org-agenda-drag-line-backward
+        (kbd "C-S-h") 'org-agenda-todo-previousset ; Original binding "C-S-<left>"
+        (kbd "C-S-l") 'org-agenda-todo-nextset ; Original binding "C-S-<right>"
 
-        (kbd "M-j") 'org-agenda-next-item
-        (kbd "M-k") 'org-agenda-previous-item
-        (kbd "M-h") 'org-agenda-earlier
-        (kbd "M-l") 'org-agenda-later
-        (kbd "gd")  'org-agenda-toggle-time-grid
-        (kbd "gr")  'org-agenda-redo
-        (kbd "M-RET") 'org-agenda-show-and-scroll-up
+        ;; undo
+        "u" 'org-agenda-undo
+
+        ;; actions
+        "dd" 'org-agenda-kill
+        "dA" 'org-agenda-archive
+        "da" 'org-agenda-archive-default-with-confirmation
+        ;; "c" default bind to 'org-agenda-goto-calendar
+        "ct" 'org-agenda-set-tags
+        "ce" 'org-agenda-set-effort
+        "cT" 'org-timer-set-timer
+        "i" 'org-agenda-diary-entry
+        "a" 'org-agenda-add-note
+        "A" 'org-agenda-append-agenda
+        "C" 'paloryemacs/org-agenda-capture ; default to 'org-agenda-convert-date
+
+        ;; mark
+        "m" 'org-agenda-bulk-toggle
+        "~" 'org-agenda-bulk-toggle-all ; default bind to 'org-agenda-limit-interactively
+        "*" 'org-agenda-bulk-mark-all
+        "%" 'org-agenda-bulk-mark-regexp
+        "M" 'org-agenda-bulk-unmark-all  ; default bind to 'org-agenda-phases-of-moon
+        "x" 'org-agenda-bulk-action
+
+        ;; refresh
+        "gr" 'org-agenda-redo
+        "gR" 'org-agenda-redo-all
+
+        ;; quit
+        "ZQ" 'org-agenda-exit
+        "ZZ" 'org-agenda-quit
+
+        ;; display
+        ;; "Dispatch" can prefix the following:
+        ;; 'org-agenda-toggle-deadlines
+        ;; 'org-agenda-toggle-diary
+        ;; 'org-agenda-follow-mode
+        ;; 'org-agenda-log-mode
+        ;; 'org-agenda-entry-text-mode
+        ;; 'org-agenda-toggle-time-grid
+        ;; 'org-agenda-day-view
+        ;; 'org-agenda-week-view
+        ;; 'org-agenda-year-view
+        "z" 'org-agenda-view-mode-dispatch ; defautl bind to 'org-agenda-add-note
+        "ZD" 'org-agenda-dim-blocked-tasks
+
+        ;; filter
+        ;; f default bind to 'org-agenda-later
+        "fc" 'org-agenda-filter-by-category
+        "fr" 'org-agenda-filter-by-regexp
+        "fx" 'org-agenda-filter-by-regexp
+        "fe" 'org-agenda-filter-by-effort
+        "ft" 'org-agenda-filter-by-tag
+        "f^" 'org-agenda-filter-by-top-headline
+        "fh" 'org-agenda-filter-by-top-headline
+        "fs" 'org-agenda-limit-interactively
+        "fd" 'org-agenda-filter-remove-all
+        "F" 'org-agenda-filter-remove-all
+
+        ;; clock
+        "I" 'org-agenda-clock-in ; Original binding
+        "O" 'org-agenda-clock-out ; Original binding
+        "cg" 'org-agenda-clock-goto
+        "cc" 'org-agenda-clock-cancel
+        "cr" 'org-agenda-clockreport-mode
+
+        ;; go and show
+        "." 'org-agenda-goto-today ; TODO: What about evil-repeat?
+        "gc" 'org-agenda-goto-calendar
+        "gC" 'org-agenda-convert-date
+        "gd" 'org-agenda-goto-date
+        "gh" 'org-agenda-holidays
+        "gm" 'org-agenda-phases-of-moon
+        "gs" 'org-agenda-sunrise-sunset
+        "gt" 'org-agenda-show-tags
+
+        "p" 'org-agenda-date-prompt
+        "P" 'org-agenda-show-the-flagging-note
+
+        ;; 'org-save-all-org-buffers ; Original binding "C-x C-s"
+
+        ;; Others
+        "+" 'org-agenda-manipulate-query-add
+        "-" 'org-agenda-manipulate-query-subtract
         (kbd "M-SPC") 'paloryemacs/org-agenda/body))
 
     (dolist (prefix '(("mC" . "clocks")
@@ -1868,7 +1969,7 @@ _h_tml    ^ ^        _A_SCII:
 
 ;;; evil-org-mode
 (defun paloryemacs//evil-org-mode ()
-  (evil-org-mode)
+  (evil-org-mode +1)
   (evil-normalize-keymaps))
 
 (use-package org-bullets
