@@ -1,0 +1,4 @@
+(:name interactive-align
+ :description "Interactive align-regexp command in emacs"
+ :type github
+ :pkgname "mkcms/interactive-align")
