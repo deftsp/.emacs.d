@@ -3,10 +3,10 @@
 (use-package dired
   :defer t
   :bind (:map dired-mode-map
-              ("r" . wdired-change-to-wdired-mode)
-              ("s" . hydra-dired-quick-sort/body)
-              ("ESC ESC i s" . paloryemacs/image-scale)
-              ("M-O" . paloryemacs/open-in-external-application))
+         ("r" . wdired-change-to-wdired-mode)
+         ("s" . hydra-dired-quick-sort/body)
+         ("ESC ESC i s" . paloryemacs/image-scale)
+         ("M-O" . paloryemacs/open-in-external-application))
   :init
   (progn
     (setq dired-isearch-filenames 'dwim
@@ -32,24 +32,25 @@
 
     (with-eval-after-load "evil-evilified-state"
       (evilified-state-evilify dired-mode dired-mode-map
-        (kbd "%")    'nil
-        (kbd "j")   'dired-hacks-next-file
-        (kbd "k")   'dired-hacks-previous-file
-        (kbd "^")   'diredp-up-directory-reuse-dir-buffer
-        (kbd "l")   'diredp-find-file-reuse-dir-buffer
-        (kbd "i")   'dired-omit-mode
-        (kbd "I")   'dired-maybe-insert-subdir
-        (kbd "/")   'dired-narrow
-        (kbd "M-r") 'dired-do-redisplay
-        (kbd "r")   ' wdired-change-to-wdired-mode
-        (kbd "gg")  'paloryemacs/dired-back-to-top
-        (kbd "gr")  'revert-buffer
-        (kbd "G")   'paloryemacs/dired-jump-to-bottom))
+        (kbd "S-SPC") 'paloryemacs/jump-to-org-agenda
+        (kbd "%")     'nil
+        (kbd "j")     'dired-hacks-next-file
+        (kbd "k")     'dired-hacks-previous-file
+        (kbd "^")     'diredp-up-directory-reuse-dir-buffer
+        (kbd "l")     'diredp-find-file-reuse-dir-buffer
+        (kbd "i")     'dired-omit-mode
+        (kbd "I")     'dired-maybe-insert-subdir
+        (kbd "/")     'dired-narrow
+        (kbd "M-r")   'dired-do-redisplay
+        (kbd "r")     'wdired-change-to-wdired-mode
+        (kbd "gg")    'paloryemacs/dired-back-to-top
+        (kbd "gr")    'revert-buffer
+        (kbd "G")     'paloryemacs/dired-jump-to-bottom))
 
     (use-package dired-narrow
       :defer t
       :bind (:map dired-mode-map
-                  ("/" . dired-narrow)))
+             ("/" . dired-narrow)))
 
     (use-package dired-open
       :init
