@@ -24,10 +24,11 @@
     (put 'dired-find-alternate-file 'disabled nil))
   :config
   (progn
+    (paloryemacs/set-leader-keys-for-major-mode 'dired-mode
+      "u" 'diredp-up-directory-reuse-dir-buffer)
     (define-key dired-mode-map (kbd "^") 'diredp-up-directory-reuse-dir-buffer)
     (define-key dired-mode-map (kbd "W") 'paloryemacs/dired-w3m-find-file)
     (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
-
 
 
     (with-eval-after-load "evil-evilified-state"
@@ -37,6 +38,7 @@
         (kbd "j")     'dired-hacks-next-file
         (kbd "k")     'dired-hacks-previous-file
         (kbd "^")     'diredp-up-directory-reuse-dir-buffer
+        (kbd "gu")    'diredp-up-directory-reuse-dir-buffer
         (kbd "l")     'diredp-find-file-reuse-dir-buffer
         (kbd "i")     'dired-omit-mode
         (kbd "I")     'dired-maybe-insert-subdir
