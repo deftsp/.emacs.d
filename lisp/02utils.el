@@ -609,6 +609,94 @@ If FORCE is non-nil, overwrite any existing line-height properties."
                   (concat "TERM=xterm-color-256color " dircolors-bin))
                  "'"))))))
 
+;; from http://www.emacswiki.org/emacs/WordCount
+(defun paloryemacs/count-words-analysis (start end)
+  "Count how many times each word is used in the region.
+ Punctuation is ignored."
+  (interactive "r")
+  (let (words
+        alist_words_compare
+        (formated "")
+        (overview (call-interactively 'count-words)))
+    (save-excursion
+      (goto-char start)
+      (while (re-search-forward "\\w+" end t)
+        (let* ((word (intern (match-string 0)))
+               (cell (assq word words)))
+          (if cell
+              (setcdr cell (1+ (cdr cell)))
+            (setq words (cons (cons word 1) words))))))
+    (defun alist_words_compare (a b)
+      "Compare elements from an associative list of words count.
+Compare them on count first,and in case of tie sort them alphabetically."
+      (let ((a_key (car a))
+            (a_val (cdr a))
+            (b_key (car b))
+            (b_val (cdr b)))
+        (if (eq a_val b_val)
+            (string-lessp a_key b_key)
+          (> a_val b_val))))
+    (setq words (cl-sort words 'alist_words_compare))
+    (while words
+      (let* ((word (pop words))
+             (name (car word))
+             (count (cdr word)))
+        (setq formated (concat formated (format "[%s: %d], " name count)))))
+    (when (interactive-p)
+      (if (> (length formated) 2)
+          (message (format "%s\nWord count: %s"
+                           overview
+                           (substring formated 0 -2)))
+        (message "No words.")))
+    words))
+
+(defun paloryemacs/uniquify-lines ()
+  "Remove duplicate adjacent lines in a region or the current buffer"
+  (interactive)
+  (save-excursion
+    (save-restriction
+      (let* ((region-active (or (region-active-p) (evil-visual-state-p)))
+             (beg (if region-active (region-beginning) (point-min)))
+             (end (if region-active (region-end) (point-max))))
+        (goto-char beg)
+        (while (re-search-forward "^\\(.*\n\\)\\1+" end t)
+          (replace-match "\\1"))))))
+
+(defun paloryemacs/sort-lines (&optional reverse)
+  "Sort lines in a region or the current buffer.
+A non-nil argument sorts in reverse order."
+  (interactive "P")
+  (let* ((region-active (or (region-active-p) (evil-visual-state-p)))
+         (beg (if region-active (region-beginning) (point-min)))
+         (end (if region-active (region-end) (point-max))))
+    (sort-lines reverse beg end)))
+
+(defun paloryemacs/sort-lines-reverse ()
+  "Sort lines in reverse order, in a region or the current buffer."
+  (interactive)
+  (paloryemacs/sort-lines -1))
+
+(defun paloryemacs/sort-lines-by-column (&optional reverse)
+  "Sort lines by the selected column,
+using a visual block/rectangle selection.
+A non-nil argument sorts in REVERSE order."
+  (interactive "P")
+  (if (and
+       ;; is there an active selection
+       (or (region-active-p) (evil-visual-state-p))
+       ;; is it a block or rectangle selection
+       (or (eq evil-visual-selection 'block) (eq rectangle-mark-mode t))
+       ;; is the selection height 2 or more lines
+       (>= (1+ (- (line-number-at-pos (region-end))
+                  (line-number-at-pos (region-beginning)))) 2))
+      (sort-columns reverse (region-beginning) (region-end))
+    (error "Sorting by column requires a block/rect selection on 2 or more lines.")))
+
+(defun paloryemacs/sort-lines-by-column-reverse ()
+  "Sort lines by the selected column in reverse order,
+using a visual block/rectangle selection."
+  (interactive)
+  (paloryemacs/sort-lines-by-column -1))
 
 
 ;;; it will be set later for time save

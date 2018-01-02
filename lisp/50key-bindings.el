@@ -3,13 +3,20 @@
 ;;; Code:
 ;; We define prefix commands only for the sake of which-key
 (setq paloryemacs/key-binding-prefixes '(("a"   "applications")
+                                         ("A"   "other applications")
+                                         ("ai"  "irc")
+                                         ("as"  "shells")
+                                         ("ay"  "ipython notebook")
                                          ("b"   "buffers")
+                                         ("bN"  "new empty buffer")
                                          ("c"   "compile/comments")
                                          ("C"   "capture/colors")
                                          ("e"   "errors")
                                          ("f"   "files")
                                          ("fC"  "files/convert")
+                                         ("fe"  "emacs(spacemacs)")
                                          ("fv"  "variables")
+                                         ("F"   "frame")
                                          ("g"   "git/versions-control")
                                          ("h"   "help")
                                          ("hd"  "help-describe")
@@ -18,8 +25,11 @@
                                          ("k"   "lisp")
                                          ("kd"  "delete")
                                          ("kD"  "delete-backward")
+                                         ("k`"  "hybrid")
                                          ("n"   "narrow/numbers")
+                                         ("N"   "navigation")
                                          ("p"   "projects")
+                                         ("p$"  "projects/shell")
                                          ("q"   "quit")
                                          ("r"   "registers/rings/resume")
                                          ("Re"  "elisp")
@@ -28,7 +38,9 @@
                                          ("sa"  "ag")
                                          ("sg"  "grep")
                                          ("sk"  "ack")
+                                         ("sr"  "ripgrep")
                                          ("st"  "pt")
+                                         ("sw"  "web")
                                          ("t"   "toggles")
                                          ("tC"  "colors")
                                          ("tE"  "editing-styles")
@@ -41,6 +53,8 @@
                                          ("x"   "text")
                                          ("xa"  "align")
                                          ("xd"  "delete")
+                                         ("xg"  "google-translate")
+                                         ("xj"  "justification")
                                          ("xl"  "lines")
                                          ("xm"  "move")
                                          ("xt"  "transpose")
@@ -190,8 +204,62 @@ offer a list of recently clocked tasks to clock into. "
   "bml" 'buf-move-right)
 
 
+;; text -----------------------------------------------------------------------
+(defalias 'count-region 'count-words-region)
+
+(paloryemacs/set-leader-keys
+  "xa%" 'paloryemacs/align-repeat-percent
+  "xa&" 'paloryemacs/align-repeat-ampersand
+  "xa(" 'paloryemacs/align-repeat-left-paren
+  "xa)" 'paloryemacs/align-repeat-right-paren
+  "xa{" 'paloryemacs/align-repeat-left-curly-brace
+  "xa}" 'paloryemacs/align-repeat-right-curly-brace
+  "xa[" 'paloryemacs/align-repeat-left-square-brace
+  "xa]" 'paloryemacs/align-repeat-right-square-brace
+  "xa," 'paloryemacs/align-repeat-comma
+  "xa." 'paloryemacs/align-repeat-decimal
+  "xa:" 'paloryemacs/align-repeat-colon
+  "xa;" 'paloryemacs/align-repeat-semicolon
+  "xa=" 'paloryemacs/align-repeat-equal
+  "xa'" 'paloryemacs/align-repeat-quote
+  "xa\\" 'paloryemacs/align-repeat-backslash
+  "xaa" 'align
+  "xac" 'align-current
+  "xam" 'paloryemacs/align-repeat-math-oper
+  "xar" 'paloryemacs/align-repeat
+  "xa|" 'paloryemacs/align-repeat-bar
+  "xc"  'count-region
+  "xd SPC" 'just-one-space
+  "xdw" 'delete-trailing-whitespace
+  "xjc" 'set-justification-center
+  "xjf" 'set-justification-full
+  "xjl" 'set-justification-left
+  "xjn" 'set-justification-none
+  "xjr" 'set-justification-right
+  "xlc" 'paloryemacs/sort-lines-by-column
+  "xlC" 'paloryemacs/sort-lines-by-column-reverse
+  "xld" 'paloryemacs/duplicate-line-or-region
+  "xls" 'paloryemacs/sort-lines
+  "xlS" 'paloryemacs/sort-lines-reverse
+  "xlu" 'paloryemacs/uniquify-lines
+  "xtc" 'transpose-chars
+  "xtl" 'transpose-lines
+  "xtp" 'transpose-paragraphs
+  "xts" 'transpose-sentences
+  "xtw" 'transpose-words
+  "xU"  'upcase-region
+  "xu"  'downcase-region
+  "xwc" 'paloryemacs/count-words-analysis
+  "x TAB" 'indent-rigidly)
+
+(define-key indent-rigidly-map "h" 'indent-rigidly-left)
+(define-key indent-rigidly-map "l" 'indent-rigidly-right)
+(define-key indent-rigidly-map "H" 'indent-rigidly-left-to-tab-stop)
+(define-key indent-rigidly-map "L" 'indent-rigidly-right-to-tab-stop)
+
+
 (defun paloryemacs/move-buffer-to-window (windownum follow-focus-p)
-  "Moves a buffer to a window, using the spacemacs numbering. follow-focus-p
+  "Moves a buffer to a window, using the paloryemacs numbering. follow-focus-p
    controls whether focus moves to new window (with buffer), or stays on
    current"
   (interactive)
@@ -255,26 +323,26 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
 
 ;; file -----------------------------------------------------------------------
 (paloryemacs/set-leader-keys
-  ;; "fc" 'spacemacs/copy-file
-  ;; "fD" 'spacemacs/delete-current-buffer-file
-  ;; "fei" 'spacemacs/find-user-init-file
-  ;; "fed" 'spacemacs/find-dotfile
-  ;; "feD" 'spacemacs/ediff-dotfile-and-template
-  ;; "feR" 'dotspacemacs/sync-configuration-layers
-  ;; "fev" 'spacemacs/display-and-copy-version
-  ;; "fCd" 'spacemacs/unix2dos
-  ;; "fCu" 'spacemacs/dos2unix
+  ;; "fc" 'paloryemacs/copy-file
+  ;; "fD" 'paloryemacs/delete-current-buffer-file
+  ;; "fei" 'paloryemacs/find-user-init-file
+  ;; "fed" 'paloryemacs/find-dotfile
+  ;; "feD" 'paloryemacs/ediff-dotfile-and-template
+  ;; "feR" 'dotpaloryemacs/sync-configuration-layers
+  ;; "fev" 'paloryemacs/display-and-copy-version
+  ;; "fCd" 'paloryemacs/unix2dos
+  ;; "fCu" 'paloryemacs/dos2unix
   "fg" 'rgrep
   "fl" 'find-file-literally
-  ;; "fE" 'spacemacs/sudo-edit
-  ;; "fo" 'spacemacs/open-in-external-app
-  ;; "fR" 'spacemacs/rename-current-buffer-file
+  ;; "fE" 'paloryemacs/sudo-edit
+  ;; "fo" 'paloryemacs/open-in-external-app
+  ;; "fR" 'paloryemacs/rename-current-buffer-file
   "fS" 'evil-write-all
   "fs" 'save-buffer
   "fvd" 'add-dir-local-variable
   "fvf" 'add-file-local-variable
   "fvp" 'add-file-local-variable-prop-line
-  ;; "fy" 'spacemacs/show-and-copy-buffer-filename
+  ;; "fy" 'paloryemacs/show-and-copy-buffer-filename
   )
 
 ;; help -----------------------------------------------------------------------
@@ -287,13 +355,13 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "hi"  'counsel-info-lookup-symbol
   "hdm" 'describe-mode
   "hdk" 'describe-key
-  ;; "hdl" 'spacemacs/describe-last-keys
+  ;; "hdl" 'paloryemacs/describe-last-keys
   "hdp" 'describe-package
   "hdP" 'configuration-layer/describe-package
-  ;; "hds" 'spacemacs/describe-system-info
+  ;; "hds" 'paloryemacs/describe-system-info
   "hdt" 'describe-theme
   "hdv" 'counsel-describe-variable
-  ;; "hI"  'spacemacs/report-issue
+  ;; "hI"  'paloryemacs/report-issue
   "hn"  'view-emacs-news)
 
 (paloryemacs/set-leader-keys
@@ -322,9 +390,9 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "w <S-right>"  'evil-window-move-far-right
   "wl"  'evil-window-right
   "w <right>"  'evil-window-right
-  "wm"  'spacemacs/toggle-maximize-buffer
-  ;; "wc"  'spacemacs/toggle-centered-buffer-mode
-  ;; "wC"  'spacemacs/centered-buffer-mode-full-width
+  "wm"  'paloryemacs/toggle-maximize-buffer
+  ;; "wc"  'paloryemacs/toggle-centered-buffer-mode
+  ;; "wC"  'paloryemacs/centered-buffer-mode-full-width
   "wo"  'other-frame
   "wpm" 'popwin:messages
   "wpp" 'popwin:close-popup-window
