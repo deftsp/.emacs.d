@@ -702,5 +702,20 @@ using a visual block/rectangle selection."
 ;;; it will be set later for time save
 (defvar paloryemacs/brew-cache-directory nil "Homebrew cache.")
 
+;;;
+(defmacro paloryemacs|create-undefine-for-new-habit (from-key-binding to-key-binding)
+  (let ((new-func (intern (concat "paloryemacs/undefine-for-new-habit-" from-key-binding))))
+    `(progn
+       (defun ,new-func ()
+         (interactive)
+         (message "Use %s instead!" ,to-key-binding))
+       (bind-key ,from-key-binding ',new-func))))
+
+(paloryemacs|create-undefine-for-new-habit "C-x 2" "SPC w s")
+(paloryemacs|create-undefine-for-new-habit "C-x 3" "SPC w v")
+(paloryemacs|create-undefine-for-new-habit "C-x 1" "SPC w m")
+
+
+
 (provide '02utils)
 ;;; 02utils.el ends here

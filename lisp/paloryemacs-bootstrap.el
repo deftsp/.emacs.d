@@ -122,6 +122,7 @@
 (require '60session)
 ;; (require '62winring)
 (require '99face)
+(require '100align)
 
 (load-file "~/.emacs.d/private-ede-projects.el")
 

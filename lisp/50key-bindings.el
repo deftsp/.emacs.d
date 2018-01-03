@@ -175,33 +175,31 @@ offer a list of recently clocked tasks to clock into. "
   "eN" 'paloryemacs/previous-error
   "ep" 'paloryemacs/previous-error)
 
-
 (paloryemacs/set-leader-keys
-  "TAB" 'paloryemacs/alternate-buffer
-  "bb"  'ivy-switch-buffer
-  "bB"  'ibuffer
-  "bd"  'kill-this-buffer
-  ;; "be"  'spacemacs/safe-erase-buffer
-  ;; "bh"  'spacemacs/home
+  ;; "b<1-9>" 'buffer-to-window-<1-9>
+  "TAB"   'paloryemacs/alternate-buffer
+  "bb"    'ivy-switch-buffer
+  "bB"    'ibuffer
+  "bd"    'paloryemacs/kill-this-buffer
+  "be"    'paloryemacs/safe-erase-buffer
+  ;; "bh"    'paloryemacs/home
+  "b C-d" 'paloryemacs/kill-other-buffers
+  "b C-S-d" 'paloryemacs/kill-matching-buffers-rudely
   "bk"  'paloryemacs/kill-matching-buffers-rudely
-  "bM"  'paloryemacs/switch-to-messages-buffer
-  "bn"  'next-buffer
-
-  ;; "em"  'spacemacs/kill-other-buffers
-  ;; "bN"  'spacemacs/new-empty-buffer
-  ;; "bP"  'spacemacs/copy-clipboard-to-whole-buffer
-  "bp"  'previous-buffer
-  ;; "bR"  'spacemacs/safe-revert-buffer
-  "bs"  'paloryemacs/switch-to-scratch-buffer
-  ;; "bY"  'spacemacs/copy-whole-buffer-to-clipboard
-  "bw"  'read-only-mode
-
-  "bR"  'revert-buffer
-
-  "bmh" 'buf-move-left
-  "bmj" 'buf-move-down
-  "bmk" 'buf-move-up
-  "bml" 'buf-move-right)
+  "bn"    'next-buffer
+  "bm"    'paloryemacs/switch-to-messages-buffer
+  "b N h" 'paloryemacs/new-empty-buffer-left
+  "b N j" 'paloryemacs/new-empty-buffer-below
+  "b N k" 'paloryemacs/new-empty-buffer-above
+  "b N l" 'paloryemacs/new-empty-buffer-right
+  "b N n" 'paloryemacs/new-empty-buffer
+  "bP"    'paloryemacs/copy-clipboard-to-whole-buffer
+  "bp"    'previous-buffer
+  "bR"    'paloryemacs/safe-revert-buffer
+  "bs"    'paloryemacs/switch-to-scratch-buffer
+  "bu"    'paloryemacs/reopen-killed-buffer
+  "bY"    'paloryemacs/copy-whole-buffer-to-clipboard
+  "bw"    'read-only-mode)
 
 
 ;; text -----------------------------------------------------------------------
@@ -365,50 +363,49 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "hn"  'view-emacs-news)
 
 (paloryemacs/set-leader-keys
-  "w TAB"  'paloryemacs/alternate-window
-  "w1"  'delete-other-windows
-  "w2"  (kbd "C-x 2")
-  "w3"  "\C-x3"
-  "wb"  'paloryemacs/switch-to-minibuffer-window
-  "wd"  'paloryemacs/delete-window
-  "wt"  'paloryemacs/toggle-current-window-dedication
-  "wf"  'follow-mode
-  "wF"  'make-frame
-  "wH"  'evil-window-move-far-left
-  "w <S-left>"  'evil-window-move-far-left
-  "wh"  'evil-window-left
-  "w <left>"  'evil-window-left
-  "wJ"  'evil-window-move-very-bottom
-  "w <S-down>"  'evil-window-move-very-bottom
-  "wj"  'evil-window-down
-  "w <down>"  'evil-window-down
-  "wK"  'evil-window-move-very-top
-  "w <S-up>"  'evil-window-move-very-top
-  "wk"  'evil-window-up
-  "w <up>"  'evil-window-up
-  "wL"  'evil-window-move-far-right
+  "w TAB"        'paloryemacs/alternate-window
+  ;; "w1"           'delete-other-windows
+  ;; "w2"           (kbd "C-x 2")
+  ;; "w3"           "\C-x3"
+  "wb"           'paloryemacs/switch-to-minibuffer-window
+  "wd"           'paloryemacs/delete-window
+  "wt"           'paloryemacs/toggle-current-window-dedication
+  "wf"           'follow-mode
+  "wF"           'make-frame
+  "wH"           'evil-window-move-far-left
+  "w <S-left>"   'evil-window-move-far-left
+  "wh"           'evil-window-left
+  "w <left>"     'evil-window-left
+  "wJ"           'evil-window-move-very-bottom
+  "w <S-down>"   'evil-window-move-very-bottom
+  "wj"           'evil-window-down
+  "w <down>"     'evil-window-down
+  "wK"           'evil-window-move-very-top
+  "w <S-up>"     'evil-window-move-very-top
+  "wk"           'evil-window-up
+  "w <up>"       'evil-window-up
+  "wL"           'evil-window-move-far-right
   "w <S-right>"  'evil-window-move-far-right
-  "wl"  'evil-window-right
-  "w <right>"  'evil-window-right
-  "wm"  'paloryemacs/toggle-maximize-buffer
-  ;; "wc"  'paloryemacs/toggle-centered-buffer-mode
-  ;; "wC"  'paloryemacs/centered-buffer-mode-full-width
-  "wo"  'other-frame
-  "wpm" 'popwin:messages
-  "wpp" 'popwin:close-popup-window
-  "wr"  'paloryemacs/rotate-windows-forward
-  "wR"  'paloryemacs/rotate-windows-backward
-  "ws"  'split-window-below
-  "wS"  'split-window-below-and-focus
-  "w-"  'split-window-below
-  "wU"  'winner-redo
-  "wu"  'winner-undo
-  "wv"  'split-window-right
-  "wV"  'split-window-right-and-focus
-  "ww"  'other-window
-  "w/"  'split-window-right
-  "w="  'balance-windows
-  "w_"  'paloryemacs/maximize-horizontally)
+  "wl"           'evil-window-right
+  "w <right>"    'evil-window-right
+  "wm"           'paloryemacs/toggle-maximize-buffer
+  "wc"           'paloryemacs/toggle-centered-buffer-mode
+  "wC"           'paloryemacs/toggle-centered-buffer-mode-frame
+  "wo"           'other-frame
+  "wr"           'paloryemacs/rotate-windows-forward
+  "wR"           'paloryemacs/rotate-windows-backward
+  "ws"           'split-window-below
+  "wS"           'split-window-below-and-focus
+  "w-"           'split-window-below
+  "wU"           'winner-redo
+  "wu"           'winner-undo
+  "wv"           'split-window-right
+  "wV"           'split-window-right-and-focus
+  "ww"           'other-window
+  "w/"           'split-window-right
+  "w="           'balance-windows-area
+  "w+"           'paloryemacs/window-layout-toggle
+  "w_"           'paloryemacs/maximize-horizontally)
 
 (defun paloryemacs/global-set-keys (&rest keycommands)
   "Register keys to commands."

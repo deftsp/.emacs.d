@@ -55,6 +55,31 @@ Dedicated (locked) windows are left untouched."
     (while (condition-case nil (windmove-right) (error nil))
       (delete-window))))
 
+
+(defun paloryemacs/split-window-vertically-and-switch ()
+  (interactive)
+  (split-window-vertically)
+  (other-window 1))
+
+(defun paloryemacs/split-window-horizontally-and-switch ()
+  (interactive)
+  (split-window-horizontally)
+  (other-window 1))
+
+(defun paloryemacs/layout-triple-columns ()
+  " Set the layout to triple columns. "
+  (interactive)
+  (delete-other-windows)
+  (dotimes (i 2) (split-window-right))
+  (balance-windows))
+
+(defun paloryemacs/layout-double-columns ()
+  " Set the layout to double columns. "
+  (interactive)
+  (delete-other-windows)
+  (split-window-right))
+
+
 (defun paloryemacs/delete-window (&optional arg)
   "Delete the current window.
 If the universal prefix argument is used then kill the buffer too."
@@ -166,8 +191,8 @@ If the universal prefix argument is used then kill the buffer too."
   (other-window 1 nil)
   (when (= prefix 1) (switch-to-next-buffer)))
 
-(global-set-key (kbd "C-x 2") 'paloryemacs/vsplit-last-buffer)
-(global-set-key (kbd "C-x 3") 'paloryemacs/hsplit-last-buffer)
+;; (global-set-key (kbd "C-x 2") 'paloryemacs/vsplit-last-buffer)
+;; (global-set-key (kbd "C-x 3") 'paloryemacs/hsplit-last-buffer)
 
 ;; https://github.com/deb0ch/emacs-winum
 (use-package winum

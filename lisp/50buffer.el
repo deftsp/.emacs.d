@@ -153,5 +153,113 @@
         '("\\`\\*tramp/.*\\*\\`"
           "\\`\\*ftp .*\\*\\`"))
 
+(defun paloryemacs/safe-revert-buffer ()
+  "Prompt before reverting the file."
+  (interactive)
+  (revert-buffer nil nil))
+
+(defun paloryemacs/safe-erase-buffer ()
+  "Prompt before erasing the content of the file."
+  (interactive)
+  (if (y-or-n-p (format "Erase content of buffer %s ? " (current-buffer)))
+      (erase-buffer)))
+
+;; https://tsdh.wordpress.com/2007/03/28/deleting-windows-vertically-or-horizontally/
+(defun paloryemacs/maximize-horizontally ()
+  "Delete all windows left or right of the current window."
+  (interactive)
+  (require 'windmove)
+  (save-excursion
+    (while (condition-case nil (windmove-left) (error nil))
+      (delete-window))
+    (while (condition-case nil (windmove-right) (error nil))
+      (delete-window))))
+
+(defun paloryemacs/toggle-centered-buffer-mode ()
+  "Toggle `paloryemacs-centered-buffer-mode'."
+  (interactive)
+  (when (require 'centered-buffer-mode nil t)
+    (call-interactively 'paloryemacs-centered-buffer-mode)))
+
+(defun paloryemacs/toggle-centered-buffer-mode-frame ()
+  "Open current buffer in the new frame centered and without mode-line."
+  (interactive)
+  (when (require 'centered-buffer-mode nil t)
+    (switch-to-buffer-other-frame (current-buffer) t)
+    (toggle-frame-fullscreen)
+    (run-with-idle-timer
+     ;; FIXME: We need this delay to make sure that the
+     ;; `toggle-frame-fullscreen' fully "finished"
+     ;; it will be better to use something more reliable
+     ;; instead :)
+     1
+     nil
+     (lambda ()
+       (call-interactively 'paloryemacs-centered-buffer-mode)
+       (setq mode-line-format nil)))))
+
+(defun paloryemacs/centered-buffer-mode-full-width ()
+  "Center buffer in the frame."
+  ;; FIXME Needs new key-binding.
+  (interactive)
+  (when (require 'centered-buffer-mode nil t)
+    (paloryemacs/maximize-horizontally)
+    (call-interactively 'paloryemacs-centered-buffer-mode)))
+
+(defun paloryemacs/new-empty-buffer (&optional split)
+  "Create a new buffer called untitled(<n>).
+A SPLIT argument with the value: `left',
+`below', `above' or `right', opens the new
+buffer in a split window."
+  (interactive)
+  (let ((newbuf (generate-new-buffer "untitled")))
+    (case split
+      ('left  (split-window-horizontally))
+      ('below (paloryemacs/split-window-vertically-and-switch))
+      ('above (split-window-vertically))
+      ('right (paloryemacs/split-window-horizontally-and-switch)))
+    ;; Prompt to save on `save-some-buffers' with positive PRED
+    (with-current-buffer newbuf
+      (setq-local buffer-offer-save t))
+    ;; pass non-nil force-same-window to prevent `switch-to-buffer' from
+    ;; displaying buffer in another window
+    (switch-to-buffer newbuf nil 'force-same-window)))
+
+(defun paloryemacs/new-empty-buffer-left ()
+  "Create a new buffer called untitled(<n>),
+in a split window to the left."
+  (interactive)
+  (paloryemacs/new-empty-buffer 'left))
+
+(defun paloryemacs/new-empty-buffer-below ()
+  "Create a new buffer called untitled(<n>),
+in a split window below."
+  (interactive)
+  (paloryemacs/new-empty-buffer 'below))
+
+(defun paloryemacs/new-empty-buffer-above ()
+  "Create a new buffer called untitled(<n>),
+in a split window above."
+  (interactive)
+  (paloryemacs/new-empty-buffer 'above))
+
+(defun paloryemacs/new-empty-buffer-right ()
+  "Create a new buffer called untitled(<n>),
+in a split window to the right."
+  (interactive)
+  (paloryemacs/new-empty-buffer 'right))
+
+;; http://stackoverflow.com/a/10216338/4869
+(defun paloryemacs/copy-whole-buffer-to-clipboard ()
+  "Copy entire buffer to clipboard"
+  (interactive)
+  (clipboard-kill-ring-save (point-min) (point-max)))
+
+(defun paloryemacs/copy-clipboard-to-whole-buffer ()
+  "Copy clipboard and replace buffer"
+  (interactive)
+  (delete-region (point-min) (point-max))
+  (clipboard-yank)
+  (deactivate-mark))
 
 (provide '50buffer)
