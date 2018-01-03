@@ -262,4 +262,39 @@ in a split window to the right."
   (clipboard-yank)
   (deactivate-mark))
 
+;; our own implementation of kill-this-buffer from menu-bar.el
+(defun paloryemacs/kill-this-buffer (&optional arg)
+  "Kill the current buffer.
+If the universal prefix argument is used then kill also the window."
+  (interactive "P")
+  (if (window-minibuffer-p)
+      (abort-recursive-edit)
+    (if (equal '(4) arg)
+        (kill-buffer-and-window)
+      (kill-buffer))))
+
+(defun paloryemacs/ace-kill-this-buffer (&optional arg)
+  "Ace kill visible buffer in a window.
+If the universal prefix argument is used then kill also the window."
+  (interactive "P")
+  (require 'ace-window)
+  (let (golden-ratio-mode)
+    (aw-select
+     " Ace - Kill buffer in Window"
+     (lambda (window)
+       (with-selected-window window
+         (paloryemacs/kill-this-buffer arg))))))
+
+;; found at http://emacswiki.org/emacs/KillingBuffers
+(defun paloryemacs/kill-other-buffers (&optional arg)
+  "Kill all other buffers.
+If the universal prefix argument is used then will the windows too."
+  (interactive "P")
+  (when (yes-or-no-p (format "Killing all buffers except \"%s\"? "
+                             (buffer-name)))
+    (mapc 'kill-buffer (delq (current-buffer) (buffer-list)))
+    (when (equal '(4) arg) (delete-other-windows))
+    (message "Buffers deleted!")))
+
+
 (provide '50buffer)
