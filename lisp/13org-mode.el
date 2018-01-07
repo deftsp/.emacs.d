@@ -82,6 +82,10 @@
              (:foreground "yellow"))
             ((raise -0.5))
             ((raise 0.5))))
+    (setq org-stuck-projects
+          '("+LEVEL=2+CATEGORY={Task\\|Project}/-DONE-CANCELLED"
+            ("TODO" "NEXT")
+            nil))
     (when window-system
       ;; … ↴, ⬎, ⤷, ⤵, ▼ and ⋱.
       (setq org-ellipsis " ◦◦◦ "))
@@ -213,7 +217,7 @@
                           ("zsh" :foreground "sea green" :weight bold))))
   :config
   (progn
-    (require '50calendar)
+    (use-package 50calendar)
     (when (eq system-type 'darwin)
       (add-to-list 'org-modules 'org-mac-link))
     (add-to-list 'org-modules 'org-habit)
@@ -227,6 +231,11 @@
     (add-to-list 'org-modules 'org-expiry)
     (add-to-list 'org-modules 'org-toc)
     (add-to-list 'org-modules 'org-drill)
+    ;; A repeating task with subitems as checkboxes. Set property
+    ;; RESET_CHECK_BOXES on the task to t, When the task is completed, all the
+    ;; checkboxes on the subitems should be cleared - so the task can be done at
+    ;; next cyclic time.
+    (add-to-list 'org-modules 'org-checklist)
     (add-to-list 'org-modules 'org-depend)
     ;; https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org
     (use-package evil-org
@@ -530,6 +539,21 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;;       (or (outline-next-heading)
 ;;           (goto-char (point-max))))))
 
+;; from http://emacs.stackexchange.com/questions/26351/custom-sorting-for-agenda
+;; being used in a org agenda custom command below
+(defun paloryemacs/cmp-date-property (prop)
+  "Compare two `org-mode' agenda entries, `A' and `B', by some date property. If a is before b, return -1. If a is after b, return 1. If they are equal return t."
+  (lexical-let ((prop prop))
+    #'(lambda (a b)
+        (let* ((a-pos (get-text-property 0 'org-marker a))
+               (b-pos (get-text-property 0 'org-marker b))
+               (a-date (or (org-entry-get a-pos prop)
+                           (format "<%s>" (org-read-date t nil "now"))))
+               (b-date (or (org-entry-get b-pos prop)
+                           (format "<%s>" (org-read-date t nil "now"))))
+               (cmp (compare-strings a-date nil nil b-date nil nil)))
+          (if (eq cmp t) nil (signum cmp))))))
+
 (defun paloryemacs/org-current-is-todo ()
   (string= "TODO" (org-get-todo-state)))
 
@@ -650,8 +674,32 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           ("O" "All TODOs" tags "TODO<>\"\"" ((org-agenda-overriding-header "All TODOs")))
           ;; ("p" tags "+project-TODO=\"DONE\"-TODO=\"CANCELLED\"")
 
-          ("r" "Uncategorized items" tags "CATEGORY=\"Inbox\"&LEVEL=2"
-           ((org-agenda-overriding-header "Uncategorized items")))
+          ;; Weekly Review block agenda
+          ("r" . "Weekly Review")
+          ("ri" "Collect loose materials and process Inbox"
+           tags "CATEGORY=\"Inbox\"&LEVEL>1"
+           ((org-agenda-overriding-header "Inbox items to process:")
+            (org-agenda-prefix-format "  ")))
+          ("rn" "Review Next Actions\n    Archive completed actions, review for further action steps"
+           ((todo "DONE|CANCELLED|FAILED|FIXED" ((org-agenda-overriding-header "Done/Dropped Items (to archive):")
+                                                 (org-agenda-cmp-user-defined (paloryemacs/cmp-date-property "CLOSED"))
+                                                 (org-agenda-sorting-strategy '(user-defined-up))))
+            (tags-todo "NEXT" ((org-agenda-overriding-header "Next Actions:")
+                               (org-agenda-sorting-strategy '(time-up category-up alpha-up))
+                               (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled))))
+            (tags-todo "NEXT" ((org-agenda-overriding-header "Scheduled Actions:")
+                               (org-agenda-sorting-strategy '(time-up category-up alpha-up))
+                               (org-agenda-skip-function '(org-agenda-skip-entry-if 'notscheduled)))))
+           ((org-agenda-prefix-format "%-12:c ")))
+          ("rc" "Review Previous Calendar"
+           ((agenda "" ((org-agenda-start-day
+                         (concat "-" (number-to-string
+                                      (- 6 (nth 6 (decode-time)))) "d"))
+                        (org-agenda-span 7)
+                        (org-agenda-repeating-timestamp-show-all t)
+                        (org-agenda-entry-types '(:deadline :timestamp :sexp)) ; show due tasks, meetings
+                        (org-agenda-show-log t)
+                        (org-agenda-prefix-format "%-12t% s")))))
           ("S" "Scheduled tasks" tags "TODO<>\"\"&TODO<>{APPT\\|DONE\\|CANCELED\\|NOTE}"
            ((org-agenda-overriding-header "Scheduled tasks: ")
             (org-agenda-skip-function '(or (paloryemacs/org-agenda-skip-subtree-if-habit)
@@ -732,6 +780,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           org-agenda-repeating-timestamp-show-all nil
           org-agenda-use-time-grid nil
           org-agenda-block-separator ?▰
+          org-agenda-dim-blocked-tasks 'invisible
           org-agenda-window-frame-fractions '(0.6 . 0.85) ; the min and max height of the agenda window as a fraction of frame height.
           org-agenda-show-future-repeats 'next
           org-agenda-prefer-last-repeat nil)
@@ -1139,11 +1188,6 @@ to `reorganize-frame', otherwise set to `other-frame'."
         org-mobile-use-encryption nil
         org-mobile-encryption-password ""))
 
-;; (setq org-stuck-projects '("+LEVEL=2/-DONE"
-;;                            ("TODO" "NEXT" "NEXTACTION")
-;;                            nil))
-
-
 ;;;; Capture
 (use-package org-capture
   :defer t
@@ -1228,7 +1272,9 @@ to `reorganize-frame', otherwise set to `other-frame'."
              :empty-lines-after 1)
             ("w" "Web page" entry
              (file "~/org/Pages.org")
-             "* %a :website:\n  :PROPERTIES:\n  :ID: %(org-id-new)\n  :CREATED:  %U\n  :END:\n %?\n\n%:initial"))))
+             "* %a :website:\n  :PROPERTIES:\n  :ID: %(org-id-new)\n  :CREATED:  %U\n  :END:\n %?\n\n%:initial")
+            ("W" "Review: Weekly Review" entry (file+olp+datetree "~/org/WeeklyReview.org")
+             (file "~/org/templates/weekly-review-template.org")))))
   :config
   (progn
     ;; ",k" not work some time, call `evil-normalize-keymaps' to force refresh
