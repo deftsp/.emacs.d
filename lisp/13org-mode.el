@@ -183,14 +183,14 @@
                           ;; time
                           ("tomorrow" . ?t) ("future" . ?f)
                           ;; places
-                          ("company" . ?N) ("home" . ?H) ("Computer" . ?C) ("phone" . ?P)
+                          ("company" . ?N) ("home" . ?H) ("computer" . ?C) ("phone" . ?P)
                           (:endgroup . nil)
                           ;; Work
                           (:startgroup . nil)
                           ("work" . ?w)
                           (:grouptags . nil)
                           ;; Green Town
-                          ("Company" . nil)
+                          ("company" . nil)
                           (:endgroup . nil))
           org-tag-faces '(("wiki" :foreground "green yellow")
                           ("org" :foreground "green yellow")
@@ -1735,31 +1735,18 @@ Headline^^            Visit entry^^               Filter^^                    Da
       (org-display-inline-images))))
 
 
-;;; get the summary of a today by tags
-;; called by C-u sum last day
-;; called by C-u sum specify date
-(defun paloryemacs/org-clock-summary-today-by-tags (timerange &optional tstart tend noinsert)
+;;; get the clock summary by tags
+(defun paloryemacs/org-clock-summary-by-tags (include-tags timerange &optional tstart tend noinsert)
+  "Get the clock summary by tags."
   (interactive "P")
   (let* ((timerange-numeric-value (prefix-numeric-value timerange))
          (files (org-add-archive-files (org-agenda-files)))
-         (include-tags '("academic" "english" "learning" "daily" "emacs" "other" "exercise"))
          (tags-time-alist (mapcar (lambda (tag) `(,tag . 0)) include-tags))
          (output-string "")
          (seconds-of-day 86400)
-         (tstart (or tstart
-                     (and timerange
-                          (equal timerange-numeric-value 4)
-                          (- (org-time-today) seconds-of-day))
-                     (and timerange
-                          (equal timerange-numeric-value 16)
-                          (org-read-date nil nil nil "Start Date/Time:"))
-                     (org-time-today)))
-         (tend (or tend
-                   (and timerange
-                        (equal timerange-numeric-value 16)
-                        (org-read-date nil nil nil "End Date/Time:"))
-                   (+ tstart seconds-of-day)))
-         h m file item prompt done-something)
+         (tstart (or tstart (org-time-today)))
+         (tend (or tend (+ tstart seconds-of-day)))
+         h m done-something)
     (dolist (file files)
       (let ((org-agenda-buffer (if (file-exists-p file)
                                    (org-get-agenda-file-buffer file)
