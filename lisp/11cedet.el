@@ -1,4 +1,4 @@
-;;; 13cedet.el ---
+;;; 11cedet.el ---
 
 ;; Copyright (C) 2015  Shihpin Tseng
 
@@ -251,7 +251,7 @@
 ;; (eval-after-load "info"
 ;;   `(cedet-settings-4-info))
 
-(provide '13cedet)
+(provide '11cedet)
 
 ;; Local Variables:
 ;; outline-regexp: ";;; *"

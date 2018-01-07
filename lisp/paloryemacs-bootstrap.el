@@ -18,7 +18,7 @@
 (require 'core-keybindings)
 (require 'core-jump)
 (require 'core-funcs)
-(require '13cedet)
+(require '11cedet)
 (require '13org-mode)
 
 (require '23powerline)
