@@ -61,6 +61,7 @@
           org-return-follows-link t
           org-startup-folded t
           org-startup-truncated t
+          org-imenu-depth 8
           org-blank-before-new-entry '((heading . auto) (plain-list-item . auto))
           org-time-stamp-rounding-minutes (quote (0 5))
           org-pretty-entities nil ; use pretty things for the clocktable
@@ -73,6 +74,8 @@
           ;; level than the first one
           org-loop-over-headlines-in-active-region 'start-level
           org-display-internal-link-with-indirect-buffer nil)
+    (setq org-goto-interface 'outline-path-completion
+          org-goto-max-level 10)
     (setq org-script-display
           '(((raise -0.3)
              (height 0.7)
