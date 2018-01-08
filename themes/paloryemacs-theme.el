@@ -171,7 +171,7 @@
    '(org-done ((t (:strike-through t))))
    `(org-hide ((t (:foreground ,base03))))
    '(org-level-1 ((t (:inherit outline-1   :foreground "#1e90ff" :weight normal :height 1.0))))
-   '(org-level-2 ((t (:inherit org-level-1 :foreground "#7ad224" :height 1.0))))
+   '(org-level-2 ((t (:inherit org-level-1 :foreground "#5ae274" :height 1.0))))
    '(org-level-3 ((t (:inherit org-level-1 :foreground "#dfaf8f"))))
    '(org-level-4 ((t (:inherit org-level-1 :foreground "#8cd0d3"))))
    '(org-level-5 ((t (:inherit org-level-1 :foreground "#8fb28f"))))
