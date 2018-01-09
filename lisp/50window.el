@@ -55,6 +55,23 @@ Dedicated (locked) windows are left untouched."
     (while (condition-case nil (windmove-right) (error nil))
       (delete-window))))
 
+(defun split-window-below-and-focus ()
+  "Split the window vertically and focus the new window."
+  (interactive)
+  (split-window-below)
+  (windmove-down)
+  (when (and (boundp 'golden-ratio-mode)
+             (symbol-value golden-ratio-mode))
+    (golden-ratio)))
+
+(defun split-window-right-and-focus ()
+  "Split the window horizontally and focus the new window."
+  (interactive)
+  (split-window-right)
+  (windmove-right)
+  (when (and (boundp 'golden-ratio-mode)
+             (symbol-value golden-ratio-mode))
+    (golden-ratio)))
 
 (defun paloryemacs/split-window-vertically-and-switch ()
   (interactive)
