@@ -338,7 +338,7 @@ kill internal buffers too."
 (defun paloryemacs/evil-set-initial-state ()
   (loop for (mode . state) in
         '((comint-mode               . insert)
-          (compilation-mode          . emacs)
+          (compilation-mode          . evilified)
           (diff-mode                 . emacs)
           (eshell-mode               . insert)
           (eww-mode                  . emacs)
