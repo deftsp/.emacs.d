@@ -9,19 +9,27 @@
   :defer t
   :init
   (progn
-    (paloryemacs/declare-prefix "D" "Docker")
+    (paloryemacs/declare-prefix "aD" "Docker")
     (paloryemacs/set-leader-keys
-      "Dc" 'docker-containers
-      "Dd" 'docker-rmi
-      "De" 'docker-unpause
-      "DF" 'docker-pull
-      "Dk" 'docker-rm
-      "Di" 'docker-images
-      "Do" 'docker-stop
-      "DP" 'docker-push
-      "Dp" 'docker-pause
-      "Dr" 'docker-restart
-      "Ds" 'docker-start)))
+      "aDc" 'docker-containers
+      "aDd" 'docker-rmi
+      "aDe" 'docker-unpause
+      "aDF" 'docker-pull
+      "aDk" 'docker-rm
+      "aDi" 'docker-images
+      "aDo" 'docker-stop
+      "aDP" 'docker-push
+      "aDp" 'docker-pause
+      "aDr" 'docker-restart
+      "aDs" 'docker-start)))
+
+(with-eval-after-load 'docker-containers
+  (evilified-state-evilify-map docker-containers-mode-map
+    :mode docker-containers-mode))
+
+(with-eval-after-load 'docker-images
+  (evilified-state-evilify-map docker-images-mode-map
+    :mode docker-images-mode))
 
 (use-package docker-tramp
   :defer t)
