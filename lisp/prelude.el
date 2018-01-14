@@ -40,5 +40,17 @@ emacs.")
   "Default cnfonts fontsize step used by chinse-font-setup.")
 
 
+(defvar dotpaloryemacs-active-transparency 96
+  "A value from the range (0..100), in increasing opacity, which describes the
+transparency level of a frame when it's active or selected. Transparency
+can be toggled through `toggle-transparency'.")
+
+(defvar dotpaloryemacs-inactive-transparency 90
+  "A value from the range (0..100), in increasing opacity, which describes the
+transparency level of a frame when it's inactive or deselected. Transparency
+can be toggled through `toggle-transparency'.")
+
+
+
 (provide 'prelude)
 ;;; 00prelude.el ends here

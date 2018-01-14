@@ -1,0 +1,5 @@
+(:name pfuture
+ :description "pfuture.el offers a set of simple functions wrapping Emacs’ existing process creation functionality."
+ :type github
+ :pkgname "Alexander-Miller/pfuture"
+ :depends (cl-lib))

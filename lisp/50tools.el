@@ -1346,6 +1346,49 @@ inputting math (Unicode) symbols." t))
     (define-key global-map (kbd "M-g x") 'dumb-jump-go-prefer-external)
     (define-key global-map (kbd "M-g o") 'dumb-jump-go-prefer-external-other-window)))
 
+;;; treemacs
+(use-package treemacs
+  :commands treemacs--window-number-ten
+  :defer t
+  :init
+  (paloryemacs/set-leader-keys
+    "ft"    #'treemacs-toggle
+    "fT"    #'treemacs
+    "fB"    #'treemacs-bookmark
+    "f C-t" #'treemacs-find-file)
+  :config
+  (progn
+    ;; (paloryemacs/define-evil-state-face "treemacs" "MediumPurple1")
+    (use-package treemacs-evil :demand t)
+    (setq treemacs-icon-open-png   (propertize "⊖ " 'face 'treemacs-directory-face)
+          treemacs-icon-closed-png (propertize "⊕ " 'face 'treemacs-directory-face)
+          treemacs-icon-tag-node-open-png   (propertize "− " 'face 'font-lock-keyword-face)
+          treemacs-icon-tag-node-closed-png (propertize "+ " 'face 'font-lock-keyword-face)
+          treemacs-icon-tag-leaf-png        (propertize "🞄 " 'face 'font-lock-keyword-face)
+          treemacs-no-png-images t
+          treemacs-indentation-string (propertize " ⫶ " 'face 'font-lock-comment-face)
+          treemacs-indentation 1
+          treemacs-follow-after-init t
+          treemacs-width 35
+          treemacs-position 'left
+          treemacs-is-never-other-window nil
+          treemacs-silent-refresh nil
+          treemacs-indentation 2
+          treemacs-change-root-without-asking nil
+          treemacs-sorting 'alphabetic-desc
+          treemacs-show-hidden-files t
+          treemacs-never-persist nil
+          treemacs-goto-tag-strategy 'refetch-index
+          treemacs-collapse-dirs (if (executable-find "python") 3 0))
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+
+    ;; this boundp check guards against a new feature that not all treemacs installations will have
+    ;; TODO remove this guard in a few weeks
+    (when (boundp 'treemacs-git-mode)
+      (treemacs-git-mode 'extended))))
+
 
 ;;; nyan-mode
 ;; https://github.com/TeMPOraL/nyan-mode

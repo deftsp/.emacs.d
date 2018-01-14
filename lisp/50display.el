@@ -18,7 +18,7 @@
                               (height . 51)
                               (top . 22) ; (frame-parameter nil 'top)
                               (left . 0)
-                              (alpha . (96 . 90)) ; first number is for the active window and the second for the inactive
+                              (alpha . (,dotpaloryemacs-active-transparency . ,dotpaloryemacs-inactive-transparency)) ; first number is for the active window and the second for the inactive
                               (mouse-color . "gray80")
                               ;; http://emacsredux.com/blog/2015/01/18/customizing-the-fringes/
                               (left-fringe . 8) ; default width (8 pixels).
@@ -176,8 +176,20 @@ ALPHA : [ %(frame-parameter nil 'alpha) ]
   ("K" (lambda () (interactive) (paloryemacs/set-transparency -10 t)) "-- less")
   ("=" (lambda (value) (interactive "nTransparency Value 0 - 100 opaque: " )
          (paloryemacs/set-transparency value nil)) "Set to ?" :color blue)
+  ("r" (lambda () (interactive)
+         (paloryemacs/set-transparency dotpaloryemacs-active-transparency nil)) "reset" :color blue)
+  ("t" (lambda () (interactive)
+         (let ((alpha (frame-parameter (selected-frame) 'alpha))
+               (dotfile-setting (cons dotpaloryemacs-active-transparency
+                                      dotpaloryemacs-inactive-transparency)))
+           (if (equal alpha dotfile-setting)
+               (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
+             (set-frame-parameter (selected-frame) 'alpha dotfile-setting)))) "toggle" :color blue)
   ("" nil "cancel")
   ("q" nil "cancel"))
+
+(paloryemacs/set-leader-keys "TT" 'hydra-transparency/body)
+
 
 (provide '50display)
 

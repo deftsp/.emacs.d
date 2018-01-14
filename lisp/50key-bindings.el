@@ -123,7 +123,6 @@ offer a list of recently clocked tasks to clock into. "
   "fel" 'counsel-find-library
   "fL"  'counsel-locate
   "fb"  'counsel-bookmark
-  "fT"  'hydra-transparency/body
   "gl"  'magit-log
   "gs"  'magit-status
   "gC"  'magit-commit
