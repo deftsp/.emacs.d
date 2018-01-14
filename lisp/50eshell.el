@@ -249,7 +249,7 @@ is achieved by adding the relevant text properties."
           ;; treat 'echo' like shell echo
           eshell-plain-echo-behavior t
           ;; cache directory
-          eshell-directory-name (concat paloryemacs/cache-directory "eshell/"))
+          eshell-directory-name (concat paloryemacs-cache-directory "eshell/"))
 
     (autoload 'eshell-delchar-or-maybe-eof "em-rebind")
     (add-hook 'eshell-after-prompt-hook 'paloryemacs//protect-eshell-prompt)

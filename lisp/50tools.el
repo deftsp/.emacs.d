@@ -1069,11 +1069,15 @@ such character is found, following options are shown:
   :defer t
   :init
   (progn
-    ;; bug: change cache file path will cause cache file be cleared after access any pojectile file.
-    ;; (when (boundp 'paloryemacs/cache-directory)
-    ;;   (setq projectile-cache-file (concat paloryemacs/cache-directory "projectile.cache")))
     (when (eq system-type 'darwin)
       (setq projectile-tags-command "/usr/local/bin/ctags -Re %s"))
+    (setq  projectile-indexing-method 'alien
+           projectile-generic-command "find . -type f")
+    (setq projectile-sort-order 'recentf
+          projectile-cache-file (concat paloryemacs-cache-directory
+                                        "projectile.cache")
+          projectile-known-projects-file (concat paloryemacs-cache-directory
+                                                 "projectile-bookmarks.eld"))
     (setq projectile-enable-caching t))
   :config
   (progn

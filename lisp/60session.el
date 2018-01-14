@@ -53,8 +53,8 @@
                                       search-ring
                                       regexp-search-ring))
 
-(when (boundp 'paloryemacs/cache-directory)
-  (setq savehist-file (concat paloryemacs/cache-directory "history")))
+(when (boundp 'paloryemacs-cache-directory)
+  (setq savehist-file (concat paloryemacs-cache-directory "history")))
 ;;; automatic saving of minibuffer history.
 (savehist-mode +1)
 
