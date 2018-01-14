@@ -1366,14 +1366,15 @@ inputting math (Unicode) symbols." t))
           treemacs-icon-tag-node-closed-png (propertize "+ " 'face 'font-lock-keyword-face)
           treemacs-icon-tag-leaf-png        (propertize "🞄 " 'face 'font-lock-keyword-face)
           treemacs-no-png-images t
-          treemacs-indentation-string (propertize " ⫶ " 'face 'font-lock-comment-face)
-          treemacs-indentation 1
+          treemacs-indentation-string " "
+          treemacs-indentation 2
           treemacs-follow-after-init t
           treemacs-width 35
+          treemacs-winum-number 10
           treemacs-position 'left
+          treemacs-file-event-delay 5000
           treemacs-is-never-other-window nil
           treemacs-silent-refresh nil
-          treemacs-indentation 2
           treemacs-change-root-without-asking nil
           treemacs-sorting 'alphabetic-desc
           treemacs-show-hidden-files t
@@ -1384,11 +1385,21 @@ inputting math (Unicode) symbols." t))
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
 
+    (defun paloryemacs/treemacs-header-with-brackets (current-root)
+      (format "[%s]" (file-name-nondirectory current-root)))
+    (setq treemacs-header-function #'paloryemacs/treemacs-header-with-brackets)
+
     ;; this boundp check guards against a new feature that not all treemacs installations will have
     ;; TODO remove this guard in a few weeks
     (when (boundp 'treemacs-git-mode)
       (treemacs-git-mode 'extended))))
 
+(use-package treemacs-projectile
+  :defer t
+  :init
+  (paloryemacs/set-leader-keys
+    "fp" #'treemacs-projectile-toggle
+    "fP" #'treemacs-projectile))
 
 ;;; nyan-mode
 ;; https://github.com/TeMPOraL/nyan-mode
