@@ -1100,17 +1100,16 @@ such character is found, following options are shown:
   ("q"  nil                                      "cancel" :color blue))
 
 (autoload 'projectile-project-root "projectile" "Retrieves the root directory of a project if available." t nil)
-(defhydra hydra-projectile (:color teal
-                                   :hint nil)
+(defhydra hydra-projectile (:color teal :hint nil)
   "
      PROJECTILE: %(projectile-project-root)
 
      Find File            Search/Tags          Buffers                Cache
 ------------------------------------------------------------------------------------------
-_s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache clear
- _ff_: file dwim       _g_: update gtags      _b_: switch to buffer  _x_: remove known project
- _fd_: file curr dir   _o_: multi-occur     _s-k_: Kill all buffers  _X_: cleanup non-existing
-  _r_: recent file                                               ^^^^_z_: cache current
+_s-f_: file              _a_: ag                _i_: Ibuffer           _c_: cache clear
+ _ff_: file dwim         _g_: ripgrep           _b_: switch to buffer  _x_: remove known project
+ _fd_: file curr dir   _s-g_: update gtags    _s-k_: Kill all buffers  _X_: cleanup non-existing
+  _r_: recent file       _o_: multi-occur                            ^^_z_: cache current
   _d_: dir
 
 "
@@ -1121,7 +1120,7 @@ _s-f_: file            _a_: ag                _i_: Ibuffer           _c_: cache 
   ("s-f" projectile-find-file)
   ("ff"  projectile-find-file-dwim)
   ("fd"  projectile-find-file-in-directory)
-  ("g"   ggtags-update-tags)
+  ("g"   projectile-ripgrep)
   ("s-g" ggtags-update-tags)
   ("i"   projectile-ibuffer)
   ("K"   projectile-kill-buffers)
