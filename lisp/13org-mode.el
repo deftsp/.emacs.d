@@ -109,8 +109,11 @@
     (setq org-use-fast-todo-selection t
           org-todo-keywords '((sequence "TODO(t)" "NEXT(n)" "DELEGATED(l)" "APPT(a)" "|" "DONE(d)" "DEFERRED(f)" "CANCELLED(c@)" "FAILED(X@/!)")
                               (sequence "WAITING(w@/!)" "HOLD(h@/!)" "Urgent(u!)" "SOMEDAY(S!)" "PROJECT(P@)" "OPEN(O@)" "|" "CANCELLED(c@/!)")
+                              ;; if 'q' is not used as shortcut, press 'q' like 'C-g'
+                              ;; (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
                               (sequence "REPORT(r)" "BUG(b!)" "ISSUE(i!)" "ERROR(e!)" "FEATURE(f!)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
-                              (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)"))
+
+                              )
           org-todo-keyword-faces (quote (("TODO"      . (:foreground "red"          :weight bold))
                                          ("NEXT"      . (:foreground "#d33682"         :weight bold))
                                          ("WAITING"   . (:foreground "orange"       :weight bold))
