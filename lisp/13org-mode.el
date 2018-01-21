@@ -130,13 +130,12 @@
                                          ("OPEN"      . (:foreground "deep pink"    :weight bold))
                                          ("PROJECT"   . (:foreground "red"          :weight bold))))
           org-group-tags t
-          org-tag-groups-alist nil
-          org-tag-groups-alist-for-agenda nil
           org-tag-persistent-alist '((:startgroup . nil) ("@office" . ?o) ("@home" . ?h) ("@shopping" . ?s) ("@tennisclub" . ?t) (:endgroup . nil)
                                      (:startgroup . nil) ("online" . ?O) ("offline" . ?F) (:endgroup . nil)
                                      (:startgroup . nil) ("business" . ?B) ("personal" . ?P) (:endgroup . nil)
-                                     (:startgroup . nil)
+
                                      ;; Knowledge aspects
+                                     (:startgroup . nil)
                                      ("knowledge" . nil)
                                      (:grouptags . nil)
                                      ("thought" . nil)
@@ -145,6 +144,7 @@
                                      ("math") ("history") ("politics") ("society") ("philosophy")
                                      ("psychology") ("literature") ("medicine")
                                      (:endgroup . nil)
+
                                      (:startgroup . nil)
                                      ("programming")
                                      (:grouptags . nil)
@@ -154,6 +154,7 @@
                                      ("regexp")
                                      ("Git" . ?g)
                                      (:endgroup . nil)
+
                                      ("project" . ?p)
                                      ("drill"   . ?d)
                                      ("hacking" . ?H)
@@ -163,6 +164,7 @@
                                      ("movie"   . nil)
                                      ("misc"    . ?m)
                                      ("reading" . ?r)
+
                                      ;; Programming Languages
                                      (:startgroup . nil)
                                      ("programming-languages" . ?L)
@@ -192,6 +194,7 @@
                           ;; places
                           ("company" . ?N) ("home" . ?H) ("computer" . ?C) ("phone" . ?P)
                           (:endgroup . nil)
+
                           ;; Work
                           (:startgroup . nil)
                           ("work" . ?w)
@@ -199,6 +202,7 @@
                           ;; Green Town
                           ("company" . nil)
                           (:endgroup . nil))
+
           org-tag-faces '(("wiki" :foreground "green yellow")
                           ("org" :foreground "green yellow")
                           ("computer" :foreground "green" :background "black")
