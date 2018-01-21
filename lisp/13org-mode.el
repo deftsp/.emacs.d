@@ -255,6 +255,15 @@
       :config
       (org-download-enable))
 
+    (with-eval-after-load 'counsel
+      ;; C-m (ivy-done) exit with the currently selected candidate
+      ;; C-M-m (ivy-call)  select the current candidate and remain in the completion session.
+      ;; Typing C-M-m (ivy-call) over an already selected candidate removes it from the list of selected tags.
+      ;; At any point,you can exit completion with the current list of selected
+      ;; tags by typing C-M-j (ivy-immediate-done).
+      (global-set-key [remap org-agenda-set-tags] #'counsel-org-tag-agenda)
+      (global-set-key [remap org-set-tags-command] #'counsel-org-tag))
+
     (defun paloryemacs/org-mode-init ()
       (display-line-numbers-mode -1))
 
