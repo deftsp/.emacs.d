@@ -120,6 +120,7 @@
    `(highlight-symbol-face ((t (:background "dodgerblue3" :foreground ,base0))))
 
    ;; auto-highlight-symbol
+   `(ahs-definition-face ((t (:background "CadetBlue" :foreground "moccasin" :underline nil))))
    `(ahs-plugin-defalt-face ((t (:background "#28248d" :foreground ,base0))))
    `(ahs-face ((t (:background "#32448d" :foreground ,base0))))
 
