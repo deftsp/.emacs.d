@@ -177,9 +177,10 @@
           wg-mode-line-decor-right-brace ""
           wg-mode-line-decor-divider ":"))
   :config
-  (define-key wg-prefixed-map (kbd "s") 'wg-save-session)
-  (when (fboundp 'key-chord-define-global)
-    (key-chord-define-global ".w" wg-prefixed-map)))
+  (progn
+    (define-key wg-prefixed-map (kbd "s") 'wg-save-session)
+    (with-eval-after-load 'key-chord
+      (key-chord-define-global ".w" wg-prefixed-map))))
 
 
 (defun paloryemacs/turn-on-workgroups-mode ()
