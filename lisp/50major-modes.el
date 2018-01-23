@@ -102,17 +102,30 @@
     (add-hook 'diff-auto-refine-mode-hook 'paloryemacs/turn-off-aggressive-indent-mode)))
 
 ;;; highlight-symbol
-(use-package highlight-symbol
+;; slow for large file
+;; (use-package highlight-symbol
+;;   :defer t
+;;   :init
+;;   (progn
+;;     (setq highlight-symbol-idle-delay 1.2)
+;;     ;; (global-set-key (kbd "M-s j") 'highlight-symbol-at-point)
+;;     ;; (global-set-key (kbd "M-s *") 'highlight-symbol-next)
+;;     ;; (global-set-key (kbd "M-s #") 'highlight-symbol-prev)
+;;     ;; (global-set-key (kbd "C-*") 'highlight-symbol-next)
+;;     ;; (global-set-key (kbd "C-#") 'highlight-symbol-prev)
+;;     (add-hook 'prog-mode-hook (lambda () (highlight-symbol-mode t)))))
+
+(use-package auto-highlight-symbol
   :defer t
+  :diminish auto-highlight-symbol-mode
   :init
   (progn
-    (setq highlight-symbol-idle-delay 1.2)
-    ;; (global-set-key (kbd "M-s j") 'highlight-symbol-at-point)
-    ;; (global-set-key (kbd "M-s *") 'highlight-symbol-next)
-    ;; (global-set-key (kbd "M-s #") 'highlight-symbol-prev)
-    ;; (global-set-key (kbd "C-*") 'highlight-symbol-next)
-    ;; (global-set-key (kbd "C-#") 'highlight-symbol-prev)
-    (add-hook 'prog-mode-hook (lambda () (highlight-symbol-mode t)))))
+    (setq ahs-case-fold-search t
+          ahs-default-range 'ahs-range-display
+          ahs-idle-interval 0.25
+          ahs-inhibit-face-list nil)
+    (add-hook 'prog-mode-hook (lambda () (auto-highlight-symbol-mode t)))))
+
 
 (use-package highlight-indent-guides
   :defer t

@@ -119,6 +119,10 @@
    ;; highlight-symbol
    `(highlight-symbol-face ((t (:background "dodgerblue3" :foreground ,base0))))
 
+   ;; auto-highlight-symbol
+   `(ahs-plugin-defalt-face ((t (:background "#28248d" :foreground ,base0))))
+   `(ahs-face ((t (:background "#32448d" :foreground ,base0))))
+
    ;; highlight
    '(highlight ((t (:foreground unspecified :foreground "#66e2e2" :background "#454545")))) ; use `unspecified' or `nil' both ok
 
