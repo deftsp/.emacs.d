@@ -9,6 +9,13 @@
 
 ;; https://truongtx.me/2014/08/23/setup-emacs-as-an-sql-database-client
 
+(use-package sql-indent
+  :defer t
+  :commands (sqlind-minor-mode)
+  :init
+  (progn
+    (setq sqlind-basic-offset 4)))
+
 (use-package sql
   :defer t
   :config
@@ -30,8 +37,7 @@
               'paloryemacs/sql-interactive-mode-init)
 
     (defun paloryemacs/sql-mode-init ()
-
-      )
+      (sqlind-minor-mode +1))
 
     (add-hook 'sql-mode-hook 'paloryemacs/sql-mode-init)
 

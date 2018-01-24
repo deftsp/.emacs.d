@@ -1,0 +1,4 @@
+(:name sql-indent
+ :description "Syntax based indentation for SQL files inside GNU Emacs "
+ :type github
+ :pkgname "alex-hhh/emacs-sql-indent")
