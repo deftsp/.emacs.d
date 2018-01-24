@@ -14,7 +14,7 @@
   :commands (sqlind-minor-mode)
   :init
   (progn
-    (setq sqlind-basic-offset 4)))
+    (setq-default sqlind-basic-offset 4)))
 
 (use-package sql
   :defer t
