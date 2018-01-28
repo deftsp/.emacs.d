@@ -135,8 +135,6 @@ offer a list of recently clocked tasks to clock into. "
   "jl" 'evil-avy-goto-line
   "jw" 'evil-avy-goto-word-or-subword-1
   "n"   'evil-narrow-indirect
-  "p"   'hydra-projectile/body   ; 'projectile-commander
-  "P"   'hydra-projectile-other-window/body
   "re"  'paloryemacs/ivy-evil-registers
   "ry"  'counsel-yank-pop
   "se"  'evil-iedit-state/iedit-mode
