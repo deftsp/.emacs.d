@@ -1067,6 +1067,30 @@ such character is found, following options are shown:
 ;; https://github.com/bbatsov/projectile
 (use-package projectile
   :defer t
+  :commands (projectile-ack
+             projectile-ag
+             projectile-ripgrep
+             projectile-compile-project
+             projectile-dired
+             projectile-find-dir
+             projectile-find-file
+             projectile-find-tag
+             projectile-test-project
+             projectile-grep
+             projectile-invalidate-cache
+             projectile-kill-buffers
+             projectile-multi-occur
+             projectile-project-p
+             projectile-project-root
+             projectile-recentf
+             projectile-regenerate-tags
+             projectile-replace
+             projectile-replace-regexp
+             projectile-run-async-shell-command-in-root
+             projectile-run-shell-command-in-root
+             projectile-switch-project
+             projectile-switch-to-buffer
+             projectile-vc)
   :init
   (progn
     (when (eq system-type 'darwin)
@@ -1078,7 +1102,31 @@ such character is found, following options are shown:
                                         "projectile.cache")
           projectile-known-projects-file (concat paloryemacs-cache-directory
                                                  "projectile-bookmarks.eld"))
-    (setq projectile-enable-caching t))
+    (setq projectile-enable-caching t)
+    (paloryemacs/set-leader-keys
+      "p!"   'projectile-run-shell-command-in-root
+      "p&"   'projectile-run-async-shell-command-in-root
+      "p%"   'projectile-replace-regexp
+      "pa"   'projectile-toggle-between-implementation-and-test
+      "pb"   'projectile-switch-to-buffer
+      "pc"   'projectile-compile-project
+      "pd"   'projectile-find-dir
+      "pD"   'projectile-dired
+      "pe"   'projectile-edit-dir-locals
+      "pf"   'projectile-find-file
+      "pF"   'projectile-find-file-dwim
+      "pg"   'projectile-find-tag
+      "pG"   'projectile-regenerate-tags
+      "pI"   'projectile-invalidate-cache
+      "pk"   'projectile-kill-buffers
+      "pp"   'projectile-switch-project
+      "pr"   'projectile-recentf
+      "psg"  'projectile-ag
+      "psr"  'counsel-projectile-rg
+      "pss"  'projectile-rg
+      "pR" 'projectile-replace
+      "pT" 'projectile-test-project
+      "pv" 'projectile-vc))
   :config
   (progn
     (add-to-list 'projectile-project-root-files ".cabal-sandbox")
