@@ -1,0 +1,5 @@
+(:name prog-fill
+ :type github
+ :description "Emacs prog-fill functionality (smartly break lines to use vertical space)"
+ :pkgname "ahungry/prog-fill"
+ :depends (cl-lib))

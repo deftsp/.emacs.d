@@ -109,4 +109,14 @@
 (setq-default auto-fill-function
               #'paloryemacs/add-blank-between-chinese-and-english-whole-buffer)
 
+
+(use-package prog-fill
+  :commands (prog-fill)
+  :defer t
+  :init
+  (progn
+    ;; (add-hook 'prog-mode-hook
+    ;;           (lambda () (local-set-key (kbd "M-q") #'prog-fill)))
+    ))
+
 (provide '50auto-fill)
