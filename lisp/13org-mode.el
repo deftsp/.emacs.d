@@ -2123,6 +2123,7 @@ _h_tml    ^ ^        _A_SCII:
 
 
 ;; inserting a function definition
+;; http://sachachua.com/blog/2018/01/org-mode-inserting-a-function-definition/
 (defun paloryemacs/org-insert-defun (function)
   "Inserts an Org source block with the definition for FUNCTION."
   (interactive (find-function-read))
