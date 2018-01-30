@@ -270,6 +270,7 @@
       (global-set-key [remap org-set-tags-command] #'counsel-org-tag))
 
     (defun paloryemacs/org-mode-init ()
+      (semantic-mode -1)
       (display-line-numbers-mode -1))
 
     (add-to-list 'org-mode-hook 'paloryemacs/org-mode-init)
