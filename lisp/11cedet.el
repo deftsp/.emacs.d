@@ -53,7 +53,8 @@
    ((member major-mode '(scheme-mode
                          javascript-mode
                          html-helper-mode
-                         html-mode))
+                         html-mode
+                         org-mode))
     ;; to disable semantic, return non-nil.
     t)
    (t nil)))
