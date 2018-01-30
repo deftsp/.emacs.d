@@ -165,7 +165,7 @@
           wg-session-file (expand-file-name "~/.emacs.d/workgroups2")
           ;; wg-prefix-key (kbd "C-c w")
           wg-prefix-key (kbd "s-w")
-          wg-emacs-exit-save-behavior 'save
+          wg-emacs-exit-save-behavior nil
           wg-workgroups-mode-exit-save-behavior 'save)
 
     ;; workgroup mode-line
