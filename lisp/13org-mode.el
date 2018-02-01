@@ -633,6 +633,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
             (alltodo ""
                      ((org-agenda-skip-function '(or (paloryemacs/org-agenda-skip-subtree-if-habit)
                                                      (paloryemacs/org-agenda-skip-subtree-if-priority ?A)
+                                                     (org-agenda-skip-entry-if 'regexp "\\* NEXT")
                                                      (org-agenda-skip-entry-if 'scheduled 'deadline)))
                       (org-agenda-overriding-header "ALL Normal Priority Tasks:")
                       (org-agenda-sorting-strategy '(priority-down
