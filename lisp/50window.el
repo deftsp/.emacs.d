@@ -544,7 +544,7 @@ If the universal prefix argument is used then kill the buffer too."
 (use-package dimmer
   :init
   (progn
-    (setq dimmer-percent 0.2))
+    (setq dimmer-fraction 0.2))
   :config
   (progn
     (dimmer-mode +1)))
