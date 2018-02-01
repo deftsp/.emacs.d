@@ -1359,6 +1359,8 @@ inputting math (Unicode) symbols." t))
     "ft"    #'treemacs-toggle
     "fT"    #'treemacs
     "fB"    #'treemacs-bookmark
+    "fp" #'treemacs-projectile-toggle
+    "fP" #'treemacs-projectile
     "f C-t" #'treemacs-find-file)
   :config
   (progn
