@@ -13,6 +13,8 @@
   (progn
     ;; (add-to-list 'auto-mode-alist '("\\.http\\'" . org-mode))
     ;; (add-to-list 'org-babel-load-languages '(http . t))
+    (setq ob-http:remove-cr t)
+    (setq ob-http:curl-custom-arguments "-i")
     (setq ob-http:max-time 10)))
 
 ;; https://github.com/alf/ob-restclient.el
