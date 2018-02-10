@@ -125,6 +125,11 @@
   (let ((backends paloryemacs/company-common-backends))
     (setq-local company-backends backends)))
 
+(add-hook 'lua-mode-hook 'paloryemacs/company-lua-mode-setup)
+(defun paloryemacs/company-lua-mode-setup ()
+  (let ((backends paloryemacs/company-common-backends))
+    (setq-local company-backends backends)))
+
 
 
 (provide '40company-mode)
