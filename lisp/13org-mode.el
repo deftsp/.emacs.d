@@ -527,6 +527,17 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
         nil
       subtree-end)))
 
+;; https://emacs.stackexchange.com/questions/14724/emacs-org-mode-how-to-make-agenda-views-of-blocked-parent-tasks
+(defun paloryemacs/org-agenda-skip-if-not-blocked ()
+  (let ((next-headline (save-excursion
+                         (or (outline-next-heading) (point-max)))))
+    (if (not (org-entry-blocked-p)) next-headline)))
+
+(defun paloryemacs/org-agenda-skip-if-blocked ()
+  (let ((next-headline (save-excursion
+                         (or (outline-next-heading) (point-max)))))
+    (if (org-entry-blocked-p) next-headline)))
+
 (defun paloryemacs/org-agenda-skip-subtree-if-habit ()
   "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
   (let ((subtree-end (save-excursion (org-end-of-subtree t))))
@@ -620,7 +631,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                                        effort-up
                                                        category-keep))))
             (tags-todo "TODO=\"NEXT\""
-                       ((org-agenda-sorting-strategy '(tag-up priority-down))
+                       ((org-agenda-sorting-strategy '(priority-down tag-up))
                         (org-agenda-overriding-header "NEXT Tasks:")))
             (tags "+PRIORITY=\"A\"+CATEGORY={Task\\|Project}"
                   ((org-agenda-skip-function
@@ -633,6 +644,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
             (alltodo ""
                      ((org-agenda-skip-function '(or (paloryemacs/org-agenda-skip-subtree-if-habit)
                                                      (paloryemacs/org-agenda-skip-subtree-if-priority ?A)
+                                                     (paloryemacs/org-agenda-skip-if-blocked)
                                                      (org-agenda-skip-entry-if 'regexp "\\* NEXT")
                                                      (org-agenda-skip-entry-if 'scheduled 'deadline)))
                       (org-agenda-overriding-header "ALL Normal Priority Tasks:")
@@ -651,6 +663,10 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
             (org-agenda-span 'day)
             (org-agenda-overriding-header "Today's priority #A and #B Tasks: ")
             (org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp "\\=.*\\[#C\\]"))))
+
+          ("B" "Blocked entries" alltodo ""
+           ((org-agenda-skip-function '(paloryemacs/org-agenda-skip-if-not-blocked))
+            (org-enforce-todo-checkbox-dependencies nil)))
 
           ("c" "Appointment Calendar" agenda ""
            ((org-agenda-overriding-header "Appointment Calendar")
@@ -799,7 +815,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           org-agenda-repeating-timestamp-show-all nil
           org-agenda-use-time-grid nil
           org-agenda-block-separator ?▰
-          org-agenda-dim-blocked-tasks 'invisible
+          org-agenda-dim-blocked-tasks t ; 'invisible
           org-agenda-window-frame-fractions '(0.6 . 0.85) ; the min and max height of the agenda window as a fraction of frame height.
           org-agenda-show-future-repeats 'next
           org-agenda-prefer-last-repeat nil)
