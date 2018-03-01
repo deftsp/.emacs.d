@@ -1407,6 +1407,21 @@ inputting math (Unicode) symbols." t))
     "fp" #'treemacs-projectile-toggle
     "fP" #'treemacs-projectile))
 
+;; https://github.com/algernon/kaleidoscope.el
+;; (kaleidoscope-send-command :help)
+;; (kaleidoscope-send-command :version)
+;; (kaleidoscope-send-command :led/setAll "255 0 0")
+;; The results will appear in the *kaleidoscope* buffer.
+(use-package kaleidoscope
+  :defer t
+  :commands (kaleidoscope-start
+             kaleidoscope-stop
+             kaleidoscope-evil-state-flash-setup
+             kaleidoscope-evil-state-flash-teardown)
+  :init
+  (progn
+    (setq kaleidoscope-device-port "/dev/tty.usbmodemCDkbio01")))
+
 ;;; nyan-mode
 ;; https://github.com/TeMPOraL/nyan-mode
 ;; (nyan-mode +1)

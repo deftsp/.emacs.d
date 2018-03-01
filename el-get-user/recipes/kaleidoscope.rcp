@@ -1,0 +1,5 @@
+(:name kaleidoscope
+ :type github
+ :description "Control Kaleidoscope-powered devices from the comfort of your Emacs."
+ :pkgname "algernon/kaleidoscope.el"
+ :depends (evil))
