@@ -1415,7 +1415,7 @@ inputting math (Unicode) symbols." t))
 (use-package kaleidoscope
   :defer t
   :commands (kaleidoscope-start
-             kaleidoscope-stop
+             kaleidoscope-quit
              kaleidoscope-evil-state-flash-setup
              kaleidoscope-evil-state-flash-teardown)
   :init

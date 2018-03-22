@@ -16,8 +16,7 @@
 (use-package tramp
   :defer t
   :config
-  (setq tramp-default-user nil
-        tramp-default-host "localhost"
+  (setq tramp-default-host "localhost"
         tramp-encoding-shell "/bin/sh"
         tramp-default-method "ssh"
         tramp-auto-save-directory "~/.tmp"
