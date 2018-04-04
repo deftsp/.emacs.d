@@ -70,7 +70,7 @@
   (key-chord-define-global "jl" 'avy-goto-line)
 
   (key-chord-define-global "/s" 'save-buffer)
-  (key-chord-define-global "##" 'server-edit)
+  ;; (key-chord-define-global "##" 'server-edit)
 
   (key-chord-define-global "hd" 'helm-dash)
 
