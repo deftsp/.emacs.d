@@ -1134,7 +1134,7 @@ to `reorganize-frame', otherwise set to `other-frame'."
     (setq org-agenda-window-setup window-config)
     (message "Update `org-agenda-window-setup' to %s" window-config)))
 
-;; (paloryemacs/update-org-agenda-window-setup)
+(paloryemacs/update-org-agenda-window-setup)
 
 ;;; archive
 ;; Tip: find all 'DONE' items older than 2 months and archive
