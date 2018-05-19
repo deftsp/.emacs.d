@@ -1123,18 +1123,28 @@ If VANILLA is non-nil, run the standard `org-capture'."
       "." 'org-agenda-goto-today
       "gd" 'org-agenda-goto-date)))
 
-;;;
-(defun paloryemacs/update-org-agenda-window-setup ()
-  "When there is only one monitor, set `org-agenda-window-setup'
-to `reorganize-frame', otherwise set to `other-frame'."
-  (let* ((monitor-count (length (display-monitor-attributes-list)))
-         (window-config (if (> monitor-count 1)
-                            'other-frame
-                          'reorganize-frame)))
-    (setq org-agenda-window-setup window-config)
-    (message "Update `org-agenda-window-setup' to %s" window-config)))
+;;; Other frame
+(defun paloryemacs/update-org-agenda-window-setup (&rest args)
+  (let* ((attrs (display-monitor-attributes-list))
+         (window-config
+          (if (= (length attrs) 1)
+              'reorganize-frame
+            (dolist (attr attrs)
+              (let ((name (assoc-default 'name attr))
+                    (frames (assoc-default 'frames attr)))
+                (when (member (selected-frame) frames)
+                  (if (string= name dotpaloryemacs-build-in-screen-name)
+                      (return 'only-window)
+                    (return 'other-frame))))))))
+    (setq org-agenda-window-setup window-config)))
 
-(paloryemacs/update-org-agenda-window-setup)
+;; (paloryemacs/update-org-agenda-window-setup)
+
+;; (defun paloryemacs//update-hammerspoon-agenda-layout ()
+;;   (paloryemacs/open-hammerspoon-url "update_agenda_layout"))
+
+(advice-add 'org-agenda-prepare-window :before #'paloryemacs/update-org-agenda-window-setup)
+;; (advice-remove 'org-agenda-prepare-window #'paloryemacs/update-org-agenda-window-setup)
 
 ;;; archive
 ;; Tip: find all 'DONE' items older than 2 months and archive
