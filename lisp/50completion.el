@@ -268,9 +268,8 @@
     ;; this makes it easy to get out of a nested expansion
     (define-key yas-minor-mode-map (kbd "M-s-/") 'yas-next-field)
     (setq yas-snippet-dirs
-          (list (expand-file-name "~/.emacs.d/snippets")
-                ;; ,(expand-file-name "~/.emacs.d/site-lisp/yasnippet-go")
-                'yas-installed-snippets-dir))) :config
+          (list (expand-file-name "~/.emacs.d/snippets"))))
+  :config
   (progn
     ;; (defun yas-advise-indent-function (function-symbol)
     ;;   (eval `(defadvice ,function-symbol (around yas-try-expand-first activate)
