@@ -975,6 +975,17 @@ to replace the symbol under cursor"
   :init
   (setq evil-visual-mark-exclude-marks '("^" "[" "]")))
 
+(use-package evil-mc
+  :defer 3
+  :init
+  (progn
+    (setq evil-mc-one-cursor-show-mode-line-text nil)
+    (setq evil-mc-enable-bar-cursor nil))
+  :config
+  (progn
+    (advice-add 'evil-mc-undo-all-cursors :after #'anzu--reset-mode-line)
+    (global-evil-mc-mode +1)))
+
 (with-eval-after-load 'wgrep
   (evil-define-key 'normal wgrep-mode-map ",," 'wgrep-finish-edit)
   (evil-define-key 'normal wgrep-mode-map ",c" 'wgrep-finish-edit)

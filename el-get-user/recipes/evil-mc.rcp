@@ -1,0 +1,5 @@
+(:name evil-mc
+ :description "Multiple cursors implementation for evil-mode "
+ :type github
+ :pkgname "gabesoft/evil-mc"
+ :depends (evil))
