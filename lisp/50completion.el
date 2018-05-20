@@ -252,6 +252,8 @@
 ;; (eval-after-load "icomplete" '(progn (require 'icomplete+)))
 ;; (setq icomplete-prospects-height 1)
 
+(autoload 'yas-hippie-try-expand "yasnippet")
+
 (use-package yasnippet
   :defer 5
   :diminish (yas-minor-mode . "") " Y"
