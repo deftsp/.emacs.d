@@ -1072,6 +1072,17 @@ if COUNT is negative. "
   (define-key evil-outer-text-objects-map (kbd "s-c") #'evil-sp-a-comment)
   (define-key evil-inner-text-objects-map (kbd "s-c") #'evil-sp-inner-comment))
 
+;;; defun text-object
+(with-eval-after-load 'evil
+  ;; https://github.com/Ambrevar/dotfiles/blob/master/.emacs.d/lisp/init-evil.el
+  ;; https://github.com/emacs-evil/evil/issues/874
+  ;; See Evil-cleverparens?
+  (evil-define-text-object evil-inner-defun (count &optional beg end type)
+    "Select inner defun."
+    (evil-select-inner-object 'evil-defun beg end type count))
+  (define-key evil-inner-text-objects-map "d" 'evil-inner-defun))
+
+
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
 ;; (add-hook 'edebug-mode-hook 'evil-normalize-keymaps) ; recreate `evil-mode-map-alist'
