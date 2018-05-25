@@ -204,73 +204,70 @@ recover evil state to it, otherwiser change to evil-emacs-state."
 
 ;; https://github.com/noctuid/general.el
 (use-package general
-  :init
-  (progn
-    (setq general-default-keymaps 'evil-normal-state-map))
   :config
   (progn
-    (general-evil-setup)
-    (general-nmap
-     "H"    "^"
-     ;; make sure that Evil's normal state never touches TAB, just wire this fall-through binding
-     ;; "TAB" 'paloryemacs/evil-undefine
-     "gL"  'org-mac-grab-link
-     "gd"  'paloryemacs/jump-to-definition
-     "gD"  'paloryemacs/jump-to-definition-other-window
-     "Q" "gqap"
-     ;; "s" "gvfd"
-     ;; "S" "vabsba"
-     "+" 'evil-numbers/inc-at-pt ; default `evil-next-line-first-non-blank'
-     "-" 'evil-numbers/dec-at-pt ; default `evil-previous-line-first-non-blank'
-     ;; "C-e" 'evil-end-of-line
+    (general-evil-setup t)
+    (nmap
+      "H"    "^"
+      ;; make sure that Evil's normal state never touches TAB, just wire this fall-through binding
+      ;; "TAB" 'paloryemacs/evil-undefine
+      "gL"  'org-mac-grab-link
+      "gd"  'paloryemacs/jump-to-definition
+      "gD"  'paloryemacs/jump-to-definition-other-window
+      "Q" "gqap"
+      ;; "s" "gvfd"
+      ;; "S" "vabsba"
+      "+" 'evil-numbers/inc-at-pt ; default `evil-next-line-first-non-blank'
+      "-" 'evil-numbers/dec-at-pt ; default `evil-previous-line-first-non-blank'
+      ;; "C-e" 'evil-end-of-line
 
-     ;; q is being used at many places to close things, and sometimes it so
-     ;; happens that evil mode is turned on in that window at the same time,
-     ;; which results in recording a macro instead of closing the window.
-     "q" nil ; `q' is binded to `evil-record-macro'
-     ;; "s" nil ; default `evil-substitute' remove default binding so I can override it
-     ;; "S" nil ; default `evil-change-whole-line' remove default binding so I can override it
-     )
+      ;; q is being used at many places to close things, and sometimes it so
+      ;; happens that evil mode is turned on in that window at the same time,
+      ;; which results in recording a macro instead of closing the window.
+      "q" nil ; `q' is binded to `evil-record-macro'
+      ;; "s" nil ; default `evil-substitute' remove default binding so I can override it
+      ;; "S" nil ; default `evil-change-whole-line' remove default binding so I can override it
+      )
 
-    (general-mmap
-     "TAB" 'indent-for-tab-command
-     ;; reserved for evil-snipe
-     ;; "s" 'evil-avy-goto-char-timer
-     ;; "S" 'evil-avy-goto-word-or-subword-1
+    (mmap
+      "TAB" 'indent-for-tab-command
+      ;; reserved for evil-snipe
+      ;; "s" 'evil-avy-goto-char-timer
+      ;; "S" 'evil-avy-goto-word-or-subword-1
 
-     [C-i] 'evil-jump-forward ; bind evil-jump-forward for GUI only.
-     "C-v" nil)
+      [C-i] 'evil-jump-forward ; bind evil-jump-forward for GUI only.
+      "C-v" nil)
 
-    (general-vmap
-     ")"  "S)"
-     "v" 'evil-visual-block ; make it easy to switch to visual-char-block mode from visual-char
-     "Q" "gq")
+    (vmap
+      ")"  "S)"
+      "v" 'evil-visual-block ; make it easy to switch to visual-char-block mode from visual-char
+      "Q" "gq")
 
-    (general-imap
-     "C-v" nil
-     "C-k" nil
-     "C-o" nil
-     "C-r" nil
-     "C-y" nil
-     "C-e" nil
-     "C-n" nil
-     "C-p" nil
-     "C-x C-n" nil
-     "C-x C-p" nil
-     "C-t" nil
-     "C-d" nil
-     "C-a" nil
-     "C-w" nil
-     "C-o" 'paloryemacs/open-line-with-indent
-     [remap newline] nil
-     [remap newline-and-indent] nil)
+    (imap
+      "C-v" nil
+      "C-k" nil
+      "C-o" nil
+      "C-r" nil
+      "C-y" nil
+      "C-e" nil
+      "C-n" nil
+      "C-p" nil
+      "C-x C-n" nil
+      "C-x C-p" nil
+      "C-t" nil
+      "C-d" nil
+      "C-a" nil
+      "C-w" nil
+      "C-o" 'paloryemacs/open-line-with-indent
+      [remap newline] nil
+      [remap newline-and-indent] nil)
 
-    (general-omap
-     "." 'evil-avy-goto-word-or-subword-1
-     "l" 'evil-avy-goto-line
-     "c" 'evil-avy-goto-char
-     "SPC" 'evil-avy-goto-char-timer
-     ",w" 'evil-avy-goto-subword-0)))
+    (omap
+      "." 'evil-avy-goto-word-or-subword-1
+      "l" 'evil-avy-goto-line
+      "c" 'evil-avy-goto-char
+      "SPC" 'evil-avy-goto-char-timer
+      ",w" 'evil-avy-goto-subword-0)))
 
 ;; (use-package evil-easymotion
 ;;   :config
