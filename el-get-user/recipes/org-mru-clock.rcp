@@ -1,0 +1,4 @@
+(:name org-mru-clock
+ :description "Effortlessly clock in/out of org-mode tasks, with completion and persistent history"
+ :type github
+ :pkgname "unhammer/org-mru-clock")
