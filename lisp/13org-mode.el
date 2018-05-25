@@ -1123,6 +1123,15 @@ If VANILLA is non-nil, run the standard `org-capture'."
       "." 'org-agenda-goto-today
       "gd" 'org-agenda-goto-date)))
 
+(use-package org-mru-clock
+  :defer t
+  :commands (org-mru-clock-in org-mru-clock-select-recent-task)
+  :bind* (("C-c C-x i" . org-mru-clock-in)
+          ("C-c C-x C-j" . org-mru-clock-select-recent-task))
+  :init
+  (setq org-mru-clock-how-many 100
+        org-mru-clock-completing-read #'ivy-completing-read))
+
 ;;; Other frame
 (defun paloryemacs/update-org-agenda-window-setup (&rest args)
   (let* ((attrs (display-monitor-attributes-list))
