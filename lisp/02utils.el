@@ -715,6 +715,22 @@ using a visual block/rectangle selection."
 (paloryemacs|create-undefine-for-new-habit "C-x 3" "SPC w v")
 (paloryemacs|create-undefine-for-new-habit "C-x 1" "SPC w m")
 
+;; http://manuel-uberti.github.io//emacs/2018/05/25/display-version/
+;;;###autoload
+(defun paloryemacs/display-version ()
+  "Display Emacs version and system details in a temporary buffer."
+  (interactive)
+  (let ((buffer-name "*version*"))
+    (with-help-window buffer-name
+      (with-current-buffer buffer-name
+        (insert (emacs-version) "\n")
+        (when (bound-and-true-p emacs-repository-version)
+          (insert "\nRepository revision: " emacs-repository-version "\n"))
+        (when (and system-configuration-options
+                   (not (equal system-configuration-options "")))
+          (insert "\nConfigured using:\n"
+                  system-configuration-options))))))
+
 
 
 (provide '02utils)
