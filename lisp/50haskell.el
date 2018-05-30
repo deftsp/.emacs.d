@@ -10,6 +10,10 @@
 ;; (require 'haskell-mode-autoloads)
 ;; dante: https://github.com/jyp/dante, a fork of Intero mode.
 
+;; TODO: ghcid
+;; http://www.parsonsmatt.org/2018/05/19/ghcid_for_the_win.html
+;; https://github.com/ndmitchell/ghcid
+
 (setq haskell-modes '(haskell-mode literate-haskell-mode))
 
 (defvar paloryemacs/haskell-completion-backend 'ghc-mod
