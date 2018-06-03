@@ -41,6 +41,8 @@
 ;; (make-glyph-code ?┃)
 (if window-system
     (progn
+      (setq window-divider-default-places 'right-only
+            window-divider-default-right-width 4)
       (window-divider-mode +1))
   ;; console window split line
   (set-display-table-slot standard-display-table 'vertical-border ?│))
