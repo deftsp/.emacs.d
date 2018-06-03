@@ -38,8 +38,12 @@
                                     (internal-border-width . 1)
                                     (border-width . 0))))
 
-;;; console window split line
-;; (set-display-table-slot standard-display-table 'vertical-border ?│)
+;; (make-glyph-code ?┃)
+(if window-system
+    (progn
+      (window-divider-mode +1))
+  ;; console window split line
+  (set-display-table-slot standard-display-table 'vertical-border ?│))
 
 ;;; standard display
 ;; the 0x2500 page, which is where all the graphics characters live. Feel free to chose other characters if you want,

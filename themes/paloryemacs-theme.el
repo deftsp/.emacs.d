@@ -74,10 +74,18 @@
    `(minibuffer-line ((t (:inherit 'mode-line-inactive :foreground ,base0 :background ,base03))))
 
 
-   ;; the split line of two window
+   ;; the split line of two windows. For window-system, if scroll-bar-mode off
+   ;; just show a vertical line. make it as the same color to fringe
    `(vertical-border ((t (:foreground ,base02))))
 
+   ;; window-divider-mode
+   `(window-divider ((t (:foreground ,base03))))
+   `(window-divider-first-pixel ((t (:foreground ,base03))))
+   `(window-divider-last-pixel ((t (:foreground ,base03))))
+
+
    `(variable-pitch ((t (:family "Roboto Condensed"))))
+
 
    ;; powerline
    `(powerline-active1 ((t (:background "#6b6b6b" :foreground "#fefefe" :inherit mode-line))))
