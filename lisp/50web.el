@@ -73,7 +73,10 @@
       "z" 'web-mode-fold-or-unfold)))
 
 (use-package css-mode
-  :defer t)
+  :defer t
+  :init
+  (progn
+    (setq-default css-indent-offset 2)))
 
 ;;; skewer
 (defun paloryemacs/skewer-start-repl ()

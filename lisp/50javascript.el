@@ -18,6 +18,8 @@
   :init
   (progn
     (add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+    (setq-default js-indent-level 2)
+
     ;; Required to make imenu functions work correctly
     (add-hook 'js2-mode-hook 'js2-imenu-extras-mode)
     (add-hook 'js2-mode-hook 'paloryemacs/js2-mode-hook))
