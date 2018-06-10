@@ -21,7 +21,7 @@
 ;;; Code:
 ;; Changlog:
 
-;; 26.05.2009 S.P.Tseng <deftsp@gmail.com>
+;; 26.05.2009 Shihpin Tseng <deftsp@gmail.com>
 ;; Try download lyrics on winampcn.com only once.
 
 (defvar emms-lyrics-download nil
@@ -31,7 +31,7 @@
 (defvar emms-tracks-have-no-lyrics nil
   "Hold the tracks that have no lyrics on winampcn.com")
 
-(defvar emms-tracks-have-no-lyrics-file "~/.emacs.d/.emms/emms-tracks-no-lyrics"
+(defvar emms-tracks-have-no-lyrics-file "~/.emacs.d/emms/emms-tracks-no-lyrics"
   "The file to hold tracks have no lyrics on winampcn.com")
 
 

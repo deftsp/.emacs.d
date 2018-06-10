@@ -145,10 +145,11 @@ mouse-1: Display Line and Column Mode Menu")
      "")))
 
 (defpowerline powerline-workgroup
-  (if (and (boundp 'workgroups-mode)
-           (symbol-value 'workgroups-mode))
-      (wg-mode-line-string)
-    " ### "))
+  (let ((str (if (fboundp 'wg-mode-line-string)
+                 (wg-mode-line-string))))
+    (if (> (length str) 0)
+        str
+      " ### ")))
 
 (defpowerline powerline-anzu
   (if (fboundp 'anzu--update-mode-line)
