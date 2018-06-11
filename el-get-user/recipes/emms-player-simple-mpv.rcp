@@ -1,0 +1,5 @@
+(:name emms-player-simple-mpv
+ :type github
+ :description "An extension of emms-player-simple.el for mpv JSON IPC"
+ :pkgname "momomo5717/emms-player-simple-mpv"
+ :depends (cl-lib emms))
