@@ -344,6 +344,8 @@ kill internal buffers too."
           (bookmark-bmenu-mode       . evilified)
           (calendar-mode             . evilified)
           (dired-mode                . evilified)
+          (emms-playlist-mode        . normal)
+          (emms-metaplaylist-mode    . normal)
           (irfc-mode                 . evilified)
           (inferior-emacs-lisp-mode  . emacs)
           (inf-ruby-mode             . emacs)

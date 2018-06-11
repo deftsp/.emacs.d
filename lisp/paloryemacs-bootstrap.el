@@ -114,7 +114,7 @@
 (require '51CommonLispTemplates)
 ;; (require '51helm)
 
-;; (require '52emms) ; do not use it any more
+(require '52emms)
 ;; (require '52icicles)
 (require '52evil-mode)
 ;; (require '52ido)
