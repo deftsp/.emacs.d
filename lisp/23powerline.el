@@ -307,9 +307,11 @@ mouse-1: Display Line and Column Mode Menu")
 
 
 (defpowerline powerline-evil-tag
-  (if (and (boundp 'evil-mode) evil-mode)
-      (let* ((raw-text (strip-text-properties evil-mode-line-tag))
-             (raw-tag (replace-regexp-in-string "[<> «»]" "" raw-text)))
+  (if (bound-and-true-p evil-mode-line-tag)
+      (let ((raw-tag (replace-regexp-in-string
+                      "[<> «»]"
+                      ""
+                      (strip-text-properties evil-mode-line-tag))))
         (cond
          ((and (evil-visual-state-p) (eq evil-visual-selection 'block))
           (concat "+" raw-tag "+"))
