@@ -998,6 +998,15 @@ to replace the symbol under cursor"
 (with-eval-after-load 'ediff
   (use-package evil-ediff))
 
+;; (use-package evil-fringe-mark
+;;   :after (evil)
+;;   :init
+;;   (progn
+;;     (setq-default evil-fringe-mark-show-special nil)
+;;     (setq-default evil-fringe-mark-side 'right-fringe))
+;;   :config
+;;   (progn
+;;     (global-evil-fringe-mark-mode +1)))
 
 ;;; sexp text object
 (with-eval-after-load 'evil

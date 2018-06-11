@@ -1,0 +1,5 @@
+(:name evil-fringe-mark
+ :description "Display evil-mode markers in the Emacs fringe"
+ :type github
+ :pkgname "Andrew-William-Smith/evil-fringe-mark"
+ :depends (evil cl-lib fringe-helper goto-chg))

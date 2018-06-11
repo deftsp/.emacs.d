@@ -38,6 +38,12 @@
                                     (internal-border-width . 1)
                                     (border-width . 0))))
 
+;; Test
+;; (modify-frame-parameters
+;;  (selected-frame)
+;;  '((left-fringe . 8)
+;;    (right-fringe . 16)))
+
 ;; (make-glyph-code ?┃)
 (if window-system
     (progn
