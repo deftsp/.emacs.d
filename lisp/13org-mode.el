@@ -1588,17 +1588,16 @@ If VANILLA is non-nil, run the standard `org-capture'."
 ;; see also `org-agenda-restore-windows-after-quit'
 (defun paloryemacs/jump-to-org-agenda ()
   (interactive)
-  (let* ((buf-name (if (boundp 'org-agenda-buffer-name)
-                       org-agenda-buffer-name
-                     "*Org Agenda*"))
-         (buf (get-buffer buf-name))
-         (wind (and buf (get-buffer-window buf))))
+  (let* ((bn (if (boundp 'org-agenda-buffer-name)
+                 org-agenda-buffer-name
+               "*Org Agenda*"))
+         (buf (and bn (get-buffer bn)))
+         (wind (and buf (get-buffer-window buf 'visible))))
     (unless (window-minibuffer-p (selected-window))
       (if wind
           (with-selected-window wind
             (org-agenda-redo)
             (org-fit-window-to-buffer))
-        ;; (call-interactively 'org-agenda-list)
         (org-agenda nil " ")))))
 
 (with-eval-after-load 'evil
