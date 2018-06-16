@@ -1586,15 +1586,18 @@ If VANILLA is non-nil, run the standard `org-capture'."
 ;; get the idea from http://www.dbrunner.de/it/org-mode.html
 ;; I give a little update. execute recursive edit before pop a new window
 ;; see also `org-agenda-restore-windows-after-quit'
-(defun paloryemacs/jump-to-org-agenda ()
-  (interactive)
+(defun paloryemacs/jump-to-org-agenda (&optional arg)
+  "Jump to or refresh 'org-agenda buffer with respected the frame.
+When called by interactive, ARG default to nil then jump to 'org-agenda',
+otherwise just refresh the org agenda buffer."
+  (interactive "p")
   (let* ((bn (if (boundp 'org-agenda-buffer-name)
                  org-agenda-buffer-name
                "*Org Agenda*"))
          (buf (and bn (get-buffer bn)))
          (wind (and buf (get-buffer-window buf 'visible))))
     (unless (window-minibuffer-p (selected-window))
-      (if wind
+      (if (and wind (not arg))
           (with-selected-window wind
             (org-agenda-redo)
             (org-fit-window-to-buffer))
