@@ -11,6 +11,8 @@
 ;; http://www.enigmacurry.com/2009/01/14/extending-emacs-with-advice/
 ;; (setenv "GPG_AGENT_INFO" nil)
 
+;; see also http://gromnitsky.blogspot.com/2018/06/emacs-gpg-files-use-minibuffer-for.html
+
 ;; install GnuPG >= 2.1
 
 (setq epa-pinentry-mode 'loopback)
