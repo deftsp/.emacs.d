@@ -576,9 +576,7 @@ vi style of % jumping to matching brace."
 ;;; auto mode alist
 (defun paloryemacs/mode-alist-init ()
   (mapcar #'(lambda (lst) (add-to-list 'auto-mode-alist lst))
-          '(("\\.js$"                             . js2-mode)
-            ("\\.julius$"                         . js2-mode)
-            ("\\.\\(xml\\|rdf\\)\\'"              . nxml-mode) ; sgml-mode
+          '(("\\.\\(xml\\|rdf\\)\\'"              . nxml-mode) ; sgml-mode
             ("\\.css\\'"                          . css-mode)
             ("\\.\\(emacs\\|session\\|gnus\\)\\'" . emacs-lisp-mode)
             ("\\.\\(jl\\|sawfishrc\\)\\'"         . sawfish-mode)
@@ -603,6 +601,8 @@ vi style of % jumping to matching brace."
             ("\\.org$"                            . org-mode)
             ("\\.markdown$"                       . markdown-mode)
             ("\\.asciidoc$"                       . adoc-mode)
+            ("\\.julius$"                         . js2-mode)
+            ("\\.js$"                             . web-mode) ; js2-mode
             ("\\.html?\\'"                        . web-mode)
             ("\\.phtml\\'"                        . web-mode)
             ("\\.tpl\\.php\\'"                    . web-mode)

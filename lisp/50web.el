@@ -47,6 +47,9 @@
             ;; script offset indentation (for JavaScript, Java, PHP, etc.)
             web-mode-code-indent-offset 2))
 
+    ;; treat <> as jsx
+    (setq web-mode-content-types-alist
+          '(("jsx" . ".*\\.js\\'")))
     (setq web-mode-script-padding 4
           web-mode-style-padding 1
           web-mode-block-padding 0))
