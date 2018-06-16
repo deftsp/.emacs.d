@@ -1607,7 +1607,17 @@ otherwise just refresh the org agenda buffer."
   (define-key evil-normal-state-map (kbd "S-SPC") 'paloryemacs/jump-to-org-agenda))
 
 ;; every 20 minutes
-(run-with-idle-timer (* 20 60) t 'paloryemacs/jump-to-org-agenda)
+(defvar paloryemacs//jump-to-org-agenda-timer nil)
+
+(defun paloryemacs/idle-jump-to-org-agenda (secs)
+  (when paloryemacs//jump-to-org-agenda-timer
+    (cancel-timer paloryemacs//jump-to-org-agenda-timer)
+    (setq paloryemacs//jump-to-org-agenda-timer nil))
+  (setq paloryemacs//jump-to-org-agenda-timer
+        (run-with-idle-timer secs t 'paloryemacs/jump-to-org-agenda)))
+
+;; every idle 20 minutes jump to org-agenda
+(paloryemacs/idle-jump-to-org-agenda (* 20 60))
 
 ;;; Embed source code and babel
 ;; fontify code in code blocks
