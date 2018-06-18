@@ -983,7 +983,8 @@ to replace the symbol under cursor"
   :config
   (progn
     (advice-add 'evil-mc-undo-all-cursors :after #'anzu--reset-mode-line)
-    (global-evil-mc-mode +1)))
+    (add-hook 'prog-mode-hook 'turn-on-evil-mc-mode)
+    (add-hook 'text-mode-hook 'turn-on-evil-mc-mode)))
 
 (with-eval-after-load 'wgrep
   (evil-define-key 'normal wgrep-mode-map ",," 'wgrep-finish-edit)
