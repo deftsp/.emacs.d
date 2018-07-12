@@ -141,7 +141,16 @@
     ;; (setq evil-magit-state 'normal)
     ;; optional: disable additional bindings for yanking text
     ;; (setq evil-magit-use-y-for-yank nil)
-    (use-package evil-magit)))
+    (use-package evil-magit)
+    (use-package magit-todos
+      :init
+      (progn
+        (setq magit-todos-ignored-keywords
+              '("NOTE" "DONE" "FAIL")))
+      :config
+      (progn
+        (setq magit-todos-section-map nil)
+        (magit-todos-mode +1)))))
 
 (use-package with-editor
   :defer t
