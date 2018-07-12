@@ -1,0 +1,5 @@
+(:name a
+ :description "Emacs Lisp functions for dealing with association lists and hash tables. Inspired by Clojure."
+ :type github
+ :pkgname "plexus/a.el"
+ :depends (cl-lib))

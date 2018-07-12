@@ -1,0 +1,4 @@
+(:name pcre2el
+ :description "convert between PCRE, Emacs and rx regexp syntax"
+ :type github
+ :pkgname "joddie/pcre2el")
