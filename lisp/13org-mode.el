@@ -788,6 +788,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :init
   (progn
     (setq org-agenda-files (list (concat org-directory "/GTD.org")
+                                 (concat org-directory "/inbox.org")
                                  (concat org-directory "/from-mobile.org"))  ; (directory-files org-directory t ".*\\.org$")
           ;; speedup and optimization
           ;; https://punchagan.muse-amuse.in/posts/how-i-learnt-to-use-emacs-profiler.html
