@@ -135,8 +135,8 @@
   :config
   (progn
     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
-    (add-to-list 'magit-repository-directories "~/.emacs.d") ; C-u C-u M-x magit-status will ignore it
-    (add-to-list 'magit-repository-directories "~/opt/emacs")
+    (add-to-list 'magit-repository-directories '("~/.emacs.d" . 0)) ; C-u C-u M-x magit-status will ignore it
+    (add-to-list 'magit-repository-directories '("~/opt/emacs" . 0))
     ;; optional: this is the evil state that evil-magit will use
     ;; (setq evil-magit-state 'normal)
     ;; optional: disable additional bindings for yanking text
