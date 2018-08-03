@@ -104,6 +104,7 @@
 (require '50tools)
 (require '50tramp)
 (require '50traverselisp)
+(require '50trello)
 (require '50unicode-input)
 (require '50vc)
 ;; (require '50w3m)  ; helm-config will defvar w3m-command, require it before that
