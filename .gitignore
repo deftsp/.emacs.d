@@ -48,6 +48,7 @@ server
 .diary.cyclic-tasks
 .session
 .wmncach.el
+.trello/
 ac-comphist.dat
 ac-dict/
 
