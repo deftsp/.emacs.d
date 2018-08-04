@@ -161,7 +161,8 @@ C-u C-u -> Start swiper without any arguments (stock behavior)"
     (t  (swiper (modi/get-symbol-at-point)))))
 
 (use-package doom-todo-ivy
-  :hook (after-init . doom-todo-ivy))
+  :defer t
+  :commands (doom/ivy-tasks))
 
 (provide '50ivy)
 
