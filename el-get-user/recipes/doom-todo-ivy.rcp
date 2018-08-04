@@ -1,0 +1,5 @@
+(:name doom-todo-ivy
+ :description "Display all TODO and FIXME entries for a project or buffer in ivy."
+ :type github
+ :pkgname "jsmestad/doom-todo-ivy"
+ :depends (swiper projectile))
