@@ -53,6 +53,10 @@
                                       search-ring
                                       regexp-search-ring))
 
+(put 'minibuffer-history 'history-length 50)
+(put 'evil-ex-history 'history-length 50)
+(put 'kill-ring 'history-length 25)
+
 (when (boundp 'paloryemacs-cache-directory)
   (setq savehist-file (concat paloryemacs-cache-directory "history")))
 ;;; automatic saving of minibuffer history.
