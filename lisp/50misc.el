@@ -883,6 +883,16 @@ Current position is preserved."
       (kill-new str)
       (goto-char orig-pos))))
 
+;; TODO: use paloryemacs/join-lines instead of paloryemacs/strip-convert-lines-into-one-big-string
+;; (defun paloryemacs/join-lines (n)
+;;   "Join N lines."
+;;   (interactive "p")
+;;   (if (use-region-p)
+;;       (let ((fill-column (point-max)))
+;;         (fill-region (region-beginning) (region-end)))
+;;     (dotimes (_ (abs n))
+;;       (delete-indentation (natnump n)))))
+
 ;;;
 ;; Don't bother entering search and replace args if the buffer is read-only. Duh.
 ;; (defadvice query-replace-read-args (before barf-if-buffer-read-only activate)
