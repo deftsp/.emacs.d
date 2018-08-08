@@ -847,6 +847,42 @@ This command is to be used interactively."
         (setq unread-command-events (list last-input-event))))))
 
 
+;; http://blog.binchen.org/posts/convert-multiple-line-into-one-big-string-in-emacs.html
+(global-set-key (kbd "C-c C-y") 'paloryemacs/strip-convert-lines-into-one-big-string)
+(defun paloryemacs/strip-convert-lines-into-one-big-string (beg end)
+  "strip and convert selected lines into one big string which is copied into kill ring.
+When transient-mark-mode is enabled, if no region is active then
+only the current line is acted upon.
+
+If the region begins or ends in the middle of a line, that entire line is
+copied, even if the region is narrowed to the middle of a line.
+
+Current position is preserved."
+  (interactive "r")
+  (let (str (orig-pos (point-marker)))
+    (save-restriction
+      (widen)
+      (when (and transient-mark-mode (not (use-region-p)))
+        (setq beg (line-beginning-position)
+              end (line-beginning-position 2)))
+
+      (goto-char beg)
+      (setq beg (line-beginning-position))
+      (goto-char end)
+      (unless (= (point) (line-beginning-position))
+        (setq end (line-beginning-position 2)))
+
+      (goto-char beg)
+      (setq str (replace-regexp-in-string
+                 "[ \t]*\n"
+                 ""
+                 (replace-regexp-in-string
+                  "^[ \t]+" ""
+                  (buffer-substring-no-properties beg end))))
+      ;; (message "str=%s" str)
+      (kill-new str)
+      (goto-char orig-pos))))
+
 ;;;
 ;; Don't bother entering search and replace args if the buffer is read-only. Duh.
 ;; (defadvice query-replace-read-args (before barf-if-buffer-read-only activate)
@@ -867,13 +903,13 @@ This command is to be used interactively."
         (filename (buffer-file-name)))
     (if (not filename)
         (message "Buffer '%s' is not visiting a file!" name)
-        (if (get-buffer new-name)
-            (message "A buffer named '%s' already exists!" new-name)
-            (progn
-              (rename-file name new-name 1)
-              (rename-buffer new-name)
-              (set-visited-file-name new-name)
-              (set-buffer-modified-p nil))))))
+      (if (get-buffer new-name)
+          (message "A buffer named '%s' already exists!" new-name)
+        (progn
+          (rename-file name new-name 1)
+          (rename-buffer new-name)
+          (set-visited-file-name new-name)
+          (set-buffer-modified-p nil))))))
 
 (global-set-key (kbd "C-c f r")  'paloryemacs/rename-file-and-buffer)
 
