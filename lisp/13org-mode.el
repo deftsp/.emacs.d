@@ -1623,6 +1623,14 @@ otherwise just refresh the org agenda buffer."
 ;;; Embed source code and babel
 ;; fontify code in code blocks
 (with-eval-after-load "org"
+  ;; give us some hint we are running
+  ;; (defadvice org-babel-execute-src-block (around progress nil activate)
+  ;;   (set-face-attribute 'org-block nil :background "LightSteelBlue")
+  ;;   (message "Running your code block")
+  ;;   ad-do-it
+  ;;   (set-face-attribute 'org-block nil :background "#002b36")
+  ;;   (message "Done with code block"))
+
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((emacs-lisp . t)
@@ -1639,14 +1647,7 @@ otherwise just refresh the org agenda buffer."
      (plantuml . t)
      (http . t)
      (latex . t)
-     (sql . t)))
-  ;; give us some hint we are running
-  (defadvice org-babel-execute-src-block (around progress nil activate)
-    (set-face-attribute 'org-block nil :background "LightSteelBlue")
-    (message "Running your code block")
-    ad-do-it
-    (set-face-attribute 'org-block nil :background "#002b36")
-    (message "Done with code block")))
+     (sql . t))))
 
 ;; stop emacs asking for confirmation
 ;; (setq org-confirm-babel-evaluate nil)
