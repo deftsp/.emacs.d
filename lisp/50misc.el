@@ -884,6 +884,7 @@ Current position is preserved."
       (goto-char orig-pos))))
 
 ;; TODO: use paloryemacs/join-lines instead of paloryemacs/strip-convert-lines-into-one-big-string
+;; https://medium.com/@4d47/join-lines-in-emacs-cc40a55e4539
 ;; (defun paloryemacs/join-lines (n)
 ;;   "Join N lines."
 ;;   (interactive "p")
