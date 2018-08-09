@@ -1122,8 +1122,8 @@ such character is found, following options are shown:
       "pp"   'projectile-switch-project
       "pr"   'projectile-recentf
       "psg"  'projectile-ag
-      "psr"  'counsel-projectile-rg
-      "pss"  'projectile-rg
+      "psr"  'projectile-ripgrep
+      "pss"  'projectile-ripgrep
       "pR" 'projectile-replace
       "pT" 'projectile-test-project
       "pv" 'projectile-vc))
@@ -1136,12 +1136,12 @@ such character is found, following options are shown:
     (with-eval-after-load "ivy"
       (setq projectile-completion-system 'ivy))))
 
-(use-package counsel-projectile
-  :after (projectile)
-  :config
-  (progn
-    (paloryemacs/set-leader-keys "p" counsel-projectile-command-map)
-    (counsel-projectile-mode +1)))
+;; (use-package counsel-projectile
+;;   :after (projectile)
+;;   :config
+;;   (progn
+;;     (paloryemacs/set-leader-keys "p" counsel-projectile-command-map)
+;;     (counsel-projectile-mode +1)))
 
 ;;; xmsi-math-symbols-input.el
 (use-package xmsi-mode
@@ -1332,10 +1332,10 @@ inputting math (Unicode) symbols." t))
 ;;   (global-pangu-spacing-mode 1))
 
 ;;; beacon
-(use-package beacon
-  :defer 7
-  :config
-  (beacon-mode +1))
+;; (use-package beacon
+;;   :defer 7
+;;   :config
+;;   (beacon-mode +1))
 
 ;;; dumb-jump
 (use-package dumb-jump
