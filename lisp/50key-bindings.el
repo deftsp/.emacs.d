@@ -721,6 +721,7 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
 "
     ("`" evil-visual-mark-mode "abbrev")
     ("a" abbrev-mode "abbrev")
+    ("c" column-number-mode "colnum")
     ("d" toggle-debug-on-error "debug")
     ("f" auto-fill-mode "fill")
     ("n" paloryemacs/narrow-or-widen-dwim "")

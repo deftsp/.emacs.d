@@ -113,14 +113,14 @@ the modeline")
 mouse-1: Display Line and Column Mode Menu")
      (if line-number-mode
          (propertize
-          " L%l"
+          " L%l "
           'local-map mode-line-column-line-number-mode-map
           'mouse-face 'mode-line-highlight
           'help-echo "Line Number\n\
 mouse-1: Display Line and Column Mode Menu")
        (if column-number-mode
            (propertize
-            " C%c"
+            " C%c "
             'local-map mode-line-column-line-number-mode-map
             'mouse-face 'mode-line-highlight
             'help-echo "Column number\n\

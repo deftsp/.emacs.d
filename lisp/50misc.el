@@ -37,7 +37,8 @@
 
 ;;; mode line
 (setq size-indication-mode t            ; show file size (emacs 22+)
-      column-number-mode t)
+      ;; slow, especially when two windows show the same buffer
+      column-number-mode nil)
 
 (if (eq system-type 'gnu/linux)
     (display-battery-mode t))
