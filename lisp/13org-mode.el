@@ -244,7 +244,9 @@
     ;; checkboxes on the subitems should be cleared - so the task can be done at
     ;; next cyclic time.
     (add-to-list 'org-modules 'org-checklist)
-    (add-to-list 'org-modules 'org-depend)
+    ;; comment out org-depend, which will cause the org-mode buffer to modified
+    ;; status after open/refresh org-agenda, even no changes happen
+    ;; (add-to-list 'org-modules 'org-depend)
     ;; https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org
     (use-package evil-org
       :diminish evil-org-mode
