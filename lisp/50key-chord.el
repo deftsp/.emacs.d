@@ -54,9 +54,9 @@
 
   (key-chord-define-global "''" 'paloryemacs/apostrophe-key-chord)
   (key-chord-define-global ";b" 'switch-to-buffer)
-  (key-chord-define-global ";r" 'helm-resume)
-  (key-chord-define-global ";s" 'helm-occur)
-  (key-chord-define-global ";f" 'helm-for-files)
+  ;; (key-chord-define-global ";r" 'helm-resume)
+  ;; (key-chord-define-global ";s" 'helm-occur)
+  ;; (key-chord-define-global ";f" 'helm-for-files)
   (key-chord-define-global ";d" 'dired-jump-other-window)
 
   (key-chord-define-global "bf" 'ibuffer)
