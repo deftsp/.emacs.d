@@ -74,8 +74,8 @@
 
   (key-chord-define-global "hd" 'helm-dash)
 
-  (key-chord-define-global ";g" 'magit-status)
-  (key-chord-define-global "mg" 'magit-grep)
+  ;; ";g" -> goto-last-change
+  ;; (key-chord-define-global ";g" 'magit-status)
   ;; (key-chord-define-global "ms" 'mark-sexp)
   (key-chord-define-global ";w" 'paloryemacs/w3m-switch-to-buffer)
 
