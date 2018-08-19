@@ -146,7 +146,7 @@
       :init
       (progn
         (setq magit-todos-ignored-keywords
-              '("NOTE" "DONE" "FAIL")))
+              '("NOTE" "DONE" "FAIL" "PROG")))
       :config
       (progn
         (setq magit-todos-section-map nil)
