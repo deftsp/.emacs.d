@@ -145,6 +145,7 @@
     (use-package magit-todos
       :init
       (progn
+        ;; FIXME: https://github.com/alphapapa/magit-todos/issues/24
         (setq magit-todos-ignored-keywords
               '("NOTE" "DONE" "FAIL" "PROG")))
       :config
