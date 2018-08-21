@@ -391,13 +391,13 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "wo"           'other-frame
   "wr"           'paloryemacs/rotate-windows-forward
   "wR"           'paloryemacs/rotate-windows-backward
-  "ws"           'split-window-below
-  "wS"           'split-window-below-and-focus
+  "ws"           'split-window-below-and-focus
+  "wS"           'split-window-below
   "w-"           'split-window-below
   "wU"           'winner-redo
   "wu"           'winner-undo
-  "wv"           'split-window-right
-  "wV"           'split-window-right-and-focus
+  "wv"           'split-window-right-and-focus
+  "wV"           'split-window-right
   "ww"           'other-window
   "w/"           'split-window-right
   "w="           'balance-windows-area
