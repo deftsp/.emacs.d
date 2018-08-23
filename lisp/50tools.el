@@ -1136,12 +1136,11 @@ such character is found, following options are shown:
     (with-eval-after-load "ivy"
       (setq projectile-completion-system 'ivy))))
 
-;; (use-package counsel-projectile
-;;   :after (projectile)
-;;   :config
-;;   (progn
-;;     (paloryemacs/set-leader-keys "p" counsel-projectile-command-map)
-;;     (counsel-projectile-mode +1)))
+(use-package counsel-projectile
+  :after (projectile)
+  :config
+  (progn
+    (counsel-projectile-mode +1)))
 
 ;;; xmsi-math-symbols-input.el
 (use-package xmsi-mode
