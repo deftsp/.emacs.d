@@ -377,9 +377,10 @@ If the universal prefix argument is used then kill the buffer too."
 ;; not use switch-window anymore, ace-window is faster
 (use-package ace-window
   :defer t
-  :bind (("s-a" . ace-window))
+  :bind (("s-o" . ace-window))
   :init
   (progn
+    (setq aw-minibuffer-flag t)
     (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
   :config
   (progn
