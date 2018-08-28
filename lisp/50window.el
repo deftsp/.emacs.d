@@ -380,7 +380,8 @@ If the universal prefix argument is used then kill the buffer too."
   :bind (("s-o" . ace-window))
   :init
   (progn
-    (setq aw-minibuffer-flag t)
+    (setq aw-minibuffer-flag t
+          aw-dispatch-when-more-than 1)
     (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
   :config
   (progn
