@@ -75,6 +75,8 @@
   :defer t
   :diminish counsel-gtags-mode
   :init (progn
+          (setq counsel-gtags-ignore-case t
+                counse1-gtags-auto-update t)
           (defun paloryemacs//turn-counsel-gtags-mode-on ()
             (counsel-gtags-mode +1))
           (add-hook 'c++-mode-hook 'counsel-gtags-mode)
@@ -89,11 +91,12 @@
                 "gc" 'counsel-gtags-create-tags
                 "gd" 'counsel-gtags-dwim
                 "gD" 'counsel-gtags-find-definition
+                "gf" 'counsel-gtags-find-file
                 "gu" 'counsel-gtags-update-tags
                 "gr" 'counsel-gtags-find-reference
-                "gs" 'counsel-gtags-find-symbol
-                "gp" 'counsel-gtags-pop
-                "gf" 'counsel-gtags-find-file))))
+                "gn" 'counsel-gtags-go-forward
+                "gp" 'counsel-gtags-go-backward
+                "gy" 'counsel-gtags-find-symbol))))
 
 ;;; ggtags
 ;; emacs frontend to GNU Global source code tagging system
