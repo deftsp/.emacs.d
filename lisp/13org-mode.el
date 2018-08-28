@@ -570,6 +570,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;;       (or (outline-next-heading)
 ;;           (goto-char (point-max))))))
 
+;; (defun paloryemacs/org-current-is-todo ()
+;;   (string= "TODO" (org-get-todo-state)))
+
 ;; from http://emacs.stackexchange.com/questions/26351/custom-sorting-for-agenda
 ;; being used in a org agenda custom command below
 (defun paloryemacs/cmp-date-property (prop)
@@ -585,8 +588,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                (cmp (compare-strings a-date nil nil b-date nil nil)))
           (if (eq cmp t) nil (signum cmp))))))
 
-(defun paloryemacs/org-current-is-todo ()
-  (string= "TODO" (org-get-todo-state)))
 
 ;; https://github.com/jwiegley/dot-emacs/blob/master/dot-org.el
 (defun paloryemacs/org-todo-age-time (&optional pos)
@@ -1216,7 +1217,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
       ;; targets include this file and any file contributing to the agenda - up to 9 levels deep
       org-refile-targets `((nil :maxlevel . 9)
                            (org-agenda-files :maxlevel . 9)
-                           (,(concat org-directory "/Someday.org") :maxlevel . 9))
+                           (,(concat org-directory "/SomeDay.org") :maxlevel . 9))
       org-refile-use-cache nil)
 
 
