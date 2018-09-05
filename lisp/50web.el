@@ -42,10 +42,10 @@
     (defun paloryemacs/init-web-mode ()
       "Hooks for Web mode."
       (flycheck-mode -1)
-      (setq web-mode-markup-indent-offset 2
-            web-mode-css-indent-offset 2
+      (setq web-mode-markup-indent-offset 4
+            web-mode-css-indent-offset 4
             ;; script offset indentation (for JavaScript, Java, PHP, etc.)
-            web-mode-code-indent-offset 2))
+            web-mode-code-indent-offset 4))
 
     ;; treat <> as jsx
     (setq web-mode-content-types-alist
