@@ -73,6 +73,7 @@
   ;; (key-chord-define-global "##" 'server-edit)
 
   (key-chord-define-global "hd" 'helm-dash)
+  (key-chord-define-global "hk" 'ace-window)
 
   ;; ";g" -> goto-last-change
   ;; (key-chord-define-global ";g" 'magit-status)
