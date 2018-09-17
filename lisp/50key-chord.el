@@ -25,6 +25,19 @@
 ;;; Code:
 ;; notice: toggle input method will cause key-chord work abnormally
 
+;;; combine right mouse key + normal char
+;; https://www.reddit.com/r/emacs/comments/9ewti1/share_a_trick_of_keychord_usage_for_laptop_user/
+;; translate right mouse key to an unusual key, e.g. "`" of the up-left
+;; one, so that key-chord can accept it (my experiment shown key-chord do not
+;; recognize mouse key by default)
+
+(defun paloryemacs/translate-to-key-chord-lead-key ()
+  (interactive)
+  (push ?` unread-command-events))
+
+(global-set-key (kbd "<mouse-5>") 'paloryemacs/translate-to-key-chord-lead-key)
+
+
 ;;; banish the shift key
 ;; http://endlessparentheses.com/banishing-the-shift-key-with-key-chord-in-emacs.html
 (defconst banish-shift-key-combo
@@ -85,7 +98,13 @@
 
   (key-chord-define-global ",r" 'paloryemacs/recursive-edit-save-window-config)
   (key-chord-define-global ",c" 'org-capture)
-  (key-chord-define-global "VV" 'other-window))
+  (key-chord-define-global "VV" 'other-window)
+
+  ;; work with <mouse-5>
+  ;; press mouse button 5 (middle button) then followed with "s"
+  (key-chord-define-global "`s" 'save-buffer))
+
+
 
 
 (provide '50key-chord)
