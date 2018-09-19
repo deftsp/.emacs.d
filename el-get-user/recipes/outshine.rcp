@@ -1,0 +1,6 @@
+(:name outshine
+ :description "Outline with outshine outshines outline."
+ :website "https://github.com/alphapapa/outshine"
+ :type github
+ :pkgname "alphapapa/outshine"
+ :depends (outorg))
