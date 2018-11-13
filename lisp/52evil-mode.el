@@ -1081,6 +1081,14 @@ if COUNT is negative. "
   (define-key evil-outer-text-objects-map (kbd "s-c") #'evil-sp-a-comment)
   (define-key evil-inner-text-objects-map (kbd "s-c") #'evil-sp-inner-comment))
 
+
+(use-package evil-textobj-syntax
+  :after evil
+  :init
+  (progn
+    (setq evil-textobj-syntax-i-key "h")
+    (setq evil-textobj-syntax-a-key "h")))
+
 ;;; defun text-object
 (with-eval-after-load 'evil
   ;; https://github.com/Ambrevar/dotfiles/blob/master/.emacs.d/lisp/init-evil.el

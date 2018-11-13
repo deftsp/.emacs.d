@@ -1,0 +1,5 @@
+(:name evil-textobj-syntax
+ :description "This package is a port of vim-textobj-syntax. It provides evil text objects for consecutive items with same syntax highlight."
+ :type github
+ :pkgname "laishulu/evil-textobj-syntax"
+ :depends (evil))
