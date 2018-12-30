@@ -238,6 +238,7 @@
     (add-to-list 'org-modules 'org-panel)
     (add-to-list 'org-modules 'org-expiry)
     (add-to-list 'org-modules 'org-toc)
+    (add-to-list 'org-modules 'org-tempo) ;; activate old template expansion mechanism like <s
     (add-to-list 'org-modules 'org-drill)
     ;; A repeating task with subitems as checkboxes. Set property
     ;; RESET_CHECK_BOXES on the task to t, When the task is completed, all the
@@ -289,12 +290,14 @@
 
     (org-defkey org-mode-map (kbd "s-b") org-babel-map)
 
-    (add-to-list 'org-structure-template-alist
-                 '("p" ":PROPERTIES:\n?\n:END:"))
-    (add-to-list 'org-structure-template-alist
-                 `("eh" ,(concat ":EXPORT_FILE_NAME: ?\n"
-                                 ":EXPORT_TITLE:\n"
-                                 ":EXPORT_OPTIONS: toc:nil html-postamble:nil num:nil")))
+    ;; TODO: update it, in Org 9.2 the format was changed from something like
+    ;; ("s" "#+BEGIN_SRC ?\n#+END_SRC") to something like ("s" . "src")
+    ;; (add-to-list 'org-structure-template-alist
+    ;;              '("p" ":PROPERTIES:\n?\n:END:"))
+    ;; (add-to-list 'org-structure-template-alist
+    ;;              `("eh" ,(concat ":EXPORT_FILE_NAME: ?\n"
+    ;;                              ":EXPORT_TITLE:\n"
+    ;;                              ":EXPORT_OPTIONS: toc:nil html-postamble:nil num:nil")))
 
 
     (defmacro paloryemacs|org-emphasize (fname char)
@@ -325,7 +328,7 @@
       "Ci" 'org-clock-in
       "Co" 'org-clock-out
       "Cr" 'org-resolve-clocks
-      "Cd" 'org-clock-display ; C-c C-x C-d
+      "Cd" 'org-clock-display           ; C-c C-x C-d
 
       "dd" 'org-deadline
       "ds" 'org-schedule
@@ -1430,6 +1433,25 @@ If VANILLA is non-nil, run the standard `org-capture'."
                    :protocol "org-anki"
                    :function org-protocol-org-anki))))
 
+
+;; Since macOS 10.14, can not send keystroke to Firefox with system event. Use
+;; hammerspoon instead
+(defun pl/org-as-mac-firefox-get-frontmost-url ()
+  (let ((result
+	     (do-applescript
+	      (concat
+	       "set oldClipboard to the clipboard\n"
+	       "set frontmostApplication to path to frontmost application\n"
+           "do shell script \"/usr/local/bin/hs -c 'ff_url.cp_firefox_frontmost_url_to_clipboard()'\"\n"
+           "delay 0.4\n"
+	       "set links to the clipboard\n"
+	       "set the clipboard to oldClipboard\n"
+	       "activate application (frontmostApplication as text)\n"
+	       "return links as string\n"))))
+    (replace-regexp-in-string
+     "^\"\\|\"$" "" (car (split-string result "[\r\n]+" t)))))
+
+(advice-add 'org-as-mac-firefox-get-frontmost-url :override 'pl/org-as-mac-firefox-get-frontmost-url)
 
 ;;; clock
 (use-package org-clock
