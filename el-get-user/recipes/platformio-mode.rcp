@@ -1,0 +1,5 @@
+(:name platformio-mode
+ :type github
+ :description "PlatformIO integration"
+ :pkgname "ZachMassia/PlatformIO-Mode"
+ :depends (projectile))
