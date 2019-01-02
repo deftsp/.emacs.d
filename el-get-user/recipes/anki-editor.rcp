@@ -1,0 +1,4 @@
+(:name anki-editor
+ :description "Emacs minor mode for making Anki cards with Org"
+ :type github
+ :pkgname "louietan/anki-editor")
