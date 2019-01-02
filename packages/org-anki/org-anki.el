@@ -36,7 +36,7 @@
 (eval-when-compile
   (require 'cl))
 
-(defvar org-anki--required-anki-connect-version 5
+(defvar org-anki--required-anki-connect-version 6
   "Version of the anki connect plugin required")
 
 (defvar org-anki-connect-url "http://127.0.0.1:8765"
@@ -57,26 +57,29 @@
 ;; NOTE: the origin https://github.com/tkf/emacs-request have problem when the
 ;; json boy have UTF-8 character use https://github.com/abingham/emacs-request
 (defun org-anki-request (callback method params sync)
-  (let ((data (json-encode (-non-nil
+  (let ((json-array-type 'list)
+        (request-backend 'curl)
+        (data (json-encode (-non-nil
                             `(("action"  . ,method)
                               ("version" . ,org-anki--required-anki-connect-version)
                               ,(when params
                                  `("params"  . ,params)))))))
-    ;; (setq test-post-data data)
+    (setq test-post-data data)
     (request org-anki-connect-url
              :type "POST"
-             :data data
+             :data (encode-coding-string data 'utf-8)
              :headers '(("Content-Type" . "application/json"))
              :parser 'json-read
              :sync sync
              :success (cl-function
                        (lambda (&key data &allow-other-keys)
+                         (setq test-result-11 data)
                          (unless data
-                           (error "org-anki-request got null response"))
+                           (error "The org-anki-request got null response"))
 
                          (let ((error-info (assoc-default 'error data))
                                (result (assoc-default 'result data)))
-                           ;; (setq test-result-22 result)
+                           (setq test-result-22 result)
                            (when (vectorp result)
                              (unless (-every? (lambda (x) (not (null x)))
                                               (append result nil))
@@ -140,9 +143,9 @@
                                                        audio-file-name)
                                    front))
          (fields `(:Front ,front-with-audio-maybe :Back ,back))
-         (note `(:deckName ,deck :modelName ,model :fields ,fields)))
+         (note `(:deckName ,deck :modelName ,model :fields ,fields :tags ?????)))
     (when audio-url
-      (let ((l `(:audio (:url ,audio-url :filename ,audio-file-name :fields "Front"))))
+      (let ((l `(:audio (:url ,audio-url :filename ,audio-file-name :fields "Word"))))
         (setq note (append note l))))
     (org-anki-request
      (lambda (ret) (message "Create base card with response: %S" ret))
@@ -220,9 +223,9 @@
                        :Word ,word-field
                        :EN-Definition ,en-definition
                        :CN-Definition ,cn-definition))
-             (note `(:deckName ,deck :modelName ,model :fields ,fields)))
+             (note `(:deckName ,deck :modelName ,model :fields ,fields :tags ,(vector))))
         (when audio-url
-          (let ((l `(:audio (:url ,audio-url :filename ,audio-name :fields "Word"))))
+          (let ((l `(:audio (:url ,audio-url :filename ,audio-name :fields ("Word")))))
             (setq note (append note l))))
 
         (push note notes)))
