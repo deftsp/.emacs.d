@@ -792,14 +792,8 @@ such character is found, following options are shown:
 
 
 ;;; ff-find-other-file and friends
-(eval-after-load "find-file"
-  '(progn
-     (push '("\\.scm\\'" ("#.scm")) cc-other-file-alist)
-     (push '("\\#.scm\\'" (".scm")) cc-other-file-alist)
-     (push ".m" (cadr (assoc "\\.h\\'" cc-other-file-alist)))
-     (push ".mm" (cadr (assoc "\\.h\\'" cc-other-file-alist)))
-     (push '("\\.m\\'" (".h")) cc-other-file-alist)
-     (push '("\\.mm\\'" (".h")) cc-other-file-alist)))
+(with-eval-after-load "find-file"
+  (pushnew ".mm" (cadr (assoc "\\.h\\'" cc-other-file-alist))  :test 'equal))
 
 
 (defadvice ff-get-file-name (around ff-get-file-name-framework
