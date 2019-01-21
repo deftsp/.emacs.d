@@ -214,6 +214,7 @@ recover evil state to it, otherwiser change to evil-emacs-state."
       "gL"  'org-mac-grab-link
       "gd"  'paloryemacs/jump-to-definition
       "gD"  'paloryemacs/jump-to-definition-other-window
+      "gO"  'ff-find-other-file
       "Q" "gqap"
       ;; "s" "gvfd"
       ;; "S" "vabsba"
