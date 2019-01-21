@@ -134,25 +134,25 @@
      (setq org-anki--decks (append decks nil)))
    "deckNames" nil t))
 
-(defun org-anki-create-basic-card (front back &optional audio-maybe deck model)
-  (let* ((deck (or deck "Inbox"))
-         (model (or model "org-anki-basic"))
-         (audio-url (and audio-maybe (org-anki--get-audio-url front)))
-         (audio-file-name (and audio-url (org-anki--get-file-name front)))
-         (front-with-audio-maybe (if audio-url (format "%s [sound:%s]" front
-                                                       audio-file-name)
-                                   front))
-         (fields `(:Front ,front-with-audio-maybe :Back ,back))
-         (note `(:deckName ,deck :modelName ,model :fields ,fields :tags ?????)))
-    (when audio-url
-      (let ((l `(:audio (:url ,audio-url :filename ,audio-file-name :fields "Word"))))
-        (setq note (append note l))))
-    (org-anki-request
-     (lambda (ret) (message "Create base card with response: %S" ret))
-     "addNotes"
-     `(:notes
-       [,note])
-     t)))
+;; (defun org-anki-create-basic-card (front back &optional audio-maybe deck model)
+;;   (let* ((deck (or deck "Inbox"))
+;;          (model (or model "org-anki-basic"))
+;;          (audio-url (and audio-maybe (org-anki--get-audio-url front)))
+;;          (audio-file-name (and audio-url (org-anki--get-file-name front)))
+;;          (front-with-audio-maybe (if audio-url (format "%s [sound:%s]" front
+;;                                                        audio-file-name)
+;;                                    front))
+;;          (fields `(:Front ,front-with-audio-maybe :Back ,back))
+;;          (note `(:deckName ,deck :modelName ,model :fields ,fields :tags ?????)))
+;;     (when audio-url
+;;       (let ((l `(:audio (:url ,audio-url :filename ,audio-file-name :fields "Word"))))
+;;         (setq note (append note l))))
+;;     (org-anki-request
+;;      (lambda (ret) (message "Create base card with response: %S" ret))
+;;      "addNotes"
+;;      `(:notes
+;;        [,note])
+;;      t)))
 
 
 ;; TODO: the api of anki-connect can not add multiple audios for one note type,
