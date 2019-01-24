@@ -792,17 +792,6 @@ such character is found, following options are shown:
 
 
 ;;; ff-find-other-file and friends
-(with-eval-after-load "find-file"
-  (pushnew
-   '("\\.mm\\'"   (".h")) cc-other-file-alist :test 'equal)
-  ;; TODO: ugly setf. pushnew put it in beginning of the list, however here need
-  ;; the end
-  (let ((l (cadr (assoc "\\.h\\'" cc-other-file-alist))))
-    (unless (member ".mm" l)
-      (setf (cadr (assoc "\\.h\\'" cc-other-file-alist))
-            (append  l '(".mm"))))))
-
-
 (defadvice ff-get-file-name (around ff-get-file-name-framework
                                     (search-dirs
                                      fname-stub
@@ -818,9 +807,26 @@ such character is found, following options are shown:
 (ad-enable-advice 'ff-get-file-name 'around 'ff-get-file-name-framework)
 (ad-activate 'ff-get-file-name)
 
-(when (eq system-type 'darwin)
-  (setq cc-search-directories '("." "../include" "/usr/include" "/usr/local/include/*"
-                                "/System/Library/Frameworks" "/Library/Frameworks")))
+(with-eval-after-load "find-file"
+  (dolist (l '("../include" "../src"))
+    (add-to-list 'cc-search-directories l t))
+
+  (when (eq system-type 'darwin)
+    (dolist (l '("/System/Library/Frameworks"
+                 "/Library/Frameworks"))
+      (add-to-list 'cc-search-directories l t)))
+
+  (pushnew
+   '("\\.mm\\'"   (".h")) cc-other-file-alist :test 'equal)
+  ;; TODO: ugly setf. pushnew put it in beginning of the list, however here need
+  ;; the end
+  (let ((l (cadr (assoc "\\.h\\'" cc-other-file-alist))))
+    (unless (member ".mm" l)
+      (setf (cadr (assoc "\\.h\\'" cc-other-file-alist))
+            (append  l '(".mm"))))))
+
+
+
 
 (eval-after-load "scheme"
   '(define-key scheme-mode-map (kbd "C-c S") 'ff-find-other-file))
