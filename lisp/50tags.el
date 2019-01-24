@@ -88,7 +88,7 @@
             ;; (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
             (dolist (mode '(c-mode c++-mode))
               (paloryemacs/set-leader-keys-for-major-mode mode
-                "gc" 'counsel-gtags-create-tags
+                "gC" 'counsel-gtags-create-tags
                 "gd" 'counsel-gtags-dwim
                 "gD" 'counsel-gtags-find-definition
                 "gf" 'counsel-gtags-find-file
