@@ -1,0 +1,4 @@
+(:name ccls
+ :description "https://github.com/MaskRay/emacs-ccls"
+ :type github
+ :pkgname "MaskRay/emacs-ccls")
