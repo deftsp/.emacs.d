@@ -71,6 +71,16 @@
 
 ;;; counsel-gtags: GNU Global with ivy completion
 ;; https://github.com/syohex/emacs-counsel-gtags
+(defun paloryemacs/counsel-gtags-find-reference-quiet ()
+  "Find reference of thing at current point or in the database."
+  "Search for TAGNAME reference in tag database.
+Prompt for TAGNAME if not given."
+  (interactive)
+  (let ((cursor-symbol (thing-at-point 'symbol)))
+    (if cursor-symbol
+        (counsel-gtags-find-reference (substring-no-properties cursor-symbol))
+      (call-interactively 'counsel-gtags-find-reference))))
+
 (use-package counsel-gtags
   :defer t
   :diminish counsel-gtags-mode
@@ -93,7 +103,7 @@
                 "gD" 'counsel-gtags-find-definition
                 "gf" 'counsel-gtags-find-file
                 "gu" 'counsel-gtags-update-tags
-                "gr" 'counsel-gtags-find-reference
+                "gr" 'paloryemacs/counsel-gtags-find-reference-quiet
                 "gn" 'counsel-gtags-go-forward
                 "gp" 'counsel-gtags-go-backward
                 "gy" 'counsel-gtags-find-symbol))))
