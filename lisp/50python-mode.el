@@ -161,14 +161,6 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
       "g*" 'anaconda-mode-go-back
       "hh" 'anaconda-mode-show-doc)
 
-    (evilified-state-evilify-map anaconda-mode-view-mode-map
-      :mode anaconda-mode-view-mode
-      :bindings
-      (kbd "q") 'quit-window
-      (kbd "C-j") 'next-error-no-select
-      (kbd "C-k") 'previous-error-no-select
-      (kbd "RET") 'spacemacs/anaconda-view-forward-and-push)
-
     (defadvice anaconda-mode-goto (before python/anaconda-mode-goto activate)
       (evil--jumps-push))))
 
