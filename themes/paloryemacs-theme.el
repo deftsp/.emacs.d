@@ -193,7 +193,7 @@
    '(org-level-8 ((t (:inherit org-level-1 :foreground "#f0dfaf"))))
    '(org-level-9 ((t (:inherit org-level-1 :foreground "#93e0e3"))))
    '(org-date ((t (:foreground "#00bfee"))))
-   '(org-link ((t (:inherit link :foreground "#e2d282" :underline t :weight normal))))
+   `(org-link ((t (:inherit link :foreground ,violet :underline t :weight normal))))
    '(org-habit-alert-face ((t (:foreground "#228822" :background "gold"))))
    `(org-agenda-structure ((t (:foreground "#26bbf8" :background ,base02 :weight bold))))
    '(org-scheduled ((t (:foreground "#8abeb2"))))
