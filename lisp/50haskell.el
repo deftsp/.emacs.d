@@ -724,6 +724,9 @@ point."
 (paloryemacs|define-jump-handlers haskell-mode haskell-mode-jump-to-def-or-tag)
 (paloryemacs|define-jump-handlers intero-mode intero-goto-definition)
 
+;; (with-eval-after-load 'intero
+;;   (flycheck-add-next-checker 'intero '(warning . haskell-hlint))
+;;   (flycheck-add-next-checker 'intero '(warning . haskell-stack-ghc)))
 
 ;;; misc
 ;; (require 'yesod-devel-mode nil t)
