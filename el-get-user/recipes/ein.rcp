@@ -1,0 +1,6 @@
+(:name ein
+ :description "EIN -- Emacs IPython Notebook"
+ :type github
+ :load-path "lisp/"
+ :pkgname "millejoh/emacs-ipython-notebook"
+ :depends (websocket request dash s skewer-mode auto-complete))
