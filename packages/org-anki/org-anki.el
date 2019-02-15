@@ -214,9 +214,7 @@
              (audio-name (assoc-default 'audio-name entity))
              (en-definition (assoc-default 'en-definition entity))
              (cn-definition (assoc-default 'cn-definition entity))
-             (word-field (if audio-url
-                             (format "%s [sound:%s]" word audio-name)
-                           word))
+             (word-field word)
              (fields `(:Context ,(org-anki--render-context
                                   org-anki--context word)
                        :Phonetic ,pronunciation
