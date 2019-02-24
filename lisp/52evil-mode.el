@@ -212,8 +212,8 @@ recover evil state to it, otherwiser change to evil-emacs-state."
       ;; make sure that Evil's normal state never touches TAB, just wire this fall-through binding
       ;; "TAB" 'paloryemacs/evil-undefine
       "gL"  'org-mac-grab-link
-      "gd"  'paloryemacs/jump-to-definition
-      "gD"  'paloryemacs/jump-to-definition-other-window
+      "gd"  'smart-jump-go
+      ;; "gD"  'smart-jump-go-other-window
       "gO"  'ff-find-other-file
       "Q" "gqap"
       ;; "s" "gvfd"
