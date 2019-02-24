@@ -251,7 +251,6 @@ Available options are `ghci', `intero', `dante', and `ghc-mod'")
 
 
 (defun paloryemacs-haskell//setup-dante ()
-  (push 'xref-find-definitions spacemacs-jump-handlers)
   (dante-mode +1)
   (dolist (mode haskell-modes)
     (paloryemacs/set-leader-keys-for-major-mode mode
@@ -719,10 +718,6 @@ point."
 
 ;; (with-eval-after-load "intero"
 ;;   (advice-add 'intero-repl-load :around #'haskell-intero//preserve-focus))
-
-;;
-(paloryemacs|define-jump-handlers haskell-mode haskell-mode-jump-to-def-or-tag)
-(paloryemacs|define-jump-handlers intero-mode intero-goto-definition)
 
 ;; (with-eval-after-load 'intero
 ;;   (flycheck-add-next-checker 'intero '(warning . haskell-hlint))

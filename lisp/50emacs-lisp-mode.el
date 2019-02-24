@@ -7,9 +7,6 @@
 ;;; Commentary:
 ;;; Code:
 
-(paloryemacs|define-jump-handlers emacs-lisp-mode)
-(paloryemacs|define-jump-handlers lisp-interaction-mode)
-
 ;;; tooltip-help
 ;; (require 'tooltip-help)
 ;; (define-key emacs-lisp-mode-map (kbd "<f1>") 'th-show-help)
@@ -58,9 +55,7 @@
       (paloryemacs/declare-prefix-for-mode mode "mg" "find-symbol")
       (paloryemacs/declare-prefix-for-mode mode "mh" "help")
       (paloryemacs/set-leader-keys-for-major-mode mode
-        "hh" 'elisp-slime-nav-describe-elisp-thing-at-point)
-      (let ((jumpl (intern (format "paloryemacs-jump-handlers-%S" mode))))
-        (add-to-list jumpl 'elisp-slime-nav-find-elisp-thing-at-point)))))
+        "hh" 'elisp-slime-nav-describe-elisp-thing-at-point))))
 
 ;;; auto compile el file
 ;; (defun byte-compile-visited-file ()

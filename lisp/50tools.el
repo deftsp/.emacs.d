@@ -1343,19 +1343,6 @@ inputting math (Unicode) symbols." t))
 ;;   :config
 ;;   (beacon-mode +1))
 
-;;; dumb-jump
-(use-package dumb-jump
-  :defer t
-  :init
-  (progn
-    (setq dumb-jump-selector 'ivy)
-    (setq dumb-jump-prefer-searcher 'rg)
-    (define-key global-map (kbd "M-g o") 'dumb-jump-go-other-window)
-    (define-key global-map (kbd "M-g j") 'dumb-jump-go)
-    (define-key global-map (kbd "M-g b") 'dumb-jump-back)
-    (define-key global-map (kbd "M-g x") 'dumb-jump-go-prefer-external)
-    (define-key global-map (kbd "M-g o") 'dumb-jump-go-prefer-external-other-window)))
-
 ;;; treemacs
 (use-package treemacs
   :commands treemacs--window-number-ten

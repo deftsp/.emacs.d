@@ -31,11 +31,6 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 Possible values are `on-visit', `on-project-switch' or `nil'.")
 
 
-
-(paloryemacs|define-jump-handlers python-mode)
-(paloryemacs|define-jump-handlers cython-mode anaconda-mode-goto)
-
-
 ;; from http://pedrokroger.net/2010/07/configuring-emacs-as-a-python-ide-2/
 (defun paloryemacs/python-annotate-pdb ()
   "Highlight break point lines."
@@ -146,9 +141,7 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
   :diminish anaconda-mode
   :init
   (progn
-    (add-hook 'python-mode-hook 'anaconda-mode)
-    (add-to-list 'paloryemacs-jump-handlers-python-mode
-                 '(anaconda-mode-find-definitions :async t)))
+    (add-hook 'python-mode-hook 'anaconda-mode))
   :config
   (progn
     (paloryemacs/set-leader-keys-for-major-mode 'python-mode
