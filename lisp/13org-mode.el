@@ -338,6 +338,8 @@
 
       "a" 'org-agenda
 
+      "C-c C-t" 'org-todo-yesterday
+
       "Te" 'org-toggle-pretty-entities
       "Ti" 'org-toggle-inline-images
       "Tl" 'org-toggle-link-display
@@ -1066,6 +1068,8 @@ If VANILLA is non-nil, run the standard `org-capture'."
         (car prefix) (cdr prefix)))
 
     (paloryemacs/set-leader-keys-for-major-mode 'org-agenda-mode
+      "C-c C-t" 'org-todo-yesterday
+
       "a" 'org-agenda
       "ie" 'org-agenda-set-effort
       "ip" 'org-agenda-set-property
@@ -2204,6 +2208,23 @@ _h_tml    ^ ^        _A_SCII:
       (setq definition (concat (prin1-to-string (symbol-function function)) "\n")))
     (insert "#+begin_src emacs-lisp\n" definition "#+end_src\n")))
 
+;;; prompt date, accurate than org-todo-yesterday
+;; https://emacs.stackexchange.com/questions/9433/how-to-make-org-prompt-for-a-timestamp-when-changing-state-of-a-todo/9451
+
+;; The line in org.el that sets the CLOSED timestamp is (org-add-planning-info
+;; 'closed (org-current-effective-time)) and the LOGBOOK notes are added by
+;; org-add-log-setup, which in turn calls org-effective-current-time.
+;; org-effective-current-time does what it sounds like and returns the effective
+;; time. The obvious solution is to temporarily change
+;; org-effective-current-time to something that prompts for a date.
+;; TODO: replace org-todo-yesterday
+(defun paloryemacs/org-todo-with-date (&optional arg)
+  (interactive "P")
+  (cl-letf* ((org-read-date-prefer-future nil)
+             (new-time (org-read-date t t nil "when:" nil nil nil))
+             ((symbol-function #'org-current-effective-time)
+              #'(lambda () new-time)))
+    (org-todo arg)))
 
 
 
