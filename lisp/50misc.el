@@ -957,13 +957,29 @@ Current position is preserved."
   (progn
     (with-eval-after-load 'evil-evilified-state
       (evilified-state-evilify Info-mode Info-mode-map
+        (kbd "<tab>") 'Info-next-reference
+        (kbd "S-<tab>") 'Info-prev-reference
+        "0"          'evil-digit-argument-or-evil-beginning-of-line
         "D"          'Info-directory
-        "d"          'Info-scroll-down
-        "e"          'Info-scroll-up
+        "u"          'Info-up
+        "L"          'Info-history
+
+        "d"          'Info-scroll-up
+        "e"          'Info-scroll-down
         (kbd "C-i")  'Info-history-forward
         (kbd "C-o")  'Info-history-back
-        "f"  'Info-history-forward
-        "b"  'Info-history-back
+        "f"          'Info-history-forward
+        "b"          'Info-history-back
+
+        "gd"         'Info-goto-node
+        "gm"         'Info-menu
+        "gt"         'Info-top-node
+        "gT"         'Info-toc
+        "gf"         'Info-follow-reference
+
+        "gj" 'Info-next
+        "gk" 'Info-prev
+
         "F"          'Info-follow-reference
         "/"          'Info-search
         "gh"         'Info-help
@@ -975,11 +991,8 @@ Current position is preserved."
       :init
       (progn
         (setq Info-breadcrumbs-in-header-flag t
-              Info-breadcrumbs-in-mode-line-mode nil))
-      (progn
-        (with-eval-after-load 'info
-          (require 'info+))
-        (setq Info-fontify-angle-bracketed-flag nil)))))
+              Info-fontify-angle-bracketed-flag nil
+              Info-breadcrumbs-in-mode-line-mode nil)))))
 
 ;; (defun find-subdirs-containing (dir pattern)
 ;;   "Return a list of all deep subdirectories of DIR that contain
