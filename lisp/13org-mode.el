@@ -35,6 +35,7 @@
           org-cycle-separator-lines 2
           org-cycle-include-plain-lists t
           org-hide-leading-stars t
+          org-adapt-indentation t
           org-log-done 'time
           org-log-reschedule 'time
           org-log-redeadline 'time
@@ -818,7 +819,6 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           org-agenda-include-diary nil
           ;; agenda view always starts out by showing me the next seven days.
           org-agenda-start-on-weekday nil
-          org-adapt-indentation t
           org-agenda-restore-windows-after-quit t
           org-agenda-repeating-timestamp-show-all nil
           org-agenda-use-time-grid nil
