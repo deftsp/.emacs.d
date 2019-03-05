@@ -100,12 +100,16 @@
       (define-key hydra-ivy/keymap [escape] 'hydra-ivy/keyboard-escape-quit-and-exit))
 
     (use-package ivy-rich
+      :after (:all ivy counsel)
       :init
       (setq ivy-virtual-abbreviate 'full
             ivy-rich-abbreviate-paths t
+            ivy-rich-path-style 'abbrev
+            ivy-rich-parse-remote-file-path t
+            ivy-format-function #'ivy-format-function-line
             ivy-rich-switch-buffer-align-virtual-buffer t)
       :config
-      (ivy-set-display-transformer 'ivy-switch-buffer 'ivy-rich-switch-buffer-transformer))))
+      (ivy-rich-mode 1))))
 
 (use-package ivy-xref
   :defer t

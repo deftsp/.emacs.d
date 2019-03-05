@@ -184,6 +184,9 @@
 ;;   ("q"        nil "quit" :color blue))
 
 
+;;;
+(use-package all-the-icons)
+
 (provide '50font)
 
 ;; Local Variables:
