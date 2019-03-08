@@ -34,8 +34,10 @@
           org-special-ctrl-a/e t
           org-cycle-separator-lines 2
           org-cycle-include-plain-lists t
-          org-hide-leading-stars t
-          org-adapt-indentation t
+          org-hide-leading-stars nil
+          ;; indentation does not play well with version control system,
+          ;; moreover, it force me to press TAB key too much.
+          org-adapt-indentation nil
           org-log-done 'time
           org-log-reschedule 'time
           org-log-redeadline 'time
@@ -2096,7 +2098,8 @@ _h_tml    ^ ^        _A_SCII:
   :defer t
   :init
   (progn
-    (setq org-bullets-face-name nil)
+    (setq org-bullets-face-name nil
+          org-bullets-invisible-leading-stars t)
     ;; http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters
     ;; https://zhangda.wordpress.com/2016/02/15/configurations-for-beautifying-emacs-org-mode/
     ;; "⬢" "⭓" "■"

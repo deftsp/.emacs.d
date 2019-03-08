@@ -1,0 +1,6 @@
+(:name org-bullets
+ :description "Show org-mode bullets as UTF-8 characters."
+ :type github
+ :pkgname "deftsp/org-bullets"
+ :branch "shihpin"
+ :features org-bullets)
