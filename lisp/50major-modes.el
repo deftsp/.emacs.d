@@ -6,8 +6,7 @@
   :init
   (progn
     (setq imenu-max-items 40)
-    (global-set-key (kbd "C-c j") 'counsel-imenu)
-    (paloryemacs/set-leader-keys "ji" 'counsel-imenu)))
+    (global-set-key (kbd "C-c j") 'counsel-imenu)))
 
 ;;; auto insert the matching closing delimiter
 ;; electric pair mode is a global minor mode

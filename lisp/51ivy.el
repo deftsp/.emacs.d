@@ -1,4 +1,4 @@
-;;; 50ivy.el ---                                     -*- lexical-binding: t; -*-
+;;; 51ivy.el ---                                     -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2017  Shihpin Tseng
 
@@ -13,6 +13,14 @@
     "*Helm Swoop*"  "*EMMS Playlist*"  "^\\*Summary\\ n" "Map_Sym.txt"
     "^\\*w3m*" "^\\#" "^\\irc.*:" "localhost:6668" "^\\*TeX\\ Help\\*"
     "\\`auto/" "\\.prv/" "_region_" "^.DS_Store$" "\\.hi\\'"))
+
+(defun paloryemacs/counsel-jump-in-buffer ()
+  "Jump in buffer with `counsel-imenu' or `counsel-org-goto' if in org-mode"
+  (interactive)
+  (call-interactively
+   (cond
+    ((eq major-mode 'org-mode) 'counsel-org-goto)
+    (t 'counsel-imenu))))
 
 
 (use-package counsel
@@ -37,11 +45,13 @@
       ;; insert
       "iu"  'counsel-unicode-char
       ;; jump
+
+      "ji"  'paloryemacs/counsel-jump-in-buffer
       ;; register/ring
       "ry"  'counsel-yank-pop
       "rm"  'counsel-mark-ring
       ;; jumping
-      "sj"  'counsel-imenu
+      "sj"  'paloryemacs/counsel-jump-in-buffer
       ;; themes
       "Ts"  'counsel-load-theme
       "sgp" 'counsel-git-grep))
@@ -168,7 +178,7 @@ C-u C-u -> Start swiper without any arguments (stock behavior)"
   :defer t
   :commands (doom/ivy-tasks))
 
-(provide '50ivy)
+(provide '51ivy)
 
 ;; Local Variables: **
 ;; outline-regexp: ";;; " **
