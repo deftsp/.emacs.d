@@ -1279,6 +1279,20 @@ If VANILLA is non-nil, run the standard `org-capture'."
         (find-file p)
         (goto-char (point-min))))
 
+    (defun org-hugo-new-subtree-post-capture-template ()
+      "Returns `org-capture' template string for new Hugo post.
+     See `org-capture-templates' for more information."
+      (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
+             (date (format-time-string (org-time-stamp-format :long :inactive) (org-current-time)))
+             (fname (org-hugo-slug title)))
+        (mapconcat #'identity
+                   `(
+                     ,(concat "* TODO " title "     :@essay:")
+                     ":PROPERTIES:"
+                     ,(concat ":EXPORT_FILE_NAME: " fname)
+                     ":END:"
+                     "%?\n")          ;Place the cursor here finally
+                   "\n")))
 
     (setq org-capture-templates
           `(("a" "Add Task" entry
@@ -1324,6 +1338,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
             ;;  :empty-lines-after 1)
             ;; work with org-protocol and emacs-mac port have default register to macOS
             ;; https://github.com/sprig/org-capture-extension
+            ("p" "Hugo post" entry (file+olp "posts/micro.org" "Posts") (function org-hugo-new-subtree-post-capture-template))
             ("P" "Protocol Clip" entry (file+headline ,(concat org-directory "/Notes.org") "Inbox")
              "* %?\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:\nSource: %:annotation\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE"
              :empty-lines-after 1)
@@ -2235,29 +2250,9 @@ _h_tml    ^ ^        _A_SCII:
 ;; HUGO
 (use-package ox-hugo
   :after ox
-  :config
-  (setq org-hugo-default-section-directory "posts")
-  (defun org-hugo-new-subtree-post-capture-template ()
-    "Returns `org-capture' template string for new Hugo post.
-     See `org-capture-templates' for more information."
-    (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
-           (date (format-time-string (org-time-stamp-format :long :inactive) (org-current-time)))
-           (fname (org-hugo-slug title)))
-      (mapconcat #'identity
-                 `(
-                   ,(concat "* TODO " title "     :@essay:")
-                   ":PROPERTIES:"
-                   ,(concat ":EXPORT_FILE_NAME: " fname)
-                   ":END:"
-                   "%?\n")          ;Place the cursor here finally
-                 "\n")))
-
-  (add-to-list 'org-capture-templates
-               '("p"                ;`org-capture' binding + h
-                 "Hugo post"
-                 entry
-                 (file+olp "posts/micro.org" "Posts")
-                 (function org-hugo-new-subtree-post-capture-template))))
+  :init
+  (progn
+    (setq org-hugo-default-section-directory "posts")))
 
 (use-package easy-hugo
   :defer t
