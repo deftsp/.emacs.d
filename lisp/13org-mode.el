@@ -2057,7 +2057,8 @@ _h_tml    ^ ^        _A_SCII:
           org-journal-date-prefix "#+TITLE: "
           org-journal-date-format "%A, %B %d %Y"
           org-journal-time-prefix "* "
-          org-journal-time-format "%R ")
+          org-journal-time-format "%R "
+          org-journal-enable-agenda-integration t)
     (paloryemacs/declare-prefix "aoj" "org-journal")
     (paloryemacs/set-leader-keys
       "aojj" 'org-journal-new-entry
