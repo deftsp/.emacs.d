@@ -843,11 +843,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
     (setq org-agenda-prefix-format
           '(
             ;; (agenda . " %i %-12:c%-12t% s") ; agenda
-            (agenda  . "  %-12:c%?-12t% s")
+            (agenda  . "  %-13:c%?-12t% s")
 		    ;; (timeline . "%-9:T%?-2t% s")   ; timeline
-            (todo . " %i %-12:c")           ; todo, alltodo
-            (tags . " %i %-12:c")           ; tags, tags-todo, stuck
-            (search . " %i %-12:c")))       ; search
+            (todo . " %i %-13:c")           ; todo, alltodo
+            (tags . " %i %-13:c")           ; tags, tags-todo, stuck
+            (search . " %i %-13:c")))       ; search
 
     ;; (setq org-agenda-category-icon-alist
     ;;       '(("Visitors" "~/.emacs.d/icons/org/visitors.png" nil nil :ascent center)
