@@ -151,7 +151,11 @@
     ;;   (progn
     ;;     (setq magit-todos-section-map nil)
     ;;     (magit-todos-mode +1)))
-    (use-package evil-magit)))
+    (use-package transient)
+    (use-package evil-magit
+      :config
+      ;; (evil-magit-init)
+      )))
 
 (use-package with-editor
   :defer t

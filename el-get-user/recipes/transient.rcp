@@ -1,0 +1,6 @@
+(:name transient
+ :description "Transient commands"
+ :type github
+ :pkgname "magit/transient"
+ :load-path "lisp/"
+ :depends (dash))

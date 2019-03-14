@@ -5,8 +5,7 @@
  :pkgname "magit/magit"
  :branch "master"
  :minimum-emacs-version "24.4"
- :depends (dash emacs-async ghub let-alist magit-popup with-editor)
- :checkout "v2.90.1"
+ :depends (dash emacs-async ghub let-alist magit-popup with-editor transient)
  :info "Documentation"
  :load-path "lisp/"
  :compile "lisp/"

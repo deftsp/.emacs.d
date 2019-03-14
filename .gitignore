@@ -103,3 +103,4 @@ network-security.data
 vimish-fold/
 request/
 .lsp-session-v*
+transient/
