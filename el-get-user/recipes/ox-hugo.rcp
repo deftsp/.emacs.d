@@ -1,0 +1,4 @@
+(:name ox-hugo
+ :description "A carefully crafted Org exporter back-end for Hugo"
+ :type github
+ :pkgname "kaushalmodi/ox-hugo")

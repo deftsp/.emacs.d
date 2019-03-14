@@ -1,0 +1,4 @@
+(:name easy-hugo
+ :description "Emacs major mode for managing hugo"
+ :type github
+ :pkgname "masasam/emacs-easy-hugo")

@@ -35,6 +35,7 @@
           org-cycle-separator-lines 2
           org-cycle-include-plain-lists t
           org-hide-leading-stars nil
+          org-hide-emphasis-markers nil ; hide the emphasis markup (e.g. /.../ for italics, *...* for bold, etc.)
           ;; indentation does not play well with version control system,
           ;; moreover, it force me to press TAB key too much.
           org-adapt-indentation nil
@@ -116,7 +117,7 @@
                               ;; (sequence "QUOTE(q!)" "QUOTED(Q!)" "|" "APPROVED(A@)" "EXPIRED(E@)" "REJECTED(R@)")
                               (sequence "REPORT(r)" "BUG(b!)" "ISSUE(i!)" "ERROR(e!)" "FEATURE(f!)" "KNOWNCAUSE(k)" "|" "FIXED(f)"))
           org-todo-keyword-faces (quote (("TODO"      . (:foreground "red"          :weight bold))
-                                         ("NEXT"      . (:foreground "#d33682"         :weight bold))
+                                         ("NEXT"      . (:foreground "#d33682"      :weight bold))
                                          ("WAITING"   . (:foreground "orange"       :weight bold))
                                          ("SOMEDAY"   . (:foreground "magenta"      :weight bold))
                                          ("DONE"      . (:foreground "forest green" :weight bold :strike-through t))
@@ -191,7 +192,7 @@
                           ("types")
                           (:grouptags . nil)
                           ;; types
-                          ("wiki") ("org") ("idea")
+                          ("wiki") ("org-mode") ("idea")
                           ("appointment" . ?a) ("meeting" . ?m)
                           ;; time
                           ("tomorrow" . ?t) ("future" . ?f)
@@ -1316,11 +1317,11 @@ If VANILLA is non-nil, run the standard `org-capture'."
              "* Q: %?       :drill:\n\n** A:\n"
              :kill-buffer t
              :empty-lines-after 1)
-            ("p" "Phone call" entry (file+headline "~/org/GTD.org" "Inbox")
-             "* PHONE %? :PHONE:\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
-             :clock-in t
-             :clock-resume t
-             :empty-lines-after 1)
+            ;; ("p" "Phone call" entry (file+headline "~/org/GTD.org" "Inbox")
+            ;;  "* PHONE %? :PHONE:\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
+            ;;  :clock-in t
+            ;;  :clock-resume t
+            ;;  :empty-lines-after 1)
             ;; work with org-protocol and emacs-mac port have default register to macOS
             ;; https://github.com/sprig/org-capture-extension
             ("P" "Protocol Clip" entry (file+headline ,(concat org-directory "/Notes.org") "Inbox")
@@ -2231,6 +2232,38 @@ _h_tml    ^ ^        _A_SCII:
     (org-todo arg)))
 
 
+;; HUGO
+(use-package ox-hugo
+  :after ox
+  :config
+  (setq org-hugo-default-section-directory "posts")
+  (defun org-hugo-new-subtree-post-capture-template ()
+    "Returns `org-capture' template string for new Hugo post.
+     See `org-capture-templates' for more information."
+    (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
+           (date (format-time-string (org-time-stamp-format :long :inactive) (org-current-time)))
+           (fname (org-hugo-slug title)))
+      (mapconcat #'identity
+                 `(
+                   ,(concat "* TODO " title "     :@essay:")
+                   ":PROPERTIES:"
+                   ,(concat ":EXPORT_FILE_NAME: " fname)
+                   ":END:"
+                   "%?\n")          ;Place the cursor here finally
+                 "\n")))
+
+  (add-to-list 'org-capture-templates
+               '("p"                ;`org-capture' binding + h
+                 "Hugo post"
+                 entry
+                 (file+olp "posts/micro.org" "Posts")
+                 (function org-hugo-new-subtree-post-capture-template))))
+
+(use-package easy-hugo
+  :defer t
+  :init
+  (setq easy-hugo-basedir "~/Lab/quick-hugo/"
+        easy-hugo-postdir "content/posts"))
 
 (provide '13org-mode)
 
