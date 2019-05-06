@@ -1294,6 +1294,14 @@ If VANILLA is non-nil, run the standard `org-capture'."
                      "%?\n")          ;Place the cursor here finally
                    "\n")))
 
+    (defun org-journal-find-location ()
+      ;; Open today's journal, but specify a non-nil prefix argument in order to
+      ;; inhibit inserting the heading; org-capture will insert the heading.
+      (org-journal-new-entry t)
+      ;; Position point on the journal's top-level heading so that org-capture
+      ;; will add the new entry as a child entry.
+      (goto-char (point-min)))
+
     (setq org-capture-templates
           `(("a" "Add Task" entry
              (file+headline "~/org/GTD.org" "Tasks")
@@ -1321,6 +1329,8 @@ If VANILLA is non-nil, run the standard `org-capture'."
             ;;  "* %?\n%U\n%i\n%a"
             ;;  :kill-buffer t
             ;;  :empty-lines-after 1)
+            ("j" "Journal entry" entry (function org-journal-find-location)
+             "* %(format-time-string org-journal-time-format)%^{Title}\n%i%?")
             ("m" "Memo" plain #'paloryemacs/find-memo-file
              "* %T\n%?\n%a\n\n"
              :prepend t
