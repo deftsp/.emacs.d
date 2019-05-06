@@ -42,6 +42,14 @@
     (defun paloryemacs/init-web-mode ()
       "Hooks for Web mode."
       (flycheck-mode -1)
+
+      (setq-default web-mode-comment-formats
+                    '(("java" . "/*")
+                      ("javascript" . "/*")
+                      ("jsx" . "/*" )
+                      ("php" . "/*")
+                      ("css" . "/*")))
+
       (setq web-mode-markup-indent-offset 4
             web-mode-css-indent-offset 4
             ;; script offset indentation (for JavaScript, Java, PHP, etc.)
