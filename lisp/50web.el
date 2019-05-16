@@ -60,6 +60,10 @@
     (paloryemac/setup-tide-mode)))
 
 (use-package tide
+  :init
+  (progn
+    ;; tide server slow start
+    (setq tide-sync-request-timeout 5))
   :after (typescript-mode company flycheck)
   :bind (("M-." . tide-jump-to-definition)
          ("M-," . tide-jump-back))
