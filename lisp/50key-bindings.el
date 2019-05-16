@@ -108,8 +108,9 @@ offer a list of recently clocked tasks to clock into. "
 
   "ops"   'profiler-start
   "opS"   'profiler-stop
-  "opr"   'profiler-report)
+  "opr"   'profiler-report
 
+  "os"     'prodigy)
 
 
 (paloryemacs/set-leader-keys

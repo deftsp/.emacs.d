@@ -366,6 +366,8 @@ kill internal buffers too."
           (Info-mode                 . evilified)
           (message-mode              . emacs)
           (nrepl-mode                . insert)
+          (prodigy-mode              . evilified)
+          (prodigy-view-mode         . evilified)
           (weibo-timeline-mode       . emacs)
           (weibo-post-mode           . emacs)
           (sr-mode                   . emacs)
@@ -380,6 +382,8 @@ kill internal buffers too."
 (defun paloryemacs/evil-init ()
   (setq evil-disable-insert-state-bindings nil
         evil-move-cursor-back nil
+        evil-want-integration t
+        ;; evil-want-keybinding nil ;; evil-collection instead
         evil-want-visual-char-semi-exclusive t
         evil-want-C-i-jump t
         evil-cross-lines t
@@ -415,6 +419,13 @@ kill internal buffers too."
 ;;; enable evil mode
 (when (fboundp 'evil-mode)
   (evil-mode +1))
+
+;; (use-package evil-collection
+;;   :after evil
+;;   :init
+;;   (setq evil-collection-mode-list nil)
+;;   :config
+;;   (evil-collection-init))
 
 (use-package evil-escape
   :commands (evil-escape)
@@ -1100,7 +1111,6 @@ if COUNT is negative. "
     "Select inner defun."
     (evil-select-inner-object 'evil-defun beg end type count))
   (define-key evil-inner-text-objects-map "d" 'evil-inner-defun))
-
 
 ;;; bugfix
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
