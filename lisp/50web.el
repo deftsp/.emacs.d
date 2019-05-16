@@ -50,15 +50,15 @@
                       ("php" . "/*")
                       ("css" . "/*")))
 
-      (setq web-mode-markup-indent-offset 4
-            web-mode-css-indent-offset 4
+      (setq web-mode-markup-indent-offset 2
+            web-mode-css-indent-offset 2
             ;; script offset indentation (for JavaScript, Java, PHP, etc.)
-            web-mode-code-indent-offset 4))
+            web-mode-code-indent-offset 2))
 
     ;; treat <> as jsx
     (setq web-mode-content-types-alist
           '(("jsx" . ".*\\.js\\'")))
-    (setq web-mode-script-padding 4
+    (setq web-mode-script-padding 2
           web-mode-style-padding 1
           web-mode-block-padding 0))
   (add-hook 'web-mode-hook 'paloryemacs/init-web-mode)

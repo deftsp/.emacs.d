@@ -603,7 +603,8 @@ vi style of % jumping to matching brace."
             ("\\.markdown$"                       . markdown-mode)
             ("\\.asciidoc$"                       . adoc-mode)
             ("\\.julius$"                         . js2-mode)
-            ("\\.js$"                             . web-mode) ; js2-mode
+            ("\\.js$"                             . web-mode)
+            ("\\.jsx$"                            . web-mode)
             ("\\.html?\\'"                        . web-mode)
             ("\\.phtml\\'"                        . web-mode)
             ("\\.tpl\\.php\\'"                    . web-mode)
