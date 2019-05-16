@@ -104,6 +104,8 @@
   (when (memq window-system '(mac ns))
     (add-to-list 'exec-path-from-shell-variables "GOROOT")
     (setq exec-path-from-shell-check-startup-files nil)
+    ;; List of environment variables which are copied from the shell.
+    (push "HISTFILE" exec-path-from-shell-variables)
     (exec-path-from-shell-initialize)))
 
 (when (eq system-type 'darwin)

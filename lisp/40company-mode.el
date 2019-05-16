@@ -130,6 +130,12 @@
   (let ((backends paloryemacs/company-common-backends))
     (setq-local company-backends backends)))
 
+(add-hook 'web-mode-hook 'paloryemacs/company-web-mode-setup)
+(defun paloryemacs/company-web-mode-setup ()
+  (let ((backends paloryemacs/company-common-backends))
+    (setq-local company-backends backends)
+    (when (fboundp 'company-tide)
+      (add-to-list 'company-backends 'company-tide))))
 
 
 (provide '40company-mode)

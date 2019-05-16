@@ -35,13 +35,75 @@
   ("q" nil "quit" :exit t)
   ("<escape>" nil nil :exit t))
 
+;; Make sure the local node_modules/.bin/ can be found (for eslint)
+;; https://github.com/codesuki/add-node-modules-path
+(use-package add-node-modules-path
+  :config
+  ;; automatically run the function when web-mode starts
+  (with-eval-after-load 'web-mode
+    (add-hook 'web-mode-hook 'add-node-modules-path)))
+
+(defun paloryemac/setup-tide-mode ()
+  (interactive)
+  (tide-setup)
+  (flycheck-mode +1)
+  ;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
+  (eldoc-mode +1)
+  (tide-hl-identifier-mode +1)
+  ;; company is an optional dependency. You have to
+  ;; install it separately via package-install
+  ;; `M-x package-install [ret] company`
+  (company-mode +1))
+
+(defun paloryemac/setup-tide-mode-maybe ()
+  (when (string-equal "js" (file-name-extension buffer-file-name))
+    (paloryemac/setup-tide-mode)))
+
+(use-package tide
+  :after (typescript-mode company flycheck)
+  :bind (("M-." . tide-jump-to-definition)
+         ("M-," . tide-jump-back))
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . tide-hl-identifier-mode)
+         (before-save . tide-format-before-save))
+  :config
+  (paloryemac/setup-tide-mode)
+  (with-eval-after-load 'flycheck
+    (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)
+    (flycheck-add-next-checker 'javascript-eslint 'tsx-tide 'append)
+    )
+  (add-hook 'web-mode-hook 'paloryemac/setup-tide-mode-maybe)
+
+
+  )
+
+
 (use-package web-mode
   :defer t
+  :after (add-node-modules-path)
   :init
   (progn
+    (with-eval-after-load 'flycheck
+      (flycheck-add-mode 'javascript-eslint 'web-mode)
+      ;; (flycheck-add-mode 'css-csslint 'web-mode)
+      )
+
+    ;; have 2 space indent also for element’s attributes,concatenations and
+    ;; contiguous function calls
+    ;; https://www.gnu.org/software/emacs/manual/html_node/ccmode/Syntactic-Symbols.html
+    (setq web-mode-indentation-params
+          '(("lineup-args"       . nil)
+            ("lineup-calls"      . nil)
+            ("lineup-concats"    . nil)
+            ("lineup-quotes"     . t)
+            ("lineup-ternary"    . t)
+            ("case-extra-offset" . t)))
+
+
     (defun paloryemacs/init-web-mode ()
       "Hooks for Web mode."
-      (flycheck-mode -1)
+      (flycheck-mode +1)
+      (setq-default flycheck-disabled-checkers '(tsx-tide handlebars))
 
       (setq-default web-mode-comment-formats
                     '(("java" . "/*")
