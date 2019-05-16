@@ -1156,7 +1156,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
               (let ((name (assoc-default 'name attr))
                     (frames (assoc-default 'frames attr)))
                 (when (member (selected-frame) frames)
-                  (if (string= name dotpaloryemacs-build-in-screen-name)
+                  (if (string= name dotpaloryemacs-org-agenda-screen-name)
                       (return 'only-window)
                     (return 'other-frame))))))))
     (setq org-agenda-window-setup window-config)))

@@ -31,6 +31,7 @@ emacs.")
 (defvar dotpaloryemacs-emacs-command-key "SPC"
   "The key used for Emacs commands (M-x) (after pressing on the leader key).")
 
+(defvar dotpaloryemacs-org-agenda-screen-name "BenQ G2220HD")
 (defvar dotpaloryemacs-build-in-screen-name "Color LCD")
 (defvar dotpaloryemacs-external-screen-name "DELL P2715Q")
 
