@@ -1383,6 +1383,7 @@ inputting math (Unicode) symbols." t))
 
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t)
 
     (defun paloryemacs/treemacs-header-with-brackets (current-root)
       (format "[%s]" (file-name-nondirectory current-root)))
@@ -1399,6 +1400,10 @@ inputting math (Unicode) symbols." t))
   (paloryemacs/set-leader-keys
     "fp" #'treemacs-projectile-toggle
     "fP" #'treemacs-projectile))
+
+(use-package treemacs-magit
+  :after treemacs magit
+  )
 
 ;; https://github.com/algernon/kaleidoscope.el
 ;; (kaleidoscope-send-command :help)

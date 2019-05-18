@@ -135,7 +135,8 @@
   (let ((backends paloryemacs/company-common-backends))
     (setq-local company-backends backends)
     (when (fboundp 'company-tide)
-      (add-to-list 'company-backends 'company-tide))))
+      (add-to-list 'company-backends 'company-tide))
+    ))
 
 
 (provide '40company-mode)

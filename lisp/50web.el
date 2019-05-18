@@ -43,22 +43,6 @@
   (with-eval-after-load 'web-mode
     (add-hook 'web-mode-hook 'add-node-modules-path)))
 
-(defun paloryemac/setup-tide-mode ()
-  (interactive)
-  (tide-setup)
-  (flycheck-mode +1)
-  ;; (setq flycheck-check-syntax-automatically '(save mode-enabled))
-  (eldoc-mode +1)
-  (tide-hl-identifier-mode +1)
-  ;; company is an optional dependency. You have to
-  ;; install it separately via package-install
-  ;; `M-x package-install [ret] company`
-  (company-mode +1))
-
-(defun paloryemac/setup-tide-mode-maybe ()
-  (when (string-equal "js" (file-name-extension buffer-file-name))
-    (paloryemac/setup-tide-mode)))
-
 (use-package tide
   :init
   (progn
@@ -68,19 +52,13 @@
   :bind (("M-." . tide-jump-to-definition)
          ("M-," . tide-jump-back))
   :hook ((typescript-mode . tide-setup)
-         (typescript-mode . tide-hl-identifier-mode)
-         (before-save . tide-format-before-save))
+         ;; (typescript-mode . tide-hl-identifier-mode)
+         ;; (before-save . tide-format-before-save)
+         (web-mode . tide-setup))
   :config
-  (paloryemac/setup-tide-mode)
   (with-eval-after-load 'flycheck
-    (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)
-    (flycheck-add-next-checker 'javascript-eslint 'tsx-tide 'append)
-    )
-  (add-hook 'web-mode-hook 'paloryemac/setup-tide-mode-maybe)
-
-
-  )
-
+    ;; (flycheck-add-next-checker 'javascript-eslint 'tsx-tide 'append)
+    (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)))
 
 (use-package web-mode
   :defer t
@@ -107,6 +85,8 @@
     (defun paloryemacs/init-web-mode ()
       "Hooks for Web mode."
       (flycheck-mode +1)
+      (company-mode +1)
+      (eldoc-mode +1)
       (setq-default flycheck-disabled-checkers '(tsx-tide handlebars))
 
       (setq-default web-mode-comment-formats
@@ -127,6 +107,7 @@
     (setq web-mode-script-padding 2
           web-mode-style-padding 1
           web-mode-block-padding 0))
+
   (add-hook 'web-mode-hook 'paloryemacs/init-web-mode)
   :config
   (progn
