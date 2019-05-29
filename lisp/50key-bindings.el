@@ -700,7 +700,7 @@ it marks the next ARG lines after the ones already marked."
 
 ;;; hydra
 ;; hydra-lv is buggy, see https://github.com/abo-abo/hydra/issues/114
-(setq hydra-lv t)
+(setq hydra-hint-display-type 'lv)
 
 (with-eval-after-load "hydra"
   (defhydra hydra-toggle (:color blue)
