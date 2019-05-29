@@ -1996,44 +1996,66 @@ Will work on both org-mode and any mode that accepts plain html."
       "k" 'org-edit-src-abort)))
 
 
+;; https://github.com/abo-abo/hydra/wiki/Org-mode-block-templates
 (with-eval-after-load "org"
-  ;; hydra org template
+  (cl-pushnew '("not" . "note") org-structure-template-alist)
+
   (with-eval-after-load "hydra"
     (defhydra hydra-org-template (:color blue :hint nil)
       "
-_c_enter  _q_uote    _L_aTeX:
-_l_atex   _e_xample  _i_ndex:
-_a_scii   _v_erse    _I_NCLUDE:
-_s_rc     ^ ^        _H_TML:
-_h_tml    ^ ^        _A_SCII:
+ _c_enter  _q_uote     _e_macs-lisp    _L_aTeX:
+ _l_atex   _E_xample   _p_erl          _i_ndex:
+ _a_scii   _v_erse     _P_erl tangled  _I_NCLUDE:
+ _s_rc     _n_ote      plant_u_ml      _H_TML:
+ _h_tml    ^ ^         ^ ^             _A_SCII:
 "
       ("s" (paloryemacs/hot-expand "<s"))
-      ("e" (paloryemacs/hot-expand "<e"))
+      ("E" (paloryemacs/hot-expand "<e"))
       ("q" (paloryemacs/hot-expand "<q"))
       ("v" (paloryemacs/hot-expand "<v"))
+      ("n" (paloryemacs/hot-expand "<not"))
       ("c" (paloryemacs/hot-expand "<c"))
       ("l" (paloryemacs/hot-expand "<l"))
       ("h" (paloryemacs/hot-expand "<h"))
       ("a" (paloryemacs/hot-expand "<a"))
       ("L" (paloryemacs/hot-expand "<L"))
       ("i" (paloryemacs/hot-expand "<i"))
+      ("e" (paloryemacs/hot-expand "<s" "emacs-lisp"))
+      ("p" (paloryemacs/hot-expand "<s" "perl"))
+      ("u" (paloryemacs/hot-expand "<s" "plantuml :file CHANGE.png"))
+      ("P" (paloryemacs/hot-expand "<s" "perl" ":results output :exports both :shebang \"#!/usr/bin/env perl\"\n"))
       ("I" (paloryemacs/hot-expand "<I"))
       ("H" (paloryemacs/hot-expand "<H"))
       ("A" (paloryemacs/hot-expand "<A"))
       ("<" self-insert-command "ins")
-      ("<escape>" nil :exit t)
-      ("o" nil "quit")))
+      ("o" nil "quit"))
 
-  (defun paloryemacs/hot-expand (str)
-    "Expand org template."
-    (insert str)
-    (org-try-structure-completion))
+    (require 'org-tempo) ; Required from org 9 onwards for old template expansion
+    ;; Reset the org-template expnsion system, this is need after upgrading to org 9 for some reason
+    (setq org-structure-template-alist (eval (car (get 'org-structure-template-alist 'standard-value))))
+    (defun paloryemacs/hot-expand (str &optional mod header)
+      "Expand org template.
 
-  (define-key org-mode-map "<"
-    (lambda () (interactive)
-      (if (looking-back "^")
-          (hydra-org-template/body)
-        (self-insert-command 1)))))
+STR is a structure template string recognised by org like <s. MOD is a
+string with additional parameters to add the begin line of the
+structure element. HEADER string includes more parameters that are
+prepended to the element after the #+HEADER: tag."
+      (let (text)
+        (when (region-active-p)
+          (setq text (buffer-substring (region-beginning) (region-end)))
+          (delete-region (region-beginning) (region-end))
+          (deactivate-mark))
+        (when header (insert "#+HEADER: " header) (forward-line))
+        (insert str)
+        (org-tempo-complete-tag)
+        (when mod (insert mod) (forward-line))
+        (when text (insert text))))
+
+    (define-key org-mode-map "<"
+      (lambda () (interactive)
+        (if (or (region-active-p) (looking-back "^"))
+            (hydra-org-template/body)
+          (self-insert-command 1))))))
 
 ;;; finding all tags
 (defun paloryemacs/counsel-org-tags ()
