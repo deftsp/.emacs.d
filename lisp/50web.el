@@ -87,7 +87,7 @@
       (flycheck-mode +1)
       (company-mode +1)
       (eldoc-mode +1)
-      (setq-default flycheck-disabled-checkers '(tsx-tide handlebars))
+      (setq-default flycheck-disabled-checkers '(jsx-tide tsx-tide handlebars))
 
       (setq-default web-mode-comment-formats
                     '(("java" . "/*")
