@@ -1143,7 +1143,8 @@ If VANILLA is non-nil, run the standard `org-capture'."
   :bind* (("C-c C-x i" . org-mru-clock-in)
           ("C-c C-x C-j" . org-mru-clock-select-recent-task))
   :init
-  (setq org-mru-clock-how-many 100
+  (setq org-mru-clock-files #'org-agenda-files
+        org-mru-clock-how-many 100
         org-mru-clock-completing-read #'ivy-completing-read))
 
 ;;; Other frame
@@ -2023,6 +2024,7 @@ Will work on both org-mode and any mode that accepts plain html."
       ("e" (paloryemacs/hot-expand "<s" "emacs-lisp"))
       ("p" (paloryemacs/hot-expand "<s" "perl"))
       ("u" (paloryemacs/hot-expand "<s" "plantuml :file CHANGE.png"))
+      ("w" (paloryemacs/hot-expand "<s" "web"))
       ("P" (paloryemacs/hot-expand "<s" "perl" ":results output :exports both :shebang \"#!/usr/bin/env perl\"\n"))
       ("I" (paloryemacs/hot-expand "<I"))
       ("H" (paloryemacs/hot-expand "<H"))
