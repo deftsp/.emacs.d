@@ -3,8 +3,11 @@
 ;; Copyright (C) 2008  Shihpin Tseng
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-;; https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
+;;; TODO: integrate https://github.com/xuchunyang/eshell-git-prompt
+;;; TODO: integrate https://github.com/manateelazycat/aweshell
+;;; TODO: integrate https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
 
+;;; shell-pop
 (defvar shell-default-shell 'eshell
   "Default shell to use in Paloryemacs. Possible values are `eshell', `shell',
 `term' and `ansi-term'.")
@@ -15,6 +18,9 @@
 
 (defvar shell-default-height 30
   "Height in percents for the shell window.")
+
+(defvar shell-default-width 30
+  "Width in percents for the shell window.")
 
 (defvar shell-default-term-shell shell-file-name
   "Default shell to use in `term' and `ansi-term' shells.")
@@ -31,14 +37,25 @@ prompts and the prompt is made read-only")
 (defvar shell-default-full-span t
   "If non-nil, the `shell' buffer spans full width of a frame.")
 
+(defvar close-window-with-terminal nil
+  "If non-nil, the window is closed when the terminal is stopped.
+This is only applied to `term' and `ansi-term' modes.")
 
 (defun paloryemacs/default-pop-shell ()
   "Open the default shell in a popup."
   (interactive)
-  (let ((shell (if (eq 'multi-term shell-default-shell)
-                   'multiterm
-                 shell-default-shell)))
+  (let ((shell (case shell-default-shell
+                 ('multi-term 'multiterm)
+                 ('shell 'inferior-shell)
+                 (t shell-default-shell))))
     (call-interactively (intern (format "paloryemacs/shell-pop-%S" shell)))))
+
+(defun paloryemacs/resize-shell-to-desired-width ()
+  (when (and (string= (buffer-name) shell-pop-last-shell-buffer-name)
+             (memq shell-pop-window-position '(left right)))
+    (enlarge-window-horizontally (- (/ (* (frame-width) shell-default-width)
+                                       100)
+                                    (window-width)))))
 
 (defmacro make-shell-pop-command (func &optional shell)
   "Create a function to open a shell via the function FUNC.
@@ -60,44 +77,8 @@ SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
           (backquote (,name
                       ,(concat "*" name "*")
                       (lambda nil (,func ,shell)))))
-         (shell-pop index)))))
-
-
-(defun paloryemacs/default-pop-shell ()
-  "Open the default shell in a popup."
-  (interactive)
-  (let ((shell (if (eq 'multi-term shell-default-shell)
-                   'multiterm
-                 shell-default-shell)))
-    (call-interactively (intern (format "paloryemacs/shell-pop-%S" shell)))))
-
-
-(defface paloryemacs/eshell-base-face
-  '((t :foreground "black"
-       :background "aquamarine"
-       :font "Knack Nerd Font"))
-  "Base face for shell."
-  :group 'eshell-prompt)
-
-(defface epe-user-face
-  '((t :inherit paloryemacs/eshell-base-face :foreground "red"))
-  "Face of user in prompt."
-  :group 'eshell-prompt)
-
-(defface epe-host-face
-  '((t :inherit paloryemacs/eshell-base-face  :foreground "blue"))
-  "Face of host in prompt."
-  :group 'eshell-prompt)
-
-(defface epe-time-face
-  '((t :inherit paloryemacs/eshell-base-face :foreground "yellow"))
-  "Face of time in prompt."
-  :group 'eshell-prompt)
-
-(defface epe-delimiter-face
-  '((t :inherit paloryemacs/eshell-base-face  :foreground "yellow"))
-  "Face of delimiter in prompt."
-  :group 'eshell-prompt)
+         (shell-pop index)
+         (paloryemacs/resize-shell-to-desired-width)))))
 
 (defun ansi-term-handle-close ()
   "Close current term buffer when `exit' from term buffer."
@@ -107,9 +88,9 @@ SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
                             (when (string-match "\\(finished\\|exited\\)"
                                                 change)
                               (kill-buffer (process-buffer proc))
-                              (when (> (count-windows) 1)
+                              (when (and close-window-with-terminal
+                                         (> (count-windows) 1))
                                 (delete-window)))))))
-
 
 (use-package shell-pop
   :defer t
@@ -120,12 +101,15 @@ SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
           shell-pop-term-shell      shell-default-term-shell
           shell-pop-full-span       shell-default-full-span)
     (make-shell-pop-command eshell)
-    (make-shell-pop-command shell)
     (make-shell-pop-command term shell-pop-term-shell)
-    (make-shell-pop-command multiterm)
     (make-shell-pop-command ansi-term shell-pop-term-shell)
+    (make-shell-pop-command inferior-shell)
+    (make-shell-pop-command multiterm)
 
     (add-hook 'term-mode-hook 'ansi-term-handle-close)
+
+    (paloryemacs/declare-prefix "'" "open shell")
+    (paloryemacs/declare-prefix "as" "shells")
 
     (paloryemacs/set-leader-keys
       "'"   'paloryemacs/default-pop-shell
@@ -134,7 +118,6 @@ SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
       "asm" 'paloryemacs/shell-pop-multiterm
       "ast" 'paloryemacs/shell-pop-ansi-term
       "asT" 'paloryemacs/shell-pop-term)))
-
 
 (defun paloryemacs//protect-eshell-prompt ()
   "Protect Eshell's prompt like Comint's prompts.
@@ -151,8 +134,14 @@ is achieved by adding the relevant text properties."
                       read-only t
                       front-sticky (field inhibit-line-move-field-capture)))))
 
+(defun paloryemacs//eshell-auto-end ()
+  "Move point to end of current prompt when switching to insert state."
+  (when (and (eq major-mode 'eshell-mode)
+             ;; Not on last line, we might want to edit within it.
+             (not (eq (point) (point-max))))
+    (end-of-buffer)))
+
 (defun paloryemacs/eshell-mode-init ()
-  (set (make-local-variable 'scroll-margin) 0)
   (setq pcomplete-cycle-completions nil)
   (buffer-face-set 'paloryemacs/eshell-base-face)
   (unless shell-enable-smart-eshell
@@ -162,78 +151,45 @@ is achieved by adding the relevant text properties."
     (add-hook 'evil-insert-state-entry-hook
               'paloryemacs//eshell-auto-end nil t))
 
+  ;; C-a to beginning of command line or beginning of line?
+  ;; I use the following code. It makes C-a go to the beginning of the command line, unless it is already there, in which
+  ;; case it goes to the beginning of the line. So if you are at the end of the command line and want to go to the real
+  ;; beginning of line, hit C-a twice:
+  (defun paloryemacs/eshell-maybe-bol ()
+    (interactive)
+    (let ((p (point)))
+      (eshell-bol)
+      (if (= p (point))
+          ;; with `paloryemacs//protect-eshell-prompt', `beginning-of-line' will
+          ;; not work
+          (beginning-of-line))))
+
+  ;; This is a key-command
+  (defun paloryemacs/eshell-clear-keystroke ()
+    "Allow for keystrokes to invoke eshell/clear"
+    (interactive)
+    (eshell/clear)
+    (eshell-send-input))
+
   (define-key eshell-mode-map (kbd "C-u") 'eshell-kill-input)
   (define-key eshell-mode-map (kbd "C-a") 'paloryemacs/eshell-maybe-bol)
-  ;; Caution! this will erase buffer's content at C-l
+
   (define-key eshell-mode-map (kbd "C-d") 'eshell-delchar-or-maybe-eof)
-  (define-key eshell-mode-map (kbd "C-l") 'paloryemacs/eshell-clear-keystroke))
-
-(defun paloryemacs/init-eshell-xterm-color ()
-  "Initialize xterm coloring for eshell"
-  (setq-local xterm-color-preserve-properties t)
-  (make-local-variable 'eshell-preoutput-filter-functions)
-  (add-hook 'eshell-preoutput-filter-functions 'xterm-color-filter)
-  (setq-local eshell-output-filter-functions
-              (remove 'eshell-handle-ansi-color
-                      eshell-output-filter-functions)))
-
-
-(defun paloryemacs//eshell-auto-end ()
-  "Move point to end of current prompt when switching to insert state."
-  (when (and (eq major-mode 'eshell-mode)
-             ;; Not on last line, we might want to edit within it.
-             (not (eq (point) (point-max))))
-    (end-of-buffer)))
-
-;; http://www.modernemacs.com/post/custom-eshell/
-(defun epe-theme-palory ()
-  "A eshell-prompt theme with full path, smiliar to oh-my-zsh theme."
-  (setq eshell-prompt-regexp "^\n┌─.*\n.* λ[#]* ")
-  (concat
-   (if (epe-remote-p)
-       (progn
-	     (concat
-	      (epe-colorize-with-face (epe-remote-user) 'epe-user-face)
-	      (epe-colorize-with-face "@" 'epe-host-face)
-	      (epe-colorize-with-face (epe-remote-host) 'epe-host-face)))
-     (progn
-       (concat
-        (epe-colorize-with-face  "\n┌─" 'epe-delimiter-face)
-        (epe-colorize-with-face (format-time-string "%H:%M:%S" (current-time)) 'epe-time-face)
-        (epe-colorize-with-face  " " 'epe-delimiter-face)
-	    (epe-colorize-with-face (user-login-name) 'epe-user-face)
-	    (epe-colorize-with-face "@" 'epe-host-face)
-	    (epe-colorize-with-face (system-name) 'epe-host-face))))
-   (concat
-    (epe-colorize-with-face ":" 'epe-dir-face)
-    (epe-colorize-with-face (concat (epe-fish-path (eshell/pwd))) 'epe-dir-face)
-    (epe-colorize-with-face  "\n" 'epe-delimiter-face))
-   (epe-colorize-with-face  "└─" 'epe-delimiter-face)
-   (when epe-show-python-info
-     (when (fboundp 'epe-venv-p)
-       (when (and (epe-venv-p) venv-current-name)
-	     (epe-colorize-with-face (concat "(" venv-current-name ") ") 'epe-venv-face))))
-   (when (epe-git-p)
-     (concat
-      (epe-colorize-with-face ":" 'epe-dir-face)
-      (epe-colorize-with-face
-       (concat (epe-git-branch)
-	           (epe-git-dirty)
-	           (epe-git-untracked)
-	           (let ((unpushed (epe-git-unpushed-number)))
-		         (unless (= unpushed 0)
-		           (concat ":" (number-to-string unpushed)))))
-       'epe-git-face)))
-   (epe-colorize-with-face " λ" 'epe-symbol-face)
-   (epe-colorize-with-face (if (= (user-uid) 0) "#" "") 'epe-sudo-symbol-face)
-   " "))
-
+  ;; Caution! this will erase buffer's content at C-l
+  (define-key eshell-mode-map (kbd "C-l") 'paloryemacs/eshell-clear-keystroke)
+  ;; These don't work well in normal state
+  ;; due to evil/emacs cursor incompatibility
+  (with-eval-after-load 'evil
+    (evil-define-key 'insert eshell-mode-map
+      (kbd "C-k") 'eshell-previous-matching-input-from-input
+      (kbd "C-j") 'eshell-next-matching-input-from-input)))
 
 (use-package eshell
   :defer t
   :init
   (progn
-    (setq eshell-error-if-no-glob t
+    (setq eshell-cmpl-cycle-completions nil
+          eshell-error-if-no-glob t
           eshell-history-size 500
           eshell-save-history-on-exit t
           eshell-scroll-to-bottom-on-input 'all
@@ -251,8 +207,10 @@ is achieved by adding the relevant text properties."
           ;; cache directory
           eshell-directory-name (concat paloryemacs-cache-directory "eshell/"))
 
+    (when shell-protect-eshell-prompt
+      (add-hook 'eshell-after-prompt-hook 'paloryemacs//protect-eshell-prompt))
+
     (autoload 'eshell-delchar-or-maybe-eof "em-rebind")
-    (add-hook 'eshell-after-prompt-hook 'paloryemacs//protect-eshell-prompt)
     (add-hook 'eshell-mode-hook 'paloryemacs/eshell-mode-init))
   :config
   (progn
@@ -275,7 +233,9 @@ is achieved by adding the relevant text properties."
     (require 'esh-opt)
 
     ;; quick commands
-    (defalias 's 'magit-status)
+    (defalias 'eshell/e 'find-file-other-window)
+    (defalias 'eshell/d 'dired)
+
     (require 'em-alias)
     (require 'esh-io)
     (eshell/alias "e" "find-file $1")
@@ -319,25 +279,93 @@ is achieved by adding the relevant text properties."
     (when (boundp 'eshell-output-filter-functions)
       (push 'eshell-truncate-buffer eshell-output-filter-functions))
 
-    ;; These don't work well in normal state
-    ;; due to evil/emacs cursor incompatibility
-    (with-eval-after-load 'evil
-      (evil-define-key 'insert eshell-mode-map
-        (kbd "C-k") 'eshell-previous-matching-input-from-input
-        (kbd "C-j") 'eshell-next-matching-input-from-input))
-
     (use-package eshell-autojump)
 
-    (use-package eshell-prompt-extras
-      :init
-      (setq eshell-highlight-prompt nil
-            eshell-prompt-function 'epe-theme-palory)  )
+    ;; (use-package eshell-prompt-extras
+    ;;   :init
+    ;;   (setq eshell-highlight-prompt nil
+    ;;         eshell-prompt-function 'epe-theme-palory))
 
     (use-package eshell-fringe-status
       :defer t
       :commands (eshell-fringe-status-mode)
       :init
       (add-hook 'eshell-mode-hook 'eshell-fringe-status-mode))))
+
+;; http://www.modernemacs.com/post/custom-eshell/
+
+;; (defface paloryemacs/eshell-base-face
+;;   '((t :foreground "black"
+;;        :background "aquamarine"
+;;        :font "Knack Nerd Font"))
+;;   "Base face for shell."
+;;   :group 'eshell-prompt)
+
+;; (defface epe-user-face
+;;   '((t :inherit paloryemacs/eshell-base-face :foreground "red"))
+;;   "Face of user in prompt."
+;;   :group 'eshell-prompt)
+
+;; (defface epe-host-face
+;;   '((t :inherit paloryemacs/eshell-base-face  :foreground "blue"))
+;;   "Face of host in prompt."
+;;   :group 'eshell-prompt)
+
+;; (defface epe-time-face
+;;   '((t :inherit paloryemacs/eshell-base-face :foreground "yellow"))
+;;   "Face of time in prompt."
+;;   :group 'eshell-prompt)
+
+;; (defface epe-delimiter-face
+;;   '((t :inherit paloryemacs/eshell-base-face  :foreground "yellow"))
+;;   "Face of delimiter in prompt."
+;;   :group 'eshell-prompt)
+
+
+
+;; (defun epe-theme-palory ()
+;;   "A eshell-prompt theme with full path, smiliar to oh-my-zsh theme."
+;;   (setq eshell-prompt-regexp "^\n┌─.*\n.* λ[#]* ")
+;;   (concat
+;;    (if (epe-remote-p)
+;;        (progn
+;; 	     (concat
+;; 	      (epe-colorize-with-face (epe-remote-user) 'epe-user-face)
+;; 	      (epe-colorize-with-face "@" 'epe-host-face)
+;; 	      (epe-colorize-with-face (epe-remote-host) 'epe-host-face)))
+;;      (progn
+;;        (concat
+;;         (epe-colorize-with-face  "\n┌─" 'epe-delimiter-face)
+;;         (epe-colorize-with-face (format-time-string "%H:%M:%S" (current-time)) 'epe-time-face)
+;;         (epe-colorize-with-face  " " 'epe-delimiter-face)
+;; 	    (epe-colorize-with-face (user-login-name) 'epe-user-face)
+;; 	    (epe-colorize-with-face "@" 'epe-host-face)
+;; 	    (epe-colorize-with-face (system-name) 'epe-host-face))))
+;;    (concat
+;;     (epe-colorize-with-face ":" 'epe-dir-face)
+;;     (epe-colorize-with-face (concat (epe-fish-path (eshell/pwd))) 'epe-dir-face)
+;;     (epe-colorize-with-face  "\n" 'epe-delimiter-face))
+;;    (epe-colorize-with-face  "└─" 'epe-delimiter-face)
+;;    (when epe-show-python-info
+;;      (when (fboundp 'epe-venv-p)
+;;        (when (and (epe-venv-p) venv-current-name)
+;; 	     (epe-colorize-with-face (concat "(" venv-current-name ") ") 'epe-venv-face))))
+;;    (when (epe-git-p)
+;;      (concat
+;;       (epe-colorize-with-face ":" 'epe-dir-face)
+;;       (epe-colorize-with-face
+;;        (concat (epe-git-branch)
+;; 	           (epe-git-dirty)
+;; 	           (epe-git-untracked)
+;; 	           (let ((unpushed (epe-git-unpushed-number)))
+;; 		         (unless (= unpushed 0)
+;; 		           (concat ":" (number-to-string unpushed)))))
+;;        'epe-git-face)))
+;;    (epe-colorize-with-face " λ" 'epe-symbol-face)
+;;    (epe-colorize-with-face (if (= (user-uid) 0) "#" "") 'epe-sudo-symbol-face)
+;;    " "))
+
+
 
 (use-package esh-mode
   :defer t
@@ -347,6 +375,18 @@ is achieved by adding the relevant text properties."
       :config
       (eshell-did-you-mean-setup))))
 
+
+(defun paloryemacs/init-eshell-xterm-color ()
+  "Initialize xterm coloring for eshell"
+  (setq-local xterm-color-preserve-properties t)
+  (make-local-variable 'eshell-preoutput-filter-functions)
+  (add-hook 'eshell-preoutput-filter-functions 'xterm-color-filter)
+  (setq-local eshell-output-filter-functions
+              (remove 'eshell-handle-ansi-color
+                      eshell-output-filter-functions)))
+
+
+
 (use-package xterm-color
   :init
   (progn
@@ -355,17 +395,6 @@ is achieved by adding the relevant text properties."
     (setq comint-output-filter-functions
           (remove 'ansi-color-process-output comint-output-filter-functions))
     (add-hook 'eshell-mode-hook 'paloryemacs/init-eshell-xterm-color)))
-
-;; C-a to beginning of command line or beginning of line?
-;; I use the following code. It makes C-a go to the beginning of the command line, unless it is already there, in which
-;; case it goes to the beginning of the line. So if you are at the end of the command line and want to go to the real
-;; beginning of line, hit C-a twice:
-(defun paloryemacs/eshell-maybe-bol ()
-  (interactive)
-  (let ((p (point)))
-    (eshell-bol)
-    (if (= p (point))
-        (beginning-of-line))))
 
 ;;; eshell here
 ;; http://www.howardism.org/Technical/Emacs/eshell-fun.html
@@ -459,13 +488,6 @@ file to edit."
   (let ((cmd (concat "find " (string-join args))))
     (shell-command-to-string cmd)))
 
-
-;; This is a key-command
-(defun paloryemacs/eshell-clear-keystroke ()
-  "Allow for keystrokes to invoke eshell/clear"
-  (interactive)
-  (eshell/clear)
-  (eshell-send-input))
 
 (defun eshell/dired () (dired (eshell/pwd)))
 
