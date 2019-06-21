@@ -444,31 +444,6 @@ If the universal prefix argument is used then kill the buffer too."
      (global-set-key (kbd "M-[ b") 'buf-move-left)
      (global-set-key (kbd "M-[ f") 'buf-move-right)))
 
-;;; popwin
-;; https://github.com/m2ym/popwin-el
-(use-package popwin
-  :config
-  (progn
-    ;; (global-set-key (kbd "C-z") popwin:keymap)
-    ;; (popwin-mode +1) ; do not enable it use emacs-purpose instead
-    (paloryemacs/set-leader-keys "wpm" 'popwin:messages)
-    (paloryemacs/set-leader-keys "wpp" 'popwin:close-popup-window)
-
-    ;; don't use default value but manage it ourselves
-    (setq popwin:special-display-config nil)
-
-    ;; buffers that we manage
-    (push '("*Help*"                 :dedicated t :position bottom :stick t :noselect t   :height 0.4) popwin:special-display-config)
-    (push '("*compilation*"          :dedicated t :position bottom :stick t :noselect t   :height 0.4) popwin:special-display-config)
-    (push '("*Shell Command Output*" :dedicated t :position bottom :stick t :noselect nil            ) popwin:special-display-config)
-    (push '("*Async Shell Command*"  :dedicated t :position bottom :stick t :noselect nil            ) popwin:special-display-config)
-    (push '(" *undo-tree*"           :dedicated t :position right  :stick t :noselect nil :width   60) popwin:special-display-config)
-    (push '("*undo-tree Diff*"       :dedicated t :position bottom :stick t :noselect nil :height 0.3) popwin:special-display-config)
-    (push '("*ert*"                  :dedicated t :position bottom :stick t :noselect nil            ) popwin:special-display-config)
-    (push '("*grep*"                 :dedicated t :position bottom :stick t :noselect nil            ) popwin:special-display-config)
-    (push '("*nosetests*"            :dedicated t :position bottom :stick t :noselect nil            ) popwin:special-display-config)
-    (push '("^\*WoMan.+\*$" :regexp t             :position bottom                                   ) popwin:special-display-config)))
-
 (use-package ivy-purpose
   :defer t
   :init
@@ -487,18 +462,18 @@ If the universal prefix argument is used then kill the buffer too."
   ;; :diminish window-purpose
   :init
   (progn
-    ;; 'r' is for "puRpose" ('w', 'p' are crowded, 'W', 'P' aren't
-    ;; comfortable)
     (paloryemacs/set-leader-keys
+      "wpp" #'purpose-x-popwin-close-windows
+
       "rb" 'purpose-switch-buffer-with-purpose
       "rB" 'switch-buffer-without-purpose
       "rd" 'purpose-toggle-window-purpose-dedicated
       "rD" 'purpose-delete-non-dedicated-windows
       "rp" 'purpose-switch-buffer-with-some-purpose
-      "rP" 'purpose-set-window-purpose)
-    (purpose-mode +1))
+      "rP" 'purpose-set-window-purpose))
   :config
   (progn
+    (purpose-mode +1)
     (add-to-list 'purpose-user-mode-purposes '(help-mode . popup))
     (add-to-list 'purpose-user-mode-purposes '(helpful-mode . popup))
     (setq purpose-use-default-configuration t)
