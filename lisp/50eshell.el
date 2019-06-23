@@ -3,9 +3,10 @@
 ;; Copyright (C) 2008  Shihpin Tseng
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-;;; TODO: integrate https://github.com/xuchunyang/eshell-git-prompt
-;;; TODO: integrate https://github.com/manateelazycat/aweshell
-;;; TODO: integrate https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
+;;; Links
+;; https://github.com/xuchunyang/eshell-git-prompt
+;; https://github.com/manateelazycat/aweshell
+;; https://github.com/howardabrams/dot-files/blob/master/emacs-eshell.org
 
 ;;; shell-pop
 (defvar shell-default-shell 'eshell
@@ -171,12 +172,23 @@ is achieved by adding the relevant text properties."
     (eshell/clear)
     (eshell-send-input))
 
+
+  ;; clear the buffer while preserving unsent input. This is more comint-like.
+  (defun paloryemacs/eshell-clear-buffer ()
+    "Clear `eshell' buffer, comint-style."
+    (interactive)
+    (let ((input (eshell-get-old-input)))
+      (eshell/clear-scrollback)
+      (eshell-emit-prompt)
+      (insert input)))
+
   (define-key eshell-mode-map (kbd "C-u") 'eshell-kill-input)
   (define-key eshell-mode-map (kbd "C-a") 'paloryemacs/eshell-maybe-bol)
 
   (define-key eshell-mode-map (kbd "C-d") 'eshell-delchar-or-maybe-eof)
   ;; Caution! this will erase buffer's content at C-l
-  (define-key eshell-mode-map (kbd "C-l") 'paloryemacs/eshell-clear-keystroke)
+  ;; (define-key eshell-mode-map (kbd "C-l") 'paloryemacs/eshell-clear-keystroke)
+  (define-key eshell-mode-map (kbd "C-l") 'paloryemacs/eshell-clear-buffer)
   ;; These don't work well in normal state
   ;; due to evil/emacs cursor incompatibility
   (with-eval-after-load 'evil
@@ -281,89 +293,86 @@ is achieved by adding the relevant text properties."
 
     (use-package eshell-autojump)
 
-    ;; (use-package eshell-prompt-extras
-    ;;   :init
-    ;;   (setq eshell-highlight-prompt nil
-    ;;         eshell-prompt-function 'epe-theme-palory))
+    ;; http://www.modernemacs.com/post/custom-eshell/
+    (use-package eshell-prompt-extras
+      :init
+      (defface paloryemacs/eshell-base-face
+        '((t :foreground "black"
+             :background "aquamarine"
+             :font "Knack Nerd Font"))
+        "Base face for shell."
+        :group 'eshell-prompt)
+
+      (defface epe-user-face
+        '((t :inherit paloryemacs/eshell-base-face :foreground "red"))
+        "Face of user in prompt."
+        :group 'eshell-prompt)
+
+      (defface epe-host-face
+        '((t :inherit paloryemacs/eshell-base-face  :foreground "blue"))
+        "Face of host in prompt."
+        :group 'eshell-prompt)
+
+      (defface epe-time-face
+        '((t :inherit paloryemacs/eshell-base-face :foreground "yellow"))
+        "Face of time in prompt."
+        :group 'eshell-prompt)
+
+      (defface epe-delimiter-face
+        '((t :inherit paloryemacs/eshell-base-face  :foreground "yellow"))
+        "Face of delimiter in prompt."
+        :group 'eshell-prompt)
+
+      (defun epe-theme-palory ()
+        "A eshell-prompt theme with full path, smiliar to oh-my-zsh theme."
+        (setq eshell-prompt-regexp "^\n┌─.*\n.* λ[#]* ")
+        (concat
+         (if (epe-remote-p)
+             (progn
+               (concat
+                (epe-colorize-with-face (epe-remote-user) 'epe-user-face)
+                (epe-colorize-with-face "@" 'epe-host-face)
+                (epe-colorize-with-face (epe-remote-host) 'epe-host-face)))
+           (progn
+             (concat
+              (epe-colorize-with-face  "\n┌─" 'epe-delimiter-face)
+              (epe-colorize-with-face (format-time-string "%H:%M:%S" (current-time)) 'epe-time-face)
+              (epe-colorize-with-face  " " 'epe-delimiter-face)
+              (epe-colorize-with-face (user-login-name) 'epe-user-face)
+              (epe-colorize-with-face "@" 'epe-host-face)
+              (epe-colorize-with-face (system-name) 'epe-host-face))))
+         (concat
+          (epe-colorize-with-face ":" 'epe-dir-face)
+          (epe-colorize-with-face (concat (epe-fish-path (eshell/pwd))) 'epe-dir-face)
+          (epe-colorize-with-face  "\n" 'epe-delimiter-face))
+         (epe-colorize-with-face  "└─" 'epe-delimiter-face)
+         (when epe-show-python-info
+           (when (fboundp 'epe-venv-p)
+             (when (and (epe-venv-p) venv-current-name)
+               (epe-colorize-with-face (concat "(" venv-current-name ") ") 'epe-venv-face))))
+         (when (epe-git-p)
+           (concat
+            (epe-colorize-with-face ":" 'epe-dir-face)
+            (epe-colorize-with-face
+             (concat (epe-git-branch)
+                     (epe-git-dirty)
+                     (epe-git-untracked)
+                     (let ((unpushed (epe-git-unpushed-number)))
+                       (unless (= unpushed 0)
+                         (concat ":" (number-to-string unpushed)))))
+             'epe-git-face)))
+         (epe-colorize-with-face " λ" 'epe-symbol-face)
+         (epe-colorize-with-face (if (= (user-uid) 0) "#" "") 'epe-sudo-symbol-face)
+         " "))
+
+      (setq eshell-highlight-prompt nil
+            eshell-prompt-function 'epe-theme-palory))
 
     (use-package eshell-fringe-status
       :defer t
       :commands (eshell-fringe-status-mode)
       :init
       (add-hook 'eshell-mode-hook 'eshell-fringe-status-mode))))
-
-;; http://www.modernemacs.com/post/custom-eshell/
-
-;; (defface paloryemacs/eshell-base-face
-;;   '((t :foreground "black"
-;;        :background "aquamarine"
-;;        :font "Knack Nerd Font"))
-;;   "Base face for shell."
-;;   :group 'eshell-prompt)
-
-;; (defface epe-user-face
-;;   '((t :inherit paloryemacs/eshell-base-face :foreground "red"))
-;;   "Face of user in prompt."
-;;   :group 'eshell-prompt)
-
-;; (defface epe-host-face
-;;   '((t :inherit paloryemacs/eshell-base-face  :foreground "blue"))
-;;   "Face of host in prompt."
-;;   :group 'eshell-prompt)
-
-;; (defface epe-time-face
-;;   '((t :inherit paloryemacs/eshell-base-face :foreground "yellow"))
-;;   "Face of time in prompt."
-;;   :group 'eshell-prompt)
-
-;; (defface epe-delimiter-face
-;;   '((t :inherit paloryemacs/eshell-base-face  :foreground "yellow"))
-;;   "Face of delimiter in prompt."
-;;   :group 'eshell-prompt)
-
-
-
-;; (defun epe-theme-palory ()
-;;   "A eshell-prompt theme with full path, smiliar to oh-my-zsh theme."
-;;   (setq eshell-prompt-regexp "^\n┌─.*\n.* λ[#]* ")
-;;   (concat
-;;    (if (epe-remote-p)
-;;        (progn
-;; 	     (concat
-;; 	      (epe-colorize-with-face (epe-remote-user) 'epe-user-face)
-;; 	      (epe-colorize-with-face "@" 'epe-host-face)
-;; 	      (epe-colorize-with-face (epe-remote-host) 'epe-host-face)))
-;;      (progn
-;;        (concat
-;;         (epe-colorize-with-face  "\n┌─" 'epe-delimiter-face)
-;;         (epe-colorize-with-face (format-time-string "%H:%M:%S" (current-time)) 'epe-time-face)
-;;         (epe-colorize-with-face  " " 'epe-delimiter-face)
-;; 	    (epe-colorize-with-face (user-login-name) 'epe-user-face)
-;; 	    (epe-colorize-with-face "@" 'epe-host-face)
-;; 	    (epe-colorize-with-face (system-name) 'epe-host-face))))
-;;    (concat
-;;     (epe-colorize-with-face ":" 'epe-dir-face)
-;;     (epe-colorize-with-face (concat (epe-fish-path (eshell/pwd))) 'epe-dir-face)
-;;     (epe-colorize-with-face  "\n" 'epe-delimiter-face))
-;;    (epe-colorize-with-face  "└─" 'epe-delimiter-face)
-;;    (when epe-show-python-info
-;;      (when (fboundp 'epe-venv-p)
-;;        (when (and (epe-venv-p) venv-current-name)
-;; 	     (epe-colorize-with-face (concat "(" venv-current-name ") ") 'epe-venv-face))))
-;;    (when (epe-git-p)
-;;      (concat
-;;       (epe-colorize-with-face ":" 'epe-dir-face)
-;;       (epe-colorize-with-face
-;;        (concat (epe-git-branch)
-;; 	           (epe-git-dirty)
-;; 	           (epe-git-untracked)
-;; 	           (let ((unpushed (epe-git-unpushed-number)))
-;; 		         (unless (= unpushed 0)
-;; 		           (concat ":" (number-to-string unpushed)))))
-;;        'epe-git-face)))
-;;    (epe-colorize-with-face " λ" 'epe-symbol-face)
-;;    (epe-colorize-with-face (if (= (user-uid) 0) "#" "") 'epe-sudo-symbol-face)
-;;    " "))
 
 
 
@@ -441,6 +450,7 @@ directory to make multiple eshell windows easier."
   (let ((inhibit-read-only t))
     (erase-buffer)))
 
+;; using the alias doesn't pull in the current working directory, use function instead
 (defun eshell/gst (&rest args)
   (magit-status (pop args) nil)
   (eshell/echo))   ;; The echo command suppresses output
