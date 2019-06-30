@@ -284,6 +284,31 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 ;; counsel-M-x use smex, I have switch to amx
 ;; (global-set-key (kbd "M-x") 'counsel-M-x)
 
+(use-package deadgrep
+  :init
+  (with-eval-after-load "evil-evilified-state"
+    (evilified-state-evilify deadgrep-mode deadgrep-mode-map
+      (kbd "RET") 'deadgrep-visit-result
+      (kbd "<S-return>") 'deadgrep-visit-result-other-window
+      "go" 'deadgrep-visit-result-other-window
+      "gr" 'deadgrep-restart
+      (kbd "C-j") 'deadgrep-forward
+      (kbd "C-k") 'deadgrep-backward
+      (kbd "TAB") 'deadgrep-toggle-file-results
+
+      "i" 'deadgrep-edit-mode
+
+      ;; FIXME: Maybe we should bind this to something?
+      ;; (define-key map (kbd "C-c C-k") #'deadgrep-kill-process)
+
+      ;; Quit
+      "q" 'quit-window
+      "ZZ" 'quit-window
+      "ZQ" 'evil-quit)
+
+    (evilified-state-evilify deadgrep-edit-mode deadgrep-edit-mode-map
+      (kbd "RET") 'deadgrep-visit-result
+      (kbd "<escape>") 'deadgrep-mode)))
 
 (provide '50search)
 
