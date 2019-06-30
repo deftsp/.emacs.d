@@ -1,0 +1,5 @@
+(:name deadgrep
+ :description "fast, friendly searching with ripgrep and Emacs"
+ :type github
+ :depends (cl-lib s dash spinner)
+ :pkgname "Wilfred/deadgrep")
