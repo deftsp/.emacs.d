@@ -22,6 +22,8 @@
           company-require-match nil ; company-explicit-action-p
           company-dabbrev-downcase nil
           company-tooltip-limit 20
+          company-minimum-prefix-length 2
+          company-selection-wrap-around t
           ;; company-backends (delete 'company-ropemacs company-backends)
           ;; company-backends (delete 'company-capf company-backends)
           company-idle-delay 0.2))
@@ -41,12 +43,36 @@
     (add-to-list 'company-begin-commands 'company-complete)
     (add-to-list 'company-backends 'company-cmake)
 
+    ;; Use the tab-and-go frontend.
+    ;; Allows TAB to select and complete at the same time.
+    ;; 'tng' means 'tab and go'
+    (company-tng-configure-default)
+
     (use-package company-flx
       :init
       (setq company-flx-limit 600)
       :config
       (company-flx-mode +1))
 
+    ;; https://github.com/TommyX12/company-tabnine
+    ;; workaround for company-transformers
+    ;; company-transformers or plugins that use it (such as company-flx-mode) can interfere with TabNine's sorting.
+    (setq company-tabnine--disable-next-transform nil)
+    (defun paloryemacs-company--transform-candidates (func &rest args)
+      (if (not company-tabnine--disable-next-transform)
+          (apply func args)
+        (setq company-tabnine--disable-next-transform nil)
+        (car args)))
+
+    (defun paloryemacs-company-tabnine (func &rest args)
+      (when (eq (car args) 'candidates)
+        (setq company-tabnine--disable-next-transform t))
+      (apply func args))
+
+    (advice-add #'company--transform-candidates :around #'paloryemacs-company--transform-candidates)
+    (advice-add #'company-tabnine :around #'paloryemacs-company-tabnine)
+
+    ;;;
     (use-package company-quickhelp
       :config
       (progn
@@ -55,28 +81,27 @@
 
 
 (defvar paloryemacs/company-common-backends
-  '(company-capf
+  '(company-tabnine
+    company-capf
     company-files
-    company-dabbrev
+    ;; company-dabbrev ; which complete some string sypmbol
     company-yasnippet))
 
 (defvar paloryemacs/company-prog-common-backends
-  (cons '(company-dabbrev-code
+  (list paloryemacs/company-common-backends
+        '(company-dabbrev-code
           company-gtags
           company-etags
-          company-keywords)
-        paloryemacs/company-common-backends)
+          company-keywords))
   "common company backends(as grouped) for editing programming language source code.")
 
 (add-hook 'c-mode-common-hook 'paloryemacs/company-c-mode-common-setup)
 (defun paloryemacs/company-c-mode-common-setup ()
   (let ((backends paloryemacs/company-prog-common-backends))
-    (push 'company-clang backends)
-    (push 'company-semantic backends)
-    (push 'company-xcode backends)
-    (push 'company-cmake backends)
-    (set (make-local-variable 'company-backends) backends)))
-
+    (set (make-local-variable 'company-backends) backends)
+    ;; (add-to-list 'backends
+    ;;              '(company-clang company-semantic company-xcode company-cmake))
+    ))
 
 (add-hook 'scheme-mode-hook 'paloryemacs/company-scheme-mode-setup)
 (defun paloryemacs/company-scheme-mode-setup ()
@@ -135,8 +160,7 @@
   (let ((backends paloryemacs/company-common-backends))
     (setq-local company-backends backends)
     (when (fboundp 'company-tide)
-      (add-to-list 'company-backends 'company-tide))
-    ))
+      (add-to-list 'company-backends 'company-tide))))
 
 
 (provide '40company-mode)

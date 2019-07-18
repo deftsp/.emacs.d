@@ -1,0 +1,5 @@
+(:name unicode-escape
+ :type github
+ :pkgname "kosh04/unicode-escape.el"
+ :description "Escape/Unescape unicode notations"
+ :depends (names dash))

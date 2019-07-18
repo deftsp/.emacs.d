@@ -1,0 +1,5 @@
+(:name company-tabnine
+ :description "A company-mode backend for TabNine"
+ :type github
+ :pkgname "TommyX12/company-tabnine"
+ :depends (company-mode cl-lib dash s unicode-escape))
