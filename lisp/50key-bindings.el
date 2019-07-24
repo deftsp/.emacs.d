@@ -97,9 +97,9 @@ offer a list of recently clocked tasks to clock into. "
   ;; "oc" 'org-capture
   "occ"   'org-clock-cancel
   "oce"   'org-clock-modify-effort-estimate
-  "oci"   'org-clock-in-last
+  "oci"   'org-mru-clock-in
   "ocI"   'paloryemacs/org-clock-in
-  "ocj"   'org-clock-jump-to-current-clock
+  "ocj"   'org-mru-clock-select-recent-task  ; org-clock-jump-to-current-clock
   "ocg"   'org-clock-goto
   "oco"   'org-clock-out
   "ocr"   'org-resolve-clocks
