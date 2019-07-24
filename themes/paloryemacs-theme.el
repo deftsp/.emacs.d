@@ -168,6 +168,10 @@
    '(diary ((t (:background "cyan2" :foreground "#222222"))))
    '(calendar-today ((t (:background "LightGoldenrod" :foreground "#000064"))))
 
+   '(cal-china-x-general-holiday-face ((t (:background "#9e3e83" :foreground "#000064"))))
+
+
+
    ;; term
    '(term-color-blue ((t (:foreground "DeepSkyBlue4"))))
 
@@ -210,6 +214,9 @@
    '(org-block-end-line ((t (:background "#30424e"))))
    '(org-ellipsis ((t (:underline nil :foreground "#c5e666" :background unspecified))))
    '(org-mode-line-clock ((t (:background nil :foreground "#268bd2"))))
+
+   '(org-journal-calendar-entry-face ((t (:background nil :foreground "#a5e692" :weight bold))))
+
 
    '(warning ((t (:foreground "VioletRed" :weight bold))))
 
