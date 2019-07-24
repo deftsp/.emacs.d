@@ -1,6 +1,6 @@
 ;;; 50web.el ---                                -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2014  Shihpin Tseng
+;; Copyright (C) 2019  Shihpin Tseng
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
@@ -43,22 +43,22 @@
   (with-eval-after-load 'web-mode
     (add-hook 'web-mode-hook 'add-node-modules-path)))
 
-(use-package tide
-  :init
-  (progn
-    ;; tide server slow start
-    (setq tide-sync-request-timeout 5))
-  :after (typescript-mode company flycheck)
-  :bind (("M-." . tide-jump-to-definition)
-         ("M-," . tide-jump-back))
-  :hook ((typescript-mode . tide-setup)
-         ;; (typescript-mode . tide-hl-identifier-mode)
-         ;; (before-save . tide-format-before-save)
-         (web-mode . tide-setup))
-  :config
-  (with-eval-after-load 'flycheck
-    ;; (flycheck-add-next-checker 'javascript-eslint 'tsx-tide 'append)
-    (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)))
+;; (use-package tide
+;;   :init
+;;   (progn
+;;     ;; tide server slow start
+;;     (setq tide-sync-request-timeout 5))
+;;   :after (typescript-mode company flycheck)
+;;   :bind (("M-." . tide-jump-to-definition)
+;;          ("M-," . tide-jump-back))
+;;   :hook ((typescript-mode . tide-setup)
+;;          ;; (typescript-mode . tide-hl-identifier-mode)
+;;          ;; (before-save . tide-format-before-save)
+;;          (web-mode . tide-setup))
+;;   :config
+;;   (with-eval-after-load 'flycheck
+;;     ;; (flycheck-add-next-checker 'javascript-eslint 'tsx-tide 'append)
+;;     (flycheck-add-next-checker 'javascript-eslint 'jsx-tide 'append)))
 
 (use-package web-mode
   :defer t
