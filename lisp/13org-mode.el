@@ -1143,8 +1143,15 @@ If VANILLA is non-nil, run the standard `org-capture'."
   :bind* (("C-c C-x i" . org-mru-clock-in)
           ("C-c C-x C-j" . org-mru-clock-select-recent-task))
   :init
+  (defun paloryemacs/org-mru-clock-exclude ()
+    "predicate for `org-mru-clock-predicate', excluding DONE and :ARCHIVE:."
+    (not (or (org-entry-is-done-p)
+             (member org-archive-tag (org-get-tags-at)))))
+
   (setq org-mru-clock-files #'org-agenda-files
         org-mru-clock-how-many 100
+        org-mru-clock-keep-formatting t
+        org-mru-clock-predicate 'paloryemacs/org-mru-clock-exclude
         org-mru-clock-completing-read #'ivy-completing-read))
 
 ;;; Other frame
