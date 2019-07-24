@@ -249,7 +249,7 @@ If the universal prefix argument is used then kill the buffer too."
 ;; http://emacswiki.org/emacs/display-buffer-for-wide-screen.el
 ;; minimum width of window to be split horizontally for `display-buffer'
 (setq split-width-threshold 200
-      split-height-threshold 80)
+      split-height-threshold 20)
 
 ;; (defvaralias 'split-window-horizontally-threshold-width 'split-width-threshold)
 
