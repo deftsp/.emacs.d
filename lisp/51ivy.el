@@ -57,6 +57,8 @@
       "sgp" 'counsel-git-grep))
   :config
   (progn
+    (with-eval-after-load 'shell
+      (define-key shell-mode-map (kbd "C-r") 'counsel-shell-history))
     (setq counsel-find-file-ignore-regexp
           (string-join paloryemacs/ignore-buffer-or-file-regexp "\\|"))
     (define-key counsel-find-file-map (kbd "C-h") 'counsel-up-directory)
