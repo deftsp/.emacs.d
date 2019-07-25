@@ -1531,6 +1531,21 @@ If VANILLA is non-nil, run the standard `org-capture'."
       (org-clock-persistence-insinuate)))
   :config
   (progn
+    ;; the function `fit-window-to-buffer' in `org-clock-select-task' shrink the
+    ;; window height overmuch(However, run it in  edebug have no problem). Add a
+    ;; empty line and double full shape space `　' for better look. Of course,
+    ;; it a dirty fix.
+
+    ;; TODO: It is seems caused by unmatched font and mode-line height, the help
+    ;; message of org-clock-resolve which used fit-window-to-buffer have the
+    ;; same problem.
+    (add-hook 'org-clock-before-select-task-hook
+              'paloryemacs//add-extra-empty-lines-to-clock-task-select-buffer)
+    (defun paloryemacs//add-extra-empty-lines-to-clock-task-select-buffer ()
+      (if (string= (buffer-name) "*Clock Task Select*")
+          (insert "\n　")
+        (error "Run in *Clock Task Select* buffer only.")))
+
     (defun paloryemacs/update-hammerspoon-org-clock-bar ()
       (let ((text (if (and (boundp 'org-mode-line-string)
                            org-mode-line-string
