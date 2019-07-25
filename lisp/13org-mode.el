@@ -333,6 +333,7 @@
       "Co" 'org-clock-out
       "Cr" 'org-resolve-clocks
       "Cd" 'org-clock-display           ; C-c C-x C-d
+      "Cz" 'paloryemacs/org-insert-clock-range
 
       "dd" 'org-deadline
       "ds" 'org-schedule
@@ -501,6 +502,11 @@
       (lambda () (interactive)
         (org-eval-in-calendar '(calendar-forward-year 1))))))
 
+
+(defun paloryemacs/org-insert-clock-range ()
+  (interactive)
+  (org-clock-in nil (apply 'encode-time (org-parse-time-string (org-read-date))))
+  (org-resolve-clocks))
 
 ;; https://blog.aaronbieber.com/2016/09/24/an-agenda-for-life-with-org-mode.html
 
