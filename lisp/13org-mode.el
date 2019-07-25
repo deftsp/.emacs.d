@@ -2122,8 +2122,11 @@ prepended to the element after the #+HEADER: tag."
           org-journal-time-format "%R "
           org-journal-carryover-items "TODO=\"TODO\"|TODO=\"NEXT\"|TODO=\"WAITING\"|TODO=\"HOLD\""
           org-journal-enable-agenda-integration t)
+    (paloryemacs/declare-prefix "oj" "org-journal")
     (paloryemacs/declare-prefix "aoj" "org-journal")
     (paloryemacs/set-leader-keys
+      "ojj" 'org-journal-new-entry
+      "ojs" 'org-journal-search-forever
       "aojj" 'org-journal-new-entry
       "aojs" 'org-journal-search-forever))
   :config
