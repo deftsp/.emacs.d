@@ -237,6 +237,7 @@
     (add-to-list 'org-modules 'org-mouse)
     (add-to-list 'org-modules 'org-annotate-file)
     (add-to-list 'org-modules 'org-info)
+    (add-to-list 'org-modules 'org-id)
     (add-to-list 'org-modules 'org-man)
     (add-to-list 'org-modules 'org-eval)
     (add-to-list 'org-modules 'org-panel)
@@ -253,6 +254,9 @@
     ;; status after open/refresh org-agenda, even no changes happen
     ;; (add-to-list 'org-modules 'org-depend)
     ;; https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org
+
+    (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+
     (use-package evil-org
       :diminish evil-org-mode
       :after org
