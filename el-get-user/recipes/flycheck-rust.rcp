@@ -1,0 +1,5 @@
+(:name flycheck-rust
+ :description "Better Rust/Cargo support for Flycheck "
+ :type github
+ :pkgname "flycheck/flycheck-rust"
+ :depends (flycheck dash))

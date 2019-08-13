@@ -7,7 +7,13 @@
 
 (use-package rust-mode
   :config
-  (setq rust-indent-method-chain t))
+  (setq rust-indent-method-chain t
+        rust-format-on-save t)
+
+  (use-package flycheck-rust
+    :after flycheck
+    :init
+    (add-hook 'rust-mode-hook #'flycheck-rust-setup)))
 
 ;; cargo-mode: execute cargo commands easily
 ;; https://github.com/kwrooijen/cargo.el
