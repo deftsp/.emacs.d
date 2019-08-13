@@ -1349,7 +1349,7 @@ inputting math (Unicode) symbols." t))
   :defer t
   :init
   (paloryemacs/set-leader-keys
-    "ft"    #'treemacs-toggle
+    "ft"    #'treemacs
     "fT"    #'treemacs
     "fB"    #'treemacs-bookmark
     "fp" #'treemacs-projectile-toggle
@@ -1384,6 +1384,18 @@ inputting math (Unicode) symbols." t))
     (treemacs-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode t)
+
+    (defun paloryemacs/treemacs-mode-init ()
+      ;; (setq mode-line-format nil)
+
+      )
+    (add-hook 'treemacs-mode-hook #'paloryemacs/treemacs-mode-init)
+
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred)) (`(t . _)
+       (treemacs-git-mode 'simple)))
 
     (defun paloryemacs/treemacs-header-with-brackets (current-root)
       (format "[%s]" (file-name-nondirectory current-root)))
