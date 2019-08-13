@@ -304,6 +304,14 @@
    '(diredp-exec-priv ((t (:foreground "red" :background unspecified))))
    '(diredp-flag-mark-line ((t (:foreground "white" :background "blue4"))))
 
+
+   '(dired-subtree-depth-1-face ((t (:foreground "white" :background "#252e30"))))
+   '(dired-subtree-depth-2-face ((t (:foreground "white" :background "#232a2b"))))
+   '(dired-subtree-depth-3-face ((t (:foreground "white" :background "#212627"))))
+   '(dired-subtree-depth-4-face ((t (:foreground "white" :background "#1e2233"))))
+   '(dired-subtree-depth-5-face ((t (:foreground "white" :background "#1c1d1e"))))
+   '(dired-subtree-depth-6-face ((t (:foreground "white" :background "#1a191a"))))
+
    ;; irfc
    '(irfc-head-name-face ((t (:foreground "violet" :underline nil))))
    '(irfc-head-number-face ((t (:foreground "violet"))))
