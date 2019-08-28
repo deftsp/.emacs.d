@@ -19,7 +19,9 @@
   (progn
     (setq company-show-numbers t
           company-clang-insert-arguments nil
-          company-require-match nil ; company-explicit-action-p
+          company-require-match nil ; company-explicit-action-p; Don't require match, so you can still move your cursor as expected.
+          company-tooltip-align-annotations t ; Align annotation to the right side.
+          ;; company-eclim-auto-save nil ; Stop eclim auto save.
           company-dabbrev-downcase nil
           company-tooltip-limit 20
           company-minimum-prefix-length 2
@@ -48,12 +50,6 @@
     ;; 'tng' means 'tab and go'
     (company-tng-configure-default)
 
-    (use-package company-flx
-      :init
-      (setq company-flx-limit 600)
-      :config
-      (company-flx-mode +1))
-
     ;; https://github.com/TommyX12/company-tabnine
     ;; workaround for company-transformers
     ;; company-transformers or plugins that use it (such as company-flx-mode) can interfere with TabNine's sorting.
@@ -79,6 +75,23 @@
         (company-quickhelp-mode +1)
         (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))))
 
+;;; company-flx -- instead by company-fuzzy
+;; (use-package company-flx
+;;   :init
+;;   (setq company-flx-limit 600)
+;;   :config
+;;   (company-flx-mode +1))
+
+
+;; TODO: when enable company-fuzzy, nothing pop out. Maybe be conflict with company-tabnine
+;; (use-package company-fuzzy
+;;   :after company
+;;   :init
+;;   (setq company-fuzzy-sorting-backend 'flx)
+;;   (setq company-fuzzy-prefix-ontop nil)
+;;   :config
+;;   (setq company-fuzzy-show-annotation t)
+;;   (global-company-fuzzy-mode +1))
 
 (defvar paloryemacs/company-common-backends
   '(company-tabnine
