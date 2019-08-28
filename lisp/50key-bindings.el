@@ -176,7 +176,7 @@ offer a list of recently clocked tasks to clock into. "
 (paloryemacs/set-leader-keys
   ;; "b<1-9>" 'buffer-to-window-<1-9>
   "TAB"   'paloryemacs/alternate-buffer
-  "bb"    'counsel-switch-buffer  ; instead ivy-switch-buffer, counsel-switch-buffer have live preiview
+  "bb"    'ivy-switch-buffer ; counsel-switch-buffer have live preiview
   "bB"    'ibuffer
   "bd"    'paloryemacs/kill-this-buffer
   "be"    'paloryemacs/safe-erase-buffer
