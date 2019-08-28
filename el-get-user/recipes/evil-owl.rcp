@@ -1,0 +1,5 @@
+(:name evil-owl
+ :type github
+ :description "preview registers and marks before actually using them"
+ :pkgname "mamapanda/evil-owl"
+ :depends (evil))

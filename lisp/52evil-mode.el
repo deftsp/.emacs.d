@@ -1102,6 +1102,31 @@ if COUNT is negative. "
     (setq evil-textobj-syntax-i-key "h")
     (setq evil-textobj-syntax-a-key "h")))
 
+(use-package evil-owl
+  :after evil
+  :config
+  (setq evil-owl-display-method 'posframe)
+
+  (if (eq evil-owl-display-method 'window)
+      (progn
+        (setq evil-owl-max-string-length 500)
+        (add-to-list 'display-buffer-alist
+                     '("*evil-owl*"
+                       (display-buffer-in-side-window)
+                       (side . bottom)
+                       (window-height . 0.3))))
+    (setq evil-owl-extra-posframe-args '(:width 60 :height 30)
+          evil-owl-max-string-length 50))
+
+  (setq evil-owl-idle-delay 0.3)
+  (setq evil-owl-header-format      "# %s"
+        evil-owl-register-format    "  %r: %s"
+        evil-owl-local-mark-format  "  %m: [l: %-5l, c: %-5c]"
+        evil-owl-global-mark-format "  %m: [l: %-5l, c: %-5c] %b"
+        evil-owl-separator          "\n")
+
+  (evil-owl-mode +1))
+
 ;;; defun text-object
 (with-eval-after-load 'evil
   ;; https://github.com/Ambrevar/dotfiles/blob/master/.emacs.d/lisp/init-evil.el
