@@ -37,7 +37,8 @@
               'paloryemacs/sql-interactive-mode-init)
 
     (defun paloryemacs/sql-mode-init ()
-      (sqlind-minor-mode +1))
+      ;; (sqlind-minor-mode +1)
+      )
 
     (add-hook 'sql-mode-hook 'paloryemacs/sql-mode-init)
 
