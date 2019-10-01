@@ -1,0 +1,4 @@
+(:name dart-mode
+ :type github
+ :description "An Emacs mode for the Dart language"
+ :pkgname "bradyt/dart-mode")

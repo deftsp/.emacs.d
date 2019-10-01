@@ -353,6 +353,7 @@ kill internal buffers too."
           (inf-ruby-mode             . emacs)
           (log-edit-mode             . emacs)
           (flycheck-error-list-mode  . evilified)
+          (flutter-mode  . evilified)
           (fundamental-mode          . normal)
           (erc-mode                  . emacs)
           (git-commit-mode           . insert)

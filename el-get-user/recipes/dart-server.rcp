@@ -1,0 +1,5 @@
+(:name dart-server
+ :type github
+ :description "An Emacs minor mode for the Dart server "
+ :pkgname "bradyt/dart-server"
+ :depends (cl-lib s dash flycheck))

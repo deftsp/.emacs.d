@@ -38,6 +38,7 @@
 (require '50clojure)
 (require '50common-lisp)
 (require '50completion)
+(require '50dart-mode)
 (require '50dictionary)
 (require '50dired)
 (require '50display)

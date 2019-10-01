@@ -1,0 +1,5 @@
+(:name flutter
+ :description "Flutter tools for Emacs"
+ :type github
+ :pkgname "amake/flutter.el"
+ :depends (cl-lib flycheck))
