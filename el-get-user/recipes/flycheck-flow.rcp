@@ -1,0 +1,5 @@
+(:name flycheck-flow
+ :description "Flycheck interface to Flow, a static type checker, designed to find type errors in JavaScript programs."
+ :type github
+ :pkgname "lbolla/emacs-flycheck-flow"
+ :depends (flycheck))

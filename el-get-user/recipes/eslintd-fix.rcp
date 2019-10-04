@@ -1,0 +1,4 @@
+(:name eslintd-fix
+ :type github
+ :description "Emacs minor-mode to automatically fix javascript with eslint_d."
+ :pkgname "aaronjensen/eslintd-fix")

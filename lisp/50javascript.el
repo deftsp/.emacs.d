@@ -101,5 +101,32 @@
       "xmj" 'js2r-move-line-down
       "xmk" 'js2r-move-line-up)))
 
+(use-package eslintd-fix
+  :after web-mode)
+
+(use-package flycheck-flow
+  :after web-mode
+  :config
+  (with-eval-after-load 'flycheck
+    ;; flycheck-flow have already add
+    ;; (flycheck-add-next-checker 'javascript-eslint 'javascript-flow)
+    ;; (flycheck-add-next-checker 'javascript-flow 'javascript-flow-coverage)
+    ))
+
+(use-package flow-minor-mode
+  :after web-mode
+  :config
+  (with-eval-after-load 'flycheck
+    (flycheck-add-mode 'javascript-eslint 'flow-minor-mode)
+    (flycheck-add-mode 'javascript-flow 'flow-minor-mode)))
+
+;; instead by TabNine
+;; (use-package company-flow
+;;   :after web-mode
+;;   :config
+;;   (with-eval-after-load 'company
+;;     (add-to-list 'company-backends 'company-flow)))
+
+
 (provide '50javascript)
 ;;; 50javascript.el ends here

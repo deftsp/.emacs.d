@@ -1,0 +1,4 @@
+(:name flow-minor-mode
+ :type github
+ :description "Emacs minor mode for editing flowtype files."
+ :pkgname "an-sh/flow-minor-mode")
