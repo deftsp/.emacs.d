@@ -4,6 +4,7 @@ site-lisp/
 elpa/
 ede-projects.el
 private-ede-projects.el
+private-prodigy-service.el
 .DS_Store
 \#*\#
 TAGS
