@@ -19,6 +19,9 @@
     ;; (set-default 'flycheck-check-syntax-automatically nil)
     (setq flycheck-standard-error-navigation nil)
 
+    ;; https://github.com/mantoni/eslint_d.js
+    (setq flycheck-javascript-eslint-executable "eslint_d")
+
     ;; key bindings
     (paloryemacs/set-leader-keys
       "eb" 'flycheck-buffer

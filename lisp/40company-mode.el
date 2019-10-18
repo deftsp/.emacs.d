@@ -28,7 +28,7 @@
           company-selection-wrap-around t
           ;; company-backends (delete 'company-ropemacs company-backends)
           ;; company-backends (delete 'company-capf company-backends)
-          company-idle-delay 0.2))
+          company-idle-delay 0.5))
   :config
   (progn
     (define-key company-active-map (kbd "M-j") 'company-select-next)
