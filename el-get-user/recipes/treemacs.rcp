@@ -2,5 +2,5 @@
  :description "a tree layout file explorer for Emacs"
  :type github
  :pkgname "Alexander-Miller/treemacs"
- :load-path ("./src/elisp")
+ :load-path ("./src/elisp" "./src/extra")
  :depends (dash s f pfuture ace-window hydra evil projectile))

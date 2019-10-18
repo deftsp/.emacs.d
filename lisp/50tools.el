@@ -1348,13 +1348,12 @@ inputting math (Unicode) symbols." t))
   :commands treemacs--window-number-ten
   :defer t
   :init
-  (paloryemacs/set-leader-keys
-    "ft"    #'treemacs
-    "fT"    #'treemacs
-    "fB"    #'treemacs-bookmark
-    "fp" #'treemacs-projectile-toggle
-    "fP" #'treemacs-projectile
-    "f C-t" #'treemacs-find-file)
+  (progn
+    (paloryemacs/set-leader-keys
+      "ft"    #'treemacs
+      "fT"    #'treemacs
+      "fB"    #'treemacs-bookmark
+      "f C-t" #'treemacs-find-file))
   :config
   (progn
     ;; (paloryemacs/define-evil-state-face "treemacs" "MediumPurple1")
@@ -1409,13 +1408,26 @@ inputting math (Unicode) symbols." t))
 (use-package treemacs-projectile
   :defer t
   :init
-  (paloryemacs/set-leader-keys
-    "fp" #'treemacs-projectile-toggle
-    "fP" #'treemacs-projectile))
+  (progn
+    (defun paloryemacs/treemacs-project-toggle ()
+      "Toggle and add the current project to treemacs if not already added."
+      (interactive)
+      (if (eq (treemacs-current-visibility) 'visible)
+          (delete-window (treemacs-get-local-window))
+        (let ((path (projectile-ensure-project (projectile-project-root)))
+              (name (projectile-project-name)))
+          (unless (treemacs-current-workspace)
+            (treemacs--find-workspace))
+          (treemacs-do-add-project-to-workspace path name)
+          (treemacs-select-window))))
+
+
+    (paloryemacs/set-leader-keys
+      "fp" #'paloryemacs/treemacs-project-toggle
+      "fP" #'treemacs-projectile)))
 
 (use-package treemacs-magit
-  :after treemacs magit
-  )
+  :after (treemacs magit))
 
 ;; https://github.com/algernon/kaleidoscope.el
 ;; (kaleidoscope-send-command :help)

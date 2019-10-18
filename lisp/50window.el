@@ -221,7 +221,7 @@ If the universal prefix argument is used then kill the buffer too."
     (paloryemacs/set-leader-keys
       "`" 'winum-select-window-by-number
       "²" 'winum-select-window-by-number
-      "0" 'treemacs
+      "0" 'treemacs-select-window
       ;; "0" 'winum-select-window-0-or-10
       "1" 'winum-select-window-1
       "2" 'winum-select-window-2
