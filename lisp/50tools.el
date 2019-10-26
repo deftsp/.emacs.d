@@ -1358,6 +1358,8 @@ inputting math (Unicode) symbols." t))
   (progn
     ;; (paloryemacs/define-evil-state-face "treemacs" "MediumPurple1")
     (use-package treemacs-evil :demand t)
+    (use-package pfuture)
+
     (setq treemacs-icon-open-png   (propertize "⊖ " 'face 'treemacs-directory-face)
           treemacs-icon-closed-png (propertize "⊕ " 'face 'treemacs-directory-face)
           treemacs-icon-tag-node-open-png   (propertize "− " 'face 'font-lock-keyword-face)
@@ -1428,6 +1430,13 @@ inputting math (Unicode) symbols." t))
 
 (use-package treemacs-magit
   :after (treemacs magit))
+
+(use-package minimap
+  :init
+  (setq minimap-window-location 'left)
+  :config
+  (with-eval-after-load 'winum
+    (pushnew minimap-buffer-name winum-ignored-buffers)))
 
 ;; https://github.com/algernon/kaleidoscope.el
 ;; (kaleidoscope-send-command :help)
