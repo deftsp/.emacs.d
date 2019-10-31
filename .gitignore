@@ -46,6 +46,7 @@ tutorial
 server
 
 .org-id-locations
+org-journal.cache
 .diary.cyclic-tasks
 .session
 .wmncach.el
