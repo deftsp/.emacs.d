@@ -142,45 +142,47 @@ is achieved by adding the relevant text properties."
              (not (eq (point) (point-max))))
     (end-of-buffer)))
 
+;; C-a to beginning of command line or beginning of line?
+;; I use the following code. It makes C-a go to the beginning of the command line, unless it is already there, in which
+;; case it goes to the beginning of the line. So if you are at the end of the command line and want to go to the real
+;; beginning of line, hit C-a twice:
+(defun paloryemacs/eshell-maybe-bol ()
+  (interactive)
+  (let ((p (point)))
+    (eshell-bol)
+    (if (= p (point))
+        ;; with `paloryemacs//protect-eshell-prompt', `beginning-of-line' will
+        ;; not work
+        (beginning-of-line))))
+
+;; This is a key-command
+(defun paloryemacs/eshell-clear-keystroke ()
+  "Allow for keystrokes to invoke eshell/clear"
+  (interactive)
+  (eshell/clear)
+  (eshell-send-input))
+
+
+;; clear the buffer while preserving unsent input. This is more comint-like.
+(defun paloryemacs/eshell-clear-buffer ()
+  "Clear `eshell' buffer, comint-style."
+  (interactive)
+  (let ((input (eshell-get-old-input)))
+    (eshell/clear-scrollback)
+    (eshell-emit-prompt)
+    (insert input)))
+
+
 (defun paloryemacs/eshell-mode-init ()
+  (display-line-numbers-mode -1)
   (setq pcomplete-cycle-completions nil)
   (buffer-face-set 'paloryemacs/eshell-base-face)
   (unless shell-enable-smart-eshell
-    ;; we don't want auto-jump to prompt when smart eshell is enabled.
-    ;; Idea: maybe we could make auto-jump smarter and jump only if
-    ;; point is not on a prompt line
+    ;; we don't want auto-jump to prompt when smart eshell is enabled. Idea:
+    ;; maybe we could make auto-jump smarter and jump only if point is not on a
+    ;; prompt line
     (add-hook 'evil-insert-state-entry-hook
               'paloryemacs//eshell-auto-end nil t))
-
-  ;; C-a to beginning of command line or beginning of line?
-  ;; I use the following code. It makes C-a go to the beginning of the command line, unless it is already there, in which
-  ;; case it goes to the beginning of the line. So if you are at the end of the command line and want to go to the real
-  ;; beginning of line, hit C-a twice:
-  (defun paloryemacs/eshell-maybe-bol ()
-    (interactive)
-    (let ((p (point)))
-      (eshell-bol)
-      (if (= p (point))
-          ;; with `paloryemacs//protect-eshell-prompt', `beginning-of-line' will
-          ;; not work
-          (beginning-of-line))))
-
-  ;; This is a key-command
-  (defun paloryemacs/eshell-clear-keystroke ()
-    "Allow for keystrokes to invoke eshell/clear"
-    (interactive)
-    (eshell/clear)
-    (eshell-send-input))
-
-
-  ;; clear the buffer while preserving unsent input. This is more comint-like.
-  (defun paloryemacs/eshell-clear-buffer ()
-    "Clear `eshell' buffer, comint-style."
-    (interactive)
-    (let ((input (eshell-get-old-input)))
-      (eshell/clear-scrollback)
-      (eshell-emit-prompt)
-      (insert input)))
 
   (define-key eshell-mode-map (kbd "C-u") 'eshell-kill-input)
   (define-key eshell-mode-map (kbd "C-a") 'paloryemacs/eshell-maybe-bol)
@@ -189,9 +191,9 @@ is achieved by adding the relevant text properties."
   ;; Caution! this will erase buffer's content at C-l
   ;; (define-key eshell-mode-map (kbd "C-l") 'paloryemacs/eshell-clear-keystroke)
   (define-key eshell-mode-map (kbd "C-l") 'paloryemacs/eshell-clear-buffer)
-  ;; These don't work well in normal state
-  ;; due to evil/emacs cursor incompatibility
   (with-eval-after-load 'evil
+    ;; These don't work well in normal state due to evil/emacs cursor
+    ;; incompatibility
     (evil-define-key 'insert eshell-mode-map
       (kbd "C-k") 'eshell-previous-matching-input-from-input
       (kbd "C-j") 'eshell-next-matching-input-from-input)))
@@ -323,7 +325,7 @@ is achieved by adding the relevant text properties."
         "Face of delimiter in prompt."
         :group 'eshell-prompt)
 
-      (defun epe-theme-palory ()
+      (defun paloryemac//eshell-prompt-function ()
         "A eshell-prompt theme with full path, smiliar to oh-my-zsh theme."
         (setq eshell-prompt-regexp "^\n┌─.*\n.* λ[#]* ")
         (concat
@@ -366,7 +368,7 @@ is achieved by adding the relevant text properties."
          " "))
 
       (setq eshell-highlight-prompt nil
-            eshell-prompt-function 'epe-theme-palory))
+            eshell-prompt-function 'paloryemac//eshell-prompt-function))
 
     (use-package eshell-fringe-status
       :defer t
