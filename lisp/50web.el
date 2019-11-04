@@ -233,7 +233,24 @@
 
 
 (use-package json-mode
-  :defer t)
+  :defer t
+  :config
+  (defun paloryemacs/json-reformat-dwim (arg &optional start end)
+    "Reformat the whole buffer of the active region.
+If ARG is non-nil (universal prefix argument) then try to decode the strings.
+If ARG is a numerical prefix argument then specify the indentation level."
+    (interactive "P\nr")
+    (let ((json-reformat:indent-width js-indent-level)
+          (json-reformat:pretty-string? nil))
+      (cond
+       ((numberp arg) (setq json-reformat:indent-width arg))
+       (arg (setq json-reformat:pretty-string? t)))
+      (if (equal start end)
+          (save-excursion (json-reformat-region (point-min) (point-max)))
+        (json-reformat-region start end))))
+
+  (paloryemacs/set-leader-keys-for-major-mode 'json-mode
+    "=" 'paloryemacs/json-reformat-dwim))
 
 (use-package json-snatcher
   :defer t
@@ -244,16 +261,17 @@
 ;; https://github.com/yasuyk/web-beautify
 (use-package web-beautify
   :defer t
-  :init
-  (progn
-    (paloryemacs/set-leader-keys-for-major-mode 'js2-mode
-      "=" 'web-beautify-js)
-    (paloryemacs/set-leader-keys-for-major-mode 'json-mode
-      "=" 'web-beautify-js)
-    (paloryemacs/set-leader-keys-for-major-mode 'web-mode
-      "=" 'web-beautify-html)
-    (paloryemacs/set-leader-keys-for-major-mode 'css-mode
-      "=" 'web-beautify-css)))
+  ;; :init
+  ;; (progn
+  ;;   (paloryemacs/set-leader-keys-for-major-mode 'js2-mode
+  ;;     "=" 'web-beautify-js)
+  ;;   (paloryemacs/set-leader-keys-for-major-mode 'json-mode
+  ;;     "=" 'web-beautify-js)
+  ;;   (paloryemacs/set-leader-keys-for-major-mode 'web-mode
+  ;;     "=" 'web-beautify-html)
+  ;;   (paloryemacs/set-leader-keys-for-major-mode 'css-mode
+  ;;     "=" 'web-beautify-css))
+  )
 
 ;; Live evaluation of JS buffer change.
 (use-package livid-mode

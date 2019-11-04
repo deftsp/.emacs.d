@@ -369,6 +369,9 @@
       "C-S-j" 'org-shiftcontroldown
       "C-S-k" 'org-shiftcontrolup
 
+      ;; other
+      "ori" 'org-redisplay-inline-images
+
       ;; Subtree editing
       "sa" 'org-archive-subtree
       "sb" 'org-tree-to-indirect-buffer
@@ -429,6 +432,7 @@
       "if" 'org-footnote-new
       "ih" 'org-insert-heading
       "iH" 'org-insert-heading-after-current
+      "ii" 'paloryemacs/org-insert-image
       "iK" 'paloryemacs/insert-keybinding-org
       "il" 'org-insert-link
       "ip" 'org-set-property
