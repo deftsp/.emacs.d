@@ -5,6 +5,8 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;;; Commentary:
+
+;;; TODO: try https://github.com/noctuid/lispyville
 ;;; Code:
 
 ;;; tooltip-help
