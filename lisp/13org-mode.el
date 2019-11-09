@@ -1448,19 +1448,22 @@ If VANILLA is non-nil, run the standard `org-capture'."
 (add-hook 'org-agenda-finalize-hook 'paloryemacs/org-agenda-to-appt)
 
 (use-package org-protocol
-  :defer 3
+  :after (org)
   :config
   (progn
     ;; https://github.com/alphapapa/org-protocol-capture-html
     (use-package org-protocol-capture-html)
 
-    (defun paloryemacs/on-input-source-change-to-chinese ()
-      (when (and (fboundp 'evil-mode)
-                 evil-mode
-                 (not (minibufferp))
-                 (not isearch-mode)
-                 (eq 'normal evil-state))
-        (call-interactively 'evil-insert)))
+    (defun paloryemacs/on-select-previous-input-source (data)
+      "Swith to insert when switch to Rime input method"
+      (let ((source-id (plist-get data :source-id)))
+        (when (string-equal source-id "im.rime.inputmethod.Squirrel.Rime")
+          (let ((state (bound-and-true-p evil-state)))
+            (when (and state
+                       (eq state 'normal)
+                       (not (minibufferp))
+                       (not isearch-mode))
+              (call-interactively 'evil-insert))))))
 
     ;; open -g 'org-protocol://hammerspoon?action=org-clock-goto'
     (defun org-protocol-hammerspoon (data)
@@ -1468,8 +1471,8 @@ If VANILLA is non-nil, run the standard `org-capture'."
       (let* ((action (plist-get data :action)))
         (cond ((string= action "org-clock-goto")
                (call-interactively 'org-clock-goto))
-              ((string= action "input-source-change-to-chinese")
-               (paloryemacs/on-input-source-change-to-chinese)))))
+              ((string= action "select-previous-input-source")
+               (paloryemacs/on-select-previous-input-source data)))))
 
     (add-to-list 'org-protocol-protocol-alist
                  '("Handle action from hammerspoon"
