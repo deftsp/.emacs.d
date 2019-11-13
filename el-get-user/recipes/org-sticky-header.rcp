@@ -1,0 +1,4 @@
+(:name org-sticky-header
+ :description "Show off-screen Org heading at top of window"
+ :type github
+ :pkgname "alphapapa/org-sticky-header")
