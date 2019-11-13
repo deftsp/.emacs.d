@@ -582,10 +582,37 @@ kill internal buffers too."
 
 ;;; evil-matchit
 (use-package evil-matchit
-  :defer 3
+  :after (evil)
+  :commands (evilmi-inner-text-object evilmi-outer-text-object evilmi-jump-items)
+  :init
+  (general-define-key
+   :states '(normal visual motion operator)
+   "M" 'evilmi-jump-items)
+  ;; (general-define-key
+  ;;  :keymaps '(evil-inner-text-objects-map)
+  ;;  "m" 'evilmi-inner-text-object)
+  ;; (general-define-key
+  ;;  :keymaps '(evil-outer-text-objects-map)
+  ;;  "m" 'evilmi-outer-text-object)
   :config
   (global-evil-matchit-mode +1))
 
+(evil-define-text-object paloryemacs/evil-textobj-a-defun (count &optional beg end type)
+  (evil-select-an-object 'evil-defun beg end type count))
+
+(evil-define-text-object paloryemacs/evil-textobj-inner-defun (count &optional beg end type)
+  (evil-select-inner-object 'evil-defun beg end type count))
+
+(define-key evil-inner-text-objects-map "m" 'evil-inner-defun)
+(define-key evil-outer-text-objects-map "m" 'evil-a-defun)
+
+(general-define-key
+ :keymaps '(evil-inner-text-objects-map)
+ "m" 'paloryemacs/evil-textobj-inner-defun)
+
+(general-define-key
+ :keymaps '(evil-outer-text-objects-map)
+ "m" 'paloryemacs/evil-textobj-a-defun)
 
 ;;; evil-textobj-between.el
 (use-package evil-textobj-between
