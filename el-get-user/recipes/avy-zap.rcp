@@ -1,0 +1,5 @@
+(:name avy-zap
+ :description "Zap to char using `avy'"
+ :type github
+ :pkgname "cute-jumper/avy-zap"
+ :depends (avy))

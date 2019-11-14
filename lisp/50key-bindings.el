@@ -614,8 +614,12 @@ it marks the next ARG lines after the ones already marked."
 ;;     (zap-to-char arg char)
 ;;     (yank)))
 
-(global-set-key (kbd "M-z") 'ace-jump-zap-up-to-char-dwim)
-(global-set-key (kbd "M-Z") 'ace-jump-zap-to-char-dwim)
+
+(use-package avy-zap
+  :commands (avy-zap-to-char-dwim avy-zap-up-to-char-dwim)
+  :init
+  (global-set-key (kbd "M-z") 'avy-zap-up-to-char-dwim)
+  (global-set-key (kbd "M-Z") 'avy-zap-to-char-dwim))
 
 ;;; extral key map
 ;; (setq paloryemacs/extra-key-map (make-keymap))
