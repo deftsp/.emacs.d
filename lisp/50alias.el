@@ -81,7 +81,7 @@
 (defalias 'bp  'bm-previous)
 (defalias 'bs  'bm-show)
 (defalias 'bsa 'bm-show-all)
-(defalias 'abl 'anything-bm-list)
+;; (defalias 'abl 'anything-bm-list)
 
 ;; traverselisp
 (defalias 'tdr 'traverse-deep-rfind)

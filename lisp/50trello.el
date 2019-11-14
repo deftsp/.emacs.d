@@ -13,6 +13,7 @@
 
 
 (use-package org-trello
+  :commands (org-trello-mode)
   :init
   (progn
     (add-to-list 'auto-mode-alist '("\\.trello$" . org-mode))
