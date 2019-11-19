@@ -74,10 +74,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; A template for ASDF system files:
-
-(push `(("\\.asd\\'" . "ASDF Skeleton")
-        "System Name: "
-        "
+(with-eval-after-load "auto-insert"
+  (push `(("\\.asd\\'" . "ASDF Skeleton")
+          "System Name: "
+          "
 (eval-when (:compile-toplevel :load-toplevel :execute)
   (unless (find-package :" str ".system)
     (defpackage :" str ".system
@@ -93,8 +93,7 @@
   :version \"" (read-string "Version: ") "\"
   :components (())
   :depends-on ())")
-  auto-insert-alist)
-
+        auto-insert-alist))
 
 ;; How do you use this ?
 ;; It should work automatically if you have auto-insert enabled:

@@ -29,7 +29,6 @@
 (require '50alias)
 (require '50android)
 (require '50asm-mode)
-;; (require '50auto-complete)
 (require '50auto-fill)
 (require '50auto-insert)
 ;; (require '50bbdb)
@@ -115,13 +114,9 @@
 (require '50web)
 (require '50window)
 (require '50xcode)
-(require '51CommonLispTemplates)
-;; (require '51helm)
 
 (require '52emms)
-;; (require '52icicles)
 (require '52evil-mode)
-;; (require '52ido)
 
 (require '60session)
 ;; (require '62winring)
