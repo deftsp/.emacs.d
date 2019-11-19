@@ -1438,6 +1438,13 @@ inputting math (Unicode) symbols." t))
   (with-eval-after-load 'winum
     (pushnew minimap-buffer-name winum-ignored-buffers)))
 
+
+(use-package anki-editor
+  :commands (anki-editor-push-notes
+             anki-editor-retry-failure-notes
+             anki-editor-insert-note
+             anki-editor-cloze-region))
+
 ;; https://github.com/algernon/kaleidoscope.el
 ;; (kaleidoscope-send-command :help)
 ;; (kaleidoscope-send-command :version)
