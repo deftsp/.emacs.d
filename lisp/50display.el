@@ -8,7 +8,9 @@
 
 ;;; frame parameters
 (setq frame-resize-pixelwise t
-      window-resize-pixelwise t)
+      ;; enable `window-resize-pixelwise' will cause the help window get the
+      ;; wrong height, that is to say only show part of the last line
+      window-resize-pixelwise nil)
 
 (when (memq window-system '(x w32 mac ns))
   (setq initial-frame-alist `((tool-bar-lines . 0)
