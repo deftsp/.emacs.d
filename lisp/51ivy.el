@@ -73,7 +73,7 @@
   :init
   (progn
     (setq ivy-display-style 'fancy)
-    (setq ivy-use-virtual-buffers t)
+    (setq ivy-use-virtual-buffers t) ; include recent(recentf) files and/or bookmarks
     ;; http://oremacs.com/2016/01/06/ivy-flx/
     ;; let flx (hopefully) sort the matches in a nice way
     (setq ivy-initial-inputs-alist nil)

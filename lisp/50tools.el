@@ -255,21 +255,21 @@ space and marks next symbol."
 ;;     (delete-char -1)))
 
 ;;; bookmark+
-(with-eval-after-load "bookmark+"
-  (setq bmkp-last-as-first-bookmark-file nil)
-  ;; (bmkp-global-auto-idle-bookmark-mode 1)
-  ;; it seems  highlight automatically not work
-  (setq bmkp-auto-light-when-set 'all-in-buffer
-        bmkp-auto-light-when-jump 'all-in-buffer)
+;; (with-eval-after-load "bookmark+"
+;;   (setq bmkp-last-as-first-bookmark-file nil)
+;;   ;; (bmkp-global-auto-idle-bookmark-mode 1)
+;;   ;; it seems  highlight automatically not work
+;;   (setq bmkp-auto-light-when-set 'all-in-buffer
+;;         bmkp-auto-light-when-jump 'all-in-buffer)
 
-  (setq bmkp-light-style-autonamed 'lfringe
-        bmkp-light-style-non-autonamed 'lfringe)
+;;   (setq bmkp-light-style-autonamed 'lfringe
+;;         bmkp-light-style-non-autonamed 'lfringe)
 
-  (when (fboundp 'define-fringe-bitmap)
-    (define-fringe-bitmap 'paloryemacs/marker-left   [#x00 #x00 #xFC #xFE #x0F #xFE #xFC #x00])
-    (define-fringe-bitmap 'paloryemacs/marker-right  [#x00 #x00 #x3F #x7F #xF0 #x7F #x3F #x00])
-    (setq bmkp-light-left-fringe-bitmap 'paloryemacs/marker-left)
-    (setq bmkp-light-right-fringe-bitmap 'paloryemacs/marker-right)))
+;;   (when (fboundp 'define-fringe-bitmap)
+;;     (define-fringe-bitmap 'paloryemacs/marker-left   [#x00 #x00 #xFC #xFE #x0F #xFE #xFC #x00])
+;;     (define-fringe-bitmap 'paloryemacs/marker-right  [#x00 #x00 #x3F #x7F #xF0 #x7F #x3F #x00])
+;;     (setq bmkp-light-left-fringe-bitmap 'paloryemacs/marker-left)
+;;     (setq bmkp-light-right-fringe-bitmap 'paloryemacs/marker-right)))
 
 
 ;;; bookmark history stack
