@@ -813,9 +813,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
   :defer t
   :init
   (progn
-    (setq org-agenda-files (list (concat org-directory "/GTD.org")
-                                 (concat org-directory "/refile-beorg.org")
-                                 (concat org-directory "/from-mobile.org"))  ; (directory-files org-directory t ".*\\.org$")
+    (setq org-agenda-files `(,(concat org-directory "/agenda"))
           ;; speedup and optimization
           ;; https://punchagan.muse-amuse.in/posts/how-i-learnt-to-use-emacs-profiler.html
           ;; http://orgmode.org/worg/agenda-optimization.html
