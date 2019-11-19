@@ -136,10 +136,42 @@
                                   cal-china-x-general-holidays)))
 
 
+;;; diary-chinese-anniversary
 ;; `diary-chinese-anniversary' use cycles
 ;; https://github.com/leoliu/cal-china-plus/pull/2
+;; https://emacs-china.org/t/topic/2119/6
+;; https://en.wikipedia.org/wiki/Chinese_calendar
+;; https://www.crystalinks.com/calendarchina.html
+
+;; According to legend, the Chinese calendar developed during the third
+;; millennium BC. It is said to have been invented by the first legendary ruler,
+;; Huang Di or the Yellow Emperor, who reigned, by tradition, c.2698-2599 BC.
+;; The fourth legendary ruler, Emperor Yao, added the intercalary month. The
+;; 60-year "stem-branch" cycle was first used to mark years during the first
+;; century BC. Tradition fixes the first year of the first cycle (the epoch) at
+;; 2637 BC. Thus the cycle beginning in 1984 is the 78th. Other opinions fix the
+;; first year at 2697 BC (while Huangdi was still immature), by which count we
+;; are now in cycle 79.
+
+;; 农历年份以 60 年为一个周期，按公元前 2637 年算起的话，则 1984 年处于第 78 个
+;; 周期中的第 1 年。`diary-chinese-anniversary' 里的 year 应该填 7801。
+
+;; (defun paloryemacs/chinese-cycle-year-from-gregorian-year (lunar-month
+;;                                                            lunar-day
+;;                                                            &optional gregorian-year)
+;;   "Change gregorian year to chinese cycle year"
+;;   (let* ((ddate (diary-make-date lunar-month lunar-day gregorian-year))
+;;          (adate (calendar-absolute-from-gregorian ddate))
+;;          (cdate (calendar-chinese-from-absolute adate))
+;;          (cycle (car cdate))
+;;          (yy (cadr cdate)))
+;;     (+ (* 100 cycle) yy)))
+
+;; (paloryemacs/chinese-cycle-year-from-gregorian-year 12 25 1984)
+
 (defun paloryemacs/diary-lunar-anniversary (month day &optional year mark)
-  (pcase-let* ((`(,cc ,cy ,cm ,cd)
+  "Like `diary-anniversary' (which see) but accepts Chinese date and Gregorian year."
+  (pcase-let* ((`(,cc ,cy ,cm ,cd) ; current chinese date
                 (calendar-chinese-from-absolute
                  (calendar-absolute-from-gregorian date)))
                (dc (and year (+ (floor year 60) 45)))
@@ -149,7 +181,10 @@
                (diff (if (and dc dy)
                          (+ (* 60 (- cc dc)) (- cy dy))
                        100)))
-    (and (> diff 0) (= dm cm) (= dd cd)
+    (and (> diff 0)
+         ;; The Chinese month can differ by 0.5 in a leap month.
+         (or (= dm cm) (= (+ 0.5 dm) cm))
+         (= dd cd)
          (cons mark (format entry diff (diary-ordinal-suffix diff))))))
 
 (use-package calendar
