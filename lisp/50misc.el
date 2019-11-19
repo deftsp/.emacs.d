@@ -304,7 +304,7 @@
               (when (file-exists-p file-path)
                 (set-register (car r) (cons 'file file-path)))))
         '((?i . "~/.emacs.d/init.el")
-          (?g . "~/org/GTD.org"))))
+          (?g . "~/org/agenda/GTD.org"))))
 (paloryemacs/register-init)
 
 ;;; file-name-shadow-mode
