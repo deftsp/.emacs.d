@@ -115,13 +115,11 @@
       :after (:all ivy counsel)
       :init
       (setq ivy-virtual-abbreviate 'full
-            ivy-rich-abbreviate-paths t
             ivy-rich-path-style 'abbrev
-            ivy-rich-parse-remote-file-path t
-            ivy-format-function #'ivy-format-function-line
-            ivy-rich-switch-buffer-align-virtual-buffer t)
+            ivy-rich-parse-remote-file-path t)
       :config
-      (ivy-rich-mode 1))))
+      (ivy-rich-mode +1)
+      (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))))
 
 (use-package ivy-xref
   :defer t
