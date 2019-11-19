@@ -949,13 +949,13 @@ Current position is preserved."
 
 ;;; info
 (use-package info
-  :init
+  :defer t
+  :config
   (progn
     ;; make sure info dir in `Info-directory-list' add to `Info-directory-list'
     (mapc (lambda (p) (add-to-list 'Info-directory-list p t)) Info-default-directory-list)
-    (add-to-list 'Info-additional-directory-list "~/share/info"))
-  :config
-  (progn
+    (add-to-list 'Info-additional-directory-list "~/share/info")
+
     (with-eval-after-load 'evil-evilified-state
       (evilified-state-evilify Info-mode Info-mode-map
         (kbd "<tab>") 'Info-next-reference
