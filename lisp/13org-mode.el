@@ -810,7 +810,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 ;; https://www.reddit.com/r/orgmode/comments/6ybjjw/aligned_agenda_view_anyway_to_make_this_more/
 (use-package org-agenda
-  :defer t
+  :after (org)
   :init
   (progn
     (setq org-agenda-files `(,(concat org-directory "/agenda"))
@@ -827,6 +827,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           ;; exclude scheduled items from the global TODO list.
           org-agenda-todo-ignore-scheduled 'all
           org-agenda-todo-ignore-with-date t
+          ;; org-agenda-todo-ignore-deadlines 'all
+          ;; org-agenda-tags-todo-honor-ignore-options t
           org-agenda-skip-scheduled-if-done t
           org-agenda-skip-deadline-if-done t
           org-agenda-skip-timestamp-if-done t
@@ -1324,12 +1326,12 @@ If VANILLA is non-nil, run the standard `org-capture'."
 
     (setq org-capture-templates
           `(("a" "Add Task" entry
-             (file+headline "~/org/GTD.org" "Tasks")
+             (file+headline "~/org/agenda/GTD.org" "Tasks")
              "* TODO %?\nSCHEDULED: %t \n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
              :prepend t
              :empty-lines-after 1)
 
-            ("t" "Todo" entry (file+headline "~/org/GTD.org" "Inbox")
+            ("t" "Todo" entry (file+headline "~/org/agenda/GTD.org" "Inbox")
              "* TODO %?\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
              :prepend t
              :empty-lines-after 1)
@@ -1361,7 +1363,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
              "* Q: %?       :drill:\n\n** A:\n"
              :kill-buffer t
              :empty-lines-after 1)
-            ;; ("p" "Phone call" entry (file+headline "~/org/GTD.org" "Inbox")
+            ;; ("p" "Phone call" entry (file+headline "~/org/agenda/GTD.org" "Inbox")
             ;;  "* PHONE %? :PHONE:\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
             ;;  :clock-in t
             ;;  :clock-resume t
@@ -1373,14 +1375,14 @@ If VANILLA is non-nil, run the standard `org-capture'."
              "* %?\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:\nSource: %:annotation\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE"
              :empty-lines-after 1)
 
-	        ("L" "Protocol Link" entry (file+headline ,(concat org-directory "/GTD.org") "Inbox")
+	        ("L" "Protocol Link" entry (file+headline ,(concat org-directory "/agenda/GTD.org") "Inbox")
              "* TODO Review %?%:annotation\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
              :prepend t
              :empty-lines-after 1)
-            ("r" "Remind" entry (file+headline "~/org/GTD.org" "Remind")
+            ("r" "Remind" entry (file+headline "~/org/agenda/GTD.org" "Remind")
              "* %?\nSCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
              :empty-lines-after 1)
-            ("h" "Habit" entry (file+headline "~/org/GTD.org" "Habit")
+            ("h" "Habit" entry (file+headline "~/org/agenda/GTD.org" "Habit")
              "* %?\nSCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:"
              :empty-lines-after 1)
             ("w" "Web page" entry

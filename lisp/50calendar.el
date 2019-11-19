@@ -189,6 +189,7 @@
 
 (use-package calendar
   :config
+  (use-package cal-china)
   (with-eval-after-load "evil-evilified-state"
     (evilified-state-evilify calendar-mode calendar-mode-map
       (kbd "j")   'calendar-forward-week
