@@ -12,8 +12,8 @@
     (setq recentf-save-file "~/.emacs.d/recentf")
     (setq recentf-max-saved-items 500)
     (setq recentf-max-menu-items 10)
-    (setq recentf-auto-cleanup 'never) ; To protect tramp
-    )
+    ;; disable to protect tramp, execute M-x recent-clean manualy
+    (setq recentf-auto-cleanup 'never))
   :config
   (progn
     (defun paloryemacs//recentf-track-file-ensure-no-properties (old-function &rest arguments)
