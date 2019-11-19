@@ -25,9 +25,6 @@
       select-enable-clipboard t ; cutting and pasting uses the clipboard.
       select-enable-primary t
       highlight-nonselected-windows nil
-      ;; means save bookmarks when Emacs is killed, 1 save bookmark every time you set bookmark, not only when you exit
-      ;; emacs
-      bookmark-save-flag t
       next-screen-context-lines 2
       mail-user-agent 'gnus-user-agent
       ;; default-enable-multibyte-characters t
@@ -1120,12 +1117,17 @@ Current position is preserved."
   (progn
     (global-undo-tree-mode t)))
 
-(use-package evil-evilified-state
-  :config
-  (progn
+(use-package bookmark
+  :defer t
+  :init
+  ;; t means save bookmarks when Emacs is killed, 1 save bookmark every time you
+  ;; set bookmark, not only when you exit emacs
+  (setq bookmark-save-flag 1)
+  (with-eval-after-load "evil-evilified-state"
     (evilified-state-evilify bookmark-bmenu-mode bookmark-bmenu-mode-map
       (kbd "v")   'bookmark-bmenu-select
       (kbd "L")   'bookmark-bmenu-load)))
+
 
 ;;; uniq lines
 (defun paloryemacs-uniq-lines (beg end)
