@@ -1564,6 +1564,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
         (error "Run in *Clock Task Select* buffer only.")))
 
     (defun paloryemacs/update-hammerspoon-org-clock-bar ()
+      (interactive)
       (let ((text (if (and (boundp 'org-mode-line-string)
                            org-mode-line-string
                            (fboundp' org-clocking-p)
@@ -1577,7 +1578,6 @@ If VANILLA is non-nil, run the standard `org-capture'."
          text
          "task_overrun"
          (if org-clock-task-overrun "true" "false"))))
-
 
     (advice-add 'org-clock-update-mode-line :after #'paloryemacs/update-hammerspoon-org-clock-bar)
     (advice-remove 'org-clock-update-mode-line #'paloryemacs//update-hammerspoon-org-clock-bar)

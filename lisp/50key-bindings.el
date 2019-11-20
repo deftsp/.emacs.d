@@ -95,6 +95,7 @@ offer a list of recently clocked tasks to clock into. "
 (paloryemacs/set-leader-keys
   "oa" 'org-agenda
   ;; "oc" 'org-capture
+  "ocb"   'paloryemacs/update-hammerspoon-org-clock-bar
   "occ"   'org-clock-cancel
   "oce"   'org-clock-modify-effort-estimate
   "oci"   'org-mru-clock-in
