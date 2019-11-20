@@ -206,6 +206,14 @@ ALPHA : [ %(frame-parameter nil 'alpha) ]
 (paloryemacs/set-leader-keys "TT" 'hydra-transparency/body)
 
 
+(defun paloryemacs/remove-menu-item ()
+  "Remove menu item."
+  ;; (define-key global-map [menu-bar edit] nil)
+  ;; (define-key global-map [menu-bar tools] nil)
+  (define-key global-map [menu-bar options] nil))
+
+(add-hook 'after-init-hook 'paloryemacs/remove-menu-item)
+
 (provide '50display)
 
 ;;; 50display.el ends here

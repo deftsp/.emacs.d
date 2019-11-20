@@ -43,6 +43,14 @@
 (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode t) ; show current fun in header line
 ;; (add-to-list 'semantic-default-submodes 'global-semantic-show-unmatched-syntax-mode t)
 
+
+(use-package semantic
+  :defer t
+  :config
+  (define-key semantic-mode-map [menu-bar] nil))
+
+
+
 (defun paloryemacs/lazy-load-stickyfunc-enhance ()
   "Lazy load the package."
   (require 'stickyfunc-enhance))

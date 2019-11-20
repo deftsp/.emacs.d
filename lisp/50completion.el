@@ -284,7 +284,7 @@
     ;;                ad-do-it)))))
 
     ;; (yas-advise-indent-function 'org-cycle)
-
+    (easy-menu-remove-item yas-minor-mode-map '("menu-bar") "YASnippet")
     (yas-global-mode +1)))
 
 (provide '50completion)

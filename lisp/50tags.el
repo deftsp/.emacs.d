@@ -151,7 +151,9 @@ so that if the major mode has better support it will use it first."
     (with-eval-after-load 'shell
       (add-hook 'shell-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
     (with-eval-after-load 'haskell-mode
-      (add-hook 'haskell-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable)) ))
+      (add-hook 'haskell-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable)))
+  :config
+  (define-key ggtags-mode-map [menu-bar ggtags] nil))
 
 (use-package etags
   :defer t

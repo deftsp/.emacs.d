@@ -4,14 +4,6 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-
-;;Change outline commands prefix to `M-o'
-(global-unset-key (kbd "M-S-o"))
-(setq outline-minor-mode-prefix "\M-\S-o") ; default "\C-c\C-o"
-
-(eval-after-load "outline"
-  '(require 'foldout))
-
 ;; M-x outline-minor-mode (enable Outline minor mode)
 ;; C-c @ C-t / M-x outline-hide-body (hide all of buffer except headings)
 ;; C-c @ C-a / M-x outline-show-all (show all of the text in the buffer)
@@ -25,13 +17,24 @@
 ;; For lisp-modes, the value matches comments starting with three semicolons and opening parens on the first column.
 ;; ";;; \\|(...."
 
-;;; key bindings
 
-(eval-after-load 'outline
-  '(progn
-     (require 'outline-magic nil t)
-     (if (fboundp 'outline-cycle)
-         (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle))))
+
+;;Change outline commands prefix to `M-o'
+(global-unset-key (kbd "M-S-o"))
+(setq outline-minor-mode-prefix "\M-\S-o") ; default "\C-c\C-o"
+
+(use-package outline
+  :defer t
+  :config
+  (require 'foldout)
+
+  (use-package outline-magic
+    :config
+    (define-key outline-minor-mode-map (kbd "<C-tab>") 'outline-cycle))
+
+  (define-key outline-mode-map [menu-bar] nil)
+  (define-key outline-minor-mode-map [menu-bar] nil))
+
 
 
 ;;; change the characters outline mode uses for ellipsis (`…’ by default).
