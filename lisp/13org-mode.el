@@ -1469,8 +1469,14 @@ If VANILLA is non-nil, run the standard `org-capture'."
     (defun org-protocol-hammerspoon (data)
       "Handle event from Hammerspoon"
       (let* ((action (plist-get data :action)))
-        (cond ((string= action "org-clock-goto")
+        (cond ((string= action "org-clock-bar-goto")
                (call-interactively 'org-clock-goto))
+              ((string= action "org-clock-bar-refresh")
+               (call-interactively 'paloryemacs/update-hammerspoon-org-clock-bar))
+              ((string= action "org-clock-bar-clock-in-last")
+               (call-interactively 'org-clock-in-last))
+              ((string= action "org-clock-bar-clock-out")
+               (call-interactively 'org-clock-out))
               ((string= action "select-previous-input-source")
                (paloryemacs/on-select-previous-input-source data)))))
 
