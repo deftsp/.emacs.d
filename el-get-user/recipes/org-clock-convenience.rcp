@@ -1,0 +1,4 @@
+(:name org-clock-convenience
+ :description "Convenience functions to work with emacs org mode clocking "
+ :type github
+ :pkgname "dfeich/org-clock-convenience")

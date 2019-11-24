@@ -891,7 +891,11 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
     (setq org-agenda-clockreport-parameter-plist
           '(:link t :maxlevel 6 :fileskip0 t :compact t :narrow 60 :score 0))
     (setq org-agenda-clock-consistency-checks
-          '(:max-duration "4:00" :min-duration 0 :max-gap 0 :gap-ok-around ("4:00")))
+          '(:max-duration "5:00"
+            :min-duration 0
+            :max-gap 15
+            :gap-ok-around ("4:00" "13:00")
+            :default-face '((:background "#9e3e83") (:foreground "#d2e2f2"))))
 
     ;; Place tags close to the right-hand side of the window
     (add-hook 'org-agenda-finalize-hook 'paloryemacs/org-agenda-adjust-tags-column)
@@ -1150,6 +1154,18 @@ If VANILLA is non-nil, run the standard `org-capture'."
       "gr" 'org-agenda-redo
       "." 'org-agenda-goto-today
       "gd" 'org-agenda-goto-date)))
+
+
+(use-package org-clock-convenience
+  :commands (org-clock-convenience-timestamp-up
+             org-clock-convenience-timestamp-down
+             org-clock-convenience-goto-ts
+             org-clock-convenience-goto-last-clockout)
+  :bind (:map org-agenda-mode-map
+         ;; ("ö" . org-clock-convenience-fill-gap)
+         ;; ("é" . org-clock-convenience-fill-gap-both)
+         ("s-k" . org-clock-convenience-timestamp-up)
+         ("s-j" . org-clock-convenience-timestamp-down)))
 
 (use-package org-mru-clock
   :defer t
@@ -1536,7 +1552,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
     ;; s 	keep 0 minutes, and subtract some amount from the clock, clocking back in
     ;; S 	keep 0 minutes, subtract some amount from the clock, and clock out
     ;; C 	cancel the clock altogether
-    (setq org-clock-idle-time 30)
+    (setq org-clock-idle-time nil) ;; 30
     (setq org-clock-into-drawer "CLOCK") ; Have a special :CLOCK: drawer for clocks
     (setq org-clock-in-resume t)
     ;; Do not prompt to resume an active clock, just resume it
