@@ -1,5 +1,7 @@
 ;;; 50dired.el ---
 
+;; TODO: try https://github.com/jojojames/dired-sidebar
+
 (use-package dired
   :defer t
   :bind (:map dired-mode-map
