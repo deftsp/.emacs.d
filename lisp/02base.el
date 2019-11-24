@@ -14,6 +14,5 @@
 ;; configurations based on local variables
 (add-hook 'hack-local-variables-hook #'paloryemacs//run-local-vars-mode-hook)
 
-
 (provide '02base)
 ;;; 02base.el ends here

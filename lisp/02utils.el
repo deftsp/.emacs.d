@@ -4,6 +4,14 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
+;;; Garbage Collection Magic Hack
+;; http://akrl.sdf.org/
+(use-package gcmh
+  :init
+  (setq gcmh-verbose t)
+  :config
+  (gcmh-mode +1))
+
 
 ;;; neat stuffs
 (use-package key-chord

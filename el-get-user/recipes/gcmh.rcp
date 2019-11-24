@@ -1,0 +1,4 @@
+(:name gcmh
+ :description "Garbage Collector Magic Hack"
+ :type git
+ :url "https://gitlab.com/koral/gcmh.git")
