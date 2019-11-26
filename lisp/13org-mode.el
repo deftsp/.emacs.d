@@ -1296,7 +1296,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
 
 ;;;; Capture
 (use-package org-capture
-  :defer t
+  :defer 5
   :init
   (progn
     (define-key global-map (kbd "C-c c") 'org-capture)
