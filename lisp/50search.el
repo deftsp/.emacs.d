@@ -281,8 +281,9 @@ Argument REPLACE String used to replace the matched strings in the buffer.
   :config
   (amx-mode +1))
 
-;; counsel-M-x use smex, I have switch to amx
-;; (global-set-key (kbd "M-x") 'counsel-M-x)
+;; `counsel-M-x' integrates with either the `amx' or `smex' package when
+;; available, in that order of precedence.
+(global-set-key (kbd "M-x") 'counsel-M-x)
 
 (use-package deadgrep
   :init
