@@ -86,6 +86,7 @@ packages/redshank/
 packages/bookmark-extension/
 packages/auto-complete/
 packages/cedet/
+packages/fuz/
 el-get/
 share/
 packages/lunar-mode-line/
