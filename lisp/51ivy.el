@@ -75,16 +75,16 @@
     (setq ivy-display-style 'fancy)
     ;; include recent(recentf) files and/or bookmarks, recentf-cleanup
     (setq ivy-use-virtual-buffers t)
-    ;; http://oremacs.com/2016/01/06/ivy-flx/
-    ;; let flx (hopefully) sort the matches in a nice way
+    ;; Better fuzzy matching support: http://oremacs.com/2016/01/06/ivy-flx/
+    ;; ivy--regex-plus use a .* regex wild card in place of each single space in the input.
+    (setq ivy-re-builders-alist
+          '((ivy-switch-buffer . ivy--regex-plus)
+            (t . ivy--regex-fuzzy)))
     (setq ivy-initial-inputs-alist nil)
     (setq ivy-count-format "[%d/%d] ")
     (setq ivy-use-selectable-prompt t)
-    (setq ivy-height 12)
+    (setq ivy-height 15)
     (setq confirm-nonexistent-file-or-buffer t)
-    (setq ivy-re-builders-alist
-          '((t . ivy--regex-fuzzy)))
-
     (mapcar (lambda (str) (add-to-list 'ivy-ignore-buffers str))
             paloryemacs/ignore-buffer-or-file-regexp)
     ;; https://oremacs.com/2016/06/27/ivy-push-view/
