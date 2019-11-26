@@ -110,6 +110,13 @@
 ;;                 (throw 'break nil)))))
 ;;       ad-do-it)))
 
+;; http://blog.binchen.org/posts/yin-and-yang-in-emacs.html
+(use-package vc-msg
+  :commands (vc-msg-show)
+  :config
+  (with-eval-after-load "magit"
+    (setq vc-msg-git-show-commit-function 'magit-show-commit)))
+
 ;;; magit
 (use-package magit
   :defer t

@@ -1,0 +1,5 @@
+(:name vc-msg
+ :description "Show commit message of current line in Emacs"
+ :type github
+ :pkgname "redguardtoo/vc-msg"
+ :depends (popup))
