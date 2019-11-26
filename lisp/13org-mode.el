@@ -2054,6 +2054,8 @@ Will work on both org-mode and any mode that accepts plain html."
   (progn
     (setq org-src-preserve-indentation nil)
     (setq org-edit-src-content-indentation 0))
+  :hook
+  (org-src-mode . (lambda() (flycheck-mode -1)))
   :config
   (progn
     (paloryemacs/set-leader-keys-for-minor-mode 'org-src-mode
