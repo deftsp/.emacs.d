@@ -273,6 +273,14 @@ If ARG is a numerical prefix argument then specify the indentation level."
   ;;     "=" 'web-beautify-css))
   )
 
+
+(use-package eslintd-fix
+  :commands (eslintd-fix eslintd-fix-mode)
+  :after (web-mode)
+  :config
+  (paloryemacs/set-leader-keys-for-major-mode 'web-mode
+    "ef" 'eslintd-fix))
+
 ;; Live evaluation of JS buffer change.
 (use-package livid-mode
   :commands (livid-mode)
