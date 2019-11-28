@@ -377,15 +377,22 @@ If the universal prefix argument is used then kill the buffer too."
 ;; not use switch-window anymore, ace-window is faster
 (use-package ace-window
   :defer t
-  :bind (("s-o" . ace-window))
+  :bind (("M-o" . ace-window))
   :init
   (progn
     (setq aw-minibuffer-flag t
+          aw-dispatch-always nil
           aw-dispatch-when-more-than 1)
     (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
   :config
   (progn
     (defvar paloryemacs/aw-mode-line-format "♯%s")
+    ;; (add-to-list 'throw-down-exit-func '(?\e keyboard-quit "Quit"))
+
+    (defun paloryemacs//exit-when-escape (char)
+      (when (= char ?\e)
+        (throw 'done 'exit)))
+    (advice-add 'aw-dispatch-default :before 'paloryemacs//exit-when-escape)
 
     (defadvice aw-update (around format-ace-window-path activate)
       "add customization for ace window path"
@@ -579,7 +586,7 @@ If the universal prefix argument is used then kill the buffer too."
 (with-eval-after-load "hydra"
   (require 'windmove) ; for hydra-move-splitter-*
   (global-set-key
-   (kbd "M-o")
+   (kbd "s-o")
    (defhydra hydra-window (:color teal)
      "
 Move Point^^^^   Move Splitter   ^Ace^                       ^Split^                          Tranpose

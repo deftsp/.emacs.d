@@ -80,6 +80,7 @@
   ;; (key-chord-define-global "jc" 'avy-goto-char)
   (key-chord-define-global "jc" 'avy-goto-char-timer)
   (key-chord-define-global "jw" 'avy-goto-word-1)
+  ;; Karabiner have map "jl" to "return_or_enter"
   (key-chord-define-global "jl" 'avy-goto-line)
 
   (key-chord-define-global "/s" 'save-buffer)
