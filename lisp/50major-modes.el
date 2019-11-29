@@ -125,6 +125,7 @@
 
 (use-package highlight-indent-guides
   :defer t
+  :diminish highlight-indent-guides-mode
   :init
   (progn
     (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
