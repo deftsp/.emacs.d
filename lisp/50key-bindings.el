@@ -140,9 +140,9 @@ offer a list of recently clocked tasks to clock into. "
   "re"  'paloryemacs/ivy-evil-registers
   "ry"  'counsel-yank-pop
   "se"  'evil-iedit-state/iedit-mode
-  "ss"  'helm-swoop
-  "sS"  'helm-multi-swoop
-  "s C-s" 'helm-multi-swoop-all
+  ;; "ss"  'helm-swoop
+  ;; "sS"  'helm-multi-swoop
+  ;; "s C-s" 'helm-multi-swoop-all
   ;; "vr"  'vr/replace
   ;; "vq"  'vr/query-replace
   ;; "vm"  'vr/mc-mark
