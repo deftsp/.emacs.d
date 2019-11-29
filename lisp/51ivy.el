@@ -25,6 +25,9 @@
 
 (use-package counsel
   :diminish counsel-mode
+  :commands (counsel-describe-function counsel-describe-variable)
+  :bind (("C-h f" . counsel-describe-function)
+         ("C-h v" . counsel-describe-variable))
   :init
   (progn
     (global-set-key (kbd "s-g") 'counsel-rg)
@@ -70,6 +73,7 @@
 (use-package ivy
   :defer t
   :diminish ivy-mode
+  :chords (("jv" . hydra-view/body))
   :init
   (progn
     (setq ivy-display-style 'fancy)
@@ -90,23 +94,49 @@
     (setq ivy-use-selectable-prompt t)
     (setq ivy-height 15)
     (setq confirm-nonexistent-file-or-buffer t)
-    (mapcar (lambda (str) (add-to-list 'ivy-ignore-buffers str))
-            paloryemacs/ignore-buffer-or-file-regexp)
     ;; https://oremacs.com/2016/06/27/ivy-push-view/
     ;; (global-set-key (kbd "s-v") 'ivy-push-view)
     ;; delete view, delete many views at once by pressing C-M-m[M-RET] (ivy-call)
     ;; (global-set-key (kbd "s-V") 'ivy-pop-view)
+
+    ;; (with-eval-after-load 'desktop
+    ;;   (add-to-list 'desktop-globals-to-save 'ivy-views))
+
+    (defun paloryemacs/ivy-views-clean ()
+      (interactive)
+      (setq ivy-views nil))
+
     (paloryemacs/set-leader-keys
       "fr" 'counsel-recentf
       "rl" 'ivy-resume))
   :config
   (progn
+    (mapcar (lambda (str) (add-to-list 'ivy-ignore-buffers str))
+            paloryemacs/ignore-buffer-or-file-regexp)
+
     (define-key ivy-minibuffer-map (kbd "C-w") 'ivy-occur)
     (define-key ivy-minibuffer-map [escape] 'minibuffer-keyboard-quit)
     (define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line)
     (define-key ivy-minibuffer-map (kbd "M-k") 'ivy-previous-line)
     (global-set-key (kbd "C-c C-r") 'ivy-resume)
     (global-set-key [f6] 'ivy-resume)
+
+    (defun paloryemacs/ivy-switch-view ()
+      (interactive)
+      (let ((ivy-initial-inputs-alist
+             '((ivy-switch-buffer . "{} "))))
+        (ivy-switch-buffer)))
+
+    (global-set-key (kbd "s-v") 'hydra-view/body)
+    (defhydra hydra-view (:color blue :hint nil)
+      "view control panel"
+      ("v" ivy-push-view "save layout" )
+      ("V" ivy-pop-view "delete a layout")
+      ("d" ivy-pop-view "delete a layout")
+      ("l" paloryemacs/ivy-switch-view "select a layout")
+      ("<escape>" nil nil)
+      ("q" nil))
+
 
     (with-eval-after-load 'evil
       (evil-make-overriding-map ivy-occur-mode-map 'normal))
@@ -125,40 +155,14 @@
             ivy-rich-parse-remote-file-path t)
       :config
       (ivy-rich-mode +1)
-      (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))))
+      (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
+    (ivy-mode +1)))
 
 (use-package ivy-xref
   :defer t
   :init
   (progn
     (setq xref-show-xrefs-function #'ivy-xref-show-xrefs)))
-
-(global-set-key (kbd "s-v") 'hydra-view/body)
-(defhydra hydra-view (:color blue :hint nil)
-  "view control panel"
-  ("v" ivy-push-view "save layout" )
-  ("V" ivy-pop-view "delete a layout")
-  ("d" ivy-pop-view "delete a layout")
-  ("l" paloryemacs/ivy-switch-view "select a layout")
-  ("<escape>" nil nil)
-  ("q" nil))
-
-
-(defun paloryemacs/ivy-switch-view ()
-  (interactive)
-  (let ((ivy-initial-inputs-alist
-         '((ivy-switch-buffer . "{}"))))
-    (ivy-switch-buffer)))
-
-(when (fboundp 'ivy-mode)
-  (ivy-mode +1))
-
-(autoload 'counsel-describe-function "counsel" "Forward to (`describe-function' FUNCTION) with ivy completion." t)
-(autoload 'counsel-describe-variable "counsel" "Forward to (`describe-variable' VARIABLE BUFFER FRAME)." t)
-(autoload 'counsel-ag "counsel" "Grep for a string in the current directory using ag. INITIAL-INPUT can be given as the initial minibuffer input." t)
-(global-set-key (kbd "C-h f") 'counsel-describe-function)
-(global-set-key (kbd "C-h v") 'counsel-describe-variable)
-
 
 ;;; swiper
 (use-package swiper
