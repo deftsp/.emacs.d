@@ -107,3 +107,5 @@ vimish-fold/
 request/
 .lsp-session-v*
 transient/
+.purpose-layout
+layouts/

@@ -1,0 +1,5 @@
+(:name eyebrowse
+ :description "Easy window config switching"
+ :type github
+ :pkgname "wasamasa/eyebrowse"
+ :depends (dash))

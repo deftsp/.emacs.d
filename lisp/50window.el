@@ -5,6 +5,9 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+;; (add-to-list 'window-persistent-parameters '(window-side . writable))
+;; (add-to-list 'window-persistent-parameters '(window-slot . writable))
+
 (setq switch-to-buffer-preserve-window-point t
       window-min-height 4               ; Let's not have too-tiny windows.
       mouse-autoselect-window nil)
@@ -500,6 +503,10 @@ If the universal prefix argument is used then kill the buffer too."
   :config
   (progn
     (purpose-mode +1)
+
+    ;; purpose-user-mode-purposes: recognize purpose according to major mode
+    ;; purpose-user-mode-purposes: recognize purpose according to buffer name (for exact names)
+    ;; purpose-user-regexp-purposes: recognize purpose according to buffer name (for name patterns)
     (add-to-list 'purpose-user-mode-purposes '(help-mode . popup))
     (add-to-list 'purpose-user-mode-purposes '(helpful-mode . popup))
     (setq purpose-use-default-configuration t)
@@ -680,6 +687,38 @@ You can use arrow-keys or HJKL.
      ("M-f" toggle-frame-fullscreen "frame fullscreen")
      ("<escape>" nil "cancel")
      ("q" nil "cancel"))))
+
+
+(use-package eyebrowse
+  :config
+  (setq eyebrowse-wrap-around t)
+  (defhydra help/hydra-left-side/eyebrowse (:color blue :hint nil)
+    "
+current eyebrowse slot: %(eyebrowse--get 'current-slot)
+
+ _j_ previous _k_ last _l_ next _u_ close _i_ choose _o_ rename _q_ quit
+   _a_ 00 _s_ 01 _d_ 02 _f_ 03 _g_ 04 _z_ 05 _x_ 06 _c_ 07 _v_ 08 _b_ 09
+"
+    ("j" #'eyebrowse-prev-window-config :exit nil)
+    ("k" #'eyebrowse-last-window-config)
+    ("l" #'eyebrowse-next-window-config :exit nil)
+    ("u" #'eyebrowse-close-window-config :exit nil)
+    ("i" #'eyebrowse-switch-to-window-config)
+    ("o" #'eyebrowse-rename-window-config :exit nil)
+    ("q" nil)
+    ("a" #'eyebrowse-switch-to-window-config-0)
+    ("s" #'eyebrowse-switch-to-window-config-1)
+    ("d" #'eyebrowse-switch-to-window-config-2)
+    ("f" #'eyebrowse-switch-to-window-config-3)
+    ("g" #'eyebrowse-switch-to-window-config-4)
+    ("z" #'eyebrowse-switch-to-window-config-5)
+    ("x" #'eyebrowse-switch-to-window-config-6)
+    ("c" #'eyebrowse-switch-to-window-config-7)
+    ("v" #'eyebrowse-switch-to-window-config-8)
+    ("b" #'eyebrowse-switch-to-window-config-9))
+  (paloryemacs/set-leader-keys "l" 'help/hydra-left-side/eyebrowse/body)
+  (eyebrowse-mode +1))
+
 
 ;;;
 (provide '50window)
