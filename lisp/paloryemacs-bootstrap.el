@@ -105,7 +105,6 @@
 (require '50tex)
 (require '50tools)
 (require '50tramp)
-(require '50traverselisp)
 (require '50treemacs)
 (require '50trello)
 (require '50unicode-input)
