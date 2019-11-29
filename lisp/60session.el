@@ -63,7 +63,13 @@
 (savehist-mode +1)
 
 ;;; Desktop
-(with-eval-after-load "desktop"
+(use-package desktop
+  :init
+  (setq desktop-load-locked-desktop t
+        desktop-missing-file-warning nil
+        desktop-save 'if-exists
+        desktop-restore-frames nil)
+
   (setq desktop-files-not-to-save
         (concat "\\("
                 "^/[^/:]*:\\|(ftp)$"
@@ -82,7 +88,7 @@
                 "^nn\\.a[0-9]+\\|\\.log\\|(ftp)\\|^tags\\|^TAGS"
                 "\\|\\.emacs.*\\|\\.diary\\|\\.newsrc-dribble\\|\\.bbdb"
                 "\\)$"))
-
+  :config
   (mapc #'(lambda (major-mode)
             (add-to-list 'desktop-modes-not-to-save major-mode))
         '(dired-by-name-mode
@@ -91,7 +97,7 @@
           ;; Info-mode
           ;; info-lookup-mode
           ;; tramp-cleanup-all-buffers
-          haskell-mode ; very slow
+          haskell-mode
           erc-mode
           tags-table-mode))
 
@@ -137,28 +143,23 @@
           ;; register-alist
           find-args-history
           tags-file-name
-          locate-history-list)))
+          locate-history-list))
 
-(setq desktop-load-locked-desktop t
-      desktop-missing-file-warning nil
-      desktop-save 'if-exists
-      desktop-restore-frames nil)
+  ;; Let desktop work with daemon
+  ;; (command-line) starts the server process, but only "after loading the user's init file and after
+  ;; processing all command line arguments".
+  (defadvice desktop-restore-file-buffer
+      (around desktop-restore-file-buffer-advice)
+    "Be non-interactive while starting a daemon."
+    (if (and (daemonp) (not (bound-and-true-p server-process)))
+        (let ((noninteractive t))
+          ad-do-it)
+      ad-do-it))
+  (ad-activate 'desktop-restore-file-buffer)
 
-;; Use M-x desktop-save once to save the desktop.When it exists, Emacs updates it on every exit.
-;; (desktop-save-mode 1)
+  ;; Use M-x desktop-save once to save the desktop.When it exists, Emacs updates it on every exit.
+  (desktop-save-mode +1))
 
-;;; Let desktop work with daemon
-;; (command-line) starts the server process, but only "after loading the user's init file and after
-;; processing all command line arguments".
-(defadvice desktop-restore-file-buffer
-  (around desktop-restore-file-buffer-advice)
-  "Be non-interactive while starting a daemon."
-  (if (and (daemonp)
-           (not server-process))
-      (let ((noninteractive t))
-        ad-do-it)
-    ad-do-it))
-(ad-activate 'desktop-restore-file-buffer)
 
 ;;; workgroups2
 (use-package workgroups2
