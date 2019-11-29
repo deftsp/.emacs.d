@@ -719,9 +719,9 @@ using a visual block/rectangle selection."
          (message "Use %s instead!" ,to-key-binding))
        (bind-key ,from-key-binding ',new-func))))
 
-(paloryemacs|create-undefine-for-new-habit "C-x 2" "SPC w s")
-(paloryemacs|create-undefine-for-new-habit "C-x 3" "SPC w v")
-(paloryemacs|create-undefine-for-new-habit "C-x 1" "SPC w m")
+;; (paloryemacs|create-undefine-for-new-habit "C-x 2" "SPC w s")
+;; (paloryemacs|create-undefine-for-new-habit "C-x 3" "SPC w v")
+;; (paloryemacs|create-undefine-for-new-habit "C-x 1" "SPC w m")
 
 ;; http://manuel-uberti.github.io//emacs/2018/05/25/display-version/
 ;;;###autoload
