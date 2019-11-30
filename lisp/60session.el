@@ -108,6 +108,7 @@
           (nxhtml-mumamo-mode nil)
           (autoinfo-mode nil)
           (ecb-minor-mode nil)
+          (dired-omit-mode nil)
           ;; (key-chord-mode nil)
           (structured-haskell-mode nil)
           (senator-minor-mode nil)

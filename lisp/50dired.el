@@ -9,6 +9,8 @@
          ("M-O" . paloryemacs/open-in-external-application))
   :init
   (progn
+    ;; Enable `a' in dired-mode, to open files/dirs in the same buffer.
+    (put 'dired-find-alternate-file 'disabled nil)
     (setq dired-isearch-filenames 'dwim
           dired-recursive-copies 'always
           dired-recursive-deletes 'top
@@ -17,11 +19,8 @@
           ;; use its current subdir, instead of the current subdir of this dired buffer.
           dired-dwim-target t
           dired-guess-shell-gnutar "tar"
-          dired-listing-switches "-alh"
-          dired-kept-versions 1)
-
-    ;; Enable `a' in dired-mode, to open files/dirs in the same buffer.
-    (put 'dired-find-alternate-file 'disabled nil))
+          dired-listing-switches "-alhXG --group-directories-first"
+          dired-kept-versions 1))
   :config
   (progn
     (paloryemacs/set-leader-keys-for-major-mode 'dired-mode
@@ -150,6 +149,7 @@
       :init
       (progn
         (setq-default dired-omit-mode t)
+
         (setq dired-omit-extensions
               '(".svn/" "CVS/" ".o" "~" ".bin" ".bak" ".obj" ".map" ".ico"
                 ".pif" ".lnk" ".a" ".ln" ".blg" ".bbl" ".dll" ".drv" ".vxd"
@@ -210,13 +210,14 @@
     "ft"    #'dired-sidebar-toggle-sidebar)
 
   :config
+  (paloryemacs/set-leader-keys-for-major-mode 'dired-sidebar-mode
+    "u" 'diredp-up-directory-reuse-dir-buffer)
 
   (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
   (push 'rotate-windows dired-sidebar-toggle-hidden-commands))
 
-(add-hook 'dired-mode-hook 'paloryemacs/dired-mode-hook-init)
-(defun paloryemacs/dired-mode-hook-init ()
-  (dired-omit-mode +1))
+;; (add-hook 'dired-mode-hook 'paloryemacs/dired-mode-hook-init)
+;; (defun paloryemacs/dired-mode-hook-init ())
 
 
 (defun paloryemacs/dired-back-to-top ()
