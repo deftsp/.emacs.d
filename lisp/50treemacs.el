@@ -94,3 +94,7 @@
   :after (treemacs magit))
 
 (provide '50treemacs)
+
+;; Local Variables:
+;; coding: utf-8-unix
+;; End:
