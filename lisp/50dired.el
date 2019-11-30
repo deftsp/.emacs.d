@@ -1,7 +1,5 @@
 ;;; 50dired.el ---
 
-;; TODO: try https://github.com/jojojames/dired-sidebar
-
 (use-package dired
   :defer t
   :bind (:map dired-mode-map
@@ -199,6 +197,22 @@
 ;;; omit mode
 ;; C-x M-o
 
+(use-package dired-sidebar
+  :commands (dired-sidebar-toggle-sidebar)
+  :init
+  (setq dired-sidebar-width 42)
+  (setq dired-sidebar-subtree-line-prefix "  ➜")
+  (setq dired-sidebar-theme 'icons)
+  ;; (setq dired-sidebar-use-term-integration t)
+  (setq dired-sidebar-use-custom-font t)
+
+  (paloryemacs/set-leader-keys
+    "ft"    #'dired-sidebar-toggle-sidebar)
+
+  :config
+
+  (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
+  (push 'rotate-windows dired-sidebar-toggle-hidden-commands))
 
 (add-hook 'dired-mode-hook 'paloryemacs/dired-mode-hook-init)
 (defun paloryemacs/dired-mode-hook-init ()
