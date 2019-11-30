@@ -1,0 +1,4 @@
+(:name dired-sidebar
+ :description "Sidebar for Emacs leveraging Dired"
+ :type github
+ :pkgname "jojojames/dired-sidebar")
