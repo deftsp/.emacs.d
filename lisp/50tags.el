@@ -110,50 +110,50 @@ Prompt for TAGNAME if not given."
 
 ;;; ggtags
 ;; emacs frontend to GNU Global source code tagging system
-(use-package ggtags
-  :defer t
-  :diminish ggtags-mode
-  :init
-  (progn
-    (setq ggtags-mode-line-project-name nil)
-    (setq ggtags-enable-navigation-keys nil)
+;; (use-package ggtags
+;;   :defer t
+;;   :diminish ggtags-mode
+;;   :init
+;;   (progn
+;;     (setq ggtags-mode-line-project-name nil)
+;;     (setq ggtags-enable-navigation-keys nil)
 
-    (defun paloryemacs/ggtags-mode-enable ()
-      "Enable ggtags and eldoc mode.
+;;     (defun paloryemacs/ggtags-mode-enable ()
+;;       "Enable ggtags and eldoc mode.
 
-For eldoc, ggtags advises the eldoc function at the lowest priority
-so that if the major mode has better support it will use it first."
-      (ggtags-mode +1)
-      (eldoc-mode +1))
+;; For eldoc, ggtags advises the eldoc function at the lowest priority
+;; so that if the major mode has better support it will use it first."
+;;       (ggtags-mode +1)
+;;       (eldoc-mode +1))
 
-    (with-eval-after-load 'lua-mode
-      (add-hook 'lua-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
-    (with-eval-after-load 'sh-script
-      (add-hook 'sh-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
-    (with-eval-after-load 'js2-mode
-      (add-hook 'js2-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
-    (with-eval-after-load 'scheme
-      (add-hook 'scheme-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
-    (with-eval-after-load 'go-mode
-      (add-hook 'go-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
-    (with-eval-after-load 'racket-mode
-      (add-hook 'racket-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
-    (with-eval-after-load 'clojure-mode
-      (add-hook 'clojure-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
-    (with-eval-after-load 'cc-mode
-      (add-hook 'c++-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
-    (with-eval-after-load 'cc-mode
-      (add-hook 'c-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
-    (with-eval-after-load 'elisp-mode
-      (add-hook 'emacs-lisp-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
-    (with-eval-after-load 'python
-      (add-hook 'python-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
-    (with-eval-after-load 'shell
-      (add-hook 'shell-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
-    (with-eval-after-load 'haskell-mode
-      (add-hook 'haskell-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable)))
-  :config
-  (define-key ggtags-mode-map [menu-bar ggtags] nil))
+;;     (with-eval-after-load 'lua-mode
+;;       (add-hook 'lua-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;     (with-eval-after-load 'sh-script
+;;       (add-hook 'sh-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;     (with-eval-after-load 'js2-mode
+;;       (add-hook 'js2-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;     (with-eval-after-load 'scheme
+;;       (add-hook 'scheme-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;     (with-eval-after-load 'go-mode
+;;       (add-hook 'go-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;     (with-eval-after-load 'racket-mode
+;;       (add-hook 'racket-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;     (with-eval-after-load 'clojure-mode
+;;       (add-hook 'clojure-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;     (with-eval-after-load 'cc-mode
+;;       (add-hook 'c++-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;     (with-eval-after-load 'cc-mode
+;;       (add-hook 'c-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;     (with-eval-after-load 'elisp-mode
+;;       (add-hook 'emacs-lisp-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;     (with-eval-after-load 'python
+;;       (add-hook 'python-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;     (with-eval-after-load 'shell
+;;       (add-hook 'shell-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;     (with-eval-after-load 'haskell-mode
+;;       (add-hook 'haskell-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable)))
+;;   :config
+;;   (define-key ggtags-mode-map [menu-bar ggtags] nil))
 
 (use-package etags
   :defer t
