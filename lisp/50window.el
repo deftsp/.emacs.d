@@ -385,11 +385,20 @@ If the universal prefix argument is used then kill the buffer too."
   (progn
     (setq aw-minibuffer-flag t
           aw-dispatch-always nil
+          aw-ignore-on t
           aw-dispatch-when-more-than 1)
-    (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+    (setq aw-keys '(?s ?d ?f ?g ?h ?j ?k ?l))
+
+    (paloryemacs/set-leader-keys "0" 'dired-sidebar-jump-to-sidebar))
   :config
   (progn
     (defvar paloryemacs/aw-mode-line-format "♯%s")
+    (add-to-list 'aw-ignored-buffers 'dired-sidebar-mode)
+    (add-to-list 'aw-ignored-buffers 'org-agenda-mode)
+
+    (add-to-list 'aw-dispatch-alist '(?a paloryemacs/jump-to-org-agenda))
+    (add-to-list 'aw-dispatch-alist '(?t dired-sidebar-jump-to-sidebar))
+
     ;; (add-to-list 'throw-down-exit-func '(?\e keyboard-quit "Quit"))
 
     (defun paloryemacs//exit-when-escape (char)

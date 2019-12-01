@@ -198,7 +198,7 @@
 ;; C-x M-o
 
 (use-package dired-sidebar
-  :commands (dired-sidebar-toggle-sidebar)
+  :commands (dired-sidebar-toggle-sidebar dired-sidebar-jump-to-sidebar)
   :init
   (setq dired-sidebar-width 42)
   (setq dired-sidebar-subtree-line-prefix "  ➜")
