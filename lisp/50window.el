@@ -379,6 +379,7 @@ If the universal prefix argument is used then kill the buffer too."
 ;; delete the selected window by calling ace-window with a double prefix argument, i.e. C-u C-u.
 ;; not use switch-window anymore, ace-window is faster
 (use-package ace-window
+  :demand t  ; don'it defer
   :bind (("M-o" . ace-window))
   :init
   (progn
