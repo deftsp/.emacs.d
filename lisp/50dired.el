@@ -211,7 +211,7 @@
 
   :config
   (paloryemacs/set-leader-keys-for-major-mode 'dired-sidebar-mode
-    "u" 'diredp-up-directory-reuse-dir-buffer)
+    "u" 'dired-sidebar-up-directory)
 
   (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
   (push 'rotate-windows dired-sidebar-toggle-hidden-commands))
