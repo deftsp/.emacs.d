@@ -437,7 +437,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
          (separator-right (intern (format "powerline-%s-%s"
                                           powerline-default-separator
                                           (cdr powerline-default-separator-dir))))
-         (lhs `(,(powerline-winum-number winum-number-face 'r)
+         (lhs `(,(powerline-ace-window-path winum-number-face 'r)
                 ,(funcall zigzag-right ace-window-path-face evil-face)
                 ,(powerline-evil-tag evil-face)
                 ,@(let ((anzu-info (powerline-anzu anzu-face 'l))

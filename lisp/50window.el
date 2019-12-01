@@ -379,7 +379,6 @@ If the universal prefix argument is used then kill the buffer too."
 ;; delete the selected window by calling ace-window with a double prefix argument, i.e. C-u C-u.
 ;; not use switch-window anymore, ace-window is faster
 (use-package ace-window
-  :defer t
   :bind (("M-o" . ace-window))
   :init
   (progn
@@ -392,7 +391,8 @@ If the universal prefix argument is used then kill the buffer too."
     (paloryemacs/set-leader-keys "0" 'dired-sidebar-jump-to-sidebar))
   :config
   (progn
-    (defvar paloryemacs/aw-mode-line-format "♯%s")
+    (defvar paloryemacs/aw-mode-line-format " ⧉ %s") ; "♯%s"
+
     (add-to-list 'aw-ignored-buffers 'dired-sidebar-mode)
     (add-to-list 'aw-ignored-buffers 'org-agenda-mode)
 
@@ -406,6 +406,7 @@ If the universal prefix argument is used then kill the buffer too."
         (throw 'done 'exit)))
     (advice-add 'aw-dispatch-default :before 'paloryemacs//exit-when-escape)
 
+    ;; TODO: set value for ignored buffer like agenda buffer and dired-sidebar
     (defadvice aw-update (around format-ace-window-path activate)
       "add customization for ace window path"
       (avy-traverse
