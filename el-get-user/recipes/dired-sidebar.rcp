@@ -1,4 +1,5 @@
 (:name dired-sidebar
  :description "Sidebar for Emacs leveraging Dired"
  :type github
- :pkgname "jojojames/dired-sidebar")
+ :branch "shihpin"
+ :pkgname "deftsp/dired-sidebar")
