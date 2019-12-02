@@ -384,7 +384,8 @@ If the universal prefix argument is used then kill the buffer too."
   :init
   (progn
     (setq aw-minibuffer-flag t
-          aw-dispatch-always nil
+          aw-select-always t
+          aw-dispatch-always t
           aw-ignore-on t
           aw-dispatch-when-more-than 1)
     (setq aw-keys '(?s ?d ?f ?g ?h ?j ?k ?l))

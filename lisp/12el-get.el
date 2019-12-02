@@ -25,6 +25,8 @@
 
 ;; (el-get-save-package-status "package-name-here" "removed")
 
+(el-get-bundle ace-window :type github :pkgname "deftsp/ace-window" :branch "shihpin")
+
 ;; (el-get 'sync 'cedet)
 (el-get 'sync 'names) ; reinstall org-mode require names
 (el-get 'sync 'org-mode) ; init org-mode first
