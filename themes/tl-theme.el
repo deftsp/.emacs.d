@@ -304,6 +304,8 @@
    '(diredp-exec-priv ((t (:foreground "red" :background unspecified))))
    '(diredp-flag-mark-line ((t (:foreground "white" :background "blue4"))))
 
+   '(diredp-compressed-file-name ((t (:foreground "#4455dd" :background "#002b36"))))
+   '(diredp-compressed-file-suffix ((t (:foreground "#8899ff" :background "002b36"))))
 
    '(dired-subtree-depth-1-face ((t (:foreground "white" :background "#252e30"))))
    '(dired-subtree-depth-2-face ((t (:foreground "white" :background "#232a2b"))))
