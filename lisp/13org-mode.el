@@ -237,7 +237,7 @@
     (add-to-list 'org-modules 'org-annotate-file)
     (add-to-list 'org-modules 'org-info)
     (add-to-list 'org-modules 'org-id)
-    (add-to-list 'org-modules 'org-man)
+    (add-to-list 'org-modules 'ol-man)
     (add-to-list 'org-modules 'org-eval)
     (add-to-list 'org-modules 'org-panel)
     (add-to-list 'org-modules 'org-expiry)
@@ -1475,6 +1475,18 @@ If VANILLA is non-nil, run the standard `org-capture'."
                        (not isearch-mode))
               (call-interactively 'evil-insert))))))
 
+
+    (defun tl/on-activate ()
+      "Switch to other frame, if selected window is org agenda and is the only window"
+      (when (> (length (frame-list)) 1)
+        (let* ((frame (selected-frame))
+               (lst (window-list frame)))
+          (when (and (= (length lst) 1)
+                     (string= org-agenda-buffer-name
+                              (buffer-name (window-buffer (car lst) ))))
+
+            (call-interactively 'other-frame)))))
+
     ;; open -g 'org-protocol://hammerspoon?action=org-clock-goto'
     (defun org-protocol-hammerspoon (data)
       "Handle event from Hammerspoon"
@@ -1487,6 +1499,8 @@ If VANILLA is non-nil, run the standard `org-capture'."
                (call-interactively 'org-clock-in-last))
               ((string= action "org-clock-bar-clock-out")
                (call-interactively 'org-clock-out))
+              ((string= action "activate")
+               (tl/on-activate))
               ((string= action "select-previous-input-source")
                (tl/on-select-previous-input-source data)))))
 
