@@ -1,4 +1,6 @@
-;; -*- mode: Emacs-Lisp -*-
+;; -*- mode: emacs-Lisp -*-
+
+;;; Note: the the statement ":features emms-setup" in el-get.rcp will cause emms load.
 
 (use-package emms-setup
   :config
