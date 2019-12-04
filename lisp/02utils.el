@@ -4,6 +4,8 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
+(use-package use-package-chords)
+
 ;;; Garbage Collection Magic Hack
 ;; http://akrl.sdf.org/
 (use-package gcmh
@@ -22,9 +24,7 @@
   :config
   (key-chord-mode +1))
 
-(use-package use-package-chords)
-
-(use-package el-patch)
+;; (use-package el-patch)
 
 (use-package evil-evilified-state
   :config

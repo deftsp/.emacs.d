@@ -114,7 +114,7 @@
 (require '50window)
 (require '50xcode)
 
-(require '52emms)
+;; (require '52emms)
 (require '52evil-mode)
 
 (require '60session)
