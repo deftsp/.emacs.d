@@ -161,7 +161,6 @@
                                      (:endgroup . nil)
 
                                      ("project" . ?p)
-                                     ("drill"   . ?d)
                                      ("hacking" . ?H)
                                      ("reading")
                                      ("exercise". ?E)
@@ -244,7 +243,6 @@
     (add-to-list 'org-modules 'org-expiry)
     (add-to-list 'org-modules 'org-toc)
     (add-to-list 'org-modules 'org-tempo) ;; activate old template expansion mechanism like <s
-    (add-to-list 'org-modules 'org-drill)
     ;; A repeating task with subitems as checkboxes. Set property
     ;; RESET_CHECK_BOXES on the task to t, When the task is completed, all the
     ;; checkboxes on the subitems should be cleared - so the task can be done at
@@ -1375,10 +1373,6 @@ If VANILLA is non-nil, run the standard `org-capture'."
              :unnarrowed t
              :kill-buffer t
              :empty-lines-after 1)
-            ("d" "Drill" entry (file+headline "~/org/drill/playground.org" "Pond")
-             "* Q: %?       :drill:\n\n** A:\n"
-             :kill-buffer t
-             :empty-lines-after 1)
             ;; ("p" "Phone call" entry (file+headline "~/org/agenda/GTD.org" "Inbox")
             ;;  "* PHONE %? :PHONE:\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
             ;;  :clock-in t
@@ -1789,67 +1783,6 @@ otherwise just refresh the org agenda buffer."
 (with-eval-after-load "org"
   (when window-system
     (require 'org-mac-protocol nil t)))
-
-;;; org-drill
-(setq org-drill-spaced-repetition-algorithm 'sm5
-      org-drill-use-visible-cloze-face-p nil
-      org-drill-learn-fraction 0.45
-      org-drill-maximum-items-per-session 40
-      org-drill-maximum-duration 30   ; 30 minutes
-      org-drill-scope 'file ; use `org-drill-directory' to drill whole directory
-      org-drill-leech-method 'warn
-      org-drill-sm5-initial-interval 4.0
-      org-drill-adjust-intervals-for-early-and-late-repetitions-p t
-      org-drill-add-random-noise-to-intervals-p t)
-
-
-;;; Fix org-drill and use space key as prefix key in evil mode
-;; Space key have been used as prefix key. When org-drill presentation prompt,
-;; press space key one time, it will expect other key sequence. Switch to
-;; `evil-emacs-state' to prevent this and recover it when org-drill finish.
-;; (defadvice org-drill (before paloryemacs/org-drill-switch-to-evil-emacs-state activate)
-;;   "Switch to evil-emacs-state before org-drill begin."
-;;   (paloryemacs/evil-state-cycle 'insert))
-
-;; (defadvice org-drill (after paloryemacs/org-drill-recover-evil-state activate)
-;;   "Recover the evil state which saved before org-drill begin."
-;;   (paloryemacs/evil-state-cycle))
-
-;; use evil-save-state to wrap it
-(defun paloryemacs/evil-org-drill ()
-  "Switch to evil insert state, execute `org-drill' then restore the state."
-  (interactive)
-  (evil-save-state
-    (evil-change-state 'insert)
-    (org-drill)))
-
-(defun paloryemacs/evil-org-drill-directory ()
-  "Switch to evil insert state, execute `org-drill-directory' then restore the state."
-  (interactive)
-  (evil-save-state
-    (evil-change-state 'insert)
-    (org-drill-directory)))
-
-(defun paloryemacs/evil-org-drill-resume ()
-  "Switch to evil insert state, execute `org-drill-resume' then restore the state."
-  (interactive)
-  (evil-save-state
-    (evil-change-state 'insert)
-    (org-drill-resume)))
-
-(defun paloryemacs/evil-org-drill-again ()
-  "Switch to evil insert state, execute `org-drill-again' then restore the state."
-  (interactive)
-  (evil-save-state
-    (evil-change-state 'insert)
-    (org-drill-again)))
-
-(defun paloryemacs/evil-org-drill-cram ()
-  "Switch to evil insert state, execute `org-drill-cram' then restore the state."
-  (interactive)
-  (evil-save-state
-    (evil-change-state 'insert)
-    (org-drill-cram)))
 
 (defhydra paloryemacs/org-agenda (:color teal)
   "
