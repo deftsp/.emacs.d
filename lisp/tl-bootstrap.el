@@ -122,6 +122,4 @@
 (require '99face)
 (require '100align)
 
-(load-file "~/.emacs.d/private-ede-projects.el")
-
 (provide 'tl-bootstrap)
