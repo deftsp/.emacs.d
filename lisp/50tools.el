@@ -17,19 +17,19 @@
   :defer t
   :init
   (progn
-    (paloryemacs/set-leader-keys "v" 'er/expand-region)
+    (tl/set-leader-keys "v" 'er/expand-region)
     (setq expand-region-contract-fast-key "V"
           expand-region-reset-fast-key "r"))
   :config
   (progn
-    (defun paloryemacs/mark-sexp-forward ()
+    (defun tl/mark-sexp-forward ()
       "Mark the sexp from the point to end of the sexp."
       (interactive)
       (set-mark (point))
       (forward-sexp 1)
       (exchange-point-and-mark))
 
-    (defun paloryemacs/mark-next-symbol ()
+    (defun tl/mark-next-symbol ()
       "Presumes that current symbol is already marked, skips over one
 space and marks next symbol."
       (interactive)
@@ -42,7 +42,7 @@ space and marks next symbol."
             (skip-syntax-forward "_w")
             (exchange-point-and-mark)))))
 
-    (defun paloryemacs/mark-lua-method-call ()
+    (defun tl/mark-lua-method-call ()
       "Mark the current symbol (including dots) and then paren to closing paren."
       (interactive)
       (let ((symbol-regexp "\\s_\\|\\sw\\|\\:"))
@@ -57,17 +57,17 @@ space and marks next symbol."
           (exchange-point-and-mark))))
 
     ;; general expand list
-    (add-to-list 'er/try-expand-list 'paloryemacs/mark-sexp-forward)
+    (add-to-list 'er/try-expand-list 'tl/mark-sexp-forward)
 
     (with-eval-after-load 'lua-mode
-      (defun paloryemacs/lua-mode-expand-list-init ()
+      (defun tl/lua-mode-expand-list-init ()
         (make-variable-buffer-local 'er/try-expand-list)
         (setq er/try-expand-list '(er/mark-word
                                    er/mark-symbol
                                    er/mark-symbol-with-prefix
-                                   paloryemacs/mark-next-symbol
+                                   tl/mark-next-symbol
                                    er/mark-next-accessor
-                                   paloryemacs/mark-lua-method-call
+                                   tl/mark-lua-method-call
                                    er/mark-method-call
                                    er/mark-outside-quotes
                                    er/mark-inside-quotes
@@ -77,7 +77,7 @@ space and marks next symbol."
                                    er/mark-defun
                                    er/mark-url
                                    er/mark-email)))
-      (add-hook 'lua-mode-hook 'paloryemacs/lua-mode-expand-list-init))))
+      (add-hook 'lua-mode-hook 'tl/lua-mode-expand-list-init))))
 
 ;;; let ^L looks beautiful
 ;; (require 'pp-c-l)
@@ -128,26 +128,26 @@ space and marks next symbol."
 
 ;;; moving region/line
 ;; Many times you'll kill a line with the intention of pasting it back a couple of lines up/below.
-(global-set-key (kbd "H-p") 'paloryemacs/move-line-or-region-up)
-(global-set-key (kbd "H-n") 'paloryemacs/move-line-or-region-down)
+(global-set-key (kbd "H-p") 'tl/move-line-or-region-up)
+(global-set-key (kbd "H-n") 'tl/move-line-or-region-down)
 
-(global-set-key (kbd "H-k") 'paloryemacs/move-line-or-region-up)
-(global-set-key (kbd "H-j") 'paloryemacs/move-line-or-region-down)
+(global-set-key (kbd "H-k") 'tl/move-line-or-region-up)
+(global-set-key (kbd "H-j") 'tl/move-line-or-region-down)
 
-(defun paloryemacs/move-line-or-region-up (n)
+(defun tl/move-line-or-region-up (n)
   (interactive "p")
   (if (region-active-p)
-      (paloryemacs/move-region-up (region-beginning) (region-end) n)
-      (call-interactively #'paloryemacs/move-line-up)))
+      (tl/move-region-up (region-beginning) (region-end) n)
+      (call-interactively #'tl/move-line-up)))
 
-(defun paloryemacs/move-line-or-region-down (n)
+(defun tl/move-line-or-region-down (n)
   (interactive "p")
   (if (region-active-p)
-      (paloryemacs/move-region-down (region-beginning) (region-end) n)
-      (call-interactively #'paloryemacs/move-line-down)))
+      (tl/move-region-down (region-beginning) (region-end) n)
+      (call-interactively #'tl/move-line-down)))
 
 ;;
-(defun paloryemacs/move-region (start end n)
+(defun tl/move-region (start end n)
   "Move the current region up or down by N lines."
   (interactive "r\np")
   (let ((line-text (delete-and-extract-region start end)))
@@ -157,19 +157,19 @@ space and marks next symbol."
       (setq deactivate-mark nil)
       (set-mark start))))
 
-(defun paloryemacs/move-region-up (start end n)
+(defun tl/move-region-up (start end n)
   "Move the current line up by N lines."
   (interactive "r\np")
-  (paloryemacs/move-region start end (if (null n) -1 (- n))))
+  (tl/move-region start end (if (null n) -1 (- n))))
 
-(defun paloryemacs/move-region-down (start end n)
+(defun tl/move-region-down (start end n)
   "Move the current line down by N lines."
   (interactive "r\np")
-  (paloryemacs/move-region start end (if (null n) 1 n)))
+  (tl/move-region start end (if (null n) 1 n)))
 
 
 ;;
-(defun paloryemacs/move-line (&optional n)
+(defun tl/move-line (&optional n)
   "Move current line N (1) lines up/down leaving point in place."
   (interactive "p")
   (let ((n (if (null n) 1 n))
@@ -180,50 +180,50 @@ space and marks next symbol."
     (previous-line (if (> n 0) 1 2))
     (move-to-column col)))
 
-(defun paloryemacs/move-line-up (n)
+(defun tl/move-line-up (n)
   "Moves current line N (1) lines up leaving point in place."
   (interactive "p")
-  (paloryemacs/move-line (if (null n) -1 (- n))))
+  (tl/move-line (if (null n) -1 (- n))))
 
-(defun paloryemacs/move-line-down (n)
+(defun tl/move-line-down (n)
   "Moves current line N (1) lines down leaving point in place."
   (interactive "p")
-  (paloryemacs/move-line (if (null n) 1 n)))
+  (tl/move-line (if (null n) 1 n)))
 
 
 ;;; Open new line
-(defun paloryemacs/haskell-modes-p ()
+(defun tl/haskell-modes-p ()
   (memq major-mode '(haskell-mode haskell-c-mode literate-haskell-mode)))
 
-(defun paloryemacs/open-line-with-indent ()
+(defun tl/open-line-with-indent ()
   "open-line with indent without moving cursor."
   (interactive)
   (save-excursion
     (open-line 1)
     (next-line 1)
-    (unless (paloryemacs/haskell-modes-p)
+    (unless (tl/haskell-modes-p)
      (indent-according-to-mode))
     (next-line -1)))
 
-(global-set-key (kbd "C-o") 'paloryemacs/open-line-with-indent)
+(global-set-key (kbd "C-o") 'tl/open-line-with-indent)
 
 
 ;; behave like vi's o command
-(defun paloryemacs/vi-open-next-line (arg)
+(defun tl/vi-open-next-line (arg)
   "Move to the next line (like vi) and then opens a line."
   (interactive "p")
   (end-of-line)
   (open-line arg)
   (next-line 1)
-  (unless (paloryemacs/haskell-modes-p)
+  (unless (tl/haskell-modes-p)
     (indent-according-to-mode)))
 
-(global-set-key (kbd "C-M-o") 'paloryemacs/vi-open-next-line)  ; `C-M-o' default bind to split-line'
+(global-set-key (kbd "C-M-o") 'tl/vi-open-next-line)  ; `C-M-o' default bind to split-line'
 
 
 ;; behave like vi's O command
-;; (global-set-key (kbd "M-O") 'paloryemacs/vi-open-above-line)
-;; (defun paloryemacs/vi-open-above-line (arg)
+;; (global-set-key (kbd "M-O") 'tl/vi-open-above-line)
+;; (defun tl/vi-open-above-line (arg)
 ;;   "Open a new line before the current one."
 ;;   (interactive "p")
 ;;   (beginning-of-line)
@@ -266,10 +266,10 @@ space and marks next symbol."
 ;;         bmkp-light-style-non-autonamed 'lfringe)
 
 ;;   (when (fboundp 'define-fringe-bitmap)
-;;     (define-fringe-bitmap 'paloryemacs/marker-left   [#x00 #x00 #xFC #xFE #x0F #xFE #xFC #x00])
-;;     (define-fringe-bitmap 'paloryemacs/marker-right  [#x00 #x00 #x3F #x7F #xF0 #x7F #x3F #x00])
-;;     (setq bmkp-light-left-fringe-bitmap 'paloryemacs/marker-left)
-;;     (setq bmkp-light-right-fringe-bitmap 'paloryemacs/marker-right)))
+;;     (define-fringe-bitmap 'tl/marker-left   [#x00 #x00 #xFC #xFE #x0F #xFE #xFC #x00])
+;;     (define-fringe-bitmap 'tl/marker-right  [#x00 #x00 #x3F #x7F #xF0 #x7F #x3F #x00])
+;;     (setq bmkp-light-left-fringe-bitmap 'tl/marker-left)
+;;     (setq bmkp-light-right-fringe-bitmap 'tl/marker-right)))
 
 
 ;;; bookmark history stack
@@ -295,7 +295,7 @@ space and marks next symbol."
       (setq point-stack (cdr point-stack))))
 
 ;;; Turns tabs into spaces
-;; (defun paloryemacs/untabify ()
+;; (defun tl/untabify ()
 ;;   "My untabify function as discussed and described at
 ;;  http://www.jwz.org/doc/tabs-vs-spaces.html
 ;;  and improved by Claus Brunzema:
@@ -311,7 +311,7 @@ space and marks next symbol."
 ;; (add-hook 'some-mode-hook
 ;;           '(lambda ()
 ;;             (make-local-hook 'write-contents-hooks)
-;;             (add-hook 'write-contents-hooks 'paloryemacs/untabify nil t)))
+;;             (add-hook 'write-contents-hooks 'tl/untabify nil t)))
 
 
 ;;; undoc
@@ -343,7 +343,7 @@ space and marks next symbol."
 
 
 ;;; misc func
-;; (defun paloryemacs/value-to-string (value)
+;; (defun tl/value-to-string (value)
 ;;   "Convert VALUE to string.
 ;; This function will automatically identify the type of VALUE, and invoke
 ;; the appropiate conversion function"
@@ -355,7 +355,7 @@ space and marks next symbol."
 ;;          (error "Cannot convert value to string."))))
 
 
-;; (defun paloryemacs/read-lines-in-buffer (&optional buffer)
+;; (defun tl/read-lines-in-buffer (&optional buffer)
 ;;   "Return list of lines in current buffer.
 ;; If BUFFER if non-nil, switch to BUFFER before reading lines. The list returned
 ;; will be in reverse with regard to the sequence of lines in the buffer read.
@@ -379,13 +379,13 @@ space and marks next symbol."
 
 ;;; convert a buffer from dos ^M end of lines to unix end of lines
 ;; dos <--> unix
-(defun paloryemacs/dos2unix ()
+(defun tl/dos2unix ()
   (interactive)
   (goto-char (point-min))
   (while (search-forward "\r" nil t) (replace-match "")))
 
 ;; vice versa
-(defun paloryemacs/unix2dos ()
+(defun tl/unix2dos ()
   (interactive)
   (goto-char (point-min))
   (while (search-forward "\n" nil t) (replace-match "\r\n")))
@@ -396,16 +396,16 @@ space and marks next symbol."
 (global-set-key "\C-xru" 'gse-number-rectangle)
 
 ;;; yank secondary
-(defun paloryemacs/yank-secondary ()
+(defun tl/yank-secondary ()
   "Insert the secondary selection at point.
   Moves point to the end of the inserted text.  Does not change mark."
   (interactive) (insert (x-get-selection 'SECONDARY)))
 
 
 ;;; Copy current line to next line
-(global-set-key (kbd "<M-S-return>") 'paloryemacs/dup-line-down)
+(global-set-key (kbd "<M-S-return>") 'tl/dup-line-down)
 
-(defun paloryemacs/ue-select-line-down ()
+(defun tl/ue-select-line-down ()
   "like Shift+down in UltraEdit."
   (interactive)
   (let ((s (point)))
@@ -414,19 +414,19 @@ space and marks next symbol."
     (setq next-line-add-newlines nil)
     (kill-new (buffer-substring s (point)))))
 
-(defun paloryemacs/dup-line-down ()
+(defun tl/dup-line-down ()
   "duplicate this line at next line"
   (interactive)
   (let ((c (current-column)))
     (beginning-of-line)
-    (paloryemacs/ue-select-line-down)
+    (tl/ue-select-line-down)
     (beginning-of-line)
     (yank)
     (previous-line 1)
     (move-to-column c)))
 
 
-(defun paloryemacs/strip-all-blank-lines ()
+(defun tl/strip-all-blank-lines ()
   "Strip all blank lines in current buffer."
   (interactive)
   (save-excursion
@@ -434,7 +434,7 @@ space and marks next symbol."
       (replace-match "" t t))))
 
 ;; resolve file names
-(defun paloryemacs/resolve-file-name (file type)
+(defun tl/resolve-file-name (file type)
   "Resolve file name in various ways.
 
 file is the abosolute filename.
@@ -452,7 +452,7 @@ type stands for different kinds of resolve.
     (t (file-name-extension file))))
 
 ;;; insert line number before each line.
-(defun paloryemacs/numerate-lines ()
+(defun tl/numerate-lines ()
   "Insert line numbers into buffer"
   (interactive)
   (save-excursion
@@ -466,7 +466,7 @@ type stands for different kinds of resolve.
 
 
 ;;; a simple way of aligning columns
-(defun paloryemacs/align-cols (start end max-cols)
+(defun tl/align-cols (start end max-cols)
   "Align text between point and mark as columns.  Columns are separated by
 whitespace characters.  Prefix arg means align that many columns. (default
 is all)"
@@ -539,7 +539,7 @@ is all)"
             (setq p (point)))))))
 
 ;;; count Chinese, English words
-(defun paloryemacs/count-ce-word (beg end)
+(defun tl/count-ce-word (beg end)
   "Count Chinese and English words in marked region."
   (interactive "r")
   (let ((cn-word 0)
@@ -553,8 +553,8 @@ is all)"
     (message (format "Total: %d (cn: %d, en: %d) words, %d bytes."
                      total-word cn-word en-word total-byte))))
 
-;;; paloryemacs/word-count-analysis (how many times a word has appeared).
-(defun paloryemacs/word-count-analysis (start end)
+;;; tl/word-count-analysis (how many times a word has appeared).
+(defun tl/word-count-analysis (start end)
   "Count how many times each word is used in the region.
     Punctuation is ignored."
   (interactive "r")
@@ -572,25 +572,25 @@ is all)"
     words))
 
 
-(defun paloryemacs/list-ref (list ref)
+(defun tl/list-ref (list ref)
   "Return the ref-th element of list."
   (if (= ref 0)
       (car list)
-      (paloryemacs/list-ref (cdr list) (1- ref))))
+      (tl/list-ref (cdr list) (1- ref))))
 
-(defun paloryemacs/info (file)
+(defun tl/info (file)
   (interactive
    (list (read-file-name "info: ")))
   (info file))
 
 
-(defun paloryemacs/delete-line (&optional arg)
+(defun tl/delete-line (&optional arg)
   "Delete the rest of the current line; if no nonblanks there, delete thru newline.
 With prefix argument, delete that many lines from point.
 Negative arguments delete lines backward.
 With zero argument, deletes the text before point on the current line.
 
-Note its difference between `paloryemacs/delete-line' and `kill-line' is
+Note its difference between `tl/delete-line' and `kill-line' is
 that, the deleted contents won't be inserted to the `kill-ring'."
   (if arg
       (dotimes (i arg)
@@ -602,7 +602,7 @@ that, the deleted contents won't be inserted to the `kill-ring'."
           (delete-region (point) (save-excursion (end-of-line)
                                                  (point))))))
 
-;; (defun paloryemacs/soft-kill-ring-save (beg end)
+;; (defun tl/soft-kill-ring-save (beg end)
 ;;   "Same as `kill-ring-save' except it will convert hard newlines to soft newlines.
 ;; This could be useful for copying texts from Emacs and pasting it to blog websites."
 ;;   (interactive "r")
@@ -628,7 +628,7 @@ that, the deleted contents won't be inserted to the `kill-ring'."
 ;;----------------------------------------------------------------------------------------------------
 ;;; Cool utility function to refresh all open buffers
 ;;----------------------------------------------------------------------------------------------------
-(defun paloryemacs/revert-all-buffers()
+(defun tl/revert-all-buffers()
   "Refreshs all open buffers from their respective files"
   (interactive)
   (let* ((list (buffer-list))
@@ -646,7 +646,7 @@ that, the deleted contents won't be inserted to the `kill-ring'."
   (message "Refreshing open files"))
 
 ;;; xmsg
-;; (defun paloryemacs/xmsg (string &optional geom process-name)
+;; (defun tl/xmsg (string &optional geom process-name)
 ;;   "Invoke xmessage(1) to display message STRING.
 ;; However, do nothing if `window-system' is not `x'.  Other args
 ;; are optional: GEOM is the window geometry (default \"+0+0\");
@@ -658,7 +658,7 @@ that, the deleted contents won't be inserted to the `kill-ring'."
 ;;                    (or string "Emacs says hi!"))))
 
 ;; It's often nice to find the true path to a file or directory.
-;; (defun paloryemacs/resolve-sym-link ()
+;; (defun tl/resolve-sym-link ()
 ;;   "Replace the string at the point with the true path."
 ;;   (interactive)
 ;;   (beginning-of-line)
@@ -701,8 +701,8 @@ that, the deleted contents won't be inserted to the `kill-ring'."
 (define-key esc-map "#" 'lisp-spell-symbol)
 
 ;;; replace-recent-char
-(global-set-key (kbd "M-R")  'paloryemacs/replace-recent-char)
-(defun paloryemacs/replace-recent-char ()
+(global-set-key (kbd "M-R")  'tl/replace-recent-char)
+(defun tl/replace-recent-char ()
   "Replace-recent-character is interactive function for quick corrections of
 recenlty typed text. It first prompts for character to search backwards. If
 such character is found, following options are shown:
@@ -758,7 +758,7 @@ such character is found, following options are shown:
 
 ;;; (dec|inc)rement number at point
 ;; The following functions allow you increment or decrement what they think is a number under point:
-;; (defun paloryemacs/increment-number-at-point (&optional amount)
+;; (defun tl/increment-number-at-point (&optional amount)
 ;;   "Increment the number under point by `amount'"
 ;;   (interactive "p")
 ;;   (let ((num (number-at-point)))
@@ -771,13 +771,13 @@ such character is found, following options are shown:
 ;;           (insert (number-to-string newnum)))
 ;;         (goto-char p)))))
 
-;; (defun paloryemacs/decrement-number-at-point (&optional amount)
+;; (defun tl/decrement-number-at-point (&optional amount)
 ;;   (interactive "p")
 ;;   "Decrement the number under point by `amount'"
-;;   (paloryemacs/increment-number-at-point (- (abs amount))))
+;;   (tl/increment-number-at-point (- (abs amount))))
 ;; I don't use the arrow keys so I have the above functions bound like this:
-;; (define-key global-map (kbd "<C-up>") 'paloryemacs/increment-number-at-point)
-;; (define-key global-map (kbd "<C-down>") 'paloryemacs/decrement-number-at-point)
+;; (define-key global-map (kbd "<C-up>") 'tl/increment-number-at-point)
+;; (define-key global-map (kbd "<C-down>") 'tl/decrement-number-at-point)
 
 ;;; incr-dwim
 (autoload 'incr-dwim "incr"
@@ -837,7 +837,7 @@ such character is found, following options are shown:
 
 
 ;;; finding non ascii characters
-(defun paloryemacs/find-first-non-ascii-char ()
+(defun tl/find-first-non-ascii-char ()
   "Find the first non-ascii character from point onwards."
   (interactive)
   (let (point)
@@ -860,7 +860,7 @@ such character is found, following options are shown:
 
 
 ;;; Insert a path into the current buffer
-(defun paloryemacs/insert-path (file)
+(defun tl/insert-path (file)
   "insert file"
   (interactive "FPath: ")
   (insert (expand-file-name file)))
@@ -930,8 +930,8 @@ such character is found, following options are shown:
 ;;; goto line with feedback
 ;; http://whattheemacsd.com//key-bindings.el-01.html
 ;; remap all key bindings from goto-line to goto-line-with-feedback.
-;; (global-set-key (vector 'remap 'goto-line) 'paloryemacs/goto-line-with-nlinum-and-feed-back)
-;; (defun paloryemacs/goto-line-with-nlinum-and-feed-back ()
+;; (global-set-key (vector 'remap 'goto-line) 'tl/goto-line-with-nlinum-and-feed-back)
+;; (defun tl/goto-line-with-nlinum-and-feed-back ()
 ;;   "Show line numbers temporarily, while prompting for the line number input"
 ;;   (interactive)
 ;;   (let* ((is-nlinum-mode-load (boundp 'nlinum-mode))
@@ -973,14 +973,14 @@ such character is found, following options are shown:
 
 ;; toggle between the beginning of the line and the beginning of the code.
 ;; bind `C-a' to this function, `C-a C-a' can be used to  replace default `M-m' back-to-indentation
-(defun paloryemacs/beginning-of-line-or-indentation ()
+(defun tl/beginning-of-line-or-indentation ()
   "move to beginning of line, or indentation"
   (interactive)
   (if (bolp)
       (back-to-indentation)
     (beginning-of-line)))
 
-(global-set-key (kbd "C-a") 'paloryemacs/beginning-of-line-or-indentation)
+(global-set-key (kbd "C-a") 'tl/beginning-of-line-or-indentation)
 
 
 ;;; cclookup
@@ -1014,41 +1014,41 @@ such character is found, following options are shown:
     ;; (global-set-key (kbd "M-å") 'mc/mark-all-in-region)
     (global-set-key (kbd "C-M-m") 'mc/mark-more-like-this-extended)
 
-    (defvar paloryemacs/mutiple-cursors-keymap (make-sparse-keymap)
+    (defvar tl/mutiple-cursors-keymap (make-sparse-keymap)
       "Keymap for key chord prefix commands in haskell mode.")
-    (define-key paloryemacs/mutiple-cursors-keymap (kbd "l") 'mc/edit-lines)
-    (define-key paloryemacs/mutiple-cursors-keymap (kbd "c") 'mc/edit-lines)
-    (define-key paloryemacs/mutiple-cursors-keymap (kbd "M-C") 'mc/edit-lines)
-    (define-key paloryemacs/mutiple-cursors-keymap (kbd "C-e") 'mc/edit-ends-of-lines)
-    (define-key paloryemacs/mutiple-cursors-keymap (kbd "e") 'mc/edit-ends-of-lines)
-    (define-key paloryemacs/mutiple-cursors-keymap (kbd "C-a") 'mc/edit-beginnings-of-lines)
-    (define-key paloryemacs/mutiple-cursors-keymap (kbd "a") 'mc/edit-beginnings-of-lines)
-    (define-key paloryemacs/mutiple-cursors-keymap (kbd "SPC") 'set-rectangular-region-anchor)
-    (define-key paloryemacs/mutiple-cursors-keymap (kbd "m") 'set-rectangular-region-anchor)
+    (define-key tl/mutiple-cursors-keymap (kbd "l") 'mc/edit-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "c") 'mc/edit-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "M-C") 'mc/edit-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "C-e") 'mc/edit-ends-of-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "e") 'mc/edit-ends-of-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "C-a") 'mc/edit-beginnings-of-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "a") 'mc/edit-beginnings-of-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "SPC") 'set-rectangular-region-anchor)
+    (define-key tl/mutiple-cursors-keymap (kbd "m") 'set-rectangular-region-anchor)
 
-    (global-set-key (kbd "M-C") paloryemacs/mutiple-cursors-keymap)
-    (key-chord-define-global ";c" paloryemacs/mutiple-cursors-keymap))
+    (global-set-key (kbd "M-C") tl/mutiple-cursors-keymap)
+    (key-chord-define-global ";c" tl/mutiple-cursors-keymap))
   :config
   (progn
     (with-eval-after-load "evil"
       (add-hook 'multiple-cursors-mode-enabled-hook
-                'paloryemacs/evil-switch-to-insert-maybe))
+                'tl/evil-switch-to-insert-maybe))
 
     (add-to-list 'mc/unsupported-minor-modes 'autopair-mode)
     (add-to-list 'mc/unsupported-minor-modes 'smartparens-mode)
     ;; (add-to-list 'mc/unsupported-minor-modes 'evil-mode)
     (add-to-list 'mc/unsupported-minor-modes 'smartparens-strict-mode)))
 
-(global-set-key (kbd "C-S-SPC") 'paloryemacs/set-rectangular-region-anchor)
+(global-set-key (kbd "C-S-SPC") 'tl/set-rectangular-region-anchor)
 ;; Rectangular region mode
-(defun paloryemacs/evil-switch-to-insert-maybe ()
+(defun tl/evil-switch-to-insert-maybe ()
   (when (and (fboundp 'evil-mode) evil-mode)
     (if (not (memq evil-state '(insert emacs)))
         (evil-insert 1))))
 
-(defun paloryemacs/set-rectangular-region-anchor ()
+(defun tl/set-rectangular-region-anchor ()
   (interactive)
-  (paloryemacs/evil-switch-to-insert-maybe)
+  (tl/evil-switch-to-insert-maybe)
   (set-rectangular-region-anchor))
 
 ;;; visual-regexp
@@ -1105,12 +1105,12 @@ such character is found, following options are shown:
     (setq  projectile-indexing-method 'alien
            projectile-generic-command "find . -type f")
     (setq projectile-sort-order 'recentf
-          projectile-cache-file (concat paloryemacs-cache-directory
+          projectile-cache-file (concat tl-cache-directory
                                         "projectile.cache")
-          projectile-known-projects-file (concat paloryemacs-cache-directory
+          projectile-known-projects-file (concat tl-cache-directory
                                                  "projectile-bookmarks.eld"))
     (setq projectile-enable-caching t)
-    (paloryemacs/set-leader-keys
+    (tl/set-leader-keys
       "p!"   'projectile-run-shell-command-in-root
       "p&"   'projectile-run-async-shell-command-in-root
       "p%"   'projectile-replace-regexp
@@ -1266,7 +1266,7 @@ inputting math (Unicode) symbols." t))
           which-key-replacement-alist)
 
     ;; Hide the entries for M-[2-9] in the SPC h k Top-level bindings,
-    ;; and for [2-9] in the SPC- paloryemacs root
+    ;; and for [2-9] in the SPC- tl root
     (push '((nil . "winum-select-window-[2-9]") . t)
           which-key-replacement-alist)
 

@@ -30,72 +30,72 @@
 ;; `C-M-x' on a defface expression reinitializes the face according to the
 ;; defface specification.
 
-(defface paloryemacs/evil-normal-tag
+(defface tl/evil-normal-tag
   `((t (:weight bold :foreground "orchid")))
   "Evil normal mode indicator face")
 
-(defface paloryemacs/evil-insert-tag
+(defface tl/evil-insert-tag
   `((t (:weight bold :foreground "OliveDrab1")))
   "Evil insert mode indicator face")
 
-(defface paloryemacs/evil-replace-tag
+(defface tl/evil-replace-tag
   `((t (:weight bold :foreground "orchid")))
   "Evil replace mode indicator face")
 
-(defface paloryemacs/evil-emacs-tag
+(defface tl/evil-emacs-tag
   `((t (:weight bold :foreground "#7cfa42")))
   "Evil emacs mode indicator face")
 
-(defface paloryemacs/evil-visual-tag
+(defface tl/evil-visual-tag
   `((t (:weight bold :foreground "Purple")))
   "Evil visual mode indicator face")
 
-(defface paloryemacs/evil-motion-tag
+(defface tl/evil-motion-tag
   `((t (:weight bold :foreground "Cyan")))
   "Evil motion mode indicator face")
 
-(defface paloryemacs/evil-operator-tag
+(defface tl/evil-operator-tag
   `((t (:weight bold :foreground "maroon")))
   "Evil operator mode indicator face")
 
-(defface paloryemacs/evil-lisp-tag
+(defface tl/evil-lisp-tag
   `((t (:weight bold :foreground "orange")))
   "Evil lisp mode indicator face")
 
-(defface paloryemacs/evil-lispy-tag
+(defface tl/evil-lispy-tag
   `((t (:weight bold :foreground "orange")))
   "Evil lispy mode indicator face")
 
-(defface paloryemacs/evil-iedit-tag
+(defface tl/evil-iedit-tag
   `((t (:weight bold :foreground "yellow")))
   "Evil iedit mode indicator face")
 
 ;;; visual indicators
 (setq evil-mode-line-format 'before
-      evil-emacs-state-tag    (propertize "« E »" 'face 'paloryemacs/evil-emacs-tag)
-      evil-normal-state-tag   (propertize "« ☢ »" 'face 'paloryemacs/evil-normal-tag)
-      evil-insert-state-tag   (propertize "« I »" 'face 'paloryemacs/evil-insert-tag)
-      evil-motion-state-tag   (propertize "« M »" 'face 'paloryemacs/evil-motion-tag)
-      evil-visual-state-tag   (propertize "« V »" 'face 'paloryemacs/evil-visual-tag)
-      evil-operator-state-tag (propertize "« O »" 'face 'paloryemacs/evil-operator-tag)
-      evil-replace-state-tag  (propertize "« R »" 'face 'paloryemacs/evil-replace-tag)
-      evil-lisp-state-tag     (propertize "« L »" 'face 'paloryemacs/evil-lisp-tag)
-      evil-iedit-state-tag    (propertize "« E »" 'face 'paloryemacs/evil-iedit-tag))
+      evil-emacs-state-tag    (propertize "« E »" 'face 'tl/evil-emacs-tag)
+      evil-normal-state-tag   (propertize "« ☢ »" 'face 'tl/evil-normal-tag)
+      evil-insert-state-tag   (propertize "« I »" 'face 'tl/evil-insert-tag)
+      evil-motion-state-tag   (propertize "« M »" 'face 'tl/evil-motion-tag)
+      evil-visual-state-tag   (propertize "« V »" 'face 'tl/evil-visual-tag)
+      evil-operator-state-tag (propertize "« O »" 'face 'tl/evil-operator-tag)
+      evil-replace-state-tag  (propertize "« R »" 'face 'tl/evil-replace-tag)
+      evil-lisp-state-tag     (propertize "« L »" 'face 'tl/evil-lisp-tag)
+      evil-iedit-state-tag    (propertize "« E »" 'face 'tl/evil-iedit-tag))
 
 ;; FIXME: as Official Emacs 24.4, if set color color,  when multile
 ;; windows (> 6), C-h evil-mode `q' then quit the help window will be very slow
 ;; see more https://bitbucket.org/lyro/evil/issue/487/after-set-colors-for-different-state-by
 (if (eq window-system 'mac) ; emacs-mac-port (https://github.com/railwaycat/emacs-mac-port)
-    (setq evil-emacs-state-cursor    `(box    ,(face-attribute 'paloryemacs/evil-emacs-tag    :foreground))
-          evil-normal-state-cursor   `(box    ,(face-attribute 'paloryemacs/evil-normal-tag   :foreground))
-          evil-insert-state-cursor   `(box    ,(face-attribute 'paloryemacs/evil-insert-tag   :foreground))
-          evil-motion-state-cursor   `(box    ,(face-attribute 'paloryemacs/evil-motion-tag   :foreground))
-          evil-visual-state-cursor   `(hollow ,(face-attribute 'paloryemacs/evil-visual-tag   :foreground))
-          evil-replace-state-cursor  `(hbar   ,(face-attribute 'paloryemacs/evil-replace-tag  :foreground))
-          evil-operator-state-cursor `(hollow ,(face-attribute 'paloryemacs/evil-operator-tag :foreground))
-          evil-lisp-state-cursor     `(box    ,(face-attribute 'paloryemacs/evil-lisp-tag     :foreground))
-          evil-lispy-state-cursor    `(box    ,(face-attribute 'paloryemacs/evil-lispy-tag    :foreground))
-          evil-iedit-state-cursor    `(box    ,(face-attribute 'paloryemacs/evil-iedit-tag    :foreground)))
+    (setq evil-emacs-state-cursor    `(box    ,(face-attribute 'tl/evil-emacs-tag    :foreground))
+          evil-normal-state-cursor   `(box    ,(face-attribute 'tl/evil-normal-tag   :foreground))
+          evil-insert-state-cursor   `(box    ,(face-attribute 'tl/evil-insert-tag   :foreground))
+          evil-motion-state-cursor   `(box    ,(face-attribute 'tl/evil-motion-tag   :foreground))
+          evil-visual-state-cursor   `(hollow ,(face-attribute 'tl/evil-visual-tag   :foreground))
+          evil-replace-state-cursor  `(hbar   ,(face-attribute 'tl/evil-replace-tag  :foreground))
+          evil-operator-state-cursor `(hollow ,(face-attribute 'tl/evil-operator-tag :foreground))
+          evil-lisp-state-cursor     `(box    ,(face-attribute 'tl/evil-lisp-tag     :foreground))
+          evil-lispy-state-cursor    `(box    ,(face-attribute 'tl/evil-lispy-tag    :foreground))
+          evil-iedit-state-cursor    `(box    ,(face-attribute 'tl/evil-iedit-tag    :foreground)))
   (setq evil-default-cursor '(box "#cd0000") ; emacs official
         evil-emacs-state-cursor    'box
         evil-normal-state-cursor   'box
@@ -121,31 +121,31 @@
 
 ;;; escape
 ;;; Cycle emacs state
-(defvar paloryemacs--saved-evil-state nil "Saved evil state for recover later.")
-(make-variable-buffer-local 'paloryemacs--saved-evil-state)
+(defvar tl--saved-evil-state nil "Saved evil state for recover later.")
+(make-variable-buffer-local 'tl--saved-evil-state)
 
-(defun paloryemacs/evil-state-cycle (&optional state)
+(defun tl/evil-state-cycle (&optional state)
   "When STATE is non-nil, change evil state to it.
-When STATE is nil, if `paloryemacs--saved-evil-state' is non-nil,
+When STATE is nil, if `tl--saved-evil-state' is non-nil,
 recover evil state to it, otherwiser change to evil-emacs-state."
   (when (and (boundp 'evil-mode) evil-mode)
     (if state
         (progn
-          (setq paloryemacs--saved-evil-state evil-state)
+          (setq tl--saved-evil-state evil-state)
           (evil-change-state state))
-      (cond (paloryemacs--saved-evil-state
-             (unless (eq evil-state paloryemacs--saved-evil-state)
-               (evil-change-state paloryemacs--saved-evil-state))
-             (setq paloryemacs--saved-evil-state nil))
+      (cond (tl--saved-evil-state
+             (unless (eq evil-state tl--saved-evil-state)
+               (evil-change-state tl--saved-evil-state))
+             (setq tl--saved-evil-state nil))
             (t
              (unless (eq evil-state 'emacs)
-               (setq paloryemacs--saved-evil-state evil-state)
+               (setq tl--saved-evil-state evil-state)
                (evil-change-state 'emacs)))))))
 
 ;; Note: the defadvice to keyboard-quit will not work when execute read-key-sequence
 
 ;;; escape dwim
-(defun paloryemacs/keyboard-escape-quit ()
+(defun tl/keyboard-escape-quit ()
   "Enhanced Edition of the build-in function `keyboard-escape-quit`."
   (interactive)
   (when (and delete-selection-mode transient-mark-mode mark-active)
@@ -168,7 +168,7 @@ recover evil state to it, otherwiser change to evil-emacs-state."
         ((get-buffer "*Completions*")
          (delete-windows-on "*Completions*"))
         ((or (memq major-mode '(Info-mode org-agenda-mode help-mode))
-             paloryemacs--saved-evil-state)
+             tl--saved-evil-state)
          (keyboard-quit))
         ((and (fboundp 'evil-mode) evil-mode (eq evil-state 'emacs))
          (evil-exit-emacs-state))
@@ -184,20 +184,20 @@ recover evil state to it, otherwiser change to evil-emacs-state."
          (delete-other-windows))
         (t (keyboard-quit))))
 
-(defun paloryemacs/company-abort-then-escape-dwim ()
+(defun tl/company-abort-then-escape-dwim ()
   (interactive)
   (company-abort)
-  (paloryemacs/keyboard-escape-quit))
+  (tl/keyboard-escape-quit))
 
 ;;; use Karabiner to remap simultaneous key presses [D+F] to Escape
-;; (key-chord-define-global "df" 'paloryemacs/keyboard-escape-quit)
+;; (key-chord-define-global "df" 'tl/keyboard-escape-quit)
 ;; (key-chord-define-global "df" [escape])
 ;; (with-eval-after-load 'company
-;;   (key-chord-define company-active-map "df" 'paloryemacs/company-abort-then-escape-dwim))
+;;   (key-chord-define company-active-map "df" 'tl/company-abort-then-escape-dwim))
 
 
 ;;;
-(defun paloryemacs/evil-undefine ()
+(defun tl/evil-undefine ()
   (interactive)
   (let (evil-mode-map-alist)
     (call-interactively (key-binding (this-command-keys)))))
@@ -210,7 +210,7 @@ recover evil state to it, otherwiser change to evil-emacs-state."
     (nmap
       "H"    "^"
       ;; make sure that Evil's normal state never touches TAB, just wire this fall-through binding
-      ;; "TAB" 'paloryemacs/evil-undefine
+      ;; "TAB" 'tl/evil-undefine
       "gL"  'org-mac-grab-link
       "gd"  'smart-jump-go
       ;; "gD"  'smart-jump-go-other-window
@@ -259,7 +259,7 @@ recover evil state to it, otherwiser change to evil-emacs-state."
       "C-d" nil
       "C-a" nil
       "C-w" nil
-      "C-o" 'paloryemacs/open-line-with-indent
+      "C-o" 'tl/open-line-with-indent
       [remap newline] nil
       [remap newline-and-indent] nil)
 
@@ -275,17 +275,17 @@ recover evil state to it, otherwiser change to evil-emacs-state."
 ;;   (evilem-default-keybindings ""))
 
 ;; (with-eval-after-load "workgroups2"
-;;   (defun paloryemacs/activate-all-major-mode-leader ()
+;;   (defun tl/activate-all-major-mode-leader ()
 ;;     (dolist (buf (buffer-list))
 ;;       (with-current-buffer buf
-;;         (paloryemacs/activate-major-mode-leader))))
+;;         (tl/activate-major-mode-leader))))
 ;;   (add-hook 'wg-after-switch-to-workgroup-hook
-;;             'paloryemacs/activate-all-major-mode-leader))
+;;             'tl/activate-all-major-mode-leader))
 
 
 
 ;; from https://github.com/gempesaw/dotemacs/blob/emacs/dg-defun.el
-(defun paloryemacs/kill-matching-buffers-rudely (regexp &optional internal-too)
+(defun tl/kill-matching-buffers-rudely (regexp &optional internal-too)
   "Kill buffers whose name matches the specified REGEXP. This
 function, unlike the built-in `kill-matching-buffers` does so
 WITHOUT ASKING. The optional second argument indicates whether to
@@ -299,29 +299,29 @@ kill internal buffers too."
         (kill-buffer buffer)))))
 
 
-(defun paloryemacs/switch-to-scratch-buffer ()
+(defun tl/switch-to-scratch-buffer ()
   "Switch to the `*scratch*' buffer. Create it first if needed."
   (interactive)
   (let ((exists (get-buffer "*scratch*")))
     (switch-to-buffer (get-buffer-create "*scratch*"))
     (when (and (not exists)
-               (not (eq major-mode dotpaloryemacs-scratch-mode))
-               (fboundp dotpaloryemacs-scratch-mode))
-      (funcall dotpaloryemacs-scratch-mode))))
+               (not (eq major-mode dottl-scratch-mode))
+               (fboundp dottl-scratch-mode))
+      (funcall dottl-scratch-mode))))
 
 ;; only active in certain evil states which defined in bind-map-default-evil-states
 (with-eval-after-load 'evil
-  (defun paloryemacs-bootstrap/init-bind-map ()
+  (defun tl-bootstrap/init-bind-map ()
     (use-package bind-map
       :config
-      (bind-map paloryemacs-default-map
-        :prefix-cmd paloryemacs-cmds
-        :keys (dotpaloryemacs-emacs-leader-key)
-        :evil-keys (dotpaloryemacs-leader-key)
+      (bind-map tl-default-map
+        :prefix-cmd tl-cmds
+        :keys (dottl-emacs-leader-key)
+        :evil-keys (dottl-leader-key)
         :override-minor-modes t
-        :override-mode-name paloryemacs-leader-override-mode)))
+        :override-mode-name tl-leader-override-mode)))
 
-  (paloryemacs-bootstrap/init-bind-map))
+  (tl-bootstrap/init-bind-map))
 
 
 ;;; evil-lisp-state
@@ -330,10 +330,10 @@ kill internal buffers too."
   :init
   (setq evil-lisp-state-global t) ; set it before require
   :config
-  (paloryemacs/set-leader-keys "k" evil-lisp-state-map))
+  (tl/set-leader-keys "k" evil-lisp-state-map))
 
 ;;; default mode
-(defun paloryemacs/evil-set-initial-state ()
+(defun tl/evil-set-initial-state ()
   (loop for (mode . state) in
         '((comint-mode               . insert)
           (compilation-mode          . evilified)
@@ -381,7 +381,7 @@ kill internal buffers too."
           (yari-mode                 . emacs))
         do (evil-set-initial-state mode state)))
 
-(defun paloryemacs/evil-init ()
+(defun tl/evil-init ()
   (setq evil-disable-insert-state-bindings nil
         evil-move-cursor-back nil
         evil-want-integration t
@@ -396,19 +396,19 @@ kill internal buffers too."
 (use-package evil
   :init
   (progn
-    (paloryemacs/evil-init))
+    (tl/evil-init))
   :config
   (progn
     ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
     (define-key evil-insert-state-map [remap evil-complete-previous] 'hippie-expand)
     (use-package evil-evilified-state)
-    (paloryemacs/evil-set-initial-state)
+    (tl/evil-set-initial-state)
     (dolist (m (list minibuffer-local-map
                      minibuffer-local-ns-map
                      minibuffer-local-completion-map
                      minibuffer-local-must-match-map
                      minibuffer-local-isearch-map))
-      ;; 'paloryemacs/keyboard-escape-quit
+      ;; 'tl/keyboard-escape-quit
       (define-key m (kbd "<escape>") 'keyboard-escape-quit))
 
     ;; alternate binding to search next occurrence with isearch without
@@ -453,11 +453,11 @@ kill internal buffers too."
                                            '(?~ . ("``" . "``"))
                                            evil-surround-pairs-alist))
   (with-eval-after-load 'org
-    (defun paloryemacs/add-org-surrounds ()
-      (push '(?: . paloryemacs//surround-drawer) evil-surround-pairs-alist)
-      (push '(?# . paloryemacs//surround-code) evil-surround-pairs-alist))
+    (defun tl/add-org-surrounds ()
+      (push '(?: . tl//surround-drawer) evil-surround-pairs-alist)
+      (push '(?# . tl//surround-code) evil-surround-pairs-alist))
 
-    (add-hook 'org-mode-hook 'paloryemacs/add-org-surrounds))
+    (add-hook 'org-mode-hook 'tl/add-org-surrounds))
   (global-evil-surround-mode +1))
 
 ;;; evil-embrace
@@ -472,7 +472,7 @@ kill internal buffers too."
 
 ;;; haskell mode
 (with-eval-after-load 'evil
-  (defun paloryemacs/newline-and-indent-relative ()
+  (defun tl/newline-and-indent-relative ()
     (interactive)
     (newline)
     (indent-to-column
@@ -481,16 +481,16 @@ kill internal buffers too."
        (back-to-indentation)
        (current-column))))
 
-  (defun paloryemacs/haskell-evil-open-below ()
+  (defun tl/haskell-evil-open-below ()
     (interactive)
     (evil-append-line 1)
-    (paloryemacs/newline-and-indent-relative))
+    (tl/newline-and-indent-relative))
 
-  (defun paloryemacs/haskell-evil-open-above ()
+  (defun tl/haskell-evil-open-above ()
     (interactive)
     (previous-line)
     (evil-append-line 1)
-    (paloryemacs/newline-and-indent-relative))
+    (tl/newline-and-indent-relative))
 
   ;; (evil-declare-key 'normal haskell-mode-map ",gn" 'ghc-goto-next-error)
   ;; (evil-declare-key 'normal haskell-mode-map ",gp" 'ghc-goto-prev-error)
@@ -506,9 +506,9 @@ kill internal buffers too."
   ;; (evil-define-key 'normal haskell-interactive-mode-map (kbd "RET") #'haskell-interactive-mode-return)
   ;; (evil-define-key 'insert haskell-interactive-mode-map (kbd "C-u") 'haskell-interactive-mode-kill-whole-line)
   ;; (evil-define-key 'normal haskell-interactive-mode-map (kbd "G") 'end-of-buffer)
-  (evil-declare-key 'insert haskell-mode-map (kbd "RET") 'paloryemacs/newline-and-indent-relative)
-  (evil-declare-key 'normal haskell-mode-map "o" 'paloryemacs/haskell-evil-open-below)
-  (evil-declare-key 'normal haskell-mode-map "O" 'paloryemacs/haskell-evil-open-above))
+  (evil-declare-key 'insert haskell-mode-map (kbd "RET") 'tl/newline-and-indent-relative)
+  (evil-declare-key 'normal haskell-mode-map "o" 'tl/haskell-evil-open-below)
+  (evil-declare-key 'normal haskell-mode-map "O" 'tl/haskell-evil-open-above))
 
 
 ;;; evil-nerd-commenter
@@ -520,43 +520,43 @@ kill internal buffers too."
   (progn
     ;; double all the commenting functions so that the inverse operations
     ;; can be called without setting a flag
-    (defun paloryemacs/comment-or-uncomment-lines-inverse (&optional arg)
+    (defun tl/comment-or-uncomment-lines-inverse (&optional arg)
       (interactive "p")
       (let ((evilnc-invert-comment-line-by-line t))
         (evilnc-comment-or-uncomment-lines arg)))
 
-    (defun paloryemacs/comment-or-uncomment-lines (&optional arg)
+    (defun tl/comment-or-uncomment-lines (&optional arg)
       (interactive "p")
       (let ((evilnc-invert-comment-line-by-line nil))
         (evilnc-comment-or-uncomment-lines arg)))
 
-    (defun paloryemacs/copy-and-comment-lines-inverse (&optional arg)
+    (defun tl/copy-and-comment-lines-inverse (&optional arg)
       (interactive "p")
       (let ((evilnc-invert-comment-line-by-line t))
         (evilnc-copy-and-comment-lines arg)))
 
-    (defun paloryemacs/copy-and-comment-lines (&optional arg)
+    (defun tl/copy-and-comment-lines (&optional arg)
       (interactive "p")
       (let ((evilnc-invert-comment-line-by-line nil))
         (evilnc-copy-and-comment-lines arg)))
 
-    (defun paloryemacs/quick-comment-or-uncomment-to-the-line-inverse
+    (defun tl/quick-comment-or-uncomment-to-the-line-inverse
         (&optional arg)
       (interactive "p")
       (let ((evilnc-invert-comment-line-by-line t))
         (evilnc-comment-or-uncomment-to-the-line arg)))
 
-    (defun paloryemacs/quick-comment-or-uncomment-to-the-line (&optional arg)
+    (defun tl/quick-comment-or-uncomment-to-the-line (&optional arg)
       (interactive "p")
       (let ((evilnc-invert-comment-line-by-line nil))
         (evilnc-comment-or-uncomment-to-the-line arg)))
 
-    (defun paloryemacs/comment-or-uncomment-paragraphs-inverse (&optional arg)
+    (defun tl/comment-or-uncomment-paragraphs-inverse (&optional arg)
       (interactive "p")
       (let ((evilnc-invert-comment-line-by-line t))
         (evilnc-comment-or-uncomment-paragraphs arg)))
 
-    (defun paloryemacs/comment-or-uncomment-paragraphs (&optional arg)
+    (defun tl/comment-or-uncomment-paragraphs (&optional arg)
       (interactive "p")
       (let ((evilnc-invert-comment-line-by-line nil))
         (evilnc-comment-or-uncomment-paragraphs arg)))
@@ -564,16 +564,16 @@ kill internal buffers too."
 
     (define-key evil-normal-state-map "gc" 'evilnc-comment-operator)
     (define-key evil-normal-state-map "gy" 'evilnc-copy-and-comment-lines)
-    (paloryemacs/set-leader-keys
+    (tl/set-leader-keys
       ";"  'evilnc-comment-operator
-      "cl" 'paloryemacs/comment-or-uncomment-lines
-      "cL" 'paloryemacs/comment-or-uncomment-lines-inverse
-      "cp" 'paloryemacs/comment-or-uncomment-paragraphs
-      "cP" 'paloryemacs/comment-or-uncomment-paragraphs-inverse
-      "ct" 'paloryemacs/quick-comment-or-uncomment-to-the-line
-      "cT" 'paloryemacs/quick-comment-or-uncomment-to-the-line-inverse
-      "cy" 'paloryemacs/copy-and-comment-lines
-      "cY" 'paloryemacs/copy-and-comment-lines-inverse)))
+      "cl" 'tl/comment-or-uncomment-lines
+      "cL" 'tl/comment-or-uncomment-lines-inverse
+      "cp" 'tl/comment-or-uncomment-paragraphs
+      "cP" 'tl/comment-or-uncomment-paragraphs-inverse
+      "ct" 'tl/quick-comment-or-uncomment-to-the-line
+      "cT" 'tl/quick-comment-or-uncomment-to-the-line-inverse
+      "cy" 'tl/copy-and-comment-lines
+      "cY" 'tl/copy-and-comment-lines-inverse)))
 
 ;;; evil-indent-plus wihch replace evil-indent-textobject
 (use-package evil-indent-plus
@@ -598,10 +598,10 @@ kill internal buffers too."
   :config
   (global-evil-matchit-mode +1))
 
-(evil-define-text-object paloryemacs/evil-textobj-a-defun (count &optional beg end type)
+(evil-define-text-object tl/evil-textobj-a-defun (count &optional beg end type)
   (evil-select-an-object 'evil-defun beg end type count))
 
-(evil-define-text-object paloryemacs/evil-textobj-inner-defun (count &optional beg end type)
+(evil-define-text-object tl/evil-textobj-inner-defun (count &optional beg end type)
   (evil-select-inner-object 'evil-defun beg end type count))
 
 (define-key evil-inner-text-objects-map "m" 'evil-inner-defun)
@@ -609,11 +609,11 @@ kill internal buffers too."
 
 (general-define-key
  :keymaps '(evil-inner-text-objects-map)
- "m" 'paloryemacs/evil-textobj-inner-defun)
+ "m" 'tl/evil-textobj-inner-defun)
 
 (general-define-key
  :keymaps '(evil-outer-text-objects-map)
- "m" 'paloryemacs/evil-textobj-a-defun)
+ "m" 'tl/evil-textobj-a-defun)
 
 ;;; evil-textobj-between.el
 (use-package evil-textobj-between
@@ -628,7 +628,7 @@ kill internal buffers too."
 
 ;;; refactor/rename a variable name in a function efficiently
 ;; http://blog.binchen.org/?p=583
-(defun paloryemacs/evil-change-symbol-in-defun ()
+(defun tl/evil-change-symbol-in-defun ()
   "mark the region in defun (definition of function) and use string replacing UI in evil-mode
 to replace the symbol under cursor"
   (interactive)
@@ -707,7 +707,7 @@ to replace the symbol under cursor"
 ;;; git-timemachine
 (with-eval-after-load 'evil
   (with-eval-after-load "git-timemachine"
-    ;; (add-hook 'git-timemachine-mode-hook 'paloryemacs/evil-state-cycle)
+    ;; (add-hook 'git-timemachine-mode-hook 'tl/evil-state-cycle)
 
     ;; @see https://bitbucket.org/lyro/evil/issue/511/let-certain-minor-modes-key-bindings
     (evil-make-overriding-map git-timemachine-mode-map 'normal)
@@ -725,11 +725,11 @@ to replace the symbol under cursor"
             company-complete-number))))
 
 ;; Abort company-mode when exiting insert mode
-(defun paloryemacs/abort-company-on-insert-state-exit ()
+(defun tl/abort-company-on-insert-state-exit ()
   (when (fboundp 'company-abort)
     (company-abort)))
 
-(add-hook 'evil-insert-state-exit-hook 'paloryemacs/abort-company-on-insert-state-exit)
+(add-hook 'evil-insert-state-exit-hook 'tl/abort-company-on-insert-state-exit)
 
 (with-eval-after-load 'evil
   (with-eval-after-load "helm-swoop"
@@ -773,7 +773,7 @@ to replace the symbol under cursor"
 ;; evil-snipe-S, respectively. In operator mode, snipe is bound to z/Z and x/X
 ;; (exclusive). The last snipe can be repeated with s/S after a successful snipe
 ;; (or with s+RET).
-(defvar paloryemacs/evil-snipe-enable-alternate-f-and-t-behaviors t)
+(defvar tl/evil-snipe-enable-alternate-f-and-t-behaviors t)
 (use-package evil-snipe
   :init
   (progn
@@ -787,7 +787,7 @@ to replace the symbol under cursor"
   (with-eval-after-load 'evil
     (push '(?\[ "[[{(]") evil-snipe-aliases)
     (evil-snipe-mode +1)
-    (when paloryemacs/evil-snipe-enable-alternate-f-and-t-behaviors
+    (when tl/evil-snipe-enable-alternate-f-and-t-behaviors
       (setq evil-snipe-repeat-scope 'whole-buffer)
       (evil-snipe-override-mode +1) ; replaces evil-mode's f/F/t/T/;/, with snipe
       (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
@@ -817,7 +817,7 @@ to replace the symbol under cursor"
     :config
     ;; activate leader in iedit and iedit-insert states
     (define-key evil-iedit-state-map
-      (kbd dotpaloryemacs-leader-key) paloryemacs-default-map)))
+      (kbd dottl-leader-key) tl-default-map)))
 
 (use-package evil-visualstar
   :defer 3
@@ -834,14 +834,14 @@ to replace the symbol under cursor"
 
 ;;; shift
 ;; (setq evil-shift-width 2)
-(defun paloryemacs/shift-left-visual ()
+(defun tl/shift-left-visual ()
   "Shift left and restore visual selection."
   (interactive)
   (evil-shift-left (region-beginning) (region-end))
   (evil-normal-state)
   (evil-visual-restore))
 
-(defun paloryemacs/shift-right-visual ()
+(defun tl/shift-right-visual ()
   "Shift right and restore visual selection."
   (interactive)
   (evil-shift-right (region-beginning) (region-end))
@@ -849,8 +849,8 @@ to replace the symbol under cursor"
   (evil-visual-restore))
 
 (with-eval-after-load 'evil
-  (define-key evil-visual-state-map (kbd ">") 'paloryemacs/shift-right-visual)
-  (define-key evil-visual-state-map (kbd "<") 'paloryemacs/shift-left-visual))
+  (define-key evil-visual-state-map (kbd ">") 'tl/shift-right-visual)
+  (define-key evil-visual-state-map (kbd "<") 'tl/shift-left-visual))
 
 ;;; auto insert blank in between Chinese and English
 (with-eval-after-load 'evil
@@ -858,7 +858,7 @@ to replace the symbol under cursor"
 
   (defun evil/add-blank-between-chinese-and-english ()
     (interactive)
-    (paloryemacs/add-blank-between-chinese-and-english (region-beginning) (region-end))
+    (tl/add-blank-between-chinese-and-english (region-beginning) (region-end))
     (evil-normal-state)))
 
 ;;; evil-lion
@@ -887,15 +887,15 @@ to replace the symbol under cursor"
     (define-key evil-inner-text-objects-map "b" 'evil-textobj-anyblock-inner-block)
     (define-key evil-inner-text-objects-map "B" 'evil-textobj-anyblock-a-block))
   :config
-  (defun paloryemacs/evil-textobj-anyblock--init ()
+  (defun tl/evil-textobj-anyblock--init ()
     (setq-local evil-textobj-anyblock-blocks
                 '(("(" . ")")
                   ("{" . "}")
                   ("\\[" . "\\]")
                   ("\"" . "\""))))
-  (add-hook 'lisp-mode-hook 'paloryemacs/evil-textobj-anyblock--init)
+  (add-hook 'lisp-mode-hook 'tl/evil-textobj-anyblock--init)
 
-  (evil-define-text-object paloryemacs/evil-textobj-anyblock-inner-quote
+  (evil-define-text-object tl/evil-textobj-anyblock-inner-quote
     (count &optional beg end type)
     "Select the closest outer quote."
     (let ((evil-textobj-anyblock-blocks
@@ -905,7 +905,7 @@ to replace the symbol under cursor"
              ("“" . "”"))))
       (evil-textobj-anyblock--make-textobj beg end type count nil)))
 
-  (evil-define-text-object paloryemacs/evil-textobj-anyblock-a-quote
+  (evil-define-text-object tl/evil-textobj-anyblock-a-quote
     (count &optional beg end type)
     "Select the closest outer quote."
     (let ((evil-textobj-anyblock-blocks
@@ -915,12 +915,12 @@ to replace the symbol under cursor"
              ("“" . "”"))))
       (evil-textobj-anyblock--make-textobj beg end type count t)))
 
-  (define-key evil-inner-text-objects-map "q" 'paloryemacs/evil-textobj-anyblock-inner-quote)
-  (define-key evil-outer-text-objects-map "q" 'paloryemacs/evil-textobj-anyblock-a-quote))
+  (define-key evil-inner-text-objects-map "q" 'tl/evil-textobj-anyblock-inner-quote)
+  (define-key evil-outer-text-objects-map "q" 'tl/evil-textobj-anyblock-a-quote))
 
 
 ;;; ivy
-(defun paloryemacs/ivy-evil-registers ()
+(defun tl/ivy-evil-registers ()
   "Show evil registers"
   (interactive)
   (let ((ivy-height 24))
@@ -931,9 +931,9 @@ to replace the symbol under cursor"
                                                         (stringp val)
                                                         (replace-regexp-in-string "\n" "^J" val))
                                                    ""))))
-              :action #'paloryemacs/ivy-insert-evil-register)))
+              :action #'tl/ivy-insert-evil-register)))
 
-(defun paloryemacs/ivy-insert-evil-register (candidate)
+(defun tl/ivy-insert-evil-register (candidate)
   (insert (replace-regexp-in-string "\\^J" "\n"
                                     (substring-no-properties candidate 4))))
 
@@ -951,12 +951,12 @@ to replace the symbol under cursor"
       "gm" #'evil-lispy/enter-marked-state ; "gm" default to evil-middle-of-visual-line
       (kbd "C-SPC") nil)
 
-    (defun paloryemacs/enable-evil-lispy-mode ()
+    (defun tl/enable-evil-lispy-mode ()
       (when (fboundp 'evil-lispy-mode)
         (evil-lispy-mode +1)))
 
     (dolist (l '(emacs-lisp-mode-hook clojure-mode-hook))
-      (add-hook l 'paloryemacs/enable-evil-lispy-mode))))
+      (add-hook l 'tl/enable-evil-lispy-mode))))
 
 
 ;;; lispyville
@@ -968,26 +968,26 @@ to replace the symbol under cursor"
 
 ;; auto-complete word in Emacs mini-buffer when using Evil
 ;; http://blog.binchen.org/posts/auto-complete-word-in-emacs-mini-buffer-when-using-evil.html
-(defun paloryemacs/minibuffer-inactive-mode-hook-setup ()
+(defun tl/minibuffer-inactive-mode-hook-setup ()
   ;; make `try-expand-dabbrev' from `hippie-expand' work in mini-buffer
   ;; @see `he-dabbrev-beg', so we need re-define syntax for '/'
   (set-syntax-table (let* ((table (make-syntax-table)))
                       (modify-syntax-entry ?/ "." table)
                       table)))
-(add-hook 'minibuffer-inactive-mode-hook 'paloryemacs/minibuffer-inactive-mode-hook-setup)
+(add-hook 'minibuffer-inactive-mode-hook 'tl/minibuffer-inactive-mode-hook-setup)
 
 
 (use-package evil-vimish-fold
   :defer 3
   :config
-  (defun paloryemacs/evil-vimish-fold-create-dwim ()
+  (defun tl/evil-vimish-fold-create-dwim ()
     "Create a fold from the current region or with avy."
     (interactive)
     (if mark-active
         (call-interactively 'evil-vimish-fold/create)
       (vimish-fold-avy)))
 
-  (evil-define-key 'motion evil-vimish-fold-mode-map "zf" 'paloryemacs/evil-vimish-fold-create-dwim)
+  (evil-define-key 'motion evil-vimish-fold-mode-map "zf" 'tl/evil-vimish-fold-create-dwim)
 
   (evil-vimish-fold-mode +1))
 
@@ -1170,7 +1170,7 @@ if COUNT is negative. "
 ;; https://bitbucket.org/lyro/evil/issue/432/edebug-mode-map-cant-take-effect-for-the
 ;; (add-hook 'edebug-mode-hook 'evil-normalize-keymaps) ; recreate `evil-mode-map-alist'
 (with-eval-after-load 'edebug
-  (add-hook 'edebug-mode-hook 'paloryemacs/evil-state-cycle))
+  (add-hook 'edebug-mode-hook 'tl/evil-state-cycle))
 
 
 (provide '52evil-mode)

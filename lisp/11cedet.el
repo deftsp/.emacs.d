@@ -22,9 +22,9 @@
 ;;; install develop version cedet
 ;; install with el-get now
 ;; Note: don't add cedet directory recursive, it'll cause strange problem
-;; (defvar paloryemacs/cedet-root-path (file-name-as-directory "~/.emacs.d/site-lisp/cedet/"))
-;; (load-file (concat paloryemacs/cedet-root-path "cedet-devel-load.el"))
-;; (load-file (concat paloryemacs/cedet-root-path "contrib/cedet-contrib-load.el"))
+;; (defvar tl/cedet-root-path (file-name-as-directory "~/.emacs.d/site-lisp/cedet/"))
+;; (load-file (concat tl/cedet-root-path "cedet-devel-load.el"))
+;; (load-file (concat tl/cedet-root-path "contrib/cedet-contrib-load.el"))
 
 ;; Add further minor-modes to be enabled by semantic-mode. See doc-string of `semantic-default-submodes' for other
 ;; things you can use here.
@@ -51,12 +51,12 @@
 
 
 
-(defun paloryemacs/lazy-load-stickyfunc-enhance ()
+(defun tl/lazy-load-stickyfunc-enhance ()
   "Lazy load the package."
   (require 'stickyfunc-enhance))
 
 ;;; inhibit semantic for some major modes
-(defun paloryemacs/semantic-inhibit-func ()
+(defun tl/semantic-inhibit-func ()
   (cond
    ((member major-mode '(scheme-mode
                          javascript-mode
@@ -68,7 +68,7 @@
    (t nil)))
 
 (when (boundp 'semantic-inhibit-functions)
-  (add-to-list 'semantic-inhibit-functions 'paloryemacs/semantic-inhibit-func))
+  (add-to-list 'semantic-inhibit-functions 'tl/semantic-inhibit-func))
 
 ;; (require 'semantic/ia)
 ;; (require 'semantic/bovine/c)
@@ -85,13 +85,13 @@
 ;; (remove-hook 'scheme-mode-hook 'semantic-default-scheme-setup)
 
 ;;; customisation of modes
-(defun paloryemacs/cedet-hook ()
+(defun tl/cedet-hook ()
   (semantic-mode +1)
   (local-set-key "\C-x,." 'senator-complete-symbol)
   (local-set-key "\C-x,?" 'semantic-ia-complete-symbol) ; M-TAB
   (local-set-key "\C-x,>" 'semantic-complete-analyze-inline)
   (local-set-key "\C-x,=" 'semantic-decoration-include-visit)
-  (local-set-key "\C-x,d" 'paloryemacs/semantic-find-definition)
+  (local-set-key "\C-x,d" 'tl/semantic-find-definition)
   (local-set-key "\C-x,j" 'semantic-ia-fast-jump)
   (local-set-key "\C-x,q" 'semantic-ia-show-doc) ; C-x,D
   (local-set-key "\C-x,s" 'semantic-ia-show-summary)
@@ -99,22 +99,22 @@
   (local-set-key "\C-x,F" 'semantic-tag-folding-fold-block)
   (local-set-key "\C-x,S" 'semantic-tag-folding-show-block))
 
-;; (add-hook 'semantic-init-hooks 'paloryemacs/cedet-hook)
-(add-hook 'c-mode-common-hook 'paloryemacs/cedet-hook)
-;; (add-hook 'lisp-mode-hook 'paloryemacs/cedet-hook)
-;; (add-hook 'scheme-mode-hook 'paloryemacs/cedet-hook)
-(add-hook 'emacs-lisp-mode-hook 'paloryemacs/cedet-hook)
-(add-hook 'erlang-mode-hook 'paloryemacs/cedet-hook)
+;; (add-hook 'semantic-init-hooks 'tl/cedet-hook)
+(add-hook 'c-mode-common-hook 'tl/cedet-hook)
+;; (add-hook 'lisp-mode-hook 'tl/cedet-hook)
+;; (add-hook 'scheme-mode-hook 'tl/cedet-hook)
+(add-hook 'emacs-lisp-mode-hook 'tl/cedet-hook)
+(add-hook 'erlang-mode-hook 'tl/cedet-hook)
 
 
 
-(defun paloryemacs/c-mode-cedet-hook ()
+(defun tl/c-mode-cedet-hook ()
   (local-set-key "." 'semantic-complete-self-insert)
   (local-set-key ">" 'semantic-complete-self-insert)
   (local-set-key "\C-x,t" 'eassist-switch-h-cpp) ; use ff-find-other-file instead
   ;; Switch header and body file according to `eassist-header-switches' var.
   (local-set-key "\C-x,m" 'eassist-list-methods))
-(add-hook 'c-mode-common-hook 'paloryemacs/c-mode-cedet-hook)
+(add-hook 'c-mode-common-hook 'tl/c-mode-cedet-hook)
 
 ;;; global support
 ;;; brew install global
@@ -214,7 +214,7 @@
 ;; (semantic-add-system-include "/usr/include/glib-2.0/" 'c-mode)
 
 (when (eq system-type 'windows-nt)
-  (defconst paloryemacs/cedet-win32-include-dirs
+  (defconst tl/cedet-win32-include-dirs
     (list "C:/MinGW/include"
           "C:/MinGW/include/c++/3.4.5"
           "C:/MinGW/include/c++/3.4.5/mingw32"
@@ -224,10 +224,10 @@
   (mapc (lambda (dir)
           (semantic-add-system-include dir 'c++-mode)
           (semantic-add-system-include dir 'c-mode))
-        paloryemacs/cedet-win32-include-dirs))
+        tl/cedet-win32-include-dirs))
 
 ;;;
-(defun paloryemacs/semantic-find-definition (arg)
+(defun tl/semantic-find-definition (arg)
   "Jump to the definition of the symbol, type or function at point.
   With prefix arg, find in other window."
   (interactive "P")
@@ -245,9 +245,9 @@
     (end-of-line)))
 
 ;;; integration with imenu
-;; (defun paloryemacs/imenu-add-to-menubar ()
+;; (defun tl/imenu-add-to-menubar ()
 ;;   (imenu-add-to-menubar "TAGS"))
-;; (add-hook 'semantic-init-hooks 'paloryemacs/imenu-add-to-menubar)
+;; (add-hook 'semantic-init-hooks 'tl/imenu-add-to-menubar)
 ;; (setq semantic-imenu-auto-rebuild-directory-indexes nil)
 
 ;;; info

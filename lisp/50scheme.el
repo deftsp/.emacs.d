@@ -7,7 +7,7 @@
 (setq gambit-repl-command-prefix (kbd "ESC ESC g"))
 (setq scheme-program-name "gsi -:d-")   ; mzscheme
 
-(defun paloryemacs/gambit-remote-repl ()
+(defun tl/gambit-remote-repl ()
   (interactive)
   (let ((scheme-program-name "telnet 127.0.0.1 7000"))
     (when (not (comint-check-proc "*scheme*"))
@@ -18,10 +18,10 @@
 ;; (add-hook 'scheme-mode-hook (function gambit-mode))
 ;; (add-hook 'inferior-scheme-mode-hook (function gambit-inferior-mode))
 
-(defun paloryemacs/scheme-mode-init ()
+(defun tl/scheme-mode-init ()
   (semantic-mode -1))
 
-(add-hook 'scheme-mode-hook 'paloryemacs/scheme-mode-init)
+(add-hook 'scheme-mode-hook 'tl/scheme-mode-init)
 
 
 ;;; geiser

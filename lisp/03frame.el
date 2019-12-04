@@ -13,7 +13,7 @@
 ;;; set frame title
 ;; it should be set before org-clock loaded, which will use it to set
 ;; `org-frame-title-format-backup'
-(defun paloryemacs//frame-title-format ()
+(defun tl//frame-title-format ()
   (concat "GNU Emacs "
           emacs-version
           "@" (or (file-remote-p default-directory 'host) system-name)
@@ -29,7 +29,7 @@
               "%b"))))
 
 (when (display-graphic-p)
-  (setq frame-title-format '((:eval (paloryemacs//frame-title-format))))
+  (setq frame-title-format '((:eval (tl//frame-title-format))))
   (setq icon-title-format frame-title-format))
 
 

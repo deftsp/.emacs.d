@@ -3,7 +3,7 @@
 ;; Copyright (C) 2008  Shihpin Tseng
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-(defun paloryemacs/ido-init ()
+(defun tl/ido-init ()
   (setq ido-enable-prefix nil
         ido-enable-regexp t
         ido-case-fold  t                  ; be case-insensitive
@@ -28,7 +28,7 @@
 
 (use-package ido
   :init
-  (paloryemacs/ido-init)
+  (tl/ido-init)
   :config
   (progn
     (ido-mode t)                  ;  Turn on ido buffer and file behavior.
@@ -50,8 +50,8 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;uses ido on the recently opened files
-    (global-set-key (kbd "C-x C-r") 'paloryemacs/ido-choose-from-recentf)
-    (defun paloryemacs/ido-choose-from-recentf ()
+    (global-set-key (kbd "C-x C-r") 'tl/ido-choose-from-recentf)
+    (defun tl/ido-choose-from-recentf ()
       "Use ido to select a recently opened file from the `recentf-list'"
       (interactive)
       (find-file
@@ -63,7 +63,7 @@
                             nil t)))
 
 ;;; ido copy selection
-    (defun paloryemacs/ido-copy-selection ()
+    (defun tl/ido-copy-selection ()
       "Copy the current ido selection to the kill ring."
       (interactive)
       (kill-new
@@ -72,12 +72,12 @@
                 ido-text))))
 
 ;;; Using ido to open files from file name cache-------------------------------
-    (defun paloryemacs/ido-file-cache-find-file (&optional init-text)
+    (defun tl/ido-file-cache-find-file (&optional init-text)
       ;;   "Using ido, interactively open file from file cache'.
       ;; First select a file, matched using ido-switch-buffer against the contents
       ;; in `file-cache-alist'. If the file exist in more than one
       ;; directory, select directory. Lastly the file is opened."
-      ;;   (interactive (list (paloryemacs/ido-file-cache-read "File: "
+      ;;   (interactive (list (tl/ido-file-cache-read "File: "
       (interactive)
       (let* ((file-name-list (mapcar (lambda (x)
                                        (car x))
@@ -103,8 +103,8 @@
                      (setq ido-temp-list (cdr record)))))
               (ido-read-buffer (format "Find %s in dir: " file))))))))
 
-    (global-set-key (kbd "ESC ESC f") 'paloryemacs/ido-file-cache-find-file) ; equal to 'C-[ C-[ f'
-    (define-key minibuffer-local-map [C-tab] 'paloryemacs/ido-magic-file-cache)
+    (global-set-key (kbd "ESC ESC f") 'tl/ido-file-cache-find-file) ; equal to 'C-[ C-[ f'
+    (define-key minibuffer-local-map [C-tab] 'tl/ido-magic-file-cache)
 
     ;; ido-ubiquitous-mode has been instead of by ido-completing-read+
     ;; https://github.com/DarwinAwardWinner/ido-completing-read-plus
@@ -169,19 +169,19 @@
 ;; // -        go to the root directory.
 ;; ~/ -        go to the home directory.
 
-(defun paloryemacs/ido-magic-file-cache (arg)
-  "Drop into `paloryemacs/ido-file-cache-find-file'."
+(defun tl/ido-magic-file-cache (arg)
+  "Drop into `tl/ido-file-cache-find-file'."
   (interactive "P")
   (when (memq ido-cur-item '(file buffer))
     (setq ido-exit 'refresh)
-    (paloryemacs/ido-file-cache-find-file ido-text)
+    (tl/ido-file-cache-find-file ido-text)
     (exit-minibuffer)))
 
 
 ;; ---------------------------------------------------------------------------------
 
 ;;; Find files in Tags File
-(defun paloryemacs/ido-find-file-in-tag-files ()
+(defun tl/ido-find-file-in-tag-files ()
   (interactive)
   (save-excursion
     (let ((enable-recursive-minibuffers t))
@@ -191,7 +191,7 @@
       (ido-completing-read
        "Project file: " (tags-table-files) nil t)))))
 
-(global-set-key (kbd "C-x f") 'paloryemacs/ido-find-file-in-tag-files)
+(global-set-key (kbd "C-x f") 'tl/ido-find-file-in-tag-files)
 
 
 ;; Invoking bookmarks from ido
@@ -234,20 +234,20 @@
 ;;             (setq ido-enable-flex-matching t)
 ;;             (global-set-key "\M-x" 'ido-execute-command)))
 
-(add-hook 'ido-setup-hook 'paloryemacs/ido-keys)
+(add-hook 'ido-setup-hook 'tl/ido-keys)
 
-(defun paloryemacs/ido-keys ()
+(defun tl/ido-keys ()
   "Add my keybindings for ido."
   (when ido-vertical-mode
     (define-key ido-completion-map (kbd "M-j") 'ido-next-match)
     (define-key ido-completion-map (kbd "M-k") 'ido-prev-match))
   (define-key ido-completion-map (kbd "C-.") 'ido-delete-backward-updir)
-  ;; (define-key ido-completion-map (kbd "C-k") 'paloryemacs/ido-erase-minibuffer-or-dwim)
+  ;; (define-key ido-completion-map (kbd "C-k") 'tl/ido-erase-minibuffer-or-dwim)
   (define-key ido-completion-map (kbd "ESC ESC k") 'ido-delete-file-at-head))
 
 ;;; // - go to the root directory.
 ;;; ~/ - go to the home directory.
-;; (defun paloryemacs/ido-erase-minibuffer-or-dwim ()
+;; (defun tl/ido-erase-minibuffer-or-dwim ()
 ;;   "If cursor the EOL erases whole minibuffer and insert  `~/'.
 ;; If cursor at the EOL and the whole minibuffer is `~/', erase whole minibuffer.
 ;; Or else erases whole minibuffer. "
@@ -264,7 +264,7 @@
 
 ;;; edit as root
 ;; find file with ido and open it with sudo
-(defun paloryemacs/ido-sudo-edit (&optional arg)
+(defun tl/ido-sudo-edit (&optional arg)
   (interactive "p")
   (if (or arg (not buffer-file-name))
       (find-file (concat "/sudo:root@localhost:" (ido-read-file-name "File: ")))

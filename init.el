@@ -7,21 +7,21 @@
 ;; This sets garbage collection to only occur when 6 megabytes are used.
 ;; Supposedly significantly speeds up startup time. (Seems to work for me, but
 ;; my computer is pretty modern. Disable if you are on anything less than 1GHZ).
-(defvar paloryemacs-gc-cons-threshold 100000000)
-(setq gc-cons-threshold (max paloryemacs-gc-cons-threshold gc-cons-threshold)) ; 100MB
+(defvar tl-gc-cons-threshold 100000000)
+(setq gc-cons-threshold (max tl-gc-cons-threshold gc-cons-threshold)) ; 100MB
 
 ;; always load the newer one between .el and .elc
 (setq load-prefer-newer t)
 
 ;; http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
-(defun paloryemacs-minibuffer-setup-hook ()
+(defun tl-minibuffer-setup-hook ()
   (setq gc-cons-threshold most-positive-fixnum))
 
-(defun paloryemacs-minibuffer-exit-hook ()
-  (setq gc-cons-threshold paloryemacs-gc-cons-threshold))
+(defun tl-minibuffer-exit-hook ()
+  (setq gc-cons-threshold tl-gc-cons-threshold))
 
-(add-hook 'minibuffer-setup-hook #'paloryemacs-minibuffer-setup-hook)
-(add-hook 'minibuffer-exit-hook #'paloryemacs-minibuffer-exit-hook)
+(add-hook 'minibuffer-setup-hook #'tl-minibuffer-setup-hook)
+(add-hook 'minibuffer-exit-hook #'tl-minibuffer-exit-hook)
 
 ;; want to see how often GC happens
 ;; (setq garbage-collection-messages nil)
@@ -93,7 +93,7 @@
   (when (file-exists-p p)
     (add-to-list 'load-path p)))
 
-(require 'paloryemacs-bootstrap)
+(require 'tl-bootstrap)
 ;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
 
 

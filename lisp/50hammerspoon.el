@@ -6,7 +6,7 @@
 
 (require 'dash)
 
-(defun paloryemacs/open-hammerspoon-url (event &rest params)
+(defun tl/open-hammerspoon-url (event &rest params)
   (let ((len (length params))
         (url (concat "hammerspoon://" event)))
     (when (> len 0)
@@ -18,18 +18,18 @@
             (setq url (concat url "?" querys)))
 
         (error "illegal hammerspoon params")))
-    (paloryemacs/with-suppress-message "Shell command succeeded with"
+    (tl/with-suppress-message "Shell command succeeded with"
       (shell-command (format "open -g \"%s\"" url)))))
 
-(defun paloryemacs/notify-hammerspoon-did-init ()
-  (paloryemacs/open-hammerspoon-url "emacs_did_init"))
+(defun tl/notify-hammerspoon-did-init ()
+  (tl/open-hammerspoon-url "emacs_did_init"))
 
-(add-hook 'after-init-hook #'paloryemacs/notify-hammerspoon-did-init t)
+(add-hook 'after-init-hook #'tl/notify-hammerspoon-did-init t)
 
-(defun paloryemacs/notify-hammerspoon-did-kill ()
-  (paloryemacs/open-hammerspoon-url "emacs_did_kill"))
+(defun tl/notify-hammerspoon-did-kill ()
+  (tl/open-hammerspoon-url "emacs_did_kill"))
 
-(add-hook 'kill-emacs-hook #'paloryemacs/notify-hammerspoon-did-kill t)
+(add-hook 'kill-emacs-hook #'tl/notify-hammerspoon-did-kill t)
 
 
 (provide '50hammerspoon)

@@ -4,7 +4,7 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-(defvar paloryemacs/ignore-buffer-or-file-regexp
+(defvar tl/ignore-buffer-or-file-regexp
   '("^\\ " "^\\*Completions*" "^\\*Article\\*" "^\\*Apropos*"
     "^\\*Ibuffer*" "^\\*Backtrace*"  "^\\*Help"  "^\\*Bookmark"
     "^\\*Messages" "^\\.newsrc-dribble"  "^\\*Woman-Log"
@@ -14,7 +14,7 @@
     "^\\*w3m*" "^\\#" "^\\irc.*:" "localhost:6668" "^\\*TeX\\ Help\\*"
     "\\`auto/" "\\.prv/" "_region_" "^.DS_Store$" "\\.hi\\'"))
 
-(defun paloryemacs/counsel-jump-in-buffer ()
+(defun tl/counsel-jump-in-buffer ()
   "Jump in buffer with `counsel-imenu' or `counsel-org-goto' if in org-mode"
   (interactive)
   (call-interactively
@@ -31,8 +31,8 @@
   :init
   (progn
     (global-set-key (kbd "s-g") 'counsel-rg)
-    (paloryemacs/set-leader-keys
-      dotpaloryemacs-emacs-command-key 'counsel-M-x ; 'execute-extended-command
+    (tl/set-leader-keys
+      dottl-emacs-command-key 'counsel-M-x ; 'execute-extended-command
       ;; files
       "ff"  'counsel-find-file
       "fel" 'counsel-find-library
@@ -44,17 +44,17 @@
       "hdm" 'describe-mode
       "hdv" 'counsel-describe-variable
       "hi"  'counsel-info-lookup-symbol
-      ;; "hR"  'paloryemacs/counsel-search-docs
+      ;; "hR"  'tl/counsel-search-docs
       ;; insert
       "iu"  'counsel-unicode-char
       ;; jump
 
-      "ji"  'paloryemacs/counsel-jump-in-buffer
+      "ji"  'tl/counsel-jump-in-buffer
       ;; register/ring
       "ry"  'counsel-yank-pop
       "rm"  'counsel-mark-ring
       ;; jumping
-      "sj"  'paloryemacs/counsel-jump-in-buffer
+      "sj"  'tl/counsel-jump-in-buffer
       ;; themes
       "Ts"  'counsel-load-theme
       "sgp" 'counsel-git-grep))
@@ -63,7 +63,7 @@
     (with-eval-after-load 'shell
       (define-key shell-mode-map (kbd "C-r") 'counsel-shell-history))
     (setq counsel-find-file-ignore-regexp
-          (string-join paloryemacs/ignore-buffer-or-file-regexp "\\|"))
+          (string-join tl/ignore-buffer-or-file-regexp "\\|"))
     (define-key counsel-find-file-map (kbd "C-h") 'counsel-up-directory)
     ;; remaps built-in commands that have a counsel replacement
     ;; do not use counsel-M-x for now
@@ -102,17 +102,17 @@
     ;; (with-eval-after-load 'desktop
     ;;   (add-to-list 'desktop-globals-to-save 'ivy-views))
 
-    (defun paloryemacs/ivy-views-clean ()
+    (defun tl/ivy-views-clean ()
       (interactive)
       (setq ivy-views nil))
 
-    (paloryemacs/set-leader-keys
+    (tl/set-leader-keys
       "fr" 'counsel-recentf
       "rl" 'ivy-resume))
   :config
   (progn
     (mapcar (lambda (str) (add-to-list 'ivy-ignore-buffers str))
-            paloryemacs/ignore-buffer-or-file-regexp)
+            tl/ignore-buffer-or-file-regexp)
 
     (define-key ivy-minibuffer-map (kbd "C-w") 'ivy-occur)
     (define-key ivy-minibuffer-map [escape] 'minibuffer-keyboard-quit)
@@ -121,7 +121,7 @@
     (global-set-key (kbd "C-c C-r") 'ivy-resume)
     (global-set-key [f6] 'ivy-resume)
 
-    (defun paloryemacs/ivy-switch-view ()
+    (defun tl/ivy-switch-view ()
       (interactive)
       (let ((ivy-initial-inputs-alist
              '((ivy-switch-buffer . "{} "))))
@@ -133,14 +133,14 @@
       ("v" ivy-push-view "save layout" )
       ("V" ivy-pop-view "delete a layout")
       ("d" ivy-pop-view "delete a layout")
-      ("l" paloryemacs/ivy-switch-view "select a layout")
+      ("l" tl/ivy-switch-view "select a layout")
       ("<escape>" nil nil)
       ("q" nil))
 
 
     (with-eval-after-load 'evil
       (evil-make-overriding-map ivy-occur-mode-map 'normal))
-    (paloryemacs/set-leader-keys-for-major-mode 'ivy-occur-grep-mode
+    (tl/set-leader-keys-for-major-mode 'ivy-occur-grep-mode
       "w" 'ivy-wgrep-change-to-wgrep-mode)
 
     (use-package ivy-hydra
@@ -168,13 +168,13 @@
 (use-package swiper
   :init
   (progn
-    (paloryemacs/set-leader-keys
+    (tl/set-leader-keys
       "ss" 'swiper
       "sb" 'swiper-all)
     (global-set-key "\C-r" 'swiper)
     (global-set-key "\C-s" 'swiper)))
 
-(defun paloryemacs/swiper-dwim (arg)
+(defun tl/swiper-dwim (arg)
   "Start swiper with input as the selected region or symbol at point by default.
 C-u     -> `ivy-resume' (resume from where you last left off swiper)
 C-u C-u -> Start swiper without any arguments (stock behavior)"

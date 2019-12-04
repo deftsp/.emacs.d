@@ -10,15 +10,15 @@
   (progn
     (setq-default wcheck-language "Highlight Commentaires")
     (add-hook 'prog-mode-hook 'wcheck-mode)
-    (defvar paloryemacs/wcheck-mode-map (make-keymap) "wcheck mode key map")
-    (define-key paloryemacs/wcheck-mode-map "s" 'wcheck-mode)
-    (define-key paloryemacs/wcheck-mode-map "l" 'wcheck-change-language)
-    (define-key paloryemacs/wcheck-mode-map "c" 'wcheck-actions)
-    (define-key paloryemacs/wcheck-mode-map "a" 'wcheck-actions)
-    (define-key paloryemacs/wcheck-mode-map "n" 'wcheck-jump-forward)
-    (define-key paloryemacs/wcheck-mode-map "p" 'wcheck-jump-backward)
+    (defvar tl/wcheck-mode-map (make-keymap) "wcheck mode key map")
+    (define-key tl/wcheck-mode-map "s" 'wcheck-mode)
+    (define-key tl/wcheck-mode-map "l" 'wcheck-change-language)
+    (define-key tl/wcheck-mode-map "c" 'wcheck-actions)
+    (define-key tl/wcheck-mode-map "a" 'wcheck-actions)
+    (define-key tl/wcheck-mode-map "n" 'wcheck-jump-forward)
+    (define-key tl/wcheck-mode-map "p" 'wcheck-jump-backward)
     (with-eval-after-load "key-chord"
-      (key-chord-define-global ",w" paloryemacs/wcheck-mode-map))))
+      (key-chord-define-global ",w" tl/wcheck-mode-map))))
 
 (setq wcheck-language-data-defaults
       '((read-or-skip-faces
@@ -37,7 +37,7 @@
 
 (setq wcheck-language-data
       '(("Highlight Commentaires"
-         (program . paloryemacs/commentaires-keywords-detect)
+         (program . tl/commentaires-keywords-detect)
          (face . font-lock-warning-face)
          (regexp-start . "\\<")
          (regexp-body . "\\w*\\+?:?")
@@ -58,7 +58,7 @@
          (read-or-skip-faces
           (nil)))))
 
-(defvar paloryemacs/commentaires-keywords
+(defvar tl/commentaires-keywords
   '("\\<\\(FIXME\\):"
     "\\<\\(XXX\\+\\):"
     "\\<\\(TODO\\):"
@@ -70,10 +70,10 @@
     "\\<\\(OUTPUT\\)"
     "\\<\\(IMPORTANT\\)"))
 
-(defun paloryemacs/commentaires-keywords-detect (strings)
+(defun tl/commentaires-keywords-detect (strings)
   (let (found)
     (dolist (string strings found)
-      (dolist (regexp paloryemacs/commentaires-keywords)
+      (dolist (regexp tl/commentaires-keywords)
         (when (string-match regexp string)
           (push (match-string-no-properties 1 string) found)
           (return))))))

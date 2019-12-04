@@ -25,14 +25,14 @@
     ad-do-it
     (setenv "GPG_AGENT_INFO" agent)))
 
-(defun paloryemacs/epg-disable-agent ()
+(defun tl/epg-disable-agent ()
   "Make EasyPG bypass any gpg-agent"
   (interactive)
   (ad-enable-advice 'epg--start 'around 'advice-epg-disable-agent)
   (ad-activate 'epg--start)
   (message "EasyPG gpg-agent bypassed"))
 
-(defun paloryemacs/epg-enable-agent ()
+(defun tl/epg-enable-agent ()
   "Make EasyPG use a gpg-agent after having been disabled with epg-disable-agent"
   (interactive)
   (ad-disable-advice 'epg--start 'around 'advice-epg-disable-agent)

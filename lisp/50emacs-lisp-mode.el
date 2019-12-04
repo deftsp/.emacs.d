@@ -26,15 +26,15 @@
      ;;  'paredit-close-round)
      ))
 
-(defun paloryemacs/emacs-lisp-mode-init ()
+(defun tl/emacs-lisp-mode-init ()
   ;; (set (make-local-variable 'lisp-indent-function)
   ;;      'common-lisp-indent-function)
 
   (set (make-local-variable 'lisp-indent-function)
-       #'paloryemacs/lisp-indent-function)
+       #'tl/lisp-indent-function)
   (turn-on-eldoc-mode))
 
-(add-hook 'emacs-lisp-mode-hook 'paloryemacs/emacs-lisp-mode-init)
+(add-hook 'emacs-lisp-mode-hook 'tl/emacs-lisp-mode-init)
 
 (add-hook 'lisp-interaction-mode-hook 'turn-on-eldoc-mode)
 (add-hook 'ielm-mode-hook 'turn-on-eldoc-mode)
@@ -54,9 +54,9 @@
   (progn
     (add-hook 'emacs-lisp-mode-hook 'turn-on-elisp-slime-nav-mode)
     (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
-      (paloryemacs/declare-prefix-for-mode mode "mg" "find-symbol")
-      (paloryemacs/declare-prefix-for-mode mode "mh" "help")
-      (paloryemacs/set-leader-keys-for-major-mode mode
+      (tl/declare-prefix-for-mode mode "mg" "find-symbol")
+      (tl/declare-prefix-for-mode mode "mh" "help")
+      (tl/set-leader-keys-for-major-mode mode
         "hh" 'elisp-slime-nav-describe-elisp-thing-at-point))))
 
 ;;; auto compile el file
@@ -81,7 +81,7 @@
    ("\\<\\(nil\\|\\t\\)\\_>" . font-lock-constant-face)))
 
 ;;; imenu
-(setq paloryemacs/emacs-lisp-imenu-generic-expression
+(setq tl/emacs-lisp-imenu-generic-expression
       '((nil "^\\s-*(def\\(un\\|subst\\|macro\\|advice\\)\
 \\s-+\\([-A-Za-z0-9+/]+\\)" 2)
         ("*Vars*" "^\\s-*(def\\(var\\|const\\)\
@@ -94,15 +94,15 @@
         ("Sections" "^;;;; \\(.+\\)$" 1)))
 
 
-(defun paloryemacs/imenu-elisp-init ()
+(defun tl/imenu-elisp-init ()
   (setq imenu-prev-index-position-function nil)
-  (setq imenu-generic-expression paloryemacs/emacs-lisp-imenu-generic-expression))
+  (setq imenu-generic-expression tl/emacs-lisp-imenu-generic-expression))
 
 
-(add-hook 'emacs-lisp-mode-hook 'paloryemacs/imenu-elisp-init)
+(add-hook 'emacs-lisp-mode-hook 'tl/imenu-elisp-init)
 
 ;; Idea from http://www.reddit.com/r/emacs/comments/312ge1/i_created_this_function_because_i_was_tired_of/
-(defun paloryemacs/eval-current-form ()
+(defun tl/eval-current-form ()
   "Find and evaluate the current def* or set* command.
 Unlike `eval-defun', this does not go to topmost function."
   (interactive)
@@ -113,7 +113,7 @@ Unlike `eval-defun', this does not go to topmost function."
 
 ;; smartparens integration
 
-(defun paloryemacs/eval-current-form-sp (&optional arg)
+(defun tl/eval-current-form-sp (&optional arg)
   "Call `eval-last-sexp' after moving out of one level of
 parentheses. Will exit any strings and/or comments first.
 An optional ARG can be used which is passed to `sp-up-sexp' to move out of more
@@ -132,7 +132,7 @@ Requires smartparens because all movement is done using `sp-up-sexp'."
       (sp-up-sexp arg)
       (call-interactively 'eval-last-sexp))))
 
-(defun paloryemacs/eval-current-symbol-sp ()
+(defun tl/eval-current-symbol-sp ()
   "Call `eval-last-sexp' on the symbol around point.
 Requires smartparens because all movement is done using `sp-forward-symbol'."
   (interactive)
@@ -143,22 +143,22 @@ Requires smartparens because all movement is done using `sp-forward-symbol'."
       (sp-forward-symbol)
       (call-interactively 'eval-last-sexp))))
 
-(defun paloryemacs/init-emacs-lisp ()
+(defun tl/init-emacs-lisp ()
   (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
-    (paloryemacs/declare-prefix-for-mode mode "mc" "compile")
-    (paloryemacs/declare-prefix-for-mode mode "me" "eval")
-    (paloryemacs/declare-prefix-for-mode mode "mt" "tests")
-    (paloryemacs/set-leader-keys-for-major-mode mode
+    (tl/declare-prefix-for-mode mode "mc" "compile")
+    (tl/declare-prefix-for-mode mode "me" "eval")
+    (tl/declare-prefix-for-mode mode "mt" "tests")
+    (tl/set-leader-keys-for-major-mode mode
       "cc" 'emacs-lisp-byte-compile
       "e$" 'lisp-state-eval-sexp-end-of-line
       "eb" 'eval-buffer
-      "eC" 'paloryemacs/eval-current-form
+      "eC" 'tl/eval-current-form
       "ee" 'eval-last-sexp
       "er" 'eval-region
       "ef" 'eval-defun
       "el" 'lisp-state-eval-sexp-end-of-line
       ","  'lisp-state-toggle-lisp-state
-      "tb" 'paloryemacs/ert-run-tests-buffer
+      "tb" 'tl/ert-run-tests-buffer
       "tq" 'ert
       "f" 'describe-function
       "k" 'describe-key
@@ -166,7 +166,7 @@ Requires smartparens because all movement is done using `sp-forward-symbol'."
       "gg" 'elisp-slime-nav-find-elisp-thing-at-point
       "v" 'describe-variable)))
 
-(paloryemacs/init-emacs-lisp)
+(tl/init-emacs-lisp)
 
 (use-package helpful
   :defer t
@@ -174,7 +174,7 @@ Requires smartparens because all movement is done using `sp-forward-symbol'."
   :init
   (progn
     (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
-      (paloryemacs/set-leader-keys-for-major-mode mode
+      (tl/set-leader-keys-for-major-mode mode
         "hC" 'helpful-command
         "hf" 'helpful-callable
         "hF" 'helpful-function
@@ -193,7 +193,7 @@ Requires smartparens because all movement is done using `sp-forward-symbol'."
 ;; after
 ;;   (:foo bar
 ;;    :baz qux)
-(defun paloryemacs/lisp-indent-function (indent-point state)
+(defun tl/lisp-indent-function (indent-point state)
   "This function is the normal value of the variable `lisp-indent-function'.
 The function `calculate-lisp-indent' calls this to determine
 if the arguments of a Lisp function call should be indented specially.

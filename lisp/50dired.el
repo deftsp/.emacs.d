@@ -5,8 +5,8 @@
   :bind (:map dired-mode-map
          ("r" . wdired-change-to-wdired-mode)
          ("s" . hydra-dired-quick-sort/body)
-         ("ESC ESC i s" . paloryemacs/image-scale)
-         ("M-O" . paloryemacs/open-in-external-application))
+         ("ESC ESC i s" . tl/image-scale)
+         ("M-O" . tl/open-in-external-application))
   :init
   (progn
     ;; Enable `a' in dired-mode, to open files/dirs in the same buffer.
@@ -23,16 +23,16 @@
           dired-kept-versions 1))
   :config
   (progn
-    (paloryemacs/set-leader-keys-for-major-mode 'dired-mode
+    (tl/set-leader-keys-for-major-mode 'dired-mode
       "u" 'diredp-up-directory-reuse-dir-buffer)
     (define-key dired-mode-map (kbd "^") 'diredp-up-directory-reuse-dir-buffer)
-    (define-key dired-mode-map (kbd "W") 'paloryemacs/dired-w3m-find-file)
+    (define-key dired-mode-map (kbd "W") 'tl/dired-w3m-find-file)
     (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
 
 
     (with-eval-after-load "evil-evilified-state"
       (evilified-state-evilify dired-mode dired-mode-map
-        (kbd "S-SPC") 'paloryemacs/jump-to-org-agenda
+        (kbd "S-SPC") 'tl/jump-to-org-agenda
         (kbd "%")     'nil
         (kbd "j")     'dired-hacks-next-file
         (kbd "k")     'dired-hacks-previous-file
@@ -44,9 +44,9 @@
         (kbd "/")     'dired-narrow
         (kbd "M-r")   'dired-do-redisplay
         (kbd "r")     'wdired-change-to-wdired-mode
-        (kbd "gg")    'paloryemacs/dired-back-to-top
+        (kbd "gg")    'tl/dired-back-to-top
         (kbd "gr")    'revert-buffer
-        (kbd "G")     'paloryemacs/dired-jump-to-bottom))
+        (kbd "G")     'tl/dired-jump-to-bottom))
 
     (use-package dired-narrow
       :defer t
@@ -91,7 +91,7 @@
     (use-package dired-open
       :init
       (progn
-        (defun paloryemacs/dired-open-by-macos-open ()
+        (defun tl/dired-open-by-macos-open ()
           "Try to run `open' with default app on macOS to open the file under point."
           (interactive)
           (let ((file (ignore-errors (dired-get-file-for-visit)))
@@ -99,7 +99,7 @@
             (setq process (dired-open--start-process file "open"))
             process))
 
-        (setq dired-open-functions '(paloryemacs/dired-open-by-macos-open dired-open-subdir))))
+        (setq dired-open-functions '(tl/dired-open-by-macos-open dired-open-subdir))))
 
 
     ;; Note, dired-filter-by-omit removes the files that would be
@@ -206,40 +206,40 @@
   ;; (setq dired-sidebar-use-term-integration t)
   (setq dired-sidebar-use-custom-font t)
 
-  (paloryemacs/set-leader-keys
+  (tl/set-leader-keys
     "ft"    #'dired-sidebar-toggle-sidebar)
 
   :config
-  (paloryemacs/set-leader-keys-for-major-mode 'dired-sidebar-mode
+  (tl/set-leader-keys-for-major-mode 'dired-sidebar-mode
     "u" 'dired-sidebar-up-directory)
 
   (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
   (push 'rotate-windows dired-sidebar-toggle-hidden-commands))
 
-;; (add-hook 'dired-mode-hook 'paloryemacs/dired-mode-hook-init)
-;; (defun paloryemacs/dired-mode-hook-init ())
+;; (add-hook 'dired-mode-hook 'tl/dired-mode-hook-init)
+;; (defun tl/dired-mode-hook-init ())
 
 
-(defun paloryemacs/dired-back-to-top ()
+(defun tl/dired-back-to-top ()
   "Move to the first file."
   (interactive)
   (beginning-of-buffer)
   (dired-next-line 2))
 
-(defun paloryemacs/dired-jump-to-bottom ()
+(defun tl/dired-jump-to-bottom ()
   "Move to last file."
   (interactive)
   (end-of-buffer)
   (dired-next-line -1))
 
-(defun paloryemacs/dired-w3m-find-file ()
+(defun tl/dired-w3m-find-file ()
   (interactive)
   (let ((file (dired-get-filename)))
     (when (y-or-n-p (format "Open 'w3m' %s " (file-name-nondirectory file)))
       (w3m-find-file file))))
 
 
-(defun paloryemacs/view-chm (file)
+(defun tl/view-chm (file)
   (interactive
    (list (let ((file (dired-get-filename)))
            (or file
@@ -290,7 +290,7 @@
 
 ;;; work with ImageMagic
 ;; thanks to http://ergoemacs.org/emacs/emacs_dired_convert_images.html
-(defun paloryemacs/image-scale (file-list scale-args)
+(defun tl/image-scale (file-list scale-args)
   "Create a scaled version of images of marked files in dired.
 The new names have \"-s\" appended before the file name extension.
 Requires ImageMagick shell tool."
@@ -316,7 +316,7 @@ Requires ImageMagick shell tool."
    file-list))
 
 ;;; zip file/dir
-(defun paloryemacs/2zip ()
+(defun tl/2zip ()
   "Zip the current file/dir in `dired'.
 If multiple files are marked, only zip the first one.
 Require unix zip commandline tool."
@@ -326,7 +326,7 @@ Require unix zip commandline tool."
     (shell-command (format "zip -r '%s.zip' '%s'" (file-relative-name file-name) (file-relative-name file-name)))))
 
 ;;; open in external application
-(defun paloryemacs/open-in-external-application ()
+(defun tl/open-in-external-application ()
   "Open the current file or dired marked files in external app.
 Works in Microsoft Windows, Mac OS X, Linux."
   (interactive)

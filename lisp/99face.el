@@ -25,9 +25,9 @@
 
 ;;; update cursor color according to mode
 ;; alternative http://www.emacswiki.org/emacs/cursor-chg.el
-;; (defvar paloryemacs/lastest-cursor-color "")
-;; (defvar paloryemacs/lastest-update-cursor-color-buffer "")
-;; (defun paloryemacs/update-cursor-color-according-to-mode ()
+;; (defvar tl/lastest-cursor-color "")
+;; (defvar tl/lastest-update-cursor-color-buffer "")
+;; (defun tl/update-cursor-color-according-to-mode ()
 ;;   "change cursor color according to some minor modes."
 ;;   ;; set-cursor-color is somewhat costly, so we only call it when needed:
 ;;   (let ((color
@@ -35,10 +35,10 @@
 ;;            (if overwrite-mode
 ;;                "yellow" "#cd0000"))))
 ;;     (unless (and
-;;              (string= color paloryemacs/lastest-cursor-color)
-;;              (string= (buffer-name) paloryemacs/lastest-update-cursor-color-buffer))
-;;       (set-cursor-color (setq paloryemacs/lastest-cursor-color color))
-;;       (setq paloryemacs/lastest-update-cursor-color-buffer (buffer-name)))))
-;; (add-hook 'post-command-hook 'paloryemacs/update-cursor-color-according-to-mode)
+;;              (string= color tl/lastest-cursor-color)
+;;              (string= (buffer-name) tl/lastest-update-cursor-color-buffer))
+;;       (set-cursor-color (setq tl/lastest-cursor-color color))
+;;       (setq tl/lastest-update-cursor-color-buffer (buffer-name)))))
+;; (add-hook 'post-command-hook 'tl/update-cursor-color-according-to-mode)
 
 (provide '99face)

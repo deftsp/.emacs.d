@@ -6,13 +6,13 @@
 ;; Keywords:
 
 ;;; Code:
-(defun paloryemacs//run-local-vars-mode-hook ()
+(defun tl//run-local-vars-mode-hook ()
   "Run a hook for the major-mode after the local variables have been processed."
   (run-hooks (intern (format "%S-local-vars-hook" major-mode))))
 
-;; hook into `hack-local-variables' in order to allow switching paloryemacs
+;; hook into `hack-local-variables' in order to allow switching tl
 ;; configurations based on local variables
-(add-hook 'hack-local-variables-hook #'paloryemacs//run-local-vars-mode-hook)
+(add-hook 'hack-local-variables-hook #'tl//run-local-vars-mode-hook)
 
 (provide '02base)
 ;;; 02base.el ends here

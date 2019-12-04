@@ -5,7 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;;; Code:
 
-(defun paloryemacs/minibuffer-line-pad (len)
+(defun tl/minibuffer-line-pad (len)
   (propertize " "
               'display
               `((space :align-to
@@ -14,7 +14,7 @@
                           ,len)))))
 
 
-(defun paloryemacs/minibuffer-line-main ()
+(defun tl/minibuffer-line-main ()
   (let* ((rml `(:eval (if (and (boundp 'org-mode-line-string)
                                (> (length org-mode-line-string) 0))
                           (concat
@@ -23,7 +23,7 @@
                         "")))
          (rml-str (format-mode-line rml)) ; with the face of minibuffer-line?
          (extra-pad 1)
-         (pad (paloryemacs/minibuffer-line-pad
+         (pad (tl/minibuffer-line-pad
                (+ (length rml-str) extra-pad))))
     (concat pad rml-str)))
 
@@ -31,14 +31,14 @@
   :init
   (progn
     (setq minibuffer-line-format
-          '("" (:eval (paloryemacs/minibuffer-line-main)))))
+          '("" (:eval (tl/minibuffer-line-main)))))
 
   :config
   (progn
     (defadvice minibuffer-line--update (around left-concat-righ-align)
       (with-current-buffer minibuffer-line--buffer
         (erase-buffer)
-        (insert (paloryemacs/minibuffer-line-main))))
+        (insert (tl/minibuffer-line-main))))
 
     (ad-activate 'minibuffer-line--update)
     ;; (ad-deactivate 'minibuffer-line--update)

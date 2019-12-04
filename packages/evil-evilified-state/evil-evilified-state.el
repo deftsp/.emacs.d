@@ -56,18 +56,18 @@
 (evil-define-state evilified
   "Evilified state.
  Hybrid `emacs state' with carrefully selected Vim key bindings.
- See paloryemacs conventions for more info."
+ See tl conventions for more info."
   :tag " <N'> "
   :enable (emacs)
   :message "-- EVILIFIED BUFFER --"
   :cursor box)
 
-(bind-map paloryemacs-default-map
-  :prefix-cmd paloryemacs-cmds
-  :evil-keys (dotpaloryemacs-leader-key)
+(bind-map tl-default-map
+  :prefix-cmd tl-cmds
+  :evil-keys (dottl-leader-key)
   :evil-states (evilified)
   :override-minor-modes t
-  :override-mode-name paloryemacs-leader-override-mode)
+  :override-mode-name tl-leader-override-mode)
 
 (evil-define-command evil-force-evilified-state ()
   "Switch to evilified state without recording current command."

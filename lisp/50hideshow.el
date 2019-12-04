@@ -13,23 +13,23 @@
 ;;; universal code folding
 ;; set-selective-display is a simple, universal function which hides code according to its indentation level. It can be
 ;; used as a fall-back for hs-toggle-hiding.
-(defun paloryemacs/toggle-selective-display (column)
+(defun tl/toggle-selective-display (column)
   (interactive "P")
   (set-selective-display
    (or column
        (unless selective-display
          (1+ (current-column))))))
 
-(defun paloryemacs/toggle-hiding (column)
+(defun tl/toggle-hiding (column)
   (interactive "P")
   (if hs-minor-mode
       (if (condition-case nil
               (hs-toggle-hiding)
             (error t))
           (hs-show-all))
-    (paloryemacs/toggle-selective-display column)))
+    (tl/toggle-selective-display column)))
 
-(global-set-key (kbd "C-x $") 'paloryemacs/toggle-hiding)
+(global-set-key (kbd "C-x $") 'tl/toggle-hiding)
 
 
 ;; code folding

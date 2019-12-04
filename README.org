@@ -22,7 +22,7 @@
 
    To be continued ...
 ** License
-   The license is GPLv3 for all parts specific to Paloryemacs, this includes:
+   The license is GPLv3 for all parts specific to TlEmacs, this includes:
 
    the initialization and core files
    the documentation

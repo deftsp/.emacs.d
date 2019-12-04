@@ -1,4 +1,4 @@
-;;; paloryemacs-bootstrap.el ---
+;;; tl-bootstrap.el ---
 
 ;; Copyright (C) 2010  Shihpin Tseng
 
@@ -124,4 +124,4 @@
 
 (load-file "~/.emacs.d/private-ede-projects.el")
 
-(provide 'paloryemacs-bootstrap)
+(provide 'tl-bootstrap)

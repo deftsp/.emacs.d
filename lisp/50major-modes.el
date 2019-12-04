@@ -23,7 +23,7 @@
 
 ;;; add commentaires keywords
 ;; use wcheck-mode insead now
-;; (defun paloryemacs/font-lock-add-commentaires-keywords (m)
+;; (defun tl/font-lock-add-commentaires-keywords (m)
 ;;   (font-lock-add-keywords m '(("\\<\\(FIXME\\):" 1 font-lock-warning-face prepend)
 ;;                               ("\\<\\(XXX+\\):" 1 font-lock-warning-face prepend)
 ;;                               ("\\<\\(TODO\\):" 1 font-lock-warning-face prepend)
@@ -39,11 +39,11 @@
 ;;                               ("^[^\n]\\{121\\}\\(.*\\)$" 1 font-lock-warning-face t))))
 
 
-;; (paloryemacs/font-lock-add-commentaires-keywords 'emacs-lisp-mode)
+;; (tl/font-lock-add-commentaires-keywords 'emacs-lisp-mode)
 
 ;; (eval-after-load "scheme"
 ;;   '(progn
-;;     (paloryemacs/font-lock-add-commentaires-keywords 'scheme-mode)))
+;;     (tl/font-lock-add-commentaires-keywords 'scheme-mode)))
 
 
 ;;; Auto close *compilation* buffer, if no compile error
@@ -68,8 +68,8 @@
 ;;; comment current line
 ;; Original idea from
 ;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
-(global-set-key (kbd "M-;") 'paloryemacs/comment-dwim)
-(defun paloryemacs/comment-dwim (&optional arg)
+(global-set-key (kbd "M-;") 'tl/comment-dwim)
+(defun tl/comment-dwim (&optional arg)
   "Replacement for the comment-dwim command.
         If no region is selected and current line is not blank and we are not at the end of the line,
         then comment current line.
@@ -88,14 +88,14 @@
   :diminish (aggressive-indent-mode . "") ; " I"
   :init
   (progn
-    (defun paloryemacs/turn-on-aggressive-indent-mode ()
+    (defun tl/turn-on-aggressive-indent-mode ()
       (aggressive-indent-mode +1))
 
-    (defun paloryemacs/turn-off-aggressive-indent-mode ()
+    (defun tl/turn-off-aggressive-indent-mode ()
       (aggressive-indent-mode -1))
 
-    (add-hook 'emacs-lisp-mode-hook #'paloryemacs/turn-on-aggressive-indent-mode)
-    (add-hook 'diff-auto-refine-mode-hook #'paloryemacs/turn-off-aggressive-indent-mode)))
+    (add-hook 'emacs-lisp-mode-hook #'tl/turn-on-aggressive-indent-mode)
+    (add-hook 'diff-auto-refine-mode-hook #'tl/turn-off-aggressive-indent-mode)))
 
 ;;; highlight-symbol
 ;; slow for large file
@@ -140,7 +140,7 @@
 
 ;;; inset file variable
 ;; insert -*- MODENAME -*- tag
-(defun paloryemacs/insert-file-variable ()
+(defun tl/insert-file-variable ()
   "Insert file variable string \"-*- Major-Mode-Name -*-\" with
   comment char"
   (interactive)
@@ -267,7 +267,7 @@
 ;;          (cons "\\(\\.\\.\\)" 'horizontal-ellipsis))))
 
 
-;; (defun paloryemacs/fonts-replace ()
+;; (defun tl/fonts-replace ()
 ;;   (interactive)
 ;;   (substitute-patterns-with-unicode
 ;;    (list (cons "\\(<\\)" 'less-than)
@@ -278,14 +278,14 @@
 ;;----------------------------------------------------------------------------------------------------
 
 ;;; pretty lambda
-;; (defun paloryemacs/pretty-lambdas ()
+;; (defun tl/pretty-lambdas ()
 ;;   (font-lock-add-keywords
 ;;    nil `(("(?\\(lambda\\>\\)"
 ;;           (0 (progn (compose-region (match-beginning 1) (match-end 1)
 ;;                                     ,(make-char 'greek-iso8859-7 107))
 ;;                     nil))))))
 
-;; (add-hook 'prog-mode-hook 'paloryemacs/pretty-lambdas)
+;; (add-hook 'prog-mode-hook 'tl/pretty-lambdas)
 
 ;; function to comment a region using #if 0 -----------------------------------
 ;; (defun if0-region (p1 p2)
@@ -316,10 +316,10 @@
 ;; (define-key global-map [?\C-h ?\C-j] 'gtk-lookup-symbol)
 
 ;;; sgml-mode
-(defun paloryemacs/init-sgml-mode ()
+(defun tl/init-sgml-mode ()
   (outline-minor-mode +1))
 
 (with-eval-after-load "sgml-mode"
-  (add-hook 'sgml-mode-hook 'paloryemacs/init-sgml-mode))
+  (add-hook 'sgml-mode-hook 'tl/init-sgml-mode))
 
 (provide '50major-modes)

@@ -12,10 +12,10 @@
   :mode "\\.dart\\'"
   :config
   (progn
-    (defun paloryemacs/dart-mode-init ()
+    (defun tl/dart-mode-init ()
       (dart-server +1))
 
-    (add-hook 'dart-mode-hook #'paloryemacs/dart-mode-init)))
+    (add-hook 'dart-mode-hook #'tl/dart-mode-init)))
 
 
 (use-package dart-server
@@ -29,9 +29,9 @@
       (interactive)
       (dart-server-show-hover t))
 
-    (paloryemacs/declare-prefix-for-mode 'dart-mode "mf" "find")
-    (paloryemacs/declare-prefix-for-mode 'dart-mode "mh" "help")
-    (paloryemacs/set-leader-keys-for-major-mode 'dart-mode
+    (tl/declare-prefix-for-mode 'dart-mode "mf" "find")
+    (tl/declare-prefix-for-mode 'dart-mode "mh" "help")
+    (tl/set-leader-keys-for-major-mode 'dart-mode
       "=" 'dart-server-format
       "?" 'dart-server-show-hover
       "g" 'dart-server-goto
@@ -84,11 +84,11 @@
       "q"  quit
       ))
   :init
-  (defun paloryemacs/flutter-run-web ()
+  (defun tl/flutter-run-web ()
     (interactive)
     (flutter-run "-d web"))
 
-  (defun paloryemacs/flutter-run-chrome ()
+  (defun tl/flutter-run-chrome ()
     (interactive)
     ;; (flutter-run "-d chrome")
     (require 'flutter)
@@ -97,15 +97,15 @@
      (unless (get-buffer-window flutter-buffer-name)
        (pop-to-buffer-same-window buffer))))
 
-  (defun paloryemacs/flutter-show-buffer ()
+  (defun tl/flutter-show-buffer ()
     (interactive)
     (pop-to-buffer flutter-buffer-name))
 
-  (paloryemacs/declare-prefix-for-mode 'dart-mode "mx" "flutter")
-  (paloryemacs/set-leader-keys-for-major-mode 'dart-mode
-    "xc" 'paloryemacs/flutter-run-chrome
-    "xb" 'paloryemacs/flutter-show-buffer
-    "xw" 'paloryemacs/flutter-run-web
+  (tl/declare-prefix-for-mode 'dart-mode "mx" "flutter")
+  (tl/set-leader-keys-for-major-mode 'dart-mode
+    "xc" 'tl/flutter-run-chrome
+    "xb" 'tl/flutter-show-buffer
+    "xw" 'tl/flutter-run-web
     "xx" 'flutter-run-or-hot-reload))
 
 ;; Optional

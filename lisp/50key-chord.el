@@ -31,11 +31,11 @@
 ;; one, so that key-chord can accept it (my experiment shown key-chord do not
 ;; recognize mouse key by default)
 
-(defun paloryemacs/translate-to-key-chord-lead-key ()
+(defun tl/translate-to-key-chord-lead-key ()
   (interactive)
   (push ?` unread-command-events))
 
-(global-set-key (kbd "<mouse-5>") 'paloryemacs/translate-to-key-chord-lead-key)
+(global-set-key (kbd "<mouse-5>") 'tl/translate-to-key-chord-lead-key)
 
 
 ;;; banish the shift key
@@ -65,7 +65,7 @@
   (dolist (combo banish-shift-key-combo)
     (key-chord-define-global (car combo) (cdr combo)))
 
-  (key-chord-define-global "''" 'paloryemacs/apostrophe-key-chord)
+  (key-chord-define-global "''" 'tl/apostrophe-key-chord)
   (key-chord-define-global ";b" 'switch-to-buffer)
   ;; (key-chord-define-global ";r" 'helm-resume)
   ;; (key-chord-define-global ";s" 'helm-occur)
@@ -92,12 +92,12 @@
   ;; ";g" -> goto-last-change
   ;; (key-chord-define-global ";g" 'magit-status)
   ;; (key-chord-define-global "ms" 'mark-sexp)
-  (key-chord-define-global ";w" 'paloryemacs/w3m-switch-to-buffer)
+  (key-chord-define-global ";w" 'tl/w3m-switch-to-buffer)
 
   (key-chord-define-global "YY" 'browse-kill-ring)
 
 
-  (key-chord-define-global ",r" 'paloryemacs/recursive-edit-save-window-config)
+  (key-chord-define-global ",r" 'tl/recursive-edit-save-window-config)
   (key-chord-define-global ",c" 'org-capture)
   (key-chord-define-global "VV" 'other-window)
 

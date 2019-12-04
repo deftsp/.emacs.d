@@ -9,8 +9,8 @@
   :defer t
   :init
   (progn
-    (paloryemacs/declare-prefix "aD" "Docker")
-    (paloryemacs/set-leader-keys
+    (tl/declare-prefix "aD" "Docker")
+    (tl/set-leader-keys
       "aDc" 'docker-containers
       "aDd" 'docker-rmi
       "aDe" 'docker-unpause

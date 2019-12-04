@@ -10,7 +10,7 @@
 
 ;;; shell-pop
 (defvar shell-default-shell 'eshell
-  "Default shell to use in Paloryemacs. Possible values are `eshell', `shell',
+  "Default shell to use. Possible values are `eshell', `shell',
 `term' and `ansi-term'.")
 
 (defvar shell-default-position 'bottom
@@ -42,16 +42,16 @@ prompts and the prompt is made read-only")
   "If non-nil, the window is closed when the terminal is stopped.
 This is only applied to `term' and `ansi-term' modes.")
 
-(defun paloryemacs/default-pop-shell ()
+(defun tl/default-pop-shell ()
   "Open the default shell in a popup."
   (interactive)
   (let ((shell (case shell-default-shell
                  ('multi-term 'multiterm)
                  ('shell 'inferior-shell)
                  (t shell-default-shell))))
-    (call-interactively (intern (format "paloryemacs/shell-pop-%S" shell)))))
+    (call-interactively (intern (format "tl/shell-pop-%S" shell)))))
 
-(defun paloryemacs/resize-shell-to-desired-width ()
+(defun tl/resize-shell-to-desired-width ()
   (when (and (string= (buffer-name) shell-pop-last-shell-buffer-name)
              (memq shell-pop-window-position '(left right)))
     (enlarge-window-horizontally (- (/ (* (frame-width) shell-default-width)
@@ -62,7 +62,7 @@ This is only applied to `term' and `ansi-term' modes.")
   "Create a function to open a shell via the function FUNC.
 SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
   (let* ((name (symbol-name func)))
-    `(defun ,(intern (concat "paloryemacs/shell-pop-" name)) (index)
+    `(defun ,(intern (concat "tl/shell-pop-" name)) (index)
        ,(format (concat "Toggle a popup window with `%S'.\n"
                         "Multiple shells can be opened with a numerical prefix "
                         "argument. Using the universal prefix argument will "
@@ -79,7 +79,7 @@ SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
                       ,(concat "*" name "*")
                       (lambda nil (,func ,shell)))))
          (shell-pop index)
-         (paloryemacs/resize-shell-to-desired-width)))))
+         (tl/resize-shell-to-desired-width)))))
 
 (defun ansi-term-handle-close ()
   "Close current term buffer when `exit' from term buffer."
@@ -109,18 +109,18 @@ SHELL is the SHELL function to use (i.e. when FUNC represents a terminal)."
 
     (add-hook 'term-mode-hook 'ansi-term-handle-close)
 
-    (paloryemacs/declare-prefix "'" "open shell")
-    (paloryemacs/declare-prefix "as" "shells")
+    (tl/declare-prefix "'" "open shell")
+    (tl/declare-prefix "as" "shells")
 
-    (paloryemacs/set-leader-keys
-      "'"   'paloryemacs/default-pop-shell
-      "ase" 'paloryemacs/shell-pop-eshell
-      "asi" 'paloryemacs/shell-pop-shell
-      "asm" 'paloryemacs/shell-pop-multiterm
-      "ast" 'paloryemacs/shell-pop-ansi-term
-      "asT" 'paloryemacs/shell-pop-term)))
+    (tl/set-leader-keys
+      "'"   'tl/default-pop-shell
+      "ase" 'tl/shell-pop-eshell
+      "asi" 'tl/shell-pop-shell
+      "asm" 'tl/shell-pop-multiterm
+      "ast" 'tl/shell-pop-ansi-term
+      "asT" 'tl/shell-pop-term)))
 
-(defun paloryemacs//protect-eshell-prompt ()
+(defun tl//protect-eshell-prompt ()
   "Protect Eshell's prompt like Comint's prompts.
 
 E.g. `evil-change-whole-line' won't wipe the prompt. This
@@ -135,7 +135,7 @@ is achieved by adding the relevant text properties."
                       read-only t
                       front-sticky (field inhibit-line-move-field-capture)))))
 
-(defun paloryemacs//eshell-auto-end ()
+(defun tl//eshell-auto-end ()
   "Move point to end of current prompt when switching to insert state."
   (when (and (eq major-mode 'eshell-mode)
              ;; Not on last line, we might want to edit within it.
@@ -146,17 +146,17 @@ is achieved by adding the relevant text properties."
 ;; I use the following code. It makes C-a go to the beginning of the command line, unless it is already there, in which
 ;; case it goes to the beginning of the line. So if you are at the end of the command line and want to go to the real
 ;; beginning of line, hit C-a twice:
-(defun paloryemacs/eshell-maybe-bol ()
+(defun tl/eshell-maybe-bol ()
   (interactive)
   (let ((p (point)))
     (eshell-bol)
     (if (= p (point))
-        ;; with `paloryemacs//protect-eshell-prompt', `beginning-of-line' will
+        ;; with `tl//protect-eshell-prompt', `beginning-of-line' will
         ;; not work
         (beginning-of-line))))
 
 ;; This is a key-command
-(defun paloryemacs/eshell-clear-keystroke ()
+(defun tl/eshell-clear-keystroke ()
   "Allow for keystrokes to invoke eshell/clear"
   (interactive)
   (eshell/clear)
@@ -164,7 +164,7 @@ is achieved by adding the relevant text properties."
 
 
 ;; clear the buffer while preserving unsent input. This is more comint-like.
-(defun paloryemacs/eshell-clear-buffer ()
+(defun tl/eshell-clear-buffer ()
   "Clear `eshell' buffer, comint-style."
   (interactive)
   (let ((input (eshell-get-old-input)))
@@ -173,24 +173,24 @@ is achieved by adding the relevant text properties."
     (insert input)))
 
 
-(defun paloryemacs/eshell-mode-init ()
+(defun tl/eshell-mode-init ()
   (display-line-numbers-mode -1)
   (setq pcomplete-cycle-completions nil)
-  (buffer-face-set 'paloryemacs/eshell-base-face)
+  (buffer-face-set 'tl/eshell-base-face)
   (unless shell-enable-smart-eshell
     ;; we don't want auto-jump to prompt when smart eshell is enabled. Idea:
     ;; maybe we could make auto-jump smarter and jump only if point is not on a
     ;; prompt line
     (add-hook 'evil-insert-state-entry-hook
-              'paloryemacs//eshell-auto-end nil t))
+              'tl//eshell-auto-end nil t))
 
   (define-key eshell-mode-map (kbd "C-u") 'eshell-kill-input)
-  (define-key eshell-mode-map (kbd "C-a") 'paloryemacs/eshell-maybe-bol)
+  (define-key eshell-mode-map (kbd "C-a") 'tl/eshell-maybe-bol)
 
   (define-key eshell-mode-map (kbd "C-d") 'eshell-delchar-or-maybe-eof)
   ;; Caution! this will erase buffer's content at C-l
-  ;; (define-key eshell-mode-map (kbd "C-l") 'paloryemacs/eshell-clear-keystroke)
-  (define-key eshell-mode-map (kbd "C-l") 'paloryemacs/eshell-clear-buffer)
+  ;; (define-key eshell-mode-map (kbd "C-l") 'tl/eshell-clear-keystroke)
+  (define-key eshell-mode-map (kbd "C-l") 'tl/eshell-clear-buffer)
   (with-eval-after-load 'evil
     ;; These don't work well in normal state due to evil/emacs cursor
     ;; incompatibility
@@ -219,13 +219,13 @@ is achieved by adding the relevant text properties."
           ;; treat 'echo' like shell echo
           eshell-plain-echo-behavior t
           ;; cache directory
-          eshell-directory-name (concat paloryemacs-cache-directory "eshell/"))
+          eshell-directory-name (concat tl-cache-directory "eshell/"))
 
     (when shell-protect-eshell-prompt
-      (add-hook 'eshell-after-prompt-hook 'paloryemacs//protect-eshell-prompt))
+      (add-hook 'eshell-after-prompt-hook 'tl//protect-eshell-prompt))
 
     (autoload 'eshell-delchar-or-maybe-eof "em-rebind")
-    (add-hook 'eshell-mode-hook 'paloryemacs/eshell-mode-init))
+    (add-hook 'eshell-mode-hook 'tl/eshell-mode-init))
   :config
   (progn
     ;; Work around bug in eshell's preoutput-filter code.
@@ -233,7 +233,7 @@ is achieved by adding the relevant text properties."
     ;; buffer. This breaks the xterm color filtering when the eshell buffer is updated
     ;; when it's not currently focused.
     ;; To remove if/when fixed upstream.
-    (defun eshell-output-filter@paloryemacs-with-buffer (fn process string)
+    (defun eshell-output-filter@tl-with-buffer (fn process string)
       (let ((proc-buf (if process (process-buffer process)
                         (current-buffer))))
         (when proc-buf
@@ -242,7 +242,7 @@ is achieved by adding the relevant text properties."
     (advice-add
      #'eshell-output-filter
      :around
-     #'eshell-output-filter@paloryemacs-with-buffer)
+     #'eshell-output-filter@tl-with-buffer)
 
     (require 'esh-opt)
 
@@ -298,7 +298,7 @@ is achieved by adding the relevant text properties."
     ;; http://www.modernemacs.com/post/custom-eshell/
     (use-package eshell-prompt-extras
       :init
-      (defface paloryemacs/eshell-base-face
+      (defface tl/eshell-base-face
         '((t :foreground "black"
              :background "aquamarine"
              :font "Knack Nerd Font"))
@@ -306,22 +306,22 @@ is achieved by adding the relevant text properties."
         :group 'eshell-prompt)
 
       (defface epe-user-face
-        '((t :inherit paloryemacs/eshell-base-face :foreground "red"))
+        '((t :inherit tl/eshell-base-face :foreground "red"))
         "Face of user in prompt."
         :group 'eshell-prompt)
 
       (defface epe-host-face
-        '((t :inherit paloryemacs/eshell-base-face  :foreground "blue"))
+        '((t :inherit tl/eshell-base-face  :foreground "blue"))
         "Face of host in prompt."
         :group 'eshell-prompt)
 
       (defface epe-time-face
-        '((t :inherit paloryemacs/eshell-base-face :foreground "yellow"))
+        '((t :inherit tl/eshell-base-face :foreground "yellow"))
         "Face of time in prompt."
         :group 'eshell-prompt)
 
       (defface epe-delimiter-face
-        '((t :inherit paloryemacs/eshell-base-face  :foreground "yellow"))
+        '((t :inherit tl/eshell-base-face  :foreground "yellow"))
         "Face of delimiter in prompt."
         :group 'eshell-prompt)
 
@@ -387,7 +387,7 @@ is achieved by adding the relevant text properties."
       (eshell-did-you-mean-setup))))
 
 
-(defun paloryemacs/init-eshell-xterm-color ()
+(defun tl/init-eshell-xterm-color ()
   "Initialize xterm coloring for eshell"
   (setq-local xterm-color-preserve-properties t)
   (make-local-variable 'eshell-preoutput-filter-functions)
@@ -405,11 +405,11 @@ is achieved by adding the relevant text properties."
     (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter)
     (setq comint-output-filter-functions
           (remove 'ansi-color-process-output comint-output-filter-functions))
-    (add-hook 'eshell-mode-hook 'paloryemacs/init-eshell-xterm-color)))
+    (add-hook 'eshell-mode-hook 'tl/init-eshell-xterm-color)))
 
 ;;; eshell here
 ;; http://www.howardism.org/Technical/Emacs/eshell-fun.html
-(defun paloryemacs/eshell-here ()
+(defun tl/eshell-here ()
   "Opens up a new shell in the directory associated with the
 current buffer's file. The eshell is renamed to match that
 directory to make multiple eshell windows easier."
@@ -427,7 +427,7 @@ directory to make multiple eshell windows easier."
     (insert (concat "ls"))
     (eshell-send-input)))
 
-(global-set-key (kbd "C-!") 'paloryemacs/eshell-here)
+(global-set-key (kbd "C-!") 'tl/eshell-here)
 
 ;;; alias
 (defun eshell/l (&rest args)
@@ -578,8 +578,8 @@ it doesn't contain the org-mode #+TAGS: entry specified."
     (setq-local company-backends '(company-eshell-autosuggest))
     (setq-local company-frontends '(company-preview-frontend)))
 
-  (add-hook 'eshell-mode-hook 'paloryemacs/company-eshell-mode-setup)
-  (defun paloryemacs/company-eshell-mode-setup ()
+  (add-hook 'eshell-mode-hook 'tl/company-eshell-mode-setup)
+  (defun tl/company-eshell-mode-setup ()
     (setq-local company-backends '(company-eshell-autosuggest))
     (setq-local company-frontends '(company-preview-frontend))))
 

@@ -17,7 +17,7 @@
 ;; M-S      -  sp-split-sexp
 
 ;;; manually set `sp-keymap' instead of use predefined sp-smartparens-bindings
-(defun paloryemacs/smartparens-set-keys ()
+(defun tl/smartparens-set-keys ()
   (define-key sp-keymap (kbd "C-M-f") 'sp-forward-sexp)
   (define-key sp-keymap (kbd "C-M-b") 'sp-backward-sexp)
 
@@ -67,22 +67,22 @@
   (define-key sp-keymap (kbd "H-s j") 'sp-join-sexp)
   (define-key sp-keymap (kbd "H-s s") 'sp-split-sexp))
 
-(defun paloryemacs//adaptive-smartparent-pair-overlay-face ()
+(defun tl//adaptive-smartparent-pair-overlay-face ()
   (set-face-attribute 'sp-pair-overlay-face nil
                       :inherit 'lazy-highlight
                       :background nil
                       :foreground nil))
 
-(defun paloryemacs/smartparens-pair-newline (id action context)
+(defun tl/smartparens-pair-newline (id action context)
   (save-excursion
     (newline)
     (indent-according-to-mode)))
 
-(defun paloryemacs/smartparens-pair-newline-and-indent (id action context)
-  (paloryemacs/smartparens-pair-newline id action context)
+(defun tl/smartparens-pair-newline-and-indent (id action context)
+  (tl/smartparens-pair-newline id action context)
   (indent-according-to-mode))
 
-(defun paloryemacs/smart-closing-parenthesis ()
+(defun tl/smart-closing-parenthesis ()
   (interactive)
   (let* ((sp-navigate-close-if-unbalanced t)
          (current-pos (point))
@@ -98,7 +98,7 @@
      (t
       (insert-char ?\))))))
 
-(defvar paloryemacs--smartparens-enabled-initially t
+(defvar tl--smartparens-enabled-initially t
   "Stored whether smartparens is originally enabled or not.")
 
 (use-package smartparens
@@ -116,45 +116,45 @@
           sp-highlight-wrap-overlay nil
           sp-highlight-wrap-tag-overlay nil)
 
-    (paloryemacs/set-leader-keys
+    (tl/set-leader-keys
       "js" 'sp-split-sexp
       "jn" 'sp-newline))
   :config
   (progn
     (require 'smartparens-config)
 
-    (defun paloryemacs//smartparens-disable-before-expand-snippet ()
+    (defun tl//smartparens-disable-before-expand-snippet ()
       "Handler for `yas-before-expand-snippet-hook'.
 Disable smartparens and remember its initial state."
       ;; Remember the initial smartparens state only once, when expanding a top-level snippet.
-      (setq paloryemacs--smartparens-enabled-initially smartparens-mode)
+      (setq tl--smartparens-enabled-initially smartparens-mode)
       (when smartparens-mode
         (smartparens-mode -1)))
 
 
-    (defun paloryemacs//smartparens-restore-after-exit-snippet ()
+    (defun tl//smartparens-restore-after-exit-snippet ()
       "Handler for `yas-after-exit-snippet-hook'.
  Restore the initial state of smartparens."
-      (when paloryemacs--smartparens-enabled-initially
+      (when tl--smartparens-enabled-initially
         (smartparens-mode +1)))
 
     (with-eval-after-load 'yasnippet
       (add-hook 'yas-before-expand-snippet-hook
-                #'paloryemacs//smartparens-disable-before-expand-snippet)
+                #'tl//smartparens-disable-before-expand-snippet)
       (add-hook 'yas-after-exit-snippet-hook
-                #'paloryemacs//smartparens-restore-after-exit-snippet))
+                #'tl//smartparens-restore-after-exit-snippet))
 
     (add-to-list 'sp-ignore-modes-list 'haskell-mode)
-    ;; (define-key evil-insert-state-map ")" 'paloryemacs/smart-closing-parenthesis)
-    (paloryemacs//adaptive-smartparent-pair-overlay-face)
+    ;; (define-key evil-insert-state-map ")" 'tl/smart-closing-parenthesis)
+    (tl//adaptive-smartparent-pair-overlay-face)
     ;; (smartparens-global-strict-mode t) ; strict mode can not worked with subword
     (show-smartparens-global-mode +1)
     ;; don't create a pair with single quote in minibuffer
     (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
     (sp-pair "{" nil :post-handlers
-             '(:add (paloryemacs/smartparens-pair-newline-and-indent "RET")))
+             '(:add (tl/smartparens-pair-newline-and-indent "RET")))
     (sp-pair "[" nil :post-handlers
-             '(:add (paloryemacs/smartparens-pair-newline-and-indent "RET")))
+             '(:add (tl/smartparens-pair-newline-and-indent "RET")))
     ;; markdown-mode
     (sp-with-modes '(markdown-mode gfm-mode rst-mode)
       (sp-local-pair "*" "*" :bind "C-*")
@@ -181,13 +181,13 @@ Disable smartparens and remember its initial state."
 (smartparens-global-mode +1)
 
 
-;; (defun paloryemacs/sp-lisp-binding (map)
+;; (defun tl/sp-lisp-binding (map)
 ;;   (define-key map (kbd "M-s") 'sp-splice-sexp)
 ;;   (define-key map (kbd "M-S") 'sp-split-sexp)
 ;;   (define-key map (kbd "M-r") 'sp-splice-sexp-killing-around))
 
-;; (paloryemacs/sp-lisp-binding lisp-mode-map)
-;; (paloryemacs/sp-lisp-binding emacs-lisp-mode-map)
+;; (tl/sp-lisp-binding lisp-mode-map)
+;; (tl/sp-lisp-binding emacs-lisp-mode-map)
 
 
 (provide '50smartparens)

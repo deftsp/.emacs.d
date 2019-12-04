@@ -50,7 +50,7 @@
           ;; add more org level face
           ;; org-n-level-faces at most 8, if less than 8, then level-1 face gets
           ;; re-used level N+1 etc.
-          ;; (add-to-list 'org-level-faces 'paloryemacs/org-level-9)
+          ;; (add-to-list 'org-level-faces 'tl/org-level-9)
           ;; (setq org-n-level-faces (length org-level-faces)))
           ;; org-catch-invisible-edits 'smart
           ;; org-startup-indented t
@@ -97,9 +97,9 @@
       ;; … ↴, ⬎, ⤷, ⤵, ▼ and ⋱.
       (setq org-ellipsis " ◦◦◦ "))
 
-    (when (fboundp 'paloryemacs/terminal-notification)
+    (when (fboundp 'tl/terminal-notification)
       (setq org-show-notification-handler
-            (lambda (msg) (paloryemacs/terminal-notification nil msg))))
+            (lambda (msg) (tl/terminal-notification nil msg))))
 
     ;; global Effort estimate values
     (setq org-global-properties
@@ -260,7 +260,7 @@
       :after org
       :init
       (progn
-        (add-hook 'org-mode-hook 'paloryemacs//evil-org-mode))
+        (add-hook 'org-mode-hook 'tl//evil-org-mode))
       :config
       (progn
         (evil-org-set-key-theme '(navigation textobjects todo additional))))
@@ -278,13 +278,13 @@
       (global-set-key [remap org-agenda-set-tags] #'counsel-org-tag-agenda)
       (global-set-key [remap org-set-tags-command] #'counsel-org-tag))
 
-    (defun paloryemacs/org-mode-init ()
+    (defun tl/org-mode-init ()
       (semantic-mode -1)
       (display-line-numbers-mode -1))
 
-    (add-to-list 'org-mode-hook 'paloryemacs/org-mode-init)
+    (add-to-list 'org-mode-hook 'tl/org-mode-init)
 
-    (org-defkey org-mode-map (kbd "C-c C-x t") 'paloryemacs/org-clock-summary-today-by-tags)
+    (org-defkey org-mode-map (kbd "C-c C-x t") 'tl/org-clock-summary-today-by-tags)
     ;; Undefine C-c [ and C-c ] since this breaks my
     ;; org-agenda files when directories are include It
     ;; expands the files in the directories individually
@@ -306,7 +306,7 @@
     ;;                              ":EXPORT_OPTIONS: toc:nil html-postamble:nil num:nil")))
 
 
-    (defmacro paloryemacs|org-emphasize (fname char)
+    (defmacro tl|org-emphasize (fname char)
       "Make function for setting the emphasis in org mode"
       `(defun ,fname () (interactive)
               (org-emphasize ,char)))
@@ -324,9 +324,9 @@
                       ("mti" . "insert")
                       ("mtt" . "toggle")
                       ("mx" . "text")))
-      (paloryemacs/declare-prefix-for-mode 'org-mode (car prefix) (cdr prefix)))
-    (paloryemacs/set-leader-keys-for-major-mode 'org-mode
-      "C-l" 'paloryemacs/reflash-indentation
+      (tl/declare-prefix-for-mode 'org-mode (car prefix) (cdr prefix)))
+    (tl/set-leader-keys-for-major-mode 'org-mode
+      "C-l" 'tl/reflash-indentation
 
       "'" 'org-edit-special
       "c" 'org-capture
@@ -335,7 +335,7 @@
       "Co" 'org-clock-out
       "Cr" 'org-resolve-clocks
       "Cd" 'org-clock-display           ; C-c C-x C-d
-      "Cz" 'paloryemacs/org-insert-clock-range
+      "Cz" 'tl/org-insert-clock-range
 
       "dd" 'org-deadline
       "ds" 'org-schedule
@@ -413,7 +413,7 @@
 
 
       ;; Multi-purpose keys
-      (or dotpaloryemacs-major-mode-leader-key ",") 'org-ctrl-c-ctrl-c
+      (or dottl-major-mode-leader-key ",") 'org-ctrl-c-ctrl-c
       "*" 'org-ctrl-c-star
       "-" 'org-ctrl-c-minus
       "#" 'org-update-statistics-cookies
@@ -430,22 +430,22 @@
       "if" 'org-footnote-new
       "ih" 'org-insert-heading
       "iH" 'org-insert-heading-after-current
-      "ii" 'paloryemacs/org-insert-image
-      "iK" 'paloryemacs/insert-keybinding-org
+      "ii" 'tl/org-insert-image
+      "iK" 'tl/insert-keybinding-org
       "il" 'org-insert-link
       "ip" 'org-set-property
       "is" 'org-insert-subheading
       "it" 'org-set-tags
 
       ;; region manipulation
-      "xb" (paloryemacs|org-emphasize paloryemacs/org-bold ?*)
-      "xc" (paloryemacs|org-emphasize paloryemacs/org-code ?~)
-      "xi" (paloryemacs|org-emphasize paloryemacs/org-italic ?/)
+      "xb" (tl|org-emphasize tl/org-bold ?*)
+      "xc" (tl|org-emphasize tl/org-code ?~)
+      "xi" (tl|org-emphasize tl/org-italic ?/)
       "xo" 'org-open-at-point
-      "xr" (paloryemacs|org-emphasize paloryemacs/org-clear ? )
-      "xs" (paloryemacs|org-emphasize paloryemacs/org-strike-through ?+)
-      "xu" (paloryemacs|org-emphasize paloryemacs/org-underline ?_)
-      "xv" (paloryemacs|org-emphasize paloryemacs/org-verbose ?=)
+      "xr" (tl|org-emphasize tl/org-clear ? )
+      "xs" (tl|org-emphasize tl/org-strike-through ?+)
+      "xu" (tl|org-emphasize tl/org-underline ?_)
+      "xv" (tl|org-emphasize tl/org-verbose ?=)
 
       "px" 'org-publish
       "pp" 'org-publish-current-project
@@ -454,9 +454,9 @@
 
     ;; Add global evil-leader mappings. Used to access org-agenda
     ;; functionalities – and a few others commands – from any other mode.
-    (paloryemacs/declare-prefix "ao" "org")
-    (paloryemacs/declare-prefix "aok" "clock")
-    (paloryemacs/set-leader-keys
+    (tl/declare-prefix "ao" "org")
+    (tl/declare-prefix "aok" "clock")
+    (tl/set-leader-keys
       ;; org-agenda
       "ao#" 'org-agenda-list-stuck-projects
       "ao/" 'org-occur-in-agenda-files
@@ -475,11 +475,11 @@
       "Cc" 'org-capture)
 
     ;; We add this key mapping because an Emacs user can change
-    ;; `dotpaloryemacs-major-mode-emacs-leader-key' to `C-c' and the key binding
+    ;; `dottl-major-mode-emacs-leader-key' to `C-c' and the key binding
     ;; C-c ' is shadowed by `spacemacs/default-pop-shell', effectively making
     ;; the Emacs user unable to exit src block editing.
     (define-key org-src-mode-map
-      (kbd (concat dotpaloryemacs-major-mode-emacs-leader-key " '"))
+      (kbd (concat dottl-major-mode-emacs-leader-key " '"))
       'org-edit-src-exit)
 
     ;; Evilify the calendar tool on C-c .
@@ -509,7 +509,7 @@
         (org-eval-in-calendar '(calendar-forward-year 1))))))
 
 
-(defun paloryemacs/org-insert-clock-range ()
+(defun tl/org-insert-clock-range ()
   (interactive)
   (org-clock-in nil (apply 'encode-time (org-parse-time-string (org-read-date))))
   (org-resolve-clocks))
@@ -529,7 +529,7 @@
 ;; rather than the numeric value so I just convert that to its corresponding
 ;; number and use org-get-priority to compare the entry’s value to the given
 ;; one.
-(defun paloryemacs/org-agenda-skip-subtree-if-priority (priority)
+(defun tl/org-agenda-skip-subtree-if-priority (priority)
   "Skip an agenda subtree if it has a priority of PRIORITY.
 PRIORITY may be one of the characters ?A, ?B, or ?C."
   (let ((subtree-end (save-excursion (org-end-of-subtree t)))
@@ -540,7 +540,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       nil)))
 
 
-(defun paloryemacs/org-agenda-skip-subtree-if-not-priority (priority)
+(defun tl/org-agenda-skip-subtree-if-not-priority (priority)
   "Skip an agenda subtree if it don't have a priority of PRIORITY.
 PRIORITY may be one of the characters ?A, ?B, or ?C."
   (let ((subtree-end (save-excursion (org-end-of-subtree t)))
@@ -551,24 +551,24 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
       subtree-end)))
 
 ;; https://emacs.stackexchange.com/questions/14724/emacs-org-mode-how-to-make-agenda-views-of-blocked-parent-tasks
-(defun paloryemacs/org-agenda-skip-if-not-blocked ()
+(defun tl/org-agenda-skip-if-not-blocked ()
   (let ((next-headline (save-excursion
                          (or (outline-next-heading) (point-max)))))
     (if (not (org-entry-blocked-p)) next-headline)))
 
-(defun paloryemacs/org-agenda-skip-if-blocked ()
+(defun tl/org-agenda-skip-if-blocked ()
   (let ((next-headline (save-excursion
                          (or (outline-next-heading) (point-max)))))
     (if (org-entry-blocked-p) next-headline)))
 
-(defun paloryemacs/org-agenda-skip-subtree-if-habit ()
+(defun tl/org-agenda-skip-subtree-if-habit ()
   "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
   (let ((subtree-end (save-excursion (org-end-of-subtree t))))
     (if (string= (org-entry-get nil "STYLE") "habit")
         subtree-end
       nil)))
 
-(defun paloryemacs/org-agenda-skip-subtree-if-not-habit ()
+(defun tl/org-agenda-skip-subtree-if-not-habit ()
   "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
   (let ((subtree-end (save-excursion (org-end-of-subtree t))))
     (if (string= (org-entry-get nil "STYLE") "habit")
@@ -578,25 +578,25 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 ;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
 ;; can be use to  only show the first action to be done (or next action) for each project
 ;; TODO: test it and add category filter
-;; (defun paloryemacs/org-agenda-skip-all-siblings-but-first ()
+;; (defun tl/org-agenda-skip-all-siblings-but-first ()
 ;;   "Skip all but the first non-done entry."
 ;;   (let (should-skip-entry)
-;;     (unless (paloryemacs/org-current-is-todo)
+;;     (unless (tl/org-current-is-todo)
 ;;       (setq should-skip-entry t))
 ;;     (save-excursion
 ;;       (while (and (not should-skip-entry) (org-goto-sibling t))
-;;         (when (paloryemacs/org-current-is-todo)
+;;         (when (tl/org-current-is-todo)
 ;;           (setq should-skip-entry t))))
 ;;     (when should-skip-entry
 ;;       (or (outline-next-heading)
 ;;           (goto-char (point-max))))))
 
-;; (defun paloryemacs/org-current-is-todo ()
+;; (defun tl/org-current-is-todo ()
 ;;   (string= "TODO" (org-get-todo-state)))
 
 ;; from http://emacs.stackexchange.com/questions/26351/custom-sorting-for-agenda
 ;; being used in a org agenda custom command below
-(defun paloryemacs/cmp-date-property (prop)
+(defun tl/cmp-date-property (prop)
   "Compare two `org-mode' agenda entries, `A' and `B', by some date property. If a is before b, return -1. If a is after b, return 1. If they are equal return t."
   (lexical-let ((prop prop))
     #'(lambda (a b)
@@ -611,15 +611,15 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 
 ;; https://github.com/jwiegley/dot-emacs/blob/master/dot-org.el
-(defun paloryemacs/org-todo-age-time (&optional pos)
+(defun tl/org-todo-age-time (&optional pos)
   (let ((stamp (org-entry-get (or pos (point)) "CREATED" t)))
     (when stamp
       (time-subtract (current-time)
                      (org-time-string-to-time
                       stamp)))))
 
-(defun paloryemacs/org-todo-age (&optional pos)
-  (let* ((age-time (paloryemacs/org-todo-age-time pos))
+(defun tl/org-todo-age (&optional pos)
+  (let* ((age-time (tl/org-todo-age-time pos))
          (days (if age-time (time-to-number-of-days age-time) nil)))
     (cond ((null days) "Unk")
           ((< days 1)   "today")
@@ -629,9 +629,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           (t            (format "%.1fY" (/ days 365.0))))))
 
 
-(defun paloryemacs/org-compare-todo-age (a b)
-  (let ((time-a (paloryemacs/org-todo-age-time (get-text-property 0 'org-hd-marker a)))
-        (time-b (paloryemacs/org-todo-age-time (get-text-property 0 'org-hd-marker b))))
+(defun tl/org-compare-todo-age (a b)
+  (let ((time-a (tl/org-todo-age-time (get-text-property 0 'org-hd-marker a)))
+        (time-b (tl/org-todo-age-time (get-text-property 0 'org-hd-marker b))))
     (cond ((null time-a) -1)
           ((null time-b) 1)
           ((and (null time-a) (null time-b)) 1)
@@ -639,7 +639,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                  -1
                (if (equal time-a time-b) 0 1))))))
 
-(defun paloryemacs/set-org-agenda-custom-commands ()
+(defun tl/set-org-agenda-custom-commands ()
   ;; Use tags-todo like this (tags-todo "+PRIORITY={A}") will be very slow,
   ;; however add more restricts, like CATEGORY, it works fine
 
@@ -666,9 +666,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                    (org-agenda-overriding-header "High Priority Unfinished Tasks:")))
 
             (alltodo ""
-                     ((org-agenda-skip-function '(or (paloryemacs/org-agenda-skip-subtree-if-habit)
-                                                     (paloryemacs/org-agenda-skip-subtree-if-priority ?A)
-                                                     (paloryemacs/org-agenda-skip-if-blocked)
+                     ((org-agenda-skip-function '(or (tl/org-agenda-skip-subtree-if-habit)
+                                                     (tl/org-agenda-skip-subtree-if-priority ?A)
+                                                     (tl/org-agenda-skip-if-blocked)
                                                      (org-agenda-skip-entry-if 'regexp "\\* NEXT")
                                                      (org-agenda-skip-entry-if 'scheduled 'deadline)))
                       (org-agenda-overriding-header "ALL Normal Priority Tasks:")
@@ -689,7 +689,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
             (org-agenda-skip-function '(org-agenda-skip-entry-if 'regexp "\\=.*\\[#C\\]"))))
 
           ("B" "Blocked entries" alltodo ""
-           ((org-agenda-skip-function '(paloryemacs/org-agenda-skip-if-not-blocked))
+           ((org-agenda-skip-function '(tl/org-agenda-skip-if-not-blocked))
             (org-enforce-todo-checkbox-dependencies nil)))
 
           ("c" "Appointment Calendar" agenda ""
@@ -727,7 +727,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
            ((org-agenda-overriding-header "Habits")
             (org-agenda-entry-types '(:scheduled))
             (org-agenda-skip-function '(or (org-agenda-skip-entry-if 'notscheduled)
-                                           (paloryemacs/org-agenda-skip-subtree-if-not-habit)))
+                                           (tl/org-agenda-skip-subtree-if-not-habit)))
             (org-agenda-sorting-strategy
              '(todo-state-down effort-up category-keep))))
           ("O" "All TODOs" tags "TODO<>\"\"" ((org-agenda-overriding-header "All TODOs")))
@@ -741,7 +741,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
             (org-agenda-prefix-format "  ")))
           ("rn" "Review Next Actions\n    Archive completed actions, review for further action steps"
            ((todo "DONE|CANCELLED|FAILED|FIXED" ((org-agenda-overriding-header "Done/Dropped Items (to archive):")
-                                                 (org-agenda-cmp-user-defined (paloryemacs/cmp-date-property "CLOSED"))
+                                                 (org-agenda-cmp-user-defined (tl/cmp-date-property "CLOSED"))
                                                  (org-agenda-sorting-strategy '(user-defined-up))))
             (tags-todo "NEXT" ((org-agenda-overriding-header "Next Actions:")
                                (org-agenda-sorting-strategy '(time-up category-up alpha-up))
@@ -761,7 +761,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                         (org-agenda-prefix-format "%-12t% s")))))
           ("S" "Scheduled tasks" tags "TODO<>\"\"&TODO<>{APPT\\|DONE\\|CANCELED\\|NOTE}"
            ((org-agenda-overriding-header "Scheduled tasks: ")
-            (org-agenda-skip-function '(or (paloryemacs/org-agenda-skip-subtree-if-habit)
+            (org-agenda-skip-function '(or (tl/org-agenda-skip-subtree-if-habit)
                                            ;; (org-agenda-skip-entry-if 'notregexp "\\=.*\\[#A\\]")
                                            (org-agenda-skip-entry-if 'notscheduled)))
             (org-agenda-sorting-strategy '(category-up))))
@@ -775,7 +775,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                                         'regexp
                                         "\\* \\(DEFERRED\\|SOMEDAY\\)"))
             (org-agenda-sorting-strategy '(user-defined-up))
-            (org-agenda-prefix-format "%-11c%5(paloryemacs/org-todo-age) ")))
+            (org-agenda-prefix-format "%-11c%5(tl/org-todo-age) ")))
 
           ;; ("u" alltodo "Unscheduled TODO entries"
           ;;  ((org-agenda-skip-function
@@ -785,7 +785,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           ("U" "Deferred tasks" tags "TODO=\"DEFERRED\""
            ((org-agenda-overriding-header "Deferred tasks:")
             (org-agenda-sorting-strategy '(user-defined-up))
-            (org-agenda-prefix-format "%-11c%5(paloryemacs/org-todo-age) ")))
+            (org-agenda-prefix-format "%-11c%5(tl/org-todo-age) ")))
 
 
           ;; ("w" todo "WAITING" )
@@ -794,7 +794,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
            ((org-agenda-overriding-header "Unscheduled work-related tasks")
             (org-agenda-sorting-strategy '(todo-state-up priority-down category-up))
             (org-agenda-skip-function '(org-agenda-skip-entry-if 'scheduled 'deadline 'timestamp))
-            (org-agenda-prefix-format "%-11c%5(paloryemacs/org-todo-age) ")))
+            (org-agenda-prefix-format "%-11c%5(tl/org-todo-age) ")))
 
           ("W" "Waiting/delegated tasks" tags "TODO=\"WAITING\"|TODO=\"DELEGATED\""
            ((org-agenda-overriding-header "Waiting/delegated tasks:")
@@ -803,7 +803,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           ("Y" "Someday tasks" tags "TODO=\"SOMEDAY\""
            ((org-agenda-overriding-header "Someday tasks:")
             (org-agenda-sorting-strategy '(user-defined-up))
-            (org-agenda-prefix-format "%-11c%5(paloryemacs/org-todo-age) "))))))
+            (org-agenda-prefix-format "%-11c%5(tl/org-todo-age) "))))))
 
 
 ;; https://www.reddit.com/r/orgmode/comments/6ybjjw/aligned_agenda_view_anyway_to_make_this_more/
@@ -875,14 +875,14 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
     ;;         ("Reading" "~/.emacs.d/icons/org/book.png" nil nil :ascent center)
     ;;         ("\\(Holidays\\|Vacation\\)" "~/.emacs.d/icons/org/holidays.png" nil nil :ascent center)
     ;;         (".*" '(space . (:width (16))))))
-    (paloryemacs/set-org-agenda-custom-commands))
+    (tl/set-org-agenda-custom-commands))
   :config
   (progn
-    (defun paloryemacs/org-agenda-mode-init ()
+    (defun tl/org-agenda-mode-init ()
       (setq truncate-lines t)
       (define-key org-agenda-mode-map " " 'org-agenda-cycle-show))
 
-    (add-hook 'org-agenda-mode-hook 'paloryemacs/org-agenda-mode-init)
+    (add-hook 'org-agenda-mode-hook 'tl/org-agenda-mode-init)
 
     ;; Agenda clock report
     ;;  v R to toggle it. In evilify state, use C-v R
@@ -896,8 +896,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
             :default-face '((:background "#9e3e83") (:foreground "#d2e2f2"))))
 
     ;; Place tags close to the right-hand side of the window
-    (add-hook 'org-agenda-finalize-hook 'paloryemacs/org-agenda-adjust-tags-column)
-    (defun paloryemacs/org-agenda-adjust-tags-column ()
+    (add-hook 'org-agenda-finalize-hook 'tl/org-agenda-adjust-tags-column)
+    (defun tl/org-agenda-adjust-tags-column ()
       "Put the agenda tags by the right border of the agenda window."
       (setq org-agenda-tags-column (- 10 (window-text-width)))
       (org-agenda-align-tags))
@@ -909,7 +909,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
     ;; use a prefix (by pressing C-u c), it will open the default (“vanilla”)
     ;; Org Mode capture dialog, prompting me to pick a capture type, where I can
     ;; choose my “note” type or others I have developed.
-    (defun paloryemacs/org-agenda-capture (&optional vanilla)
+    (defun tl/org-agenda-capture (&optional vanilla)
       "Capture a task in agenda mode, using the date at point.
 
 If VANILLA is non-nil, run the standard `org-capture'."
@@ -926,17 +926,17 @@ If VANILLA is non-nil, run the standard `org-capture'."
     (org-defkey org-agenda-mode-map (kbd "G") nil) ;'org-agenda-toggle-time-grid
 
     ;; https://blog.aaronbieber.com/2016/09/25/agenda-interactions-primer.html
-    (defun paloryemacs/org-agenda-next-header ()
+    (defun tl/org-agenda-next-header ()
       "Jump to the next header in an agenda series."
       (interactive)
-      (paloryemacs//org-agenda-goto-header))
+      (tl//org-agenda-goto-header))
 
-    (defun paloryemacs/org-agenda-previous-header ()
+    (defun tl/org-agenda-previous-header ()
       "Jump to the previous header in an agenda series."
       (interactive)
-      (paloryemacs//org-agenda-goto-header t))
+      (tl//org-agenda-goto-header t))
 
-    (defun paloryemacs//org-agenda-goto-header (&optional backwards)
+    (defun tl//org-agenda-goto-header (&optional backwards)
       "Find the next agenda series header forwards or BACKWARDS."
       (let ((pos (save-excursion
                    (goto-char (if backwards
@@ -973,8 +973,8 @@ If VANILLA is non-nil, run the standard `org-capture'."
         ;; motion
         "j" 'org-agenda-next-line
         "k" 'org-agenda-previous-line
-        "gj" 'paloryemacs/org-agenda-next-header
-        "gk" 'paloryemacs/org-agenda-previous-header
+        "gj" 'tl/org-agenda-next-header
+        "gk" 'tl/org-agenda-previous-header
         (kbd "C-j") 'org-agenda-next-item
         (kbd "C-k") 'org-agenda-previous-item
         (kbd "[") 'org-agenda-earlier ; default to 'org-agenda-manipulate-query-add
@@ -1008,7 +1008,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
         "i" 'org-agenda-diary-entry
         "a" 'org-agenda-add-note
         "A" 'org-agenda-append-agenda
-        "C" 'paloryemacs/org-agenda-capture ; default to 'org-agenda-convert-date
+        "C" 'tl/org-agenda-capture ; default to 'org-agenda-convert-date
 
         ;; mark
         "m" 'org-agenda-bulk-toggle
@@ -1078,16 +1078,16 @@ If VANILLA is non-nil, run the standard `org-capture'."
         ;; Others
         "+" 'org-agenda-manipulate-query-add
         "-" 'org-agenda-manipulate-query-subtract
-        (kbd "M-SPC") 'paloryemacs/org-agenda/body))
+        (kbd "M-SPC") 'tl/org-agenda/body))
 
     (dolist (prefix '(("mC" . "clocks")
                       ("md" . "dates")
                       ("mi" . "insert")
                       ("ms" . "trees/subtrees")))
-      (paloryemacs/declare-prefix-for-mode 'org-agenda-mode
+      (tl/declare-prefix-for-mode 'org-agenda-mode
         (car prefix) (cdr prefix)))
 
-    (paloryemacs/set-leader-keys-for-major-mode 'org-agenda-mode
+    (tl/set-leader-keys-for-major-mode 'org-agenda-mode
       "C-c C-t" 'org-todo-yesterday
 
       "a" 'org-agenda
@@ -1171,7 +1171,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
   :bind* (("C-c C-x i" . org-mru-clock-in)
           ("C-c C-x C-j" . org-mru-clock-select-recent-task))
   :init
-  (defun paloryemacs/org-mru-clock-exclude ()
+  (defun tl/org-mru-clock-exclude ()
     "predicate for `org-mru-clock-predicate', excluding DONE and :ARCHIVE:."
     (not (or (org-entry-is-done-p)
              (member org-archive-tag (org-get-tags-at)))))
@@ -1179,11 +1179,11 @@ If VANILLA is non-nil, run the standard `org-capture'."
   (setq org-mru-clock-files #'org-agenda-files
         org-mru-clock-how-many 100
         org-mru-clock-keep-formatting t
-        org-mru-clock-predicate 'paloryemacs/org-mru-clock-exclude
+        org-mru-clock-predicate 'tl/org-mru-clock-exclude
         org-mru-clock-completing-read #'ivy-completing-read))
 
 ;;; Other frame
-(defun paloryemacs/update-org-agenda-window-setup (&rest args)
+(defun tl/update-org-agenda-window-setup (&rest args)
   (let* ((attrs (display-monitor-attributes-list))
          (window-config
           (if (= (length attrs) 1)
@@ -1192,18 +1192,18 @@ If VANILLA is non-nil, run the standard `org-capture'."
               (let ((name (assoc-default 'name attr))
                     (frames (assoc-default 'frames attr)))
                 (when (member (selected-frame) frames)
-                  (if (string= name dotpaloryemacs-org-agenda-screen-name)
+                  (if (string= name dottl-org-agenda-screen-name)
                       (return 'only-window)
                     (return 'other-frame))))))))
     (setq org-agenda-window-setup window-config)))
 
-;; (paloryemacs/update-org-agenda-window-setup)
+;; (tl/update-org-agenda-window-setup)
 
-;; (defun paloryemacs//update-hammerspoon-agenda-layout ()
-;;   (paloryemacs/open-hammerspoon-url "update_agenda_layout"))
+;; (defun tl//update-hammerspoon-agenda-layout ()
+;;   (tl/open-hammerspoon-url "update_agenda_layout"))
 
-(advice-add 'org-agenda-prepare-window :before #'paloryemacs/update-org-agenda-window-setup)
-;; (advice-remove 'org-agenda-prepare-window #'paloryemacs/update-org-agenda-window-setup)
+(advice-add 'org-agenda-prepare-window :before #'tl/update-org-agenda-window-setup)
+;; (advice-remove 'org-agenda-prepare-window #'tl/update-org-agenda-window-setup)
 
 ;;; archive
 ;; Tip: find all 'DONE' items older than 2 months and archive
@@ -1221,20 +1221,20 @@ If VANILLA is non-nil, run the standard `org-capture'."
 (setq org-archive-location "%s_archive::")
 
 ;; http://ivanmalison.github.io/dotfiles/#org
-(defun paloryemacs/org-archive-if (condition-function)
+(defun tl/org-archive-if (condition-function)
   (if (funcall condition-function)
       (let ((next-point-marker
              (save-excursion (org-forward-heading-same-level 1) (point-marker))))
         (org-archive-subtree)
         (setq org-map-continue-from (marker-position next-point-marker)))))
 
-(defun paloryemacs/org-archive-if-completed ()
+(defun tl/org-archive-if-completed ()
   (interactive)
-  (paloryemacs/org-archive-if 'org-entry-is-done-p))
+  (tl/org-archive-if 'org-entry-is-done-p))
 
-(defun paloryemacs/org-archive-completed-in-buffer ()
+(defun tl/org-archive-completed-in-buffer ()
   (interactive)
-  (org-map-entries 'paloryemacs/org-archive-if-completed))
+  (org-map-entries 'tl/org-archive-if-completed))
 
 
 ;;; Priority
@@ -1269,19 +1269,19 @@ If VANILLA is non-nil, run the standard `org-capture'."
 
 ;; Exclude DONE state tasks from refile targets
 ;; http://doc.norang.ca/org-mode.html
-;; (defun paloryemacs/verify-refile-target ()
+;; (defun tl/verify-refile-target ()
 ;;   "Exclude todo keywords with a done state from refile targets"
 ;;   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
-;; (setq org-refile-target-verify-function 'paloryemacs/verify-refile-target)
+;; (setq org-refile-target-verify-function 'tl/verify-refile-target)
 
 ;; Refile settings
 ;; Exclude DONE state tasks from refile targets
-(defun paloryemacs/verify-refile-target ()
+(defun tl/verify-refile-target ()
   "Exclude todo keywords with a done state from refile targets"
   (not (member (nth 2 (org-heading-components)) org-done-keywords)))
 
-(setq org-refile-target-verify-function 'paloryemacs/verify-refile-target)
+(setq org-refile-target-verify-function 'tl/verify-refile-target)
 
 
 ;;; for MobileOrg
@@ -1299,7 +1299,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
   (progn
     (define-key global-map (kbd "C-c c") 'org-capture)
     ;; https://lists.gnu.org/archive/html/emacs-orgmode/2010-08/msg00469.html
-    (defun paloryemacs/find-today-trading-journal ()
+    (defun tl/find-today-trading-journal ()
       "Find today's trading journal."
       (let ((p (concat org-directory
                        (format-time-string
@@ -1307,7 +1307,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
         (find-file p)
         (goto-char (point-min))))
 
-    (defun paloryemacs/find-memo-file ()
+    (defun tl/find-memo-file ()
       "Find today's trading journal."
       (let ((p (concat org-directory
                        (format-time-string
@@ -1349,7 +1349,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
              "* TODO %?\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
              :prepend t
              :empty-lines-after 1)
-            ("T" "Trading Journal" plain (function paloryemacs/find-today-trading-journal)
+            ("T" "Trading Journal" plain (function tl/find-today-trading-journal)
              "* %U\n%i%?"
              :prepend t
              :unnarrowed nil
@@ -1367,7 +1367,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
             ;;  :empty-lines-after 1)
             ("j" "Journal entry" entry (function org-journal-find-location)
              "* %(format-time-string org-journal-time-format)%^{Title}\n%i%?")
-            ("m" "Memo" plain #'paloryemacs/find-memo-file
+            ("m" "Memo" plain #'tl/find-memo-file
              "* %T\n%?\n%a\n\n"
              :prepend t
              :unnarrowed t
@@ -1403,13 +1403,13 @@ If VANILLA is non-nil, run the standard `org-capture'."
   :config
   (progn
     ;; ",k" not work some time, call `evil-normalize-keymaps' to force refresh
-    (defun paloryemacs//org-capture-mode-init ()
+    (defun tl//org-capture-mode-init ()
       (evil-normalize-keymaps))
 
-    (add-hook 'org-capture-mode-hook 'paloryemacs//org-capture-mode-init)
+    (add-hook 'org-capture-mode-hook 'tl//org-capture-mode-init)
 
-    (paloryemacs/set-leader-keys-for-minor-mode 'org-capture-mode
-      dotpaloryemacs-major-mode-leader-key 'org-capture-finalize
+    (tl/set-leader-keys-for-minor-mode 'org-capture-mode
+      dottl-major-mode-leader-key 'org-capture-finalize
       "a" 'org-capture-kill
       "c" 'org-capture-finalize
       "k" 'org-capture-kill
@@ -1424,7 +1424,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
           org-expiry-inactive-timestamps   t)))
 
 ;; http://www.ideaio.ch/posts/my-gtd-system-with-org-mode.html
-(defun paloryemacs/insert-created-timestamp()
+(defun tl/insert-created-timestamp()
   "Insert a CREATED property using org-expiry.el for TODO entries"
   (org-expiry-insert-created)
   (org-back-to-heading)
@@ -1438,24 +1438,24 @@ If VANILLA is non-nil, run the standard `org-capture'."
 ;;   "Clear the appt-time-msg-list."
 ;;   (setq appt-time-msg-list nil))
 
-(defun paloryemacs//quiet-no-event-message (orig-fun &rest args)
+(defun tl//quiet-no-event-message (orig-fun &rest args)
   "Do annoy me when no event"
-  (paloryemacs/with-suppress-message "No event to add"
+  (tl/with-suppress-message "No event to add"
     (apply orig-fun args)))
 
-(advice-add 'org-agenda-to-appt :around #'paloryemacs//quiet-no-event-message)
-;; (advice-remove 'org-agenda-to-appt #'paloryemacs//quiet-no-event-message)
+(advice-add 'org-agenda-to-appt :around #'tl//quiet-no-event-message)
+;; (advice-remove 'org-agenda-to-appt #'tl//quiet-no-event-message)
 
 
-(defun paloryemacs/org-agenda-to-appt ()
+(defun tl/org-agenda-to-appt ()
   (setq appt-time-msg-list nil)
   ;; Dangerous!!! do not use `appt-add', this might remove entries added by `appt-add' manually.
   (org-agenda-to-appt t "TODO"))
 ;; update appt
-(run-at-time "24:01" (* 0.5 60 60) 'paloryemacs/org-agenda-to-appt) ;; update every half an hour
+(run-at-time "24:01" (* 0.5 60 60) 'tl/org-agenda-to-appt) ;; update every half an hour
 
 ;; update appt each time agenda opened
-(add-hook 'org-agenda-finalize-hook 'paloryemacs/org-agenda-to-appt)
+(add-hook 'org-agenda-finalize-hook 'tl/org-agenda-to-appt)
 
 (use-package org-protocol
   :after (org)
@@ -1464,7 +1464,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
     ;; https://github.com/alphapapa/org-protocol-capture-html
     (use-package org-protocol-capture-html)
 
-    (defun paloryemacs/on-select-previous-input-source (data)
+    (defun tl/on-select-previous-input-source (data)
       "Swith to insert when switch to Rime input method"
       (let ((source-id (plist-get data :source-id)))
         (when (string-equal source-id "im.rime.inputmethod.Squirrel.Rime")
@@ -1482,13 +1482,13 @@ If VANILLA is non-nil, run the standard `org-capture'."
         (cond ((string= action "org-clock-bar-goto")
                (call-interactively 'org-clock-goto))
               ((string= action "org-clock-bar-refresh")
-               (call-interactively 'paloryemacs/update-hammerspoon-org-clock-bar))
+               (call-interactively 'tl/update-hammerspoon-org-clock-bar))
               ((string= action "org-clock-bar-clock-in-last")
                (call-interactively 'org-clock-in-last))
               ((string= action "org-clock-bar-clock-out")
                (call-interactively 'org-clock-out))
               ((string= action "select-previous-input-source")
-               (paloryemacs/on-select-previous-input-source data)))))
+               (tl/on-select-previous-input-source data)))))
 
     (add-to-list 'org-protocol-protocol-alist
                  '("Handle action from hammerspoon"
@@ -1573,13 +1573,13 @@ If VANILLA is non-nil, run the standard `org-capture'."
     ;; message of org-clock-resolve which used fit-window-to-buffer have the
     ;; same problem.
     (add-hook 'org-clock-before-select-task-hook
-              'paloryemacs//add-extra-empty-lines-to-clock-task-select-buffer)
-    (defun paloryemacs//add-extra-empty-lines-to-clock-task-select-buffer ()
+              'tl//add-extra-empty-lines-to-clock-task-select-buffer)
+    (defun tl//add-extra-empty-lines-to-clock-task-select-buffer ()
       (if (string= (buffer-name) "*Clock Task Select*")
           (insert "\n　")
         (error "Run in *Clock Task Select* buffer only.")))
 
-    (defun paloryemacs/update-hammerspoon-org-clock-bar ()
+    (defun tl/update-hammerspoon-org-clock-bar ()
       (interactive)
       (let ((text (if (and (boundp 'org-mode-line-string)
                            org-mode-line-string
@@ -1588,30 +1588,30 @@ If VANILLA is non-nil, run the standard `org-capture'."
                            (org-clocking-p))
                       (substring-no-properties org-mode-line-string)
                     "Nothing !!!")))
-        (paloryemacs/open-hammerspoon-url
+        (tl/open-hammerspoon-url
          "org_clock_update"
          "agenda_next_info"
          text
          "task_overrun"
          (if org-clock-task-overrun "true" "false"))))
 
-    (advice-add 'org-clock-update-mode-line :after #'paloryemacs/update-hammerspoon-org-clock-bar)
-    (advice-remove 'org-clock-update-mode-line #'paloryemacs//update-hammerspoon-org-clock-bar)
+    (advice-add 'org-clock-update-mode-line :after #'tl/update-hammerspoon-org-clock-bar)
+    (advice-remove 'org-clock-update-mode-line #'tl//update-hammerspoon-org-clock-bar)
 
-    (defun paloryemacs/org-clock-force-mode-line-update ()
+    (defun tl/org-clock-force-mode-line-update ()
       (setq org-mode-line-string nil)
       (org-clock-update-mode-line)
-      (paloryemacs/update-hammerspoon-org-clock-bar))
+      (tl/update-hammerspoon-org-clock-bar))
 
     ;; org-clock-in will call `org-clock-update-mode-line'
-    ;; (add-hook 'org-clock-in-hook 'paloryemacs/org-clock-force-mode-line-update)
+    ;; (add-hook 'org-clock-in-hook 'tl/org-clock-force-mode-line-update)
 
     ;; `org-clock-cancel' and `org-clock-out' remove the `org-mode-line-string'
     ;; from `global-mode-string' then call `force-mode-line-update' instead of
     ;; `org-clock-update-mode-line' which have been advice to update hammerspoon
     ;; org_clock_bar
-    (add-hook 'org-clock-cancel-hook 'paloryemacs/org-clock-force-mode-line-update)
-    (add-hook 'org-clock-out-hook 'paloryemacs/org-clock-force-mode-line-update)))
+    (add-hook 'org-clock-cancel-hook 'tl/org-clock-force-mode-line-update)
+    (add-hook 'org-clock-out-hook 'tl/org-clock-force-mode-line-update)))
 
 ;;; org-publish
 (setq org-publish-project-alist
@@ -1705,7 +1705,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
 ;; get the idea from http://www.dbrunner.de/it/org-mode.html
 ;; I give a little update. execute recursive edit before pop a new window
 ;; see also `org-agenda-restore-windows-after-quit'
-(defun paloryemacs/jump-to-org-agenda (&optional arg)
+(defun tl/jump-to-org-agenda (&optional arg)
   "Jump to or refresh 'org-agenda buffer with respected the frame.
 When called by interactive, ARG default to nil then jump to 'org-agenda',
 otherwise just refresh the org agenda buffer."
@@ -1723,20 +1723,20 @@ otherwise just refresh the org agenda buffer."
         (org-agenda nil " ")))))
 
 (with-eval-after-load 'evil
-  (define-key evil-normal-state-map (kbd "S-SPC") 'paloryemacs/jump-to-org-agenda))
+  (define-key evil-normal-state-map (kbd "S-SPC") 'tl/jump-to-org-agenda))
 
 ;; every 20 minutes
-(defvar paloryemacs//jump-to-org-agenda-timer nil)
+(defvar tl//jump-to-org-agenda-timer nil)
 
-(defun paloryemacs/idle-jump-to-org-agenda (secs)
-  (when paloryemacs//jump-to-org-agenda-timer
-    (cancel-timer paloryemacs//jump-to-org-agenda-timer)
-    (setq paloryemacs//jump-to-org-agenda-timer nil))
-  (setq paloryemacs//jump-to-org-agenda-timer
-        (run-with-idle-timer secs t 'paloryemacs/jump-to-org-agenda)))
+(defun tl/idle-jump-to-org-agenda (secs)
+  (when tl//jump-to-org-agenda-timer
+    (cancel-timer tl//jump-to-org-agenda-timer)
+    (setq tl//jump-to-org-agenda-timer nil))
+  (setq tl//jump-to-org-agenda-timer
+        (run-with-idle-timer secs t 'tl/jump-to-org-agenda)))
 
 ;; every idle 20 minutes jump to org-agenda
-(paloryemacs/idle-jump-to-org-agenda (* 20 60))
+(tl/idle-jump-to-org-agenda (* 20 60))
 
 ;;; Embed source code and babel
 ;; fontify code in code blocks
@@ -1769,10 +1769,10 @@ otherwise just refresh the org agenda buffer."
 
 ;; stop emacs asking for confirmation
 ;; (setq org-confirm-babel-evaluate nil)
-(defun paloryemacs/org-confirm-babel-evaluate (lang body)
+(defun tl/org-confirm-babel-evaluate (lang body)
   (cond ((string= lang "ditaa") nil) ; don't ask for ditaa
         ((string= lang "emacs-lisp") nil)))
-(setq org-confirm-babel-evaluate 'paloryemacs/org-confirm-babel-evaluate)
+(setq org-confirm-babel-evaluate 'tl/org-confirm-babel-evaluate)
 
 
 ;;; Info directory
@@ -1784,7 +1784,7 @@ otherwise just refresh the org agenda buffer."
   (when window-system
     (require 'org-mac-protocol nil t)))
 
-(defhydra paloryemacs/org-agenda (:color teal)
+(defhydra tl/org-agenda (:color teal)
   "
 Headline^^            Visit entry^^               Filter^^                    Date^^               Toggle mode^^        View^^             Clock^^        Other^^
 --------^^---------   -----------^^------------   ------^^-----------------   ----^^-------------  -----------^^------  ----^^---------    -----^^------  -----^^-----------
@@ -1859,7 +1859,7 @@ Headline^^            Visit entry^^               Filter^^                    Da
   ("gd" org-agenda-goto-date))
 
 
-(defun paloryemacs/org-insert-image ()
+(defun tl/org-insert-image ()
   "Insert a image link, when C-u take a screenshot."
   (interactive)
   (let* ((buf-file-name (buffer-file-name))
@@ -1897,7 +1897,7 @@ Headline^^            Visit entry^^               Filter^^                    Da
 
 
 ;;; get the clock summary by tags
-(defun paloryemacs/org-clock-summary-by-tags (include-tags timerange &optional tstart tend noinsert)
+(defun tl/org-clock-summary-by-tags (include-tags timerange &optional tstart tend noinsert)
   "Get the clock summary by tags."
   (interactive "P")
   (let* ((timerange-numeric-value (prefix-numeric-value timerange))
@@ -1932,8 +1932,8 @@ Headline^^            Visit entry^^               Filter^^                    Da
     output-string))
 
 ;; http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-return-in-org-mode
-;; (define-key org-mode-map (kbd "RET") 'paloryemacs/org-return)
-(defun paloryemacs/org-return ()
+;; (define-key org-mode-map (kbd "RET") 'tl/org-return)
+(defun tl/org-return ()
   "Add new list or headline "
   (interactive)
   (cond
@@ -1970,7 +1970,7 @@ Headline^^            Visit entry^^               Filter^^                    Da
 
 ;; Insert key for org-mode and markdown a la C-h k
 ;; from SE endless http://emacs.stackexchange.com/questions/2206/i-want-to-have-the-kbd-tags-for-my-blog-written-in-org-mode/2208#2208
-(defun paloryemacs/insert-keybinding-org (key)
+(defun tl/insert-keybinding-org (key)
   "Ask for a key then insert its description.
 Will work on both org-mode and any mode that accepts plain html."
   (interactive "kType key sequence: ")
@@ -1991,8 +1991,8 @@ Will work on both org-mode and any mode that accepts plain html."
   (org-src-mode . (lambda() (flycheck-mode -1)))
   :config
   (progn
-    (paloryemacs/set-leader-keys-for-minor-mode 'org-src-mode
-      dotpaloryemacs-major-mode-leader-key 'org-edit-src-exit
+    (tl/set-leader-keys-for-minor-mode 'org-src-mode
+      dottl-major-mode-leader-key 'org-edit-src-exit
       "c" 'org-edit-src-exit
       "a" 'org-edit-src-abort
       "k" 'org-edit-src-abort)))
@@ -2011,32 +2011,32 @@ Will work on both org-mode and any mode that accepts plain html."
  _s_rc     _n_ote      plant_u_ml      _H_TML:
  _h_tml    ^ ^         ^ ^             _A_SCII:
 "
-      ("s" (paloryemacs/hot-expand "<s"))
-      ("E" (paloryemacs/hot-expand "<e"))
-      ("q" (paloryemacs/hot-expand "<q"))
-      ("v" (paloryemacs/hot-expand "<v"))
-      ("n" (paloryemacs/hot-expand "<not"))
-      ("c" (paloryemacs/hot-expand "<c"))
-      ("l" (paloryemacs/hot-expand "<l"))
-      ("h" (paloryemacs/hot-expand "<h"))
-      ("a" (paloryemacs/hot-expand "<a"))
-      ("L" (paloryemacs/hot-expand "<L"))
-      ("i" (paloryemacs/hot-expand "<i"))
-      ("e" (paloryemacs/hot-expand "<s" "emacs-lisp"))
-      ("p" (paloryemacs/hot-expand "<s" "perl"))
-      ("u" (paloryemacs/hot-expand "<s" "plantuml :file CHANGE.png"))
-      ("w" (paloryemacs/hot-expand "<s" "web"))
-      ("P" (paloryemacs/hot-expand "<s" "perl" ":results output :exports both :shebang \"#!/usr/bin/env perl\"\n"))
-      ("I" (paloryemacs/hot-expand "<I"))
-      ("H" (paloryemacs/hot-expand "<H"))
-      ("A" (paloryemacs/hot-expand "<A"))
+      ("s" (tl/hot-expand "<s"))
+      ("E" (tl/hot-expand "<e"))
+      ("q" (tl/hot-expand "<q"))
+      ("v" (tl/hot-expand "<v"))
+      ("n" (tl/hot-expand "<not"))
+      ("c" (tl/hot-expand "<c"))
+      ("l" (tl/hot-expand "<l"))
+      ("h" (tl/hot-expand "<h"))
+      ("a" (tl/hot-expand "<a"))
+      ("L" (tl/hot-expand "<L"))
+      ("i" (tl/hot-expand "<i"))
+      ("e" (tl/hot-expand "<s" "emacs-lisp"))
+      ("p" (tl/hot-expand "<s" "perl"))
+      ("u" (tl/hot-expand "<s" "plantuml :file CHANGE.png"))
+      ("w" (tl/hot-expand "<s" "web"))
+      ("P" (tl/hot-expand "<s" "perl" ":results output :exports both :shebang \"#!/usr/bin/env perl\"\n"))
+      ("I" (tl/hot-expand "<I"))
+      ("H" (tl/hot-expand "<H"))
+      ("A" (tl/hot-expand "<A"))
       ("<" self-insert-command "ins")
       ("o" nil "quit"))
 
     (require 'org-tempo) ; Required from org 9 onwards for old template expansion
     ;; Reset the org-template expnsion system, this is need after upgrading to org 9 for some reason
     (setq org-structure-template-alist (eval (car (get 'org-structure-template-alist 'standard-value))))
-    (defun paloryemacs/hot-expand (str &optional mod header)
+    (defun tl/hot-expand (str &optional mod header)
       "Expand org template.
 
 STR is a structure template string recognised by org like <s. MOD is a
@@ -2061,17 +2061,17 @@ prepended to the element after the #+HEADER: tag."
           (self-insert-command 1))))))
 
 ;;; finding all tags
-(defun paloryemacs/counsel-org-tags ()
+(defun tl/counsel-org-tags ()
   (interactive)
   (let* ((tag-l (org-map-entries (lambda () org-scanner-tags) t 'agenda))
          (tags (sort (delete-dups (apply 'append (delete-dups tag-l))) 'string<)))
     (ivy-read "Org Tag View: "
               tags
               :action (lambda (tag) (org-tags-view nil tag))
-              :caller 'paloryemacs/org-tags)))
+              :caller 'tl/org-tags)))
 
 ;;; indent
-(defun paloryemacs/reflash-indentation ()
+(defun tl/reflash-indentation ()
   "Fix org-indent issues, center line."
   (interactive)
   (org-indent-mode +1)
@@ -2095,24 +2095,24 @@ prepended to the element after the #+HEADER: tag."
           org-journal-time-format "%R "
           org-journal-carryover-items "TODO=\"TODO\"|TODO=\"NEXT\"|TODO=\"WAITING\"|TODO=\"HOLD\""
           org-journal-enable-agenda-integration t)
-    (paloryemacs/declare-prefix "oj" "org-journal")
-    (paloryemacs/declare-prefix "aoj" "org-journal")
-    (paloryemacs/set-leader-keys
+    (tl/declare-prefix "oj" "org-journal")
+    (tl/declare-prefix "aoj" "org-journal")
+    (tl/set-leader-keys
       "ojj" 'org-journal-new-entry
       "ojs" 'org-journal-search-forever
       "aojj" 'org-journal-new-entry
       "aojs" 'org-journal-search-forever))
   :config
   (progn
-    (paloryemacs/set-leader-keys-for-major-mode 'org-journal-mode
+    (tl/set-leader-keys-for-major-mode 'org-journal-mode
       "j" 'org-journal-new-entry
       "n" 'org-journal-open-next-entry
       "p" 'org-journal-open-previous-entry)
 
     ;; set the parent keymap, so we can use the keybinding of ", *" binded in org-mode
-    (set-keymap-parent paloryemacs-org-journal-mode-map paloryemacs-org-mode-map)
+    (set-keymap-parent tl-org-journal-mode-map tl-org-mode-map)
 
-    (paloryemacs/set-leader-keys-for-major-mode 'calendar-mode
+    (tl/set-leader-keys-for-major-mode 'calendar-mode
       "r" 'org-journal-read-entry
       "i" 'org-journal-new-date-entry
       "n" 'org-journal-next-entry
@@ -2129,24 +2129,24 @@ prepended to the element after the #+HEADER: tag."
       (bind-key "s-c" 'org-anki-capture-region)
       (with-eval-after-load 'evil
         (evil-define-key 'normal org-anki-mode-map "gr" 'org-anki-refresh-buffer))
-      (paloryemacs/set-leader-keys-for-major-mode 'org-anki-mode
-        dotpaloryemacs-major-mode-leader-key 'org-anki-send-capture-and-quit
+      (tl/set-leader-keys-for-major-mode 'org-anki-mode
+        dottl-major-mode-leader-key 'org-anki-send-capture-and-quit
         "r" 'org-anki-refresh
         "k" 'org-anki-quit
         "a" 'org-anki-add-word)
-      (set-keymap-parent paloryemacs-org-anki-mode-map paloryemacs-org-mode-map))))
+      (set-keymap-parent tl-org-anki-mode-map tl-org-mode-map))))
 
 ;;; evil surround
-(defun paloryemacs//surround-drawer ()
+(defun tl//surround-drawer ()
   (let ((dname (read-from-minibuffer "" "")))
     (cons (format ":%s:" (upcase (or dname ""))) ":END:")))
 
-(defun paloryemacs//surround-code ()
+(defun tl//surround-code ()
   (let ((dname (read-from-minibuffer "" "")))
     (cons (format "#+BEGIN_SRC %s" (or dname "")) "#+END_SRC")))
 
 ;;; evil-org-mode
-(defun paloryemacs//evil-org-mode ()
+(defun tl//evil-org-mode ()
   (evil-org-mode +1)
   (evil-normalize-keymaps))
 
@@ -2171,7 +2171,7 @@ prepended to the element after the #+HEADER: tag."
   :defer t
   :init
   (setq org-brain-path (expand-file-name "brain" org-directory))
-  (paloryemacs/set-leader-keys "aob" 'org-brain-visualize)
+  (tl/set-leader-keys "aob" 'org-brain-visualize)
   (with-eval-after-load 'evil
     (evil-set-initial-state 'org-brain-visualize-mode 'emacs))
   :config
@@ -2184,7 +2184,7 @@ prepended to the element after the #+HEADER: tag."
   (setq org-brain-title-max-length 12))
 
 ;; https://github.com/kiwanami/emacs-calfw
-(defun paloryemacs/calfw-calendar ()
+(defun tl/calfw-calendar ()
   (interactive)
   (let ((buf (get-buffer "*cfw-calendar*")))
     (if buf
@@ -2197,7 +2197,7 @@ prepended to the element after the #+HEADER: tag."
 
 (use-package calfw
   :defer t
-  :bind (("C-c A" . paloryemacs/calfw-calendar))
+  :bind (("C-c A" . tl/calfw-calendar))
   :init
   (progn
     (use-package calfw-cal
@@ -2221,7 +2221,7 @@ prepended to the element after the #+HEADER: tag."
     ;; (bind-key "g" 'cfw:refresh-calendar-buffer cfw:calendar-mode-map)
     ))
 
-(defun paloryemacs/add-created-pro-from-subtree ()
+(defun tl/add-created-pro-from-subtree ()
   (let* ((heading (org-heading-components))
          (level (nth 0 heading))
          timestr)
@@ -2240,19 +2240,19 @@ prepended to the element after the #+HEADER: tag."
 
 ;; my previous capture template put a timestamp in to the subtree, move it to
 ;; property
-(defun paloryemacs/add-created-pro-from-subtree-whole-file ()
+(defun tl/add-created-pro-from-subtree-whole-file ()
   (interactive)
   (let ((MATCH t)
         (SCOPE 'file)
         (SKIP nil)
         (spacing nil))
-    (org-map-entries 'paloryemacs/add-created-pro-from-subtree
+    (org-map-entries 'tl/add-created-pro-from-subtree
                      MATCH SCOPE SKIP)))
 
 
 ;; inserting a function definition
 ;; http://sachachua.com/blog/2018/01/org-mode-inserting-a-function-definition/
-(defun paloryemacs/org-insert-defun (function)
+(defun tl/org-insert-defun (function)
   "Inserts an Org source block with the definition for FUNCTION."
   (interactive (find-function-read))
   (let* ((buffer-point (condition-case nil (find-definition-noselect function nil) (error nil)))
@@ -2278,7 +2278,7 @@ prepended to the element after the #+HEADER: tag."
 ;; time. The obvious solution is to temporarily change
 ;; org-effective-current-time to something that prompts for a date.
 ;; TODO: replace org-todo-yesterday
-(defun paloryemacs/org-todo-with-date (&optional arg)
+(defun tl/org-todo-with-date (&optional arg)
   (interactive "P")
   (cl-letf* ((org-read-date-prefer-future nil)
              (new-time (org-read-date t t nil "when:" nil nil nil))

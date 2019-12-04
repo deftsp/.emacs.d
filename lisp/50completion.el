@@ -91,13 +91,13 @@
   :config
   (progn
     (define-abbrev-table 'c-mode-abbrev-table
-      '(("ife" "" paloryemacs/skel-c-ife 1)))
+      '(("ife" "" tl/skel-c-ife 1)))
     (define-abbrev-table 'c++-mode-abbrev-table
-      '(("ife" "" paloryemacs/skel-c-ife 1)))
+      '(("ife" "" tl/skel-c-ife 1)))
 
     (mapc
      (lambda (mode)
-       (define-abbrev-table mode '(("inc" "" paloryemacs/skel-include 1))))
+       (define-abbrev-table mode '(("inc" "" tl/skel-include 1))))
      '(c-mode-abbrev-table c++-mode-abbrev-table))))
 
 ;; input inc and space, auto prompt input filename which can be auto-complete.
@@ -122,7 +122,7 @@
             (?` _ ?'))))
   :config
   (progn
-    (define-skeleton paloryemacs/skel-include
+    (define-skeleton tl/skel-include
       "generate include<>" ""
       > "#include <"
       (let ((prompt "Include File: ")
@@ -149,28 +149,28 @@
       ">\n")
 
     ;; trigger abbrev use space, instead of RET, otherwise the cursor will stay the wrong place
-    (define-skeleton paloryemacs/skeleton-c-mode-main-func
+    (define-skeleton tl/skeleton-c-mode-main-func
       "generate int main(int argc, char * argv[]) automatic" nil
       "int\nmain(int argc, char *argv[]) \n{\n"
       > _  "\n" > "return 0;"
       "\n}")
     (define-abbrev-table 'c-mode-abbrev-table
-      '(("main" "" paloryemacs/skeleton-c-mode-main-func 1)))
+      '(("main" "" tl/skeleton-c-mode-main-func 1)))
     (define-abbrev-table 'c++-mode-abbrev-table
-      '(("main" "" paloryemacs/skeleton-c-mode-main-func 1)))
+      '(("main" "" tl/skeleton-c-mode-main-func 1)))
     ;;-------------------------------------------------------------------------------------
-    (define-skeleton paloryemacs/skel-c-for-func
+    (define-skeleton tl/skel-c-for-func
       "generate for () { } automatic" nil
       "for (" _ ") { " > \n
       \n
       "}"> \n)
     (define-abbrev-table 'c-mode-abbrev-table
-      '(("fors" "" paloryemacs/skel-c-for-func 1)))
+      '(("fors" "" tl/skel-c-for-func 1)))
     (define-abbrev-table 'c++-mode-abbrev-table
-      '(("fors" "" paloryemacs/skel-c-for-func 1)))
+      '(("fors" "" tl/skel-c-for-func 1)))
     ;;-------------------------------------------------------------------------------------
 
-    (define-skeleton paloryemacs/skel-c-ife
+    (define-skeleton tl/skel-c-ife
       "Insert a C if ... else .. block" nil
       > "if (" _ ") {" \n
       \n
@@ -178,7 +178,7 @@
       "else {" > \n
       \n
       "}" > \n)
-    (define-skeleton paloryemacs/skel-elisp-separator
+    (define-skeleton tl/skel-elisp-separator
       "Inserts a separator for elisp file."
       nil
       ";; ------------------------------------------------------------------------------------\n"
@@ -192,7 +192,7 @@
     ;;   > " **********************************************/"
     ;;   )
 
-    (define-skeleton paloryemacs/haskell-module-skeleton
+    (define-skeleton tl/haskell-module-skeleton
       "Haskell hs file header"
       "Brief description: "
       "{- \|\n"
@@ -209,11 +209,11 @@
       "module " module-name " where\n\n")))
 
 
-(add-to-list 'auto-insert-alist '("\\.hs\\'" . paloryemacs/haskell-module-skeleton))
+(add-to-list 'auto-insert-alist '("\\.hs\\'" . tl/haskell-module-skeleton))
 
 ;;; Pair Insertion
 
-(defun paloryemacs/auto-pair ()
+(defun tl/auto-pair ()
   (interactive)
   (make-local-variable 'skeleton-pair-alist)
   (local-set-key (kbd "\'") 'skeleton-pair-insert-maybe)
@@ -222,8 +222,8 @@
   (local-set-key (kbd "[") 'skeleton-pair-insert-maybe)
   (local-set-key (kbd "{") 'skeleton-pair-insert-maybe))
 
-;; (add-hook 'c-mode-hook 'paloryemacs/auto-pair)
-;; (add-hook 'c++-mode-hook 'paloryemacs/auto-pair)
+;; (add-hook 'c-mode-hook 'tl/auto-pair)
+;; (add-hook 'c++-mode-hook 'tl/auto-pair)
 
 ;; (global-set-key (kbd "<") 'skeleton-pair-insert-maybe)
 ;; (global-set-key (kbd "`") 'skeleton-pair-insert-maybe)

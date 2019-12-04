@@ -21,7 +21,7 @@
                               (height . 51)
                               (top . 22) ; (frame-parameter nil 'top)
                               (left . 0)
-                              (alpha . (,dotpaloryemacs-active-transparency . ,dotpaloryemacs-inactive-transparency)) ; first number is for the active window and the second for the inactive
+                              (alpha . (,dottl-active-transparency . ,dottl-inactive-transparency)) ; first number is for the active window and the second for the inactive
                               (mouse-color . "gray80")
                               ;; http://emacsredux.com/blog/2015/01/18/customizing-the-fringes/
                               (left-fringe . 8) ; default width (8 pixels).
@@ -166,7 +166,7 @@
 
 ;;; frame transparency
 ;; https://www.reddit.com/r/emacs/comments/5rnpsm/nice_hydra_to_set_frame_transparency/
-(defun paloryemacs/set-transparency (inc &optional inc-p)
+(defun tl/set-transparency (inc &optional inc-p)
   "Increase or decrease the selected frame transparency"
   (when (display-graphic-p)
     (let* ((alphas (frame-parameter (selected-frame) 'alpha))
@@ -185,34 +185,34 @@
   "
 ALPHA : [ %(frame-parameter nil 'alpha) ]
 "
-  ("j" (lambda () (interactive) (paloryemacs/set-transparency +1 t)) "+ more")
-  ("k" (lambda () (interactive) (paloryemacs/set-transparency -1 t)) "- less")
-  ("J" (lambda () (interactive) (paloryemacs/set-transparency +10 t)) "++ more")
-  ("K" (lambda () (interactive) (paloryemacs/set-transparency -10 t)) "-- less")
+  ("j" (lambda () (interactive) (tl/set-transparency +1 t)) "+ more")
+  ("k" (lambda () (interactive) (tl/set-transparency -1 t)) "- less")
+  ("J" (lambda () (interactive) (tl/set-transparency +10 t)) "++ more")
+  ("K" (lambda () (interactive) (tl/set-transparency -10 t)) "-- less")
   ("=" (lambda (value) (interactive "nTransparency Value 0 - 100 opaque: " )
-         (paloryemacs/set-transparency value nil)) "Set to ?" :color blue)
+         (tl/set-transparency value nil)) "Set to ?" :color blue)
   ("r" (lambda () (interactive)
-         (paloryemacs/set-transparency dotpaloryemacs-active-transparency nil)) "reset" :color blue)
+         (tl/set-transparency dottl-active-transparency nil)) "reset" :color blue)
   ("t" (lambda () (interactive)
          (let ((alpha (frame-parameter (selected-frame) 'alpha))
-               (dotfile-setting (cons dotpaloryemacs-active-transparency
-                                      dotpaloryemacs-inactive-transparency)))
+               (dotfile-setting (cons dottl-active-transparency
+                                      dottl-inactive-transparency)))
            (if (equal alpha dotfile-setting)
                (set-frame-parameter (selected-frame) 'alpha '(100 . 100))
              (set-frame-parameter (selected-frame) 'alpha dotfile-setting)))) "toggle" :color blue)
   ("" nil "cancel")
   ("q" nil "cancel"))
 
-(paloryemacs/set-leader-keys "TT" 'hydra-transparency/body)
+(tl/set-leader-keys "TT" 'hydra-transparency/body)
 
 
-(defun paloryemacs/remove-menu-item ()
+(defun tl/remove-menu-item ()
   "Remove menu item."
   ;; (define-key global-map [menu-bar edit] nil)
   ;; (define-key global-map [menu-bar tools] nil)
   (define-key global-map [menu-bar options] nil))
 
-(add-hook 'after-init-hook 'paloryemacs/remove-menu-item)
+(add-hook 'after-init-hook 'tl/remove-menu-item)
 
 (provide '50display)
 

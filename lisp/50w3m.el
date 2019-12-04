@@ -51,33 +51,33 @@
       (setq w3m-icon-directory p)
     (message "w3m-icon-directory: %s is not exist" p)))
 
-(defun paloryemacs/w3m-mode-setup ()
+(defun tl/w3m-mode-setup ()
   ;; (define-key w3m-mode-map "S" 'w3m-session-save)
-  ;; (define-key w3m-mode-map "t" 'paloryemacs/w3m-toggle-proxy)
+  ;; (define-key w3m-mode-map "t" 'tl/w3m-toggle-proxy)
   (define-key w3m-mode-map "N" 'surfkeys:next)
   (define-key w3m-mode-map "P" 'surfkeys:prev)
-  ;; (define-key w3m-mode-map "d" 'paloryemacs/w3m-download-with-wget) ; default value: w3m-dtree 'paloryemacs/w3m-download-with-curl/w3m-wget
+  ;; (define-key w3m-mode-map "d" 'tl/w3m-download-with-wget) ; default value: w3m-dtree 'tl/w3m-download-with-curl/w3m-wget
   (define-key w3m-mode-map "\M-n" 'w3m-next-buffer)
   (define-key w3m-mode-map "\M-p" 'w3m-previous-buffer)
 
-  (define-key w3m-mode-map "g" 'paloryemacs/w3m-goto-url)
+  (define-key w3m-mode-map "g" 'tl/w3m-goto-url)
   (define-key w3m-mode-map "k" 'w3m-delete-buffer)
   (define-key w3m-mode-map "u" 'w3m-scroll-up-or-next-url))
 
-(add-hook 'w3m-mode-hook 'paloryemacs/w3m-mode-setup)
+(add-hook 'w3m-mode-hook 'tl/w3m-mode-setup)
 
 ;;; w3m-toggle-proxy
-(defvar paloryemacs/w3m-proxy-p nil)
-(defun paloryemacs/w3m-toggle-proxy ()
+(defvar tl/w3m-proxy-p nil)
+(defun tl/w3m-toggle-proxy ()
   (interactive)
-  (if paloryemacs/w3m-proxy-p
+  (if tl/w3m-proxy-p
       (progn
         (setq w3m-command-arguments '("-F"))
-        (setq paloryemacs/w3m-proxy-p nil)
+        (setq tl/w3m-proxy-p nil)
         (message "w3m proxy: OFF"))
     (progn
       (setq w3m-command-arguments '("-F" "-o" "http_proxy=http://127.0.0.1:8118/"))
-      (setq paloryemacs/w3m-proxy-p t)
+      (setq tl/w3m-proxy-p t)
       (message "w3m proxy: ON"))))
 
 (setq w3m-no-proxy-domains '("google.com" "google.cn"))
@@ -87,7 +87,7 @@
 ;; download and save large files here are two solutions to do so asynchronously. One uses wget and the other uses cURL.
 ;; Neither of these solutions really helps with the problem of synchronous browsing,only eliminates synchronous
 ;; downloading. EmacsWget is probably superior than the following function.
-(defun paloryemacs/w3m-download-with-wget (loc)
+(defun tl/w3m-download-with-wget (loc)
   (interactive "DSave to: ")
   (let ((url (or (w3m-anchor) (w3m-image))))
     (if url
@@ -100,7 +100,7 @@
                                        (message "wget download done"))))
         (message "Nothing to get"))))
 
-(defun paloryemacs/w3m-download-with-curl (loc)
+(defun tl/w3m-download-with-curl (loc)
   (define-key w3m-mode-map "c"
     (lambda (dir)
       (interactive "DSave to: ")
@@ -156,8 +156,8 @@
       (w3m-session-select)
       (call-interactively 'w3m)))
 
-;; bind keychord ";w" to `paloryemacs/w3m-switch-to-buffer'
-(defun paloryemacs/w3m-switch-to-buffer (arg)
+;; bind keychord ";w" to `tl/w3m-switch-to-buffer'
+(defun tl/w3m-switch-to-buffer (arg)
   "Select the ARG'th w3m buffer."
   (interactive "p")
   (let* ((arg (if (= arg 0) 10 (1- arg)))
@@ -186,10 +186,10 @@
           (lambda ()
             (dolist (bufnum '(0 1 2 3 4 5 6 7 8 9))
               (let* ((bufstr (number-to-string bufnum))
-                     (funcname (concat "paloryemacs/w3m-switch-to-buffer-" bufstr)))
+                     (funcname (concat "tl/w3m-switch-to-buffer-" bufstr)))
                 (eval `(defun ,(intern funcname) ()
                          (interactive)
-                         (paloryemacs/w3m-switch-to-buffer ,bufnum)))
+                         (tl/w3m-switch-to-buffer ,bufnum)))
                 (define-key w3m-mode-map bufstr
                   (intern funcname))))))
 
@@ -415,7 +415,7 @@
 ;;; usefull function
 ;; Browsing the current buffer
 ;; "preview" a buffer full of HTML in w3m.
-(defun paloryemacs/w3m-browse-current-buffer ()
+(defun tl/w3m-browse-current-buffer ()
   (interactive)
   (let ((filename (concat (make-temp-file "w3m-") ".html")))
     (unwind-protect
@@ -424,7 +424,7 @@
           (w3m-find-file filename))
       (delete-file filename))))
 
-(defun paloryemacs/w3m-goto-url ()
+(defun tl/w3m-goto-url ()
   (interactive)
   (let ((w3m-current-url ""))
     (call-interactively #'w3m-goto-url)))

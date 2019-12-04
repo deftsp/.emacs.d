@@ -5,7 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;;; js2-mode
-(defun paloryemacs/js2-mode-hook ()
+(defun tl/js2-mode-hook ()
   (when (fboundp 'moz-minor-mode)
     (define-key js2-mode-map (kbd "C-c C-z") 'run-mozilla)
     (moz-minor-mode +1)))
@@ -22,16 +22,16 @@
 
     ;; Required to make imenu functions work correctly
     (add-hook 'js2-mode-hook 'js2-imenu-extras-mode)
-    (add-hook 'js2-mode-hook 'paloryemacs/js2-mode-hook))
+    (add-hook 'js2-mode-hook 'tl/js2-mode-hook))
   :config
   (progn
     ;; prefixes
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mh" "documentation")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mg" "goto")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mr" "refactor")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mz" "folding")
+    (tl/declare-prefix-for-mode 'js2-mode "mh" "documentation")
+    (tl/declare-prefix-for-mode 'js2-mode "mg" "goto")
+    (tl/declare-prefix-for-mode 'js2-mode "mr" "refactor")
+    (tl/declare-prefix-for-mode 'js2-mode "mz" "folding")
     ;; key bindings
-    (paloryemacs/set-leader-keys-for-major-mode 'js2-mode
+    (tl/set-leader-keys-for-major-mode 'js2-mode
       "w" 'js2-mode-toggle-warnings-and-errors
       "zc" 'js2-mode-hide-element
       "zo" 'js2-mode-show-element
@@ -42,7 +42,7 @@
 
 
 ;;; js-refactor
-(defun paloryemacs/js2-refactor-require ()
+(defun tl/js2-refactor-require ()
   "Lazy load js2-refactor"
   (require 'js2-refactor))
 
@@ -51,25 +51,25 @@
   :defer t
   :init
   (progn
-    (add-hook 'js2-mode-hook 'paloryemacs/js2-refactor-require)
+    (add-hook 'js2-mode-hook 'tl/js2-refactor-require)
     ;; prefixes
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mr3" "ternary")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mra" "add/args")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mrb" "barf")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mrc" "contract")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mre" "expand/extract")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mri" "inline/inject/introduct")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mrl" "localize/log")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mrr" "rename")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mrs" "split/slurp")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mrt" "toggle")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mru" "unwrap")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mrv" "var")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mrw" "wrap")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mx" "text")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "mxm" "move")
+    (tl/declare-prefix-for-mode 'js2-mode "mr3" "ternary")
+    (tl/declare-prefix-for-mode 'js2-mode "mra" "add/args")
+    (tl/declare-prefix-for-mode 'js2-mode "mrb" "barf")
+    (tl/declare-prefix-for-mode 'js2-mode "mrc" "contract")
+    (tl/declare-prefix-for-mode 'js2-mode "mre" "expand/extract")
+    (tl/declare-prefix-for-mode 'js2-mode "mri" "inline/inject/introduct")
+    (tl/declare-prefix-for-mode 'js2-mode "mrl" "localize/log")
+    (tl/declare-prefix-for-mode 'js2-mode "mrr" "rename")
+    (tl/declare-prefix-for-mode 'js2-mode "mrs" "split/slurp")
+    (tl/declare-prefix-for-mode 'js2-mode "mrt" "toggle")
+    (tl/declare-prefix-for-mode 'js2-mode "mru" "unwrap")
+    (tl/declare-prefix-for-mode 'js2-mode "mrv" "var")
+    (tl/declare-prefix-for-mode 'js2-mode "mrw" "wrap")
+    (tl/declare-prefix-for-mode 'js2-mode "mx" "text")
+    (tl/declare-prefix-for-mode 'js2-mode "mxm" "move")
     ;; key bindings
-    (paloryemacs/set-leader-keys-for-major-mode 'js2-mode
+    (tl/set-leader-keys-for-major-mode 'js2-mode
       "r3i" 'js2r-ternary-to-if
       "rag" 'js2r-add-to-globals-annotation
       "rao" 'js2r-arguments-to-object

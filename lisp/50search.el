@@ -23,10 +23,10 @@
 ;;; search at point
 ;; Many times you'll want to search for the word or expression at the point.
 ;; Here is a feature stolen from vi:
-(global-set-key (kbd "<f7>")  'paloryemacs/isearch-forward-current-symbol-keep-offset)
-(global-set-key (kbd "<f8>") 'paloryemacs/isearch-backward-current-symbol-keep-offset)
+(global-set-key (kbd "<f7>")  'tl/isearch-forward-current-symbol-keep-offset)
+(global-set-key (kbd "<f8>") 'tl/isearch-backward-current-symbol-keep-offset)
 
-(defun paloryemacs/isearch-forward-current-symbol-keep-offset ()
+(defun tl/isearch-forward-current-symbol-keep-offset ()
   (interactive)
   (let* ((curword (thing-at-point 'symbol))
          (opoint (point))
@@ -47,7 +47,7 @@
           (goto-char opoint)
           (message "Searching from top: Not found"))))))
 
-(defun paloryemacs/isearch-backward-current-symbol-keep-offset ()
+(defun tl/isearch-backward-current-symbol-keep-offset ()
   (interactive)
   (let* ((curword (thing-at-point 'symbol))
          (opoint (point))
@@ -76,9 +76,9 @@
 ;; for:
 
 ;; Always end searches at the beginning of the matching expression.
-(add-hook 'isearch-mode-end-hook 'paloryemacs/custom-goto-match-beginning)
+(add-hook 'isearch-mode-end-hook 'tl/custom-goto-match-beginning)
 
-(defun paloryemacs/custom-goto-match-beginning ()
+(defun tl/custom-goto-match-beginning ()
   "Use with isearch hook to end search at first char of match."
   (if isearch-other-end
       (when isearch-forward (goto-char isearch-other-end))))
@@ -128,7 +128,7 @@
 
 ;;; query-replace-regexp
 ;; http://emacs-journey.blogspot.tw/2012/06/re-builder-query-replace-this.html
-(defun paloryemacs/reb-query-replace-this-regxp (replace)
+(defun tl/reb-query-replace-this-regxp (replace)
   "Uses the regexp built with re-builder to query the target buffer.
 This function must be run from within the re-builder buffer, not the target
 buffer.
@@ -145,7 +145,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
     (message "Not in a re-builder buffer!")))
 
 (eval-after-load "re-builder"
-  '(define-key reb-mode-map "\C-c\M-%" 'paloryemacs/reb-query-replace-this-regxp))
+  '(define-key reb-mode-map "\C-c\M-%" 'tl/reb-query-replace-this-regxp))
 
 
 
@@ -190,7 +190,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
     (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp))
   :config
   (progn
-    (defun paloryemacs/anzu-update-mode-line (here total)
+    (defun tl/anzu-update-mode-line (here total)
       "Custom update function which does not propertize the status."
       (when anzu--state
         (let ((status (cl-case anzu--state
@@ -200,7 +200,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
                         (replace-query (format "(%d replace)" total))
                         (replace (format "(%d/%d)" here total)))))
           status)))
-    (setq anzu-mode-line-update-function 'paloryemacs/anzu-update-mode-line)
+    (setq anzu-mode-line-update-function 'tl/anzu-update-mode-line)
     (global-anzu-mode +1)
 
     (with-eval-after-load "evil"

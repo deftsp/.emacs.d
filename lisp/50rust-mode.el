@@ -21,9 +21,9 @@
   :after rust-mode
   :hook ((rust-mode . cargo-minor-mode))
   :config
-  (paloryemacs/declare-prefix-for-mode 'rust-mode "mc" "cargo")
+  (tl/declare-prefix-for-mode 'rust-mode "mc" "cargo")
 
-  (paloryemacs/set-leader-keys-for-major-mode 'rust-mode
+  (tl/set-leader-keys-for-major-mode 'rust-mode
     "c." 'cargo-process-repeat
     "ca" 'cargo-process-add
     "cC" 'cargo-process-clean

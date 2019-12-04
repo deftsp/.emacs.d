@@ -33,21 +33,21 @@
         appt-audible t ; beep to indicate appointment
         appt-display-mode-line t)
 
-  ;; designate the window function for paloryemacs/appt-send-notification
-  (defun paloryemacs/appt-display (min-to-app new-time msg)
-    (paloryemacs/terminal-notification
+  ;; designate the window function for tl/appt-send-notification
+  (defun tl/appt-display (min-to-app new-time msg)
+    (tl/terminal-notification
      (format "'Appointment in %s minutes'" min-to-app)    ;; passed to -title in terminal-notifier call
      (format "'%s'" msg)))                                ;; passed to -message in terminal-notifier call
 
   (if (eq system-type 'darwin)
-      (setq appt-disp-window-function #'paloryemacs/appt-display)
+      (setq appt-disp-window-function #'tl/appt-display)
     (setq appt-disp-window-function #'appt-disp-window))
 
   :config
   (appt-activate +1))
 
 ;; use grow to notification
-;; (defun paloryemacs/grow-appt-display (min-to-app new-time msg)
+;; (defun tl/grow-appt-display (min-to-app new-time msg)
 ;;   (growl (format "Appointment in %s minute(s)" min-to-app) msg t))
 
 (setq diary-date-forms '((year "/" month "/" day "[^/0-9]"))
@@ -156,7 +156,7 @@
 ;; 农历年份以 60 年为一个周期，按公元前 2637 年算起的话，则 1984 年处于第 78 个
 ;; 周期中的第 1 年。`diary-chinese-anniversary' 里的 year 应该填 7801。
 
-;; (defun paloryemacs/chinese-cycle-year-from-gregorian-year (lunar-month
+;; (defun tl/chinese-cycle-year-from-gregorian-year (lunar-month
 ;;                                                            lunar-day
 ;;                                                            &optional gregorian-year)
 ;;   "Change gregorian year to chinese cycle year"
@@ -167,9 +167,9 @@
 ;;          (yy (cadr cdate)))
 ;;     (+ (* 100 cycle) yy)))
 
-;; (paloryemacs/chinese-cycle-year-from-gregorian-year 12 25 1984)
+;; (tl/chinese-cycle-year-from-gregorian-year 12 25 1984)
 
-(defun paloryemacs/diary-lunar-anniversary (month day &optional year mark)
+(defun tl/diary-lunar-anniversary (month day &optional year mark)
   "Like `diary-anniversary' (which see) but accepts Chinese date and Gregorian year."
   (pcase-let* ((`(,cc ,cy ,cm ,cd) ; current chinese date
                 (calendar-chinese-from-absolute

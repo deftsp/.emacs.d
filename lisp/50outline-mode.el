@@ -141,7 +141,7 @@
 ;;     (run-hooks 'outline-view-change-hook)))
 
 ;;; outline minor mode
-(defun paloryemacs/outline-local-set-regexp (regexp &optional fun)
+(defun tl/outline-local-set-regexp (regexp &optional fun)
   "Set `outline-regexp' locally to REGEXP and `outline-level' to FUN."
   (set (make-local-variable 'outline-regexp) regexp)
   (if fun
@@ -155,7 +155,7 @@
 ;; "[:blank:]*\\(.*{\\|.*}\\)"
 ;; "[^ #\t\n]\\|[:blank:]*\\([{}]\\|[^* \t\n\^M\^L]\\|\\*+[a-zA-Z_0-9=(]\\)"
 ;; "[ \t]*\\([^* \t\n\^M\^L]\\|\\*+[a-zA-Z_0-9=(]\\)"
-(defconst paloryemacs/c-mode-common-outline-regexp (concat
+(defconst tl/c-mode-common-outline-regexp (concat
                                            "^"                ; beginning of line is required
                                            "\\(template[ \t]*<[^>]+>[ \t]*\\)?" ; there may be a "template <...>"
                                            "\\([a-zA-Z0-9_:]+[ \t]+\\)?" ; type specs; there can be no
@@ -178,35 +178,35 @@
   "outline regexp for C and C++")
 
 (add-hook 'c-mode-hook (lambda ()
-                         (paloryemacs/outline-local-set-regexp paloryemacs/c-mode-common-outline-regexp)))
+                         (tl/outline-local-set-regexp tl/c-mode-common-outline-regexp)))
 
 (add-hook 'c++-mode-hook (lambda ()
-                           (paloryemacs/outline-local-set-regexp paloryemacs/c-mode-common-outline-regexp)))
+                           (tl/outline-local-set-regexp tl/c-mode-common-outline-regexp)))
 
 
 ;;; Haskell
 ;; outline uses this regexp to find headers. I match lines with no indent and indented
 ;; some lines, such as "--" ... "class"
-(defconst paloryemacs/haskell-mode-outline-regexp
+(defconst tl/haskell-mode-outline-regexp
   "^[^\t ].*\\|^.*[\t ]+\\(where\\|of\\|do\\|in\\|if\\|then\\|else\\|let\\|module\\|import\\|deriving\\|instance\\|class\\)[\t\n ]")
 
 (eval-after-load "haskell-mode"
-  '(add-hook 'haskell-mode-hook (lambda () (paloryemacs/outline-local-set-regexp paloryemacs/haskell-mode-outline-regexp))))
+  '(add-hook 'haskell-mode-hook (lambda () (tl/outline-local-set-regexp tl/haskell-mode-outline-regexp))))
 
 ;;; Go
-(defconst paloryemacs/go-mode-outline-regexp
+(defconst tl/go-mode-outline-regexp
   "//\\.\\|//[^\r\n\f][^\r\n\f]\\|pack\\|func\\|impo\\|cons\\|var.\\|type\\|\t\t*....")
 
 (eval-after-load "go-mode"
-  '(add-hook 'go-mode-hook (lambda () (paloryemacs/outline-local-set-regexp paloryemacs/go-mode-outline-regexp))))
+  '(add-hook 'go-mode-hook (lambda () (tl/outline-local-set-regexp tl/go-mode-outline-regexp))))
 
 
 ;; Lua
-(defconst paloryemacs/lua-mode-outline-regexp
+(defconst tl/lua-mode-outline-regexp
   "function \\|local \\|-- \\|--\\[\\[ \\|if \\|while \\|repeat$\\|for ")
 
 (eval-after-load "lua-mode"
-  '(add-hook 'lua-mode-hook (lambda () (paloryemacs/outline-local-set-regexp paloryemacs/lua-mode-outline-regexp))))
+  '(add-hook 'lua-mode-hook (lambda () (tl/outline-local-set-regexp tl/lua-mode-outline-regexp))))
 
 ;; (add-hook 'php-mode-user-hook
 ;;           '(lambda ()

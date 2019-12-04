@@ -22,10 +22,10 @@
 ;; No indentation after `in' keywords.
 ;; (setq tuareg-in-indent 0)
 
-(defun paloryemacs/tuareg-mode-init ()
+(defun tl/tuareg-mode-init ()
   (auto-fill-mode 1))
 
-(add-hook 'tuareg-mode-hook (paloryemacs/tuareg-mode-init))
+(add-hook 'tuareg-mode-hook (tl/tuareg-mode-init))
 
 ;; flymake
 ;; (require 'flymake)

@@ -27,44 +27,44 @@
 ;; Space key have been used as prefix key. When org-drill presentation prompt,
 ;; press space key one time, it will expect other key sequence. Switch to
 ;; `evil-emacs-state' to prevent this and recover it when org-drill finish.
-;; (defadvice org-drill (before paloryemacs/org-drill-switch-to-evil-emacs-state activate)
+;; (defadvice org-drill (before tl/org-drill-switch-to-evil-emacs-state activate)
 ;;   "Switch to evil-emacs-state before org-drill begin."
-;;   (paloryemacs/evil-state-cycle 'insert))
+;;   (tl/evil-state-cycle 'insert))
 
-;; (defadvice org-drill (after paloryemacs/org-drill-recover-evil-state activate)
+;; (defadvice org-drill (after tl/org-drill-recover-evil-state activate)
 ;;   "Recover the evil state which saved before org-drill begin."
-;;   (paloryemacs/evil-state-cycle))
+;;   (tl/evil-state-cycle))
 
 ;; use evil-save-state to wrap it
-(defun paloryemacs/evil-org-drill ()
+(defun tl/evil-org-drill ()
   "Switch to evil insert state, execute `org-drill' then restore the state."
   (interactive)
   (evil-save-state
     (evil-change-state 'insert)
     (org-drill)))
 
-(defun paloryemacs/evil-org-drill-directory ()
+(defun tl/evil-org-drill-directory ()
   "Switch to evil insert state, execute `org-drill-directory' then restore the state."
   (interactive)
   (evil-save-state
     (evil-change-state 'insert)
     (org-drill-directory)))
 
-(defun paloryemacs/evil-org-drill-resume ()
+(defun tl/evil-org-drill-resume ()
   "Switch to evil insert state, execute `org-drill-resume' then restore the state."
   (interactive)
   (evil-save-state
     (evil-change-state 'insert)
     (org-drill-resume)))
 
-(defun paloryemacs/evil-org-drill-again ()
+(defun tl/evil-org-drill-again ()
   "Switch to evil insert state, execute `org-drill-again' then restore the state."
   (interactive)
   (evil-save-state
     (evil-change-state 'insert)
     (org-drill-again)))
 
-(defun paloryemacs/evil-org-drill-cram ()
+(defun tl/evil-org-drill-cram ()
   "Switch to evil insert state, execute `org-drill-cram' then restore the state."
   (interactive)
   (evil-save-state

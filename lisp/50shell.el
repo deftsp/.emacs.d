@@ -7,7 +7,7 @@
 (setq shell-command-switch "-cf")
 (setq shell-command-completion-mode t)  ; Allow completion for some shell-command functions.
 
-(defun paloryemacs/shell-mode-init  ()
+(defun tl/shell-mode-init  ()
   (toggle-truncate-lines 1)
   (ansi-color-for-comint-mode-on)
   (local-set-key [home] 'comint-bol)      ; move to beginning of line, after prompt
@@ -29,12 +29,12 @@
   (add-hook 'comint-output-filter-functions 'comint-watch-for-password-prompt nil t)
 
   (set-process-sentinel (get-buffer-process (current-buffer))
-                        #'paloryemacs/shell-mode-kill-buffer-on-exit))
+                        #'tl/shell-mode-kill-buffer-on-exit))
 
-(add-hook 'shell-mode-hook 'paloryemacs/shell-mode-init)
+(add-hook 'shell-mode-hook 'tl/shell-mode-init)
 
 ;; auto close shell buffer, after execute `exit' exit shell
-(defun paloryemacs/shell-mode-kill-buffer-on-exit (process state)
+(defun tl/shell-mode-kill-buffer-on-exit (process state)
   (message "%s" state)
   (if (or
        (string-match "exited abnormally with code.*" state)
@@ -42,7 +42,7 @@
       (kill-buffer (current-buffer))))
 
 ;;; ansi-term
-(defun paloryemacs/ansi-term ()
+(defun tl/ansi-term ()
   "Use bash for ansi term"
   (interactive)
   (ansi-term "/bin/zsh"))

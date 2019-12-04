@@ -39,7 +39,7 @@
   (progn
     (use-package emms-player-simple-mpv-control-functions)
     (emms-player-simple-mpv-playlist-mode-setup-keybinds)
-    (define-emms-simple-player-mpv paloryemacs-mpv '(file url streamlist playlist)
+    (define-emms-simple-player-mpv tl-mpv '(file url streamlist playlist)
       (concat "\\`\\(http[s]?\\|mms\\)://\\|"
               (apply #'emms-player-simple-regexp
                      "aac" "pls" "m3u"
@@ -47,10 +47,10 @@
       "mpv" "--no-terminal" "--force-window=no" "--audio-display=no")
 
     (emms-player-simple-mpv-add-to-converters
-     'emms-player-paloryemacs-mpv "." '(playlist)
+     'emms-player-tl-mpv "." '(playlist)
      (lambda (track-name) (format "--playlist=%s" track-name)))
 
-    (add-to-list 'emms-player-list 'emms-player-paloryemacs-mpv)
+    (add-to-list 'emms-player-list 'emms-player-tl-mpv)
 
     (dolist (map (list emms-playlist-mode-map
                        emms-stream-mode-map))
@@ -169,10 +169,10 @@
         (t                                . "%Y-%m-%d")))
 
 
-(defvar paloryemacs-emms-playlist-last-track nil)
-(defvar paloryemacs-emms-playlist-last-indent "\\")
+(defvar tl-emms-playlist-last-track nil)
+(defvar tl-emms-playlist-last-indent "\\")
 
-(defun paloryemacs/emms-track-description (track)
+(defun tl/emms-track-description (track)
   "Return a description of the current track."
   (let* ((name (emms-track-name track))
          (type (emms-track-type track))
@@ -195,7 +195,7 @@
                   (ext (file-name-extension name))
 
                   ;; last track
-                  (ltrack paloryemacs-emms-playlist-last-track)
+                  (ltrack tl-emms-playlist-last-track)
                   (lartist (or (and ltrack (emms-track-get ltrack 'info-artist))
                                empty))
                   (lalbum (or (and ltrack (emms-track-get ltrack 'info-album))
@@ -213,9 +213,9 @@
                      ;; (format "%s%s%-40s"
                      (concat
                       (if same-album-p  ; indention by album
-                          (setq paloryemacs-emms-playlist-last-indent
-                                (concat " " paloryemacs-emms-playlist-last-indent))
-                        (setq paloryemacs-emms-playlist-last-indent "\\")
+                          (setq tl-emms-playlist-last-indent
+                                (concat " " tl-emms-playlist-last-indent))
+                        (setq tl-emms-playlist-last-indent "\\")
                         "")
 
                       (if (string= tracknumber "") "" (format "%2s." tracknumber))
@@ -244,9 +244,9 @@
                    play-count
                    (concat (symbol-name type) ":" name))))
 
-      (setq paloryemacs-emms-playlist-last-track track))))
+      (setq tl-emms-playlist-last-track track))))
 
-(setq emms-track-description-function 'paloryemacs/emms-track-description)
+(setq emms-track-description-function 'tl/emms-track-description)
 
 
 ;;To get track information from MusicPD, invoke the following:
@@ -279,13 +279,13 @@
 ;;             (emms-playlist-sort-map-setup)))
 
 
-;; (defun paloryemacs/emms-playlist-mode-hook ()
+;; (defun tl/emms-playlist-mode-hook ()
 ;;   (toggle-truncate-lines 1))
-;; (add-hook 'emms-playlist-mode-hook 'paloryemacs/emms-playlist-mode-hook)
+;; (add-hook 'emms-playlist-mode-hook 'tl/emms-playlist-mode-hook)
 
 
 ;;; Misc
-;; (defun paloryemacs/playlist-mode-delete-track-at ()
+;; (defun tl/playlist-mode-delete-track-at ()
 ;;   "Delete the track at point in emms-playlist buffer"
 ;;   (interactive)
 ;;   (if (emms-playlist-ensure-playlist-buffer)
@@ -370,7 +370,7 @@
 ;; (setq emms-info-mp3info-program-name "~/bin/mp3info.sh")
 
 ;;;----------------------------------------------------------------------------------------------------
-;; (defun paloryemacs/emms-lyrics-visit-lyric ()
+;; (defun tl/emms-lyrics-visit-lyric ()
 ;;   "Visit playing track's lyric file.
 ;; If we can't find it from local disk, then search it from internet."
 ;;   (interactive)
@@ -442,8 +442,8 @@
     (emms-browser-make-filter "PENDING" (emms-browser-filter-only-dir "~/media/mp3/pending"))
     (emms-browser-set-filter (assoc "EVERYTHING" emms-browser-filters))
 
-    (add-hook 'emms-browser-filter-changed-hook 'paloryemacs/emms-browser-filter-changed)
-    (defun paloryemacs/emms-browser-filter-changed ()
+    (add-hook 'emms-browser-filter-changed-hook 'tl/emms-browser-filter-changed)
+    (defun tl/emms-browser-filter-changed ()
       (interactive)
       (if (string= emms-browser-current-filter-name "PENDING")
           (setq emms-browser-get-track-field-function 'emms-browser-get-track-field-simple)
@@ -464,7 +464,7 @@
 
 ;;; mp3 crawler from http://mp3.baidu.com
 ;; (require 'wget nil t)
-;; (defun paloryemacs/mp3-crawler (title)
+;; (defun tl/mp3-crawler (title)
 ;;   "Download mp3 with TITLE from http://mp3.baidu.com."
 ;;   (interactive "sTitle: ")
 ;;   (let* ((urlencoded-title (emms-url-quote-plus
@@ -472,9 +472,9 @@
 ;;          (url1 (concat "http://mp3.baidu.com/m?f=ms&rn=&tn=baidump3&ct=134217728&word="
 ;;                        urlencoded-title
 ;;                        "&lm=0")))
-;;     (url-retrieve url1 'paloryemacs/mp3-crawler-url1-callback (list title))))
+;;     (url-retrieve url1 'tl/mp3-crawler-url1-callback (list title))))
 
-;; (defun paloryemacs/mp3-crawler-url1-callback (status title)
+;; (defun tl/mp3-crawler-url1-callback (status title)
 ;;   (let (url2)
 ;;     (goto-char (point-min))
 ;;     (search-forward "<td class=tdn>" nil t 1)
@@ -488,10 +488,10 @@
 ;;             (setq url2 (replace-regexp-in-string
 ;;                         i (url-hexify-string i) url2)))
 ;;           '(";" " "))
-;;     (url-retrieve url2 'paloryemacs/mp3-crawler-url2-callback (list title))
+;;     (url-retrieve url2 'tl/mp3-crawler-url2-callback (list title))
 ;;     (kill-buffer (current-buffer))))
 
-;; (defun paloryemacs/mp3-crawler-url2-callback (status title)
+;; (defun tl/mp3-crawler-url2-callback (status title)
 ;;   (let (url3)
 ;;     (goto-char (point-min))
 ;;     (search-forward "<li class=\"li\" style=\"margin-right:10px;\">" nil t 1)
@@ -569,19 +569,19 @@
 
 
 ;;; evil integrate
-(defun paloryemacs/evil-emms-playlist-mode-insert-newline-above ()
+(defun tl/evil-emms-playlist-mode-insert-newline-above ()
   "Insert a newline above point."
   (interactive)
   (emms-with-inhibit-read-only-t
    (evil-insert-newline-above)))
 
-(defun paloryemacs/evil-emms-playlist-mode-insert-newline-below ()
+(defun tl/evil-emms-playlist-mode-insert-newline-below ()
   "Insert a newline below point."
   (interactive)
   (emms-with-inhibit-read-only-t
    (evil-insert-newline-below)))
 
-(defun paloryemacs/evil-emms-playlist-mode-paste-before ()
+(defun tl/evil-emms-playlist-mode-paste-before ()
   "Pastes the latest yanked playlist items before the cursor position.
 The return value is the yanked text."
   (interactive)
@@ -592,12 +592,12 @@ The return value is the yanked text."
    (evil-previous-line)
    (evil-beginning-of-line)))
 
-(defun paloryemacs/evil-emms-playlist-mode-paste-after ()
+(defun tl/evil-emms-playlist-mode-paste-after ()
   "Pastes the latest yanked playlist items behind point.
 The return value is the yanked text."
   (interactive)
   (evil-next-line)
-  (paloryemacs/evil-emms-playlist-mode-paste-before))
+  (tl/evil-emms-playlist-mode-paste-before))
 
 (general-define-key
  :states 'normal
@@ -708,10 +708,10 @@ The return value is the yanked text."
 
  "D" 'emms-playlist-mode-kill-track  ; emms-browser uses "D"
  "C" 'emms-playlist-mode-clear
- "O" 'paloryemacs/evil-emms-playlist-mode-insert-newline-above
- "o" 'paloryemacs/evil-emms-playlist-mode-insert-newline-below
- "P" 'paloryemacs/evil-emms-playlist-mode-paste-before
- "p" 'paloryemacs/evil-emms-playlist-mode-paste-after
+ "O" 'tl/evil-emms-playlist-mode-insert-newline-above
+ "o" 'tl/evil-emms-playlist-mode-insert-newline-below
+ "P" 'tl/evil-emms-playlist-mode-paste-before
+ "p" 'tl/evil-emms-playlist-mode-paste-after
 
  "u" 'emms-playlist-mode-undo
 
@@ -756,7 +756,7 @@ The return value is the yanked text."
  "D" 'emms-metaplaylist-mode-kill-buffer
  "q" 'kill-this-buffer)
 
-(paloryemacs/set-leader-keys
+(tl/set-leader-keys
   "oex"   'emms-start
   "oeh"   'emms-history-load
   "oeX"   'emms-stop
@@ -782,7 +782,7 @@ The return value is the yanked text."
   "oeM"   'emms-lyrics-toggle-display-on-modeline
   "oel"   'emms-lyrics-visit-lyric
 
-  "oed" 'paloryemacs/playlist-mode-delete-track-at
+  "oed" 'tl/playlist-mode-delete-track-at
 
   "oef" 'emms-play-file
   "oef" 'emms-play-playlist

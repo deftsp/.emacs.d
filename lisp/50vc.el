@@ -125,9 +125,9 @@
     (setq magit-completing-read-function 'ivy-completing-read) ; 'magit-ido-completing-read
     ;; (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
     (autoload 'magit-grep "magit" "Command for `grep'." t) ; which is not a autload function at 2013.06.25 yet
-    (paloryemacs/declare-prefix "gd" "diff")
-    (paloryemacs/declare-prefix "gf" "file")
-    (paloryemacs/set-leader-keys
+    (tl/declare-prefix "gd" "diff")
+    (tl/declare-prefix "gf" "file")
+    (tl/set-leader-keys
       "gb"  'git-blame
       "gc"  'magit-clone
       "gff" 'magit-find-file
@@ -176,7 +176,7 @@
       [escape] 'with-editor-cancel)
 
     (add-hook 'with-editor-mode-hook 'evil-normalize-keymaps)
-    (let ((mm-key dotpaloryemacs-major-mode-leader-key))
+    (let ((mm-key dottl-major-mode-leader-key))
       (dolist (state '(normal motion))
         (evil-define-key state with-editor-mode-map
           (concat mm-key mm-key) 'with-editor-finish

@@ -16,7 +16,7 @@
 
 ;;; coding system
 (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
-(defun paloryemacs/set-coding-system (coding)
+(defun tl/set-coding-system (coding)
   (prefer-coding-system coding) ; default coding system for subprocess I/O
   (set-clipboard-coding-system coding) ; 'ctext
   (set-selection-coding-system coding)
@@ -31,7 +31,7 @@
   (add-to-list 'process-coding-system-alist `("git" . ,coding))
   (add-to-list 'auto-coding-alist `("COMMIT_EDITMSG" . ,coding)))
 
-(paloryemacs/set-coding-system 'utf-8)
+(tl/set-coding-system 'utf-8)
 
 (set-input-method nil)
 
@@ -111,7 +111,7 @@
 (when (eq system-type 'darwin)
   (setenv "INFOPATH" (concat (expand-file-name "~/share/info:") (getenv "INFOPATH"))))
 
-(defconst paloryemacs-cache-directory (concat user-emacs-directory "cache/")
+(defconst tl-cache-directory (concat user-emacs-directory "cache/")
   "cache files directory")
 
 ;;; preset variables
@@ -122,6 +122,6 @@
 ;; see also color-theme-buffer-local from https://github.com/vic/color-theme-buffer-local
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (when (display-graphic-p)
-  (load-theme 'paloryemacs t))
+  (load-theme 'tl t))
 
 (provide '01env)

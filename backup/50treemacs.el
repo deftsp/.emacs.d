@@ -11,14 +11,14 @@
   :defer t
   :init
   (progn
-    (paloryemacs/set-leader-keys
+    (tl/set-leader-keys
       "ft"    #'treemacs
       "fT"    #'treemacs
       "fB"    #'treemacs-bookmark
       "f C-t" #'treemacs-find-file))
   :config
   (progn
-    ;; (paloryemacs/define-evil-state-face "treemacs" "MediumPurple1")
+    ;; (tl/define-evil-state-face "treemacs" "MediumPurple1")
     (use-package treemacs-evil :demand t)
     (use-package pfuture)
 
@@ -48,11 +48,11 @@
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode t)
 
-    (defun paloryemacs/treemacs-mode-init ()
+    (defun tl/treemacs-mode-init ()
       ;; (setq mode-line-format nil)
 
       )
-    (add-hook 'treemacs-mode-hook #'paloryemacs/treemacs-mode-init)
+    (add-hook 'treemacs-mode-hook #'tl/treemacs-mode-init)
 
     (pcase (cons (not (null (executable-find "git")))
                  (not (null treemacs-python-executable)))
@@ -60,9 +60,9 @@
        (treemacs-git-mode 'deferred)) (`(t . _)
        (treemacs-git-mode 'simple)))
 
-    (defun paloryemacs/treemacs-header-with-brackets (current-root)
+    (defun tl/treemacs-header-with-brackets (current-root)
       (format "[%s]" (file-name-nondirectory current-root)))
-    (setq treemacs-header-function #'paloryemacs/treemacs-header-with-brackets)
+    (setq treemacs-header-function #'tl/treemacs-header-with-brackets)
 
     ;; this boundp check guards against a new feature that not all treemacs installations will have
     ;; TODO remove this guard in a few weeks
@@ -73,7 +73,7 @@
   :defer t
   :init
   (progn
-    (defun paloryemacs/treemacs-project-toggle ()
+    (defun tl/treemacs-project-toggle ()
       "Toggle and add the current project to treemacs if not already added."
       (interactive)
       (if (eq (treemacs-current-visibility) 'visible)
@@ -86,8 +86,8 @@
           (treemacs-select-window))))
 
 
-    (paloryemacs/set-leader-keys
-      "fp" #'paloryemacs/treemacs-project-toggle
+    (tl/set-leader-keys
+      "fp" #'tl/treemacs-project-toggle
       "fP" #'treemacs-projectile)))
 
 (use-package treemacs-magit

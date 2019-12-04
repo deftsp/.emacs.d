@@ -32,13 +32,13 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 
 
 ;; from http://pedrokroger.net/2010/07/configuring-emacs-as-a-python-ide-2/
-(defun paloryemacs/python-annotate-pdb ()
+(defun tl/python-annotate-pdb ()
   "Highlight break point lines."
   (interactive)
   (highlight-lines-matching-regexp "import \\(pdb\\|ipdb\\|pudb\\|wdb\\)")
   (highlight-lines-matching-regexp "\\(pdb\\|ipdb\\|pudb\\|wdb\\).set_trace()"))
 
-(defun paloryemacs/pyenv-executable-find (command)
+(defun tl/pyenv-executable-find (command)
   "Find executable taking pyenv shims into account."
   (if (executable-find "pyenv")
       (progn
@@ -47,8 +47,8 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
             (string-trim pyenv-string))))
     (executable-find command)))
 
-(defun paloryemacs//python-setup-shell (&rest args)
-  (if (paloryemacs/pyenv-executable-find "ipython")
+(defun tl//python-setup-shell (&rest args)
+  (if (tl/pyenv-executable-find "ipython")
       (progn (setq python-shell-interpreter "ipython")
              (if (version< (replace-regexp-in-string "\n$" "" (shell-command-to-string "ipython --version")) "5")
                  (setq python-shell-interpreter-args "-i")
@@ -58,28 +58,28 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
       (setq python-shell-interpreter "python"))))
 
 
-(defun paloryemacs//python-setup-checkers (&rest args)
+(defun tl//python-setup-checkers (&rest args)
   (when (fboundp 'flycheck-set-checker-executable)
-    (let ((pylint (paloryemacs/pyenv-executable-find "pylint"))
-          (flake8 (paloryemacs/pyenv-executable-find "flake8")))
+    (let ((pylint (tl/pyenv-executable-find "pylint"))
+          (flake8 (tl/pyenv-executable-find "flake8")))
       (when pylint
         (flycheck-set-checker-executable "python-pylint" pylint))
       (when flake8
         (flycheck-set-checker-executable "python-flake8" flake8)))))
 
-(defun paloryemacs/python-setup-everything (&rest args)
-  (apply 'paloryemacs//python-setup-shell args)
-  (apply 'paloryemacs//python-setup-checkers args))
+(defun tl/python-setup-everything (&rest args)
+  (apply 'tl//python-setup-shell args)
+  (apply 'tl//python-setup-checkers args))
 
 
-(defun paloryemacs/python-toggle-breakpoint ()
+(defun tl/python-toggle-breakpoint ()
   "Add a break point, highlight it."
   (interactive)
-  (let ((trace (cond ((paloryemacs/pyenv-executable-find "wdb") "import wdb; wdb.set_trace()")
-                     ((paloryemacs/pyenv-executable-find "ipdb") "import ipdb; ipdb.set_trace()")
-                     ((paloryemacs/pyenv-executable-find "pudb") "import pudb; pudb.set_trace()")
-                     ((paloryemacs/pyenv-executable-find "ipdb3") "import ipdb; ipdb.set_trace()")
-                     ((paloryemacs/pyenv-executable-find "pudb3") "import pudb; pudb.set_trace()")
+  (let ((trace (cond ((tl/pyenv-executable-find "wdb") "import wdb; wdb.set_trace()")
+                     ((tl/pyenv-executable-find "ipdb") "import ipdb; ipdb.set_trace()")
+                     ((tl/pyenv-executable-find "pudb") "import pudb; pudb.set_trace()")
+                     ((tl/pyenv-executable-find "ipdb3") "import ipdb; ipdb.set_trace()")
+                     ((tl/pyenv-executable-find "pudb3") "import pudb; pudb.set_trace()")
                      (t "import pdb; pdb.set_trace()")))
         (line (thing-at-point 'line)))
     (if (and line (string-match trace line))
@@ -91,7 +91,7 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
         (python-indent-line)))))
 
 ;; from https://www.snip2code.com/Snippet/127022/Emacs-auto-remove-unused-import-statemen
-(defun paloryemacs/python-remove-unused-imports()
+(defun tl/python-remove-unused-imports()
   "Use Autoflake to remove unused function"
   "autoflake --remove-all-unused-imports -i unused_imports.py"
   (interactive)
@@ -103,7 +103,7 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
     (message "Error: Cannot find autoflake executable.")))
 
 
-(defun paloryemacs//pyenv-mode-set-local-version ()
+(defun tl//pyenv-mode-set-local-version ()
   "Set pyenv version from \".python-version\" by looking in parent directories."
   (interactive)
   (let ((root-path (locate-dominating-file default-directory
@@ -121,7 +121,7 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
           (message "pyenv: version `%s' is not installed (set by %s)"
                    version file-path))))))
 
-(defun paloryemacs//pyvenv-mode-set-local-virtualenv ()
+(defun tl//pyvenv-mode-set-local-virtualenv ()
   "Set pyvenv virtualenv from \".venv\" by looking in parent directories."
   (interactive)
   (let ((root-path (locate-dominating-file default-directory
@@ -144,7 +144,7 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
     (add-hook 'python-mode-hook 'anaconda-mode))
   :config
   (progn
-    (paloryemacs/set-leader-keys-for-major-mode 'python-mode
+    (tl/set-leader-keys-for-major-mode 'python-mode
       ;; use gtags
       "gd" 'anaconda-mode-find-definitions
       "ga" 'anaconda-mode-find-assignments
@@ -164,14 +164,14 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
   (progn
     (pcase python-auto-set-local-pyenv-version
       (`on-visit
-       (add-hook 'python-mode-hook 'paloryemacs//pyenv-mode-set-local-version))
+       (add-hook 'python-mode-hook 'tl//pyenv-mode-set-local-version))
       (`on-project-switch
        (add-hook 'projectile-after-switch-project-hook
-                 'paloryemacs//pyenv-mode-set-local-version)))
+                 'tl//pyenv-mode-set-local-version)))
     ;; setup shell correctly on environment switch
     (dolist (func '(pyenv-mode-set pyenv-mode-unset))
-      (advice-add func :after 'paloryemacs/python-setup-everything))
-    (paloryemacs/set-leader-keys-for-major-mode 'python-mode
+      (advice-add func :after 'tl/python-setup-everything))
+    (tl/set-leader-keys-for-major-mode 'python-mode
       "vu" 'pyenv-mode-unset
       "vs" 'pyenv-mode-set))
   :config
@@ -188,12 +188,12 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
     ;; https://github.com/pyenv/pyenv-virtualenv/issues/113
     ;; https://github.com/ipython/ipython/issues/9774
     ;; https://github.com/ipython/ipython/pull/5939
-    (defun paloryemacs//chase-virtualenv-root (p)
+    (defun tl//chase-virtualenv-root (p)
       (file-truename p))
     ;; (advice-remove 'pyenv-mode-full-path
-    ;;                #'paloryemacs//chase-virtualenv-root)
+    ;;                #'tl//chase-virtualenv-root)
     (advice-add 'pyenv-mode-full-path
-                :filter-return #'paloryemacs//chase-virtualenv-root)))
+                :filter-return #'tl//chase-virtualenv-root)))
 
 (use-package pyvenv
   :defer t
@@ -201,17 +201,17 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
   (progn
     (pcase python-auto-set-local-pyvenv-virtualenv
       (`on-visit
-       (add-hook 'python-mode-hook 'paloryemacs//pyvenv-mode-set-local-virtualenv))
+       (add-hook 'python-mode-hook 'tl//pyvenv-mode-set-local-virtualenv))
       (`on-project-switch
        (add-hook 'projectile-after-switch-project-hook
-                 'paloryemacs//pyvenv-mode-set-local-virtualenv)))
-    (paloryemacs/set-leader-keys-for-major-mode 'python-mode
+                 'tl//pyvenv-mode-set-local-virtualenv)))
+    (tl/set-leader-keys-for-major-mode 'python-mode
       "Va" 'pyvenv-activate
       "Vd" 'pyvenv-deactivate
       "Vw" 'pyvenv-workon)
     ;; setup shell correctly on environment switch
     (dolist (func '(pyvenv-activate pyvenv-deactivate pyvenv-workon))
-      (advice-add func :after 'paloryemacs/python-setup-everything))))
+      (advice-add func :after 'tl/python-setup-everything))))
 
 ;; https://github.com/tsgates/pylookup
 (use-package pylookup
@@ -220,7 +220,7 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
   (progn
     ;; (setq pylookup-search-options '("--insensitive" "0" "--desc" "0"))
     (evilified-state-evilify pylookup-mode pylookup-mode-map)
-    (paloryemacs/set-leader-keys-for-major-mode 'python-mode
+    (tl/set-leader-keys-for-major-mode 'python-mode
       "hH" 'pylookup-lookup))
   :config
   (progn
@@ -241,54 +241,54 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
     (setq python-shell-completion-native-enable nil))
   :config
   (progn
-    (paloryemacs//python-setup-shell) ; slow
-    (paloryemacs/declare-prefix-for-mode 'python-mode "mc" "execute")
-    (paloryemacs/declare-prefix-for-mode 'python-mode "md" "debug")
-    (paloryemacs/declare-prefix-for-mode 'python-mode "mh" "help")
-    (paloryemacs/declare-prefix-for-mode 'python-mode "mg" "goto")
-    (paloryemacs/declare-prefix-for-mode 'python-mode "ms" "send to REPL")
-    (paloryemacs/declare-prefix-for-mode 'python-mode "mr" "refactor")
-    (paloryemacs/declare-prefix-for-mode 'python-mode "mv" "pyenv")
-    (paloryemacs/declare-prefix-for-mode 'python-mode "mV" "pyvenv")
-    (paloryemacs/set-leader-keys-for-major-mode 'python-mode
-      "'"  'paloryemacs/python-start-or-switch-repl
-      "cc" 'paloryemacs/python-execute-file
-      "cC" 'paloryemacs/python-execute-file-focus
-      "db" 'paloryemacs/python-toggle-breakpoint
-      "ri" 'paloryemacs/python-remove-unused-imports
-      "sB" 'paloryemacs/python-shell-send-buffer-switch
+    (tl//python-setup-shell) ; slow
+    (tl/declare-prefix-for-mode 'python-mode "mc" "execute")
+    (tl/declare-prefix-for-mode 'python-mode "md" "debug")
+    (tl/declare-prefix-for-mode 'python-mode "mh" "help")
+    (tl/declare-prefix-for-mode 'python-mode "mg" "goto")
+    (tl/declare-prefix-for-mode 'python-mode "ms" "send to REPL")
+    (tl/declare-prefix-for-mode 'python-mode "mr" "refactor")
+    (tl/declare-prefix-for-mode 'python-mode "mv" "pyenv")
+    (tl/declare-prefix-for-mode 'python-mode "mV" "pyvenv")
+    (tl/set-leader-keys-for-major-mode 'python-mode
+      "'"  'tl/python-start-or-switch-repl
+      "cc" 'tl/python-execute-file
+      "cC" 'tl/python-execute-file-focus
+      "db" 'tl/python-toggle-breakpoint
+      "ri" 'tl/python-remove-unused-imports
+      "sB" 'tl/python-shell-send-buffer-switch
       "sb" 'python-shell-send-buffer
-      "sF" 'paloryemacs/python-shell-send-defun-switch
+      "sF" 'tl/python-shell-send-defun-switch
       "sf" 'python-shell-send-defun
-      "si" 'paloryemacs/python-start-or-switch-repl
-      "sR" 'paloryemacs/python-shell-send-region-switch
+      "si" 'tl/python-start-or-switch-repl
+      "sR" 'tl/python-shell-send-region-switch
       "sr" 'python-shell-send-region)
 
     (define-key inferior-python-mode-map (kbd "C-j") 'comint-next-input)
     (define-key inferior-python-mode-map (kbd "C-k") 'comint-previous-input)
-    (define-key inferior-python-mode-map (kbd "C-l") 'paloryemacs/comint-clear-buffer)
+    (define-key inferior-python-mode-map (kbd "C-l") 'tl/comint-clear-buffer)
     (define-key inferior-python-mode-map (kbd "C-r") 'comint-history-isearch-backward)))
 
 (put 'project-venv-name 'safe-local-variable 'stringp)
 
 
-(defun paloryemacs/python-imenu-create-index ()
+(defun tl/python-imenu-create-index ()
   (if (bound-and-true-p semantic-mode)
       (semantic-create-imenu-index)
     (python-imenu-create-index)))
 
-(defun paloryemacs//python-imenu-create-index-use-semantic-maybe ()
+(defun tl//python-imenu-create-index-use-semantic-maybe ()
   "Use semantic if the layer is enabled."
-  (setq imenu-create-index-function 'paloryemacs/python-imenu-create-index))
+  (setq imenu-create-index-function 'tl/python-imenu-create-index))
 
-(defun paloryemacs/python-mode-init ()
+(defun tl/python-mode-init ()
   (setq mode-name "Python"
         tab-width 4)
   (setq-local comment-inline-offset 2)
 
   (hack-local-variables)
 
-  (paloryemacs/python-annotate-pdb)
+  (tl/python-annotate-pdb)
   ;; make C-j work the same way as RET
   (local-set-key (kbd "C-j") 'newline-and-indent)
 
@@ -302,12 +302,12 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
   (smartparens-mode +1)
   (turn-on-evil-matchit-mode)
 
-  (paloryemacs//python-imenu-create-index-use-semantic-maybe)
+  (tl//python-imenu-create-index-use-semantic-maybe)
   ;; Anaconda provides more useful information but can not do it properly when
   ;; this mode is enabled since the minibuffer is cleared all the time.
   (semantic-idle-summary-mode 0)
   (semantic-mode +1)
-  (paloryemacs/lazy-load-stickyfunc-enhance)
+  (tl/lazy-load-stickyfunc-enhance)
   ;; (virtualenv-minor-mode 1)
   ;; (ropemacs-mode)
   ;; (setq imenu-create-index-function 'py--imenu-create-index-new)
@@ -317,11 +317,11 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 
 ;; python-mode set imenu-create-index-function too, make sure init function
 ;; override it by append it
-(add-hook 'python-mode-hook 'paloryemacs/python-mode-init t)
+(add-hook 'python-mode-hook 'tl/python-mode-init t)
 
 
-(add-hook 'inferior-python-mode-hook 'paloryemacs/init-inferior-python-mode)
-(defun paloryemacs/init-inferior-python-mode ()
+(add-hook 'inferior-python-mode-hook 'tl/init-inferior-python-mode)
+(defun tl/init-inferior-python-mode ()
   ;; do not echo input
   ;; http://stackoverflow.com/questions/8060609/python-interpreter-in-emacs-repeats-lines
   (setq comint-output-filter-functions
@@ -332,35 +332,35 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
   :defer t
   :init
   (progn
-    (paloryemacs/set-leader-keys-for-major-mode 'cython-mode
+    (tl/set-leader-keys-for-major-mode 'cython-mode
       "hh" 'anaconda-mode-view-doc
       "gu" 'anaconda-mode-usages
       "gg"  'anaconda-mode-goto)))
 
 
 ;; REPL
-(defun paloryemacs/python-shell-send-buffer-switch ()
+(defun tl/python-shell-send-buffer-switch ()
   "Send buffer content to shell and switch to it in insert mode."
   (interactive)
   (python-shell-send-buffer)
   (python-shell-switch-to-shell)
   (evil-insert-state))
 
-(defun paloryemacs/python-shell-send-defun-switch ()
+(defun tl/python-shell-send-defun-switch ()
   "Send function content to shell and switch to it in insert mode."
   (interactive)
   (python-shell-send-defun nil)
   (python-shell-switch-to-shell)
   (evil-insert-state))
 
-(defun paloryemacs/python-shell-send-region-switch (start end)
+(defun tl/python-shell-send-region-switch (start end)
   "Send region content to shell and switch to it in insert mode."
   (interactive "r")
   (python-shell-send-region start end)
   (python-shell-switch-to-shell)
   (evil-insert-state))
 
-(defun paloryemacs/python-start-or-switch-repl ()
+(defun tl/python-start-or-switch-repl ()
   "Start and/or switch to the REPL."
   (interactive)
   (let ((shell-process
@@ -380,14 +380,14 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
     (pop-to-buffer (process-buffer shell-process))
     (evil-insert-state)))
 
-(defun paloryemacs/python-execute-file (arg)
+(defun tl/python-execute-file (arg)
   "Execute a python script in a shell."
   (interactive "P")
   ;; set compile command to buffer-file-name
   ;; universal argument put compile buffer in comint mode
   (let ((universal-argument t)
         (compile-command (format "%s %s"
-                                 (paloryemacs/pyenv-executable-find python-shell-interpreter)
+                                 (tl/pyenv-executable-find python-shell-interpreter)
                                  (file-name-nondirectory buffer-file-name))))
     (if arg
         (call-interactively 'compile)
@@ -395,16 +395,16 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
       (with-current-buffer (get-buffer "*compilation*")
         (inferior-python-mode)))))
 
-(defun paloryemacs/python-execute-file-focus (arg)
+(defun tl/python-execute-file-focus (arg)
   "Execute a python script in a shell and switch to the shell buffer in
  `insert state'."
   (interactive "P")
-  (paloryemacs/python-execute-file arg)
+  (tl/python-execute-file arg)
   (switch-to-buffer-other-window "*compilation*")
   (end-of-buffer)
   (evil-insert-state))
 
-(defun paloryemacs/python-execute-file (arg)
+(defun tl/python-execute-file (arg)
   "Execute a python script in a shell."
   (interactive "P")
   ;; set compile command to buffer-file-name

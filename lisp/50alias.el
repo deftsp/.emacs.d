@@ -53,11 +53,11 @@
 (defalias 'ssm 'shell-script-mode)
 (defalias 'cm  'c++-mode)
 
-(defalias 'od  'paloryemacs/evil-org-drill)
-(defalias 'odd 'paloryemacs/evil-org-drill-directory)
-(defalias 'odr 'paloryemacs/evil-org-drill-resume)
-(defalias 'oda 'paloryemacs/evil-org-drill-again)
-(defalias 'odc 'paloryemacs/evil-org-drill-cram)
+(defalias 'od  'tl/evil-org-drill)
+(defalias 'odd 'tl/evil-org-drill-directory)
+(defalias 'odr 'tl/evil-org-drill-resume)
+(defalias 'oda 'tl/evil-org-drill-again)
+(defalias 'odc 'tl/evil-org-drill-cram)
 
 ;; minor modes
 (defalias 'wsm 'whitespace-mode)
@@ -71,7 +71,7 @@
 ;; (defalias '\" 'replace-straight-quotes)
 
 ;; dev
-(defalias 'grr 'paloryemacs/gambit-remote-repl)
+(defalias 'grr 'tl/gambit-remote-repl)
 (defalias 'hpc 'haskell-process-cabal)
 
 ;; bm

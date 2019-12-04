@@ -13,7 +13,7 @@
       mouse-autoselect-window nil)
 
 ;; from https://gist.github.com/3402786
-(defun paloryemacs/toggle-maximize-buffer ()
+(defun tl/toggle-maximize-buffer ()
   "Maximize buffer"
   (interactive)
   (if (and (= 1 (length (window-list)))
@@ -25,7 +25,7 @@
 
 ;; originally from magnars and modified by ffevotte for dedicated windows
 ;; support, it has quite diverged by now
-(defun paloryemacs/rotate-windows-forward (count)
+(defun tl/rotate-windows-forward (count)
   "Rotate each window forwards.
 A negative prefix argument rotates each window backwards.
 Dedicated (locked) windows are left untouched."
@@ -41,14 +41,14 @@ Dedicated (locked) windows are left untouched."
          (elt states i)
          (elt non-dedicated-windows (% (+ step i) num-windows)))))))
 
-(defun paloryemacs/rotate-windows-backward (count)
+(defun tl/rotate-windows-backward (count)
   "Rotate each window backwards.
 Dedicated (locked) windows are left untouched."
   (interactive "p")
   (spacemacs/rotate-windows-forward (* -1 count)))
 
 ;; https://tsdh.wordpress.com/2007/03/28/deleting-windows-vertically-or-horizontally/
-(defun paloryemacs/maximize-horizontally ()
+(defun tl/maximize-horizontally ()
   "Delete all windows left or right of the current window."
   (interactive)
   (require 'windmove)
@@ -76,31 +76,31 @@ Dedicated (locked) windows are left untouched."
              (symbol-value golden-ratio-mode))
     (golden-ratio)))
 
-(defun paloryemacs/split-window-vertically-and-switch ()
+(defun tl/split-window-vertically-and-switch ()
   (interactive)
   (split-window-vertically)
   (other-window 1))
 
-(defun paloryemacs/split-window-horizontally-and-switch ()
+(defun tl/split-window-horizontally-and-switch ()
   (interactive)
   (split-window-horizontally)
   (other-window 1))
 
-(defun paloryemacs/layout-triple-columns ()
+(defun tl/layout-triple-columns ()
   " Set the layout to triple columns. "
   (interactive)
   (delete-other-windows)
   (dotimes (i 2) (split-window-right))
   (balance-windows))
 
-(defun paloryemacs/layout-double-columns ()
+(defun tl/layout-double-columns ()
   " Set the layout to double columns. "
   (interactive)
   (delete-other-windows)
   (split-window-right))
 
 
-(defun paloryemacs/delete-window (&optional arg)
+(defun tl/delete-window (&optional arg)
   "Delete the current window.
 If the universal prefix argument is used then kill the buffer too."
   (interactive "P")
@@ -138,7 +138,7 @@ If the universal prefix argument is used then kill the buffer too."
 ;; set-window-dedicated-p
 ;; When a window is dedicated to its buffer, `display-buffer' will refrain
 ;; from displaying another buffer in it.
-(defun paloryemacs/toggle-current-window-dedication ()
+(defun tl/toggle-current-window-dedication ()
   (interactive)
   (let* ((window (selected-window))
          (dedicated (window-dedicated-p window)))
@@ -147,7 +147,7 @@ If the universal prefix argument is used then kill the buffer too."
              (if dedicated "no longer " "")
              (buffer-name))))
 
-(define-key ctl-x-4-map (kbd "C-d") 'paloryemacs/toggle-current-window-dedication)
+(define-key ctl-x-4-map (kbd "C-d") 'tl/toggle-current-window-dedication)
 
 ;;; window extension
 ;; http://www.emacswiki.org/emacs/window-extension.el
@@ -169,8 +169,8 @@ If the universal prefix argument is used then kill the buffer too."
 
 ;;; switch between horizontal and vertical layout of two windows
 ;; base on http://whattheemacsd.com/buffer-defuns.el-03.html
-(global-set-key (kbd "C-x !") 'paloryemacs/toggle-window-split)
-(defun paloryemacs/toggle-window-split ()
+(global-set-key (kbd "C-x !") 'tl/toggle-window-split)
+(defun tl/toggle-window-split ()
   (interactive)
   (cond ((not (= (count-windows) 2))
          (message "You need exactly 2 windows to do this."))
@@ -197,22 +197,22 @@ If the universal prefix argument is used then kill the buffer too."
              (select-window first-win)
              (if this-win-2nd (other-window 1)))))))
 
-(defun paloryemacs/vsplit-last-buffer (prefix)
+(defun tl/vsplit-last-buffer (prefix)
   "Split the window vertically and display the previous buffer."
   (interactive "p")
   (split-window-vertically)
   (other-window 1 nil)
   (when (= prefix 1) (switch-to-next-buffer)))
 
-(defun paloryemacs/hsplit-last-buffer (prefix)
+(defun tl/hsplit-last-buffer (prefix)
   "Split the window horizontally and display the previous buffer."
   (interactive "p")
   (split-window-horizontally)
   (other-window 1 nil)
   (when (= prefix 1) (switch-to-next-buffer)))
 
-;; (global-set-key (kbd "C-x 2") 'paloryemacs/vsplit-last-buffer)
-;; (global-set-key (kbd "C-x 3") 'paloryemacs/hsplit-last-buffer)
+;; (global-set-key (kbd "C-x 2") 'tl/vsplit-last-buffer)
+;; (global-set-key (kbd "C-x 3") 'tl/hsplit-last-buffer)
 
 ;; https://github.com/deb0ch/emacs-winum
 (use-package winum
@@ -221,7 +221,7 @@ If the universal prefix argument is used then kill the buffer too."
     (setq winum-auto-assign-0-to-minibuffer nil
           winum-auto-setup-mode-line nil
           winum-ignored-buffers '(" *which-key*"))
-    (paloryemacs/set-leader-keys
+    (tl/set-leader-keys
       "`" 'winum-select-window-by-number
       "²" 'winum-select-window-by-number
       ;; "0" 'treemacs-select-window
@@ -303,10 +303,10 @@ If the universal prefix argument is used then kill the buffer too."
 ;;             (add-to-list 'special-display-buffer-names buffer-name))
 ;;         (list "*Ido Completions*" "*Completions*"))
 
-;; (setq special-display-function 'paloryemacs/display-special-buffer-popup)
+;; (setq special-display-function 'tl/display-special-buffer-popup)
 ;; (add-to-list 'special-display-regexps ".*")  ; match any window
 
-;; (defun paloryemacs/display-special-buffer-popup (buffer &optional args)
+;; (defun tl/display-special-buffer-popup (buffer &optional args)
 ;;   "put the special buffers in the bottom right"
 ;;   ;; The top left corner of the frame is considered to be row 0,
 ;;   ;; column 0.
@@ -330,7 +330,7 @@ If the universal prefix argument is used then kill the buffer too."
 ;; also quits the unfinished command immediately.
 
 ;;; ",r" key-chord
-(defun paloryemacs/recursive-edit-save-window-config ()
+(defun tl/recursive-edit-save-window-config ()
   (interactive)
   (save-window-excursion
     (save-excursion
@@ -342,13 +342,13 @@ If the universal prefix argument is used then kill the buffer too."
 ;; wrote this macro:
 
 ;; inspired by Erik Naggum's `recursive-edit-with-single-window'
-(defmacro paloryemacs/recursive-edit-preserving-window-config (body)
+(defmacro tl/recursive-edit-preserving-window-config (body)
   "*Return a command that enters a recursive edit after executing BODY.
  Upon exiting the recursive edit (with \\[exit-recursive-edit] (exit)
  or \\[abort-recursive-edit] (abort)), restore window configuration
  in current frame."
   `(lambda ()
-     "See the documentation for `paloryemacs/recursive-edit-preserving-window-config'."
+     "See the documentation for `tl/recursive-edit-preserving-window-config'."
      (interactive)
      (save-window-excursion
        ,body
@@ -356,12 +356,12 @@ If the universal prefix argument is used then kill the buffer too."
 
 ;; Use it like this:
 
-(global-set-key (kbd "C-c 0") (paloryemacs/recursive-edit-preserving-window-config (delete-window)))
-(global-set-key (kbd "C-c 2") (paloryemacs/recursive-edit-preserving-window-config
+(global-set-key (kbd "C-c 0") (tl/recursive-edit-preserving-window-config (delete-window)))
+(global-set-key (kbd "C-c 2") (tl/recursive-edit-preserving-window-config
                                (split-window-vertically 20)))
-(global-set-key (kbd "C-c 3") (paloryemacs/recursive-edit-preserving-window-config
+(global-set-key (kbd "C-c 3") (tl/recursive-edit-preserving-window-config
                                (split-window-horizontally -52)))
-(global-set-key (kbd "C-c 1") (paloryemacs/recursive-edit-preserving-window-config
+(global-set-key (kbd "C-c 1") (tl/recursive-edit-preserving-window-config
                                (if (one-window-p 'ignore-minibuffer)
                                    (message "Current window is the only window in its frame")
                                  (delete-other-windows))))
@@ -390,23 +390,23 @@ If the universal prefix argument is used then kill the buffer too."
           aw-dispatch-when-more-than 1)
     (setq aw-keys '(?s ?d ?f ?g ?h ?j ?k ?l))
 
-    (paloryemacs/set-leader-keys "0" 'dired-sidebar-jump-to-sidebar))
+    (tl/set-leader-keys "0" 'dired-sidebar-jump-to-sidebar))
   :config
   (progn
-    (defvar paloryemacs/aw-mode-line-format " ⧉ %s") ; "♯%s"
+    (defvar tl/aw-mode-line-format " ⧉ %s") ; "♯%s"
 
     (add-to-list 'aw-ignored-buffers 'dired-sidebar-mode)
     (add-to-list 'aw-ignored-buffers 'org-agenda-mode)
 
-    (add-to-list 'aw-dispatch-alist '(?a paloryemacs/jump-to-org-agenda))
+    (add-to-list 'aw-dispatch-alist '(?a tl/jump-to-org-agenda))
     (add-to-list 'aw-dispatch-alist '(?t dired-sidebar-jump-to-sidebar))
 
     ;; (add-to-list 'throw-down-exit-func '(?\e keyboard-quit "Quit"))
 
-    (defun paloryemacs//exit-when-escape (char)
+    (defun tl//exit-when-escape (char)
       (when (= char ?\e)
         (throw 'done 'exit)))
-    (advice-add 'aw-dispatch-default :before 'paloryemacs//exit-when-escape)
+    (advice-add 'aw-dispatch-default :before 'tl//exit-when-escape)
 
     ;; TODO: set value for ignored buffer like agenda buffer and dired-sidebar
     (defadvice aw-update (around format-ace-window-path activate)
@@ -417,7 +417,7 @@ If the universal prefix argument is used then kill the buffer too."
          (set-window-parameter
           leaf 'ace-window-path
           (propertize
-           (format paloryemacs/aw-mode-line-format
+           (format tl/aw-mode-line-format
                    (upcase (apply #'string (reverse path))))
            'face 'aw-mode-line-face)))))
     ;; (ad-deactivate 'aw-update)
@@ -463,15 +463,15 @@ If the universal prefix argument is used then kill the buffer too."
 ;;      (add-to-list 'golden-ratio-exclude-modes "w3m-select-buffer-mode")
 ;;      (add-to-list 'golden-ratio-exclude-modes "w3m-mode")
 ;;      (add-to-list 'golden-ratio-exclude-modes "org-mode")
-;;      (add-to-list 'golden-ratio-inhibit-functions 'paloryemacs/helm-alive-p)
+;;      (add-to-list 'golden-ratio-inhibit-functions 'tl/helm-alive-p)
 ;;      (require 'ediff nil t)
 ;;      (if (boundp 'ediff-this-buffer-ediff-sessions)
-;;          (add-to-list 'golden-ratio-inhibit-functions 'paloryemacs/ediff-comparison-buffer-p))))
+;;          (add-to-list 'golden-ratio-inhibit-functions 'tl/ediff-comparison-buffer-p))))
 
-(defun paloryemacs/ediff-comparison-buffer-p ()
+(defun tl/ediff-comparison-buffer-p ()
   ediff-this-buffer-ediff-sessions)
 
-(defun paloryemacs/helm-alive-p ()
+(defun tl/helm-alive-p ()
   (if (boundp 'helm-alive-p)
       (symbol-value 'helm-alive-p)))
 
@@ -498,12 +498,12 @@ If the universal prefix argument is used then kill the buffer too."
                     #'ivy-purpose-switch-buffer-with-some-purpose)))
 
 ;; https://github.com/bmag/emacs-purpose
-(defvar dotpaloryemacs-switch-to-buffer-prefers-purpose nil)
+(defvar dottl-switch-to-buffer-prefers-purpose nil)
 (use-package window-purpose
   ;; :diminish window-purpose
   :init
   (progn
-    (paloryemacs/set-leader-keys
+    (tl/set-leader-keys
       "wpp" #'purpose-x-popwin-close-windows
 
       "rb" 'purpose-switch-buffer-with-purpose
@@ -525,10 +525,10 @@ If the universal prefix argument is used then kill the buffer too."
     (purpose-compile-user-configuration)
 
     ;; change `switch-to-buffer' display preferences according to
-    ;; `dotpaloryemacs-switch-to-buffer-prefers-purpose'. This affects actions
-    ;; like `paloryemacs/alternate-buffer', and opening buffers from Dired
+    ;; `dottl-switch-to-buffer-prefers-purpose'. This affects actions
+    ;; like `tl/alternate-buffer', and opening buffers from Dired
     (setcdr (assq 'switch-to-buffer purpose-action-sequences)
-            (if dotpaloryemacs-switch-to-buffer-prefers-purpose
+            (if dottl-switch-to-buffer-prefers-purpose
                 '(purpose-display-reuse-window-buffer
                   purpose-display-reuse-window-purpose
                   purpose-display-maybe-same-window
@@ -571,7 +571,7 @@ If the universal prefix argument is used then kill the buffer too."
   (progn
     (dimmer-mode +1)))
 
-(defun paloryemacs/switch-to-minibuffer-window ()
+(defun tl/switch-to-minibuffer-window ()
   "switch to minibuffer window (if active)"
   (interactive)
   (when (active-minibuffer-window)
@@ -579,7 +579,7 @@ If the universal prefix argument is used then kill the buffer too."
 
 
 ;;; toggle full window
-(defun paloryemacs/toggle-full-window()
+(defun tl/toggle-full-window()
   "Toggle the full view of selected window"
   (interactive)
   ;; @see http://www.gnu.org/software/emacs/manual/html_node/elisp/Splitting-Windows.html
@@ -694,7 +694,7 @@ You can use arrow-keys or HJKL.
      ;; ("b" ido-switch-buffer "buf")
      ("b" ivy-switch-buffer "buf")
      ("m" bookmark-jump "bmk")
-     ("f" paloryemacs/toggle-full-window "full-window")
+     ("f" tl/toggle-full-window "full-window")
      ("F" toggle-frame-maximized "frame max")
      ("M-f" toggle-frame-fullscreen "frame fullscreen")
      ("<escape>" nil "cancel")
@@ -728,7 +728,7 @@ current eyebrowse slot: %(eyebrowse--get 'current-slot)
     ("c" #'eyebrowse-switch-to-window-config-7)
     ("v" #'eyebrowse-switch-to-window-config-8)
     ("b" #'eyebrowse-switch-to-window-config-9))
-  (paloryemacs/set-leader-keys "l" 'help/hydra-left-side/eyebrowse/body)
+  (tl/set-leader-keys "l" 'help/hydra-left-side/eyebrowse/body)
   (eyebrowse-mode +1))
 
 

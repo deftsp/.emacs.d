@@ -23,12 +23,12 @@
     (setq flycheck-javascript-eslint-executable "eslint_d")
 
     ;; key bindings
-    (paloryemacs/set-leader-keys
+    (tl/set-leader-keys
       "eb" 'flycheck-buffer
       "ec" 'flycheck-clear
       "eh" 'flycheck-describe-checker
-      "el" 'paloryemacs/toggle-flycheck-error-list
-      "eL" 'paloryemacs/goto-flycheck-error-list
+      "el" 'tl/toggle-flycheck-error-list
+      "eL" 'tl/goto-flycheck-error-list
       "es" 'flycheck-select-checker
       "eS" 'flycheck-set-checker-executable
       "ev" 'flycheck-verify-setup
@@ -42,7 +42,7 @@
     "k" 'flycheck-error-list-previous-error))
 
 ;; toggle flycheck window
-(defun paloryemacs/toggle-flycheck-error-list ()
+(defun tl/toggle-flycheck-error-list ()
   "Toggle flycheck's error list window.
 If the error list is visible, hide it.  Otherwise, show it."
   (interactive)
@@ -50,7 +50,7 @@ If the error list is visible, hide it.  Otherwise, show it."
       (quit-window nil window)
     (flycheck-list-errors)))
 
-(defun paloryemacs/goto-flycheck-error-list ()
+(defun tl/goto-flycheck-error-list ()
   "Open and go to the error list buffer."
   (interactive)
   (unless (get-buffer-window (get-buffer flycheck-error-list-buffer))

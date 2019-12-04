@@ -47,7 +47,7 @@
 
 
 ;;; generate tags
-(defun paloryemacs/create-tags ()
+(defun tl/create-tags ()
   "create etag file"
   (interactive)
   (let ((suffix (read-from-minibuffer "suffix: "))
@@ -58,7 +58,7 @@
        (buffer-name)))))
 
 
-(defun paloryemacs/create-haskell-tags (sd dd name)
+(defun tl/create-haskell-tags (sd dd name)
   (interactive (list (read-directory-name "source directory: " nil "" t)
                      (read-directory-name "destination directory: " nil "" t)
                      (read-from-minibuffer "Tag name(TAGS): " "")))
@@ -71,7 +71,7 @@
 
 ;;; counsel-gtags: GNU Global with ivy completion
 ;; https://github.com/syohex/emacs-counsel-gtags
-(defun paloryemacs/counsel-gtags-find-reference-quiet ()
+(defun tl/counsel-gtags-find-reference-quiet ()
   "Find reference of thing at current point or in the database."
   "Search for TAGNAME reference in tag database.
 Prompt for TAGNAME if not given."
@@ -87,23 +87,23 @@ Prompt for TAGNAME if not given."
   :init (progn
           (setq counsel-gtags-ignore-case t
                 counse1-gtags-auto-update t)
-          (defun paloryemacs//turn-counsel-gtags-mode-on ()
+          (defun tl//turn-counsel-gtags-mode-on ()
             (counsel-gtags-mode +1))
           (add-hook 'c++-mode-hook 'counsel-gtags-mode)
-          (add-hook 'c-mode-common-hook 'paloryemacs//turn-counsel-gtags-mode-on))
+          (add-hook 'c-mode-common-hook 'tl//turn-counsel-gtags-mode-on))
   :config (progn
             ;; (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
             ;; (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
             ;; (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
             ;; (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
             (dolist (mode '(c-mode c++-mode makefile-bsdmake-mode dired-mode))
-              (paloryemacs/set-leader-keys-for-major-mode mode
+              (tl/set-leader-keys-for-major-mode mode
                 "gC" 'counsel-gtags-create-tags
                 "gd" 'counsel-gtags-dwim
                 "gD" 'counsel-gtags-find-definition
                 "gf" 'counsel-gtags-find-file
                 "gu" 'counsel-gtags-update-tags
-                "gr" 'paloryemacs/counsel-gtags-find-reference-quiet
+                "gr" 'tl/counsel-gtags-find-reference-quiet
                 "gn" 'counsel-gtags-go-forward
                 "gp" 'counsel-gtags-go-backward
                 "gy" 'counsel-gtags-find-symbol))))
@@ -118,7 +118,7 @@ Prompt for TAGNAME if not given."
 ;;     (setq ggtags-mode-line-project-name nil)
 ;;     (setq ggtags-enable-navigation-keys nil)
 
-;;     (defun paloryemacs/ggtags-mode-enable ()
+;;     (defun tl/ggtags-mode-enable ()
 ;;       "Enable ggtags and eldoc mode.
 
 ;; For eldoc, ggtags advises the eldoc function at the lowest priority
@@ -127,31 +127,31 @@ Prompt for TAGNAME if not given."
 ;;       (eldoc-mode +1))
 
 ;;     (with-eval-after-load 'lua-mode
-;;       (add-hook 'lua-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;       (add-hook 'lua-mode-local-vars-hook #'tl/ggtags-mode-enable))
 ;;     (with-eval-after-load 'sh-script
-;;       (add-hook 'sh-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;       (add-hook 'sh-mode-local-vars-hook #'tl/ggtags-mode-enable))
 ;;     (with-eval-after-load 'js2-mode
-;;       (add-hook 'js2-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;       (add-hook 'js2-mode-local-vars-hook #'tl/ggtags-mode-enable))
 ;;     (with-eval-after-load 'scheme
-;;       (add-hook 'scheme-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;       (add-hook 'scheme-mode-local-vars-hook #'tl/ggtags-mode-enable))
 ;;     (with-eval-after-load 'go-mode
-;;       (add-hook 'go-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;       (add-hook 'go-mode-local-vars-hook #'tl/ggtags-mode-enable))
 ;;     (with-eval-after-load 'racket-mode
-;;       (add-hook 'racket-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;       (add-hook 'racket-mode-local-vars-hook #'tl/ggtags-mode-enable))
 ;;     (with-eval-after-load 'clojure-mode
-;;       (add-hook 'clojure-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;       (add-hook 'clojure-mode-local-vars-hook #'tl/ggtags-mode-enable))
 ;;     (with-eval-after-load 'cc-mode
-;;       (add-hook 'c++-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;       (add-hook 'c++-mode-local-vars-hook #'tl/ggtags-mode-enable))
 ;;     (with-eval-after-load 'cc-mode
-;;       (add-hook 'c-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;       (add-hook 'c-mode-local-vars-hook #'tl/ggtags-mode-enable))
 ;;     (with-eval-after-load 'elisp-mode
-;;       (add-hook 'emacs-lisp-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;       (add-hook 'emacs-lisp-mode-local-vars-hook #'tl/ggtags-mode-enable))
 ;;     (with-eval-after-load 'python
-;;       (add-hook 'python-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;       (add-hook 'python-mode-local-vars-hook #'tl/ggtags-mode-enable))
 ;;     (with-eval-after-load 'shell
-;;       (add-hook 'shell-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable))
+;;       (add-hook 'shell-mode-local-vars-hook #'tl/ggtags-mode-enable))
 ;;     (with-eval-after-load 'haskell-mode
-;;       (add-hook 'haskell-mode-local-vars-hook #'paloryemacs/ggtags-mode-enable)))
+;;       (add-hook 'haskell-mode-local-vars-hook #'tl/ggtags-mode-enable)))
 ;;   :config
 ;;   (define-key ggtags-mode-map [menu-bar ggtags] nil))
 
@@ -188,10 +188,10 @@ Prompt for TAGNAME if not given."
   :commands (counsel-etags-find-tag-at-point)
   :init
   (progn
-    ;; (defun paloryemacs/counsel-etags-add-update-tags-hook ()
+    ;; (defun tl/counsel-etags-add-update-tags-hook ()
     ;;   ;; after-save-hook is a local variable
     ;;   (add-hook 'after-save-hook 'counsel-etags-virtual-update-tags 'append 'local))
-    ;; (add-hook 'prog-mode-hook 'paloryemacs/counsel-etags-add-update-tags-hook)
+    ;; (add-hook 'prog-mode-hook 'tl/counsel-etags-add-update-tags-hook)
     ;; (setq counsel-etags-update-tags-backend
     ;;       (lambda () (shell-command "find . -type f -iname \"*.[ch]\" | etags -")))
     ;; 300 seconds, OPTIONAL

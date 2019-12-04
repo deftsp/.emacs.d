@@ -15,18 +15,18 @@
 
 ;; (setq ediff-diff-options "-w") ; ignore white space
 
-(defun paloryemacs/ediff-mode-init ()
+(defun tl/ediff-mode-init ()
 
   )
 
-(add-hook 'ediff-mode-hook 'paloryemacs/ediff-mode-init)
+(add-hook 'ediff-mode-hook 'tl/ediff-mode-init)
 
 ;; Restoring the windows after Ediff quits
-(defun paloryemacs/winner-undo-maybe ()
+(defun tl/winner-undo-maybe ()
   (when winner-mode
     (winner-undo)))
 
-(add-hook 'ediff-after-quit-hook-internal 'paloryemacs/winner-undo-maybe)
+(add-hook 'ediff-after-quit-hook-internal 'tl/winner-undo-maybe)
 
 
 (provide '50ediff)

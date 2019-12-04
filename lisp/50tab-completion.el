@@ -12,7 +12,7 @@
 
 ;; --------------------------------------------------------------------------------
 ;; tab completion
-;; (defun paloryemacs/indent-or-complete ()
+;; (defun tl/indent-or-complete ()
 ;;   "Complete if point is at end of a word, otherwise indent line."
 ;;   (interactive)
 ;;   (if (looking-at "\\>")
@@ -21,7 +21,7 @@
 
 ;; (add-hook 'c-mode-common-hook
 ;;           (function (lambda ()
-;;             (local-set-key (kbd "<tab>") 'paloryemacs/indent-or-complete))))
+;;             (local-set-key (kbd "<tab>") 'tl/indent-or-complete))))
 
 
 ;; "To hit tab to auto-complete (like bash does) put this in

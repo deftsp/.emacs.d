@@ -35,22 +35,22 @@
 ;; Michael Hoffman at the comment of
 ;; http://endlessparentheses.com/understanding-letf-and-how-it-replaces-flet.html
 
-(defalias 'paloryemacs/message-orig (symbol-function 'message))
+(defalias 'tl/message-orig (symbol-function 'message))
 
 ;; Unfortunately this isn't re-entrant, so if you stack uses of
 ;; with-suppress-message I think only the innermost regexes will still be
 ;; suppressed. The this-fn of noflet would be nice but I use this very early in
 ;; my emacs startup so I wouldn't necessarily have access to it.
-(defmacro paloryemacs/with-suppress-message (regex &rest body)
+(defmacro tl/with-suppress-message (regex &rest body)
   "Suppress any `message' starting with REGEX when executing BODY."
   (declare (indent 1))
   `(cl-letf (((symbol-function 'message)
               (lambda (format-string &rest args)
                 (unless (string-match-p ,regex format-string)
-                  (apply 'paloryemacs/message-orig format-string args)))))
+                  (apply 'tl/message-orig format-string args)))))
      ,@body))
 
-(defmacro paloryemacs-with-timer (title &rest forms)
+(defmacro tl-with-timer (title &rest forms)
   "Run the given FORMS, counting the elapsed time.
 A message including the given TITLE and the corresponding elapsed
 time is displayed."
@@ -64,22 +64,22 @@ time is displayed."
                 (float-time (time-subtract (current-time) ,nowvar))))
            (message "%s... done (%.3fs)" ,title elapsed))))))
 
-(defun paloryemacs-buffer/warning (msg &rest args)
+(defun tl-buffer/warning (msg &rest args)
   "Display MSG as a warning message but in buffer `*Messages*'.
 The message is always displayed. "
-  (message "(Paloryemacs) Warning: %s" (apply 'format msg args)))
+  (message "(TL) Warning: %s" (apply 'format msg args)))
 
 
 ;; http://article.gmane.org/gmane.emacs.orgmode/66151
-(defvar paloryemacs/terminal-notifier-bin "terminal-notifier")
+(defvar tl/terminal-notifier-bin "terminal-notifier")
 
 ;; Small terminal icon in title when using -appIcon option. It's the intended
 ;; behavior. https://github.com/julienXX/terminal-notifier/issues/131
-(defun paloryemacs/terminal-notification (title msg)
-  (if (executable-find paloryemacs/terminal-notifier-bin)
+(defun tl/terminal-notification (title msg)
+  (if (executable-find tl/terminal-notifier-bin)
       (let* ((icon-path "/Applications/Emacs.app/Contents/Resources/Emacs.icns")
              (cmd (format "%s -message \"%s\" -title \"%s\" -active org.gnu.Emacs"
-                          paloryemacs/terminal-notifier-bin
+                          tl/terminal-notifier-bin
                           msg
                           title))
              (cmd-with-icon
@@ -87,10 +87,10 @@ The message is always displayed. "
                   (concat cmd " -appIcon " "\"" icon-path "\"")
                 cmd)))
         (shell-command cmd-with-icon))
-    (error (format "unable to find: %s" paloryemacs/terminal-notifier-bin))))
+    (error (format "unable to find: %s" tl/terminal-notifier-bin))))
 
 ;; http://oremacs.com/2015/03/05/testing-init-sanity/
-(defun paloryemacs/test-emacs ()
+(defun tl/test-emacs ()
   "Testing your .emacs sanity.
 If there were no start up errors, it will echo \"All is well\",
 otherwise, it will pop to a *startup error* buffer with the error description."
@@ -123,25 +123,25 @@ otherwise, it will pop to a *startup error* buffer with the error description."
   `(lambda () (interactive) ,@forms))
 
 (if (fboundp 'with-eval-after-load)
-    (defmacro paloryemacs/after (feature &rest body)
+    (defmacro tl/after (feature &rest body)
       "After FEATURE is loaded, evaluate BODY."
       (declare (indent defun))
       `(with-eval-after-load ,feature ,@body))
-  (defmacro paloryemacs/after (feature &rest body)
+  (defmacro tl/after (feature &rest body)
     "After FEATURE is loaded, evaluate BODY."
     (declare (indent defun))
     `(eval-after-load ,feature
        '(progn ,@body))))
 
 
-(defun paloryemacs/future-time-string (delay)
+(defun tl/future-time-string (delay)
   (format-time-string "%H:%M:%S"
                       (seconds-to-time (+ (time-to-seconds (current-time))
                                           delay))))
 
 
 
-(defun paloryemacs/apostrophe-key-chord ()
+(defun tl/apostrophe-key-chord ()
   (interactive)
   (let* ((regionp (region-active-p))
          (end (if regionp
@@ -154,7 +154,7 @@ otherwise, it will pop to a *startup error* buffer with the error description."
           (goto-char (+ end 1)))
       (insert "'"))))
 
-(defun paloryemacs/underline-with-char (char)
+(defun tl/underline-with-char (char)
   (interactive (list (read-from-minibuffer "Char: ")))
   (when (= 0 (length char))
     (error "Need a character"))
@@ -606,7 +606,7 @@ If FORCE is non-nil, overwrite any existing line-height properties."
         (goto-char from)
         (eval convertor)))))
 
-(defvar paloryemacs/dircolors-string
+(defvar tl/dircolors-string
   (let ((dircolors-bin
          (or (executable-find "dircolors") (executable-find "gdircolors"))))
     (when dircolors-bin
@@ -618,7 +618,7 @@ If FORCE is non-nil, overwrite any existing line-height properties."
                  "'"))))))
 
 ;; from http://www.emacswiki.org/emacs/WordCount
-(defun paloryemacs/count-words-analysis (start end)
+(defun tl/count-words-analysis (start end)
   "Count how many times each word is used in the region.
  Punctuation is ignored."
   (interactive "r")
@@ -658,7 +658,7 @@ Compare them on count first,and in case of tie sort them alphabetically."
         (message "No words.")))
     words))
 
-(defun paloryemacs/uniquify-lines ()
+(defun tl/uniquify-lines ()
   "Remove duplicate adjacent lines in a region or the current buffer"
   (interactive)
   (save-excursion
@@ -670,7 +670,7 @@ Compare them on count first,and in case of tie sort them alphabetically."
         (while (re-search-forward "^\\(.*\n\\)\\1+" end t)
           (replace-match "\\1"))))))
 
-(defun paloryemacs/sort-lines (&optional reverse)
+(defun tl/sort-lines (&optional reverse)
   "Sort lines in a region or the current buffer.
 A non-nil argument sorts in reverse order."
   (interactive "P")
@@ -679,12 +679,12 @@ A non-nil argument sorts in reverse order."
          (end (if region-active (region-end) (point-max))))
     (sort-lines reverse beg end)))
 
-(defun paloryemacs/sort-lines-reverse ()
+(defun tl/sort-lines-reverse ()
   "Sort lines in reverse order, in a region or the current buffer."
   (interactive)
-  (paloryemacs/sort-lines -1))
+  (tl/sort-lines -1))
 
-(defun paloryemacs/sort-lines-by-column (&optional reverse)
+(defun tl/sort-lines-by-column (&optional reverse)
   "Sort lines by the selected column,
 using a visual block/rectangle selection.
 A non-nil argument sorts in REVERSE order."
@@ -700,32 +700,32 @@ A non-nil argument sorts in REVERSE order."
       (sort-columns reverse (region-beginning) (region-end))
     (error "Sorting by column requires a block/rect selection on 2 or more lines.")))
 
-(defun paloryemacs/sort-lines-by-column-reverse ()
+(defun tl/sort-lines-by-column-reverse ()
   "Sort lines by the selected column in reverse order,
 using a visual block/rectangle selection."
   (interactive)
-  (paloryemacs/sort-lines-by-column -1))
+  (tl/sort-lines-by-column -1))
 
 
 ;;; it will be set later for time save
-(defvar paloryemacs/brew-cache-directory nil "Homebrew cache.")
+(defvar tl/brew-cache-directory nil "Homebrew cache.")
 
 ;;;
-(defmacro paloryemacs|create-undefine-for-new-habit (from-key-binding to-key-binding)
-  (let ((new-func (intern (concat "paloryemacs/undefine-for-new-habit-" from-key-binding))))
+(defmacro tl|create-undefine-for-new-habit (from-key-binding to-key-binding)
+  (let ((new-func (intern (concat "tl/undefine-for-new-habit-" from-key-binding))))
     `(progn
        (defun ,new-func ()
          (interactive)
          (message "Use %s instead!" ,to-key-binding))
        (bind-key ,from-key-binding ',new-func))))
 
-;; (paloryemacs|create-undefine-for-new-habit "C-x 2" "SPC w s")
-;; (paloryemacs|create-undefine-for-new-habit "C-x 3" "SPC w v")
-;; (paloryemacs|create-undefine-for-new-habit "C-x 1" "SPC w m")
+;; (tl|create-undefine-for-new-habit "C-x 2" "SPC w s")
+;; (tl|create-undefine-for-new-habit "C-x 3" "SPC w v")
+;; (tl|create-undefine-for-new-habit "C-x 1" "SPC w m")
 
 ;; http://manuel-uberti.github.io//emacs/2018/05/25/display-version/
 ;;;###autoload
-(defun paloryemacs/display-version ()
+(defun tl/display-version ()
   "Display Emacs version and system details in a temporary buffer."
   (interactive)
   (let ((buffer-name "*version*"))

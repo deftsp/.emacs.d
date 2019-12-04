@@ -37,14 +37,14 @@
                                          'face 'mode-line-position-normal-face))))
                 (column-number-mode ("" (:eval
                                          (propertize
-                                          (format "%%c/%d▷ " (paloryemacs/get-line-columns))
+                                          (format "%%c/%d▷ " (tl/get-line-columns))
                                           'face (if (>= (current-column) 81)
                                                     'mode-line-position-exceed-face
                                                   'mode-line-position-normal-face)))
                                      ""))))
 
 
-(defun paloryemacs/init-mode-line ()
+(defun tl/init-mode-line ()
   (let* ((help-echo
           "mouse-1: Select (drag to resize)\nmouse-2: Make current window occupy the whole frame\n mouse-3: Remove current window from display")
          (recursive-edit-help-echo "Recursive edit, type C-M-c to get out")
@@ -87,7 +87,7 @@
 
 
 (unless (featurep 'powerline)
-  (paloryemacs/init-mode-line))
+  (tl/init-mode-line))
 
 (setq global-mode-string
       '(" "
@@ -112,7 +112,7 @@
     (setq point-mode-line-string '(:eval (format "P[%d] " (point))))))
 
 
-(defun paloryemacs/get-line-columns ()
+(defun tl/get-line-columns ()
   (- (line-end-position) (line-beginning-position)))
 
 (provide '50mode-line)

@@ -2,7 +2,7 @@
 
 ;;; Code:
 ;; We define prefix commands only for the sake of which-key
-(setq paloryemacs/key-binding-prefixes '(("a"   "applications")
+(setq tl/key-binding-prefixes '(("a"   "applications")
                                          ("A"   "other applications")
                                          ("ai"  "irc")
                                          ("as"  "shells")
@@ -61,17 +61,17 @@
                                          ("xw"  "words")
                                          ("z"   "zoom")))
 
-(mapc (lambda (x) (apply #'paloryemacs/declare-prefix x))
-      paloryemacs/key-binding-prefixes)
+(mapc (lambda (x) (apply #'tl/declare-prefix x))
+      tl/key-binding-prefixes)
 
 ;; Universal argument ---------------------------------------------------------
-(paloryemacs/set-leader-keys "u" 'universal-argument)
+(tl/set-leader-keys "u" 'universal-argument)
 (define-key universal-argument-map
-  (kbd (concat dotpaloryemacs-leader-key " u"))
+  (kbd (concat dottl-leader-key " u"))
   'universal-argument-more)
 
 
-(defun paloryemacs/org-clock-in ()
+(defun tl/org-clock-in ()
   "Start the clock on the current item.
 
 If necessary, clock-out of the currently active clock.
@@ -81,10 +81,10 @@ offer a list of recently clocked tasks to clock into. "
   (let ((current-prefix-arg '(4))) ; C-u
     (call-interactively 'org-clock-in))  )
 
-(paloryemacs/set-leader-keys "!" 'shell-command)
+(tl/set-leader-keys "!" 'shell-command)
 
 ;; applications
-(paloryemacs/set-leader-keys
+(tl/set-leader-keys
   "ac" 'calc-dispatch
   "au"  'undo-tree-visualize)
 
@@ -92,14 +92,14 @@ offer a list of recently clocked tasks to clock into. "
 ;; SPC o and SPC m o are reserved for the user
 ;; SPC m is reserved for the current major mode. Three keys bindings are not an
 ;; issue (ie. SPC m h d) since SPC m can be accessed via ​,​.
-(paloryemacs/set-leader-keys
+(tl/set-leader-keys
   "oa" 'org-agenda
   ;; "oc" 'org-capture
-  "ocb"   'paloryemacs/update-hammerspoon-org-clock-bar
+  "ocb"   'tl/update-hammerspoon-org-clock-bar
   "occ"   'org-clock-cancel
   "oce"   'org-clock-modify-effort-estimate
   "oci"   'org-mru-clock-in
-  "ocI"   'paloryemacs/org-clock-in
+  "ocI"   'tl/org-clock-in
   "ocj"   'org-mru-clock-select-recent-task  ; org-clock-jump-to-current-clock
   "ocg"   'org-clock-goto
   "oco"   'org-clock-out
@@ -114,9 +114,9 @@ offer a list of recently clocked tasks to clock into. "
   "os"     'prodigy)
 
 
-(paloryemacs/set-leader-keys
+(tl/set-leader-keys
   ;; ";" "cc" "ci", "cl", "cp", "cr", "ct", "cy" and "cv" are used by evil-nerd-commenter
-  "cs"  'paloryemacs/evil-change-symbol-in-defun
+  "cs"  'tl/evil-change-symbol-in-defun
   "ch"  'crosshairs-mode
   "fj"  'dired-jump
   "dp"  'dash-at-point
@@ -137,7 +137,7 @@ offer a list of recently clocked tasks to clock into. "
   "jl" 'evil-avy-goto-line
   "jw" 'evil-avy-goto-word-or-subword-1
   "n"   'evil-narrow-indirect
-  "re"  'paloryemacs/ivy-evil-registers
+  "re"  'tl/ivy-evil-registers
   "ry"  'counsel-yank-pop
   "se"  'evil-iedit-state/iedit-mode
   ;; "ss"  'helm-swoop
@@ -159,72 +159,72 @@ offer a list of recently clocked tasks to clock into. "
   "y"   'counsel-yank-pop)
 
 ;; errors ---------------------------------------------------------------------
-(paloryemacs/set-leader-keys
+(tl/set-leader-keys
   "ec" 'flycheck-clear
   "eh" 'flycheck-describe-checker
   "el" 'flycheck-list-errors
-  "eL" 'paloryemacs/goto-flycheck-error-list
+  "eL" 'tl/goto-flycheck-error-list
   "es" 'flycheck-select-checker
   "eS" 'flycheck-set-checker-executable
   "ev" 'flycheck-verify-setup
 
   "ef"  'flycheck-mode
 
-  "en" 'paloryemacs/next-error
-  "eN" 'paloryemacs/previous-error
-  "ep" 'paloryemacs/previous-error)
+  "en" 'tl/next-error
+  "eN" 'tl/previous-error
+  "ep" 'tl/previous-error)
 
-(paloryemacs/set-leader-keys
+(tl/set-leader-keys
   ;; "b<1-9>" 'buffer-to-window-<1-9>
-  "TAB"   'paloryemacs/alternate-buffer
+  "TAB"   'tl/alternate-buffer
   "bb"    'ivy-switch-buffer ; counsel-switch-buffer have live preiview
   "bB"    'ibuffer
-  "bd"    'paloryemacs/kill-this-buffer
-  "be"    'paloryemacs/safe-erase-buffer
-  ;; "bh"    'paloryemacs/home
-  "b C-d" 'paloryemacs/kill-other-buffers
-  "b C-S-d" 'paloryemacs/kill-matching-buffers-rudely
-  "bk"  'paloryemacs/kill-matching-buffers-rudely
+  "bd"    'tl/kill-this-buffer
+  "be"    'tl/safe-erase-buffer
+  ;; "bh"    'tl/home
+  "b C-d" 'tl/kill-other-buffers
+  "b C-S-d" 'tl/kill-matching-buffers-rudely
+  "bk"  'tl/kill-matching-buffers-rudely
   "bn"    'next-buffer
-  "bm"    'paloryemacs/switch-to-messages-buffer
-  "b N h" 'paloryemacs/new-empty-buffer-left
-  "b N j" 'paloryemacs/new-empty-buffer-below
-  "b N k" 'paloryemacs/new-empty-buffer-above
-  "b N l" 'paloryemacs/new-empty-buffer-right
-  "b N n" 'paloryemacs/new-empty-buffer
-  "bP"    'paloryemacs/copy-clipboard-to-whole-buffer
+  "bm"    'tl/switch-to-messages-buffer
+  "b N h" 'tl/new-empty-buffer-left
+  "b N j" 'tl/new-empty-buffer-below
+  "b N k" 'tl/new-empty-buffer-above
+  "b N l" 'tl/new-empty-buffer-right
+  "b N n" 'tl/new-empty-buffer
+  "bP"    'tl/copy-clipboard-to-whole-buffer
   "bp"    'previous-buffer
-  "bR"    'paloryemacs/safe-revert-buffer
-  "bs"    'paloryemacs/switch-to-scratch-buffer
-  "bu"    'paloryemacs/reopen-killed-buffer
-  "bY"    'paloryemacs/copy-whole-buffer-to-clipboard
+  "bR"    'tl/safe-revert-buffer
+  "bs"    'tl/switch-to-scratch-buffer
+  "bu"    'tl/reopen-killed-buffer
+  "bY"    'tl/copy-whole-buffer-to-clipboard
   "bw"    'read-only-mode)
 
 
 ;; text -----------------------------------------------------------------------
 (defalias 'count-region 'count-words-region)
 
-(paloryemacs/set-leader-keys
-  "xa%" 'paloryemacs/align-repeat-percent
-  "xa&" 'paloryemacs/align-repeat-ampersand
-  "xa(" 'paloryemacs/align-repeat-left-paren
-  "xa)" 'paloryemacs/align-repeat-right-paren
-  "xa{" 'paloryemacs/align-repeat-left-curly-brace
-  "xa}" 'paloryemacs/align-repeat-right-curly-brace
-  "xa[" 'paloryemacs/align-repeat-left-square-brace
-  "xa]" 'paloryemacs/align-repeat-right-square-brace
-  "xa," 'paloryemacs/align-repeat-comma
-  "xa." 'paloryemacs/align-repeat-decimal
-  "xa:" 'paloryemacs/align-repeat-colon
-  "xa;" 'paloryemacs/align-repeat-semicolon
-  "xa=" 'paloryemacs/align-repeat-equal
-  "xa'" 'paloryemacs/align-repeat-quote
-  "xa\\" 'paloryemacs/align-repeat-backslash
+(tl/set-leader-keys
+  "xa%" 'tl/align-repeat-percent
+  "xa&" 'tl/align-repeat-ampersand
+  "xa(" 'tl/align-repeat-left-paren
+  "xa)" 'tl/align-repeat-right-paren
+  "xa{" 'tl/align-repeat-left-curly-brace
+  "xa}" 'tl/align-repeat-right-curly-brace
+  "xa[" 'tl/align-repeat-left-square-brace
+  "xa]" 'tl/align-repeat-right-square-brace
+  "xa," 'tl/align-repeat-comma
+  "xa." 'tl/align-repeat-decimal
+  "xa:" 'tl/align-repeat-colon
+  "xa;" 'tl/align-repeat-semicolon
+  "xa=" 'tl/align-repeat-equal
+  "xa'" 'tl/align-repeat-quote
+  "xa\\" 'tl/align-repeat-backslash
   "xaa" 'align
   "xac" 'align-current
-  "xam" 'paloryemacs/align-repeat-math-oper
-  "xar" 'paloryemacs/align-repeat
-  "xa|" 'paloryemacs/align-repeat-bar
+  "xam" 'tl/align-repeat-math-oper
+  "xar" 'tl/align-repeat
+  "xa|" 'tl/align-repeat-bar
   "xc"  'count-region
   "xd SPC" 'just-one-space
   "xdw" 'delete-trailing-whitespace
@@ -233,12 +233,12 @@ offer a list of recently clocked tasks to clock into. "
   "xjl" 'set-justification-left
   "xjn" 'set-justification-none
   "xjr" 'set-justification-right
-  "xlc" 'paloryemacs/sort-lines-by-column
-  "xlC" 'paloryemacs/sort-lines-by-column-reverse
-  "xld" 'paloryemacs/duplicate-line-or-region
-  "xls" 'paloryemacs/sort-lines
-  "xlS" 'paloryemacs/sort-lines-reverse
-  "xlu" 'paloryemacs/uniquify-lines
+  "xlc" 'tl/sort-lines-by-column
+  "xlC" 'tl/sort-lines-by-column-reverse
+  "xld" 'tl/duplicate-line-or-region
+  "xls" 'tl/sort-lines
+  "xlS" 'tl/sort-lines-reverse
+  "xlu" 'tl/uniquify-lines
   "xtc" 'transpose-chars
   "xtl" 'transpose-lines
   "xtp" 'transpose-paragraphs
@@ -246,7 +246,7 @@ offer a list of recently clocked tasks to clock into. "
   "xtw" 'transpose-words
   "xU"  'upcase-region
   "xu"  'downcase-region
-  "xwc" 'paloryemacs/count-words-analysis
+  "xwc" 'tl/count-words-analysis
   "x TAB" 'indent-rigidly)
 
 (define-key indent-rigidly-map "h" 'indent-rigidly-left)
@@ -255,8 +255,8 @@ offer a list of recently clocked tasks to clock into. "
 (define-key indent-rigidly-map "L" 'indent-rigidly-right-to-tab-stop)
 
 
-(defun paloryemacs/move-buffer-to-window (windownum follow-focus-p)
-  "Moves a buffer to a window, using the paloryemacs numbering. follow-focus-p
+(defun tl/move-buffer-to-window (windownum follow-focus-p)
+  "Moves a buffer to a window, using the tl numbering. follow-focus-p
    controls whether focus moves to new window (with buffer), or stays on
    current"
   (interactive)
@@ -270,7 +270,7 @@ offer a list of recently clocked tasks to clock into. "
   (when follow-focus-p (select-window (winum-get-window-by-number windownum))))
 
 
-(defun paloryemacs/swap-buffers-to-window (windownum follow-focus-p)
+(defun tl/swap-buffers-to-window (windownum follow-focus-p)
   "Swaps visible buffers between active window and selected window.
    follow-focus-p controls whether focus moves to new window (with buffer), or
    stays on current"
@@ -293,22 +293,22 @@ offer a list of recently clocked tasks to clock into. "
              ,(format "Move buffer to the window with number %i." n)
              (interactive "P")
              (if arg
-                 (paloryemacs/swap-buffers-to-window ,n t)
-               (paloryemacs/move-buffer-to-window ,n t))))
+                 (tl/swap-buffers-to-window ,n t)
+               (tl/move-buffer-to-window ,n t))))
     (eval `(defun ,(intern (format "move-buffer-window-no-follow-%s" n)) ()
              (interactive)
-             (paloryemacs/move-buffer-to-window ,n nil)))
+             (tl/move-buffer-to-window ,n nil)))
     (eval `(defun ,(intern (format "swap-buffer-window-no-follow-%s" n)) ()
              (interactive)
-             (paloryemacs/swap-buffers-to-window ,n nil)))))
+             (tl/swap-buffers-to-window ,n nil)))))
 
 (dotimes (i 9)
   (let ((n (+ i 1)))
-    (paloryemacs/set-leader-keys
+    (tl/set-leader-keys
       (format "b%i" n)
       (intern (format "buffer-to-window-%s" n)))))
 
-(defun paloryemacs/switch-to-messages-buffer (&optional arg)
+(defun tl/switch-to-messages-buffer (&optional arg)
   "Switch to the `*Messages*' buffer.
 if prefix argument ARG is given, switch to it in an other, possibly new window."
   (interactive "P")
@@ -319,31 +319,31 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
       (switch-to-buffer (current-buffer)))))
 
 ;; file -----------------------------------------------------------------------
-(paloryemacs/set-leader-keys
-  ;; "fc" 'paloryemacs/copy-file
-  ;; "fD" 'paloryemacs/delete-current-buffer-file
-  ;; "fei" 'paloryemacs/find-user-init-file
-  ;; "fed" 'paloryemacs/find-dotfile
-  ;; "feD" 'paloryemacs/ediff-dotfile-and-template
-  ;; "feR" 'dotpaloryemacs/sync-configuration-layers
-  ;; "fev" 'paloryemacs/display-and-copy-version
-  ;; "fCd" 'paloryemacs/unix2dos
-  ;; "fCu" 'paloryemacs/dos2unix
+(tl/set-leader-keys
+  ;; "fc" 'tl/copy-file
+  ;; "fD" 'tl/delete-current-buffer-file
+  ;; "fei" 'tl/find-user-init-file
+  ;; "fed" 'tl/find-dotfile
+  ;; "feD" 'tl/ediff-dotfile-and-template
+  ;; "feR" 'dottl/sync-configuration-layers
+  ;; "fev" 'tl/display-and-copy-version
+  ;; "fCd" 'tl/unix2dos
+  ;; "fCu" 'tl/dos2unix
   "fg" 'rgrep
   "fl" 'find-file-literally
-  ;; "fE" 'paloryemacs/sudo-edit
-  ;; "fo" 'paloryemacs/open-in-external-app
-  ;; "fR" 'paloryemacs/rename-current-buffer-file
+  ;; "fE" 'tl/sudo-edit
+  ;; "fo" 'tl/open-in-external-app
+  ;; "fR" 'tl/rename-current-buffer-file
   "fS" 'evil-write-all
   "fs" 'save-buffer
   "fvd" 'add-dir-local-variable
   "fvf" 'add-file-local-variable
   "fvp" 'add-file-local-variable-prop-line
-  ;; "fy" 'paloryemacs/show-and-copy-buffer-filename
+  ;; "fy" 'tl/show-and-copy-buffer-filename
   )
 
 ;; help -----------------------------------------------------------------------
-(paloryemacs/set-leader-keys
+(tl/set-leader-keys
   "?"   'counsel-descbinds
   "hdb" 'describe-bindings
   "hdc" 'describe-char
@@ -352,23 +352,23 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "hi"  'counsel-info-lookup-symbol
   "hdm" 'describe-mode
   "hdk" 'describe-key
-  ;; "hdl" 'paloryemacs/describe-last-keys
+  ;; "hdl" 'tl/describe-last-keys
   "hdp" 'describe-package
   "hdP" 'configuration-layer/describe-package
-  ;; "hds" 'paloryemacs/describe-system-info
+  ;; "hds" 'tl/describe-system-info
   "hdt" 'describe-theme
   "hdv" 'counsel-describe-variable
-  ;; "hI"  'paloryemacs/report-issue
+  ;; "hI"  'tl/report-issue
   "hn"  'view-emacs-news)
 
-(paloryemacs/set-leader-keys
-  "w TAB"        'paloryemacs/alternate-window
+(tl/set-leader-keys
+  "w TAB"        'tl/alternate-window
   ;; "w1"           'delete-other-windows
   ;; "w2"           (kbd "C-x 2")
   ;; "w3"           "\C-x3"
-  "wb"           'paloryemacs/switch-to-minibuffer-window
-  "wd"           'paloryemacs/delete-window
-  "wt"           'paloryemacs/toggle-current-window-dedication
+  "wb"           'tl/switch-to-minibuffer-window
+  "wd"           'tl/delete-window
+  "wt"           'tl/toggle-current-window-dedication
   "wf"           'follow-mode
   "wF"           'make-frame
   "wH"           'evil-window-move-far-left
@@ -387,12 +387,12 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "w <S-right>"  'evil-window-move-far-right
   "wl"           'evil-window-right
   "w <right>"    'evil-window-right
-  "wm"           'paloryemacs/toggle-maximize-buffer
-  "wc"           'paloryemacs/toggle-centered-buffer-mode
-  "wC"           'paloryemacs/toggle-centered-buffer-mode-frame
+  "wm"           'tl/toggle-maximize-buffer
+  "wc"           'tl/toggle-centered-buffer-mode
+  "wC"           'tl/toggle-centered-buffer-mode-frame
   "wo"           'other-frame
-  "wr"           'paloryemacs/rotate-windows-forward
-  "wR"           'paloryemacs/rotate-windows-backward
+  "wr"           'tl/rotate-windows-forward
+  "wR"           'tl/rotate-windows-backward
   "ws"           'split-window-below-and-focus
   "wS"           'split-window-below
   "w-"           'split-window-below
@@ -403,10 +403,10 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "ww"           'other-window
   "w/"           'split-window-right
   "w="           'balance-windows-area
-  "w+"           'paloryemacs/window-layout-toggle
-  "w_"           'paloryemacs/maximize-horizontally)
+  "w+"           'tl/window-layout-toggle
+  "w_"           'tl/maximize-horizontally)
 
-(defun paloryemacs/global-set-keys (&rest keycommands)
+(defun tl/global-set-keys (&rest keycommands)
   "Register keys to commands."
   (while keycommands
     (let ((key (car keycommands))
@@ -416,7 +416,7 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
 
 
 ;; register my preferred keybindings
-(paloryemacs/global-set-keys
+(tl/global-set-keys
  "<f1>"    'anything-man ; 'woman-word-at-point
  "<C-f1>"  '(lambda () (interactive) (manual-entry (current-word))) ;;; load man pages when on a word and F1 is pressed
  "<S-f1>"  'iman
@@ -440,8 +440,8 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
  ;; "<f9>"    'door-gnus
  "<S-f9>"  'ascii-table-show
  "<C-f9>"  'shell
- "<M-f9>"  'paloryemacs/ansi-term
- "<f10>"   'paloryemacs/w3m-switch-to-buffer
+ "<M-f9>"  'tl/ansi-term
+ "<f10>"   'tl/w3m-switch-to-buffer
  ;; "<f11>"
  "<S-f11>" 'appt-add
  "<S-f12>" 'recentf-open-files
@@ -465,8 +465,8 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
 ;; (global-set-key "\C-j" 'reindent-then-newline-and-indent)
 
 ;;; indent the whole buffer
-(global-set-key (kbd "C-c i w") 'paloryemacs/indent-whole-buffer)
-(defun paloryemacs/indent-whole-buffer ()
+(global-set-key (kbd "C-c i w") 'tl/indent-whole-buffer)
+(defun tl/indent-whole-buffer ()
   "indent whole buffer"
   (interactive)
   (delete-trailing-whitespace)
@@ -483,8 +483,8 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
 ;;; view mode
 ;; rebind "C-x C-q" to `view-mode' instead of `read-only-mode'
 (define-key ctl-x-map "\C-q" 'view-mode)
-(add-hook 'view-mode-hook 'paloryemacs/view-mode-hook)
-(defun paloryemacs/view-mode-hook ()
+(add-hook 'view-mode-hook 'tl/view-mode-hook)
+(defun tl/view-mode-hook ()
   (define-key view-mode-map "b" 'View-scroll-page-backward)
   (define-key view-mode-map "f" 'View-scroll-page-forward)
   (define-key view-mode-map "h" 'backward-char)
@@ -498,27 +498,27 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
 ;;Maverick WOO <sw77@cornell.edu>" This is complex. In short, the first invocation of Home/End moves to the beginning of
 ;;the *text* line. A second invocation moves the cursor to the beginning of the *absolute* line. Most of the time this
 ;;won't matter or even be noticeable, but when it does (in comments, for example) it will be quite convenient.
-(global-set-key [home] 'paloryemacs/smart-home)
-(global-set-key [end] 'paloryemacs/smart-end)
+(global-set-key [home] 'tl/smart-home)
+(global-set-key [end] 'tl/smart-end)
 
-(defun paloryemacs/smart-home ()
+(defun tl/smart-home ()
   "Odd home to beginning of line, even home to beginning of
 text/code."
   (interactive)
-  (if (and (eq last-command 'paloryemacs/smart-home)
+  (if (and (eq last-command 'tl/smart-home)
            (/= (line-beginning-position) (point)))
       (beginning-of-line)
     (beginning-of-line-text)))
 
-(defun paloryemacs/smart-end ()
+(defun tl/smart-end ()
   "Odd end to end of line, even end to begin of text/code."
   (interactive)
-  (if (and (eq last-command 'paloryemacs/smart-end)
+  (if (and (eq last-command 'tl/smart-end)
            (= (line-end-position) (point)))
-      (paloryemacs//end-of-line-text)
+      (tl//end-of-line-text)
     (end-of-line)))
 
-(defun paloryemacs//end-of-line-text ()
+(defun tl//end-of-line-text ()
   "Move to end of current line and skip comments and trailing space.
 Require `font-lock'."
   (end-of-line)
@@ -532,8 +532,8 @@ Require `font-lock'."
         (forward-char 1) (skip-chars-backward " \t\n"))))) ; Done with home and end keys.
 
 ;;; repeat to mark multi-line
-;; (global-set-key (kbd "C-z") 'paloryemacs/mark-line)
-(defun paloryemacs/mark-line (&optional arg allow-extend)
+;; (global-set-key (kbd "C-z") 'tl/mark-line)
+(defun tl/mark-line (&optional arg allow-extend)
   "Put point at beginning of this line, mark at end.
 The line marked is the one that contains point or follows point.
 
@@ -566,7 +566,7 @@ it marks the next ARG lines after the ones already marked."
 
 ;;-------------------------------------------------------------------------------------------------------
 
-(defun paloryemacs/return-current-point ()
+(defun tl/return-current-point ()
   (interactive)
   (message "Current point is: %d" (point)))
 ;;----------------------------------------------------------------------------------------------------
@@ -592,8 +592,8 @@ it marks the next ARG lines after the ones already marked."
 ;; "' and kill upto and including the final ", allowing you to change the output. In this case you'd
 ;; better use 'C-M-k' at the starting "
 
-;; (global-set-key (kbd "M-z") 'paloryemacs/zap-up-to-char)
-;; (defun paloryemacs/zap-up-to-char (arg char)
+;; (global-set-key (kbd "M-z") 'tl/zap-up-to-char)
+;; (defun tl/zap-up-to-char (arg char)
 ;;   "Kill up to and including ARGth occurrence of CHAR. "
 ;;   (interactive (list (prefix-numeric-value current-prefix-arg)
 ;;                      (read-char "Zap to char: " t)))
@@ -607,8 +607,8 @@ it marks the next ARG lines after the ones already marked."
 ;;                              (point))))
 ;;   (backward-char))
 
-;; (global-set-key (kbd "M-Z") 'paloryemacs/zap-to-char-save)
-;; (defun paloryemacs/zap-to-char-save (arg char)
+;; (global-set-key (kbd "M-Z") 'tl/zap-to-char-save)
+;; (defun tl/zap-to-char-save (arg char)
 ;;   "Zap to a character, but save instead of kill."
 ;;   (interactive "p\ncZap to char: ")
 ;;   (save-excursion
@@ -623,10 +623,10 @@ it marks the next ARG lines after the ones already marked."
   (global-set-key (kbd "M-Z") 'avy-zap-to-char-dwim))
 
 ;;; extral key map
-;; (setq paloryemacs/extra-key-map (make-keymap))
-;; (global-set-key [(super z)] paloryemacs/extra-key-map)
-;; (define-key paloryemacs/extra-key-map "b" 'bbdb)
-;; (define-key paloryemacs/extra-key-map "m" 'bbdb-and-mail-with-default-mailer)
+;; (setq tl/extra-key-map (make-keymap))
+;; (global-set-key [(super z)] tl/extra-key-map)
+;; (define-key tl/extra-key-map "b" 'bbdb)
+;; (define-key tl/extra-key-map "m" 'bbdb-and-mail-with-default-mailer)
 
 
 ;;; M-^: delete-indentation
@@ -652,8 +652,8 @@ it marks the next ARG lines after the ones already marked."
                         (scroll-down 1))))))
 
 ;;; _/-/SPACE
-(global-set-key (kbd "H--") 'paloryemacs/_-SPC)
-(defun paloryemacs/_-SPC ()
+(global-set-key (kbd "H--") 'tl/_-SPC)
+(defun tl/_-SPC ()
   (interactive)
   (let ((char (following-char)))
     (cl-case char
@@ -719,7 +719,7 @@ _g_ golden-ratio-mode:                 %`golden-ratio-mode
 _i_ aggressive-indent-mode:            %`aggressive-indent-mode
 _G_ debug-on-quit:                     %`debug-on-quit
 _r_ read-only-mode:                    %`buffer-read-only
-_s_ rainbow-delimiters-string-color    %`--paloryemacs/rainbow-delimiters-strong-color
+_s_ rainbow-delimiters-string-color    %`--tl/rainbow-delimiters-strong-color
 _p_ smartparens:                       %`smartparens-mode
 _t_ truncate-lines:                    %`truncate-lines
 _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespace-mode)
@@ -730,7 +730,7 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
     ("c" column-number-mode "colnum")
     ("d" toggle-debug-on-error "debug")
     ("f" auto-fill-mode "fill")
-    ("n" paloryemacs/narrow-or-widen-dwim "")
+    ("n" tl/narrow-or-widen-dwim "")
     ("g" golden-ratio-mode "golden-ratio")
     ("hi" highlight-indent-guides-mode "hl-indent")
     ;; ("hi" highlight-indentation-mode "hl-indent")
@@ -742,7 +742,7 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
     ("r" dired-toggle-read-only "read only") ; generalized version of `read-only-mode'.
     ("t" toggle-truncate-lines "truncate")
     ("w" whitespace-mode "whitespace")
-    ("s" paloryemacs/toggle-saturate-rainbow-delimiters-color "strong color")
+    ("s" tl/toggle-saturate-rainbow-delimiters-color "strong color")
     ("<escape>" nil "cancel")
     ("q"        nil "cancel")))
 
@@ -756,9 +756,9 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
 
 ;; Launching External Applications and Websites
 ;; http://endlessparentheses.com/keymap-for-launching-external-applications-and-websites.html
-;; (defmacro paloryemacs/def-run (exec)
+;; (defmacro tl/def-run (exec)
 ;;   "Return a function that runs the executable EXEC."
-;;   (let ((func-name (intern (concat "paloryemacs/run-" exec))))
+;;   (let ((func-name (intern (concat "tl/run-" exec))))
 ;;     `(progn
 ;;        (defun ,func-name ()
 ;;          ,(format "Run the %s executable." exec)
@@ -766,11 +766,11 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
 ;;          (start-process "" nil ,exec))
 ;;        ',func-name)))
 
-;; (define-key launcher-map "m" (paloryemacs/def-run "Mathematica"))
+;; (define-key launcher-map "m" (tl/def-run "Mathematica"))
 
-;; (defmacro paloryemacs/def-browse (url)
+;; (defmacro tl/def-browse (url)
 ;;   "Return a function that calls `browse-url' on URL."
-;;   (let ((func-name (intern (concat "paloryemacs/browse-" url))))
+;;   (let ((func-name (intern (concat "tl/browse-" url))))
 ;;     `(progn
 ;;        (defun ,func-name ()
 ;;          ,(format "Browse to the url %s." url)
@@ -778,8 +778,8 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
 ;;          (browse-url ,url))
 ;;        ',func-name)))
 
-;; (define-key launcher-map "r" (paloryemacs/def-browse "http://www.reddit.com/r/emacs/"))
-;; (define-key launcher-map "w" (paloryemacs/def-browse "http://www.emacswiki.org/"))
+;; (define-key launcher-map "r" (tl/def-browse "http://www.reddit.com/r/emacs/"))
+;; (define-key launcher-map "w" (tl/def-browse "http://www.emacswiki.org/"))
 
 ;;; Launcher
 ;; C-x l is `count-lines-page' by default. If you use that, you can try s-l or <C-return>.
@@ -811,23 +811,23 @@ undo-tree-_u_ndo undo-tree-_r_edo
    ("SPC" mark-sexp "mark sexp" :color red)
    ("+" cnfonts-increase-fontsize :color red)
    ("-" cnfonts-decrease-fontsize :color red)
-   ("=" paloryemacs/cnfonts-reset-profile-and-fontsize "reset font")
+   ("=" tl/cnfonts-reset-profile-and-fontsize "reset font")
    ("a" org-agenda nil)
    ("c" org-capture nil)
    ("g" org-clock-goto nil)
    ("G" hydra-git-gutter/body "git gutter")
    ("h" hydra-apropos/body "apropos")
    ("j" dired-jump "dired jump")
-   ("o" paloryemacs/replace-charset-to-oem "char->oem")
+   ("o" tl/replace-charset-to-oem "char->oem")
    ("p" hydra-projectile/body nil)
-   ("s" paloryemacs/switch-to-scratch nil)
+   ("s" tl/switch-to-scratch nil)
    ("t" hydra-toggle/body "toggle")
    ("u" undo-tree-undo nil :color red)
    ("r" undo-tree-redo nil :color red)
    ("<escape>" nil "cancel")
    ("q"        nil "cancel")))
 
-(defun paloryemacs/switch-to-scratch ()
+(defun tl/switch-to-scratch ()
   (interactive)
   (switch-to-buffer "*scratch*"))
 

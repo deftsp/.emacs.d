@@ -79,7 +79,7 @@ the modeline")
   text)
 
 ;; base on mode-line-modified
-(defpowerline paloryemacs/mode-line-modified
+(defpowerline tl/mode-line-modified
   (list (propertize
          "%1*"
          'help-echo 'mode-line-read-only-help-echo
@@ -100,7 +100,7 @@ the modeline")
                  'powerline-mode-line-normal-face)
          'mouse-face 'mode-line-highlight)))
 
-(defpowerline paloryemacs/powerline-position
+(defpowerline tl/powerline-position
   (concat
    (if (and column-number-mode line-number-mode)
        (propertize
@@ -127,7 +127,7 @@ mouse-1: Display Line and Column Mode Menu")
 mouse-1: Display Line and Column Mode Menu")
          "")))))
 
-(defpowerline paloryemacs/powerline-file-size
+(defpowerline tl/powerline-file-size
   (concat
    (propertize
     " %p"
@@ -161,7 +161,7 @@ mouse-1: Display Line and Column Mode Menu")
 (defpowerline powerline-ace-window-path
   (window-parameter (selected-window) 'ace-window-path))
 
-(defun paloryemacs--unicode-number (str)
+(defun tl--unicode-number (str)
   "Return a nice unicode representation of a single-digit number STR."
   (cond
    ;; "☰" 0
@@ -181,7 +181,7 @@ mouse-1: Display Line and Column Mode Menu")
   (if (and (fboundp 'winum-mode) winum-mode)
       (let* ((n (winum-get-number))
              (s (if (numberp n) (int-to-string n) "")))
-        (propertize (concat " " (paloryemacs--unicode-number s))
+        (propertize (concat " " (tl--unicode-number s))
                     'face 'winum-face))
     "#"))
 
@@ -194,7 +194,7 @@ mouse-1: Display Line and Column Mode Menu")
 ;;     "##"))
 
 
-(defpowerline paloryemacs/powerline-vc
+(defpowerline tl/powerline-vc
   (let ((vc-mark (char-to-string #xe0a0)))
     (if (and buffer-file-name vc-mode)
         (if (and window-system (not powerline-gui-use-vcs-glyph))
@@ -322,12 +322,12 @@ mouse-1: Display Line and Column Mode Menu")
     " Unk "))
 
 
-(defpowerline paloryemacs/powerline-client
+(defpowerline tl/powerline-client
   (if (frame-parameter nil 'client)
       "@"
     ""))
 
-(defpowerline paloryemacs/powerline-remote
+(defpowerline tl/powerline-remote
   (propertize
    (if (file-remote-p default-directory)
        "@"
@@ -343,14 +343,14 @@ mouse-1: Display Line and Column Mode Menu")
                                      default-directory)))))))
 
 
-(defpowerline paloryemacs/powerline-frame-id
+(defpowerline tl/powerline-frame-id
   (if (or (null window-system)
           (eq window-system 'pc))
       "-%F "
     ""))
 
 
-(defvar paloryemacs/powerline-max-which-fun-length 32)
+(defvar tl/powerline-max-which-fun-length 32)
 (defpowerline powerline-which-func
   (let ((s (replace-regexp-in-string
             "%" "%%"
@@ -360,7 +360,7 @@ mouse-1: Display Line and Column Mode Menu")
               which-func-table)
              which-func-unknown))))
     (propertize
-     (truncate-string-to-width s paloryemacs/powerline-max-which-fun-length nil nil "…")
+     (truncate-string-to-width s tl/powerline-max-which-fun-length nil nil "…")
      'mouse-face 'mode-line-highlight
      'help-echo "mouse-1: go to beginning\n\
 mouse-2: toggle rest visibility\nmouse-3: go to end"
@@ -374,7 +374,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
   #("%]" 0 2
     (help-echo "Recursive edit, type C-M-c to get out")))
 
-(defun paloryemacs/beautify-major-mode-name (name)
+(defun tl/beautify-major-mode-name (name)
   (if (stringp name)
       (cond ((string= name "Emacs-Lisp") "EL")
             ((string= name "Lisp Interaction") "IEL")
@@ -382,8 +382,8 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
             (t name))
     name))
 
-(defpowerline paloryemacs/powerline-major-mode
-  (propertize (format-mode-line (paloryemacs/beautify-major-mode-name mode-name))
+(defpowerline tl/powerline-major-mode
+  (propertize (format-mode-line (tl/beautify-major-mode-name mode-name))
               'mouse-face 'mode-line-highlight
               'help-echo "Major mode\n\ mouse-1: Display major mode menu\n\ mouse-2: Show help for major mode\n\ mouse-3: Toggle minor modes"
               'local-map (let ((map (make-sparse-keymap)))
@@ -400,13 +400,13 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
 (defpowerline powerline-git-state-mark
   powerline-git-state-mark)
 
-(defun paloryemacs/setup-powerline-evil-theme ()
+(defun tl/setup-powerline-evil-theme ()
   "Setup the powerline evil mode-line."
   (interactive)
-  (setq-default mode-line-format '("%e" (:eval (paloryemacs/powerline-evil-theme)))))
+  (setq-default mode-line-format '("%e" (:eval (tl/powerline-evil-theme)))))
 
 
-(defun paloryemacs/powerline-evil-theme ()
+(defun tl/powerline-evil-theme ()
   "Setup the default mode-line."
   (interactive)
   (let* ((active (powerline-selected-window-active))
@@ -441,7 +441,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                 ,(funcall zigzag-right ace-window-path-face evil-face)
                 ,(powerline-evil-tag evil-face)
                 ,@(let ((anzu-info (powerline-anzu anzu-face 'l))
-                        (vc-info (paloryemacs/powerline-vc vc-face 'r)))
+                        (vc-info (tl/powerline-vc vc-face 'r)))
 
                     (cond ((and anzu-info vc-info)
                            (list (funcall separator-left evil-face anzu-face)
@@ -466,12 +466,12 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                                           evil-face
                                           file-base-info-face)))))
                 ,(powerline-raw mode-line-front-space file-base-info-face)
-                ,(paloryemacs/powerline-client file-base-info-face)
-                ,(paloryemacs/powerline-remote file-base-info-face)
-                ,(paloryemacs/powerline-frame-id file-base-info-face)
+                ,(tl/powerline-client file-base-info-face)
+                ,(tl/powerline-remote file-base-info-face)
+                ,(tl/powerline-frame-id file-base-info-face)
                 ,(powerline-raw mode-line-mule-info file-base-info-face)
-                ,(paloryemacs/mode-line-modified file-base-info-face)
-                ,(paloryemacs/powerline-position file-base-info-face)
+                ,(tl/mode-line-modified file-base-info-face)
+                ,(tl/powerline-position file-base-info-face)
                 ,(funcall separator-left file-base-info-face buffer-id-face)
                 ,(powerline-buffer-id buffer-id-face 'l)
 
@@ -488,7 +488,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                 ,(powerline-raw " " face2)
                 ,(powerline-raw " " face2)
                 ,(powerline-recursive-left face2)
-                ,(paloryemacs/powerline-major-mode face2)
+                ,(tl/powerline-major-mode face2)
                 ,(powerline-process face2)
                 ,(powerline-minor-modes face2 'l)
                 ,(powerline-narrow face2 'l)
@@ -505,7 +505,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                (powerline-raw global-mode-string face1 'r)
                (powerline-raw " " face1)
                (funcall separator-right face1 face2)
-               (paloryemacs/powerline-file-size face2 'r)
+               (tl/powerline-file-size face2 'r)
                (when powerline-display-hud (powerline-hud face2 face1)))))
     (concat (powerline-render lhs)
             (powerline-fill face2 (powerline-width rhs))
@@ -513,11 +513,11 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
 
 (use-package powerline-themes
   :config
-  (paloryemacs/setup-powerline-evil-theme))
+  (tl/setup-powerline-evil-theme))
 
-(defun paloryemacs/force-update-mode-line  ()
+(defun tl/force-update-mode-line  ()
   (interactive)
-  (paloryemacs/setup-powerline-evil-theme)
+  (tl/setup-powerline-evil-theme)
   (powerline-reset)
   (force-mode-line-update t)
   (let* ((buf (current-buffer))
@@ -527,7 +527,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
     (find-file fn))
   (message "updated mode-line"))
 
-(global-set-key (kbd "<f5>") 'paloryemacs/force-update-mode-line)
+(global-set-key (kbd "<f5>") 'tl/force-update-mode-line)
 
 
 (provide '23powerline)

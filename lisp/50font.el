@@ -18,7 +18,7 @@
 
 ;;; line spacing
 ;; (setq line-spacing nil)
-;; (defun paloryemacs/toggle-line-spacing ()
+;; (defun tl/toggle-line-spacing ()
 ;;   "Toggle line spacing between 1 and 5 pixels."
 ;;   (interactive)
 ;;   (if (eq line-spacing 1)
@@ -26,13 +26,13 @@
 ;;       (setq-default line-spacing 1)))
 
 
-(defun paloryemacs/toggle-operator-composition-mode ()
+(defun tl/toggle-operator-composition-mode ()
   (interactive)
   (when (fboundp 'mac-auto-operator-composition-mode)
     (if mac-auto-operator-composition-mode
         (mac-auto-operator-composition-mode -1)
       (mac-auto-operator-composition-mode))))
-(defalias 'paloryemacs/toggle-ligature 'paloryemacs/toggle-operator-composition-mode)
+(defalias 'tl/toggle-ligature 'tl/toggle-operator-composition-mode)
 
 (use-package mac-win
   :init
@@ -57,7 +57,7 @@
   :init
   (progn
     (setq cnfonts-verbose nil
-          cnfonts-default-step paloryemacs/default-cnfonts-fontsize-step
+          cnfonts-default-step tl/default-cnfonts-fontsize-step
           cnfonts-use-face-font-rescale nil ; not work on macOS
           cnfonts-profiles '("program" "org-mode" "read-book")))
   :config
@@ -71,13 +71,13 @@
       (global-set-key (kbd "<M-wheel-up>") 'cnfonts-decrease-fontsize)
       (global-set-key (kbd "<M-wheel-down>") 'cnfonts-increase-fontsize))
 
-    (defun paloryemacs/cnfonts-reset-profile-and-fontsize ()
+    (defun tl/cnfonts-reset-profile-and-fontsize ()
       "Reset fontsize with chinese-fonts-setup."
       (interactive)
       (when (display-graphic-p)
-        (let* ((profile-name paloryemacs/default-cnfonts-profile-name)
+        (let* ((profile-name tl/default-cnfonts-profile-name)
                (profile-step (cnfonts--get-profile-step profile-name))
-               (reset-step (- paloryemacs/default-cnfonts-fontsize-step profile-step)))
+               (reset-step (- tl/default-cnfonts-fontsize-step profile-step)))
           (cnfonts--select-profile profile-name)
           (cnfonts--step-fontsize reset-step))))
 
@@ -126,7 +126,7 @@
     ;;     Latin Extended-B
     ;;     Latin-1 Supplement
     ;;     Spacing Modifier Letters
-    (defun paloryemacs/cnfonts-set-extra-fonts (fontsizes-list)
+    (defun tl/cnfonts-set-extra-fonts (fontsizes-list)
       (mapc
        (lambda (l)
          (let* ((default-font-name "MesloLGS Nerd Font")
@@ -170,7 +170,7 @@
          )))
 
     (add-hook 'cnfonts-set-font-finish-hook
-              'paloryemacs/cnfonts-set-extra-fonts)
+              'tl/cnfonts-set-extra-fonts)
 
     (cnfonts-enable)))
 

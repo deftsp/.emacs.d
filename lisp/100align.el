@@ -21,13 +21,13 @@
 ;;; Code:
 
 ;;; align
-(defvar paloryemacs/c-align-rules-list nil "C/C++ mode align rules")
+(defvar tl/c-align-rules-list nil "C/C++ mode align rules")
 
 (use-package align
   :defer t
   :init
   (progn
-    (setq paloryemacs/c-align-rules-list
+    (setq tl/c-align-rules-list
           `((c-comment-one-line
              (regexp . "[^- \t]\\(\\s-*\\)/\\*.*\\*/$")
              (group  . 1)
@@ -76,14 +76,14 @@
                               (save-excursion
                                 (goto-char (match-end 2))
                                 (looking-at "\\s-*\\(/[*/]\\|$\\)")))))))))
-    (add-hook 'c-mode-hook (lambda () (setq align-mode-rules-list paloryemacs/c-align-rules-list)))
-    (add-hook 'c++-mode-hook (lambda () (setq align-mode-rules-list paloryemacs/c-align-rules-list)))))
+    (add-hook 'c-mode-hook (lambda () (setq align-mode-rules-list tl/c-align-rules-list)))
+    (add-hook 'c++-mode-hook (lambda () (setq align-mode-rules-list tl/c-align-rules-list)))))
 
 
 ;; BEGIN align functions
 
 ;; modified function from http://emacswiki.org/emacs/AlignCommands
-(defun paloryemacs/align-repeat (start end regexp &optional justify-right after)
+(defun tl/align-repeat (start end regexp &optional justify-right after)
   "Repeat alignment with respect to the given regular expression.
 If JUSTIFY-RIGHT is non nil justify to the right instead of the
 left. If AFTER is non-nil, add whitespace to the left instead of
@@ -112,7 +112,7 @@ the right."
     (align-regexp start end complete-regexp group 1 t)))
 
 ;; Modified answer from http://emacs.stackexchange.com/questions/47/align-vertical-columns-of-numbers-on-the-decimal-point
-(defun paloryemacs/align-repeat-decimal (start end)
+(defun tl/align-repeat-decimal (start end)
   "Align a table of numbers on decimal points and dollar signs (both optional)"
   (interactive "r")
   (require 'align)
@@ -124,29 +124,29 @@ the right."
                        (justify nil t)))
                 nil))
 
-(defmacro paloryemacs|create-align-repeat-x (name regexp &optional justify-right default-after)
-  (let ((new-func (intern (concat "paloryemacs/align-repeat-" name))))
+(defmacro tl|create-align-repeat-x (name regexp &optional justify-right default-after)
+  (let ((new-func (intern (concat "tl/align-repeat-" name))))
     `(defun ,new-func (start end switch)
        (interactive "r\nP")
        (let ((after (not (eq (if switch t nil) (if ,default-after t nil)))))
-         (paloryemacs/align-repeat start end ,regexp ,justify-right after)))))
+         (tl/align-repeat start end ,regexp ,justify-right after)))))
 
-(paloryemacs|create-align-repeat-x "comma" "," nil t)
-(paloryemacs|create-align-repeat-x "semicolon" ";" nil t)
-(paloryemacs|create-align-repeat-x "colon" ":" nil t)
-(paloryemacs|create-align-repeat-x "equal" "=")
-(paloryemacs|create-align-repeat-x "math-oper" "[+\\-*/]")
-(paloryemacs|create-align-repeat-x "percent" "%")
-(paloryemacs|create-align-repeat-x "ampersand" "&")
-(paloryemacs|create-align-repeat-x "bar" "|")
-(paloryemacs|create-align-repeat-x "left-paren" "(")
-(paloryemacs|create-align-repeat-x "right-paren" ")" t)
-(paloryemacs|create-align-repeat-x "left-curly-brace" "{")
-(paloryemacs|create-align-repeat-x "right-curly-brace" "}" t)
-(paloryemacs|create-align-repeat-x "left-square-brace" "\\[")
-(paloryemacs|create-align-repeat-x "right-square-brace" "\\]" t)
-(paloryemacs|create-align-repeat-x "backslash" "\\\\")
-(paloryemacs|create-align-repeat-x "quote" " '")
+(tl|create-align-repeat-x "comma" "," nil t)
+(tl|create-align-repeat-x "semicolon" ";" nil t)
+(tl|create-align-repeat-x "colon" ":" nil t)
+(tl|create-align-repeat-x "equal" "=")
+(tl|create-align-repeat-x "math-oper" "[+\\-*/]")
+(tl|create-align-repeat-x "percent" "%")
+(tl|create-align-repeat-x "ampersand" "&")
+(tl|create-align-repeat-x "bar" "|")
+(tl|create-align-repeat-x "left-paren" "(")
+(tl|create-align-repeat-x "right-paren" ")" t)
+(tl|create-align-repeat-x "left-curly-brace" "{")
+(tl|create-align-repeat-x "right-curly-brace" "}" t)
+(tl|create-align-repeat-x "left-square-brace" "\\[")
+(tl|create-align-repeat-x "right-square-brace" "\\]" t)
+(tl|create-align-repeat-x "backslash" "\\\\")
+(tl|create-align-repeat-x "quote" " '")
 
 ;; END align functions
 

@@ -13,21 +13,21 @@
   :defer t
   :init
   (progn
-    (defun paloryemacs/ruby-mode-init ()
+    (defun tl/ruby-mode-init ()
       ;; (push '(".+\\.rb$" flymake-ruby-init) flymake-allowed-file-name-masks)
       ;; (push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
       ;; (push '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns)
-      ;; (add-hook 'ruby-mode-hook 'paloryemacs/flymake-ruby-enable)
+      ;; (add-hook 'ruby-mode-hook 'tl/flymake-ruby-enable)
       (rinari-minor-mode +1)
-      (define-key ruby-mode-map "\C-c\C-z" 'paloryemacs/ruby-switch-to-inf-dwim))
-    (add-hook 'ruby-mode-hook 'paloryemacs/ruby-mode-init))
+      (define-key ruby-mode-map "\C-c\C-z" 'tl/ruby-switch-to-inf-dwim))
+    (add-hook 'ruby-mode-hook 'tl/ruby-mode-init))
   :config
   (progn
     (use-package rinari )
     (use-package ruby-electric)
     (use-package rspec-mode)
     (use-package rsense)
-    (defun paloryemacs/flymake-ruby-enable ()
+    (defun tl/flymake-ruby-enable ()
       (when (and buffer-file-name
                  (file-writable-p
                   (file-name-directory buffer-file-name))
@@ -40,7 +40,7 @@
         ;; (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
         (flymake-mode t)))
 
-    (defun paloryemacs/ruby-switch-to-inf-dwim ()
+    (defun tl/ruby-switch-to-inf-dwim ()
       (interactive)
       (unless inf-ruby-buffer
         (inf-ruby))

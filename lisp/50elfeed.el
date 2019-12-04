@@ -6,7 +6,7 @@
 ;;; Code:
 
 
-(defun paloryemacs/elfeed-mark-all-as-read ()
+(defun tl/elfeed-mark-all-as-read ()
   (interactive)
   (when (y-or-n-p "Really mark all items as read?")
     (mark-whole-buffer)
@@ -15,7 +15,7 @@
 ;; http://pragmaticemacs.com/emacs/read-your-rss-feeds-in-emacs-with-elfeed/
 ;; functions to support syncing .elfeed between machines
 ;; makes sure elfeed reads index from disk before launching
-(defun paloryemacs/elfeed-load-db-and-open ()
+(defun tl/elfeed-load-db-and-open ()
   "Wrapper to load the elfeed db from disk before opening"
   (interactive)
   (elfeed-db-load)
@@ -23,27 +23,27 @@
   (elfeed-search-update--force))
 
 ;;write to disk when quiting
-(defun paloryemacs/elfeed-save-db-and-bury ()
+(defun tl/elfeed-save-db-and-bury ()
   "Wrapper to save the elfeed db to disk before burying buffer"
   (interactive)
   (elfeed-db-save)
   (quit-window))
 
-(defun paloryemacs/elfeed-show-emacs ()
+(defun tl/elfeed-show-emacs ()
   (interactive)
   (bookmark-maybe-load-default-file)
   (bookmark-jump "elfeed-emacs"))
 
-(defhydra paloryemacs/hydra-elfeed ()
+(defhydra tl/hydra-elfeed ()
   "Filter"
   ("c" (elfeed-search-set-filter "@6-months-ago +cs") "cs")
   ("e" (elfeed-search-set-filter "@6-months-ago +emacs") "emacs")
   ("d" (elfeed-search-set-filter "@6-months-ago +education") "education")
   ("*" (elfeed-search-set-filter "@6-months-ago +star") "Starred")
-  ("m" paloryemacs/elfeed-toggle-star "Mark")
+  ("m" tl/elfeed-toggle-star "Mark")
   ("A" (elfeed-search-set-filter "@6-months-ago") "All")
   ("T" (elfeed-search-set-filter "@1-day-ago") "Today")
-  ("Q" paloryemacs/elfeed-save-db-and-bury "Quit Elfeed" :color blue)
+  ("Q" tl/elfeed-save-db-and-bury "Quit Elfeed" :color blue)
   ("q" nil "quit" :color blue))
 
 
@@ -64,7 +64,7 @@
     (when (not (one-window-p))
       (delete-window win))))
 
-(defun paloryemacs/elfeed-quit ()
+(defun tl/elfeed-quit ()
   (interactive)
   (let ((win (get-buffer-window "*elfeed-entry*")))
     (when (not (one-window-p))
@@ -75,7 +75,7 @@
   :defer t
   :init
   (progn
-    (paloryemacs/set-leader-keys "af" 'elfeed)
+    (tl/set-leader-keys "af" 'elfeed)
     (setq-default elfeed-search-filter "@1-week-ago +unread ")
     (setq elfeed-use-curl t))
   :config
@@ -83,15 +83,15 @@
     (setq elfeed-show-entry-switch #'popwin:elfeed-show-entry
           elfeed-show-entry-delete #'popwin:elfeed-kill-buffer)
 
-    (defalias 'paloryemacs/elfeed-toggle-star
+    (defalias 'tl/elfeed-toggle-star
       (elfeed-expose #'elfeed-search-toggle-all 'star))
 
     (use-package elfeed-show
       :config
       (progn
-        (defun paloryemacs/elfeed-show-mode-init ()
+        (defun tl/elfeed-show-mode-init ()
           (setq truncate-lines nil))
-        (add-hook 'elfeed-show-mode-hook 'paloryemacs/elfeed-show-mode-init)))
+        (add-hook 'elfeed-show-mode-hook 'tl/elfeed-show-mode-init)))
 
     (use-package elfeed-org
       :init
@@ -110,16 +110,16 @@
       :mode elfeed-search-mode
       :eval-after-load elfeed-search
       :bindings
-      "Q"  'paloryemacs/elfeed-save-db-and-bury
-      "A"  'paloryemacs/elfeed-mark-all-as-read
+      "Q"  'tl/elfeed-save-db-and-bury
+      "A"  'tl/elfeed-mark-all-as-read
       "c"  'elfeed-db-compact
       "gr" 'elfeed-update
       "gR" 'elfeed-search-update--force
       "gu" 'elfeed-unjam
       "o"  'elfeed-load-opml
-      "q"  'paloryemacs/elfeed-quit
-      "m"  'paloryemacs/elfeed-toggle-star
-      "f"  'paloryemacs/hydra-elfeed/body
+      "q"  'tl/elfeed-quit
+      "m"  'tl/elfeed-toggle-star
+      "f"  'tl/hydra-elfeed/body
       "w"  'elfeed-web-start
       "W"  'elfeed-web-stop)
 

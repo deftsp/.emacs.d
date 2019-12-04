@@ -19,7 +19,7 @@
 ;;; auto fill mode
 (setq-default fill-column 80)
 
-(defun paloryemacs/unfill-buffer ()
+(defun tl/unfill-buffer ()
   "Undo filling for all paragraphs."
   (interactive)
   (goto-char (point-min))
@@ -44,7 +44,7 @@
 ;; Stefan Monnier <foo at acm.org>. It is the opposite of fill-paragraph Takes a multi-line paragraph and makes it into
 ;; a single line of text.
 ;; http://pages.sachachua.com/.emacs.d/Sacha.html
-(defun paloryemacs/fill-or-unfill-paragraph (&optional unfill region)
+(defun tl/fill-or-unfill-paragraph (&optional unfill region)
   "Fill paragraph (or REGION).
   With the prefix argument UNFILL, unfill it instead."
   (interactive (progn
@@ -53,26 +53,26 @@
   (let ((fill-column (if unfill (point-max) fill-column)))
     (fill-paragraph nil region)))
 
-(global-set-key (kbd "M-q") 'paloryemacs/fill-or-unfill-paragraph) ;; `M-q' default to `fill-paragraph'
+(global-set-key (kbd "M-q") 'tl/fill-or-unfill-paragraph) ;; `M-q' default to `fill-paragraph'
 
-;; You can convert an entire buffer from paragraphs to lines by recording a macro that calls 'paloryemacs/unfill-paragraph' and
+;; You can convert an entire buffer from paragraphs to lines by recording a macro that calls 'tl/unfill-paragraph' and
 ;; moves past the blank-line to the next unfilled paragraph and then executing that macro on the whole buffer, 'C-u 0
 ;; C-x e'
 
 ;; delete the hard-wrapped line endings in a paragraph
-(defun paloryemacs/remove-hard-wrap-paragraph ()
+(defun tl/remove-hard-wrap-paragraph ()
   "Replace newline chars in current paragraph by single spaces."
   (interactive)
   (let ((fill-column 90002000))
     (fill-paragraph nil)))
 
-(defun paloryemacs/remove-hard-wrap-region (start end)
+(defun tl/remove-hard-wrap-region (start end)
   "Replace newline chars in region by single spaces."
   (interactive "r")
   (let ((fill-column 90002000))
     (fill-region start end)))
 
-(global-set-key (kbd "M-Q") 'paloryemacs/remove-hard-wrap-paragraph)
+(global-set-key (kbd "M-Q") 'tl/remove-hard-wrap-paragraph)
 
 
 ;; 解决中英文混排不能正确 fill 的问题
@@ -80,7 +80,7 @@
 (put-charset-property 'chinese-cns11643-6 'nospace-between-words t)
 (put-charset-property 'chinese-cns11643-7 'nospace-between-words t)
 
-(defun paloryemacs/add-blank-between-chinese-and-english (&optional start end)
+(defun tl/add-blank-between-chinese-and-english (&optional start end)
   "automaticall add a blank between English and Chinese words."
   (interactive)
   (save-excursion
@@ -101,13 +101,13 @@
 ;; Function called (if non-nil) to perform auto-fill. It is called after
 ;; self-inserting any character specified in the `auto-fill-chars' table. NOTE:
 ;; This variable is not a hook; its value may not be a list of functions.
-(defun paloryemacs/add-blank-between-chinese-and-english-whole-buffer ()
+(defun tl/add-blank-between-chinese-and-english-whole-buffer ()
   (interactive)
-  (paloryemacs/add-blank-between-chinese-and-english (point-at-bol) (point-at-eol))
+  (tl/add-blank-between-chinese-and-english (point-at-bol) (point-at-eol))
   (do-auto-fill))
 
 (setq-default auto-fill-function
-              #'paloryemacs/add-blank-between-chinese-and-english-whole-buffer)
+              #'tl/add-blank-between-chinese-and-english-whole-buffer)
 
 
 (use-package prog-fill

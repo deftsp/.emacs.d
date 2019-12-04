@@ -17,7 +17,7 @@
 
 ;;; web-mode.el is an autonomous emacs major-mode for editing web templates:
 ;;; HTML documents embedding parts (CSS / JavaScript) and blocks (client / server side)
-(defhydra paloryemacs/web-mode (:color teal)
+(defhydra tl/web-mode (:color teal)
   ("j" web-mode-element-next "next" :color red)
   ("J" web-mode-element-sibling-next "next sibling" :color red)
   ("gj" web-mode-element-sibling-next :color red)
@@ -82,7 +82,7 @@
             ("case-extra-offset" . t)))
 
 
-    (defun paloryemacs/init-web-mode ()
+    (defun tl/init-web-mode ()
       "Hooks for Web mode."
       (flycheck-mode +1)
       (company-mode +1)
@@ -108,15 +108,15 @@
           web-mode-style-padding 1
           web-mode-block-padding 0))
 
-  (add-hook 'web-mode-hook 'paloryemacs/init-web-mode)
+  (add-hook 'web-mode-hook 'tl/init-web-mode)
   :config
   (progn
-    (paloryemacs/declare-prefix-for-mode 'web-mode "me" "errors")
-    (paloryemacs/declare-prefix-for-mode 'web-mode "mg" "goto")
-    (paloryemacs/declare-prefix-for-mode 'web-mode "mh" "dom")
-    (paloryemacs/declare-prefix-for-mode 'web-mode "mr" "refactor")
-    (paloryemacs/set-leader-keys-for-major-mode 'web-mode
-      "."  'paloryemacs/web-mode/body
+    (tl/declare-prefix-for-mode 'web-mode "me" "errors")
+    (tl/declare-prefix-for-mode 'web-mode "mg" "goto")
+    (tl/declare-prefix-for-mode 'web-mode "mh" "dom")
+    (tl/declare-prefix-for-mode 'web-mode "mr" "refactor")
+    (tl/set-leader-keys-for-major-mode 'web-mode
+      "."  'tl/web-mode/body
       "eh" 'web-mode-dom-errors-show
       "gb" 'web-mode-element-beginning
       "gc" 'web-mode-element-child
@@ -137,35 +137,35 @@
     (setq-default css-indent-offset 2)))
 
 ;;; skewer
-(defun paloryemacs/skewer-start-repl ()
+(defun tl/skewer-start-repl ()
   "Attach a browser to Emacs and start a skewer REPL."
   (interactive)
   (run-skewer)
   (skewer-repl))
 
-(defun paloryemacs/skewer-load-buffer-and-focus ()
+(defun tl/skewer-load-buffer-and-focus ()
   "Execute whole buffer in browser and switch to REPL in insert state."
   (interactive)
   (skewer-load-buffer)
   (skewer-repl)
   (evil-insert-state))
 
-(defun paloryemacs/skewer-eval-defun-and-focus ()
+(defun tl/skewer-eval-defun-and-focus ()
   "Execute function at point in browser and switch to REPL in insert state."
   (interactive)
   (skewer-eval-defun)
   (skewer-repl)
   (evil-insert-state))
 
-(defun paloryemacs/skewer-eval-region (beg end)
+(defun tl/skewer-eval-region (beg end)
   "Execute the region as JavaScript code in the attached browser."
   (interactive "r")
   (skewer-eval (buffer-substring beg end) #'skewer-post-minibuffer))
 
-(defun paloryemacs/skewer-eval-region-and-focus (beg end)
+(defun tl/skewer-eval-region-and-focus (beg end)
   "Execute the region in browser and swith to REPL in insert state."
   (interactive "r")
-  (paloryemacs/skewer-eval-region beg end)
+  (tl/skewer-eval-region beg end)
   (skewer-repl)
   (evil-insert-state))
 
@@ -177,9 +177,9 @@
   :diminish skewer-mode
   :init
   (progn
-    (defun paloryemacs/skewer-clients-mode-init ()
+    (defun tl/skewer-clients-mode-init ()
       (display-line-numbers-mode -1))
-    (add-hook 'skewer-clients-mode-hook 'paloryemacs/skewer-clients-mode-init)
+    (add-hook 'skewer-clients-mode-hook 'tl/skewer-clients-mode-init)
 
     (add-hook 'js2-mode-hook 'skewer-mode))
   :config
@@ -191,19 +191,19 @@
         :bindings
         "gr" (lookup-key skewer-clients-mode-map "g")))
 
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "ms" "skewer")
-    (paloryemacs/declare-prefix-for-mode 'js2-mode "me" "eval")
-    (paloryemacs/set-leader-keys-for-major-mode 'js2-mode
-      "'" 'paloryemacs/skewer-start-repl
+    (tl/declare-prefix-for-mode 'js2-mode "ms" "skewer")
+    (tl/declare-prefix-for-mode 'js2-mode "me" "eval")
+    (tl/set-leader-keys-for-major-mode 'js2-mode
+      "'" 'tl/skewer-start-repl
       "ee" 'skewer-eval-last-expression
       "eE" 'skewer-eval-print-last-expression
       "sb" 'skewer-load-buffer
-      "sB" 'paloryemacs/skewer-load-buffer-and-focus
-      "si" 'paloryemacs/skewer-start-repl
+      "sB" 'tl/skewer-load-buffer-and-focus
+      "si" 'tl/skewer-start-repl
       "sf" 'skewer-eval-defun
-      "sF" 'paloryemacs/skewer-eval-defun-and-focus
-      "sr" 'paloryemacs/skewer-eval-region
-      "sR" 'paloryemacs/skewer-eval-region-and-focus
+      "sF" 'tl/skewer-eval-defun-and-focus
+      "sr" 'tl/skewer-eval-region
+      "sR" 'tl/skewer-eval-region-and-focus
       "ss" 'skewer-repl)))
 
 (use-package skewer-html
@@ -214,7 +214,7 @@
     (add-hook 'web-mode-hook 'skewer-html-mode))
   :config
   (progn
-    (paloryemacs/set-leader-keys-for-minor-mode 'skewer-html-mode
+    (tl/set-leader-keys-for-minor-mode 'skewer-html-mode
       "et" 'skewer-html-eval-tag)))
 
 (use-package skewer-css
@@ -225,7 +225,7 @@
     (add-hook 'css-mode-hook 'skewer-css-mode))
   :config
   (progn
-    (paloryemacs/set-leader-keys-for-minor-mode 'skewer-css-mode
+    (tl/set-leader-keys-for-minor-mode 'skewer-css-mode
       "ee" 'skewer-css-eval-current-declaration
       "ex" 'skewer-css-eval-current-rule
       "eb" 'skewer-css-eval-buffer
@@ -235,7 +235,7 @@
 (use-package json-mode
   :defer t
   :config
-  (defun paloryemacs/json-reformat-dwim (arg &optional start end)
+  (defun tl/json-reformat-dwim (arg &optional start end)
     "Reformat the whole buffer of the active region.
 If ARG is non-nil (universal prefix argument) then try to decode the strings.
 If ARG is a numerical prefix argument then specify the indentation level."
@@ -249,13 +249,13 @@ If ARG is a numerical prefix argument then specify the indentation level."
           (save-excursion (json-reformat-region (point-min) (point-max)))
         (json-reformat-region start end))))
 
-  (paloryemacs/set-leader-keys-for-major-mode 'json-mode
-    "=" 'paloryemacs/json-reformat-dwim))
+  (tl/set-leader-keys-for-major-mode 'json-mode
+    "=" 'tl/json-reformat-dwim))
 
 (use-package json-snatcher
   :defer t
   :init
-  (paloryemacs/set-leader-keys-for-major-mode 'json-mode
+  (tl/set-leader-keys-for-major-mode 'json-mode
     "hp" 'jsons-print-path))
 
 ;; https://github.com/yasuyk/web-beautify
@@ -263,13 +263,13 @@ If ARG is a numerical prefix argument then specify the indentation level."
   :defer t
   ;; :init
   ;; (progn
-  ;;   (paloryemacs/set-leader-keys-for-major-mode 'js2-mode
+  ;;   (tl/set-leader-keys-for-major-mode 'js2-mode
   ;;     "=" 'web-beautify-js)
-  ;;   (paloryemacs/set-leader-keys-for-major-mode 'json-mode
+  ;;   (tl/set-leader-keys-for-major-mode 'json-mode
   ;;     "=" 'web-beautify-js)
-  ;;   (paloryemacs/set-leader-keys-for-major-mode 'web-mode
+  ;;   (tl/set-leader-keys-for-major-mode 'web-mode
   ;;     "=" 'web-beautify-html)
-  ;;   (paloryemacs/set-leader-keys-for-major-mode 'css-mode
+  ;;   (tl/set-leader-keys-for-major-mode 'css-mode
   ;;     "=" 'web-beautify-css))
   )
 
@@ -278,7 +278,7 @@ If ARG is a numerical prefix argument then specify the indentation level."
   :commands (eslintd-fix eslintd-fix-mode)
   :after (web-mode)
   :config
-  (paloryemacs/set-leader-keys-for-major-mode 'web-mode
+  (tl/set-leader-keys-for-major-mode 'web-mode
     "ef" 'eslintd-fix))
 
 ;; Live evaluation of JS buffer change.
@@ -288,7 +288,7 @@ If ARG is a numerical prefix argument then specify the indentation level."
   :init
   (progn
     (with-eval-after-load 'js2-mode
-      (paloryemacs/set-leader-keys-for-major-mode 'js2-mode
+      (tl/set-leader-keys-for-major-mode 'js2-mode
         "sa" 'livid-mode))))
 
 (provide '50web)

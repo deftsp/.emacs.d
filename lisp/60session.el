@@ -16,13 +16,13 @@
     (setq recentf-auto-cleanup 'never))
   :config
   (progn
-    (defun paloryemacs//recentf-track-file-ensure-no-properties (old-function &rest arguments)
+    (defun tl//recentf-track-file-ensure-no-properties (old-function &rest arguments)
       (and buffer-file-name
            (recentf-add-file (substring-no-properties buffer-file-name)))
       ;; Must return nil because it is run from `write-file-functions'.
       nil)
 
-    (advice-add #'recentf-track-opened-file :around #'paloryemacs//recentf-track-file-ensure-no-properties)
+    (advice-add #'recentf-track-opened-file :around #'tl//recentf-track-file-ensure-no-properties)
 
     (add-to-list 'recentf-keep 'file-remote-p) ; the remote connection is NOT opened
     (add-to-list 'recentf-exclude "^/su:")
@@ -34,13 +34,13 @@
 (use-package saveplace
   :config
   (progn
-    (defun paloryemacs//save-place-to-alist-ensure-no-properties ()
+    (defun tl//save-place-to-alist-ensure-no-properties ()
       (when buffer-file-name
         (setq buffer-file-name
               (substring-no-properties buffer-file-name))))
 
     (advice-add 'save-place-to-alist :before
-                #'paloryemacs//save-place-to-alist-ensure-no-properties)
+                #'tl//save-place-to-alist-ensure-no-properties)
 
     (save-place-mode +1)))
 
@@ -57,8 +57,8 @@
 (put 'evil-ex-history 'history-length 50)
 (put 'kill-ring 'history-length 25)
 
-(when (boundp 'paloryemacs-cache-directory)
-  (setq savehist-file (concat paloryemacs-cache-directory "history")))
+(when (boundp 'tl-cache-directory)
+  (setq savehist-file (concat tl-cache-directory "history")))
 ;;; automatic saving of minibuffer history.
 (savehist-mode +1)
 
@@ -189,13 +189,13 @@
       (key-chord-define-global ".w" wg-prefixed-map))))
 
 
-(defun paloryemacs/turn-on-workgroups-mode ()
+(defun tl/turn-on-workgroups-mode ()
   (interactive)
   (when (fboundp 'workgroups-mode)
     (workgroups-mode 1)))
 
 ;; make sure workgroups2 runs bofore desktop
-(add-hook 'after-init-hook 'paloryemacs/turn-on-workgroups-mode)
+(add-hook 'after-init-hook 'tl/turn-on-workgroups-mode)
 
 (provide '60session)
 

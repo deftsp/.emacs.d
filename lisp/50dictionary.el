@@ -45,26 +45,26 @@
      (setq global-dictionary-tooltip-mode nil
            dictionary-tooltip-mode nil)))
 
-(defun paloryemacs/dictionary-next-dictionary ()
+(defun tl/dictionary-next-dictionary ()
   (interactive)
   (end-of-line)
   (search-forward-regexp "^From" nil t)
   (beginning-of-line))
 
-(defun paloryemacs/dictionary-prev-dictionary ()
+(defun tl/dictionary-prev-dictionary ()
   (interactive)
   (beginning-of-line)
   (search-backward-regexp "^From" nil t)
   (beginning-of-line))
 
-(defun paloryemacs/dictionary-mode-hook ()
+(defun tl/dictionary-mode-hook ()
   (define-key dictionary-mode-map (kbd "<backtab>") 'dictionary-prev-link)
-  (define-key dictionary-mode-map (kbd "n") 'paloryemacs/dictionary-next-dictionary)
-  (define-key dictionary-mode-map (kbd "p") 'paloryemacs/dictionary-prev-dictionary))
+  (define-key dictionary-mode-map (kbd "n") 'tl/dictionary-next-dictionary)
+  (define-key dictionary-mode-map (kbd "p") 'tl/dictionary-prev-dictionary))
 
 
 (eval-after-load "dictionary"
-  '(add-hook 'dictionary-mode-hook 'paloryemacs/dictionary-mode-hook))
+  '(add-hook 'dictionary-mode-hook 'tl/dictionary-mode-hook))
 
 ;;; wordnet
 (use-package wordnet
@@ -72,20 +72,20 @@
 
 ;;; Emacs & Dictionary.app
 ;; http://larkery.tumblr.com/post/465585528/emacs-dictionary-app
-(defun paloryemacs/mac-open-dictionary (the-word)
+(defun tl/mac-open-dictionary (the-word)
   "Open Dictionary.app for the-word"
   (interactive "sDictionary Lookup: ")
   (shell-command (concat "open \"dict:///" (replace-regexp-in-string "\"" "\\\\\"" the-word) "\"")))
 
-(defun paloryemacs/lookup-current-word ()
+(defun tl/lookup-current-word ()
   (interactive)
   (let ((w (current-word)))
     (if w
-        (paloryemacs/mac-open-dictionary w)
-      (call-interactively #'paloryemacs/mac-open-dictionary))))
+        (tl/mac-open-dictionary w)
+      (call-interactively #'tl/mac-open-dictionary))))
 
 (eval-after-load "key-chord"
-  '(key-chord-define-global "/d" 'paloryemacs/lookup-current-word))
+  '(key-chord-define-global "/d" 'tl/lookup-current-word))
 
 
 (provide '50dictionary)

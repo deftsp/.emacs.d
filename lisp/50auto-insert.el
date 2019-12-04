@@ -26,7 +26,7 @@
 ;;       "#define " str "\n\n"
 ;;       _ "\n\n#endif"))
 
-(defun paloryemacs/auto-inset-copyright ()
+(defun tl/auto-inset-copyright ()
   (concat "Copyright (C) "
           (format-time-string "%Y ")
           (user-full-name)
@@ -41,7 +41,7 @@
       " * Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       " * Created: " (current-time-string) "\n"
       " * Description: \n"
-      " * " (paloryemacs/auto-inset-copyright)
+      " * " (tl/auto-inset-copyright)
       " */\n\n"
       (let* ((nopath (file-name-sans-extension (file-name-nondirectory buffer-file-name)))
              (indent (concat "__" (upcase nopath)
@@ -62,7 +62,7 @@
       " * Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       " * Created: "(current-time-string) "\n"
       " * Description: \n"
-      " * " (paloryemacs/auto-inset-copyright)
+      " * " (tl/auto-inset-copyright)
       " */\n\n"
       ;; (let* ((nopath (file-name-nondirectory buffer-file-name))
       ;;        (noext  (file-name-sans-extension nopath)))
@@ -79,7 +79,7 @@
       ";; Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       ";; Created: "(current-time-string) "\n"
       ";; Description: \n"
-      ";; " (paloryemacs/auto-inset-copyright)
+      ";; " (tl/auto-inset-copyright)
       "\n\n"
       (previous-line 4)
       (end-of-line)))
@@ -92,7 +92,7 @@
       ";; Author: " (format "%s <%s>" (user-full-name) user-mail-address) "\n"
       ";; Created: "(current-time-string) "\n"
       ";; Description: \n"
-      ";; " (paloryemacs/auto-inset-copyright)
+      ";; " (tl/auto-inset-copyright)
       "\n\n"
       (previous-line 4)
       (end-of-line)))

@@ -1,4 +1,4 @@
-;;; paloryemacs-theme.el ---
+;;; tl-theme.el ---
 
 ;; Copyright (C) 2012  Shihpin Tseng
 
@@ -18,7 +18,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;;; Commentary: paloryemacs theme, for programmer
+;;; Commentary: tl theme, for programmer
 
 ;;; Code:
 
@@ -31,7 +31,7 @@
 ;; the easy way to get following vlaue is: `customize face' => Apply and save => copy and paste
 ;; Likes "#032238"
 
-(deftheme paloryemacs "The Paloryemacs color theme. Base on zenburn and solarized")
+(deftheme tl "The TLEmacs color theme. Base on zenburn and solarized")
 
 (let ((base03  "#002b36")
       (base02  "#073642")
@@ -53,7 +53,7 @@
       (inactive2 "#33485d"))
 
   (custom-theme-set-faces
-   'paloryemacs
+   'tl
    ;; basic coloring
    `(default ((t (:background ,base03 :foreground ,base0))))
    '(cursor ((t (:foreground unspecified :background "#cd0000"))))
@@ -406,15 +406,15 @@
    `(diff-hl-unknown ((t (:foreground)) ,violet :background ,violet))
 
    ;; eshell-prompt-extras
-   `(paloryemacs/eshell-base-face ((t (:foreground ,base0 :background nil :font "mplus Nerd Font" :size 14))))
-   `(epe-symbol-face ((t (:foreground "#d01ce2" :inherit paloryemacs/eshell-base-face))))
-   `(epe-user-face ((t (:foreground "#648fc3" :inherit paloryemacs/eshell-base-face))))
-   `(epe-host-face ((t (:foreground "#648fc3" :inherit paloryemacs/eshell-base-face))))
-   `(epe-time-face ((t (:foreground "#e2d282" :inherit paloryemacs/eshell-base-face))))
-   `(epe-dir-face ((t (:foreground "#94bff3" :inherit paloryemacs/eshell-base-face))))
-   `(epe-venv-face ((t (:foreground "#dca3a3" :inherit paloryemacs/eshell-base-face))))
-   `(epe-git-face ((t (:foreground "#22ccee" :inherit paloryemacs/eshell-base-face))))
-   `(epe-delimiter-face ((t (:foreground ,base1 :inherit paloryemacs/eshell-base-face))))
+   `(tl/eshell-base-face ((t (:foreground ,base0 :background nil :font "mplus Nerd Font" :size 14))))
+   `(epe-symbol-face ((t (:foreground "#d01ce2" :inherit tl/eshell-base-face))))
+   `(epe-user-face ((t (:foreground "#648fc3" :inherit tl/eshell-base-face))))
+   `(epe-host-face ((t (:foreground "#648fc3" :inherit tl/eshell-base-face))))
+   `(epe-time-face ((t (:foreground "#e2d282" :inherit tl/eshell-base-face))))
+   `(epe-dir-face ((t (:foreground "#94bff3" :inherit tl/eshell-base-face))))
+   `(epe-venv-face ((t (:foreground "#dca3a3" :inherit tl/eshell-base-face))))
+   `(epe-git-face ((t (:foreground "#22ccee" :inherit tl/eshell-base-face))))
+   `(epe-delimiter-face ((t (:foreground ,base1 :inherit tl/eshell-base-face))))
 
    ;; structured-haskell-mode
    '(shm-current-face ((t (:background "#222222"))))
@@ -466,7 +466,7 @@
 
   ;;; custom theme variables
   (custom-theme-set-variables
-   'paloryemacs
+   'tl
    `(ansi-color-names-vector ['bg ,red ,green ,yellow ,blue ,magenta ,cyan ,base0])
    ;; fill-column-indicator
    `(fci-rule-color ,base01)))
@@ -481,7 +481,7 @@
 
 
 
-(provide-theme 'paloryemacs)
+(provide-theme 'tl)
 
 ;;;###autoload
 (add-to-list 'safe-local-eval-forms
@@ -497,4 +497,4 @@
 ;; eval: (when (require 'hexcolor-mode nil t) (hexcolor-mode 1))
 ;; eval: (auto-fill-mode -1)
 ;; End:
-;;; paloryemacs-theme.el ends here.
+;;; tl-theme.el ends here.

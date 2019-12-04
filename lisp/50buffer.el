@@ -111,7 +111,7 @@
 ;; "09:30am". see more..  run-at-time.
 ;; (midnight-delay-set 'midnight-delay "09:30am")
 ;; set midnight-delay after 3 hours
-(midnight-delay-set 'midnight-delay (paloryemacs/future-time-string (* 3 60 60)))
+(midnight-delay-set 'midnight-delay (tl/future-time-string (* 3 60 60)))
 
 
 
@@ -153,19 +153,19 @@
         '("\\`\\*tramp/.*\\*\\`"
           "\\`\\*ftp .*\\*\\`"))
 
-(defun paloryemacs/safe-revert-buffer ()
+(defun tl/safe-revert-buffer ()
   "Prompt before reverting the file."
   (interactive)
   (revert-buffer nil nil))
 
-(defun paloryemacs/safe-erase-buffer ()
+(defun tl/safe-erase-buffer ()
   "Prompt before erasing the content of the file."
   (interactive)
   (if (y-or-n-p (format "Erase content of buffer %s ? " (current-buffer)))
       (erase-buffer)))
 
 ;; https://tsdh.wordpress.com/2007/03/28/deleting-windows-vertically-or-horizontally/
-(defun paloryemacs/maximize-horizontally ()
+(defun tl/maximize-horizontally ()
   "Delete all windows left or right of the current window."
   (interactive)
   (require 'windmove)
@@ -175,13 +175,13 @@
     (while (condition-case nil (windmove-right) (error nil))
       (delete-window))))
 
-(defun paloryemacs/toggle-centered-buffer-mode ()
-  "Toggle `paloryemacs-centered-buffer-mode'."
+(defun tl/toggle-centered-buffer-mode ()
+  "Toggle `tl-centered-buffer-mode'."
   (interactive)
   (when (require 'centered-buffer-mode nil t)
-    (call-interactively 'paloryemacs-centered-buffer-mode)))
+    (call-interactively 'tl-centered-buffer-mode)))
 
-(defun paloryemacs/toggle-centered-buffer-mode-frame ()
+(defun tl/toggle-centered-buffer-mode-frame ()
   "Open current buffer in the new frame centered and without mode-line."
   (interactive)
   (when (require 'centered-buffer-mode nil t)
@@ -195,18 +195,18 @@
      1
      nil
      (lambda ()
-       (call-interactively 'paloryemacs-centered-buffer-mode)
+       (call-interactively 'tl-centered-buffer-mode)
        (setq mode-line-format nil)))))
 
-(defun paloryemacs/centered-buffer-mode-full-width ()
+(defun tl/centered-buffer-mode-full-width ()
   "Center buffer in the frame."
   ;; FIXME Needs new key-binding.
   (interactive)
   (when (require 'centered-buffer-mode nil t)
-    (paloryemacs/maximize-horizontally)
-    (call-interactively 'paloryemacs-centered-buffer-mode)))
+    (tl/maximize-horizontally)
+    (call-interactively 'tl-centered-buffer-mode)))
 
-(defun paloryemacs/new-empty-buffer (&optional split)
+(defun tl/new-empty-buffer (&optional split)
   "Create a new buffer called untitled(<n>).
 A SPLIT argument with the value: `left',
 `below', `above' or `right', opens the new
@@ -215,9 +215,9 @@ buffer in a split window."
   (let ((newbuf (generate-new-buffer "untitled")))
     (case split
       ('left  (split-window-horizontally))
-      ('below (paloryemacs/split-window-vertically-and-switch))
+      ('below (tl/split-window-vertically-and-switch))
       ('above (split-window-vertically))
-      ('right (paloryemacs/split-window-horizontally-and-switch)))
+      ('right (tl/split-window-horizontally-and-switch)))
     ;; Prompt to save on `save-some-buffers' with positive PRED
     (with-current-buffer newbuf
       (setq-local buffer-offer-save t))
@@ -225,37 +225,37 @@ buffer in a split window."
     ;; displaying buffer in another window
     (switch-to-buffer newbuf nil 'force-same-window)))
 
-(defun paloryemacs/new-empty-buffer-left ()
+(defun tl/new-empty-buffer-left ()
   "Create a new buffer called untitled(<n>),
 in a split window to the left."
   (interactive)
-  (paloryemacs/new-empty-buffer 'left))
+  (tl/new-empty-buffer 'left))
 
-(defun paloryemacs/new-empty-buffer-below ()
+(defun tl/new-empty-buffer-below ()
   "Create a new buffer called untitled(<n>),
 in a split window below."
   (interactive)
-  (paloryemacs/new-empty-buffer 'below))
+  (tl/new-empty-buffer 'below))
 
-(defun paloryemacs/new-empty-buffer-above ()
+(defun tl/new-empty-buffer-above ()
   "Create a new buffer called untitled(<n>),
 in a split window above."
   (interactive)
-  (paloryemacs/new-empty-buffer 'above))
+  (tl/new-empty-buffer 'above))
 
-(defun paloryemacs/new-empty-buffer-right ()
+(defun tl/new-empty-buffer-right ()
   "Create a new buffer called untitled(<n>),
 in a split window to the right."
   (interactive)
-  (paloryemacs/new-empty-buffer 'right))
+  (tl/new-empty-buffer 'right))
 
 ;; http://stackoverflow.com/a/10216338/4869
-(defun paloryemacs/copy-whole-buffer-to-clipboard ()
+(defun tl/copy-whole-buffer-to-clipboard ()
   "Copy entire buffer to clipboard"
   (interactive)
   (clipboard-kill-ring-save (point-min) (point-max)))
 
-(defun paloryemacs/copy-clipboard-to-whole-buffer ()
+(defun tl/copy-clipboard-to-whole-buffer ()
   "Copy clipboard and replace buffer"
   (interactive)
   (delete-region (point-min) (point-max))
@@ -263,7 +263,7 @@ in a split window to the right."
   (deactivate-mark))
 
 ;; our own implementation of kill-this-buffer from menu-bar.el
-(defun paloryemacs/kill-this-buffer (&optional arg)
+(defun tl/kill-this-buffer (&optional arg)
   "Kill the current buffer.
 If the universal prefix argument is used then kill also the window."
   (interactive "P")
@@ -273,7 +273,7 @@ If the universal prefix argument is used then kill also the window."
         (kill-buffer-and-window)
       (kill-buffer))))
 
-(defun paloryemacs/ace-kill-this-buffer (&optional arg)
+(defun tl/ace-kill-this-buffer (&optional arg)
   "Ace kill visible buffer in a window.
 If the universal prefix argument is used then kill also the window."
   (interactive "P")
@@ -283,10 +283,10 @@ If the universal prefix argument is used then kill also the window."
      " Ace - Kill buffer in Window"
      (lambda (window)
        (with-selected-window window
-         (paloryemacs/kill-this-buffer arg))))))
+         (tl/kill-this-buffer arg))))))
 
 ;; found at http://emacswiki.org/emacs/KillingBuffers
-(defun paloryemacs/kill-other-buffers (&optional arg)
+(defun tl/kill-other-buffers (&optional arg)
   "Kill all other buffers.
 If the universal prefix argument is used then will the windows too."
   (interactive "P")

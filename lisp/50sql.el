@@ -29,18 +29,18 @@
             (server :default "localhost")
             (port :default 5433)))
 
-    (defun paloryemacs/sql-interactive-mode-init ()
+    (defun tl/sql-interactive-mode-init ()
       (toggle-truncate-lines t)
       (setq-local show-trailing-whitespace nil))
 
     (add-hook 'sql-interactive-mode-hook
-              'paloryemacs/sql-interactive-mode-init)
+              'tl/sql-interactive-mode-init)
 
-    (defun paloryemacs/sql-mode-init ()
+    (defun tl/sql-mode-init ()
       ;; (sqlind-minor-mode +1)
       )
 
-    (add-hook 'sql-mode-hook 'paloryemacs/sql-mode-init)
+    (add-hook 'sql-mode-hook 'tl/sql-mode-init)
 
 
     (setq sql-connection-alist
