@@ -896,6 +896,7 @@ to replace the symbol under cursor"
   :init
   (with-eval-after-load 'evil
     (define-key evil-inner-text-objects-map "b" 'evil-textobj-anyblock-inner-block)
+    ;; (define-key evil-outer-text-objects-map "b" 'evil-textobj-anyblock-a-block)
     (define-key evil-inner-text-objects-map "B" 'evil-textobj-anyblock-a-block))
   :config
   (defun tl/evil-textobj-anyblock--init ()
