@@ -598,22 +598,33 @@ kill internal buffers too."
   :config
   (global-evil-matchit-mode +1))
 
-(evil-define-text-object tl/evil-textobj-a-defun (count &optional beg end type)
-  (evil-select-an-object 'evil-defun beg end type count))
 
-(evil-define-text-object tl/evil-textobj-inner-defun (count &optional beg end type)
-  (evil-select-inner-object 'evil-defun beg end type count))
+(evil-define-text-object tl:evil-textobj-whole-buffer (count &optional _beg _end type)
+  "Text object to select the whole buffer."
+  (evil-range (point-min) (point-max) type))
 
-(define-key evil-inner-text-objects-map "m" 'evil-inner-defun)
-(define-key evil-outer-text-objects-map "m" 'evil-a-defun)
+(evil-define-text-object tl:evil-textobj-defun (count &optional _beg _end type)
+  "Text object to select the whole buffer."
+  (cl-destructuring-bind (beg . end)
+      (bounds-of-thing-at-point 'defun)
+    (evil-range beg end type)))
 
-(general-define-key
- :keymaps '(evil-inner-text-objects-map)
- "m" 'tl/evil-textobj-inner-defun)
+(define-key evil-inner-text-objects-map "m" 'tl:evil-textobj-defun)
+(define-key evil-outer-text-objects-map "m" 'tl:evil-textobj-defun)
 
-(general-define-key
- :keymaps '(evil-outer-text-objects-map)
- "m" 'tl/evil-textobj-a-defun)
+;; (evil-define-text-object tl/evil-textobj-a-defun (count &optional beg end type)
+;;   (evil-select-an-object 'evil-defun beg end type count))
+
+;; (evil-define-text-object tl/evil-textobj-inner-defun (count &optional beg end type)
+;;   (evil-select-inner-object 'evil-defun beg end type count))
+
+;; (general-define-key
+;;  :keymaps '(evil-inner-text-objects-map)
+;;  "m" 'tl/evil-textobj-inner-defun)
+
+;; (general-define-key
+;;  :keymaps '(evil-outer-text-objects-map)
+;;  "m" 'tl/evil-textobj-a-defun)
 
 ;;; evil-textobj-between.el
 (use-package evil-textobj-between
