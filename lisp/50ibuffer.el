@@ -250,6 +250,15 @@
   :config
   (tl//evilified-binding)
 
+  (defface tl//ibuffer-filter-group-name-face
+    '((((class color))
+       :foreground "#a9d9d9" :background "#43586d" :weight bold)
+      (t (:weight bold)))
+    "face to ibuffer filter group name")
+
+  (setq ibuffer-filter-group-name-face 'tl//ibuffer-filter-group-name-face)
+
+
   (el-get-bundle ibuffer-vc :type github :pkgname "purcell/ibuffer-vc")
   (use-package ibuffer-vc)
 
