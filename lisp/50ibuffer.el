@@ -250,16 +250,36 @@
   :config
   (tl//evilified-binding)
 
+  (el-get-bundle ibuffer-vc :type github :pkgname "purcell/ibuffer-vc")
+  (use-package ibuffer-vc)
+
   ;; reverse the order of groups:
   (defadvice ibuffer-generate-filter-groups (after reverse-ibuffer-groups ()
                                                    activate)
     (setq ad-return-value (nreverse ad-return-value)))
 
   (defun tl//ibuffer-init-h ()
-    (ibuffer-switch-to-saved-filter-groups
-     "default"))
+    (ibuffer-vc-set-filter-groups-by-vc-root)
+    (unless (eq ibuffer-sorting-mode 'alphabetic)
+      (ibuffer-do-sort-by-alphabetic))
+
+    ;; (ibuffer-switch-to-saved-filter-groups
+    ;;  "default")
+    (ibuffer-auto-mode +1))
 
   (add-hook 'ibuffer-mode-hook 'tl//ibuffer-init-h))
+
+
+;; (el-get-bundle ibuffer-projectile :type github :pkgname "purcell/ibuffer-projectile")
+;; (use-package ibuffer-projectile
+;;   :after (projectile)
+;;   :init
+;;   (defun tl//ibufer-projectile-h ()
+;;     (ibuffer-projectile-set-filter-groups)
+;;     (unless (eq ibuffer-sorting-mode 'alphabetic)
+;;       (ibuffer-do-sort-by-alphabetic)))
+
+;;   (add-hook 'ibuffer-hook 'tl//ibufer-projectile-h))
 
 
 (provide '50ibuffer)

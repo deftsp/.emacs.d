@@ -1149,18 +1149,6 @@ such character is found, following options are shown:
   (progn
     (counsel-projectile-mode +1)))
 
-
-;; (el-get-bundle ibuffer-projectile :type github :pkgname "purcell/ibuffer-projectile")
-;; (use-package ibuffer-projectile
-;;   :after (projectile)
-;;   :init
-;;   (defun tl//ibufer-projectile-h ()
-;;     (ibuffer-projectile-set-filter-groups)
-;;     (unless (eq ibuffer-sorting-mode 'alphabetic)
-;;       (ibuffer-do-sort-by-alphabetic)))
-
-;;   (add-hook 'ibuffer-hook 'tl//ibufer-projectile-h))
-
 ;;; xmsi-math-symbols-input.el
 (use-package xmsi-mode
   :defer 7
