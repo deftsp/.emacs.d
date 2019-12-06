@@ -60,6 +60,7 @@
 (require '50hammerspoon)
 (require '50haskell)
 (require '50haskell-emacs)
+(require '50ibuffer)
 (require '50hideshow)
 (require '50input-method)
 (require '51ivy)

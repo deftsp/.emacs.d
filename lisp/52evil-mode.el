@@ -341,7 +341,7 @@ kill internal buffers too."
           (eshell-mode               . insert)
           (eww-mode                  . emacs)
           (helm-grep-mode            . emacs)
-          (ibuffer-mode              . normal)
+          (ibuffer-mode              . evilified)
           (bookmark-bmenu-mode       . evilified)
           (calendar-mode             . evilified)
           (dired-mode                . evilified)
@@ -672,14 +672,6 @@ to replace the symbol under cursor"
   (evil-add-hjkl-bindings eww-mode-map 'emacs
     ;; defaut "l"
     "L" 'eww-back-url))
-
-;;; ibuffer
-(with-eval-after-load 'evil
-  (with-eval-after-load "ibuffer"
-    (evil-define-key 'normal ibuffer-mode-map "J" 'ibuffer-jump-to-buffer)
-    (evil-define-key 'normal ibuffer-mode-map "M-r" 'ibuffer-redisplay) ; default `l'
-    (evil-define-key 'normal ibuffer-mode-map "K" 'ibuffer-do-kill-lines)))
-
 
 ;;; evil-exchange
 ;; `gx': evil-exchange-key, `gX': evil-exchange-cancel-key
@@ -1045,10 +1037,6 @@ to replace the symbol under cursor"
   (evil-define-key 'normal wgrep-mode-map ",c" 'wgrep-finish-edit)
   (evil-define-key 'normal wgrep-mode-map ",a" 'wgrep-abort-changes)
   (evil-define-key 'normal wgrep-mode-map ",k" 'wgrep-abort-changes))
-
-;;; ibuffer
-(with-eval-after-load 'ibuffer
-  (evil-define-key 'normal ibuffer-mode-map (kbd "gr") 'ibuffer-update))
 
 (with-eval-after-load 'ediff
   (use-package evil-ediff))
