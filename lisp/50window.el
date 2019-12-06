@@ -401,12 +401,13 @@ If the universal prefix argument is used then kill the buffer too."
     (add-to-list 'aw-dispatch-alist '(?a tl/jump-to-org-agenda))
     (add-to-list 'aw-dispatch-alist '(?t dired-sidebar-jump-to-sidebar))
 
-    ;; (add-to-list 'throw-down-exit-func '(?\e keyboard-quit "Quit"))
+    (add-to-list 'aw-dispatch-alist '(?\e keyboard-quit))
 
-    (defun tl//exit-when-escape (char)
-      (when (= char ?\e)
-        (throw 'done 'exit)))
-    (advice-add 'aw-dispatch-default :before 'tl//exit-when-escape)
+    ;; (defun tl//exit-when-escape (char)
+    ;;   (when (= char ?\e)
+    ;;     (throw 'done 'exit)))
+    ;; (advice-add 'aw-dispatch-default :before 'tl//exit-when-escape)
+    ;; (advice-remove 'aw-dispatch-default 'tl//exit-when-escape)
 
     ;; TODO: set value for ignored buffer like agenda buffer and dired-sidebar
     (defadvice aw-update (around format-ace-window-path activate)
