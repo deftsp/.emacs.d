@@ -63,7 +63,11 @@
 (savehist-mode +1)
 
 ;;; Desktop
+;; TODO: the jsx buffer execute `eslintd-fix' not work
+(defvar tl/with-desktop nil)
+
 (use-package desktop
+  :defer t
   :init
   (setq desktop-load-locked-desktop t
         desktop-missing-file-warning nil
@@ -160,8 +164,8 @@
   (ad-activate 'desktop-restore-file-buffer)
 
   ;; Use M-x desktop-save once to save the desktop.When it exists, Emacs updates it on every exit.
-  (desktop-save-mode +1))
-
+  (when tl/with-desktop
+    (desktop-save-mode +1)))
 
 ;;; workgroups2
 (use-package workgroups2
@@ -193,9 +197,9 @@
 (defun tl/turn-on-workgroups-mode ()
   (interactive)
   (when (fboundp 'workgroups-mode)
-    (workgroups-mode 1)))
+    (workgroups-mode +1)))
 
-;; make sure workgroups2 runs bofore desktop
+;; make sure workgroups2 runs before desktop
 (add-hook 'after-init-hook 'tl/turn-on-workgroups-mode)
 
 (provide '60session)
