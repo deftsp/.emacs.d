@@ -110,6 +110,7 @@
           (ecb-minor-mode nil)
           (dired-omit-mode nil)
           ;; (key-chord-mode nil)
+          (workgroups-mode nil)
           (structured-haskell-mode nil)
           (senator-minor-mode nil)
           (semantic-show-unmatched-syntax-mode nil)
