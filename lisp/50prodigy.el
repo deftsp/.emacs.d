@@ -12,6 +12,18 @@
   :config
   (progn
     (load "~/.emacs.d/private-prodigy-service.el")
+
+    (defun tl/prodigy-reload-define ()
+      "Reload prodigy define"
+      (interactive)
+      (setq prodigy-services nil)
+
+      (let ((f  "~/.emacs.d/private-prodigy-service.el"))
+        (when (file-exists-p f)
+          (progn
+            (load f)
+            (prodigy-refresh)))))
+
     (with-eval-after-load "evil-evilified-state"
       (evilified-state-evilify prodigy-view-mode prodigy-view-mode-map
         "x"  'prodigy-view-clear-buffer
@@ -41,6 +53,7 @@
 
         ;; refresh
         "gr" 'prodigy-refresh
+        "gR" 'tl/prodigy-reload-define
         "r" 'prodigy-restart
 
         "`" 'prodigy-display-process
