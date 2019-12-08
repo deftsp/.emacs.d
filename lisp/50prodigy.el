@@ -6,6 +6,7 @@
 ;; Keywords:
 
 (use-package prodigy
+  :defer t
   :init
   (progn
     (setq prodigy-completion-system 'default))
