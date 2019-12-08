@@ -87,6 +87,7 @@
       (flycheck-mode +1)
       (company-mode +1)
       (eldoc-mode +1)
+      (show-smartparens-mode -1) ; </> of jsx error
       (setq-default flycheck-disabled-checkers '(jsx-tide tsx-tide handlebars))
 
       (setq-default web-mode-comment-formats
