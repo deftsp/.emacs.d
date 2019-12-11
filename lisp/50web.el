@@ -93,7 +93,7 @@
       (setq-default web-mode-comment-formats
                     '(("java" . "/*")
                       ("javascript" . "/*")
-                      ("jsx" . "//" ) ;"/*"
+                      ("jsx" . "/*" )
                       ("php" . "/*")
                       ("css" . "/*")))
 
