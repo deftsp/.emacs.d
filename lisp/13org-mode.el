@@ -463,6 +463,7 @@
       "aoa" 'org-agenda-list
       "aoc" 'org-capture
       "aoe" 'org-store-agenda-views
+      "aoi" 'org-insert-link-global
       "aoki" 'org-clock-in-last
       "aokj" 'org-clock-jump-to-current-clock
       "aoko" 'org-clock-out
@@ -2300,8 +2301,15 @@ prepended to the element after the #+HEADER: tag."
               #'(lambda () new-time)))
     (org-todo arg)))
 
+;; org-link-minor-mode
+(el-get-bundle org-link-minor-mode :type github :pkgname "seanohalpin/org-link-minor-mode")
+(use-package org-link-minor-mode
+  :defer t
+  :diminish org-link-minor-mode
+  :hook ((emacs-lisp-mode . org-link-minor-mode)))
 
-;; HUGO
+
+;;; HUGO
 (use-package ox-hugo
   :after ox
   :init
