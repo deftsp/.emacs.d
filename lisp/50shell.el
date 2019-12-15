@@ -47,4 +47,15 @@
   (interactive)
   (ansi-term "/bin/zsh"))
 
+
+;;; vterm
+;; [[https://github.com/akermu/emacs-libvterm][akermu/emacs-libvterm: Emacs libvterm integration]]
+;; [[https://github.com/jixiuf/vterm-toggle][jixiuf/vterm-toggle: toggles between the vterm buffer and whatever buffer you are editing.]]
+(when (file-exists-p "~/opt/emacs-libvterm")
+  (use-package vterm
+    :load-path  "~/opt/emacs-libvterm")
+
+  (use-package vterm-toggle
+    :commands (vterm-toggle vterm-toggle-cd)))
+
 (provide '50shell)
