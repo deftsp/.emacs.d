@@ -378,6 +378,7 @@ kill internal buffers too."
           (term-mode                 . emacs)
           (tuareg-interactive-mode   . insert)
           (speedbar-mode             . emacs)
+          (vterm-mode                . insert)
           (yari-mode                 . emacs))
         do (evil-set-initial-state mode state)))
 

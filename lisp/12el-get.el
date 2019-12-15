@@ -26,6 +26,11 @@
 ;; (el-get-save-package-status "package-name-here" "removed")
 
 (el-get-bundle ace-window :type github :pkgname "deftsp/ace-window" :branch "shihpin")
+(el-get-bundle org-link-minor-mode :type github :pkgname "deftsp/org-link-minor-mode" :branch "shihpin")
+(el-get-bundle ibuffer-vc :type github :pkgname "purcell/ibuffer-vc")
+(el-get-bundle vterm-toggle :type github :pkgname "jixiuf/vterm-toggle")
+;; (el-get-bundle ibuffer-projectile :type github :pkgname "purcell/ibuffer-projectile")
+
 
 ;; (el-get 'sync 'cedet)
 (el-get 'sync 'names) ; reinstall org-mode require names

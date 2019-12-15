@@ -259,7 +259,6 @@
   (setq ibuffer-filter-group-name-face 'tl//ibuffer-filter-group-name-face)
 
 
-  (el-get-bundle ibuffer-vc :type github :pkgname "purcell/ibuffer-vc")
   (use-package ibuffer-vc)
 
   ;; reverse the order of groups:
@@ -279,7 +278,6 @@
   (add-hook 'ibuffer-mode-hook 'tl//ibuffer-init-h))
 
 
-;; (el-get-bundle ibuffer-projectile :type github :pkgname "purcell/ibuffer-projectile")
 ;; (use-package ibuffer-projectile
 ;;   :after (projectile)
 ;;   :init

@@ -2302,7 +2302,6 @@ prepended to the element after the #+HEADER: tag."
     (org-todo arg)))
 
 ;; org-link-minor-mode
-(el-get-bundle org-link-minor-mode :type github :pkgname "seanohalpin/org-link-minor-mode")
 (use-package org-link-minor-mode
   :defer t
   :diminish org-link-minor-mode
