@@ -29,6 +29,8 @@
 (el-get-bundle org-link-minor-mode :type github :pkgname "deftsp/org-link-minor-mode" :branch "shihpin")
 (el-get-bundle ibuffer-vc :type github :pkgname "purcell/ibuffer-vc")
 (el-get-bundle vterm-toggle :type github :pkgname "jixiuf/vterm-toggle")
+;; (el-get-bundle diredp :description "Extensions to Dired" :type http :url "https://www.emacswiki.org/emacs/download/dired+.el")
+
 ;; (el-get-bundle ibuffer-projectile :type github :pkgname "purcell/ibuffer-projectile")
 
 
