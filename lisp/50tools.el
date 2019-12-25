@@ -1343,6 +1343,22 @@ inputting math (Unicode) symbols." t))
 ;;   :config
 ;;   (beacon-mode +1))
 
+
+(use-package company-ledger
+  :after (company beancount))
+
+(use-package beancount
+  :load-path "~/opt/beancount/editors/emacs"
+  :mode ("\\.bean$" . beancount-mode)
+  :init
+  (add-hook 'beancount-mode-hook 'tl/beancount-mode-init)
+  (defun tl/beancount-mode-init ()
+    (let ((backends tl/company-common-backends))
+      (push 'company-ledger backends)
+      (set (make-local-variable 'company-backends) backends))
+
+    (company-mode +1)))
+
 (use-package minimap
   :init
   (setq minimap-window-location 'left)
