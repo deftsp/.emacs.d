@@ -26,29 +26,28 @@
 ;; (load-file (concat tl/cedet-root-path "cedet-devel-load.el"))
 ;; (load-file (concat tl/cedet-root-path "contrib/cedet-contrib-load.el"))
 
-;; Add further minor-modes to be enabled by semantic-mode. See doc-string of `semantic-default-submodes' for other
-;; things you can use here.
-(add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode t)
-(add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode t)
-(add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
-;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t) ; use auto completion instead
-(when (fboundp 'global-cedet-m3-minor-mode)
-  (add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode t))
-(add-to-list 'semantic-default-submodes 'global-semantic-mru-bookmark-mode t)
-;; (add-to-list 'semantic-default-submodes 'global-semantic-decoration-mode t) ; Additional tag decorations.
-;; (add-to-list 'semantic-default-submodes 'global-semantic-highlight-func-mode t) ; Highlight the current tag.
-;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-local-symbol-highlight-mode t) ; Highlight references of the symbol under point.
-
-(add-to-list 'semantic-default-submodes 'global-semantic-show-parser-state-mode t)
-(add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode t) ; show current fun in header line
-;; (add-to-list 'semantic-default-submodes 'global-semantic-show-unmatched-syntax-mode t)
-
-
 (use-package semantic
   :defer t
+  :init
+  (progn
+    ;; Add further minor-modes to be enabled by semantic-mode. See doc-string of `semantic-default-submodes' for other
+    ;; things you can use here.
+    (add-to-list 'semantic-default-submodes 'global-semantic-idle-scheduler-mode t)
+    (add-to-list 'semantic-default-submodes 'global-semanticdb-minor-mode t)
+    (add-to-list 'semantic-default-submodes 'global-semantic-idle-summary-mode t)
+    ;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-completions-mode t) ; use auto completion instead
+    (when (fboundp 'global-cedet-m3-minor-mode)
+      (add-to-list 'semantic-default-submodes 'global-cedet-m3-minor-mode t))
+    (add-to-list 'semantic-default-submodes 'global-semantic-mru-bookmark-mode t)
+    ;; (add-to-list 'semantic-default-submodes 'global-semantic-decoration-mode t) ; Additional tag decorations.
+    ;; (add-to-list 'semantic-default-submodes 'global-semantic-highlight-func-mode t) ; Highlight the current tag.
+    ;; (add-to-list 'semantic-default-submodes 'global-semantic-idle-local-symbol-highlight-mode t) ; Highlight references of the symbol under point.
+
+    ;; (add-to-list 'semantic-default-submodes 'global-semantic-show-unmatched-syntax-mode t)
+    (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode t) ; show current fun in header line
+    (add-to-list 'semantic-default-submodes 'global-semantic-show-parser-state-mode t))
   :config
   (define-key semantic-mode-map [menu-bar] nil))
-
 
 
 (defun tl/lazy-load-stickyfunc-enhance ()
