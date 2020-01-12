@@ -7,6 +7,13 @@
 
 (use-package rust-mode
   :config
+
+  (defun tl/rust-mode-init ()
+    (when (fboundp 'org-link-minor-mode)
+      (org-link-minor-mode +1)))
+
+  (add-hook 'rust-mode-hook 'tl/rust-mode-init)
+
   (setq rust-indent-method-chain t
         rust-format-on-save t)
 
