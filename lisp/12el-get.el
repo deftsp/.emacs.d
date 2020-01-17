@@ -33,6 +33,9 @@
   :type github
   :description "Transaction Auto-Completion for Beancount & other Ledger-Likes with Company Mode"
   :pkgname "debanjum/company-ledger")
+(el-get-bundle reveal-in-osx-finder :type github :pkgname "kaz-yos/reveal-in-osx-finder")
+
+
 
 ;; (el-get-bundle diredp :description "Extensions to Dired" :type http :url "https://www.emacswiki.org/emacs/download/dired+.el")
 

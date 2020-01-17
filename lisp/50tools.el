@@ -1327,9 +1327,11 @@ inputting math (Unicode) symbols." t))
 
 
 ;;; reveal-in-finder
-;; https://github.com/kaz-yos/elisp
+;; https://github.com/kaz-yos/reveal-in-osx-finder
 (when (eq system-type 'darwin)
-  (global-set-key (kbd "C-c R") 'reveal-in-finder))
+  (use-package reveal-in-osx-finder
+    :defer
+    :commands (reveal-in-osx-finder)))
 
 ;;; pangu-spacing
 ;; emacs minor-mode to add space between Chinese and English characters.

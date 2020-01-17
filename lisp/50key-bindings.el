@@ -331,6 +331,7 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   ;; "fCu" 'tl/dos2unix
   "fg" 'rgrep
   "fl" 'find-file-literally
+  "fz" 'reveal-in-osx-finder
   ;; "fE" 'tl/sudo-edit
   ;; "fo" 'tl/open-in-external-app
   ;; "fR" 'tl/rename-current-buffer-file

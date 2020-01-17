@@ -24,7 +24,8 @@
   :config
   (progn
     (tl/set-leader-keys-for-major-mode 'dired-mode
-      "u" 'diredp-up-directory-reuse-dir-buffer)
+      "u" 'diredp-up-directory-reuse-dir-buffer
+      "z" 'reveal-in-osx-finder)
     (define-key dired-mode-map (kbd "^") 'diredp-up-directory-reuse-dir-buffer)
     (define-key dired-mode-map (kbd "W") 'tl/dired-w3m-find-file)
     (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
