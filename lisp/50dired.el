@@ -76,8 +76,7 @@
         (dired-rainbow-define fonts "#6cb2eb" ("afm" "fon" "fnt" "pfb" "pfm" "ttf" "otf"))
         (dired-rainbow-define partition "#e3342f" ("dmg" "iso" "bin" "nrg" "qcow" "toast" "vcd" "vmdk" "bak"))
         (dired-rainbow-define vc "#0074d9" ("git" "gitignore" "gitattributes" "gitmodules"))
-        (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*")
-        ))
+        (dired-rainbow-define-chmod executable-unix "#38c172" "-.*x.*")))
 
 
     (use-package dired-subtree
