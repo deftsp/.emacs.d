@@ -17,6 +17,22 @@
   (setq rust-indent-method-chain t
         rust-format-on-save t)
 
+
+  (defun tl/toggle-mut ()
+    "Toggles the mutability of the variable defined on the current line"
+    (interactive)
+    (save-excursion
+      (back-to-indentation)
+      (forward-word)
+      (if (string= " mut" (buffer-substring (point) (+ (point) 4)))
+          (delete-region (point) (+ (point) 4))
+        (insert " mut"))))
+
+  (tl/declare-prefix-for-mode 'rust-mode "mv" "variable")
+
+  (tl/set-leader-keys-for-major-mode 'rust-mode
+    "vm" 'tl/toggle-mut)
+
   (use-package flycheck-rust
     :after flycheck
     :init
