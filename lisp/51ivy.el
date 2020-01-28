@@ -71,6 +71,60 @@
     ;; (define-key counsel-mode-map (vector 'remap 'execute-extended-command) nil)
     (counsel-mode +1)))
 
+;; Support pinyin in Ivy
+;; Input prefix ';' to match pinyin. For example: 你好 can be match by type ;nh.
+;; Refer to  https://github.com/abo-abo/swiper/issues/919 and
+;; https://github.com/pengpengxp/swiper/wiki/ivy-support-chinese-pinyin
+;; https://github.com/seagle0128/.emacs.d/blob/master/lisp/init-ivy.el
+(use-package pinyinlib
+  :after ivy
+  :commands pinyinlib-build-regexp-string
+  :init
+  (with-no-warnings
+    (defun tl/ivy--regex-pinyin (str)
+      "The regex builder wrapper to support pinyin."
+      (or (tl/pinyin-to-utf8 str)
+          (and (fboundp 'ivy-prescient-non-fuzzy)
+               (ivy-prescient-non-fuzzy str))
+          (ivy--regex-plus str)))
+
+    ;; (mapcar
+    ;;  (lambda (item)
+    ;;    (let ((key (car item))
+    ;;          (value (cdr item)))
+    ;;      (when (member value '(ivy-prescient-non-fuzzy
+    ;;                            ivy--regex-plus))
+    ;;        (setf (alist-get key ivy-re-builders-alist)
+    ;;              #'tl/ivy--regex-pinyin))))
+    ;;  ivy-re-builders-alist)
+
+
+    (defun tl/pinyinlib-build-regexp-string (str)
+      "Build a pinyin regexp sequence from STR."
+      (cond ((equal str ".*") ".*")
+            (t (pinyinlib-build-regexp-string str t))))
+
+    (defun tl/pinyin-regexp-helper (str)
+      "Construct pinyin regexp for STR."
+      (cond ((equal str " ") ".*")
+            ((equal str "") nil)
+            (t str)))
+
+    (defun tl/pinyin-to-utf8 (str)
+      "Convert STR to UTF-8."
+      (cond ((equal 0 (length str)) nil)
+            ((equal (substring str 0 1) ";")
+             (mapconcat
+              #'tl/pinyinlib-build-regexp-string
+              (remove nil (mapcar
+                           #'tl/pinyin-regexp-helper
+                           (split-string
+                            (replace-regexp-in-string ";" "" str )
+                            "")))
+              ""))
+            (t nil)))))
+
+
 (use-package ivy
   :defer t
   :diminish ivy-mode
@@ -85,6 +139,8 @@
     (setq ivy-re-builders-alist
           '((ivy-switch-buffer . ivy--regex-plus)
             (counsel-rg . ivy--regex-plus)
+            (counsel-outline . tl/ivy--regex-pinyin)
+            (counsel-org-goto . tl/ivy--regex-pinyin)
             (t . ivy--regex-fuzzy)))
 
     (setq ivy-initial-inputs-alist nil)
