@@ -35,7 +35,7 @@
   :pkgname "debanjum/company-ledger")
 (el-get-bundle reveal-in-osx-finder :type github :pkgname "kaz-yos/reveal-in-osx-finder")
 (el-get-bundle om :type github :pkgname "ndwarshuis/om.el" :description "A functional library for org-mode")
-
+(el-get-bundle org-fancy-priorities :type github :pkgname "harrybournis/org-fancy-priorities")
 
 ;; (el-get-bundle diredp :description "Extensions to Dired" :type http :url "https://www.emacswiki.org/emacs/download/dired+.el")
 

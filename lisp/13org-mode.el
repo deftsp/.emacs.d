@@ -280,6 +280,7 @@
 
     (defun tl/org-mode-init ()
       (semantic-mode -1)
+      (org-num-mode  +1)
       (display-line-numbers-mode -1))
 
     (add-to-list 'org-mode-hook 'tl/org-mode-init)
@@ -2320,6 +2321,26 @@ prepended to the element after the #+HEADER: tag."
   :init
   (setq easy-hugo-basedir "~/Lab/quick-hugo/"
         easy-hugo-postdir "content/posts"))
+
+(use-package org-fancy-priorities
+  :diminish
+  :after org
+  :defer t
+  :defines org-fancy-priorities-list
+  :hook (org-mode . org-fancy-priorities-mode)
+  :config
+  (unless (char-displayable-p ?❗)
+    (setq org-fancy-priorities-list '((?A . "❗")
+                                      (?B . "⬆")
+                                      (?C . "⬇")
+                                      (?D . "☕")
+                                      (?1 . "⚡")
+                                      (?2 . "⮬")
+                                      (?3 . "⮮")
+                                      (?4 . "☕")
+                                      (?I . "Important")))))
+
+
 
 (provide '13org-mode)
 
