@@ -971,12 +971,13 @@ Current position is preserved."
 
         "gd"         'Info-goto-node
         "gm"         'Info-menu
+        "m"          'evil-set-marker
         "gt"         'Info-top-node
         "gT"         'Info-toc
         "gf"         'Info-follow-reference
 
-        "gj" 'Info-next
-        "gk" 'Info-prev
+        "gj"         'Info-next
+        "gk"         'Info-prev
 
         "F"          'Info-follow-reference
         "/"          'Info-search
