@@ -5,8 +5,7 @@
   :defer t
   :init
   (progn
-    (setq imenu-max-items 40)
-    (global-set-key (kbd "C-c j") 'counsel-imenu)))
+    (setq imenu-max-items 40)))
 
 ;;; auto insert the matching closing delimiter
 ;; electric pair mode is a global minor mode

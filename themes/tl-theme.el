@@ -380,6 +380,7 @@
    ;; ivy
    '(ivy-action ((t (:foreground "PaleGoldenrod"))))
    '(ivy-virtual ((t (:foreground "#536393"))))
+   '(ivy-grep-info ((t (:foreground "#337799"))))
    `(ivy-current-match ((t (:foreground "#dddddd" :background ,magenta :weight bold))))
 
    ;; counsel
