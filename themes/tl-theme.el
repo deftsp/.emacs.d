@@ -65,7 +65,7 @@
    `(mode-line-inactive ((t (:inherit 'mode-line :foreground ,base0  :background ,base03))))
    `(mode-line-highlight ((t (:inherit 'mode-line :background ,base01 :foreground ,base2))))
 
-   '(minibuffer-prompt ((t (:foreground "chartreuse2" :weight bold))))
+   '(minibuffer-prompt ((t (:foreground "#22ccee" :weight bold))))
    `(fringe ((t (:foreground "#00cbcb" :background ,base02))))
    `(region ((t (:foreground unspecified :background "#244252"))))
    '(secondary-selection ((t (:foreground unspecified :background "#485c60"))))
@@ -377,10 +377,13 @@
    ;; hl-line
    `(hl-line ((t (:background ,base02))))
 
-   ;;ivy
+   ;; ivy
    '(ivy-action ((t (:foreground "PaleGoldenrod"))))
    '(ivy-virtual ((t (:foreground "#536393"))))
    `(ivy-current-match ((t (:foreground "#dddddd" :background ,magenta :weight bold))))
+
+   ;; counsel
+   '(counsel-outline-default ((t (:foreground "#648fc3"))))
 
    ;; col-highlight
    `(col-highlight ((t (:background ,base02))))

@@ -30,6 +30,7 @@
          ("C-h v" . counsel-describe-variable))
   :init
   (progn
+    (setq counsel-outline-face-style 'verbatim)
     (global-set-key (kbd "s-g") 'counsel-rg)
     (tl/set-leader-keys
       dottl-emacs-command-key 'counsel-M-x ; 'execute-extended-command
