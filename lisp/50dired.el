@@ -1,5 +1,7 @@
 ;;; 50dired.el ---
 
+;; TODO: TRY [[https://github.com/syohex/emacs-dired-k][syohex/emacs-dired-k: Highlighting dired buffer like k]]
+
 (use-package dired
   :defer t
   :bind (:map dired-mode-map
