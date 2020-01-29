@@ -19,7 +19,7 @@
           ;; use its current subdir, instead of the current subdir of this dired buffer.
           dired-dwim-target t
           dired-guess-shell-gnutar "tar"
-          dired-listing-switches "-alhXG --group-directories-first"
+          dired-listing-switches "-AlhXG --group-directories-first"
           dired-kept-versions 1))
   :config
   (add-hook 'dired-mode-hook 'tl/dired-mode-hook-init)
