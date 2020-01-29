@@ -22,6 +22,9 @@
           dired-listing-switches "-alhXG --group-directories-first"
           dired-kept-versions 1))
   :config
+  (add-hook 'dired-mode-hook 'tl/dired-mode-hook-init)
+  (defun tl/dired-mode-hook-init ())
+
   (progn
     (tl/set-leader-keys-for-major-mode 'dired-mode
       "u" 'diredp-up-directory-reuse-dir-buffer
@@ -40,7 +43,7 @@
         (kbd "^")     'diredp-up-directory-reuse-dir-buffer
         (kbd "gu")    'diredp-up-directory-reuse-dir-buffer
         (kbd "l")     'diredp-find-file-reuse-dir-buffer
-        (kbd "i")     'dired-omit-mode
+        ;; (kbd "i")     'dired-omit-mode
         (kbd "I")     'dired-maybe-insert-subdir
         (kbd "/")     'dired-narrow
         (kbd "M-r")   'dired-do-redisplay
@@ -105,12 +108,15 @@
     ;; Note, dired-filter-by-omit removes the files that would be
     ;; removed by dired-omit-mode, so you should not need to use both---in fact
     ;; it is discouraged, as it would make the read-in slower.
+
     (use-package dired-filter
       :defer t
       :init
-      (progn
-        (define-key dired-mode-map (kbd "s-m") dired-filter-mark-map)
-        (define-key dired-mode-map (kbd "s-f") dired-filter-map)))
+      (setq dired-filter-stack '((omit)))
+      ;; `F' default to dired-do-find-marked-files
+      (define-key dired-mode-map (kbd "f") dired-filter-map)
+      (define-key dired-mode-map (kbd "F") dired-filter-mark-map)
+      (add-hook 'dired-mode-hook 'dired-filter-mode))
 
     ;; TODO: dired will be require when el-get sync and here dired+ require slow.
     (use-package dired+
@@ -148,8 +154,6 @@
     (use-package dired-x
       :init
       (progn
-        (setq-default dired-omit-mode t)
-
         (setq dired-omit-extensions
               '(".svn/" "CVS/" ".o" "~" ".bin" ".bak" ".obj" ".map" ".ico"
                 ".pif" ".lnk" ".a" ".ln" ".blg" ".bbl" ".dll" ".drv" ".vxd"
@@ -206,6 +210,9 @@
   ;; (setq dired-sidebar-use-term-integration t)
   (setq dired-sidebar-use-custom-font t)
 
+  (defun tl/dired-sidebar-init ())
+  (add-hook 'dired-sidebar-mode-hook 'tl/dired-sidebar-init)
+
   (tl/set-leader-keys
     "ft"    #'dired-sidebar-toggle-sidebar)
 
@@ -215,9 +222,6 @@
 
   (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
   (push 'rotate-windows dired-sidebar-toggle-hidden-commands))
-
-;; (add-hook 'dired-mode-hook 'tl/dired-mode-hook-init)
-;; (defun tl/dired-mode-hook-init ())
 
 
 (defun tl/dired-back-to-top ()
