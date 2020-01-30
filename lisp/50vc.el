@@ -156,13 +156,10 @@
               '("NOTE" "DONE" "FAIL" "PROG")))
       :config
       (progn
-        (setq magit-todos-section-map nil)
-        (magit-todos-mode +1)))
+        ;; (magit-todos-mode +1); use magit-todos-list instead
+        (setq magit-todos-section-map nil)))
     (use-package transient)
-    (use-package evil-magit
-      :config
-      ;; (evil-magit-init)
-      )))
+    (use-package evil-magit)))
 
 (use-package with-editor
   :defer t
