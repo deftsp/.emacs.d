@@ -9,6 +9,7 @@
 ;;; Garbage Collection Magic Hack
 ;; http://akrl.sdf.org/
 (use-package gcmh
+  :diminish
   :init
   (setq gcmh-verbose t)
   :config

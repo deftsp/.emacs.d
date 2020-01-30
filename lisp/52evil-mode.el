@@ -1133,6 +1133,7 @@ if COUNT is negative. "
     (setq evil-textobj-syntax-a-key "h")))
 
 (use-package evil-owl
+  :diminish
   :after evil
   :config
   (setq evil-owl-display-method 'posframe)
