@@ -217,6 +217,16 @@
   (setq dired-sidebar-theme 'icons)
   ;; (setq dired-sidebar-use-term-integration t)
   (setq dired-sidebar-use-custom-font t)
+  (setq dired-sidebar-should-follow-file nil
+        dired-sidebar-follow-file-idle-delay 3)
+
+  (defun tl/do-dired-sidebar-follow-file ()
+    (interactive)
+    (dired-sidebar-follow-file))
+
+  (tl/set-leader-keys
+    "ors"    #'tl/do-dired-sidebar-follow-file
+    "sf"    #'tl/do-dired-sidebar-follow-file)
 
   (defun tl/dired-sidebar-init ())
   (add-hook 'dired-sidebar-mode-hook 'tl/dired-sidebar-init)
