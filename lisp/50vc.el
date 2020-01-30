@@ -148,16 +148,16 @@
     ;; (setq evil-magit-state 'normal)
     ;; optional: disable additional bindings for yanking text
     ;; (setq evil-magit-use-y-for-yank nil)
-    ;; (use-package magit-todos
-    ;;   :init
-    ;;   (progn
-    ;;     ;; FIXME: https://github.com/alphapapa/magit-todos/issues/24
-    ;;     (setq magit-todos-ignored-keywords
-    ;;           '("NOTE" "DONE" "FAIL" "PROG")))
-    ;;   :config
-    ;;   (progn
-    ;;     (setq magit-todos-section-map nil)
-    ;;     (magit-todos-mode +1)))
+    (use-package magit-todos
+      :init
+      (progn
+        ;; FIXME: https://github.com/alphapapa/magit-todos/issues/24
+        (setq magit-todos-ignored-keywords
+              '("NOTE" "DONE" "FAIL" "PROG")))
+      :config
+      (progn
+        (setq magit-todos-section-map nil)
+        (magit-todos-mode +1)))
     (use-package transient)
     (use-package evil-magit
       :config
