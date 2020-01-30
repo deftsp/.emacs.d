@@ -2,4 +2,4 @@
  :type github
  :description "A set of keybindings for evil-mode"
  :pkgname "jojojames/evil-collection"
- :depends (evil))
+ :depends (evil annalist))

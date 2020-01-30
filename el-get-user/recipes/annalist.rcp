@@ -1,0 +1,4 @@
+(:name annalist
+ :type github
+ :description "Record and display information such as keybindings"
+ :pkgname "noctuid/annalist.el")
