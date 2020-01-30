@@ -215,15 +215,16 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 
 ;; https://github.com/tsgates/pylookup
 (use-package pylookup
+  :after python
   :commands (pylookup-lookup pylookup-update pylookup-update-all)
   :init
   (progn
     ;; (setq pylookup-search-options '("--insensitive" "0" "--desc" "0"))
-    (evilified-state-evilify pylookup-mode pylookup-mode-map)
     (tl/set-leader-keys-for-major-mode 'python-mode
       "hH" 'pylookup-lookup))
   :config
   (progn
+    (evilified-state-evilify pylookup-mode pylookup-mode-map)
     (setq pylookup-dir (concat user-emacs-directory "pylookup/")
           pylookup-program (concat pylookup-dir "pylookup.py")
           pylookup-db-file (concat pylookup-dir "pylookup.db"))
