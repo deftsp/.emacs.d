@@ -7,8 +7,9 @@
        :pkgname "emacs-evil/evil"
        :features evil
        :depends (undo-tree)
+       :checkout "1.12.17"
        :build (("make" "doc" "all"))
        :build/berkeley-unix (("gmake" "doc" "all"))
        :build/darwin `(("make" ,(format "EMACS=%s" el-get-emacs) "doc" "all")
-		       ("make" "-C" "doc/build/texinfo" "info"))
+                       ("make" "-C" "doc/build/texinfo" "info"))
        :info "doc/build/texinfo")
