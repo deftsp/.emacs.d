@@ -386,7 +386,7 @@ kill internal buffers too."
   (setq evil-disable-insert-state-bindings nil
         evil-move-cursor-back nil
         evil-want-integration t
-        ;; evil-want-keybinding nil ;; evil-collection instead
+        evil-want-keybinding nil ;; evil-collection instead
         evil-want-visual-char-semi-exclusive t
         evil-want-C-i-jump t
         evil-cross-lines t
@@ -423,12 +423,12 @@ kill internal buffers too."
 (when (fboundp 'evil-mode)
   (evil-mode +1))
 
-;; (use-package evil-collection
-;;   :after evil
-;;   :init
-;;   (setq evil-collection-mode-list nil)
-;;   :config
-;;   (evil-collection-init))
+(use-package evil-collection
+  :after evil
+  :init
+  (setq evil-collection-mode-list '(magit-todos))
+  :config
+  (evil-collection-init))
 
 (use-package evil-escape
   :commands (evil-escape)
