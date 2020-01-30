@@ -1,4 +1,4 @@
-;;; 50dired.el ---
+;;; 50dired.el ---                               -*- lexical-binding: t; -*-
 
 ;; TODO: TRY [[https://github.com/syohex/emacs-dired-k][syohex/emacs-dired-k: Highlighting dired buffer like k]]
 
@@ -99,10 +99,16 @@
         (defun tl/dired-open-by-macos-open ()
           "Try to run `open' with default app on macOS to open the file under point."
           (interactive)
-          (let ((file (ignore-errors (dired-get-file-for-visit)))
-                process)
-            (setq process (dired-open--start-process file "open"))
-            process))
+          (let ((file (ignore-errors (dired-get-file-for-visit))))
+            (when file
+              (let* ((process (dired-open--start-process file "open")))
+                (set-process-sentinel
+                 process
+                 (lambda (proc _event)
+                   (when (and (eq 'exit (process-status proc))
+                              (not (zerop (process-exit-status proc))))
+                     (message (format "Unable to open \"%s\"" file)))))
+                process))))
 
         (setq dired-open-functions '(tl/dired-open-by-macos-open dired-open-subdir))))
 
