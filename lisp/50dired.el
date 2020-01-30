@@ -36,6 +36,17 @@
     (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
 
 
+    (defun tl/dired-find-file-ace-window ()
+      "Use ace window to select a window for opening a file from dired."
+      (interactive)
+      (let ((file (dired-get-file-for-visit)))
+        (if (> (length (aw-window-list)) 1)
+            (aw-select "" (lambda (window)
+                            (aw-switch-to-window window)
+                            (find-file file)))
+          (find-file-other-window file))))
+
+
     (with-eval-after-load "evil-evilified-state"
       (evilified-state-evilify dired-mode dired-mode-map
         (kbd "S-SPC") 'tl/jump-to-org-agenda
@@ -49,6 +60,7 @@
         (kbd "I")     'dired-maybe-insert-subdir
         (kbd "/")     'dired-narrow
         (kbd "M-r")   'dired-do-redisplay
+        (kbd "o")     'tl/dired-find-file-ace-window
         (kbd "r")     'wdired-change-to-wdired-mode
         (kbd "gg")    'tl/dired-back-to-top
         (kbd "gr")    'revert-buffer
