@@ -190,11 +190,12 @@
   :init
   (setq all-the-icons-scale-factor 1.0))
 
-(use-package all-the-icons-dired
-  :after (all-the-icons dired)
-  :init
-  (with-eval-after-load 'dired
-    (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)))
+;; ;; conflict with dired-quick-sort
+;; (use-package all-the-icons-dired
+;;   :after (all-the-icons dired)
+;;   :init
+;;   (with-eval-after-load 'dired
+;;     (add-hook 'dired-mode-hook 'all-the-icons-dired-mode)))
 
 
 (provide '50font)
