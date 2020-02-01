@@ -1406,6 +1406,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
   (progn
     ;; ",k" not work some time, call `evil-normalize-keymaps' to force refresh
     (defun tl//org-capture-mode-init ()
+      (evil-insert-state)
       (evil-normalize-keymaps))
 
     (add-hook 'org-capture-mode-hook 'tl//org-capture-mode-init)
