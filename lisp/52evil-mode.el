@@ -385,6 +385,7 @@ kill internal buffers too."
 (defun tl/evil-init ()
   (setq evil-disable-insert-state-bindings nil
         evil-move-cursor-back nil
+        evil-move-beyond-eol t
         evil-want-integration t
         evil-want-keybinding nil ;; evil-collection instead
         evil-want-visual-char-semi-exclusive t
