@@ -109,3 +109,4 @@ request/
 transient/
 .purpose-layout
 layouts/
+emacs-libvterm/
