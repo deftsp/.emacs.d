@@ -452,6 +452,31 @@
    '(quack-threesemi-semi-face ((t (:background unspecified))))
    '(quack-threesemi-text-face ((t (:background unspecified))))
 
+   ;;
+   '(compilation-error ((t (:foreground "#ff6666"))))
+   '(compilation-warning ((t (:foreground "#976464"))))
+   '(compilation-info ((t (:foreground "#33bb33"))))
+
+   ;; flycheck
+   '(flycheck-error-list-id-with-explainer ((t (:inherit flycheck-error-list-id :box nil :underline t))))
+
+   ;; flycheck-posframe
+   '(flycheck-posframe-error-face ((t (:inherit compilation-error :slant italic))))
+   '(flycheck-posframe-warning-face ((t (:inherit compilation-warning :slant italic))))
+   '(flycheck-posframe-info-face ((t (:inherit compilation-info :slant italic))))
+
+
+   ;; flycheck-inline
+   '(flycheck-inline-error ((t (:inherit compilation-error :slant italic))))
+   '(flycheck-inline-warning ((t (:inherit compilation-warning :slant italic))))
+   '(flycheck-inline-info ((t (:inherit compilation-info :slant italic))))
+
+
+   ;; quick-peek
+   '(quick-peek-background-face ((t (:background "#23384d" :height 0.9 :slant italic :extend t))))
+   '(quick-peek-border-face ((t (:background "#33485d"  :height 0.12 :extend t))))
+   '(quick-peek-padding-face ((t (:background "#33485d" :height 0.10 :extend t))))
+
 
    ;; narrow-indirect
    `(ni-mode-line-buffer-id ((t (:foreground "RosyBrown" :box nil))))

@@ -58,6 +58,36 @@ If the error list is visible, hide it.  Otherwise, show it."
     (switch-to-buffer-other-window flycheck-error-list-buffer)))
 
 
+;; https://github.com/alexmurray/flycheck-posframe
+(use-package flycheck-posframe
+  :after flycheck
+  :config
+  (setq flycheck-posframe-warning-prefix "➤ ")
+  (setq flycheck-posframe-error-prefix "➤ ")
+  (set-face-attribute 'flycheck-posframe-warning-face nil :inherit 'warning)
+  (set-face-attribute 'flycheck-posframe-error-face nil :inherit 'error)
+  (flycheck-posframe-configure-pretty-defaults)
+  (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
+
+;; (use-package flycheck-inline
+;;   :after flycheck
+;;   :init
+;;   (add-hook 'flycheck-mode-hook #'flycheck-inline-mode))
+
+;; quick-peek can not work with display-line-numbers-mode
+;; [[https://github.com/cpitclaudel/quick-peek/issues/14][Emacs 26 display-line-numbers-mode breaks quick-peek · Issue #14 · cpitclaudel/quick-peek]]
+;; (use-package quick-peek
+;;   :after flycheck-inline
+;;   :config
+;;   (defun tl/flycheck-inline-display-quick-peek (msg pos)
+;;     (let* ((ov (quick-peek-overlay-ensure-at pos))
+;;            (contents (quick-peek-overlay-contents ov)))
+;;       (setf (quick-peek-overlay-contents ov)
+;;             (concat contents (when contents "\n") msg))
+;;       (quick-peek-update ov)))
+
+;;   (setq flycheck-inline-display-function #'tl/flycheck-inline-display-quick-peek
+;;         flycheck-inline-clear-function #'quick-peek-hide))
 
 (provide '50syntax-checker)
 ;;; 50syntax-checker ends here

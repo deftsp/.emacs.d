@@ -1,0 +1,5 @@
+(:name flycheck-posframe
+ :description "Show flycheck errors via posframe.el"
+ :type github
+ :pkgname "alexmurray/flycheck-posframe"
+ :depends (posframe flycheck))

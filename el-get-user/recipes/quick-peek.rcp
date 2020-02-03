@@ -1,0 +1,5 @@
+(:name quick-peek
+ :description "Quick-peek inline-window library for Emacs"
+ :type github
+ :pkgname "cpitclaudel/quick-peek"
+ :depends (cl-lib))
