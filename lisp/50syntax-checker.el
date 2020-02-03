@@ -66,7 +66,6 @@ If the error list is visible, hide it.  Otherwise, show it."
   (setq flycheck-posframe-error-prefix "➤ ")
   (set-face-attribute 'flycheck-posframe-warning-face nil :inherit 'warning)
   (set-face-attribute 'flycheck-posframe-error-face nil :inherit 'error)
-  (flycheck-posframe-configure-pretty-defaults)
   (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
 
 ;; (use-package flycheck-inline
