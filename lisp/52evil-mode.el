@@ -944,33 +944,34 @@ to replace the symbol under cursor"
                                     (substring-no-properties candidate 4))))
 
 
-;;; evil-lispy
+;;; lispy [[https://github.com/abo-abo/lispy][abo-abo/lispy: Short and sweet LISP editing]]
 (use-package lispy
-  :defer 3
+  :hook ((common-lisp-mode . lispy-mode)
+         (emacs-lisp-mode . lispy-mode)
+         (scheme-mode . lispy-mode)
+         (racket-mode . lispy-mode)
+         (clojure-mode . lispy-mode))
   :config
+  (setq lispy-close-quotes-at-end-p t)
   (define-key lispy-mode-map-lispy (kbd "M-o") nil)
-  (use-package evil-lispy
-    :config
-    (evil-define-key 'insert evil-lispy-mode-map ";" nil)
-
-    (evil-define-key 'normal evil-lispy-mode-map
-      "gm" #'evil-lispy/enter-marked-state ; "gm" default to evil-middle-of-visual-line
-      (kbd "C-SPC") nil)
-
-    (defun tl/enable-evil-lispy-mode ()
-      (when (fboundp 'evil-lispy-mode)
-        (evil-lispy-mode +1)))
-
-    (dolist (l '(emacs-lisp-mode-hook clojure-mode-hook))
-      (add-hook l 'tl/enable-evil-lispy-mode))))
+  (add-hook 'lispy-mode-hook #'turn-off-smartparens-mode))
 
 
-;;; lispyville
-;; (use-package lispyville
-;;   :config
-;;   (lispyville-set-key-theme '(operators
-;;                               (escape insert)
-;;                               (additional-movement normal visual motion))))
+;;; lispyville: [[https://github.com/noctuid/lispyville][noctuid/lispyville: lispy + evil = lispyville]]
+(use-package lispyville
+  :hook (lispy-mode . lispyville-mode)
+  :config
+  (lispyville-set-key-theme
+   '((operators normal)
+     ;; c-w
+     (prettify insert)
+     (atom-movement normal visual)
+     slurp/barf-lispy
+     (wrap normal insert)
+     additional
+     ;; ;; additional-insert
+     (additional-wrap normal insert)
+     (escape insert))))
 
 ;; auto-complete word in Emacs mini-buffer when using Evil
 ;; http://blog.binchen.org/posts/auto-complete-word-in-emacs-mini-buffer-when-using-evil.html
