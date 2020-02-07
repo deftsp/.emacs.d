@@ -4,6 +4,11 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
+;; TODO: after refactor, following core packages should be located in a
+;; specify module
+(require 'general)
+(require 'hydra)
+
 (use-package use-package-chords)
 
 ;;; Garbage Collection Magic Hack
