@@ -1,7 +1,5 @@
 ;;; 50key-bindings.el ---
 
-(require 'general)
-
 (general-define-key
  "C-c j" 'tl/counsel-jump-in-buffer)
 
