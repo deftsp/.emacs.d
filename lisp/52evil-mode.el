@@ -58,10 +58,6 @@
   `((t (:weight bold :foreground "maroon")))
   "Evil operator mode indicator face")
 
-(defface tl/evil-lisp-tag
-  `((t (:weight bold :foreground "orange")))
-  "Evil lisp mode indicator face")
-
 (defface tl/evil-lispy-tag
   `((t (:weight bold :foreground "orange")))
   "Evil lispy mode indicator face")
@@ -79,7 +75,6 @@
       evil-visual-state-tag   (propertize "« V »" 'face 'tl/evil-visual-tag)
       evil-operator-state-tag (propertize "« O »" 'face 'tl/evil-operator-tag)
       evil-replace-state-tag  (propertize "« R »" 'face 'tl/evil-replace-tag)
-      evil-lisp-state-tag     (propertize "« L »" 'face 'tl/evil-lisp-tag)
       evil-iedit-state-tag    (propertize "« E »" 'face 'tl/evil-iedit-tag))
 
 ;; FIXME: as Official Emacs 24.4, if set color color,  when multile
@@ -93,7 +88,6 @@
           evil-visual-state-cursor   `(hollow ,(face-attribute 'tl/evil-visual-tag   :foreground))
           evil-replace-state-cursor  `(hbar   ,(face-attribute 'tl/evil-replace-tag  :foreground))
           evil-operator-state-cursor `(hollow ,(face-attribute 'tl/evil-operator-tag :foreground))
-          evil-lisp-state-cursor     `(box    ,(face-attribute 'tl/evil-lisp-tag     :foreground))
           evil-lispy-state-cursor    `(box    ,(face-attribute 'tl/evil-lispy-tag    :foreground))
           evil-iedit-state-cursor    `(box    ,(face-attribute 'tl/evil-iedit-tag    :foreground)))
   (setq evil-default-cursor '(box "#cd0000") ; emacs official
@@ -323,14 +317,6 @@ kill internal buffers too."
 
   (tl-bootstrap/init-bind-map))
 
-
-;;; evil-lisp-state
-(use-package evil-lisp-state
-  :defer 3
-  :init
-  (setq evil-lisp-state-global t) ; set it before require
-  :config
-  (tl/set-leader-keys "k" evil-lisp-state-map))
 
 ;;; default mode
 (defun tl/evil-set-initial-state ()
@@ -959,6 +945,7 @@ to replace the symbol under cursor"
 
 ;;; lispyville: [[https://github.com/noctuid/lispyville][noctuid/lispyville: lispy + evil = lispyville]]
 (use-package lispyville
+  :after (evil)
   :hook (lispy-mode . lispyville-mode)
   :config
   (lispyville-set-key-theme

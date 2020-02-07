@@ -150,14 +150,14 @@ Requires smartparens because all movement is done using `sp-forward-symbol'."
     (tl/declare-prefix-for-mode mode "mt" "tests")
     (tl/set-leader-keys-for-major-mode mode
       "cc" 'emacs-lisp-byte-compile
-      "e$" 'lisp-state-eval-sexp-end-of-line
+      ;; "e$" 'lisp-state-eval-sexp-end-of-line
       "eb" 'eval-buffer
       "eC" 'tl/eval-current-form
       "ee" 'eval-last-sexp
       "er" 'eval-region
       "ef" 'eval-defun
-      "el" 'lisp-state-eval-sexp-end-of-line
-      ","  'lisp-state-toggle-lisp-state
+      ;; "el" 'lisp-state-eval-sexp-end-of-line
+      ;; ","  'lisp-state-toggle-lisp-state
       "tb" 'tl/ert-run-tests-buffer
       "tq" 'ert
       "f" 'describe-function
