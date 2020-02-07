@@ -410,17 +410,17 @@ If the universal prefix argument is used then kill the buffer too."
     ;; (advice-remove 'aw-dispatch-default 'tl//exit-when-escape)
 
     ;; FIXME: conflict with `window-purpose'
-    (setq display-buffer-base-action '((display-buffer-reuse-window
-                                        ace-display-buffer)))
+    ;; (setq display-buffer-base-action '((display-buffer-reuse-window
+    ;;                                     ace-display-buffer)))
 
-    (dolist (l '(("\\*help\\[R" (display-buffer-reuse-mode-window
-                                 ace-display-buffer))
-                 ("\\*helm"
-                  ;; see also: `helm-split-window-default-fn'
-                  (display-buffer-pop-up-window))
-                 ("magit-diff:" (ace-display-buffer)
-                  (inhibit-same-window . t))))
-      (push l display-buffer-alist))
+    ;; (dolist (l '(("\\*help\\[R" (display-buffer-reuse-mode-window
+    ;;                              ace-display-buffer))
+    ;;              ("\\*helm"
+    ;;               ;; see also: `helm-split-window-default-fn'
+    ;;               (display-buffer-pop-up-window))
+    ;;              ("magit-diff:" (ace-display-buffer)
+    ;;               (inhibit-same-window . t))))
+    ;;   (push l display-buffer-alist))
 
     ;; TODO: set value for ignored buffer like agenda buffer and dired-sidebar
     (defadvice aw-update (around format-ace-window-path activate)
