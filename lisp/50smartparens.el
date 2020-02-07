@@ -190,5 +190,35 @@ Disable smartparens and remember its initial state."
 ;; (tl/sp-lisp-binding emacs-lisp-mode-map)
 
 
+(use-package sexp-transient-state
+  :after (smartparens evil )
+  :init
+  (tl/set-leader-keys "k" 'sexp-transient-state/body)
+
+  (with-eval-after-load 'evil
+    (define-key evil-normal-state-map "gs" 'sexp-transient-state/body)))
+
+;; [[https://www.reddit.com/r/emacs/comments/b9ubvn/evil_smartparens_what_keybindings_do_you_use/][[Evil + Smartparens] What keybindings do you use? : emacs]]
+;; (nvmap :prefix ", ,"
+;;   :keymaps 'smartparens-mode-map
+;;   "<" '(sp-backward-barf-sexp :wk "Barf backward")
+;;   ">" '(sp-forward-barf-sexp :wk "Barf forward")
+;;   "(" '(sp-backward-slurp-sexp :wk "Slurp backward")
+;;   ")" '(sp-forward-slurp-sexp :wk "Slurp forward")
+;;   "}" '(sp-slurp-hybrid-sexp :wk "Slurp (hybrid)")
+;;   "+" '(sp-join-sexp :wk "Join")
+;;   "-" '(sp-split-sexp :wk "Split")
+;;   "a" '(sp-absorb-sexp :wk "Absorb")
+;;   "c" '(sp-clone-sexp :wk "Clone")
+;;   "C" '(sp-convolute-sexp :wk "Convolute")
+;;   "m" '(sp-mark-sexp :wk "Mark")
+;;   "r" '(sp-raise-sexp :wk "Raise")
+;;   "s" '(sp-splice-sexp-killing-around :wk "Splice")
+;;   "t" '(sp-transpose-sexp :wk "Transpose")
+;;   "T" '(sp-transpose-hybrid-sexp :wk "Transpose (hybrid)")
+;;   ;; Narrow and Widen, use default emacs for widening
+;;   "n" '(sp-narrow-to-sexp :wk "Narrow"))
+
+
 (provide '50smartparens)
 ;;; 50smartparens.el ends here
