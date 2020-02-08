@@ -31,7 +31,7 @@
 (require 'smartparens)
 (require 'hydra)
 
-(defun evil-lisp-state-escape-command (command)
+(defun sexp-transient-state-escape-command (command)
   "Wrap COMMAND to escape to normal state before executing COMMAND."
   `(lambda ()
      (interactive)
@@ -44,10 +44,10 @@
 
  Moving^^^^                       Slurp & Barf^^   Wrapping^^            Sexp juggling^^^^               Destructive
 ------------------------------------------------------------------------------------------------------------------------
- [_0_] beginning  [_n_] down      [_S_] bw slurp   [_R_]   rewrap        [_S_] split   [_t_] transpose   [_c_] change inner  [_w_] copy
- [_$_] end        [_N_] bw down   [_B_] bw barf    [_w_]   unwrap        [_s_] splice  [_a_] absorb      [_C_] change outer
- [_L_] forward    [_u_] up        [_s_] slurp      [_W_]   bw unwrap     [_r_] raise   [_E_] emit        [_k_] kill          [_g_] quit
- [_H_] backward   [_U_] bw up     [_b_] barf       [_(__{__[_] wrap (){}[]   [_j_] join    [_c_] convolute   [_K_] bw kill       [_q_] quit "
+ [_0_] beginning  [_n_] down      [_S_] bw slurp   [_R_]   rewrap        [_C-s_] split   [_t_] transpose   [_c_] change inner  [_w_] copy
+ [_$_] end        [_N_] bw down   [_B_] bw barf    [_w_]   unwrap        [_M-s_] splice  [_a_] absorb      [_C_] change outer
+ [_L_] forward    [_u_] up        [_s_] slurp      [_W_]   bw unwrap     [_r_]   raise   [_E_] emit        [_k_] kill          [_g_] quit
+ [_H_] backward   [_U_] bw up     [_b_] barf       [_(__{__[_] wrap (){}[]   [_j_]   join    [_c_] convolute   [_K_] bw kill       [_q_] quit "
   ;; digit-argument
   ("1"    digit-argument)
   ("2"    digit-argument)
@@ -79,36 +79,36 @@
   ("U"    sp-backward-up-sexp)
 
   ;; Slurping & barfing
-  ("s"    sp-forward-slurp-sexp )
+  ("s"    sp-forward-slurp-sexp)
   ("b"    sp-forward-barf-sexp)
   ("S"    sp-backward-slurp-sexp)
   ("B"    sp-backward-barf-sexp)
 
 
   ;; Wrapping
-  ("R" sp-rewrap-sexp)
-  ("w" sp-unwrap-sexp)
-  ("W" sp-backward-unwrap-sexp)
-  ("(" sp-wrap-round)
-  ("{" sp-wrap-curly)
-  ("[" sp-wrap-square)
+  ("R"    sp-rewrap-sexp)
+  ("w"    sp-unwrap-sexp)
+  ("W"    sp-backward-unwrap-sexp)
+  ("("    sp-wrap-round)
+  ("{"    sp-wrap-curly)
+  ("["    sp-wrap-square)
 
   ;; Sexp juggling
-  ("S" sp-split-sexp)
-  ("s" sp-splice-sexp)
-  ("r" sp-raise-sexp)
-  ("j" sp-join-sexp)
-  ("t" sp-transpose-sexp)
-  ("a" sp-absorb-sexp)
-  ("E" sp-emit-sexp)
+  ("C-s"  sp-split-sexp)
+  ("M-s"  sp-splice-sexp)
+  ("r"    sp-raise-sexp)
+  ("j"    sp-join-sexp)
+  ("t"    sp-transpose-sexp)
+  ("a"    sp-absorb-sexp)
+  ("E"    sp-emit-sexp)
   ;; ("c"    sp-convolute-sexp)
 
   ;; Destructive editing
-  ("c" sp-change-inner :exit t)
-  ("C" sp-change-enclosing :exit t)
-  ("k" sp-kill-sexp)
-  ("K" sp-backward-kill-sexp)
-  ("y" sp-copy-sexp)
+  ("c"    sp-change-inner :exit t)
+  ("C"    sp-change-enclosing :exit t)
+  ("k"    sp-kill-sexp)
+  ("K"    sp-backward-kill-sexp)
+  ("y"    sp-copy-sexp)
 
   ("ds"   sp-kill-symbol)
   ("Ds"   sp-backward-kill-symbol)
