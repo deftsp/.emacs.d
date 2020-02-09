@@ -33,6 +33,7 @@
   (tl/declare-prefix-for-mode 'rust-mode "mv" "variable")
 
   (tl/set-leader-keys-for-major-mode 'rust-mode
+    "cm" 'tl/maximize-cargo-window
     "vm" 'tl/toggle-mut)
 
   (use-package flycheck-rust
@@ -69,7 +70,20 @@
     "cU" 'cargo-process-upgrade
     "cx" 'cargo-process-run
     "cv" 'cargo-process-check
-    "t" 'cargo-process-test))
+    "t" 'cargo-process-test)
+
+  (defun tl/cargo-process-quit ()
+    (interactive)
+    (if (and (= 1 (length (window-list)))
+             (assoc ?_ register-alist))
+        (jump-to-register ?_)
+      (quit-window)))
+
+  (with-eval-after-load "evil-evilified-state"
+    (evilified-state-evilify-map cargo-process-mode-map
+      :mode cargo-process-mode
+      :bindings
+      "q" 'tl/cargo-process-quit)))
 
 (use-package racer
   :defer t
@@ -87,6 +101,18 @@ If `help-window-select' is non-nil, also select the help window."
     (let ((window (racer-describe)))
       (when help-window-select
         (select-window window)))))
+
+(defun tl/maximize-cargo-window ()
+  (interactive)
+  (let ((bufs (-filter
+               (lambda (s) (string-prefix-p "*Cargo " s))
+               (-map (lambda (win) (buffer-name (window-buffer win)) )
+                     (-mapcat 'window-list (frame-list))))))
+    (if (> (length bufs) 0)
+        (tl/toggle-maximize-buffer
+         (car bufs))
+      (message "No cargo process buffer found"))))
+
 
 (provide '50rust-mode)
 ;;; 50rust-mode.el ends here

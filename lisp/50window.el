@@ -12,8 +12,9 @@
       window-min-height 4               ; Let's not have too-tiny windows.
       mouse-autoselect-window nil)
 
-;; from https://gist.github.com/3402786
-(defun tl/toggle-maximize-buffer ()
+;; Origial from https://gist.github.com/3402786 An Emacs function to temporarily make
+;; one buffer fullscreen. You can quickly restore the old window setup.
+(defun tl/toggle-maximize-buffer (&optional buffer-or-name)
   "Maximize buffer"
   (interactive)
   (if (and (= 1 (length (window-list)))
@@ -21,7 +22,13 @@
       (jump-to-register ?_)
     (progn
       (window-configuration-to-register ?_)
+
+      (when buffer-or-name
+        (let* ((win (get-buffer-window buffer-or-name)))
+          (select-window win)))
+
       (delete-other-windows))))
+
 
 ;; originally from magnars and modified by ffevotte for dedicated windows
 ;; support, it has quite diverged by now
