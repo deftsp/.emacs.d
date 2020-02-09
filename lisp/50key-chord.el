@@ -98,7 +98,6 @@
 
 
   (key-chord-define-global ",r" 'tl/recursive-edit-save-window-config)
-  (key-chord-define-global ",c" 'org-capture)
   (key-chord-define-global "VV" 'other-window)
 
   ;; work with <mouse-5>
