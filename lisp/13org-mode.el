@@ -1411,6 +1411,11 @@ If VANILLA is non-nil, run the standard `org-capture'."
 
     (add-hook 'org-capture-mode-hook 'tl//org-capture-mode-init)
 
+    (defun tl//org-capture-after-finalize-h ()
+      (tl/jump-to-org-agenda nil))
+
+    (add-hook 'org-capture-after-finalize-hook 'tl//org-capture-after-finalize-h)
+
     (tl/set-leader-keys-for-minor-mode 'org-capture-mode
       dottl-major-mode-leader-key 'org-capture-finalize
       "a" 'org-capture-kill
