@@ -9,6 +9,8 @@
   :config
 
   (defun tl/rust-mode-init ()
+    (racer-mode +1)
+    (eldoc-mode +1)
     (when (fboundp 'org-link-minor-mode)
       (org-link-minor-mode +1)))
 
@@ -69,6 +71,22 @@
     "cv" 'cargo-process-check
     "t" 'cargo-process-test))
 
+(use-package racer
+  :defer t
+  :diminish
+  :after rust-mode
+  :commands racer-mode
+  :init
+  (tl/set-leader-keys-for-major-mode 'rust-mode
+    "hh" 'tl/racer-describe)
+  :config
+  (defun tl/racer-describe ()
+    "Show a *Racer Help* buffer for the function or type at point.
+If `help-window-select' is non-nil, also select the help window."
+    (interactive)
+    (let ((window (racer-describe)))
+      (when help-window-select
+        (select-window window)))))
 
 (provide '50rust-mode)
 ;;; 50rust-mode.el ends here
