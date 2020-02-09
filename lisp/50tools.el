@@ -115,7 +115,9 @@ space and marks next symbol."
 
 (use-package display-line-numbers
   :init
-  (setq display-line-numbers-type 'relative)
+  (setq display-line-numbers-type 'relative
+        display-line-numbers-width-start nil
+        display-line-numbers-grow-only t)
   (global-display-line-numbers-mode +1))
 
 ;;; uniquify
