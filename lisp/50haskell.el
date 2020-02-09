@@ -288,6 +288,7 @@ Available options are `ghci', `intero', `dante', and `ghc-mod'")
       "it"  'intero-targets))
 
   (evil-define-key '(insert normal) intero-mode-map
+    ;; TODO: replace it with smart-jump
     (kbd "M-.") 'intero-goto-definition))
 
 

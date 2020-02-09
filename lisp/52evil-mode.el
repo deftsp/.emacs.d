@@ -741,12 +741,6 @@ to replace the symbol under cursor"
     "j" 'evil-next-visual-line
     "k" 'evil-previous-visual-line))
 
-;;; elisp-slime-nav
-(with-eval-after-load 'evil
-  (evil-define-key 'normal elisp-slime-nav-mode-map
-    (kbd "M-.") 'elisp-slime-nav-find-elisp-thing-at-point
-    (kbd "M-,") 'pop-tag-mark))
-
 ;;; misc
 (with-eval-after-load 'evil
   ;; using both the RET and <return> forms to make sure the key works both in terminal and under X.
