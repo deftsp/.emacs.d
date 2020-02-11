@@ -11,6 +11,7 @@
 (setq switch-to-buffer-preserve-window-point t
       window-min-height 4               ; Let's not have too-tiny windows.
       mouse-autoselect-window nil)
+;; (setq fit-window-to-buffer-horizontally t)
 
 ;; Origial from https://gist.github.com/3402786 An Emacs function to temporarily make
 ;; one buffer fullscreen. You can quickly restore the old window setup.
