@@ -469,36 +469,6 @@ vi style of % jumping to matching brace."
 (setq-default kill-whole-line t)
 (setq kill-ring-max 200) ; default 60
 
-;;; Spell check
-;; don't use Ispell, but the more modern Aspell
-(setq-default ispell-program-name "aspell")
-
-;;; save new words in pdict without questioning
-(setq ispell-silently-savep t)
-
-;; add good shortcut for flyspell. The hook makes sure when flyspell-mode is on, the buffer gets scanned.
-;; (defun flyspell ()
-;;   "Do the expected default, which is run flyspell on the whole buffer."
-;;   (interactive)
-;;   (flyspell-buffer))
-;; (add-hook 'flyspell-mode-hook 'flyspell-buffer)
-
-;; After we add a word to ispell or correct something, flyspell's highlighting may become outdated. Let's re-run
-;; highlighting after a correction.
-;; (defadvice ispell (after advice)
-;;   (flyspell-buffer))
-;; (ad-activate 'ispell t)
-;; (defadvice ispell-word (after advice)
-;;   (flyspell-buffer))
-;; (ad-activate 'ispell-word t)
-
-;; Programming language modes use flyspell-prog-mode and not normal spell-check.
-;; (add-hook 'haskell-mode-hook 'flyspell-prog-mode)
-;; (add-hook 'emacs-lisp-mode-hook (lambda () (flyspell-prog-mode)))
-;; (add-hook 'lisp-mode-hook (lambda () (flyspell-prog-mode)))
-;; (add-hook 'shell-mode-hook (lambda () (flyspell-prog-mode)))
-
-
 ;; Use cperl-mode instead of perl-mode
 ;; (defalias 'perl-mode 'cperl-mode)
 

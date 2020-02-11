@@ -99,6 +99,7 @@
 (require '50swift-mode)
 (require '50syntax-checker)
 (require '50sql)
+(require '50spellcheck)
 (require '50buffer)
 (require '50smartparens)
 (require '50tab-completion)

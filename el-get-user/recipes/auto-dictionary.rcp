@@ -1,0 +1,5 @@
+(:name auto-dictionary
+       :website "http://nschum.de/src/emacs/auto-dictionary/"
+       :description "Automatic dictionary switcher for flyspell."
+       :type github
+       :pkgname "nschum/auto-dictionary-mode")
