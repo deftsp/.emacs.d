@@ -13,7 +13,7 @@
   (progn
     ;; don't use Ispell, but the more modern Aspell
     (setq ispell-program-name "aspell")
-    ;; (setq flyspell-issue-message-flag nil)
+    (setq flyspell-issue-message-flag nil)
 
     ;; save new words in pdict without questioning
     (setq ispell-silently-savep t)
