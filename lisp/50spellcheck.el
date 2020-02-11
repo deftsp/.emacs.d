@@ -55,18 +55,17 @@
   :commands (flyspell-correct-at-point
              flyspell-correct-wrapper))
 
-(use-package flyspell-correct-avy-menu
-  :after flyspell
-  :commands (flyspell-correct-avy-menu)
-  :init
-  (setq flyspell-correct-interface #'flyspell-correct-avy-menu))
-
-
-;; (use-package flyspell-correct-ivy
+;; (use-package flyspell-correct-avy-menu
 ;;   :after flyspell
-;;   :commands (flyspell-correct-ivy)
+;;   :commands (flyspell-correct-avy-menu)
 ;;   :init
-;;   (setq flyspell-correct-interface #'flyspell-correct-ivy))
+;;   (setq flyspell-correct-interface #'flyspell-correct-avy-menu))
+
+(use-package flyspell-correct-ivy
+  :after flyspell
+  :commands (flyspell-correct-ivy)
+  :init
+  (setq flyspell-correct-interface #'flyspell-correct-ivy))
 
 ;; (use-package flyspell-correct-popup
 ;;   :after flyspell
