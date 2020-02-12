@@ -64,7 +64,6 @@
    `(mode-line ((t (:foreground ,base1 :background ,base02 :box nil :height 1.0 :family "mplus Nerd Font"))))
    `(mode-line-inactive ((t (:inherit 'mode-line :foreground ,base0  :background ,base03))))
    `(mode-line-highlight ((t (:inherit 'mode-line :background ,base01 :foreground ,base2))))
-   `(tl/mode-line-display-time ((t (:inherit 'mode-line :background ,base01 :foreground "lawn green"))))
 
    '(minibuffer-prompt ((t (:foreground "#22ccee" :weight bold))))
    `(fringe ((t (:foreground "#00cbcb" :background ,base02))))
@@ -297,7 +296,7 @@
 
    '(diredp-dir-heading ((t (:background "#555555" :foreground "magenta"))))
    '(diredp-file-name ((t (:foreground "dodger blue"))))
-   '(diredp-dir-name ((t (:foreground "#222222" :background "burlywood"))))
+   '(diredp-dir-name ((t (:foreground "#e1ed22" :background "#204b56" :weight bold))))
    '(diredp-dir-priv ((t (:foreground "steel blue" :background unspecified :weight bold))))
    '(diredp-no-priv ((t (:foreground unspecified :background unspecified))))
    '(diredp-read-priv ((t (:foreground "deep sky blue" :background unspecified))))

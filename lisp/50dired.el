@@ -102,7 +102,7 @@
              ("TAB" . dired-subtree-cycle))
 
       :init
-      (setq dired-subtree-line-prefix "    ->"
+      (setq dired-subtree-line-prefix "  ➜ "
             dired-subtree-use-backgrounds t))
 
     (use-package dired-open
@@ -224,9 +224,10 @@
 (use-package dired-sidebar
   :commands (dired-sidebar-toggle-sidebar dired-sidebar-jump-to-sidebar)
   :init
+  (setq dired-sidebar-tui-update-delay 0.0)
   (setq dired-sidebar-width 42)
-  (setq dired-sidebar-subtree-line-prefix "  ➜")
-  (setq dired-sidebar-theme 'icons)
+  (setq dired-sidebar-theme 'nerd)
+  (setq dired-sidebar-subtree-line-prefix "  ➜ ")
   ;; (setq dired-sidebar-use-term-integration t)
   (setq dired-sidebar-use-custom-font t)
   (setq dired-sidebar-should-follow-file nil
@@ -240,8 +241,53 @@
     "ors"    #'tl/do-dired-sidebar-follow-file
     "sf"    #'tl/do-dired-sidebar-follow-file)
 
-  (defun tl/dired-sidebar-init ())
+  ;; TODO: use ⯇ ⯈ ⯅ ⯆  to tui
+  (defun tl/dired-sidebar-init ()
+    ;; `dired-sidebar-setup-tui' will unconditional set `dired-subtree-line-prefix' to " "
+    (if (dired-sidebar-using-tui-p)
+        ;; "  🠺"
+        (setq-local dired-subtree-line-prefix "  ")))
+
   (add-hook 'dired-sidebar-mode-hook 'tl/dired-sidebar-init)
+
+  (defun tl/dired-sidebar-tui-dired-display (orig-fun &rest args)
+    "Display the icons of files in a dired buffer."
+    (interactive)
+    (when (or t (and (not dired-sidebar-tui-dired-displayed) dired-subdir-alist))
+      (setq-local dired-sidebar-tui-dired-displayed t)
+      (let ((inhibit-read-only t)
+            (collapsible-icon (if (eq dired-sidebar-theme 'nerd) "⯆" "-"))
+            (expandable-icon (if (eq dired-sidebar-theme 'nerd) "⯈" "+")))
+        (save-excursion
+          (goto-char (point-min))
+          (while (not (eobp))
+            (when (dired-move-to-filename nil)
+              (dired-move-to-filename)
+              (let ((file (dired-get-filename 'verbatim t)))
+                (unless (member file '("." ".."))
+                  (let ((filename (dired-get-filename nil t)))
+                    (if (eq dired-sidebar-theme 'vscode)
+                        (progn
+                          (require 'vscode-icon)
+                          (when (fboundp 'vscode-icon-for-file)
+                            (insert-image
+                             (vscode-icon-for-file filename) " "))
+                          (insert " "))
+                      (if (file-directory-p filename)
+                          (if (dired-subtree--is-expanded-p)
+                              (insert (concat collapsible-icon " "))
+                            (insert (concat expandable-icon " ")))
+                        (insert "- ")))))))
+            (forward-line 1))))))
+
+  (advice-add 'dired-sidebar-tui-dired-display :around #'tl/dired-sidebar-tui-dired-display)
+  ;; (advice-remove 'dired-sidebar-tui-dired-display #'tl/dired-sidebar-tui-dired-display)
+
+  (defun tl/dired-subtree-cycle-after-hook (&rest _)
+    (when (eq major-mode 'dired-sidebar-mode))
+    (dired-sidebar-tui-update-with-delay))
+
+  (advice-add 'dired-subtree-cycle :after #'tl/dired-subtree-cycle-after-hook)
 
   (tl/set-leader-keys
     "ft"    #'dired-sidebar-toggle-sidebar)
