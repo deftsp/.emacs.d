@@ -75,6 +75,7 @@
 (require '50misc)
 (require '50mmm-mode)
 ;; (require '50mode-line)
+;; (require '50doom-modeline)
 (require '50narrowing)
 (require '50net-utils)
 ;; (require '50nethack)
