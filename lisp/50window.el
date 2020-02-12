@@ -13,6 +13,33 @@
       mouse-autoselect-window nil)
 ;; (setq fit-window-to-buffer-horizontally t)
 
+;;; Copy from doom-modeline. Fix org-agenda command window height
+;; FIXME #183: Force to caculate mode-line height
+;; @see https://github.com/seagle0128/doom-modeline/issues/183
+(defun tl//modeline-redisplay (&rest _)
+  "Call `redisplay' to trigger mode-line height calculations.
+
+Certain functions, including e.g. `fit-window-to-buffer', base
+their size calculations on values which are incorrect if the
+mode-line has a height different from that of the `default' face
+and certain other calculations have not yet taken place for the
+window in question.
+
+These calculations can be triggered by calling `redisplay'
+explicitly at the appropriate time and this functions purpose
+is to make it easier to do so.
+
+This function is like `redisplay' with non-nil FORCE argument.
+It accepts an arbitrary number of arguments making it suitable
+as a `:before' advice for any function.  If the current buffer
+has no mode-line or this function has already been called in it,
+then this function does nothing."
+  (when mode-line-format
+    (redisplay t)))
+
+(advice-add #'fit-window-to-buffer :before #'tl//modeline-redisplay)
+(advice-add #'resize-temp-buffer-window :before #'tl//modeline-redisplay)
+
 ;; Origial from https://gist.github.com/3402786 An Emacs function to temporarily make
 ;; one buffer fullscreen. You can quickly restore the old window setup.
 (defun tl/toggle-maximize-buffer (&optional buffer-or-name)
