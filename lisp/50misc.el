@@ -194,7 +194,7 @@
 (setq display-time-string-forms
       '((format-time-string "%Y/%m/%d " now)
         (propertize (concat " " 24-hours ":" minutes)
-                    'face 'tl/mode-line-display-time)
+                    'face 'mode-line-inactive)
         (if time-zone " ") time-zone (if time-zone " ")
         load
         (if mail
