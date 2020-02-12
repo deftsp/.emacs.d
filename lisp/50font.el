@@ -167,7 +167,9 @@
           (fontname . "FreeMono")
           (fontsize-index . 0))
          ((target . (#x2700 . #x27bf))) ; Dingbats
-         )))
+         ((target . (#x2622 . #x2622)) ; ☢
+          (fontname . "DejaVu Sans Mono")
+          (rescale . 0.98)))))
 
     (add-hook 'cnfonts-set-font-finish-hook
               'tl/cnfonts-set-extra-fonts)
