@@ -243,9 +243,17 @@
 
   ;; TODO: use ⯇ ⯈ ⯅ ⯆  to tui
   (defun tl/dired-sidebar-init ()
-    ;; `dired-sidebar-setup-tui' will unconditional set `dired-subtree-line-prefix' to " "
+    ;; FIXME: it not work, but why?
+    ;; (let* ((buf (dired-sidebar-buffer))
+    ;;        (win (get-buffer-window buf)))
+    ;;   (when win
+    ;;     (set-window-fringes (selected-window) 0 0)))
+
+    ;; `dired-sidebar-setup-tui' will unconditional set
+    ;; `dired-subtree-line-prefix' to " "
+
+    ;; "  🠺"
     (if (dired-sidebar-using-tui-p)
-        ;; "  🠺"
         (setq-local dired-subtree-line-prefix "  ")))
 
   (add-hook 'dired-sidebar-mode-hook 'tl/dired-sidebar-init)
