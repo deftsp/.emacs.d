@@ -64,6 +64,7 @@
    `(mode-line ((t (:foreground ,base1 :background ,base02 :box nil :height 1.0 :family "mplus Nerd Font"))))
    `(mode-line-inactive ((t (:inherit 'mode-line :foreground ,base0  :background ,base03))))
    `(mode-line-highlight ((t (:inherit 'mode-line :background ,base01 :foreground ,base2))))
+   `(tl/mode-line-display-time ((t (:inherit 'mode-line :background ,base01 :foreground "lawn green"))))
 
    '(minibuffer-prompt ((t (:foreground "#22ccee" :weight bold))))
    `(fringe ((t (:foreground "#00cbcb" :background ,base02))))

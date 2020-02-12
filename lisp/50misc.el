@@ -185,15 +185,6 @@
       display-time-use-mail-icon t)
 (display-time-mode +1)
 
-(defface tl/display-time-face
-  '((((type x w32 mac))
-     ;; #060525
-     (:foreground "lawn green" :inherit bold))
-    (((type tty))
-     (:foreground "blue")))
-  "Face used to display the time in the mode line.")
-
-;; Name of mail inbox directory
 ;; check that the file specified by `display-time-mail-file' is nonempty or that the
 ;; directory `display-time-mail-directory' contains nonempty files.
 
@@ -203,7 +194,7 @@
 (setq display-time-string-forms
       '((format-time-string "%Y/%m/%d " now)
         (propertize (concat " " 24-hours ":" minutes)
-                    'face 'tl/display-time-face)
+                    'face 'tl/mode-line-display-time)
         (if time-zone " ") time-zone (if time-zone " ")
         load
         (if mail
@@ -216,6 +207,7 @@
                      'mouse-face 'mode-line-highlight
                      'local-map (make-mode-line-mouse-map 'mouse-2 read-mail-command)))
           "")))
+
 
 ;;; use y-or-n-p instead of yes-or-no-p
 (fset 'yes-or-no-p 'y-or-n-p)
