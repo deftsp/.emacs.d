@@ -85,7 +85,7 @@
 
 ;;; customisation of modes
 (defun tl/cedet-hook ()
-  (semantic-mode +1)
+  ;; (semantic-mode +1)
   (local-set-key "\C-x,." 'senator-complete-symbol)
   (local-set-key "\C-x,?" 'semantic-ia-complete-symbol) ; M-TAB
   (local-set-key "\C-x,>" 'semantic-complete-analyze-inline)
