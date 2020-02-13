@@ -30,6 +30,8 @@
   ;; (set (make-local-variable 'lisp-indent-function)
   ;;      'common-lisp-indent-function)
 
+  (when (fboundp 'show-smartparens-mode)
+    (show-smartparens-mode +1))
   (set (make-local-variable 'lisp-indent-function)
        #'tl/lisp-indent-function)
   (turn-on-eldoc-mode))
