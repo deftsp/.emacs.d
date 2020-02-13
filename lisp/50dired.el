@@ -35,6 +35,78 @@
     (define-key dired-mode-map (kbd "W") 'tl/dired-w3m-find-file)
     (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
 
+    ;; [[https://emacs.stackexchange.com/a/13380][diredp header line follow link]]
+    (defface tl/dired-mouseover-face
+      '((t (:inherit diredp-dir-heading :underline t)))
+      "Face for `tl/dired-mouseover-face'."
+      :group 'dired)
+
+    ;; header line abbrev HOME and breadcrumb
+    (defvar tl/dired-mouse-map
+      (let ((map (make-sparse-keymap)))
+        (define-key map [mouse-2] 'tl/dired-follow-link)
+        (define-key map [return] 'tl/dired-follow-link)
+        (define-key map [follow-link] 'mouse-face)
+        map)
+      "Keymap for mouse when in `dired-mode'.")
+
+    ;; Author:  Drew Adams -- http://emacs.stackexchange.com/a/13411/2287
+    (defun tl/dired-follow-link (event)
+      "Follow the link in the dired directory heading, causing a new
+dired buffer to be opened."
+      (interactive (list last-nonmenu-event))
+      (run-hooks 'mouse-leave-buffer-hook)
+      (with-current-buffer (window-buffer (posn-window (event-start event)))
+        (let ((path  (get-text-property (posn-point (event-start event)) 'breadcrumb)))
+          (dired path))))
+
+    (defun tl//dired-breadcrumb-add-properties (beg end path &optional display)
+      (add-text-properties
+       beg end
+       (list
+        'display (and display (propertize display 'face 'diredp-dir-heading))
+        'breadcrumb path
+        'face 'diredp-dir-heading
+        'help-echo (format "mouse-2, RET: Follow the link to \"%s\"" path)
+        'keymap tl/dired-mouse-map
+        'mouse-face 'tl/dired-mouseover-face)))
+
+    (add-hook 'dired-after-readin-hook 'tl/dired-propertize-directory-heading)
+
+    (defun tl/dired-propertize-directory-heading ()
+      (interactive)
+      (unless (buffer-narrowed-p)
+        (let* ((inhibit-read-only t)
+               (home (getenv "HOME"))
+               path-begin)
+          (progn ;; save-excursion
+            (goto-char (point-min))
+            (setq peol (point-at-eol))
+            (set-text-properties (point) peol nil)
+
+            (if (re-search-forward
+                 (format "\\([^/\\]+\\)\\(%s\\)[/:]"
+                         (regexp-quote home))
+                 peol t)
+                (progn
+                  (setq path-begin (match-beginning 2))
+                  (tl//dired-breadcrumb-add-properties
+                   (match-beginning 0)  ; include the prefix two spaces
+                   (match-end 2)
+                   home
+                   "~"))
+              (re-search-forward "\\([^/\\]+\\)[/\\]" peol t)
+              (setq path-begin (match-end 1))
+
+              (tl//dired-breadcrumb-add-properties
+               (match-beginning 0) (1+ (match-end 1)) "/" "/"))
+
+            (while (re-search-forward "\\([^/\\]+\\)[/\\:]" peol t)
+              (tl//dired-breadcrumb-add-properties
+               (match-beginning 1)
+               (match-end 1)
+               (buffer-substring-no-properties path-begin (match-end 1))))))))
+
 
     (defun tl/dired-find-file-ace-window ()
       "Use ace window to select a window for opening a file from dired."
@@ -146,7 +218,7 @@
         (setq diredp-hide-details-propagate-flag nil)))
 
     (when (eq system-type 'darwin)
-      (let ((ls (executable-find "gls")))   ;; brew insall coreutils
+      (let ((ls (executable-find "gls"))) ;; brew insall coreutils
         (cond (ls (setq dired-use-ls-dired t)
                   (setq insert-directory-program ls))
               (t (require 'ls-lisp)
@@ -193,9 +265,9 @@
                       (regexp-opt '("^TAGS$" "^cscope.out$")))))
       :config
       (progn
-        (setq dired-guess-shell-alist-user    ; use ! to call guess command
+        (setq dired-guess-shell-alist-user ; use ! to call guess command
               `((,(regexp-opt '(".gif" ".png" ".bmp" ".jpg" ".tif" ".jpeg"))
-                 '("qiv"                     ; feh, "xloadimage -onroot"
+                 '("qiv"                ; feh, "xloadimage -onroot"
                    ))
                 ("\\.htm[l]?$" "firefox")
                 ("\\.dvi$"    "xdvi")
@@ -218,14 +290,13 @@
                         ,(format "zip -r %s.jar"
                                  (file-name-nondirectory (dired-get-filename)))
                         "qiv"))))))))
-;;; omit mode
-;; C-x M-o
+
 
 (use-package dired-sidebar
   :commands (dired-sidebar-toggle-sidebar dired-sidebar-jump-to-sidebar)
   :init
   (setq dired-sidebar-tui-update-delay 0.0)
-  (setq dired-sidebar-width 42)
+  (setq dired-sidebar-width 36)
   (setq dired-sidebar-theme 'nerd)
   (setq dired-sidebar-subtree-line-prefix "  ➜ ")
   ;; (setq dired-sidebar-use-term-integration t)

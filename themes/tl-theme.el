@@ -294,7 +294,7 @@
    ;; dried & diredp
    '(dired-marked ((t (:background "#555555" :foreground "Pink"))))
 
-   '(diredp-dir-heading ((t (:background "#555555" :foreground "magenta"))))
+   '(diredp-dir-heading ((t (:background "#555555" :foreground "magenta" :weight bold))))
    '(diredp-file-name ((t (:foreground "dodger blue"))))
    '(diredp-dir-name ((t (:foreground "#e1ed22" :background "#204b56" :weight bold))))
    '(diredp-dir-priv ((t (:foreground "steel blue" :background unspecified :weight bold))))
