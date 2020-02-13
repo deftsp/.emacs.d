@@ -49,7 +49,8 @@ emacs.")
 transparency level of a frame when it's active or selected. Transparency
 can be toggled through `toggle-transparency'.")
 
-(defvar dottl-inactive-transparency 90
+;; 90 looks better, but bad for screenshot
+(defvar dottl-inactive-transparency 96
   "A value from the range (0..100), in increasing opacity, which describes the
 transparency level of a frame when it's inactive or deselected. Transparency
 can be toggled through `toggle-transparency'.")
