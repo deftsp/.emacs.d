@@ -109,6 +109,7 @@ offer a list of recently clocked tasks to clock into. "
   "ocr"   'org-resolve-clocks
   "ocx"   'org-clock-in-last
   "ocz"   'org-resolve-clocks
+  "oee"   'eval-expression
 
   "ops"   'profiler-start
   "opS"   'profiler-stop
