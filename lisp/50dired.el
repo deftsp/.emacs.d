@@ -304,6 +304,18 @@
   (tl/set-leader-keys-for-major-mode 'dired-sidebar-mode
     "u" 'dired-sidebar-up-directory)
 
+  (defun tl/dired-sidebar-preview-file ()
+    (interactive)
+    (let ((file (dired-get-file-for-visit)))
+      (with-selected-window (selected-window)
+        (if (and dired-sidebar-cycle-subtree-on-click
+                 (file-directory-p file)
+                 (not (string-suffix-p "." file)))
+            (dired-subtree-cycle)
+          (dired-sidebar-find-file file)))))
+
+  (define-key dired-sidebar-mode-map "p" 'tl/dired-sidebar-preview-file)
+
   (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
   (push 'rotate-windows dired-sidebar-toggle-hidden-commands))
 
