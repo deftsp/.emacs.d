@@ -40,10 +40,9 @@
 (use-package gcmh
   :diminish
   :init
-  (setq gcmh-verbose t)
+  (setq gcmh-verbose nil)
   :config
   (gcmh-mode +1))
-
 
 ;;; neat stuffs
 (use-package key-chord

@@ -3,28 +3,16 @@
 ;;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
 
-;;; Garbage Collection
-;; This sets garbage collection to only occur when 6 megabytes are used.
-;; Supposedly significantly speeds up startup time. (Seems to work for me, but
-;; my computer is pretty modern. Disable if you are on anything less than 1GHZ).
-(defvar tl-gc-cons-threshold 100000000)
-(setq gc-cons-threshold (max tl-gc-cons-threshold gc-cons-threshold)) ; 100MB
-
-;; always load the newer one between .el and .elc
-(setq load-prefer-newer t)
-
-;; http://bling.github.io/blog/2016/01/18/why-are-you-changing-gc-cons-threshold/
-(defun tl-minibuffer-setup-hook ()
-  (setq gc-cons-threshold most-positive-fixnum))
-
-(defun tl-minibuffer-exit-hook ()
-  (setq gc-cons-threshold tl-gc-cons-threshold))
-
-(add-hook 'minibuffer-setup-hook #'tl-minibuffer-setup-hook)
-(add-hook 'minibuffer-exit-hook #'tl-minibuffer-exit-hook)
+;; doom-emacs: A big contributor to startup times is garbage collection. We up
+;; the gc threshold to temporarily prevent it from running, then reset it later
+;; by enabling `gcmh-mode'. Not resetting it will cause stuttering/freezes.
+(setq gc-cons-threshold most-positive-fixnum)
 
 ;; want to see how often GC happens
 ;; (setq garbage-collection-messages nil)
+
+;; always load the newer one between .el and .elc
+(setq load-prefer-newer t)
 
 ;;; package
 (setq package-archives
