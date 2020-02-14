@@ -1,0 +1,5 @@
+(:name mmt
+ :type github
+ :description "Missing macro tools for Emacs Lisp"
+ :pkgname "mrkkrp/mmt"
+ :depends (cl-lib))

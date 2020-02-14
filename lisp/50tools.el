@@ -1377,6 +1377,13 @@ inputting math (Unicode) symbols." t))
              anki-editor-insert-note
              anki-editor-cloze-region))
 
+
+(use-package typit
+  :commands (typit-test typit-basic-test typit-advanced-test)
+  :init
+  (setq typit-dict-dir "~/.emacs.d/typit-dict"
+        typit-dict "number-symbol.txt"))
+
 ;; https://github.com/algernon/kaleidoscope.el
 ;; (kaleidoscope-send-command :help)
 ;; (kaleidoscope-send-command :version)

@@ -110,3 +110,5 @@ transient/
 .purpose-layout
 layouts/
 emacs-libvterm/
+typit-dict/
+type-break

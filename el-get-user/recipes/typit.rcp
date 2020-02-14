@@ -1,0 +1,5 @@
+(:name typit
+ :type github
+ :description "Typing game similar to tests on 10 fast fingers"
+ :pkgname "mrkkrp/typit"
+ :depends (f mmt))
