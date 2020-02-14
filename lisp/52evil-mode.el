@@ -940,6 +940,7 @@ to replace the symbol under cursor"
 ;;; lispyville: [[https://github.com/noctuid/lispyville][noctuid/lispyville: lispy + evil = lispyville]]
 (use-package lispyville
   :after (evil)
+  :diminish
   :hook (lispy-mode . lispyville-mode)
   :config
   (lispyville-set-key-theme
