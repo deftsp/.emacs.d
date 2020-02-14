@@ -1230,13 +1230,13 @@ If VANILLA is non-nil, run the standard `org-capture'."
         (org-archive-subtree)
         (setq org-map-continue-from (marker-position next-point-marker)))))
 
-(defun tl/org-archive-if-completed ()
-  (interactive)
+(defun tl//org-archive-if-completed ()
   (tl/org-archive-if 'org-entry-is-done-p))
 
 (defun tl/org-archive-completed-in-buffer ()
+  "Move all of the done subtrees in current buffer to the archive."
   (interactive)
-  (org-map-entries 'tl/org-archive-if-completed))
+  (org-map-entries 'tl//org-archive-if-completed))
 
 
 ;;; Priority
