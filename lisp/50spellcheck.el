@@ -38,6 +38,7 @@
           (flyspell-mode +1))))
 
     (advice-add 'ispell-init-process :around #'tl/suppress-messages)
+    (advice-add 'ispell-kill-ispell :around #'tl/suppress-messages)
 
     (tl/declare-prefix "S" "spelling")
     (tl/declare-prefix "Sa" "add word to dict")
