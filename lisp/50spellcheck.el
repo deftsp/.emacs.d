@@ -37,6 +37,8 @@
             (flyspell-prog-mode)
           (flyspell-mode +1))))
 
+    (advice-add 'ispell-init-process :around #'tl/suppress-messages)
+
     (tl/declare-prefix "S" "spelling")
     (tl/declare-prefix "Sa" "add word to dict")
     (tl/set-leader-keys
@@ -49,6 +51,7 @@
       "Sn" 'flyspell-goto-next-error
       "Ss" 'flyspell-correct-at-point
       "St" 'tl/toggle-flyspell-mode)))
+
 
 (use-package flyspell-correct
   :after flyspell

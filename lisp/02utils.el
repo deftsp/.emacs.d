@@ -1,4 +1,4 @@
-;;; 02utils.el ---
+;;; 02utils.el ---            -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2013  Shihpin Tseng
 
@@ -10,6 +10,30 @@
 (require 'hydra)
 
 (use-package use-package-chords)
+
+;;; [[https://superuser.com/questions/669701/emacs-disable-some-minibuffer-messages][Emacs - Disable Some Minibuffer Messages]]
+(defun tl/suppress-messages (old-fun &rest args)
+  (cl-flet ((silence (&rest args1) (ignore)))
+    (advice-add 'message :around #'silence)
+    (unwind-protect
+        (apply old-fun args)
+      (advice-remove 'message #'silence))))
+
+;; (advice-add 'some-function :around #'tl/suppress-messages)
+;; (advice-remove 'some-function #'tl/suppress-messages)
+
+;; TODO: add a toggle function
+(defun tl/who-called-me? (old-fun format &rest args)
+  (let ((trace nil) (n 1) (frame nil))
+    (while (setf frame (backtrace-frame n))
+      (setf n     (1+ n)
+            trace (cons (cadr frame) trace)) )
+    (apply old-fun (concat "<<%S>>\n" format) (cons trace args))))
+
+;; (advice-add 'message :around #'tl/who-called-me?)
+;; (advice-remove 'message #'tl/who-called-me?)
+
+
 
 ;;; Garbage Collection Magic Hack
 ;; http://akrl.sdf.org/
