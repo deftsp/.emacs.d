@@ -82,7 +82,6 @@
 (require '50nxml)
 (require '50ocaml)
 (require '50outline-mode)
-(require '50paredit)
 (require '50patch)
 (require '50perl)
 (require '50printing)
