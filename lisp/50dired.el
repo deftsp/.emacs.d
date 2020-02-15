@@ -212,6 +212,7 @@ dired buffer to be opened."
 
     ;; TODO: dired will be require when el-get sync and here dired+ require slow.
     (use-package dired+
+      :after dired
       :init
       (progn
         (setq diredp-hide-details-initially-flag nil)
