@@ -329,7 +329,8 @@ dired buffer to be opened."
     (dired-sidebar-follow-file))
 
   (tl/set-leader-keys
-    "ors"    #'tl/do-dired-sidebar-follow-file
+    "ft"    #'dired-sidebar-toggle-sidebar
+    "ors"   #'tl/do-dired-sidebar-follow-file
     "sf"    #'tl/do-dired-sidebar-follow-file)
 
   ;; TODO: use ⯇ ⯈ ⯅ ⯆  to tui
@@ -348,6 +349,22 @@ dired buffer to be opened."
         (setq-local dired-subtree-line-prefix " ")))
 
   (add-hook 'dired-sidebar-mode-hook 'tl/dired-sidebar-init)
+
+  :config
+  (tl/set-leader-keys-for-major-mode 'dired-sidebar-mode
+    "u" 'dired-sidebar-up-directory)
+
+  (defun tl/dired-sidebar-preview-file ()
+    (interactive)
+    (let ((file (dired-get-file-for-visit)))
+      (with-selected-window (selected-window)
+        (if (and dired-sidebar-cycle-subtree-on-click
+                 (file-directory-p file)
+                 (not (string-suffix-p "." file)))
+            (dired-subtree-cycle)
+          (dired-sidebar-find-file file)))))
+
+  (define-key dired-sidebar-mode-map "p" 'tl/dired-sidebar-preview-file)
 
   (defun tl/dired-sidebar-tui-dired-display (orig-fun &rest args)
     "Display the icons of files in a dired buffer."
@@ -388,25 +405,6 @@ dired buffer to be opened."
       (dired-sidebar-tui-update-with-delay)))
 
   (advice-add 'dired-subtree-cycle :after #'tl/dired-subtree-cycle-after-hook)
-
-  (tl/set-leader-keys
-    "ft"    #'dired-sidebar-toggle-sidebar)
-
-  :config
-  (tl/set-leader-keys-for-major-mode 'dired-sidebar-mode
-    "u" 'dired-sidebar-up-directory)
-
-  (defun tl/dired-sidebar-preview-file ()
-    (interactive)
-    (let ((file (dired-get-file-for-visit)))
-      (with-selected-window (selected-window)
-        (if (and dired-sidebar-cycle-subtree-on-click
-                 (file-directory-p file)
-                 (not (string-suffix-p "." file)))
-            (dired-subtree-cycle)
-          (dired-sidebar-find-file file)))))
-
-  (define-key dired-sidebar-mode-map "p" 'tl/dired-sidebar-preview-file)
 
   (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
   (push 'rotate-windows dired-sidebar-toggle-hidden-commands))
