@@ -22,7 +22,8 @@
     (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
     (defun tl/flyspell-mode-init ()
-      (auto-dictionary-mode +1))
+      ;; (auto-dictionary-mode +1)
+      )
 
     (add-hook 'flyspell-mode-hook 'tl/flyspell-mode-init)
 
@@ -77,21 +78,21 @@
 ;;   (setq flyspell-correct-interface #'flyspell-correct-popup))
 
 
-(use-package auto-dictionary
-  :defer t
-  :after flyspell
-  :init
-  (progn
-    ;; Select the buffer local dictionary if it was set, otherwise
-    ;; auto-dictionary will replace it with a guessed one at each activation.
-    ;; https://github.com/nschum/auto-dictionary-mode/issues/5
-    (defun tl//adict-set-local-dictionary ()
-      "Set the local dictionary if not nil."
-      (when (and (fboundp 'adict-change-dictionary)
-                 ispell-local-dictionary)
-        (adict-change-dictionary ispell-local-dictionary)))
-    (add-hook 'auto-dictionary-mode-hook
-              'tl//adict-set-local-dictionary 'append)))
+;; (use-package auto-dictionary
+;;   :defer t
+;;   :after flyspell
+;;   :init
+;;   (progn
+;;     ;; Select the buffer local dictionary if it was set, otherwise
+;;     ;; auto-dictionary will replace it with a guessed one at each activation.
+;;     ;; https://github.com/nschum/auto-dictionary-mode/issues/5
+;;     (defun tl//adict-set-local-dictionary ()
+;;       "Set the local dictionary if not nil."
+;;       (when (and (fboundp 'adict-change-dictionary)
+;;                  ispell-local-dictionary)
+;;         (adict-change-dictionary ispell-local-dictionary)))
+;;     (add-hook 'auto-dictionary-mode-hook
+;;               'tl//adict-set-local-dictionary 'append)))
 
 
 (defun spell-checking/change-dictionary ()
