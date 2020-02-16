@@ -409,6 +409,7 @@ Available options are `ghci', `intero', `dante', and `ghc-mod'")
   (define-key haskell-interactive-mode-map (kbd "C-c C-l") 'haskell-interactive-mode-clear))
 
 ;;; completion backend
+;; TODO: ghc-mode have switch to [[https://github.com/haskell/haskell-ide-engine][haskell/haskell-ide-engine]]
 (defun tl-haskell//setup-ghc-mod ()
   (ghc-init)
   (tl/declare-prefix-for-mode 'haskell-mode "mm" "haskell/ghc-mod")
