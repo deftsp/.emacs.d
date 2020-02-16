@@ -33,6 +33,7 @@
       "z" 'reveal-in-osx-finder)
     (define-key dired-mode-map (kbd "^") 'diredp-up-directory-reuse-dir-buffer)
     (define-key dired-mode-map (kbd "W") 'tl/dired-w3m-find-file)
+    (define-key dired-mode-map (kbd "I") 'dired-maybe-insert-subdir)
     (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
 
     ;; [[https://emacs.stackexchange.com/a/13380][diredp header line follow link]]
@@ -175,7 +176,25 @@ dired buffer to be opened."
 
       :init
       (setq dired-subtree-line-prefix "  ➜ "
-            dired-subtree-use-backgrounds t))
+            dired-subtree-use-backgrounds t)
+
+      (define-key dired-mode-map (kbd "i") nil)
+      (general-define-key
+       :keymaps 'dired-mode-map
+       "ii" #'dired-subtree-insert
+       "ir" #'dired-subtree-remove
+       "ij" #'dired-subtree-down
+       "ik" #'dired-subtree-up
+       "in" #'dired-subtree-next-sibling
+       "ip" #'dired-subtree-previous-sibling
+       "if" #'dired-subtree-apply-filter
+       "ia" #'dired-subtree-narrow
+       "i_" #'dired-subtree-beginning
+       "i$" #'dired-subtree-end
+       "im" #'dired-subtree-mark-subtree
+       "im" #'dired-subtree-unmark-subtree
+       "if" #'dired-subtree-only-this-file
+       "id" #'dired-subtree-only-this-directory))
 
     (use-package dired-open
       :init
@@ -326,7 +345,7 @@ dired buffer to be opened."
 
     ;; "  🠺"
     (if (dired-sidebar-using-tui-p)
-        (setq-local dired-subtree-line-prefix "  ")))
+        (setq-local dired-subtree-line-prefix " ")))
 
   (add-hook 'dired-sidebar-mode-hook 'tl/dired-sidebar-init)
 
@@ -344,15 +363,14 @@ dired buffer to be opened."
             (when (dired-move-to-filename nil)
               (dired-move-to-filename)
               (let ((file (dired-get-filename 'verbatim t)))
-                (unless (member file '("." ".."))
-                  (let ((filename (dired-get-filename nil t)))
-                    (if (eq dired-sidebar-theme 'vscode)
-                        (progn
-                          (require 'vscode-icon)
-                          (when (fboundp 'vscode-icon-for-file)
-                            (insert-image
-                             (vscode-icon-for-file filename) " "))
-                          (insert " "))
+                ;; TODO: fix it
+                ;; For the file named "'Icon'$'\r'" in *.localized directory in
+                ;; macOS. the dired-subtree in dired-sidebar buffer will insert
+                ;; the illegal file name casue dired-get-filename can not get
+                ;; the filename
+                (when file
+                  (unless (member file '("." ".."))
+                    (let ((filename (dired-get-filename nil t)))
                       (if (file-directory-p filename)
                           (if (dired-subtree--is-expanded-p)
                               (insert (concat collapsible-icon " "))
@@ -360,12 +378,14 @@ dired buffer to be opened."
                         (insert "- ")))))))
             (forward-line 1))))))
 
+
+
   (advice-add 'dired-sidebar-tui-dired-display :around #'tl/dired-sidebar-tui-dired-display)
   ;; (advice-remove 'dired-sidebar-tui-dired-display #'tl/dired-sidebar-tui-dired-display)
 
   (defun tl/dired-subtree-cycle-after-hook (&rest _)
-    (when (eq major-mode 'dired-sidebar-mode))
-    (dired-sidebar-tui-update-with-delay))
+    (when (eq major-mode 'dired-sidebar-mode)
+      (dired-sidebar-tui-update-with-delay)))
 
   (advice-add 'dired-subtree-cycle :after #'tl/dired-subtree-cycle-after-hook)
 
