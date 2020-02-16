@@ -4,7 +4,7 @@
  :type git
  :url "https://code.orgmode.org/bzg/org-mode.git"
  :info "doc"
- :checkout "release_9.3.2"
+ :checkout "release_9.3.6"
  :build/berkeley-unix `,(mapcar
                          (lambda (target)
                            (list "gmake" target (concat "EMACS=" (shell-quote-argument el-get-emacs))))
