@@ -188,7 +188,7 @@
     (defhydra hydra-view (:color blue :hint nil)
       "view control panel"
       ("v" ivy-push-view "save layout" )
-      ("V" ivy-pop-view "delete a layout")
+      ;; ("V" ivy-pop-view "delete a layout")
       ("d" ivy-pop-view "delete a layout")
       ("l" tl/ivy-switch-view "select a layout")
       ("<escape>" nil nil)
