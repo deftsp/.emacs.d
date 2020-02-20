@@ -1,0 +1,5 @@
+(:name flycheck-grammarly
+ :description "Grammarly support for Flycheck."
+ :type github
+ :pkgname "jcs-elpa/flycheck-grammarly"
+ :depends (cl-lib flycheck grammarly))

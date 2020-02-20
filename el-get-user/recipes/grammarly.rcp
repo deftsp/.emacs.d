@@ -1,0 +1,4 @@
+(:name grammarly
+       :description "Grammarly API interface."
+       :type github
+       :pkgname "jcs-elpa/grammarly")

@@ -88,5 +88,8 @@ If the error list is visible, hide it.  Otherwise, show it."
 ;;   (setq flycheck-inline-display-function #'tl/flycheck-inline-display-quick-peek
 ;;         flycheck-inline-clear-function #'quick-peek-hide))
 
+(use-package flycheck-grammarly
+  :after flycheck)
+
 (provide '50syntax-checker)
 ;;; 50syntax-checker ends here
