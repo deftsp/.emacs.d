@@ -282,6 +282,8 @@ dired buffer to be opened."
         (setq dired-omit-files
               (concat "^\\.?#\\|^\\.$\\|^\\.\\.$\\|^~\\|^\\.\\|^#.*#$\\|^nohup.out$\\|\\.jlc$"
                       "\\|"
+                      "node_modules"
+                      "\\|"
                       (regexp-opt '("^TAGS$" "^cscope.out$")))))
       :config
       (progn
