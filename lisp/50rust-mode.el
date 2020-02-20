@@ -11,6 +11,7 @@
   (defun tl/rust-mode-init ()
     (racer-mode +1)
     (eldoc-mode +1)
+    (smartparens-strict-mode +1)
     (when (fboundp 'org-link-minor-mode)
       (org-link-minor-mode +1)))
 
