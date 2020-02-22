@@ -147,7 +147,7 @@
                              target
                              fontspec nil 'prepend)))
        '(((target . symbol)
-          (rescale . 0.8)) ; not works for some font size
+          (rescale . 0.8))          ; not works for some font size
          ;; Note: "« »" not coverd by mplus Nerd Font
          ;; ((target . (#x0080 . #x00ff))) ; Latin-1 Supplement,   see above comment
          ((target . (#xe5fa . #xe62b))) ; Seti-UI + Custom
@@ -158,7 +158,12 @@
          ((target . (#xe0a0 . #xe0d7))) ; Powerline Extra Symbols
          ((target . (#x23ed . #x2b5c))) ; IEC Power Symbols
          ((target . (#xf300 . #xf317))) ; Font Linux
-         ((target . (#x2500 . #x257f))) ; ┌ └
+         ((target . (#x2500 . #x257f))
+          (rescale . 1.0)               ; BOX DRAWINGS, ┌ └
+          (fontname . "PragmataPro Mono"))
+         ((target . (#x2580 . #x259f))
+          (rescale . 1.0)               ; BOX DRAWINGS, ┌ └
+          (fontname . "PragmataPro Mono"))
          ((target . (#x25A0 . #x25ff))  ; Geometric Shapes, ▢ ◦
           (rescale . 0.8)
           (fontname . "Hack"))
@@ -167,7 +172,7 @@
           (fontname . "FreeMono")
           (fontsize-index . 0))
          ((target . (#x2700 . #x27bf))) ; Dingbats
-         ((target . (#x2622 . #x2622)) ; ☢
+         ((target . (#x2622 . #x2622))  ; ☢
           (fontname . "DejaVu Sans Mono")
           (rescale . 0.98)))))
 
