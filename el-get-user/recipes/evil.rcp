@@ -8,6 +8,5 @@
        :depends (undo-tree)
        :build (("make" "doc" "all"))
        :build/berkeley-unix (("gmake" "doc" "all"))
-       :build/darwin `(("make" ,(format "EMACS=%s" el-get-emacs) "doc" "all")
-                       ("make" "-C" "doc/build/texinfo" "info"))
+       :build/darwin `(("make" ,(format "EMACS=%s" el-get-emacs) "info" "all"))
        :info "doc/build/texinfo")
