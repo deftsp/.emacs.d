@@ -136,8 +136,8 @@
    '(highlight ((t (:foreground unspecified :foreground "#66e2e2" :background "#454545")))) ; use `unspecified' or `nil' both ok
 
    ;; link
-   '(link ((t (:foreground "#40929a" :background unspecified :underline t :weight bold))))
-   '(link-visited ((t (:foreground "#30727a" :background unspecified :underline t :weight normal))))
+   '(link ((t (:foreground "#ba60b6" :background unspecified :underline nil :weight normal)))) ; bold chinese font is hard to read
+   '(link-visited ((t (:foreground "#ba60b6" :background unspecified :underline nil :weight normal))))
 
    ;; info
    '(info-xref ((t (:foreground "DeepSkyBlue2" :weight bold :underline nil))))
@@ -197,7 +197,7 @@
    '(org-level-8 ((t (:inherit outline-8   :foreground "#f0dfaf"))))
    '(org-level-9 ((t (:inherit outline-8   :foreground "#93e0e3"))))
    '(org-date ((t (:foreground "#00bfee"))))
-   `(org-link ((t (:inherit link :foreground unspecified :underline t :weight normal))))
+   `(org-link ((t (:inherit link :foreground unspecified :underline nil :weight normal))))
    '(org-habit-alert-face ((t (:foreground "#228822" :background "gold"))))
    `(org-agenda-structure ((t (:foreground "#26bbf8" :background ,base02 :weight bold))))
    '(org-scheduled ((t (:foreground "#8abeb2"))))
