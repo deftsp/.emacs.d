@@ -136,8 +136,9 @@
    '(highlight ((t (:foreground unspecified :foreground "#66e2e2" :background "#454545")))) ; use `unspecified' or `nil' both ok
 
    ;; link
-   '(link ((t (:foreground "#ba60b6" :background unspecified :underline nil :weight normal)))) ; bold chinese font is hard to read
-   '(link-visited ((t (:foreground "#ba60b6" :background unspecified :underline nil :weight normal))))
+   ;; '(link ((t (:foreground "#0c8e9f" :background unspecified :underline nil :weight normal)))) ; bold chinese font is hard to read
+   '(link ((t (:foreground "#23a2df" :background unspecified :underline t :weight bold))))
+   '(link-visited ((t (:foreground "#23a2df" :background unspecified :underline t :weight normal))))
 
    ;; info
    '(info-xref ((t (:foreground "DeepSkyBlue2" :weight bold :underline nil))))
@@ -175,7 +176,7 @@
    ;; term
    '(term-color-blue ((t (:foreground "DeepSkyBlue4"))))
 
-   ;;; mmm-mode
+;;; mmm-mode
    '(mmm-default-submode-face ((t (:background "gray97"))))
 
    ;; adoc-mode
@@ -223,6 +224,13 @@
    ;; whitespace
    `(whitespace-space ((t (:foreground "#ff6622" :background ,base02))))
 
+
+   ;; org-brain
+   '(org-brain-title ((t (:foreground "#b820a8" :weight normal))))
+   '(org-brain-child ((t (:foreground "#4ab2c4" :weight normal))))
+   '(org-brain-local-child ((t (:foreground "#4ab2c4" :weight normal))))
+   '(org-brain-history-list ((t (:foreground "#4ab2c4" :weight normal))))
+   '(org-brain-pinned ((t (:foreground "#4ab2c4" :weight normal))))
 
    ;; font lock
    '(font-lock-builtin-face ((t (:foreground "chartreuse3"))))

@@ -2194,12 +2194,27 @@ prepended to the element after the #+HEADER: tag."
   :defer t
   :init
   (setq org-brain-path (expand-file-name "brain" org-directory))
+  (setq org-id-track-globally t)
+  (setq org-id-locations-file "~/.emacs.d/.org-id-locations")
+  (push '("b" "Brain" plain (function org-brain-goto-end)
+          "* %i%?" :empty-lines 1)
+        org-capture-templates)
+  (setq org-brain-refile-max-level 9)
+  (setq org-brain-title-max-length 20
+        org-brain-visualize-default-choices 'all
+        org-brain-include-file-entries nil
+        org-brain-file-entries-use-title nil)
+
   (tl/set-leader-keys "aob" 'org-brain-visualize)
   (with-eval-after-load 'evil
     (evil-set-initial-state 'org-brain-visualize-mode 'evilified))
 
-
   :config
+  (tl/set-leader-keys-for-major-mode 'org-brain-visualize-mode
+    "mp" 'org-brain-change-local-parent
+    "mr" 'org-brain-refile
+    "sr" 'org-brain-refile)
+
   (with-eval-after-load "evil-evilified-state"
     (evilified-state-evilify-map org-brain-visualize-mode-map
       :mode org-brain-visualize-mode
@@ -2212,8 +2227,7 @@ prepended to the element after the #+HEADER: tag."
       "h" 'org-brain-add-child-headline
       "n" 'org-brain-pin
       "v" 'org-brain-visualize
-      "V" 'org-brain-visualize-follow
-      ))
+      "V" 'org-brain-visualize-follow))
 
   ;; ascii-art-to-unicode
   ;; (use-package ascii-art-to-unicode)
@@ -2240,19 +2254,8 @@ prepended to the element after the #+HEADER: tag."
           (setq args '("▽")))
       (apply old-func args)))
 
-  (advice-add 'org-brain--insert-wire :around 'tl//org-brain-pretty-wire)
   ;; (advice-remove 'org-brain--insert-wire 'tl//org-brain-pretty-wire)
-
-
-  (setq org-id-track-globally t)
-  (setq org-id-locations-file "~/.emacs.d/.org-id-locations")
-  (push '("b" "Brain" plain (function org-brain-goto-end)
-          "* %i%?" :empty-lines 1)
-        org-capture-templates)
-  (setq org-brain-title-max-length 20
-        org-brain-visualize-default-choices 'all
-        org-brain-include-file-entries nil
-        org-brain-file-entries-use-title nil))
+  (advice-add 'org-brain--insert-wire :around 'tl//org-brain-pretty-wire))
 
 ;; https://github.com/kiwanami/emacs-calfw
 (defun tl/calfw-calendar ()
