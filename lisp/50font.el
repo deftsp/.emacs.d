@@ -165,8 +165,8 @@
           (rescale . 1.0)               ; BOX DRAWINGS, ┌ └
           (fontname . "PragmataPro Mono"))
          ((target . (#x25A0 . #x25ff))  ; Geometric Shapes, ▢ ◦
-          (rescale . 0.8)
-          (fontname . "Hack"))
+          (rescale . 1.0)
+          (fontname . "PragmataPro Mono"))
          ;; "☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷"
          ((target . (#x2600 . #x26ff))
           (fontname . "FreeMono")
