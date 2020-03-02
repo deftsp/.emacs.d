@@ -1207,6 +1207,16 @@ If VANILLA is non-nil, run the standard `org-capture'."
 (advice-add 'org-agenda-prepare-window :before #'tl/update-org-agenda-window-setup)
 ;; (advice-remove 'org-agenda-prepare-window #'tl/update-org-agenda-window-setup)
 
+;;; org-id
+;; https://stackoverflow.com/questions/13340616/assign-ids-to-every-entry-in-org-mode
+;; (add-hook 'org-capture-prepare-finalize-hook 'org-id-get-create)
+
+(defun tl/org-id-get-create-in-buffer ()
+  "Add ID properties to all headlines in the current file which
+do not already have one."
+  (interactive)
+  (org-map-entries 'org-id-get-create))
+
 ;;; archive
 ;; Tip: find all 'DONE' items older than 2 months and archive
 ;; Here's how to find all 'DONE' items older than 60 days in org-mode so they can be archived:

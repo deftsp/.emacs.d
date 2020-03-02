@@ -229,8 +229,8 @@
    '(org-brain-title ((t (:foreground "#b820a8" :weight normal))))
    '(org-brain-child ((t (:foreground "#4ab2c4" :weight normal))))
    '(org-brain-local-child ((t (:foreground "#4ab2c4" :weight normal))))
-   '(org-brain-history-list ((t (:foreground "#4ab2c4" :weight normal))))
-   '(org-brain-pinned ((t (:foreground "#4ab2c4" :weight normal))))
+   '(org-brain-history-list ((t (:foreground "#ba42c4" :background "#174652" :weight normal))))
+   '(org-brain-pinned ((t (:foreground "#ba42c4" :background "#174652" :weight normal))))
 
    ;; font lock
    '(font-lock-builtin-face ((t (:foreground "chartreuse3"))))
