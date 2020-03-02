@@ -1,0 +1,5 @@
+(:name ascii-art-to-unicode
+ :description "a small artist adjunct"
+ :type github
+ :pkgname "emacs-straight/ascii-art-to-unicode"
+ :depends (cl-lib))
