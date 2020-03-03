@@ -253,9 +253,6 @@
     ;; (add-to-list 'org-modules 'org-depend)
     ;; https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org
 
-    (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id
-          org-id-search-archives nil)
-
     (use-package evil-org
       :diminish evil-org-mode
       :after org
@@ -1212,11 +1209,30 @@ If VANILLA is non-nil, run the standard `org-capture'."
 ;; https://stackoverflow.com/questions/13340616/assign-ids-to-every-entry-in-org-mode
 ;; (add-hook 'org-capture-prepare-finalize-hook 'org-id-get-create)
 
-(defun tl/org-id-get-create-in-buffer ()
-  "Add ID properties to all headlines in the current file which
-do not already have one."
-  (interactive)
-  (org-map-entries 'org-id-get-create))
+(setq org-id-search-archives nil
+      org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+
+;; Base on https://writequit.org/articles/emacs-org-mode-generate-ids.html
+(defun tl/org-id-get-create-in-buffer (arg)
+  "Add ID properties to all headlines in the current
+buffer which do not already have one. When `arg' nil only adds ids if the
+`auto-id' option is set to `t' in the file somewhere. ie,
+#+OPTIONS: auto-id:t"
+  (interactive "P")
+  (if (and arg (>= arg 4))
+      (org-map-entries 'org-id-get-create)
+    (save-excursion
+      (widen)
+      (goto-char (point-min))
+      (when (re-search-forward "^#\\+OPTIONS:.*auto-id:t\\b" (point-max) t)
+        (org-map-entries 'org-id-get-create)))))
+
+(defun tl//org-mode-save-try-add-id-hook ()
+  (when (and (eq major-mode 'org-mode)
+             (eq buffer-read-only nil))
+    (tl/org-id-get-create-in-buffer nil)))
+
+(add-hook 'before-save-hook 'tl//org-mode-save-try-add-id-hook)
 
 ;;; archive
 ;; Tip: find all 'DONE' items older than 2 months and archive
