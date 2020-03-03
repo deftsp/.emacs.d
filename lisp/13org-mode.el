@@ -253,7 +253,8 @@
     ;; (add-to-list 'org-modules 'org-depend)
     ;; https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org
 
-    (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id)
+    (setq org-id-link-to-org-use-id 'create-if-interactive-and-no-custom-id
+          org-id-search-archives nil)
 
     (use-package evil-org
       :diminish evil-org-mode
@@ -1273,8 +1274,9 @@ do not already have one."
       ;; Allow refile to create parent tasks with confirmation
       org-refile-allow-creating-parent-nodes 'confirm
       ;; targets include this file and any file contributing to the agenda - up to 9 levels deep
-      org-refile-targets `((nil :maxlevel . 9)
+      org-refile-targets `((nil :maxlevel . 9) ; nil means consider headings in the current buffer
                            (org-agenda-files :maxlevel . 9)
+                           (org-brain-files :maxlevel . 12)
                            (,(concat org-directory "/SomeDay.org") :maxlevel . 9))
       org-refile-use-cache nil)
 
@@ -2199,73 +2201,6 @@ prepended to the element after the #+HEADER: tag."
     (setq org-bullets-bullet-list
           '("☱" "☲" "☳" "☴" "☵" "☶" "☷"))
     (add-hook 'org-mode-hook 'org-bullets-mode)))
-
-(use-package org-brain
-  :defer t
-  :init
-  (setq org-brain-path (expand-file-name "brain" org-directory))
-  (setq org-id-track-globally t)
-  (setq org-id-locations-file "~/.emacs.d/.org-id-locations")
-  (push '("b" "Brain" plain (function org-brain-goto-end)
-          "* %i%?" :empty-lines 1)
-        org-capture-templates)
-  (setq org-brain-refile-max-level 9)
-  (setq org-brain-title-max-length 20
-        org-brain-visualize-default-choices 'all
-        org-brain-include-file-entries nil
-        org-brain-file-entries-use-title nil)
-
-  (tl/set-leader-keys "aob" 'org-brain-visualize)
-  (with-eval-after-load 'evil
-    (evil-set-initial-state 'org-brain-visualize-mode 'evilified))
-
-  :config
-  (tl/set-leader-keys-for-major-mode 'org-brain-visualize-mode
-    "mp" 'org-brain-change-local-parent
-    "mr" 'org-brain-refile
-    "sr" 'org-brain-refile)
-
-  (with-eval-after-load "evil-evilified-state"
-    (evilified-state-evilify-map org-brain-visualize-mode-map
-      :mode org-brain-visualize-mode
-      :bindings
-      ;; (kbd "C-h") nil
-      "gr" 'revert-buffer
-      "j" 'forward-button
-      "k" 'backward-button
-      "l" 'org-brain-add-resource
-      "h" 'org-brain-add-child-headline
-      "n" 'org-brain-pin
-      "v" 'org-brain-visualize
-      "V" 'org-brain-visualize-follow))
-
-  ;; ascii-art-to-unicode
-  ;; (use-package ascii-art-to-unicode)
-
-  ;; (defface aa2u-face '((t . nil))
-  ;;   "Face for aa2u box drawing characters")
-
-  ;; (advice-add #'aa2u-1c :filter-return
-  ;;             (lambda (str) (propertize str 'face 'aa2u-face)))
-
-  ;; (defun aa2u-org-brain-buffer ()
-  ;;   (let ((inhibit-read-only t))
-  ;;     (make-local-variable 'face-remapping-alist)
-  ;;     (add-to-list 'face-remapping-alist
-  ;;                  '(aa2u-face . org-brain-wires))
-  ;;     (ignore-errors (aa2u (point-min) (point-max)))))
-
-  ;; (with-eval-after-load 'org-brain
-  ;;   (add-hook 'org-brain-after-visualize-hook #'aa2u-org-brain-buffer))
-
-  (defun tl//org-brain-pretty-wire (old-func &rest arguments)
-    (let ((args arguments))
-      (if (equal args '("V"))
-          (setq args '("▽")))
-      (apply old-func args)))
-
-  ;; (advice-remove 'org-brain--insert-wire 'tl//org-brain-pretty-wire)
-  (advice-add 'org-brain--insert-wire :around 'tl//org-brain-pretty-wire))
 
 ;; https://github.com/kiwanami/emacs-calfw
 (defun tl/calfw-calendar ()

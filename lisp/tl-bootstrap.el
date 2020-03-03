@@ -19,6 +19,7 @@
 (require 'core-funcs)
 (require '11cedet)
 (require '13org-mode)
+(require '13org-brain)
 
 (require '23powerline)
 (require '40company-mode)
