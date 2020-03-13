@@ -171,7 +171,9 @@
          ((target . (#x2600 . #x26ff))
           (fontname . "FreeMono")
           (fontsize-index . 0))
-         ((target . (#x2700 . #x27bf))) ; Dingbats
+         ((target . (#x2700 . #x27bf))  ; Dingbats
+          (rescale . 0.9)
+          (fontname . "Everson Mono"))
          ((target . (#x2622 . #x2622))  ; ☢
           (fontname . "DejaVu Sans Mono")
           (rescale . 0.98)))))

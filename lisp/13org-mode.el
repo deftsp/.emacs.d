@@ -1276,6 +1276,24 @@ buffer which do not already have one. When `arg' nil only adds ids if the
         (?B . (:foreground "#00f900" :weight bold))
         (?C . (:foreground "#fefb00" :weight bold))))
 
+(use-package org-fancy-priorities
+  :diminish
+  :after org
+  :defer t
+  :defines org-fancy-priorities-list
+  :hook (org-mode . org-fancy-priorities-mode)
+  :config
+  ;; (char-displayable-p ?❗)
+  (setq org-fancy-priorities-list '((?A . "⬆")
+                                    (?B . "·")
+                                    (?C . "⬇")
+                                    (?D . "☕")
+                                    (?1 . "·")
+                                    (?2 . "⮬")
+                                    (?3 . "⮮")
+                                    (?4 . "☕")
+                                    (?I . "Important"))))
+
 
 ;;; org-habit
 (setq org-habit-preceding-days 21
@@ -2341,23 +2359,6 @@ prepended to the element after the #+HEADER: tag."
   (setq easy-hugo-basedir "~/Lab/quick-hugo/"
         easy-hugo-postdir "content/posts"))
 
-(use-package org-fancy-priorities
-  :diminish
-  :after org
-  :defer t
-  :defines org-fancy-priorities-list
-  :hook (org-mode . org-fancy-priorities-mode)
-  :config
-  (unless (char-displayable-p ?❗)
-    (setq org-fancy-priorities-list '((?A . "❗")
-                                      (?B . "⬆")
-                                      (?C . "⬇")
-                                      (?D . "☕")
-                                      (?1 . "⚡")
-                                      (?2 . "⮬")
-                                      (?3 . "⮮")
-                                      (?4 . "☕")
-                                      (?I . "Important")))))
 
 
 
