@@ -1,0 +1,4 @@
+(:name docker-explorer
+ :description "An Emacs mode for exploring log files in docker containers."
+ :type git
+ :url "https://gitlab.com/ndw/docker-explorer.git")
