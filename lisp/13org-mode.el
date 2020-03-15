@@ -1590,7 +1590,7 @@ buffer which do not already have one. When `arg' nil only adds ids if the
 	       "activate application (frontmostApplication as text)\n"
 	       "return links as string\n"))))
     (replace-regexp-in-string
-     "^\"\\| - Mozilla Firefox\"$" ""
+     "^\"\\| - Mozilla Firefox\"$\\|\"$" ""
      (car (split-string result "[\r\n]+" t)))))
 
 (advice-add 'org-as-mac-firefox-get-frontmost-url :override 'pl/org-as-mac-firefox-get-frontmost-url)
