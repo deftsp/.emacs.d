@@ -267,6 +267,9 @@
       :config
       (org-download-enable))
 
+    (use-package org-num
+      :diminish org-num-mode)
+
     (with-eval-after-load 'counsel
       ;; C-m (ivy-done) exit with the currently selected candidate
       ;; C-M-m (ivy-call)  select the current candidate and remain in the completion session.
