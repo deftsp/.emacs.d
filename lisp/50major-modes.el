@@ -121,7 +121,7 @@
           ahs-inhibit-face-list nil)
     (add-hook 'prog-mode-hook (lambda () (auto-highlight-symbol-mode t)))))
 
-
+;; TODO: sql-mode have to disable and re-enable to make it work
 (use-package highlight-indent-guides
   :defer t
   :diminish highlight-indent-guides-mode
