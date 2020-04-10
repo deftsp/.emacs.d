@@ -12,7 +12,6 @@
 
 (eval-after-load "lua-mode"
   '(progn
-     (setq )
      ;; (require 'lua2-mode nil t) ; Note: it will cause lua mode very slow.
      (require 'mobdebug-mode nil t)
      (setq mobdebug-use-evil-binding t)
@@ -28,6 +27,8 @@
 (defun tl/lua-mode-setup ()
   (if (fboundp 'flycheck-mode)
       (flycheck-mode +1))
+  (if (fboundp 'flyspell-mode)
+      (flyspell-mode -1))
   (subword-mode +1))
 
 (defun tl/relaunch-quick-cocos2d-x ()
