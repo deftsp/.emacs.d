@@ -2346,7 +2346,8 @@ prepended to the element after the #+HEADER: tag."
 (use-package org-link-minor-mode
   :defer t
   :diminish org-link-minor-mode
-  :hook ((emacs-lisp-mode . org-link-minor-mode)))
+  :hook ((emacs-lisp-mode . org-link-minor-mode)
+         (sql-mode . org-link-minor-mode)))
 
 
 ;;; HUGO
