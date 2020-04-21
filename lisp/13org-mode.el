@@ -2364,6 +2364,13 @@ prepended to the element after the #+HEADER: tag."
         easy-hugo-postdir "content/posts"))
 
 
+(use-package ob-ditaa
+  :defer t
+  :config
+  (let ((path
+         "/usr/local/Cellar/ditaa/0.11.0_1/libexec/ditaa-0.11.0-standalone.jar"))
+    (when (file-exists-p path)
+      (setq org-ditaa-jar-path path))))
 
 
 (provide '13org-mode)
