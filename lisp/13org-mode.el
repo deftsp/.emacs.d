@@ -1846,6 +1846,13 @@ otherwise just refresh the org agenda buffer."
         ((string= lang "emacs-lisp") nil)))
 (setq org-confirm-babel-evaluate 'tl/org-confirm-babel-evaluate)
 
+(defun tl//org-redisplay-inline-images-h ()
+  (when org-inline-image-overlays
+    (org-redisplay-inline-images)))
+
+(with-eval-after-load 'org
+  (add-hook 'org-babel-after-execute-hook 'tl//org-redisplay-inline-images-h))
+
 
 ;;; Info directory
 (eval-after-load "info"
