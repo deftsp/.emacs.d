@@ -1384,6 +1384,12 @@ inputting math (Unicode) symbols." t))
   (setq typit-dict-dir "~/.emacs.d/typit-dict"
         typit-dict "number-symbol.txt"))
 
+
+(use-package graphviz-dot-mode
+  :defer t
+  :init
+  (setq graphviz-dot-indent-width 2))
+
 ;; https://github.com/algernon/kaleidoscope.el
 ;; (kaleidoscope-send-command :help)
 ;; (kaleidoscope-send-command :version)

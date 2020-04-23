@@ -2070,6 +2070,7 @@ Will work on both org-mode and any mode that accepts plain html."
   (org-src-mode . (lambda() (flycheck-mode -1)))
   :config
   (progn
+    (add-to-list 'org-src-lang-modes (quote ("dot" . graphviz-dot)))
     (tl/set-leader-keys-for-minor-mode 'org-src-mode
       dottl-major-mode-leader-key 'org-edit-src-exit
       "c" 'org-edit-src-exit
