@@ -63,7 +63,7 @@
 (require '50haskell-emacs)
 (require '50ibuffer)
 (require '50hideshow)
-(require '50input-method)
+;; (require '50input-method)
 (require '50markdown-mode)
 (require '51ivy)
 (require '50javascript)
