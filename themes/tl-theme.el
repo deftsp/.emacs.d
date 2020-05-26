@@ -58,6 +58,10 @@
    `(default ((t (:background ,base03 :foreground ,base0))))
    '(cursor ((t (:foreground unspecified :background "#cd0000"))))
 
+   ;; '(variable-pitch ((t (:family "Source Sans Pro" :height 180 :weight light))))
+   `(variable-pitch ((t (:family "Roboto Condensed"))))
+   '(fixed-pitch ((t (:family unspecified :slant normal :weight normal :height 1.0 :width normal))))
+
    ;; mode-line
    '(mode-line-buffer-id ((t (:foreground "#90377d"))))
    '(mode-line-emphasis ((t (:foreground "Magenta"))))
@@ -82,10 +86,6 @@
    `(window-divider ((t (:foreground ,base03))))
    `(window-divider-first-pixel ((t (:foreground ,base03))))
    `(window-divider-last-pixel ((t (:foreground ,base03))))
-
-
-   `(variable-pitch ((t (:family "Roboto Condensed"))))
-
 
    ;; powerline
    `(powerline-active1 ((t (:background "#6b6b6b" :foreground "#fefefe" :inherit mode-line))))
@@ -485,6 +485,9 @@
    '(quick-peek-border-face ((t (:background "#33485d"  :height 0.12 :extend t))))
    '(quick-peek-padding-face ((t (:background "#33485d" :height 0.10 :extend t))))
 
+   ;; markdown-mode
+   '(markdown-line-break-face ((t (:inherit font-lock-constant-face :underline nil))))
+   '(markdown-pre-face ((t (:inherit markdown-code-face :underline nil))))
 
    ;; narrow-indirect
    `(ni-mode-line-buffer-id ((t (:foreground "RosyBrown" :box nil))))

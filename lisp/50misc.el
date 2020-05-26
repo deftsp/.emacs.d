@@ -558,7 +558,6 @@ vi style of % jumping to matching brace."
             ("\\.procmailrc$"                     . conf-mode)
             ("fonts.conf"                         . xml-mode)
             ("\\.org$"                            . org-mode)
-            ("\\.markdown$"                       . markdown-mode)
             ("\\.asciidoc$"                       . adoc-mode)
             ("\\.julius$"                         . js2-mode)
             ("\\.js$"                             . web-mode)
