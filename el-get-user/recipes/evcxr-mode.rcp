@@ -1,0 +1,4 @@
+(:name evcxr-mode
+ :type github
+ :pkgname "SerialDev/evcxr-mode"
+ :description "Minor Mode for rust Repl interaction")
