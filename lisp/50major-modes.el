@@ -110,16 +110,44 @@
 ;;     ;; (global-set-key (kbd "C-#") 'highlight-symbol-prev)
 ;;     (add-hook 'prog-mode-hook (lambda () (highlight-symbol-mode t)))))
 
-(use-package auto-highlight-symbol
+;; (use-package auto-highlight-symbol
+;;   :defer t
+;;   :diminish auto-highlight-symbol-mode
+;;   :init
+;;   (progn
+;;     (setq ahs-case-fold-search t
+;;           ahs-default-range 'ahs-range-display
+;;           ahs-idle-interval 0.25
+;;           ahs-inhibit-face-list nil)
+;;     (add-hook 'prog-mode-hook (lambda () (auto-highlight-symbol-mode t)))))
+
+(use-package symbol-overlay
   :defer t
-  :diminish auto-highlight-symbol-mode
+  :diminish symbol-overlay-mode
   :init
   (progn
-    (setq ahs-case-fold-search t
-          ahs-default-range 'ahs-range-display
-          ahs-idle-interval 0.25
-          ahs-inhibit-face-list nil)
-    (add-hook 'prog-mode-hook (lambda () (auto-highlight-symbol-mode t)))))
+    (setq symbol-overlay-idle-time 0.25)
+    (add-hook 'prog-mode-hook (lambda () (symbol-overlay-mode t)))
+
+    ;; https://github.com/wolray/symbol-overlay/issues/59
+    (with-eval-after-load 'transient
+      (define-transient-command symbol-overlay-transient ()
+        "Symbol Overlay transient"
+        ["Symbol Overlay"
+         ["Overlays"
+          ("." "Add/Remove at point" symbol-overlay-put)
+          ("k" "Remove All" symbol-overlay-remove-all)
+          ]
+         ["Move to Symbol"
+          ("n" "Next" symbol-overlay-switch-forward)
+          ("p" "Previous" symbol-overlay-switch-backward)
+          ]
+         ["Other"
+          ("m" "Hightlight symbol-at-point" symbol-overlay-mode)
+          ]
+         ])
+
+      (global-set-key (kbd "s-.") 'symbol-overlay-transient))))
 
 ;; TODO: sql-mode have to disable and re-enable to make it work
 (use-package highlight-indent-guides
