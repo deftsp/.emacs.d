@@ -1410,4 +1410,12 @@ inputting math (Unicode) symbols." t))
 ;; (nyan-mode +1)
 ;; (setq nyan-animate-nyancat t)
 
+;;; Control Firefox via the Marionette Protocol
+;; $ /Applications/Firefox.app/Contents/MacOS/firefox -marionette
+;; # For macOS (open(1) does not block your terminal)
+;; $ open -a Firefox --args -marionette
+(use-package marionette
+  :defer t
+  :commands (marionette-with-page marionette-request))
+
 (provide '50tools)

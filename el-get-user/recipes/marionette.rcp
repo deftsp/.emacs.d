@@ -1,0 +1,4 @@
+(:name marionette
+ :description "Control Firefox via the Marionette Protocol"
+ :type github
+ :pkgname "xuchunyang/marionette.el")
