@@ -479,6 +479,8 @@
    '(flycheck-inline-warning ((t (:inherit compilation-warning :slant italic))))
    '(flycheck-inline-info ((t (:inherit compilation-info :slant italic))))
 
+   ;; flyspell
+   '(flyspell-incorrect ((t (:weight bold :underline (:style wave :color "#cc3030")))))
 
    ;; quick-peek
    '(quick-peek-background-face ((t (:background "#23384d" :height 0.9 :slant italic :extend t))))
@@ -540,3 +542,5 @@
 ;; eval: (auto-fill-mode -1)
 ;; End:
 ;;; tl-theme.el ends here.
+
+; LocalWords:  flyspell flycheck
