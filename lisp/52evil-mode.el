@@ -955,8 +955,8 @@ to replace the symbol under cursor"
      (atom-movement normal visual)
      slurp/barf-lispy
      (wrap normal insert)
-     additional
-     ;; ;; additional-insert
+     ;; additional
+     ;; additional-insert
      (additional-wrap normal insert)
      (escape insert))))
 

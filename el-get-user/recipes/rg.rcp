@@ -1,0 +1,4 @@
+(:name rg
+ :type github
+ :description "Emacs search tool based on ripgrep"
+ :pkgname "dajva/rg.el")
