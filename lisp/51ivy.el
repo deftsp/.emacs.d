@@ -211,9 +211,48 @@
             ivy-rich-path-style 'abbrev
             ivy-rich-parse-remote-file-path t)
       :config
-      (ivy-rich-mode +1)
-      (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line))
-    (ivy-mode +1)))
+      (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+      (setq ivy-rich-display-transformers-list
+            '(ivy-switch-buffer
+              (:columns
+               ((ivy-switch-buffer-transformer (:width 30))
+                (ivy-rich-switch-buffer-size (:width 7))
+                (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
+                (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
+                (ivy-rich-switch-buffer-project (:width 15 :face success))
+                (ivy-rich-switch-buffer-path (:width
+                                              (lambda (x)
+                                                (ivy-rich-switch-buffer-shorten-path
+                                                 x (ivy-rich-minibuffer-width 0.3))))))
+               :predicate
+               (lambda (cand) (get-buffer cand)))
+              counsel-find-file
+              (:columns
+               ((ivy-read-file-transformer)
+                (ivy-rich-counsel-find-file-truename (:face font-lock-doc-face))))
+              counsel-M-x
+              (:columns
+               ((counsel-M-x-transformer (:width 40))
+                (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
+              counsel-describe-function
+              (:columns
+               ((counsel-describe-function-transformer (:width 40))
+                (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
+              counsel-describe-variable
+              (:columns
+               ((counsel-describe-variable-transformer (:width 40))
+                (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))
+              counsel-recentf
+              (:columns
+               ((ivy-rich-candidate (:width 0.8))
+                (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))
+              counsel-bookmark
+              (:columns
+               ((ivy-rich-bookmark-type :wdith 15)
+                (ivy-rich-candidate (:width 32))
+                (ivy-rich-bookmark-info)))))
+      (ivy-mode +1)
+      (ivy-rich-mode +1))))
 
 (use-package ivy-xref
   :defer t
