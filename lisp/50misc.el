@@ -252,7 +252,7 @@
 (use-package compile
   :defer t
   :config
-  (setq compilation-window-height 16      ; Some windows's height
+  (setq compilation-window-height nil      ; Some windows's height
         compilation-ask-about-save nil
         ;; compilation-context-lines 3
         ;; compilation-skip-threshold 1

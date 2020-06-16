@@ -570,6 +570,7 @@ If the universal prefix argument is used then kill the buffer too."
     ;; purpose-user-regexp-purposes: recognize purpose according to buffer name (for name patterns)
     (add-to-list 'purpose-user-mode-purposes '(help-mode . popup))
     (add-to-list 'purpose-user-mode-purposes '(helpful-mode . popup))
+    (add-to-list 'purpose-user-mode-purposes '(rg-mode . popup))
     (setq purpose-use-default-configuration t)
     (purpose-compile-user-configuration)
 
@@ -600,17 +601,18 @@ If the universal prefix argument is used then kill the buffer too."
       :init
       (progn
         (setq purpose-x-popwin-position 'bottom
-              purpose-x-popwin-height 0.45))
+              ;; if `compilation-window-height' are set, the
+              ;; `purpose-x-popwin-height' will be ignore
+              purpose-x-popwin-height 0.66
+              purpose-x-popwin-width 0.45))
       :config
       (progn
         (add-to-list 'purpose-x-popwin-major-modes 'helpful-mode)
         (add-to-list 'purpose-x-popwin-major-modes 'org-anki-mode)
-        (purpose-x-popwin-update-conf)
+        ;; (purpose-x-popupify-purpose 'search #'purpose-display-at-right)
         ;; Activate `popwin' emulation.
         (purpose-x-popwin-setup)
-        (purpose-x-kill-setup)
-        ;; make `golden-ratio-mode' work correctly with Purpose.
-        (purpose-x-golden-ratio-setup)))))
+        (purpose-x-kill-setup)))))
 
 ;; (use-package dimmer
 ;;   :init
