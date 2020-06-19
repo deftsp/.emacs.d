@@ -248,8 +248,8 @@
                 (ivy-rich-file-last-modified-time (:face font-lock-comment-face))))
               counsel-bookmark
               (:columns
-               ((ivy-rich-bookmark-type :wdith 15)
-                (ivy-rich-candidate (:width 32))
+               ((ivy-rich-candidate (:width 32))
+                (ivy-rich-bookmark-type :wdith 15)
                 (ivy-rich-bookmark-info)))))
       (ivy-mode +1)
       (ivy-rich-mode +1))))
