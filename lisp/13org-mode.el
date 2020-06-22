@@ -1532,18 +1532,6 @@ buffer which do not already have one. When `arg' nil only adds ids if the
                        (not isearch-mode))
               (call-interactively 'evil-insert))))))
 
-
-    (defun tl/on-activate ()
-      "Switch to other frame, if selected window is org agenda and is the only window"
-      (when (> (length (frame-list)) 1)
-        (let* ((frame (selected-frame))
-               (lst (window-list frame)))
-          (when (and (= (length lst) 1)
-                     (string= org-agenda-buffer-name
-                              (buffer-name (window-buffer (car lst) ))))
-
-            (call-interactively 'other-frame)))))
-
     ;; open -g 'org-protocol://hammerspoon?action=org-clock-goto'
     (defun org-protocol-hammerspoon (data)
       "Handle event from Hammerspoon"
@@ -1556,8 +1544,10 @@ buffer which do not already have one. When `arg' nil only adds ids if the
                (call-interactively 'org-clock-in-last))
               ((string= action "org-clock-bar-clock-out")
                (call-interactively 'org-clock-out))
-              ((string= action "activate")
-               (tl/on-activate))
+              ;; ((string= action "activate")
+              ;;  (tl/on-emacs-activated))
+              ;; ((string= action "deactivated")
+              ;;  (tl/on-emacs-deactivated))
               ((string= action "select-previous-input-source")
                (tl/on-select-previous-input-source data)))))
 

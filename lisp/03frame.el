@@ -33,5 +33,21 @@
   (setq icon-title-format frame-title-format))
 
 
+(defvar tl/emacs-deactivated-focus-frame nil
+  "The frame when emacs lost focus.")
+
+(defun tl/on-emacs-deactivated ()
+  (setq tl/emacs-deactivated-focus-frame (selected-frame)))
+
+(add-hook 'focus-out-hook 'tl/on-emacs-deactivated)
+
+(defun tl/on-emacs-activated ()
+  (when (and tl/emacs-deactivated-focus-frame
+             (not (eq (selected-frame) tl/emacs-deactivated-focus-frame)))
+    (select-frame-set-input-focus tl/emacs-deactivated-focus-frame)
+    (setq tl/emacs-deactivated-focus-frame nil)))
+
+(add-hook 'focus-in-hook 'tl/on-emacs-activated)
+
 (provide '03frame)
 ;;; 03frame.el ends here
