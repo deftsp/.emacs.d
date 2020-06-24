@@ -1,0 +1,4 @@
+(:name emacsql-sqlite3
+ :description "Yet another EmacSQL backend for SQLite"
+ :type github
+ :pkgname "cireu/emacsql-sqlite3")

@@ -921,6 +921,7 @@ Current position is preserved."
         "D"          'Info-directory
         "u"          'Info-up
         "L"          'Info-history
+        "l"          'Info-history-back
 
         "d"          'Info-scroll-up
         "e"          'Info-scroll-down
@@ -931,7 +932,7 @@ Current position is preserved."
 
         "gd"         'Info-goto-node
         "gm"         'Info-menu
-        "m"          'evil-set-marker
+        "m"          'Info-menu
         "gt"         'Info-top-node
         "gT"         'Info-toc
         "gf"         'Info-follow-reference

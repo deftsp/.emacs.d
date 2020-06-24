@@ -1,0 +1,7 @@
+(:name org-roam
+ :description "Roam Research replica with Org-mode."
+ :type github
+ :pkgname "org-roam/org-roam"
+ :info "doc"
+ :build '(("make" "-C" "doc" "info"))
+ :depends (dash f s emacsql emacsql-sqlite3))
