@@ -227,6 +227,7 @@
   :config
   (global-diff-hl-mode +1)
   (with-eval-after-load "magit"
+    (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
 
 ;;; git-gutter

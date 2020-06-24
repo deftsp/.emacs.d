@@ -323,6 +323,13 @@
    '(dired-subtree-depth-5-face ((t (:foreground "white" :background "#1c1d1e"))))
    '(dired-subtree-depth-6-face ((t (:foreground "white" :background "#1a191a"))))
 
+   '(diredfl-read-priv ((t (:background unspecified :foreground "#00bbbb"))))
+   '(diredfl-write-priv ((t (:background unspecified :foreground "pale green"))))
+   '(diredfl-exec-priv ((t (:background unspecified :foreground "dark magenta"))))
+   '(diredfl-link-priv ((t (:background "#990000" :foreground "#bbbbbb"))))
+   '(diredfl-rare-priv ((t (:background "#004455" :foreground "#b20022"))))
+
+
    ;; irfc
    '(irfc-head-name-face ((t (:foreground "violet" :underline nil))))
    '(irfc-head-number-face ((t (:foreground "violet"))))

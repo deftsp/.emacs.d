@@ -1,0 +1,4 @@
+(:name diredfl
+ :description "Extra font lock rules for a more colourful dired"
+ :type github
+ :pkgname "purcell/diredfl")
