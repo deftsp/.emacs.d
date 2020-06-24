@@ -29,16 +29,16 @@
 
   (progn
     (tl/set-leader-keys-for-major-mode 'dired-mode
-      "u" 'diredp-up-directory-reuse-dir-buffer
+      "u" 'dired-up-directory
       "z" 'reveal-in-osx-finder)
-    (define-key dired-mode-map (kbd "^") 'diredp-up-directory-reuse-dir-buffer)
+    (define-key dired-mode-map (kbd "^") 'dired-up-directory)
     (define-key dired-mode-map (kbd "W") 'tl/dired-w3m-find-file)
     (define-key dired-mode-map (kbd "I") 'dired-maybe-insert-subdir)
     (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
 
     ;; [[https://emacs.stackexchange.com/a/13380][diredp header line follow link]]
     (defface tl/dired-mouseover-face
-      '((t (:inherit diredp-dir-heading :underline t)))
+      '((t (:inherit dired-header :underline t)))
       "Face for `tl/dired-mouseover-face'."
       :group 'dired)
 
@@ -65,9 +65,9 @@ dired buffer to be opened."
       (add-text-properties
        beg end
        (list
-        'display (and display (propertize display 'face 'diredp-dir-heading))
+        'display (and display (propertize display 'face 'dired-header))
         'breadcrumb path
-        'face 'diredp-dir-heading
+        'face 'dired-header
         'help-echo (format "mouse-2, RET: Follow the link to \"%s\"" path)
         'keymap tl/dired-mouse-map
         'mouse-face 'tl/dired-mouseover-face)))
@@ -126,9 +126,9 @@ dired buffer to be opened."
         (kbd "%")     'nil
         (kbd "j")     'dired-hacks-next-file
         (kbd "k")     'dired-hacks-previous-file
-        (kbd "^")     'diredp-up-directory-reuse-dir-buffer
-        (kbd "gu")    'diredp-up-directory-reuse-dir-buffer
-        (kbd "l")     'diredp-find-file-reuse-dir-buffer
+        (kbd "^")     'dired-up-directory
+        (kbd "gu")    'dired-up-directory
+        (kbd "l")     'dired-find-file
         ;; (kbd "i")     'dired-omit-mode
         (kbd "I")     'dired-maybe-insert-subdir
         (kbd "/")     'dired-narrow
@@ -228,14 +228,6 @@ dired buffer to be opened."
       (define-key dired-mode-map (kbd "f") dired-filter-map)
       (define-key dired-mode-map (kbd "F") dired-filter-mark-map)
       (add-hook 'dired-mode-hook 'dired-filter-mode))
-
-    ;; TODO: dired will be require when el-get sync and here dired+ require slow.
-    (use-package dired+
-      :after dired
-      :init
-      (progn
-        (setq diredp-hide-details-initially-flag nil)
-        (setq diredp-hide-details-propagate-flag nil)))
 
     (when (eq system-type 'darwin)
       (let ((ls (executable-find "gls"))) ;; brew insall coreutils

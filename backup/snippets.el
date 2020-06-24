@@ -18,3 +18,11 @@
 
   (dolist (l '(emacs-lisp-mode-hook clojure-mode-hook))
     (add-hook l 'tl/enable-evil-lispy-mode)))
+
+;; TODO: dired will be require when el-get sync and here dired+ require slow.
+;; (use-package dired+
+;;   :after dired
+;;   :init
+;;   (progn
+;;     (setq diredp-hide-details-initially-flag nil)
+;;     (setq diredp-hide-details-propagate-flag nil)))
