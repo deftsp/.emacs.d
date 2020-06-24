@@ -29,9 +29,9 @@
 
   (progn
     (tl/set-leader-keys-for-major-mode 'dired-mode
-      "u" 'dired-up-directory
+      "u" 'tl/dired-up-directory-reuse-dir-buffer
       "z" 'reveal-in-osx-finder)
-    (define-key dired-mode-map (kbd "^") 'dired-up-directory)
+    (define-key dired-mode-map (kbd "^") 'tl/dired-up-directory-reuse-dir-buffer)
     (define-key dired-mode-map (kbd "W") 'tl/dired-w3m-find-file)
     (define-key dired-mode-map (kbd "I") 'dired-maybe-insert-subdir)
     (define-key dired-mode-map [mouse-2] 'dired-mouse-find-file)
@@ -120,14 +120,17 @@ dired buffer to be opened."
           (find-file-other-window file))))
 
 
+    (defun tl/dired-up-directory-reuse-dir-buffer ()
+      (interactive) (find-alternate-file ".."))
+
     (with-eval-after-load "evil-evilified-state"
       (evilified-state-evilify dired-mode dired-mode-map
         (kbd "S-SPC") 'tl/jump-to-org-agenda
         (kbd "%")     'nil
         (kbd "j")     'dired-hacks-next-file
         (kbd "k")     'dired-hacks-previous-file
-        (kbd "^")     'dired-up-directory
-        (kbd "gu")    'dired-up-directory
+        (kbd "^")     'tl/dired-up-directory-reuse-dir-buffer
+        (kbd "gu")    'tl/dired-up-directory-reuse-dir-buffer
         (kbd "l")     'dired-find-file
         ;; (kbd "i")     'dired-omit-mode
         (kbd "I")     'dired-maybe-insert-subdir
