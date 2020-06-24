@@ -7,6 +7,7 @@
 
 ;; org-roam-db-build-cache
 (use-package org-roam
+  :diminish org-roam-mode
   :hook (after-init . org-roam-mode)
   :custom (org-roam-directory "~/org/roam")
   :init
