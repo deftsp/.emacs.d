@@ -1,0 +1,4 @@
+(:name lsp-ivy
+ :type github
+ :description "LSP ivy integration"
+ :pkgname "emacs-lsp/lsp-ivy")

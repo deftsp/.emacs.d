@@ -73,6 +73,7 @@
 (require '50key-bindings)
 (require '50major-modes)
 (require '50lua)
+(require '50lsp-mode)
 (require '50maxima)
 ;; (require '50minibuffer-line)
 (require '50misc)
