@@ -1,0 +1,5 @@
+(:name eglot
+ :description "Client for Language Server Protocol (LSP) servers"
+ :type github
+ :pkgname "joaotavora/eglot"
+ :depends ())
