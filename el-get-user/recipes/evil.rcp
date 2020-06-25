@@ -1,12 +1,13 @@
 (:name evil
-       :website "https://github.com/emacs-evil/evil"
-       :description "Evil is an extensible vi layer for Emacs. It
+ :website "https://github.com/emacs-evil/evil"
+ :description "Evil is an extensible vi layer for Emacs. It
        emulates the main features of Vim, and provides facilities
        for writing custom extensions."
-       :type github
-       :pkgname "emacs-evil/evil"
-       :depends (undo-tree)
-       :build (("make" "doc" "all"))
-       :build/berkeley-unix (("gmake" "doc" "all"))
-       :build/darwin `(("make" ,(format "EMACS=%s" el-get-emacs) "info" "all"))
-       :info "doc/build/texinfo")
+ :type github
+ :pkgname "emacs-evil/evil"
+ :checkout "1.14.0"
+ :depends (undo-tree)
+ :build (("make" "doc" "all"))
+ :build/berkeley-unix (("gmake" "doc" "all"))
+ :build/darwin `(("make" ,(format "EMACS=%s" el-get-emacs) "info" "all"))
+ :info "doc/build/texinfo")
