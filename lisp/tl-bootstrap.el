@@ -93,7 +93,7 @@
 (require '50python-mode)
 (require '50restclient)
 (require '50ruby)
-(require '50rust-mode)
+(require '50rust)
 (require '50sawfish)
 (require '50scheme)
 (require '50search)

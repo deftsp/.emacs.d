@@ -16,7 +16,8 @@
 
   (use-package lsp-rust
     :init
-    (setq lsp-rust-server 'rust-analyzer))
+    (setq lsp-rust-server 'rust-analyzer)
+    (setq lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")))
 
   (use-package lsp-ivy)
   ;; (use-package company-lsp :commands company-lsp)
