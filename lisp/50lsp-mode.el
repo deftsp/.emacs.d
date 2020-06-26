@@ -16,10 +16,10 @@
 
   (use-package lsp-rust
     :init
-    (setq lsp-rust-server 'rust-analyzer)
-    (setq lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")))
+    (setq lsp-rust-server 'rust-analyzer
+          lsp-rust-analyzer-cargo-watch-command "clippy"
+          lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")))
 
-  (use-package lsp-ivy)
   ;; (use-package company-lsp :commands company-lsp)
 
   (tl/set-leader-keys-for-minor-mode 'lsp-mode
@@ -60,10 +60,15 @@
     "xl" #'lsp-lens-show
     "xL" #'lsp-lens-hide))
 
+(use-package lsp-ivy
+  :defer t
+  :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol))
 
 (use-package lsp-ui
   :defer t
   :commands lsp-ui-mode
+  :init
+  (setq lsp-ui-sideline-delay 0.2)
   :config
   (progn
     (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)

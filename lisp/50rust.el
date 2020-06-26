@@ -15,6 +15,8 @@
   (setq rustic-indent-method-chain t
         rustic-format-trigger 'on-save)
   :config
+  (tl/declare-prefix-for-mode 'rustic-mode "mh" "help")
+
 
   (define-key rustic-compilation-mode-map "q" 'tl/quit-rustic-compilation-window)
   (define-key rustic-cargo-outdated-mode-map"q" 'tl/quit-rustic-compilation-window)
