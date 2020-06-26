@@ -328,6 +328,8 @@
    '(diredfl-exec-priv ((t (:background unspecified :foreground "dark magenta"))))
    '(diredfl-link-priv ((t (:background "#990000" :foreground "#bbbbbb"))))
    '(diredfl-rare-priv ((t (:background "#004455" :foreground "#b20022"))))
+   '(diredfl-dir-name ((t (:background "#103b46" :foreground "#2299ed"  :weight bold))))
+
 
 
    ;; irfc
