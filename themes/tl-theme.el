@@ -204,7 +204,7 @@
    '(org-scheduled ((t (:foreground "#8abeb2"))))
    '(org-scheduled-previously ((t (:foreground "#ae799f"))))
    '(org-scheduled-today ((t (:foreground "#46bbd2"))))
-   '(org-agenda-calendar-sexp ((t (:foreground "#367292"))))
+   '(org-agenda-calendar-sexp ((t (:foreground "#b2c226"))))
    '(org-agenda-date ((t (:foreground "#36abf2" :weight bold))))
    '(org-agenda-date-today ((t (:foreground "#e8d882" :weight bold))))
    '(org-agenda-dimmed-todo-face ((t (:foreground "#778888" :weight bold))))
