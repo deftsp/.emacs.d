@@ -33,7 +33,15 @@
 ;; (advice-add 'message :around #'tl/who-called-me?)
 ;; (advice-remove 'message #'tl/who-called-me?)
 
+;;
+(defun tl/get-current-major-mode ()
+  ;; (buffer-local-value 'major-mode (current-buffer))
+  (with-current-buffer (current-buffer)
+    major-mode))
 
+(defun tl/message-current-major-mode ()
+  (interactive)
+  (message "Current Major Mode: %s" (tl/get-current-major-mode)))
 
 ;;; Garbage Collection Magic Hack
 ;; http://akrl.sdf.org/
