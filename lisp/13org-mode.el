@@ -2348,6 +2348,23 @@ prepended to the element after the #+HEADER: tag."
          (sql-mode . org-link-minor-mode)))
 
 
+;; TODO: not work as expect
+;; (use-package org-spacer
+;;   :after org
+;;   :commands (org-spacer-enforce)
+;;   :init
+;;   (setq org-spacer-element-blanks '((0 headline)
+;;                                     (1 paragraph src-block table property-drawer)))
+;;   (defun tl/turn-on-org-spacer ()
+;;     (interactive)
+;;     (add-hook 'before-save-hook 'org-spacer-enforce nil 'make-it-local))
+
+;;   (defun tl/turn-off-org-spacer ()
+;;     (interactive)
+;;     (remove-hook 'before-save-hook 'org-spacer-enforce 'make-it-local))
+
+;;   (add-hook 'org-mode-hook 'tl/turn-on-org-spacer))
+
 ;;; HUGO
 (use-package ox-hugo
   :after ox
