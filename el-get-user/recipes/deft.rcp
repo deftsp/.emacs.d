@@ -1,0 +1,4 @@
+(:name deft
+ :description "Quickly browse, filter, and edit plain text notes."
+ :type github
+ :pkgname "jrblevin/deft")
