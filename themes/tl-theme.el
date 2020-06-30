@@ -215,6 +215,7 @@
    '(org-block-end-line ((t (:background "#30424e"))))
    '(org-ellipsis ((t (:underline nil :foreground "#c5e666" :background unspecified))))
    '(org-mode-line-clock ((t (:background nil :foreground "#268bd2"))))
+   '(org-time-grid ((t (:background unspecified :foreground "#83b496"))))
 
    '(org-journal-calendar-entry-face ((t (:background nil :foreground "#a5e692" :weight bold))))
 
