@@ -1314,7 +1314,6 @@ buffer which do not already have one. When `arg' nil only adds ids if the
       ;; targets include this file and any file contributing to the agenda - up to 9 levels deep
       org-refile-targets `((nil :maxlevel . 9) ; nil means consider headings in the current buffer
                            (org-agenda-files :maxlevel . 9)
-                           (org-brain-files :maxlevel . 12)
                            (,(concat org-directory "/SomeDay.org") :maxlevel . 9))
       org-refile-use-cache nil)
 

@@ -19,7 +19,6 @@
 (require 'core-funcs)
 (require '11cedet)
 (require '13org-mode)
-(require '13org-brain)
 (require '13org-roam)
 
 (require '23powerline)
