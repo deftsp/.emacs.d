@@ -1371,6 +1371,12 @@ inputting math (Unicode) symbols." t))
     (pushnew minimap-buffer-name winum-ignored-buffers)))
 
 
+(use-package link-hint
+  ;; :bind
+  ;; ("C-c l o" . link-hint-open-link)
+  ;; ("C-c l c" . link-hint-copy-link)
+  :commands (link-hint-open-link link-hint-copy-link))
+
 (use-package anki-editor
   :commands (anki-editor-push-notes
              anki-editor-retry-failure-notes

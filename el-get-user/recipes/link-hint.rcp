@@ -1,0 +1,5 @@
+(:name link-hint
+ :type github
+ :description "Use avy to open, copy, etc. visible links."
+ :pkgname "noctuid/link-hint.el"
+ :depends (avy cl-lib))
