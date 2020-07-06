@@ -1,0 +1,5 @@
+(:name org-roam-server
+ :description "Org Roam Database Visualizer"
+ :type github
+ :pkgname "org-roam/org-roam-server"
+ :depends (org-roam simple-httpd s))

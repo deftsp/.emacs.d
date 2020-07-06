@@ -9,7 +9,7 @@
 (use-package org-roam
   :diminish org-roam-mode
   :hook (after-init . org-roam-mode)
-  :custom (org-roam-directory "~/org/roam")
+  :custom (org-roam-directory (concat org-directory "/roam/"))
   :init
   (setq org-roam-completion-system 'ivy
         org-roam-index-file "index.org")
@@ -21,13 +21,21 @@
            :head "#+TITLE: ${title}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n\n"
            :unnarrowed t))
         org-roam-capture-ref-templates
-        '(("r" "ref" plain
+        '(("a" "Annotation" plain (function org-roam-capture--get-point)
+           "%U ${body}\n"
+           :file-name "${slug}"
+           :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n#+ROAM_ALIAS:\n\n"
+           :immediate-finish t
+           :unnarrowed t)
+          ("r" "ref" plain
            (function org-roam-capture--get-point)
            ""
            :file-name "caps/${slug}"
            :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n\n"
            :unnarrowed t)))
   :config
+  (require 'org-roam-protocol)
+
   (tl/set-leader-keys-for-major-mode 'org-mode
     "mi" 'org-roam-insert
     "mI" 'org-roam-insert-immediate)
@@ -42,5 +50,20 @@
     "mb" 'org-roam-switch-to-buffer
     "mg" 'org-roam-graph))
 
+
+
+(use-package org-roam-server
+  :defer t
+  :commands (org-roam-server-mode)
+  :config
+  (setq org-roam-server-host "127.0.0.1"
+        org-roam-server-port 5050
+        org-roam-server-export-inline-images t
+        org-roam-server-authenticate nil
+        org-roam-server-network-poll t
+        org-roam-server-network-arrows nil
+        org-roam-server-network-label-truncate t
+        org-roam-server-network-label-truncate-length 60
+        org-roam-server-network-label-wrap-length 20))
 
 (provide '13org-roam)

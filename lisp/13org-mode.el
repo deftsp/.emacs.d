@@ -2157,8 +2157,8 @@ prepended to the element after the #+HEADER: tag."
   :defer t
   :init
   (progn
-    (setq org-journal-dir (concat org-directory "/journal/")
-          org-journal-file-format "%Y-%m-%d"
+    (setq org-journal-dir (concat org-directory "/roam/")
+          org-journal-file-format "%Y-%m-%d.org"
           org-journal-date-prefix "#+TITLE: "
           org-journal-date-format "%A, %B %d %Y"
           org-journal-time-prefix "* "
