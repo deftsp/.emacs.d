@@ -21,6 +21,7 @@
 
 (use-package org
   :defer t
+  :hook ((before-save . tl/org-set-last-modified))
   :init
   (progn
     (global-set-key (kbd "C-c l") 'org-store-link)
@@ -2340,6 +2341,60 @@ prepended to the element after the #+HEADER: tag."
               #'(lambda () new-time)))
     (org-todo arg)))
 
+(defun tl/print-org-element-at-point  ()
+  (interactive)
+  (message "current org-element-type: %s"
+           (org-element-type (org-element-at-point))))
+
+;; Handling file properties for ‘CREATED’ & ‘LAST_MODIFIED’
+[[https://github.com/zaeph/.emacs.d/blob/master/init.el][.emacs.d/init.el at master · zaeph/.emacs.d]]
+(defun tl/org-find-time-file-property (property &optional anywhere)
+  "Return the position of the time file PROPERTY if it exists.
+When ANYWHERE is non-nil, search beyond the preamble."
+  (save-excursion
+    (goto-char (point-min))
+    (let ((first-heading
+           (save-excursion
+             (re-search-forward org-outline-regexp-bol nil t))))
+      (when (re-search-forward (format "^#\\+%s:" property)
+                               (if anywhere nil first-heading)
+                               t)
+        (point)))))
+
+(defun tl/org-has-time-file-property-p (property &optional anywhere)
+  "Return the position of time file PROPERTY if it is defined.
+As a special case, return -1 if the time file PROPERTY exists but
+is not defined."
+  (when-let ((pos (tl/org-find-time-file-property property anywhere)))
+    (save-excursion
+      (goto-char pos)
+      (if (and (looking-at-p " ")
+               (progn (forward-char)
+                      (org-at-timestamp-p 'lax)))
+          pos
+        -1))))
+
+(defun tl/org-set-time-file-property (property &optional anywhere pos)
+  "Set the time file PROPERTY in the preamble.
+When ANYWHERE is non-nil, search beyond the preamble.
+If the position of the file PROPERTY has already been computed,
+it can be passed in POS."
+  (when-let ((pos (or pos (tl/org-find-time-file-property property))))
+    (save-excursion
+      (goto-char pos)
+      (if (looking-at-p " ")
+          (forward-char)
+        (insert " "))
+      (delete-region (point) (line-end-position))
+      (let* ((now (format-time-string "[%Y-%m-%d %a %H:%M]")))
+        (insert now)))))
+
+(defun tl/org-set-last-modified ()
+  "Update the LAST_MODIFIED file property in the preamble."
+  (when (derived-mode-p 'org-mode)
+    (tl/org-set-time-file-property "LAST_MODIFIED")))
+
+
 ;; org-link-minor-mode
 (use-package org-link-minor-mode
   :defer t
@@ -2349,12 +2404,16 @@ prepended to the element after the #+HEADER: tag."
 
 
 ;; TODO: not work as expect
+;; enforce the number of blanks lines after elements in an org-mode document
+;; `tl/print-org-element-at-point' to print element type
 ;; (use-package org-spacer
 ;;   :after org
 ;;   :commands (org-spacer-enforce)
 ;;   :init
-;;   (setq org-spacer-element-blanks '((0 headline)
-;;                                     (1 paragraph src-block table property-drawer)))
+;;   (setq org-spacer-element-blanks
+;;         '((0 headline plain-list)
+;;           (1 src-block table property-drawer)))
+
 ;;   (defun tl/turn-on-org-spacer ()
 ;;     (interactive)
 ;;     (add-hook 'before-save-hook 'org-spacer-enforce nil 'make-it-local))

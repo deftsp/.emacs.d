@@ -11,14 +11,36 @@
   :hook (after-init . org-roam-mode)
   :custom (org-roam-directory "~/org/roam")
   :init
-  (setq org-roam-completion-system 'ivy)
-  :bind (:map org-roam-mode-map
-         (("C-c n l" . org-roam)
-          ("C-c n f" . org-roam-find-file)
-          ("C-c n g" . org-roam-graph-show))
-         :map org-mode-map
-         (("C-c n i" . org-roam-insert))
-         (("C-c n I" . org-roam-insert-immediate))))
+  (setq org-roam-completion-system 'ivy
+        org-roam-index-file "index.org")
+  (setq org-roam-capture-templates
+        '(("d" "default" plain
+           (function org-roam-capture--get-point)
+           "%?"
+           :file-name "%<%Y%m%d%H%M%S>-${slug}"
+           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n\n"
+           :unnarrowed t))
+        org-roam-capture-ref-templates
+        '(("r" "ref" plain
+           (function org-roam-capture--get-point)
+           ""
+           :file-name "caps/${slug}"
+           :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n\n"
+           :unnarrowed t)))
+  :config
+  (tl/set-leader-keys-for-major-mode 'org-mode
+    "mi" 'org-roam-insert
+    "mI" 'org-roam-insert-immediate)
+
+  (tl/set-leader-keys-for-minor-mode 'org-mode
+    "ml" 'org-roam
+    "mf" 'org-roam-find-file
+    "mg" 'org-roam-graph-show
+    "mr" 'org-roam-find-ref
+    "md" 'org-roam-find-directory
+    "mj" 'org-roam-jump-to-index
+    "mb" 'org-roam-switch-to-buffer
+    "mg" 'org-roam-graph))
 
 
 (provide '13org-roam)
