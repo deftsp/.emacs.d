@@ -37,20 +37,19 @@
   (require 'org-roam-protocol)
 
   (tl/set-leader-keys-for-major-mode 'org-mode
-    "mi" 'org-roam-insert
-    "mI" 'org-roam-insert-immediate)
+    "ri" 'org-roam-insert
+    "rI" 'org-roam-insert-immediate)
 
   (tl/set-leader-keys-for-minor-mode 'org-mode
-    "ml" 'org-roam
-    "mf" 'org-roam-find-file
-    "mg" 'org-roam-graph-show
-    "mr" 'org-roam-find-ref
-    "md" 'org-roam-find-directory
-    "mj" 'org-roam-jump-to-index
-    "mb" 'org-roam-switch-to-buffer
-    "mg" 'org-roam-graph))
-
-
+    "rb" 'org-roam-switch-to-buffer
+    "rc" 'org-roam-capture
+    "rf" 'org-roam-find-file
+    "rg" 'org-roam-graph-show
+    "rl" 'org-roam
+    "rd" 'org-roam-find-directory
+    "rj" 'org-roam-jump-to-index
+    "rg" 'org-roam-graph
+    "rr" 'org-roam-find-ref))
 
 (use-package org-roam-server
   :defer t
