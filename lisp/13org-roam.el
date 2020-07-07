@@ -36,6 +36,8 @@
   :config
   (require 'org-roam-protocol)
 
+  (tl/declare-prefix-for-mode 'org-mode "mr" "org-roam")
+
   (tl/set-leader-keys-for-major-mode 'org-mode
     "ri" 'org-roam-insert
     "rI" 'org-roam-insert-immediate)
