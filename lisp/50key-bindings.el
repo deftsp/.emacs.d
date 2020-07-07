@@ -176,7 +176,6 @@ offer a list of recently clocked tasks to clock into. "
 (tl/set-leader-keys
   "oa" 'org-agenda
   ;; "oc" 'org-capture
-  ;; "ob"  nil
   "ocb"   'tl/update-hammerspoon-org-clock-bar
   "occ"   'org-clock-cancel
   "oce"   'org-clock-modify-effort-estimate
@@ -193,6 +192,10 @@ offer a list of recently clocked tasks to clock into. "
   "ops"   'profiler-start
   "opS"   'profiler-stop
   "opr"   'profiler-report
+
+  "orc"    'org-roam-capture
+  "orj"    'org-roam-jump-to-index
+  "orf"    'org-roam-find-file
 
   "os"     'prodigy)
 
