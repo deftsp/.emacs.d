@@ -302,7 +302,7 @@
 
    ;; dried & diredp
    '(dired-marked ((t (:background "#555555" :foreground "Pink"))))
-   '(dired-header ((t (:background "#555555" :foreground "magenta"))))
+   '(dired-header ((t (:background unspecified :foreground "magenta"))))
 
    '(diredp-dir-heading ((t (:background "#555555" :foreground "magenta" :weight bold))))
    '(diredp-file-name ((t (:foreground "dodger blue"))))
@@ -330,7 +330,7 @@
    '(diredfl-link-priv ((t (:background "#990000" :foreground "#bbbbbb"))))
    '(diredfl-rare-priv ((t (:background "#004455" :foreground "#b20022"))))
    '(diredfl-dir-name ((t (:background "#103b46" :foreground "#2299ed"  :weight bold))))
-
+   '(diredfl-no-priv ((t (:background unspecified :foreground "#999999"  :weight bold))))
 
 
    ;; irfc
