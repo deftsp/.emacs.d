@@ -137,3 +137,76 @@ If `help-window-select' is non-nil, also select the help window."
         (tl/toggle-maximize-buffer
          (car bufs))
       (message "No cargo process buffer found"))))
+
+;;; Switch rg to color-rg for following reason:
+;; FIXME: in rg-mode (search result), press `n' cause below message:
+;; Error in pre-command-hook (evilified-state--pre-command-hook): (wrong-type-argument listp compilation-button-map)
+;; when result the cursor keep at the bottom of the window
+(use-package rg
+  :commands (rg-menu)
+  :bind (("M-s g" . tl/rg-vc-or-dir)
+         ("M-s r" . tl/rg-ref-in-dir)
+         :map rg-mode-map
+         ("s" . tl/rg-save-search-as-name))
+  :init
+  (setq rg-hide-command t
+        rg-show-columns nil)
+  (global-set-key (kbd "C-c s") #'rg-menu)
+  :config
+  (with-eval-after-load "evil-evilified-state"
+    (evilified-state-evilify rg-mode rg-mode-map
+      "g>" 'rg-forward-history
+      "g<" 'rg-back-history
+
+      "j" 'compilation-next-error
+      "k" 'compilation-previous-error
+
+      "h" 'rg-next-file
+      "l" 'rg-prev-file
+      "m" 'rg-menu
+
+      "gg" 'evil-goto-first-line
+      "gr" 'rg-recompile
+      "G" 'evil-goto-line
+
+      "e" 'wgrep-change-to-wgrep-mode
+      ;; Quit
+      "q" 'color-rg-quit
+      "ZQ" 'evil-quit))
+
+  (rg-define-search rg-emacs-config
+                    "Search the emacs config."
+                    :dir "~/.emacs.d"
+                    :files "*.{el,el.gz}"
+                    :menu ("Custom" "e" "emacs config"))
+
+  (rg-define-search tl/rg-vc-or-dir
+                    "RipGrep in project root or present directory."
+                    :query ask
+                    :format regexp
+                    :files "everything"
+                    :dir (let ((vc (vc-root-dir)))
+                           (if vc
+                               vc                       ; search root project dir
+                             default-directory))        ; or from the current dir
+                    :confirm prefix
+                    :flags ("--hidden -g !.git"))
+
+
+  ;; https://protesilaos.com/dotemacs
+  (rg-define-search tl/rg-ref-in-dir
+                    "RipGrep for thing at point in present directory."
+                    :query point
+                    :format regexp
+                    :files "everything"
+                    :dir default-directory
+                    :confirm prefix
+                    :flags ("--hidden -g !.git"))
+
+  (defun tl/rg-save-search-as-name ()
+    "Save `rg' buffer, naming it after the current search query.
+
+ This function is meant to be mapped to a key in `rg-mode-map'."
+    (interactive)
+    (let ((pattern (car rg-pattern-history)))
+      (rg-save-search-as-name (concat "«" pattern "»")))))

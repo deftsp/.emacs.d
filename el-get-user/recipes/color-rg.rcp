@@ -1,0 +1,5 @@
+(:name color-rg
+ :description "Search and refacotry code with rg"
+ :type github
+ :pkgname "manateelazycat/color-rg"
+ :depends (cl-lib))
