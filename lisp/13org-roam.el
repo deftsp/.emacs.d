@@ -12,7 +12,31 @@
   :custom (org-roam-directory (concat org-directory "/roam/"))
   :init
   (setq org-roam-completion-system 'ivy
-        org-roam-index-file "index.org")
+        org-roam-index-file "index.org"
+        org-roam-graph-executable "neato" ; dot
+        org-roam-graph-viewer #'tl/open-with-firefox
+        org-roam-graph-exclude-matcher '("____-__-__.org") ; in sql like wildcard
+        org-roam-graph-max-title-length    50
+        org-roam-graph-extra-config '(("overlap" . "false")
+                                      ("concentrate" . "true")
+                                      ("bgcolor" . "grey80"))
+        org-roam-graph-node-extra-config
+        '(("shape"      . "underline")
+          ("style"      . "rounded,filled")
+          ("fontsize"   . "10")
+          ("margin"     . "0.02,0.02")
+          ("width"      . "0.2")
+          ("height"      . "0.2")
+          ("fillcolor"  . "#43586d")
+          ("color"      . "#43586d")
+          ("fontcolor"  . "#40d9f5"))
+        org-roam-graph-edge-extra-config
+        '(("color" . "#33485d"))
+        org-roam-graph-edge-cites-extra-config
+        '(("color" . "gray")
+          ("style" . "dashed")
+          ("sep" . "20")))
+
   (setq org-roam-capture-templates
         '(("d" "default" plain
            (function org-roam-capture--get-point)
@@ -66,5 +90,9 @@
         org-roam-server-network-label-truncate t
         org-roam-server-network-label-truncate-length 60
         org-roam-server-network-label-wrap-length 20))
+
+(defun tl/open-with-firefox (path)
+  (let ((process-connection-type nil))
+    (start-process "" nil "/usr/bin/open" "-a" "Firefox" path)))
 
 (provide '13org-roam)
