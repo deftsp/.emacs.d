@@ -138,14 +138,12 @@
     ;; ivy--regex-plus use a .* regex wild card in place of each single space in the input.
     (setq ivy-re-builders-alist
           '((ivy-switch-buffer . ivy--regex-plus)
-            (counsel-rg . ivy--regex-plus)
+            (counsel-rg . ivy--regex-ignore-order)
             (counsel-outline . tl/ivy--regex-pinyin)
             (counsel-org-goto . tl/ivy--regex-pinyin)
             (t . ivy--regex-fuzzy)))
 
     (setq ivy-initial-inputs-alist nil)
-    (push '(counsel-ag . "--file-search-regex '' -- ") ivy-initial-inputs-alist)
-    (push '(counsel-rg . "--glob '**' -- ") ivy-initial-inputs-alist)
 
     (setq ivy-count-format "[%d/%d] ")
     (setq ivy-use-selectable-prompt t)
