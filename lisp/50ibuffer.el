@@ -262,9 +262,10 @@
   (use-package ibuffer-vc)
 
   ;; reverse the order of groups:
-  (defadvice ibuffer-generate-filter-groups (after reverse-ibuffer-groups ()
-                                                   activate)
-    (setq ad-return-value (nreverse ad-return-value)))
+  ;; FIXME: SLOW!!!
+  ;; (defadvice ibuffer-generate-filter-groups (after reverse-ibuffer-groups ()
+  ;;                                                  activate)
+  ;;   (setq ad-return-value (nreverse ad-return-value)))
 
   (defun tl//ibuffer-init-h ()
     (ibuffer-vc-set-filter-groups-by-vc-root)
