@@ -1753,11 +1753,32 @@ buffer which do not already have one. When `arg' nil only adds ids if the
       '(("google"   . "http://www.google.com/search?q=")
         ("baidu"    . "http://www.baidu.com/s?wd=")))
 
-;; https://emacs.stackexchange.com/questions/33064/fontify-broken-links-in-org-mode
 (with-eval-after-load "org"
+  ;; https://emacs.stackexchange.com/questions/33064/fontify-broken-links-in-org-mode
+  (defun tl//org-file-link-face (path)
+    (if (file-exists-p path) 'org-link 'org-warning))
+
   (org-link-set-parameters
    "file"
-   :face (lambda (path) (if (file-exists-p path) 'org-link 'org-warning))))
+   :face #'tl//org-file-link-face)
+
+  (defface tl/org-link-http-empty-face
+    '((t (:inherit default :foreground unspecified :background unspecified)))
+    "Empty face for http/https link in non org-mode")
+
+  (defun tl//org-link-face (path)
+    (if (and (not (eq major-mode 'org-mode)) (string-prefix-p ":" path))
+        'tl/org-link-http-empty-face
+      'org-link))
+
+  (org-link-set-parameters
+   "http"
+   :face #'tl//org-link-face)
+
+  (org-link-set-parameters
+   "https"
+   :face #'tl//org-link-face))
+
 
 ;; keybinding conflicts with icicles keys
 ;; (org-defkey org-mode-map (kbd "C-c C-'") 'org-edit-special)
