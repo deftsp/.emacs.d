@@ -210,3 +210,25 @@ If `help-window-select' is non-nil, also select the help window."
     (interactive)
     (let ((pattern (car rg-pattern-history)))
       (rg-save-search-as-name (concat "«" pattern "»")))))
+
+(use-package nox
+  :init
+  (dolist (hook (list
+                 ;; 'js-mode-hook
+                 ;; 'python-mode-hook
+                 ;; 'ruby-mode-hook
+                 ;; 'java-mode-hook
+                 ;; 'sh-mode-hook
+                 ;; 'php-mode-hook
+                 ;; 'c-mode-common-hook
+                 ;; 'c-mode-hook
+                 ;; 'csharp-mode-hook
+                 ;; 'c++-mode-hook
+                 ;; 'haskell-mode-hook
+                 ;; 'rust-mode-hook
+                 'rustic-mode-hook
+                 ))
+    (add-hook hook #'nox-ensure))
+  :config
+  ;; (add-to-list 'nox-server-programs '(rustic-mode . (nox-rls "rls")))
+  (add-to-list 'nox-server-programs '(rustic-mode . (nox-rls "rust-analyzer"))))

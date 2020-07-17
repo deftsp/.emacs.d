@@ -37,6 +37,7 @@
     "gM" #'lsp-ui-imenu
     ;; help
     "hh" #'lsp-describe-thing-at-point
+    "hd" #'lsp-ui-doc-show
     ;; jump
     ;; backend
     "bd" #'lsp-describe-session
@@ -68,7 +69,8 @@
   :defer t
   :commands lsp-ui-mode
   :init
-  (setq lsp-ui-sideline-delay 0.2)
+  (setq lsp-ui-sideline-delay 0.2
+        lsp-ui-doc-enable nil)
   :config
   (progn
     (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)

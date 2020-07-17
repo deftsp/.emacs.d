@@ -1,0 +1,5 @@
+(:name nox
+ :description "Nox is LSP Client for Emacs "
+ :type github
+ :pkgname "manateelazycat/nox"
+ :depends (company-mode posframe))

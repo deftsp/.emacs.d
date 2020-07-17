@@ -11,9 +11,18 @@
   :init
   (setq rustic-lsp-server 'rust-analyzer)
   (setq rustic-lsp-client 'lsp-mode)
+  ;; (setq rustic-lsp-client nil)          ; setting to nil to disable LSP
 
+  (setq rustic-ansi-faces ["black"
+                           "#bb0000"
+                           "green3"
+                           "yellow3"
+                           "#26bbf8"
+                           "magenta3"
+                           "cyan3"
+                           "white"])
   (setq rustic-indent-method-chain t
-        rustic-format-trigger 'on-save)
+        rustic-format-trigger nil)
   :config
   (tl/declare-prefix-for-mode 'rustic-mode "mh" "help")
 
@@ -22,6 +31,14 @@
   (define-key rustic-cargo-outdated-mode-map"q" 'tl/quit-rustic-compilation-window)
   ;; (define-key rustic-cargo-test-mode-map "q" nil)
   ;; (define-key rustic-cargo-clippy-mode-map "q" nil)
+
+
+  ;; rustic-compilation-mode
+  (with-eval-after-load "evil-evilified-state"
+    (evilified-state-evilify rustic-compilation-mode rustic-compilation-mode-map
+      "gg" 'evil-goto-first-line
+      "gr" 'rustic-recompile
+      "G" 'evil-goto-line))
 
   (defun tl/rustic-mode-init ()
     (smartparens-strict-mode +1)
@@ -35,6 +52,7 @@
 
   (tl/declare-prefix-for-mode 'rustic-mode "mv" "variable")
   (tl/set-leader-keys-for-major-mode 'rustic-mode
+    "p"  'rustic-format-buffer
     "cm" 'tl/maximize-rustic-compilation-window
     "vm" 'tl/toggle-mut))
 
@@ -103,6 +121,7 @@
       (window-configuration-to-register ??)
       (select-window (get-buffer-window buf))
       (delete-other-windows))))
+
 
 
 (provide '50rust)
