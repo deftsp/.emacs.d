@@ -8,6 +8,9 @@
 (use-package lsp-mode
   :commands lsp
   :init
+  (setq lsp-enable-symbol-highlighting nil
+        lsp-enable-snippet nil
+        lsp-enable-semantic-highlighting nil)
   :hook (
          ;; (rust-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
