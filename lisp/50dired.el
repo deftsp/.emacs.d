@@ -147,9 +147,10 @@ dired buffer to be opened."
       :bind (:map dired-mode-map
              ("/" . dired-narrow)))
 
-    (use-package diredfl
-      :config
-      (diredfl-global-mode +1))
+    ;; not work well with dired-sidebar
+    ;; (use-package diredfl
+    ;;   :config
+    ;;   (diredfl-global-mode +1))
 
     (use-package dired-rainbow
       :config
