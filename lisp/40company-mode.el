@@ -178,8 +178,8 @@
 
 (add-hook 'rustic-mode-hook 'tl/company-rustic-mode-setup)
 (defun tl/company-rustic-mode-setup ()
-  (let ((backends '(company-lsp company-tabnine)))
-    (set (make-local-variable 'company-backends) backends)))
+  (let ((backends tl/company-common-backends))
+    (setq-local company-backends backends)))
 
 (provide '40company-mode)
 ;;; 40company-mode.el ends here
