@@ -34,10 +34,10 @@
       (mac-auto-operator-composition-mode))))
 (defalias 'tl/toggle-ligature 'tl/toggle-operator-composition-mode)
 
-(use-package mac-win
-  :init
-  (setq mac-auto-operator-composition-characters
-        "!\"#$%&'()*+,-./:;<=>?@[]^_`{|}~"))
+;; (use-package mac-win
+;;   :init
+;;   (setq mac-auto-operator-composition-characters
+;;         "!\"#$%&'()*+,-./:;<=>?@[]^_`{|}~"))
 
 ;; (setq x-use-underline-position-properties nil)
 

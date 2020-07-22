@@ -5,7 +5,6 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-
 ;;; frame parameters
 (setq frame-resize-pixelwise t
       ;; enable `window-resize-pixelwise' will cause the help window get the
@@ -14,6 +13,8 @@
 
 (when (memq window-system '(x w32 mac ns))
   (setq initial-frame-alist `((tool-bar-lines . 0)
+                              (ns-transparent-titlebar . t)
+                              (ns-appearance . dark) ;; or light - depending on your theme
                               ;; https://github.com/railwaycat/homebrew-emacsmacport/issues/124
                               ;; https://github.com/railwaycat/homebrew-emacsmacport/issues/139
                               (menu-bar-lines . ,(if (eq window-system 'mac) 1 0))
@@ -31,12 +32,18 @@
                               ;; (scroll-bar-background . "#80abb6")
                               ;; (scroll-bar-width . 12)
                               ;; (vertical-scroll-bars . right)
-                              (vertical-scroll-bars . nil))
+                              (vertical-scroll-bars . nil)))
 
-        ;; default-frame-alist is defined in terms of initial-frame-alist.  Don't
-        ;; use copy-sequence here -- it doesn't copy the list elements, just the
-        ;; list's cons cells.  Use copy-alist instead.
-        default-frame-alist (copy-alist initial-frame-alist))
+  (when (memq window-system '(mac ns))
+    (add-to-list 'default-frame-alist '(ns-appearance . dark)) ; nil for dark text
+    (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
+
+  ;; default-frame-alist is defined in terms of initial-frame-alist.  Don't
+  ;; use copy-sequence here -- it doesn't copy the list elements, just the
+  ;; list's cons cells.  Use copy-alist instead.
+
+  (setq default-frame-alist (copy-alist initial-frame-alist))
+
   (setq tooltip-frame-parameters  '((name . "tooltip")
                                     (internal-border-width . 1)
                                     (border-width . 0))))

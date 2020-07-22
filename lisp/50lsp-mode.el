@@ -4,13 +4,16 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-
 (use-package lsp-mode
   :commands lsp
   :init
   (setq lsp-enable-symbol-highlighting nil
         lsp-enable-snippet nil
         lsp-enable-semantic-highlighting nil)
+
+  (setq lsp-prefer-capf t)
+  ;; This variable determines how often lsp-mode will refresh the highlights, lenses, links, etc while you type.
+  (setq lsp-idle-delay 0.500)
   :hook (
          ;; (rust-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))

@@ -362,6 +362,7 @@ kill internal buffers too."
           (nrepl-mode                . insert)
           (prodigy-mode              . evilified)
           (prodigy-view-mode         . evilified)
+          (profiler-report-mode      . emacs)
           (weibo-timeline-mode       . emacs)
           (weibo-post-mode           . emacs)
           (rg-mode                   . evilified)

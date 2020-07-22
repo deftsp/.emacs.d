@@ -8,6 +8,9 @@
 ;; by enabling `gcmh-mode'. Not resetting it will cause stuttering/freezes.
 (setq gc-cons-threshold most-positive-fixnum)
 
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+
+(setq byte-compile-warnings '(cl-functions))
 ;; want to see how often GC happens
 ;; (setq garbage-collection-messages nil)
 

@@ -14,15 +14,17 @@
       initial-scratch-message nil ;; no message in the scratch buff
       inhibit-startup-echo-area-message t)
 
-(setq read-quoted-char-radix 10         ; accept decimal input when using ^q, e.g.: ^q 13 [RET] -> ^M
+(setq-default default-directory "~/")
+
+(setq read-quoted-char-radix 10 ; accept decimal input when using ^q, e.g.: ^q 13 [RET] -> ^M
       ;; echo unfinished commands after this many seconds of pause.
-      echo-keystrokes 0.02                 ; 0.1
+      echo-keystrokes 0.02              ; 0.1
       tooltip-hide-delay 20             ; default 10
-      confirm-kill-emacs nil ; alternative `yes-or-no-p' ; `y-or-n-p'
-      use-dialog-box nil                  ; mouse commands don't use dialog boxes to ask quesary "english"
+      confirm-kill-emacs nil            ; alternative `yes-or-no-p' ; `y-or-n-p'
+      use-dialog-box nil ; mouse commands don't use dialog boxes to ask quesary "english"
       mark-even-if-inactive t
       set-mark-command-repeat-pop t
-      select-enable-clipboard t ; cutting and pasting uses the clipboard.
+      select-enable-clipboard t        ; cutting and pasting uses the clipboard.
       select-enable-primary t
       highlight-nonselected-windows nil
       next-screen-context-lines 2
