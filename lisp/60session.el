@@ -30,6 +30,11 @@
     (add-to-list 'recentf-exclude "\\.gpg$")
     (recentf-mode +1)))
 
+
+(defun tl/recentf-cleanup-non-exist-files ()
+  (interactive)
+  (setq recentf-list (-filter (lambda (fp) (file-exists-p fp)) recentf-list)))
+
 ;;; when open a file, point goes to the last place
 (use-package saveplace
   :config
