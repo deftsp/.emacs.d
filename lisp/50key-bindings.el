@@ -181,7 +181,7 @@ offer a list of recently clocked tasks to clock into. "
   "oce"   'org-clock-modify-effort-estimate
   "oci"   'org-mru-clock-in
   "ocI"   'tl/org-clock-in
-  "ocj"   'org-mru-clock-select-recent-task  ; org-clock-jump-to-current-clock
+  "ocj"   'org-mru-clock-select-recent-task ; org-clock-jump-to-current-clock
   "ocg"   'org-clock-goto
   "oco"   'org-clock-out
   "ocr"   'org-resolve-clocks
@@ -193,11 +193,11 @@ offer a list of recently clocked tasks to clock into. "
   "opS"   'profiler-stop
   "opr"   'profiler-report
 
-  "orc"    'org-roam-capture
-  "orj"    'org-roam-jump-to-index
-  "orf"    'org-roam-find-file
+  "os"     'prodigy
 
-  "os"     'prodigy)
+  "rc"    'org-roam-capture
+  "rj"    'org-roam-jump-to-index
+  "rf"    'org-roam-find-file)
 
 
 (tl/set-leader-keys
