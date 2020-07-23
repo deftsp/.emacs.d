@@ -32,6 +32,7 @@
 
 
 (defun tl/recentf-cleanup-non-exist-files ()
+  "Cleanup recentf files which is not exists any more."
   (interactive)
   (setq recentf-list (-filter (lambda (fp) (file-exists-p fp)) recentf-list)))
 
