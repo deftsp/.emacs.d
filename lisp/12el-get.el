@@ -46,8 +46,8 @@
 (el-get 'sync 'names) ; reinstall org-mode require names
 (el-get 'sync 'org-mode) ; init org-mode first
 ;; (el-get 'sync 'org-drill) ; init after org-mode, don't use build-in org-drill
-(el-get 'sync 'exec-path-from-shell)
-(require 'exec-path-from-shell nil t) ; https://github.com/purcell/exec-path-from-shell
+;; (el-get 'sync 'exec-path-from-shell)
+;; (require 'exec-path-from-shell nil t) ; https://github.com/purcell/exec-path-from-shell
 (el-get 'sync 'clojure-mode)
 (el-get 'sync 'evil)
 
