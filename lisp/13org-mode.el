@@ -1543,8 +1543,8 @@ buffer which do not already have one. When `arg' nil only adds ids if the
                (call-interactively 'org-clock-in-last))
               ((string= action "org-clock-bar-clock-out")
                (call-interactively 'org-clock-out))
-              ;; ((string= action "activate")
-              ;;  (tl/on-emacs-activated))
+              ((string= action "activated")
+               (tl/on-emacs-activated))
               ;; ((string= action "deactivated")
               ;;  (tl/on-emacs-deactivated))
               ((string= action "select-previous-input-source")
@@ -2464,6 +2464,12 @@ it can be passed in POS."
          "/usr/local/Cellar/ditaa/0.11.0_1/libexec/ditaa-0.11.0-standalone.jar"))
     (when (file-exists-p path)
       (setq org-ditaa-jar-path path))))
+
+;; TODO: update it to auto add link in RESOURCES drawer.
+;; like https://github.com/Kungsgeten/org-brain/blob/master/org-brain.el
+(defun tl/org-insert-resources-drawer-at-point ()
+  (interactive)
+  (org-insert-drawer nil "RESOURCES"))
 
 
 (provide '13org-mode)

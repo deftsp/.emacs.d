@@ -32,22 +32,45 @@
   (setq frame-title-format '((:eval (tl//frame-title-format))))
   (setq icon-title-format frame-title-format))
 
-
+;;; Focus the last frame when Emacs re-activated
 (defvar tl/emacs-deactivated-focus-frame nil
   "The frame when emacs lost focus.")
 
+;; N.B. It can not be triggered by org-protocol, because Emacs will get focus
+;; Even call the org-protocol with "open -g ...."
 (defun tl/on-emacs-deactivated ()
   (setq tl/emacs-deactivated-focus-frame (selected-frame)))
 
-(add-hook 'focus-out-hook 'tl/on-emacs-deactivated)
 
+;;; N.B. The `frame-focus-state' in `after-focus-change-function' can not get
+;;; `t' when using `hs.application.open("/Applications/Emacs.app")' in
+;;; Hammerspoon to make Emacs activate. Only mouse click the Emacs frame or
+;;; Alt-Tab can. So, triggering it with the help of Hammerspoon.
 (defun tl/on-emacs-activated ()
   (when (and tl/emacs-deactivated-focus-frame
              (not (eq (selected-frame) tl/emacs-deactivated-focus-frame)))
     (select-frame-set-input-focus tl/emacs-deactivated-focus-frame)
     (setq tl/emacs-deactivated-focus-frame nil)))
 
-(add-hook 'focus-in-hook 'tl/on-emacs-activated)
+;;; N.B. focus-in/out-hook is obsoleted since Emacs27.1
+;; (add-hook 'focus-in-hook 'tl/on-emacs-activated)
+;; (add-hook 'focus-out-hook 'tl/on-emacs-deactivated)
+
+;; (defun tl/fix-focus-frame-when-activated ()
+;;   (message (format "frame-focus-state: %S>>> %S|| %S"
+;;                    (frame-focus-state)
+;;                    (selected-frame)
+;;                    tl/emacs-deactivated-focus-frame)))
+
+(when (and (boundp 'after-focus-change-function)
+           (member window-system '(ns mac)))
+  ;; (add-function :after after-focus-change-function
+  ;;   'tl/fix-focus-frame-when-activated)
+  (add-function :after after-focus-change-function
+    'tl/on-emacs-deactivated))
+
+;; (remove-function  after-focus-change-function 'tl/fix-focus-frame-when-activated)
+
 
 (provide '03frame)
 ;;; 03frame.el ends here
