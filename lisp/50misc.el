@@ -21,6 +21,7 @@
       echo-keystrokes 0.02              ; 0.1
       tooltip-hide-delay 20             ; default 10
       confirm-kill-emacs nil            ; alternative `yes-or-no-p' ; `y-or-n-p'
+      confirm-kill-processes nil
       use-dialog-box nil ; mouse commands don't use dialog boxes to ask quesary "english"
       mark-even-if-inactive t
       set-mark-command-repeat-pop t
@@ -149,13 +150,6 @@
   :defer 7
   :config
   (mailcap-parse-mailcaps "~/.mailcap" t))
-
-
-;;; Run 'save-buffers-kill-emacs' without process-killing query
-;; seems not work on emacs26
-;; (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
-;;   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
-;;   (cl-flet ((process-list () nil)) ad-do-it))
 
 ;;; syntax table
 ;; (modify-syntax-entry ?_ "w")            ; now '_' is not considered a word-delimiter

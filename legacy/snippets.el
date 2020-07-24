@@ -232,3 +232,10 @@ If `help-window-select' is non-nil, also select the help window."
   :config
   ;; (add-to-list 'nox-server-programs '(rustic-mode . (nox-rls "rls")))
   (add-to-list 'nox-server-programs '(rustic-mode . (nox-rls "rust-analyzer"))))
+
+
+;;; Run 'save-buffers-kill-emacs' without process-killing query
+;; seems not work on emacs26
+;; (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
+;;   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
+;;   (cl-flet ((process-list () nil)) ad-do-it))
