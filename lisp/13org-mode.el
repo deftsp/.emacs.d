@@ -1252,6 +1252,8 @@ buffer which do not already have one. When `arg' nil only adds ids if the
 ;; find all 'CANCELLED' items. C-c < t then N r
 (setq org-archive-location "%s_archive::")
 
+(setq org-archive-subtree-save-file-p t)
+
 ;; http://ivanmalison.github.io/dotfiles/#org
 (defun tl/org-archive-if (condition-function)
   (if (funcall condition-function)
