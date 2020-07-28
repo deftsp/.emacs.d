@@ -1772,6 +1772,9 @@ buffer which do not already have one. When `arg' nil only adds ids if the
         'tl/org-link-http-empty-face
       'org-link))
 
+  ;; https://kitchingroup.cheme.cmu.edu/blog/2016/11/04/New-link-features-in-org-9/
+  (org-link-set-parameters "x-devonthink-item" :face '(:foreground "#99dd55" :underline t))
+
   (org-link-set-parameters
    "http"
    :face #'tl//org-link-face)
