@@ -155,7 +155,7 @@ dired buffer to be opened."
     (use-package dired-rainbow
       :config
       (progn
-        (dired-rainbow-define-chmod directory "#6cb2eb" "d.*")
+        (dired-rainbow-define-chmod directory (:inherit default :foreground "#6cb2eb" :weight bold)  "d.*")
         (dired-rainbow-define html "#eb5286" ("css" "less" "sass" "scss" "htm" "html" "jhtm" "mht" "eml" "mustache" "xhtml"))
         (dired-rainbow-define xml "#f2d024" ("xml" "xsd" "xsl" "xslt" "wsdl" "bib" "json" "msg" "pgn" "rss" "yaml" "yml" "rdata"))
         (dired-rainbow-define document "#9561e2" ("docm" "doc" "docx" "odb" "odt" "pdb" "pdf" "ps" "rtf" "djvu" "epub" "odp" "ppt" "pptx"))
