@@ -341,6 +341,7 @@ kill internal buffers too."
           (easy-hugo-mode            . emacs)
           (emms-playlist-mode        . normal)
           (emms-metaplaylist-mode    . normal)
+          (explain-pause-top-mode    . emacs)
           (irfc-mode                 . evilified)
           (inferior-emacs-lisp-mode  . emacs)
           (inf-ruby-mode             . emacs)

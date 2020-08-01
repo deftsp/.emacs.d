@@ -1347,4 +1347,13 @@ inputting math (Unicode) symbols." t))
   :defer t
   :commands (marionette-with-page marionette-request))
 
+;;; FIXME: can not work with key-chord
+;; $socat -u UNIX-RECV:./that-file-you-named-earlier STDOUT
+(use-package explain-pause-mode
+  :commands (explain-pause-top)
+  :init
+  ;; (explain-pause-log-to-socket "./some-socket-file-you-know-where-it-is")
+  :config
+  (explain-pause-mode +1))
+
 (provide '50tools)

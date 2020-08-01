@@ -1,0 +1,4 @@
+(:name explain-pause-mode
+ :type github
+ :description "explain emacs pauses"
+ :pkgname "lastquestion/explain-pause-mode")
