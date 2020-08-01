@@ -18,7 +18,7 @@
   (setq org-brain-refile-max-level 9)
   (setq org-brain-title-max-length 20
         org-brain-visualize-default-choices 'all
-        org-brain-include-file-entries nil
+        org-brain-include-file-entries t
         org-brain-file-entries-use-title nil)
 
   (tl/set-leader-keys "aob" 'org-brain-visualize)
