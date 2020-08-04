@@ -193,7 +193,9 @@ offer a list of recently clocked tasks to clock into. "
   "opS"   'profiler-stop
   "opr"   'profiler-report
 
-  "os"     'prodigy
+  "os"    'prodigy
+
+  "ot"    'vterm-toggle
 
   "rc"    'org-roam-capture
   "rj"    'org-roam-jump-to-index

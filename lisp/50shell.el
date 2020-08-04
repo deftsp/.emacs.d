@@ -51,9 +51,18 @@
 ;;; vterm
 ;; [[https://github.com/akermu/emacs-libvterm][akermu/emacs-libvterm: Emacs libvterm integration]]
 ;; [[https://github.com/jixiuf/vterm-toggle][jixiuf/vterm-toggle: toggles between the vterm buffer and whatever buffer you are editing.]]
+(defun tl/vterm-mode-init ()
+  (setq confirm-kill-processes nil
+        ;; Prevent premature horizontal scrolling
+        hscroll-margin 0))
+
 (when (file-exists-p "~/.emacs.d/emacs-libvterm")
   (use-package vterm
-    :load-path  "~/.emacs.d/emacs-libvterm")
+    :load-path  "~/.emacs.d/emacs-libvterm"
+    :init
+    (setq vterm-kill-buffer-on-exit t)
+    :config
+    (add-hook 'vterm-mode-hook 'tl/vterm-mode-init))
 
   (use-package vterm-toggle
     :commands (vterm-toggle vterm-toggle-cd)))
