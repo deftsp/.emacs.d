@@ -67,9 +67,10 @@
 
   (use-package multi-vterm
 	:config
-	(evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
-	(evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
-	(evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev))
+    (with-eval-after-load 'evil
+	  (evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
+	  (evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
+      (evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)))
 
   (use-package vterm-toggle
     :commands (vterm-toggle vterm-toggle-cd)))
