@@ -408,6 +408,9 @@ kill internal buffers too."
       ;; 'tl/keyboard-escape-quit
       (define-key m (kbd "<escape>") 'keyboard-escape-quit))
 
+    (define-key evil-normal-state-map "P" 'evil-paste-after)
+    (define-key evil-normal-state-map "p" 'evil-paste-before)
+
     ;; alternate binding to search next occurrence with isearch without
     ;; exiting isearch
     (define-key isearch-mode-map (kbd "S-<return>") 'isearch-repeat-forward)
@@ -422,7 +425,7 @@ kill internal buffers too."
 (use-package evil-collection
   :after evil
   :init
-  (setq evil-collection-mode-list '(magit-todos))
+  (setq evil-collection-mode-list '(magit-todos vterm))
   :config
   (evil-collection-init))
 
@@ -994,18 +997,14 @@ to replace the symbol under cursor"
   :defer 3
   :init
   ;; default is 'region, you can try `isearch-fail
-  (setq evil-goggles-default-face 'region) ; 'highlight
-  (setq evil-goggles-faces-alist `((evil-delete . diff-removed)
-                                   (evil-yank . diff-changed)
-                                   (evil-paste-after . diff-added)
-                                   (evil-paste-before . diff-added)))
-  (setq evil-goggles-duration 0.100) ;; default is 0.200
+  (setq evil-goggles-default-face '((t (:inherit 'highlight)))) ; 'highlight
+  (setq evil-goggles-duration 0.200) ;; default is 0.200
   (setq evil-goggles-pulse t)
   ;; to disable the hint when yanking or deleting
   (setq evil-goggles-blacklist `(evil-yank evil-delete))
 
   :config
-  (require 'diff-mode) ;; load diff-* faces
+  (evil-goggles-use-diff-faces)
   (evil-goggles-mode +1))
 
 (use-package evil-visual-mark-mode
