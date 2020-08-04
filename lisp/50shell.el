@@ -60,9 +60,16 @@
   (use-package vterm
     :load-path  "~/.emacs.d/emacs-libvterm"
     :init
+	;; (setq vterm-keymap-exceptions nil)
     (setq vterm-kill-buffer-on-exit t)
     :config
     (add-hook 'vterm-mode-hook 'tl/vterm-mode-init))
+
+  (use-package multi-vterm
+	:config
+	(evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
+	(evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
+	(evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev))
 
   (use-package vterm-toggle
     :commands (vterm-toggle vterm-toggle-cd)))

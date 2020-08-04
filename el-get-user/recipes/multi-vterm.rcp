@@ -1,0 +1,5 @@
+(:name multi-vterm
+ :description ""Managing multiple vterm buffers in Emacs.
+ :type github
+ :pkgname "suonlight/multi-vterm"
+ :depends (projectile))
