@@ -101,7 +101,7 @@
   (standard-display-ascii ?\226 "-")
   (standard-display-ascii ?\227 "--")     ; long dash
 
-  ;; (standard-display-ascii ?\240  [? ])    ;  non-breaking space
+  (standard-display-ascii ?\240  [? ])    ; non-breaking space
   (standard-display-ascii ?\251 "©")      ; \251 copyright,  [?(?C?)]
   ;; (standard-display-ascii ?\256  [?(?R?)])  ; registered [?(?R?)]
   ;; (standard-display-ascii ?\267  [?*])    ; center dot
