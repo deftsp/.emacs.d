@@ -69,6 +69,9 @@
 
   (general-evil-define-key 'normal pdf-view-mode-map
     ;; "q" 'kill-current-buffer
+    "gl" 'pdf-view-goto-label
+    "gt" 'pdf-view-goto-page
+
     "d" 'pdf-view-scroll-up-or-next-page
     "e" 'pdf-view-scroll-down-or-previous-page))
 
