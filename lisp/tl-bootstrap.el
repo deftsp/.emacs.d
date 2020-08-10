@@ -8,6 +8,7 @@
 ;;; Code:
 
 (require 'prelude)
+(require 'tl-store)
 (require '01env)
 (require '02base)
 (require '03frame)
@@ -119,6 +120,7 @@
 (require '50web)
 (require '50window)
 (require '50xcode)
+(require '50pdf)
 
 ;; (require '52emms)
 (require '52evil-mode)

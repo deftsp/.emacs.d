@@ -408,8 +408,8 @@ kill internal buffers too."
       ;; 'tl/keyboard-escape-quit
       (define-key m (kbd "<escape>") 'keyboard-escape-quit))
 
-    (define-key evil-normal-state-map "P" 'evil-paste-after)
-    (define-key evil-normal-state-map "p" 'evil-paste-before)
+    ;; (define-key evil-normal-state-map "p" 'evil-paste-after)
+    ;; (define-key evil-normal-state-map "P" 'evil-paste-before)
 
     ;; alternate binding to search next occurrence with isearch without
     ;; exiting isearch
@@ -425,7 +425,7 @@ kill internal buffers too."
 (use-package evil-collection
   :after evil
   :init
-  (setq evil-collection-mode-list '(magit-todos vterm))
+  (setq evil-collection-mode-list '(magit-todos vterm (pdf pdf-view)))
   :config
   (evil-collection-init))
 
@@ -774,7 +774,8 @@ to replace the symbol under cursor"
 (use-package evil-snipe
   :init
   (progn
-    (setq evil-snipe-scope 'whole-buffer
+    (setq evil-snipe-override-evil-repeat-keys nil
+          evil-snipe-scope 'whole-buffer
           evil-snipe-enable-highlight t
           evil-snipe-enable-incremental-highlight t
           evil-snipe-auto-disable-substitute t

@@ -35,6 +35,11 @@
 
 (add-to-list 'safe-local-eval-forms '(auto-fill-mode -1))
 
+;; https://unix.stackexchange.com/a/108308
+;; https://emacsredux.com/blog/2014/05/16/opening-large-files/
+;; warn when opening files bigger than 100MB
+(setq large-file-warning-threshold 100000000)
+
 ;;; mode line
 (setq size-indication-mode t            ; show file size (emacs 22+)
       ;; slow, especially when two windows show the same buffer
