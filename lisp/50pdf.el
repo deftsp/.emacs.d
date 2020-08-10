@@ -9,9 +9,6 @@
 (use-package pdf-tools
   :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
   :magic ("%PDF" . pdf-view-mode)
-  :init
-  (defvar tl--pdf-view-history nil)
-  (add-to-list 'savehist-additional-variables 'tl--pdf-view-history)
   :config
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-width)
@@ -32,6 +29,43 @@
   ;; solarized dark + bright front
   (setq pdf-view-midnight-colors '("#a3b4b6" . "#002b36")) ; #839496
 
+  (general-evil-define-key 'normal pdf-view-mode-map
+    :prefix ","
+
+    "0"  'image-bol
+    "$"  'image-eol
+
+    ;; Slicing image
+    "sm" 'pdf-view-set-slice-using-mouse
+    "sb" 'pdf-view-set-slice-from-bounding-box
+    "sr" 'pdf-view-reset-slice
+
+    ;; Annotations
+    "aD" 	'pdf-annot-delete
+    "at" 	'pdf-annot-attachment-dired
+    "al" 	'pdf-annot-list-annotations
+    "am" 	'pdf-annot-add-markup-annotation
+    "ao" 	'pdf-annot-add-strikeout-markup-annotation
+    "as" 	'pdf-annot-add-squiggly-markup-annotation
+    "at" 	'pdf-annot-add-text-annotation
+    "au" 	'pdf-annot-add-underline-markup-annotation
+
+    ;; Fit image to window
+    "fw"    'pdf-view-fit-width-to-window
+    "fh"    'pdf-view-fit-height-to-window
+    "fp"    'pdf-view-fit-page-to-window
+
+    ;; Other
+    "ss"    'pdf-occur
+    "p"     'pdf-misc-print-document
+    "o"     'pdf-links-action-perform
+    "O"     'pdf-outline
+    "n"     'pdf-view-midnight-minor-mode)
+
+
+  (general-evil-define-key 'visual pdf-view-mode-map
+    "ah" 	'pdf-annot-add-highlight-markup-annotation
+    "y"     'pdf-view-kill-ring-save)
 
   (general-evil-define-key 'normal pdf-view-mode-map
     ;; "q" 'kill-current-buffer
@@ -42,6 +76,7 @@
 (defun tl/pdf-view-mode-init ()
   (set (make-local-variable 'evil-normal-state-cursor) (list nil))
   (set (make-local-variable 'evil-evilified-state-cursor) (list nil))
+  (pdf-view-midnight-minor-mode +1)
   (display-line-numbers-mode -1))
 
 (defun tl/pdf-outline-buffer-init ()
