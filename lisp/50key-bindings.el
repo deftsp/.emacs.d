@@ -264,8 +264,23 @@ offer a list of recently clocked tasks to clock into. "
 
 (tl/set-leader-keys
   ;; "b<1-9>" 'buffer-to-window-<1-9>
-  "TAB"   'tl/alternate-buffer
-  "bb"    'ivy-switch-buffer ; counsel-switch-buffer have live preiview
+  ;; "TAB"   'tl/alternate-buffer
+  "TAB A"   'wg-rename-workgroup
+  "TAB v"   'wg-switch-to-workgroup
+  "TAB ."   'wg-switch-to-workgroup
+  "TAB c"   'wg-create-workgroup
+  "TAB k"   'wg-kill-workgroup
+  "TAB y"   'wg-yank-wconfig
+  "TAB h"   'wg-switch-to-workgroup-left
+  "TAB l"   'wg-switch-to-workgroup-right
+  "TAB n"   'wg-switch-to-workgroup-right
+  "TAB p"   'wg-switch-to-workgroup-left
+  "TAB a"   'wg-switch-to-previous-workgroup
+  "TAB r"   'wg-revert-workgroup
+  "TAB s"   'wg-save-session
+  "TAB d"   'wg-toggle-window-dedicated-p
+
+  "bb"    'ivy-switch-buffer          ; counsel-switch-buffer have live preiview
   "bB"    'ibuffer
   "bd"    'tl/kill-this-buffer
   "be"    'tl/safe-erase-buffer

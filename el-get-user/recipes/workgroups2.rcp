@@ -1,10 +1,11 @@
 (:name workgroups2
-       :type github
-       :pkgname "deftsp/workgroups2"
-       :prepare (defun workgroups-mode-on ()
-                  "Turn on `workgroups-mode' mode."
-                  (interactive)
-                  (workgroups-mode 1))
-       :load-path "src"
-       :description "Workgroups is a session manager for Emacs."
-       :depends (anaphora dash f cl-lib))
+ :type github
+ :pkgname "pashinin/workgroups2"
+ :checkout "1.2.1"
+ :prepare (defun workgroups-mode-on ()
+            "Turn on `workgroups-mode' mode."
+            (interactive)
+            (workgroups-mode 1))
+ :load-path "src"
+ :description "Workgroups is a session manager for Emacs."
+ :depends (anaphora dash f cl-lib))
