@@ -1,0 +1,5 @@
+(:name sqlformat
+ :description "Reformat SQL using sqlformat or pgformatter"
+ :type github
+ :pkgname "purcell/sqlformat"
+ :depends (reformatter))

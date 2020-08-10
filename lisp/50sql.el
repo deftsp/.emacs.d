@@ -55,5 +55,17 @@
                      (sql-user "user")
                      (sql-database "db2"))))))
 
+
+(use-package sqlformat
+  :after sql
+  :init
+  (setq sqlformat-command 'pgformatter)
+  ;; https://github.com/darold/pgFormatter
+  (setq sqlformat-args '("-s4" "-g" "-u1")))
+
+(general-evil-define-key '(normal visual) sql-mode-map
+  :prefix ","
+  "p" 'sqlformat)
+
 (provide '50sql)
 ;;; 50sql.el ends here
