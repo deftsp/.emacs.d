@@ -1728,11 +1728,12 @@ buffer which do not already have one. When `arg' nil only adds ids if the
           "bibtex %b"
           "xelatex -interaction nonstopmode -output-directory %o %f"
           "xelatex -interaction nonstopmode -output-directory %o %f"))
-  (setq org-latex-listings t)
-  (setq org-export-latex-listings t)
+  (setq org-latex-compiler "xelatex")
+  ;; fontify source code
+  (setq org-latex-listings t)     ; 'minted
   :config
-  (add-to-list 'org-latex-packages-alist
-               '(("AUTO" "inputenc" t)))
+  ;; (add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
+  ;; (add-to-list 'org-latex-packages-alist '(("AUTO" "inputenc" t)))
 
   ;; https://github.com/tsdye/org-article
   ;; $ cp org-article.cls ~/Library/texmf/tex/latex/
