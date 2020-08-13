@@ -219,7 +219,7 @@
       (kbd "RET") 'ibuffer-visit-buffer
       (kbd "go") 'ibuffer-visit-buffer-other-window
       (kbd "C-o") 'ibuffer-visit-buffer-other-window-noselect
-      (kbd "M-o") 'ibuffer-visit-buffer-1-window
+      ;; (kbd "M-o") 'ibuffer-visit-buffer-1-window
       (kbd "M-r") 'ibuffer-redisplay
       (kbd "gv") 'ibuffer-do-view
       (kbd "gV") 'ibuffer-do-view-horizontally
@@ -248,6 +248,9 @@
   (setq ibuffer-show-empty-filter-groups nil)
   (setq ibuffer-saved-filter-groups tl//ibuffer-gnus-styled-groups)
   :config
+  ;; "M-o" already for ace-window
+  (define-key ibuffer-mode-map (kbd "M-o") nil)
+
   (tl//evilified-binding)
 
   (defface tl//ibuffer-filter-group-name-face
