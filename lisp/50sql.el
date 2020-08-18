@@ -59,9 +59,9 @@
 (use-package sqlformat
   :after sql
   :init
-  (setq sqlformat-command 'pgformatter)
   ;; https://github.com/darold/pgFormatter
-  (setq sqlformat-args '("-s4" "-g" "-u1")))
+  (setq sqlformat-args '("-s4" "-u1" "-b"))
+  (setq sqlformat-command 'pgformatter))
 
 (general-evil-define-key '(normal visual) sql-mode-map
   :prefix ","
