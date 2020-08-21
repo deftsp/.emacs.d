@@ -21,14 +21,18 @@
           company-clang-insert-arguments nil
           company-require-match nil ; company-explicit-action-p; Don't require match, so you can still move your cursor as expected.
           company-tooltip-align-annotations t ; Align annotation to the right side.
+          company-tooltip-minimum-width 60
+          company-tooltip-maximum-width 60
           ;; company-eclim-auto-save nil ; Stop eclim auto save.
           company-dabbrev-downcase nil
           company-tooltip-limit 20
-          company-minimum-prefix-length 2
+          company-minimum-prefix-length 1
           company-selection-wrap-around t
+          company-posframe-show-indicator t
           ;; company-backends (delete 'company-ropemacs company-backends)
           ;; company-backends (delete 'company-capf company-backends)
-          company-idle-delay 0.9))
+          company-posframe-show-indicator nil
+          company-idle-delay 0.2))
   :config
   (progn
     (define-key company-active-map (kbd "M-j") 'company-select-next)
@@ -45,10 +49,13 @@
     (add-to-list 'company-begin-commands 'company-complete)
     (add-to-list 'company-backends 'company-cmake)
 
-    ;; Use the tab-and-go frontend.
-    ;; Allows TAB to select and complete at the same time.
-    ;; 'tng' means 'tab and go'
-    (company-tng-configure-default)
+
+    (if (window-system)
+        (company-posframe-mode +1)
+      ;; Use the tab-and-go frontend.
+      ;; Allows TAB to select and complete at the same time.
+      ;; 'tng' means 'tab and go'
+      (company-tng-configure-default))
 
     ;; https://github.com/TommyX12/company-tabnine
     ;; workaround for company-transformers
@@ -68,7 +75,6 @@
     (advice-add #'company--transform-candidates :around #'tl-company--transform-candidates)
     (advice-add #'company-tabnine :around #'tl-company-tabnine)
 
-    ;;;
     (use-package company-quickhelp
       :config
       (progn

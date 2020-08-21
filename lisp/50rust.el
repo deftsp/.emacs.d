@@ -42,6 +42,7 @@
 
   (defun tl/rustic-mode-init ()
     (smartparens-strict-mode +1)
+    (rainbow-delimiters-mode -1)
     (when (fboundp 'org-link-minor-mode)
       (org-link-minor-mode +1)))
 

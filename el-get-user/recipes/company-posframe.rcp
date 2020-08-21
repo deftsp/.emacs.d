@@ -1,0 +1,5 @@
+(:name company-posframe
+ :description "Use a posframe as company candidate menu"
+ :type github
+ :pkgname "tumashu/company-posframe"
+ :depends (company-mode posframe))

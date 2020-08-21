@@ -117,6 +117,7 @@
           (javascript-mode nil)
           (nxhtml-mumamo-mode nil)
           (autoinfo-mode nil)
+          (company-posframe-mode nil)
           (ecb-minor-mode nil)
           (dired-omit-mode nil)
           ;; (key-chord-mode nil)

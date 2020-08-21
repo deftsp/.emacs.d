@@ -9,6 +9,8 @@
   :init
   (setq lsp-enable-symbol-highlighting nil
         lsp-enable-snippet nil
+        lsp-headerline-breadcrumb-enable t
+        lsp-completion-show-kind nil
         lsp-enable-semantic-highlighting nil)
 
   (setq lsp-prefer-capf t)
@@ -74,6 +76,7 @@
   :commands lsp-ui-mode
   :init
   (setq lsp-ui-sideline-delay 0.2
+        lsp-ui-sideliqne-enable nil
         lsp-ui-doc-enable nil)
   :config
   (progn
