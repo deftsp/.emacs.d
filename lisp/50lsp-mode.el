@@ -8,8 +8,10 @@
   :commands lsp
   :init
   (setq lsp-enable-symbol-highlighting nil
+        lsp-modeline-diagnostics-enable nil
         lsp-enable-snippet nil
         lsp-headerline-breadcrumb-enable t
+        lsp-modeline-code-actions-enable nil
         lsp-completion-show-kind nil
         lsp-enable-semantic-highlighting nil)
 
@@ -76,7 +78,8 @@
   :commands lsp-ui-mode
   :init
   (setq lsp-ui-sideline-delay 0.2
-        lsp-ui-sideliqne-enable nil
+        lsp-ui-sideline-enable t
+        lsp-ui-flycheck-list-position 'right
         lsp-ui-doc-enable nil)
   :config
   (progn

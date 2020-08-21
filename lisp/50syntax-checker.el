@@ -58,15 +58,17 @@ If the error list is visible, hide it.  Otherwise, show it."
     (switch-to-buffer-other-window flycheck-error-list-buffer)))
 
 
+;;; flycheck-posframe can not work will with company-posframe
+;;; lsp-ui-sideline-mode to show the message on the right
 ;; https://github.com/alexmurray/flycheck-posframe
-(use-package flycheck-posframe
-  :after flycheck
-  :config
-  (setq flycheck-posframe-warning-prefix "➤ ")
-  (setq flycheck-posframe-error-prefix "➤ ")
-  (set-face-attribute 'flycheck-posframe-warning-face nil :inherit 'warning)
-  (set-face-attribute 'flycheck-posframe-error-face nil :inherit 'error)
-  (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
+;; (use-package flycheck-posframe
+;;   :after flycheck
+;;   :config
+;;   (setq flycheck-posframe-warning-prefix "➤ ")
+;;   (setq flycheck-posframe-error-prefix "➤ ")
+;;   (set-face-attribute 'flycheck-posframe-warning-face nil :inherit 'warning)
+;;   (set-face-attribute 'flycheck-posframe-error-face nil :inherit 'error)
+;;   (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
 
 ;; (use-package flycheck-inline
 ;;   :after flycheck

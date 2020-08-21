@@ -49,7 +49,7 @@
   (add-hook 'rustic-mode-hook 'tl/rustic-mode-init)
 
 
-  ;; (add-to-list 'flycheck-checkers 'rustic-clippy)
+  (add-to-list 'flycheck-checkers 'rustic-clippy)
 
   (tl/declare-prefix-for-mode 'rustic-mode "mv" "variable")
   (tl/set-leader-keys-for-major-mode 'rustic-mode

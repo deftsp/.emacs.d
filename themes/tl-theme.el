@@ -371,6 +371,8 @@
    `(company-scrollbar-fg ((t (:background ,base2))))
    '(company-tooltip-search ((t (:background "#aa3333" :foreground "#eeeeee"))))
 
+   ;; lsp
+   '(lsp-modeline-code-actions-face ((t (:foreground "#75cc55" :background "#bbbbbb"))))
 
    ;; cedet
    '(pulse-highlight-start-face ((t (:background "#222222"))))

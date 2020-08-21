@@ -75,6 +75,9 @@
     (advice-add #'company--transform-candidates :around #'tl-company--transform-candidates)
     (advice-add #'company-tabnine :around #'tl-company-tabnine)
 
+    (use-package company-posframe
+      :diminish company-posframe-mode)
+
     (use-package company-quickhelp
       :config
       (progn
