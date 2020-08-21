@@ -1,0 +1,5 @@
+(:name dotenv
+ :description "Plugin for loading .env project files"
+ :type github
+ :pkgname "pkulev/dotenv.el"
+ :depends (f s))

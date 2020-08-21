@@ -92,6 +92,7 @@
 (require '50perl)
 (require '50printing)
 (require '50prodigy)
+(require '50project)
 (require '50python-mode)
 (require '50restclient)
 (require '50ruby)

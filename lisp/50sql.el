@@ -22,12 +22,17 @@
   (progn
     (setq sql-electric-stuff (quote semicolon)
           sql-input-ring-file-name "~/.sql_history"
+          sql-product 'postgres
           sql-pop-to-buffer-after-send-region t)
     (setq sql-postgres-login-params
           '((user :default "postgres")
             (database :default "postgres")
             (server :default "localhost")
             (port :default 5433)))
+
+    ;; (sql-set-product-feature 'postgres :prompt-regexp "^[-[:alnum:]_]*=[#>] ")
+    ;; (sql-set-product-feature 'postgres :prompt-cont-regexp
+    ;;                          "^[-[:alnum:]_]*[-(][#>] ")
 
     (defun tl/sql-interactive-mode-init ()
       (toggle-truncate-lines t)
@@ -42,7 +47,6 @@
 
     (add-hook 'sql-mode-hook 'tl/sql-mode-init)
 
-
     (setq sql-connection-alist
           '((localhost (sql-product 'postgres)
                        (sql-port 5433)
@@ -53,8 +57,43 @@
                      (sql-port 5432)
                      (sql-server "localhost")
                      (sql-user "user")
-                     (sql-database "db2"))))))
+                     (sql-database "db2"))
+            (dotenv-server ())))))
 
+(use-package dotenv
+  :after (sql))
+
+(defun tl/get-value-from-dotenv (name)
+  (let ((path (dotenv-path (projectile-project-root))))
+    (when (s-present? path)
+      (cadr (-find (lambda (l) (string= (car l) name))
+                   (dotenv-load path))))))
+
+(defun tl/sql-update-dotenv-server (product)
+  (interactive (list (intern
+                      (ivy-read "sql product: "
+                                '("postgres" "sqlite")))))
+  (if-let ((connection-name (cdr (project-current)))
+           (sql-user (tl/get-value-from-dotenv "SUPER_USER"))
+           (sql-password (tl/get-value-from-dotenv "SUPER_USER_PASSWORD"))
+           (sql-port (tl/get-value-from-dotenv "DB_PORT"))
+           (sql-database (tl/get-value-from-dotenv "DB_NAME"))
+           (sql-server "localhost"))
+      (progn
+        (setq sql-connection-alist (assq-delete-all
+                                    connection-name
+                                    sql-connection-alist))
+        (add-to-list 'sql-connection-alist
+                     `(,connection-name (sql-user ,sql-user)
+                                        ;; (sql-password ,sql-password)
+                                        (sql-port ,(string-to-number sql-port))
+                                        (sql-database ,sql-database)
+                                        (sql-server ,sql-server)
+                                        (sql-product ',product)))
+        ;; https://stackoverflow.com/questions/26677909/emacs-sql-mode-postgresql-and-inputing-password
+        (setenv "PGPASSWORD" sql-password)
+        (message "set sql server connection parameters for current project"))
+    (user-error "Unable to set connection from dotenv")))
 
 (use-package sqlformat
   :after sql
@@ -65,6 +104,12 @@
 
 (general-evil-define-key '(normal visual) sql-mode-map
   :prefix ","
+  "eb" 'sql-send-buffer
+  "er" 'sql-send-region
+  "ei" 'sql-product-interactive
+  "u" 'tl/sql-update-dotenv-server
+  "z" 'sql-show-sqli-buffer
+  "c" 'sql-connect
   "p" 'sqlformat)
 
 (provide '50sql)
