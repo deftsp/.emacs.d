@@ -31,9 +31,13 @@
 ;; the easy way to get following vlaue is: `customize face' => Apply and save => copy and paste
 ;; Likes "#032238"
 
+;; set custom--inhibit-theme-enable to nil make update theme take effect immediately
+;; https://emacs.stackexchange.com/a/52804
+
 (deftheme tl "The TLEmacs color theme. Base on zenburn and solarized")
 
-(let ((base03  "#002b36")
+(let ((custom--inhibit-theme-enable nil)
+      (base03  "#002b36")
       (base02  "#073642")
       (base01  "#586e75")
       (base00  "#657b83")
@@ -188,7 +192,7 @@
    '(org-headline-done ((t (:strike-through t))))
    '(org-done ((t (:strike-through t))))
    `(org-hide ((t (:foreground ,base03))))
-   '(org-level-1 ((t (:inherit outline-1   :foreground "#2e80df" :weight normal :height 1.0))))
+   '(org-level-1 ((t (:inherit outline-1   :foreground "#d3d08c" :weight normal :height 1.0))))
    '(org-level-2 ((t (:inherit outline-2   :foreground "#4ab2c4" :height 1.0))))
    '(org-level-3 ((t (:inherit outline-3   :foreground "#dfaf8f"))))
    '(org-level-4 ((t (:inherit outline-4   :foreground "#8cd0d3"))))
@@ -225,6 +229,7 @@
    ;; whitespace
    `(whitespace-space ((t (:foreground "#ff6622" :background ,base02))))
 
+   `(escape-glyph ((t (:foreground "#17cccc"))))
 
    ;; org-brain
    '(org-brain-title ((t (:foreground "#b820a8" :weight normal))))
@@ -234,13 +239,13 @@
    '(org-brain-pinned ((t (:foreground "#ba42c4" :background "#174652" :weight normal))))
 
    ;; font lock
-   '(font-lock-builtin-face ((t (:foreground "chartreuse3"))))
+   '(font-lock-builtin-face ((t (:foreground "#5ca0b3"))))
    `(font-lock-comment-face ((t (:foreground ,base01))))
    `(font-lock-comment-delimiter-face ((t (:foreground ,base1))))
    '(font-lock-constant-face ((t (:foreground "#22ccee"))))
    '(font-lock-doc-face ((t (:foreground "turquoise4"))))
-   '(font-lock-function-name-face ((t (:foreground "LightCoral"))))
-   '(font-lock-keyword-face ((t (:foreground "DarkOliveGreen2"))))
+   '(font-lock-function-name-face ((t (:foreground "#f08484"))))
+   '(font-lock-keyword-face ((t (:foreground "#aede5d"))))
    `(font-lock-negation-char-face ((t (:foreground ,yellow :weight bold))))
    '(font-lock-preprocessor-face ((t (:foreground "#79C96D"))))
    `(font-lock-regexp-grouping-construct ((t (:foreground ,yellow :weight bold))))
@@ -520,7 +525,6 @@
    '(rainbow-delimiters-depth-8-face ((t (:foreground "#dc8cc3"))))
    '(rainbow-delimiters-depth-9-face ((t (:foreground "#d0bf8f")))))
 
-
   ;;; custom theme variables
   (custom-theme-set-variables
    'tl
@@ -528,13 +532,14 @@
    ;; fill-column-indicator
    `(fci-rule-color ,base01)))
 
+
+;; make sure the file path of current theme in custom-theme-load-path
 ;;;###autoload
 (and load-file-name
      (boundp 'custom-theme-load-path)
      (add-to-list 'custom-theme-load-path
                   (file-name-as-directory
                    (file-name-directory load-file-name))))
-
 
 
 (provide-theme 'tl)
