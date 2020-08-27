@@ -1,0 +1,5 @@
+(:name org-link-beautify
+ :description "Beautify Org Links"
+ :type github
+ :pkgname "stardiviner/org-link-beautify"
+ :depends (all-the-icons))
