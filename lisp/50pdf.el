@@ -90,9 +90,9 @@
 ;; adapted from doom-emacs
 (defun tl/pdf-cleanup-windows-h ()
   "Kill left-over annotation buffers when the document is killed."
-  (when (buffer-live-p pdf-annot-list-document-buffer)
+  (when (buffer-live-p (bound-and-true-p pdf-annot-list-document-buffer) )
     (pdf-info-close pdf-annot-list-document-buffer))
-  (when (buffer-live-p pdf-annot-list-buffer)
+  (when (buffer-live-p (bound-and-true-p pdf-annot-list-buffer))
     (kill-buffer pdf-annot-list-buffer))
   (let ((contents-buffer (get-buffer "*Contents*")))
     (when (and contents-buffer (buffer-live-p contents-buffer))
