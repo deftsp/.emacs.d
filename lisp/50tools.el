@@ -1180,9 +1180,11 @@ inputting math (Unicode) symbols." t))
 
 ;;; pangu-spacing
 ;; emacs minor-mode to add space between Chinese and English characters.
-;; (when (fboundp 'global-pangu-spacing-mode)
-;;   (setq pangu-spacing-real-insert-separtor t)
-;;   (global-pangu-spacing-mode 1))
+(use-package pangu-spacing
+  :diminish
+  :config
+  (setq pangu-spacing-real-insert-separtor t)
+  (global-pangu-spacing-mode 1))
 
 ;;; beacon
 ;; (use-package beacon

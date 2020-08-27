@@ -17,7 +17,7 @@
   (temp-buffer-resize-mode 1))
 
 ;;; auto fill mode
-(setq-default fill-column 80)
+(setq-default fill-column 100)
 
 (defun tl/unfill-buffer ()
   "Undo filling for all paragraphs."
@@ -99,15 +99,16 @@
         (replace-match "\\1 \\2" nil nil)))))
 
 ;; Function called (if non-nil) to perform auto-fill. It is called after
-;; self-inserting any character specified in the `auto-fill-chars' table. NOTE:
-;; This variable is not a hook; its value may not be a list of functions.
-(defun tl/add-blank-between-chinese-and-english-whole-buffer ()
-  (interactive)
-  (tl/add-blank-between-chinese-and-english (point-at-bol) (point-at-eol))
-  (do-auto-fill))
+;; self-inserting any character specified in the `auto-fill-chars' table.
+;; NOTE: This variable is not a hook; its value may not be a list of functions.
+;; instead of by pangu-spacing
+;; (defun tl/add-blank-between-chinese-and-english-whole-buffer ()
+;;   (interactive)
+;;   (tl/add-blank-between-chinese-and-english (point-at-bol) (point-at-eol))
+;;   (do-auto-fill))
 
-(setq-default auto-fill-function
-              #'tl/add-blank-between-chinese-and-english-whole-buffer)
+;; (setq-default auto-fill-function
+;;               #'tl/add-blank-between-chinese-and-english-whole-buffer)
 
 
 (use-package prog-fill
