@@ -840,7 +840,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           org-agenda-start-on-weekday nil
           org-agenda-restore-windows-after-quit t
           org-agenda-repeating-timestamp-show-all nil
-          org-agenda-use-time-grid t
+          org-agenda-use-time-grid nil
           org-agenda-block-separator ?▰
           org-agenda-dim-blocked-tasks t ; 'invisible
           org-agenda-window-frame-fractions '(0.6 . 0.85) ; the min and max height of the agenda window as a fraction of frame height.
