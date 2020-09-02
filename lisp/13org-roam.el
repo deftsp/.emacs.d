@@ -42,7 +42,7 @@
            (function org-roam-capture--get-point)
            "%?"
            :file-name "%<%Y%m%d%H%M%S>-${slug}"
-           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n\n"
+           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n#+ROAM_TAGS: other\n\n"
            :unnarrowed t))
         org-roam-capture-ref-templates
         '(("a" "Annotation" plain (function org-roam-capture--get-point)
