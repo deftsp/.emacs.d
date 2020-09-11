@@ -253,6 +253,13 @@
     ;; (add-to-list 'org-modules 'org-depend)
     ;; https://github.com/Somelauw/evil-org-mode/blob/master/doc/keythemes.org
 
+    ;; local bound inhibit-message to t works when be called by other function, but not C-x C-e
+    (defun tl//org-save-all-org-buffers-quietly ()
+      (let ((inhibit-message t))
+        (org-save-all-org-buffers)))
+
+    (add-function :after after-focus-change-function 'tl//org-save-all-org-buffers-quietly) ; Sacha Chua
+
     (use-package evil-org
       :diminish evil-org-mode
       :after org
@@ -1252,6 +1259,8 @@ buffer which do not already have one. When `arg' nil only adds ids if the
 ;; find all 'CANCELLED' items. C-c < t then N r
 (setq org-archive-location "%s_archive::")
 
+;; save target buffer after archiving a node.
+;; FIXME: it is not exist any more?
 (setq org-archive-subtree-save-file-p t)
 
 ;; http://ivanmalison.github.io/dotfiles/#org
