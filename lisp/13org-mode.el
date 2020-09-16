@@ -667,21 +667,27 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
             (tags-todo "TODO=\"NEXT\""
                        ((org-agenda-sorting-strategy '(priority-down tag-up))
                         (org-agenda-overriding-header "NEXT Tasks:")))
-            (tags "+PRIORITY=\"A\"+CATEGORY={Inbox\\|Task\\|Project}"
-                  ((org-agenda-skip-function
-                    '(org-agenda-skip-entry-if 'todo 'done))
+            (tags "CATEGORY=\"Projects\""
+                  ((org-agenda-sorting-strategy '(priority-down tag-up))
+                   (org-agenda-skip-function '(or
+                                               (org-agenda-skip-entry-if 'todo 'done )))
+                   (org-agenda-overriding-header "Projects:")))
 
-                   (org-agenda-sorting-strategy '(tag-up priority-down))
-                   ;; (org-agenda-todo-keyword-format "")
-                   (org-agenda-overriding-header "High Priority Unfinished Tasks:")))
+            ;; (tags "+PRIORITY=\"A\"+CATEGORY={Inbox\\|Task\\|Project}"
+            ;;       ((org-agenda-skip-function
+            ;;         '(org-agenda-skip-entry-if 'todo 'done))
+
+            ;;        (org-agenda-sorting-strategy '(tag-up priority-down))
+            ;;        ;; (org-agenda-todo-keyword-format "")
+            ;;        (org-agenda-overriding-header "High Priority Unfinished Tasks:")))
 
             (alltodo ""
                      ((org-agenda-skip-function '(or (tl/org-agenda-skip-subtree-if-habit)
                                                      (tl/org-agenda-skip-subtree-if-priority ?A)
                                                      (tl/org-agenda-skip-if-blocked)
-                                                     (org-agenda-skip-entry-if 'regexp "\\* NEXT")
+                                                     ;; (org-agenda-skip-entry-if 'regexp "\\* NEXT")
                                                      (org-agenda-skip-entry-if 'scheduled 'deadline)))
-                      (org-agenda-overriding-header "ALL Normal Priority Tasks:")
+                      (org-agenda-overriding-header "ALL Other Tasks:")
                       (org-agenda-sorting-strategy '(priority-down
                                                      category-keep)))))
            ;; ((org-agenda-compact-blocks t))
@@ -813,7 +819,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           ("Y" "Someday tasks" tags "TODO=\"SOMEDAY\""
            ((org-agenda-overriding-header "Someday tasks:")
             (org-agenda-sorting-strategy '(user-defined-up))
-            (org-agenda-prefix-format "%-11c%5(tl/org-todo-age) "))))))
+            (org-agenda-prefix-format "%-11c%5(tl/org-todo-age) "))))) )
 
 
 ;; https://www.reddit.com/r/orgmode/comments/6ybjjw/aligned_agenda_view_anyway_to_make_this_more/
