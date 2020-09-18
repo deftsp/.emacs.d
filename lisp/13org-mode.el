@@ -585,6 +585,15 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
         nil
       subtree-end)))
 
+
+(defun tl/org-agenda-skip-project ()
+  "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
+  (let ((subtree-end (save-excursion (org-end-of-subtree t))))
+    (if (string= (org-entry-get nil "CATEGORY") "Projects")
+        subtree-end
+      nil)))
+
+
 ;; https://emacs.cafe/emacs/orgmode/gtd/2017/06/30/orgmode-gtd.html
 ;; can be use to  only show the first action to be done (or next action) for each project
 ;; TODO: test it and add category filter
@@ -684,6 +693,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
             (alltodo ""
                      ((org-agenda-skip-function '(or (tl/org-agenda-skip-subtree-if-habit)
                                                      (tl/org-agenda-skip-subtree-if-priority ?A)
+                                                     (tl/org-agenda-skip-project)
                                                      (tl/org-agenda-skip-if-blocked)
                                                      ;; (org-agenda-skip-entry-if 'regexp "\\* NEXT")
                                                      (org-agenda-skip-entry-if 'scheduled 'deadline)))
