@@ -1602,7 +1602,7 @@ buffer which do not already have one. When `arg' nil only adds ids if the
 	      (concat
 	       "set oldClipboard to the clipboard\n"
 	       "set frontmostApplication to path to frontmost application\n"
-           "do shell script \"/usr/local/bin/hs -c 'ff_url.cp_firefox_frontmost_url_to_clipboard()'\"\n"
+           "do shell script \"~/bin/hs -c 'ff_url.cp_firefox_frontmost_url_to_clipboard()'\"\n"
            "delay 0.4\n"
 	       "set links to the clipboard\n"
 	       "set the clipboard to oldClipboard\n"
