@@ -1833,7 +1833,8 @@ otherwise just refresh the org agenda buffer."
           (with-selected-window wind
             (org-agenda-redo)
             (org-fit-window-to-buffer))
-        (org-agenda nil " ")))))
+        (org-agenda nil " "))
+      (goto-char (point-min)))))
 
 (with-eval-after-load 'evil
   (define-key evil-normal-state-map (kbd "S-SPC") 'tl/jump-to-org-agenda))
