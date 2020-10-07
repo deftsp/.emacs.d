@@ -416,7 +416,16 @@ kill internal buffers too."
     (define-key isearch-mode-map (kbd "S-<return>") 'isearch-repeat-forward)
     (define-key isearch-mode-map (kbd "M-S-<return>") 'isearch-repeat-backward)
     ;; Escape from isearch-mode("/" and "?" in evil-mode) like vim
-    (define-key isearch-mode-map (kbd "<escape>") 'isearch-cancel)))
+    (define-key isearch-mode-map (kbd "<escape>") 'isearch-cancel))
+
+  (general-define-key
+   :keymaps '(evil-ex-completion-map evil-ex-search-keymap)
+   "C-a" #'evil-beginning-of-line
+   "C-e" #'evil-end-of-line
+   "C-b" #'evil-backward-char
+   "C-f" #'evil-forward-char
+   "M-j" #'next-complete-history-element
+   "M-k" #'previous-complete-history-element))
 
 ;;; enable evil mode
 (when (fboundp 'evil-mode)
