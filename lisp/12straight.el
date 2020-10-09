@@ -8,6 +8,7 @@
 ;; (require 'straight-x)
 
 (setq straight-repository-branch "develop"
+      straight-check-for-modifications '(check-on-save)
       straight-use-package-by-default nil)
 
 (defvar bootstrap-version)
@@ -42,7 +43,7 @@
 (straight-use-package 'org-plus-contrib)
 
 (straight-use-package 'org-mru-clock)
-(straight-use-package '(org-bullets :type git :host github :repo "deftsp/org-bullets"))
+(straight-use-package '(org-bullets :type git :host github :repo "deftsp/org-bullets" :branch "shihpin"))
 (straight-use-package 'org-clock-convenience)
 (straight-use-package 'org-download)
 (straight-use-package 'org-fancy-priorities)
@@ -93,6 +94,10 @@
 (straight-use-package 'evil-vimish-fold)
 (straight-use-package 'evil-visual-mark-mode)
 (straight-use-package 'evil-visualstar)
+
+;; (straight-use-package 'undo-tree)
+(straight-use-package 'undo-fu)
+
 
 (straight-use-package 'swiper)
 (straight-use-package 'ivy-hydra)
@@ -307,7 +312,6 @@
 (straight-use-package 'typit)
 (straight-use-package 'company-flx)
 (straight-use-package 'ibuffer-vc)
-(straight-use-package 'undo-tree)
 (straight-use-package 'company-fuzzy)
 (straight-use-package 'icomplete+)
 (straight-use-package 'outline-magic)
@@ -422,8 +426,7 @@
 (straight-use-package 'linkd)
 (straight-use-package 'pyenv-mode)
 (straight-use-package 'zoutline)
-(straight-use-package
- '(dired-sidebar :type git :host github :repo "deftsp/dired-sidebar"))
+(straight-use-package '(dired-sidebar :type git :host github :repo "deftsp/dired-sidebar" :branch "shihpin"))
 (straight-use-package 'lispy)
 (straight-use-package 'pylookup)
 (straight-use-package 'diredfl)
