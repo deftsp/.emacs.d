@@ -27,6 +27,7 @@
 ;; minibuffer-local-must-match-map
 ;; minibuffer-local-isearch-map
 
+
 ;; `C-M-x' on a defface expression reinitializes the face according to the
 ;; defface specification.
 
@@ -383,6 +384,7 @@ kill internal buffers too."
         evil-move-beyond-eol t
         evil-want-integration t
         evil-want-keybinding nil ;; evil-collection instead
+        evil-undo-system 'undo-fu
         evil-want-visual-char-semi-exclusive t
         evil-want-C-i-jump t
         evil-cross-lines t
@@ -396,6 +398,10 @@ kill internal buffers too."
     (tl/evil-init))
   :config
   (progn
+    ;; FIXME: `evil-set-undo-system' will not called if set before evil load. set it directly
+    (evil-set-undo-system 'undo-fu)
+    (set-default 'evil-undo-system 'undo-fu)
+
     ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
     (define-key evil-insert-state-map [remap evil-complete-previous] 'hippie-expand)
     (use-package evil-evilified-state)
