@@ -209,7 +209,7 @@
       "module " module-name " where\n\n")))
 
 
-(add-to-list 'auto-insert-alist '("\\.hs\\'" . tl/haskell-module-skeleton))
+;; (add-to-list 'auto-insert-alist '("\\.hs\\'" . tl/haskell-module-skeleton))
 
 ;;; Pair Insertion
 

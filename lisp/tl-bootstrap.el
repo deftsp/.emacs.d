@@ -33,7 +33,7 @@
 (require '50android)
 (require '50asm-mode)
 (require '50auto-fill)
-(require '50auto-insert)
+;; (require '50auto-insert)
 ;; (require '50bbdb)
 (require '50calendar)
 
