@@ -276,6 +276,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 
 ;;; amx
 (use-package amx
+  :defer t
   :init
   (setq amx-backend 'ivy)
   :config
@@ -286,6 +287,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 (global-set-key (kbd "M-x") 'counsel-M-x)
 
 (use-package deadgrep
+  :commands (deadgrep)
   :init
   (with-eval-after-load "evil-evilified-state"
     (evilified-state-evilify deadgrep-mode deadgrep-mode-map
@@ -313,6 +315,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 
 ;; https://github.com/dajva/rg.el
 (use-package rg
+  :defer t
   :commands (rg-menu)
   :bind (("M-s g" . tl/rg-vc-or-dir)
          ("M-s r" . tl/rg-ref-in-dir)
