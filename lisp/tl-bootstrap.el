@@ -12,7 +12,8 @@
 (require '01env)
 (require '02base)
 (require '03frame)
-(require '12el-get)
+;; (require '12el-get)
+(require '12straight)
 
 (require '02utils)
 (require '05cc-mode)

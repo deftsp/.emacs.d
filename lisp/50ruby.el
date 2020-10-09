@@ -18,12 +18,12 @@
       ;; (push '("Rakefile$" flymake-ruby-init) flymake-allowed-file-name-masks)
       ;; (push '("^\\(.*\\):\\([0-9]+\\): \\(.*\\)$" 1 2 nil 3) flymake-err-line-patterns)
       ;; (add-hook 'ruby-mode-hook 'tl/flymake-ruby-enable)
-      (rinari-minor-mode +1)
+      ;; (rinari-minor-mode +1)
       (define-key ruby-mode-map "\C-c\C-z" 'tl/ruby-switch-to-inf-dwim))
     (add-hook 'ruby-mode-hook 'tl/ruby-mode-init))
   :config
   (progn
-    (use-package rinari )
+    ;; (use-package rinari)
     (use-package ruby-electric)
     (use-package rspec-mode)
     (use-package rsense)

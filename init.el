@@ -18,16 +18,16 @@
 (setq load-prefer-newer t)
 
 ;;; package
-(setq package-archives
-      '(("marmalade" . "https://marmalade-repo.org/packages/")
-        ("gnu" . "https://elpa.gnu.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")
-        ("elpy" . "https://jorgenschaefer.github.io/packages/")
-        ("org" . "http://orgmode.org/elpa/")))
+;; (setq package-archives
+;;       '(("marmalade" . "https://marmalade-repo.org/packages/")
+;;         ("gnu" . "https://elpa.gnu.org/packages/")
+;;         ("melpa" . "https://melpa.org/packages/")
+;;         ("elpy" . "https://jorgenschaefer.github.io/packages/")
+;;         ("org" . "http://orgmode.org/elpa/")))
 
-(setq package-check-signature nil)
+;; (setq package-check-signature nil)
 
-(package-initialize)
+;; (package-initialize)
 
 (when (featurep 'xemacs)
   (error "This .emacs file (probably) does not work with XEmacs."))
@@ -80,9 +80,9 @@
 
 ;;; temporary fix bug
 ;; when el-get initialize ace-window, it'll compain can not find ace-jump-mode
-(let ((p (expand-file-name"~/.emacs.d/el-get/ace-jump-mode")))
-  (when (file-exists-p p)
-    (add-to-list 'load-path p)))
+;; (let ((p (expand-file-name"~/.emacs.d/el-get/ace-jump-mode")))
+;;   (when (file-exists-p p)
+;;     (add-to-list 'load-path p)))
 
 (require 'tl-bootstrap)
 ;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))

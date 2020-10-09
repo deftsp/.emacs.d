@@ -113,3 +113,5 @@ emacs-libvterm/
 typit-dict/
 type-break
 store/
+straight/
+org-roam.db

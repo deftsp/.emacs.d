@@ -9,7 +9,8 @@
 (require 'general)
 (require 'hydra)
 
-(use-package use-package-chords)
+(use-package use-package-chords
+  :config (key-chord-mode +1))
 
 ;;; [[https://superuser.com/questions/669701/emacs-disable-some-minibuffer-messages][Emacs - Disable Some Minibuffer Messages]]
 (defun tl/suppress-messages (old-fun &rest args)
