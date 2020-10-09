@@ -22,8 +22,6 @@
          ;; (rust-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :config
-  (use-package lsp-clients)
-
   (use-package lsp-rust
     :init
     (setq lsp-rust-server 'rust-analyzer
