@@ -40,6 +40,7 @@
     (setq  projectile-indexing-method 'alien
            projectile-generic-command "find . -type f")
     (setq projectile-sort-order 'recentf
+          projectile-mode-line-prefix " Proj"
           projectile-cache-file (concat tl-cache-directory
                                         "projectile.cache")
           projectile-known-projects-file (concat tl-cache-directory
