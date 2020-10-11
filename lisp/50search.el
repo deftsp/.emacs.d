@@ -1,12 +1,5 @@
 ;;; 50search.el ---
 
-;; enable the use of vertical scrolling during incremental, but I bind C-v M-v
-;; to other command.
-(setq isearch-allow-scroll t)
-
-;; ignore case searches
-(setq-default case-fold-search t)
-
 ;;; tips
 ;; C-s ...
 ;;     C-w / Backspace:  appends / delete the next character or word at point to the search string.
@@ -16,57 +9,64 @@
 ;;; Start `query-replace' with string to replace from last search string.
 ;; C-s SOMETHING M-% SOMEOTHERS
 
-
 ;;; M-x rgrep or grep-find
 ;; location resulte with `C-x `M-g n' `M-g p' `M-g'  `C-c C-c'.
+(use-package isearch
+  :defer t
+  :bind (("<f7>" . 'tl/isearch-forward-current-symbol-keep-offset)
+         ("<f8>" . 'tl/isearch-backward-current-symbol-keep-offset))
+  :init
+  ;; enable the use of vertical scrolling during incremental, but I bind C-v M-v
+  ;; to other command.
+  (setq isearch-allow-scroll t)
 
-;;; search at point
-;; Many times you'll want to search for the word or expression at the point.
-;; Here is a feature stolen from vi:
-(global-set-key (kbd "<f7>")  'tl/isearch-forward-current-symbol-keep-offset)
-(global-set-key (kbd "<f8>") 'tl/isearch-backward-current-symbol-keep-offset)
+  ;; ignore case searches
+  (setq-default case-fold-search t)
 
-(defun tl/isearch-forward-current-symbol-keep-offset ()
-  (interactive)
-  (let* ((curword (thing-at-point 'symbol))
-         (opoint (point))
-         (offset (- (end-of-thing 'symbol) opoint))
-         (re-curword (if (and (equal (substring curword 0 1) "*") (equal (substring curword -1) "*"))
-                         (replace-regexp-in-string "\\*" "\\\\*" curword)
-                       (setq offset (1+ offset))
-                       (concat "[^*]" curword "[^*]")))
-         (case-fold-search))
-    (if (re-search-forward re-curword nil t)
-        (progn (backward-char offset)
-               (message "Searching `%s' done." curword))
-      (progn
-        (goto-char (point-min))
-        (if (re-search-forward re-curword nil t)
-            (progn (message "Searching `%s' from top. `%s' done" curword (what-line))
-                   (backward-char offset))
-          (goto-char opoint)
-          (message "Searching from top: Not found"))))))
+  ;; search at point
+  ;; Many times you'll want to search for the word or expression at the point.
+  ;; Here is a feature stolen from vi:
+  (defun tl/isearch-forward-current-symbol-keep-offset ()
+    (interactive)
+    (let* ((curword (thing-at-point 'symbol))
+           (opoint (point))
+           (offset (- (end-of-thing 'symbol) opoint))
+           (re-curword (if (and (equal (substring curword 0 1) "*") (equal (substring curword -1) "*"))
+                           (replace-regexp-in-string "\\*" "\\\\*" curword)
+                         (setq offset (1+ offset))
+                         (concat "[^*]" curword "[^*]")))
+           (case-fold-search))
+      (if (re-search-forward re-curword nil t)
+          (progn (backward-char offset)
+                 (message "Searching `%s' done." curword))
+        (progn
+          (goto-char (point-min))
+          (if (re-search-forward re-curword nil t)
+              (progn (message "Searching `%s' from top. `%s' done" curword (what-line))
+                     (backward-char offset))
+            (goto-char opoint)
+            (message "Searching from top: Not found"))))))
 
-(defun tl/isearch-backward-current-symbol-keep-offset ()
-  (interactive)
-  (let* ((curword (thing-at-point 'symbol))
-         (opoint (point))
-         (offset (- opoint (beginning-of-thing 'symbol)))
-         (re-curword (if (and (equal (substring curword 0 1) "*") (equal (substring curword -1) "*"))
-                         (replace-regexp-in-string "\\*" "\\\\*" curword)
-                       (setq offset (1+ offset))
-                       (concat "[^*]" curword "[^*]")))
-         (case-fold-search))
-    (if (re-search-backward re-curword nil t)
-        (progn (forward-char offset)
-               (message "Searching `%s' done." curword))
-      (progn
-        (goto-char (point-max))
-        (if (re-search-backward re-curword nil t)
-            (progn (message "Searching from bottom done.`%s'" (what-line))
-                   (forward-char offset))
-          (goto-char opoint)
-          (message "Searching from bottom: Not found"))))))
+  (defun tl/isearch-backward-current-symbol-keep-offset ()
+    (interactive)
+    (let* ((curword (thing-at-point 'symbol))
+           (opoint (point))
+           (offset (- opoint (beginning-of-thing 'symbol)))
+           (re-curword (if (and (equal (substring curword 0 1) "*") (equal (substring curword -1) "*"))
+                           (replace-regexp-in-string "\\*" "\\\\*" curword)
+                         (setq offset (1+ offset))
+                         (concat "[^*]" curword "[^*]")))
+           (case-fold-search))
+      (if (re-search-backward re-curword nil t)
+          (progn (forward-char offset)
+                 (message "Searching `%s' done." curword))
+        (progn
+          (goto-char (point-max))
+          (if (re-search-backward re-curword nil t)
+              (progn (message "Searching from bottom done.`%s'" (what-line))
+                     (forward-char offset))
+            (goto-char opoint)
+            (message "Searching from bottom: Not found")))))))
 
 ;;; Moving around
 ;; Use the largest monitor you can afford and try to maximize the number of lines of code your system can display. The
@@ -181,38 +181,29 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 
 ;;; anzu -- a minor mode which displays current match and total matches information in the mode-line in various search mode.
 (use-package anzu
-  :defer 5
+  :after isearch
+  :bind (("M-%" . anzu-query-replace-regexp) ; anzu-query-replace
+         ("C-M-%" . anzu-query-replace-regexp))
   :init
-  (progn
-    (setq anzu-search-threshold 1000)
-    (setq anzu-cons-mode-line-p nil)
-    (global-set-key (kbd "M-%") 'anzu-query-replace)
-    (global-set-key (kbd "C-M-%") 'anzu-query-replace-regexp))
+  (setq anzu-search-threshold 1000)
+  (setq anzu-cons-mode-line-p nil)
   :config
-  (progn
-    (defun tl/anzu-update-mode-line (here total)
-      "Custom update function which does not propertize the status."
-      (when anzu--state
-        (let ((status (cl-case anzu--state
-                        (search (format "(%s/%d%s)"
-                                        (anzu--format-here-position here total)
-                                        total (if anzu--overflow-p "+" "")))
-                        (replace-query (format "(%d replace)" total))
-                        (replace (format "(%d/%d)" here total)))))
-          status)))
-    (setq anzu-mode-line-update-function 'tl/anzu-update-mode-line)
-    (global-anzu-mode +1)
+  (defun tl/anzu-update-mode-line (here total)
+    "Custom update function which does not propertize the status."
+    (when anzu--state
+      (let ((status (cl-case anzu--state
+                      (search (format "(%s/%d%s)"
+                                      (anzu--format-here-position here total)
+                                      total (if anzu--overflow-p "+" "")))
+                      (replace-query (format "(%d replace)" total))
+                      (replace (format "(%d/%d)" here total)))))
+        status)))
+  (setq anzu-mode-line-update-function 'tl/anzu-update-mode-line))
 
-    (with-eval-after-load "evil"
-      (use-package evil-anzu))))
-
-
-;;; The Silver Searcher (ag)
-;; http://thetrafficstat.net/
-;; run `wgrep-change-to-wgrep-mode' and edit the *ag* buffer. Press C-x C-s when you're done to make the changes to
-;; buffers.
-(setq ag-highlight-search t)
-(setq ag-reuse-window 't)
+(use-package evil-anzu
+  :after (evil anzu)
+  :config
+  (global-anzu-mode +1))
 
 ;;; wgrep https://github.com/mhayashi1120/Emacs-wgrep
 (setq wgrep-auto-save-buffer t) ; save buffer automatically when `wgrep-finish-edit'
@@ -266,7 +257,8 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 
 ;; ace-pinyin
 (use-package ace-pinyin
-  :defer 5
+  :defer t
+  :after (avy)
   :init
   (progn
     (setq ace-pinyin-simplified-chinese-only-p t)
@@ -287,6 +279,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 (global-set-key (kbd "M-x") 'counsel-M-x)
 
 (use-package deadgrep
+  :defer t
   :commands (deadgrep)
   :init
   (with-eval-after-load "evil-evilified-state"
@@ -317,14 +310,14 @@ Argument REPLACE String used to replace the matched strings in the buffer.
 (use-package rg
   :defer t
   :commands (rg-menu)
-  :bind (("M-s g" . tl/rg-vc-or-dir)
+  :bind (("C-c s" . rg-menu)
+         ("M-s g" . tl/rg-vc-or-dir)
          ("M-s r" . tl/rg-ref-in-dir)
          :map rg-mode-map
          ("s" . tl/rg-save-search-as-name))
   :init
   (setq rg-hide-command t
         rg-show-columns nil)
-  (global-set-key (kbd "C-c s") #'rg-menu)
   :config
   (with-eval-after-load "evil-evilified-state"
     (evilified-state-evilify rg-mode rg-mode-map

@@ -192,3 +192,11 @@ If `help-window-select' is non-nil, also select the help window."
 ;; (defadvice save-buffers-kill-emacs (around no-query-kill-emacs activate)
 ;;   "Prevent annoying \"Active processes exist\" query when you quit Emacs."
 ;;   (cl-flet ((process-list () nil)) ad-do-it))
+
+
+;; The Silver Searcher (ag)
+;; http://thetrafficstat.net/
+;; run `wgrep-change-to-wgrep-mode' and edit the *ag* buffer. Press C-x C-s when you're done to make the changes to
+;; buffers.
+(setq ag-highlight-search t)
+(setq ag-reuse-window 't)
