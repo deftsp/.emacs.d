@@ -38,27 +38,6 @@
 (straight-use-package 'f)
 (straight-use-package 'ht)
 
-
-(straight-use-package 'org)
-(straight-use-package 'org-plus-contrib)
-
-(straight-use-package 'org-mru-clock)
-(straight-use-package '(org-bullets :type git :host github :repo "deftsp/org-bullets" :branch "shihpin"))
-(straight-use-package 'org-clock-convenience)
-(straight-use-package 'org-download)
-(straight-use-package 'org-fancy-priorities)
-(straight-use-package 'org-journal)
-(straight-use-package 'org-link-beautify)
-(straight-use-package '(org-link-minor-mode :type git :host github :repo "seanohalpin/org-link-minor-mode"))
-(straight-use-package '(org-protocol-capture-html :type git :host github :repo "alphapapa/org-protocol-capture-html"))
-(straight-use-package 'org-ql)
-(straight-use-package 'org-roam)
-(straight-use-package 'org-roam-server)
-(straight-use-package '(org-spacer :type git :host github :repo "dustinlacewell/org-spacer.el"))
-(straight-use-package 'org-super-agenda)
-(straight-use-package 'org-trello)
-(straight-use-package 'ob-http)
-
 (straight-use-package 'evil)
 (straight-use-package 'evil-org)
 (straight-use-package 'evil-anzu)
@@ -97,6 +76,28 @@
 
 ;; (straight-use-package 'undo-tree)
 (straight-use-package 'undo-fu)
+
+
+(straight-use-package 'org)
+(straight-use-package 'org-plus-contrib)
+
+(straight-use-package 'org-mru-clock)
+(straight-use-package '(org-bullets :type git :host github :repo "deftsp/org-bullets" :branch "shihpin"))
+(straight-use-package 'org-clock-convenience)
+(straight-use-package 'org-download)
+(straight-use-package 'org-fancy-priorities)
+(straight-use-package 'org-journal)
+(straight-use-package 'org-link-beautify)
+(straight-use-package '(org-link-minor-mode :type git :host github :repo "seanohalpin/org-link-minor-mode"))
+(straight-use-package '(org-protocol-capture-html :type git :host github :repo "alphapapa/org-protocol-capture-html"))
+(straight-use-package 'org-ql)
+(straight-use-package 'org-roam)
+(straight-use-package 'org-roam-server)
+(straight-use-package '(org-spacer :type git :host github :repo "dustinlacewell/org-spacer.el"))
+(straight-use-package 'org-super-agenda)
+(straight-use-package 'org-trello)
+(straight-use-package 'ob-http)
+
 
 
 (straight-use-package 'swiper)
@@ -262,7 +263,7 @@
 (straight-use-package 'growl)
 ;; (straight-use-package 'om)
 (straight-use-package 'sql-indent)
-(straight-use-package 'boxquote)
+(straight-use-package '(boxquote :type git :host github :repo "davep/boxquote.el" :branch "main"))
 (straight-use-package 'hamlet-mode)
 (straight-use-package 'org-brain)
 (straight-use-package 'sqlformat)
