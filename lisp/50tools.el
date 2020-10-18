@@ -106,9 +106,11 @@ space and marks next symbol."
 ;; Unicad is short for Universal Charset Auto Detector. It is an Emacs-Lisp port of Mozilla Universal Charset Detector.
 ;; Unicad helps Emacs to guess the correct coding system when opening a file. It's designed to work automatically and
 ;; quietly without user interaction.
+;; https://github.com/ukari/unicad/tree/master
 (use-package unicad
+  :diminish
   :config
-  (unicad-enable))
+  (unicad-mode +1))
 
 ;;; ascii table
 (autoload 'ascii-table-show "ascii-table-show" "Create a buffer and print the ascii table" t)
