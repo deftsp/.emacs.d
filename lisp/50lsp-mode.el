@@ -7,9 +7,17 @@
 (use-package lsp-mode
   :commands lsp
   :init
-  (setq lsp-enable-symbol-highlighting nil
+  (setq lsp-log-io nil
+        lsp-enable-folding nil
+        lsp-diagnostics-provider :flycheck  ; :none, no real time syntax check
+        lsp-enable-symbol-highlighting nil ; turn off for better performance
         lsp-modeline-diagnostics-enable nil
-        lsp-enable-snippet nil
+        lsp-enable-snippet nil          ; use yasnippet instead
+        ;; use `company-ctags' only.
+        ;; N.B. `company-lsp' is automatically enabled if installed
+        ;; lsp-enable-completion-at-point nil
+        lsp-restart 'auto-restart
+        lsp-enable-links nil            ; use ffip instead
         lsp-headerline-breadcrumb-enable t
         lsp-modeline-code-actions-enable nil
         lsp-completion-show-kind nil
