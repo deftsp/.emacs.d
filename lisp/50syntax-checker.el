@@ -34,12 +34,13 @@
       "ev" 'flycheck-verify-setup
       "ex" 'flycheck-explain-error-at-point))
   :config
-  (evilified-state-evilify-map flycheck-error-list-mode-map
-    :mode flycheck-error-list-mode
-    :bindings
-    "RET" 'flycheck-error-list-goto-error
-    "j" 'flycheck-error-list-next-error
-    "k" 'flycheck-error-list-previous-error))
+  (with-eval-after-load "evil-evilified-state"
+    (evilified-state-evilify-map flycheck-error-list-mode-map
+      :mode flycheck-error-list-mode
+      :bindings
+      "RET" 'flycheck-error-list-goto-error
+      "j" 'flycheck-error-list-next-error
+      "k" 'flycheck-error-list-previous-error)))
 
 ;; toggle flycheck window
 (defun tl/toggle-flycheck-error-list ()
