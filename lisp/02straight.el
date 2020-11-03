@@ -1,4 +1,4 @@
-;;; 12straight.el ---                                -*- lexical-binding: t; -*-
+;;; 02straight.el ---                                -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2020  Shihpin Tseng
 
@@ -440,4 +440,4 @@
 
 
 
-(provide '12straight)
+(provide '02straight)

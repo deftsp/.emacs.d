@@ -1,4 +1,4 @@
-;;; core-funcs.el --- Spacemacs Core File
+;;; 05core-funcs.el --- Spacemacs Core File
 ;;
 ;; Copyright (c) 2012-2017 Sylvain Benner & Contributors
 ;;
@@ -387,4 +387,4 @@ set."
   (funcall tl--gne-line-func
            (buffer-substring (point-at-bol) (point-at-eol))))
 
-(provide 'core-funcs)
+(provide '05core-funcs)

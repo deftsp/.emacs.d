@@ -1,4 +1,4 @@
-;;; 52evil-mode.el ---                               -*- lexical-binding: t; -*-
+;;; 05evil-mode.el ---                               -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2013  Shihpin Tseng
 
@@ -1183,5 +1183,5 @@ if COUNT is negative. "
   (add-hook 'edebug-mode-hook 'tl/evil-state-cycle))
 
 
-(provide '52evil-mode)
-;;; 50evil-mode.el ends here
+(provide '05evil-mode)
+;;; 05evil-mode.el ends here

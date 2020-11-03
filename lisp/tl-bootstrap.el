@@ -11,14 +11,14 @@
 (require 'tl-store)
 (require '01env)
 (require '02base)
-(require '03frame)
-;; (require '12el-get)
-(require '12straight)
-
+(require '02straight)
 (require '02utils)
+(require '03frame)
+(require '05core-funcs)
+(require '05core-keybindings)
+(require '05evil-mode)
+
 (require '05cc-mode)
-(require 'core-keybindings)
-(require 'core-funcs)
 (require '11cedet)
 (require '13org-mode)
 (require '13org-brain)
@@ -125,7 +125,6 @@
 (require '50pdf)
 
 ;; (require '52emms)
-(require '52evil-mode)
 
 (require '60session)
 ;; (require '62winring)

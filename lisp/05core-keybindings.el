@@ -1,4 +1,4 @@
-;;; core-keybindings.el
+;;; 05core-keybindings.el
 ;;
 ;; Copyright (c) 2012-2017 Sylvain Benner & Contributors
 ;;
@@ -174,4 +174,4 @@ they are in `tl/set-leader-keys'."
         (setq key (pop bindings) def (pop bindings))))))
 (put 'tl/set-leader-keys-for-minor-mode 'lisp-indent-function 'defun)
 
-(provide 'core-keybindings)
+(provide '05core-keybindings)
