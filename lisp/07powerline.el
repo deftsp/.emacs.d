@@ -1,4 +1,4 @@
-;;; 23powerline.el ---                               -*- lexical-binding: t; -*-
+;;; 07powerline.el ---                               -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2014  Shihpin Tseng
 
@@ -400,12 +400,6 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
 (defpowerline powerline-git-state-mark
   powerline-git-state-mark)
 
-(defun tl/setup-powerline-evil-theme ()
-  "Setup the powerline evil mode-line."
-  (interactive)
-  (setq-default mode-line-format '("%e" (:eval (tl/powerline-evil-theme)))))
-
-
 (defun tl/powerline-evil-theme ()
   "Setup the default mode-line."
   (interactive)
@@ -511,6 +505,18 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
             (powerline-fill face2 (powerline-width rhs))
             (powerline-render rhs))))
 
+;; `mode-line-format' is a a buffer-local variable. That is too say, after set
+;; it with `set-default', only new created buffer will get the new value. Some
+;; package such as evil or workgroups2 will update `mode-line-format' like this:
+;; `(set-default 'mode-line-format (-insert-at (1+ pos) format mode-line-format))'.
+;; The buffer local variable `mode-line-format' which have not update to newest
+;; will issue bug.
+;; So, set it as early as possible
+(defun tl/setup-powerline-evil-theme ()
+  "Setup the powerline evil mode-line."
+  (interactive)
+  (setq-default mode-line-format '("%e" (:eval (tl/powerline-evil-theme)))))
+
 (use-package powerline-themes
   :config
   (tl/setup-powerline-evil-theme))
@@ -530,5 +536,5 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
 (global-set-key (kbd "<f5>") 'tl/force-update-mode-line)
 
 
-(provide '23powerline)
-;;; 23powerline.el ends here
+(provide '07powerline)
+;;; 07powerline.el ends here

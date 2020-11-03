@@ -1,4 +1,4 @@
-;;; 05cc-mode.el ---
+;;; 11cc-mode.el ---
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
 
 ;; FIXME: if not use build in cc-mode, `TAB' will be bound to `c-indent-command', not `c-indent-line-or-region'
@@ -161,4 +161,4 @@
 ;;          (lambda () (require 'ccls) (lsp))))
 
 
-(provide '05cc-mode)
+(provide '11cc-mode)

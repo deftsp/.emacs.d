@@ -176,30 +176,24 @@
 
 ;;; workgroups2
 (use-package workgroups2
-  :defer t
+  :chords ((".w" . wg-prefixed-map))
+  :bind (:map wg-prefixed-map
+         ("s" . wg-save-session))
   :init
-  (progn
-    (setq wg-session-load-on-start (not (daemonp))  ; set to nil, if you emacs started as daemon
-          wg-session-file (expand-file-name "~/.emacs.d/workgroups2")
-          ;; wg-prefix-key (kbd "C-c w")
-          wg-prefix-key (kbd "s-w")
-          wg-emacs-exit-save-behavior nil
-          wg-workgroups-mode-exit-save-behavior 'save)
+  ;; use '(wg-workgroup-name (wg-current-workgroup))' to get workgroup name
+  (setq wg-mode-line-display-on (not (featurep 'powerline))
+        wg-modeline-string "")
+  (setq wg-flag-modified t)               ; Display modified flags as well
+  (setq wg-mode-line-decor-left-brace "#" ; "♯"
+        wg-mode-line-decor-right-brace ""
+        wg-mode-line-decor-divider ":")
 
-    ;; workgroup mode-line
-    ;; use '(wg-workgroup-name (wg-current-workgroup))' to get workgroup name
-    (setq wg-mode-line-display-on (not (featurep 'powerline))
-          wg-modeline-string "")
-    (setq wg-flag-modified t)                 ; Display modified flags as well
-    (setq wg-mode-line-decor-left-brace "#" ; "♯"
-          wg-mode-line-decor-right-brace ""
-          wg-mode-line-decor-divider ":"))
-  :config
-  (progn
-    (define-key wg-prefixed-map (kbd "s") 'wg-save-session)
-    (with-eval-after-load 'key-chord
-      (key-chord-define-global ".w" wg-prefixed-map))))
-
+  (setq wg-session-load-on-start (not (daemonp)) ; set to nil, if you emacs started as daemon
+        wg-session-file (expand-file-name "~/.emacs.d/workgroups2")
+        ;; wg-prefix-key (kbd "C-c w")
+        wg-prefix-key (kbd "s-w")
+        wg-emacs-exit-save-behavior nil
+        wg-workgroups-mode-exit-save-behavior 'save))
 
 (defun tl/turn-on-workgroups-mode ()
   (interactive)

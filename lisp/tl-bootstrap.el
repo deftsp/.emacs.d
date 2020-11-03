@@ -16,15 +16,15 @@
 (require '03frame)
 (require '05core-funcs)
 (require '05core-keybindings)
-(require '05evil-mode)
+(require '07powerline)
+(require '09evil-mode)
 
-(require '05cc-mode)
+(require '11cc-mode)
 (require '11cedet)
 (require '13org-mode)
 (require '13org-brain)
 (require '13org-roam)
 
-(require '23powerline)
 (require '40company-mode)
 (when (eq system-type 'gnu/linux)
   (require '42ecb.el))
