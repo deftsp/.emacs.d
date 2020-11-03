@@ -79,6 +79,7 @@
 
 
 (straight-use-package 'org)
+;; (straight-use-package 'org-contrib) ; since 9.5
 (straight-use-package 'org-plus-contrib)
 
 (straight-use-package 'org-mru-clock)
