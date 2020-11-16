@@ -416,6 +416,7 @@ If the universal prefix argument is used then kill the buffer too."
 (use-package ace-window
   :demand t  ; don'it defer
   :bind (("M-o" . ace-window))
+  :commands (ace-window)
   :init
   (progn
     (setq aw-minibuffer-flag t
