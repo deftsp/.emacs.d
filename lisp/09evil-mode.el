@@ -359,7 +359,6 @@ kill internal buffers too."
           (haskell-error-mode        . emacs)
           (haskell-interactive-mode  . insert)
           (helpful-mode              . motion)
-          (Info-mode                 . evilified)
           (message-mode              . emacs)
           (nrepl-mode                . insert)
           (prodigy-mode              . evilified)
@@ -440,7 +439,7 @@ kill internal buffers too."
 (use-package evil-collection
   :after evil
   :init
-  (setq evil-collection-mode-list '(magit-todos vterm (pdf pdf-view)))
+  (setq evil-collection-mode-list '(info magit-todos vterm (pdf pdf-view)))
   :config
   (evil-collection-init))
 

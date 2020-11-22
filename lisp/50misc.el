@@ -909,51 +909,38 @@ Current position is preserved."
 (use-package info
   :defer t
   :config
+  ;; make sure info dir in `Info-directory-list' add to `Info-directory-list'
+  (mapc (lambda (p) (add-to-list 'Info-directory-list p t)) Info-default-directory-list)
+  (add-to-list 'Info-additional-directory-list "~/share/info")
+  (general-define-key
+   :states 'normal
+   :keymaps 'Info-mode-map
+   "n"          'Info-next
+   "p"          'Info-prev
+   "N"          'Info-prev
+
+   "D"          'Info-directory
+   "u"          'Info-up
+   "L"          'Info-history
+   "l"          'Info-history-back
+
+   "d"          'Info-scroll-up
+   "e"          'Info-scroll-down
+   "f"          'Info-history-forward
+
+   "m"          'Info-menu
+
+   "/"          'Info-search
+   "gh"         'Info-help
+   "gn"         'Info-goto-node))
+
+(use-package info+
+  :after (info)
+  :init
   (progn
-    ;; make sure info dir in `Info-directory-list' add to `Info-directory-list'
-    (mapc (lambda (p) (add-to-list 'Info-directory-list p t)) Info-default-directory-list)
-    (add-to-list 'Info-additional-directory-list "~/share/info")
-
-    (with-eval-after-load 'evil-evilified-state
-      (evilified-state-evilify Info-mode Info-mode-map
-        (kbd "<tab>") 'Info-next-reference
-        (kbd "S-<tab>") 'Info-prev-reference
-        "0"          'evil-digit-argument-or-evil-beginning-of-line
-        "D"          'Info-directory
-        "u"          'Info-up
-        "L"          'Info-history
-        "l"          'Info-history-back
-
-        "d"          'Info-scroll-up
-        "e"          'Info-scroll-down
-        (kbd "C-i")  'Info-history-forward
-        (kbd "C-o")  'Info-history-back
-        "f"          'Info-history-forward
-        "b"          'Info-history-back
-
-        "gd"         'Info-goto-node
-        "gm"         'Info-menu
-        "m"          'Info-menu
-        "gt"         'Info-top-node
-        "gT"         'Info-toc
-        "gf"         'Info-follow-reference
-
-        "gj"         'Info-next
-        "gk"         'Info-prev
-
-        "F"          'Info-follow-reference
-        "/"          'Info-search
-        "gh"         'Info-help
-        "gn"         'Info-goto-node
-        "n"          'Info-next
-        "p"          'Info-prev
-        "N"          'Info-prev))
-    (use-package info+
-      :init
-      (progn
-        (setq Info-breadcrumbs-in-header-flag t
-              Info-fontify-angle-bracketed-flag nil
-              Info-breadcrumbs-in-mode-line-mode nil)))))
+    (setq Info-breadcrumbs-in-header-flag t
+          Info-fontify-angle-bracketed-flag nil
+          Info-breadcrumbs-in-mode-line-mode nil)))
 
 ;; (defun find-subdirs-containing (dir pattern)
 ;;   "Return a list of all deep subdirectories of DIR that contain
