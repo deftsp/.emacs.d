@@ -1739,10 +1739,10 @@ buffer which do not already have one. When `arg' nil only adds ids if the
 (setq org-export-html-style-default "")
 (setq org-publish-timestamp-directory "~/.org-timestamps/")
 
-(use-package org-contacts
-  :after org
-  :config
-  (setq org-contacts-files '("~/org/agenda/Contacts.org")))
+;; (use-package org-contacts
+;;   :after org
+;;   :config
+;;   (setq org-contacts-files '("~/org/agenda/Contacts.org")))
 
 ;; https://github.com/tumashu/ox-latex-chinese
 (use-package ox-latex
