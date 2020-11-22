@@ -115,3 +115,5 @@ type-break
 store/
 straight/
 org-roam.db
+org-roam.db-shm
+org-roam.db-wal
