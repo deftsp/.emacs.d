@@ -1228,7 +1228,9 @@ inputting math (Unicode) symbols." t))
   :commands (anki-editor-push-notes
              anki-editor-retry-failure-notes
              anki-editor-insert-note
-             anki-editor-cloze-region))
+             anki-editor-cloze-region)
+  :config
+  (setq anki-editor-create-decks t))
 
 
 (use-package typit
