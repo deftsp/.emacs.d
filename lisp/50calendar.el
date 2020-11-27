@@ -55,7 +55,7 @@
       calendar-time-display-form
       '(24-hours ":" minutes (if time-zone " (") time-zone (if time-zone ")")))
 
-;;当你创建了一个'~/diary'文件，你就可以使用calendar去查看里面的内容。你可以查看当天的事件，相关命令如下 ：
+;;当你创建了一个'~/diary'文件，你就可以使用 calendar 去查看里面的内容。你可以查看当天的事件，相关命令如下 ：
 ;;  d     显示被选中的日期的所有事件
 ;;  s     显示所有事件，包括过期的，未到期的等等
 
@@ -188,6 +188,7 @@
          (cons mark (format entry diff (diary-ordinal-suffix diff))))))
 
 (use-package calendar
+  :defer t
   :config
   (use-package cal-china)
   (with-eval-after-load "evil-evilified-state"
@@ -200,7 +201,7 @@
 
 ;; Calendar 模式支持各种方式来更改当前日期
 ;;（这里的"前"是指还没有到来的那一天，"后"是指已经过去的日子）
-;;  q      退出calendar模式
+;;  q      退出 calendar 模式
 ;; C-f     让当前日期向前一天
 ;; C-b     让当前日期向后一天
 ;; C-n     让当前日期向前一周
@@ -216,24 +217,24 @@
 ;; M-<     移动到当前年的第一天
 ;; M->     移动到当前年的最后一天
 
-;;Calendar模式支持移动多种移动到特珠日期的方式
+;;Calendar 模式支持移动多种移动到特珠日期的方式
 ;; g d     移动到一个特别的日期
 ;;  o      使某个特殊的月分作为中间的月分
 ;;  .      移动到当天的日期
 ;; p d     显示某一天在一年中的位置，也显示本年度还有多少天。
-;; C-c C-l 刷新Calendar窗口
+;; C-c C-l 刷新 Calendar 窗口
 
-;; Calendar支持生成LATEX代码。
+;; Calendar 支持生成 LATEX 代码。
 ;; t m     按月生成日历
 ;; t M     按月生成一个美化的日历
 ;; t d     按当天日期生成一个当天日历
 ;; t w 1   在一页上生成这个周的日历
 ;; t w 2   在两页上生成这个周的日历
-;; t w 3   生成一个ISO-SYTLE风格的当前周日历
+;; t w 3   生成一个 ISO-SYTLE 风格的当前周日历
 ;; t w 4   生成一个从周一开始的当前周日历
 ;; t y     生成当前年的日历
 
-;;EMACS Calendar支持配置节日：
+;;EMACS Calendar 支持配置节日：
 ;; h       显示当前的节日
 ;; x       定义当天为某个节日
 ;; u       取消当天已被定义的节日
@@ -242,7 +243,7 @@
 
 
 ;; 另外，还有一些特殊的，有意思的命令：
-;; S       显示当天的日出日落时间(是大写的S)
+;; S       显示当天的日出日落时间(是大写的 S)
 ;; p C     显示农历可以使用
 ;; g C     使用农历移动日期可以使用
 

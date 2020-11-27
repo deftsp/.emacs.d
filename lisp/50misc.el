@@ -151,7 +151,10 @@
 (setq global-auto-revert-non-file-buffers t)
 
 ;;; mailcap
-(setq mailcap-parse-mailcaps "~/.mailcap" t)
+(use-package mailcap
+  :defer 7
+  :config
+  (mailcap-parse-mailcaps "~/.mailcap" t))
 
 ;;; syntax table
 ;; (modify-syntax-entry ?_ "w")            ; now '_' is not considered a word-delimiter
