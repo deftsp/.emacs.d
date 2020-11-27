@@ -5,9 +5,9 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-(require 'tabkey2)
-(setq tabkey2-message-style 'echo-area
-      tabkey2-alternate-key nil)
+;; (require 'tabkey2)
+;; (setq tabkey2-message-style 'echo-area
+;;       tabkey2-alternate-key nil)
 ;; (tabkey2-mode t)
 
 ;; --------------------------------------------------------------------------------

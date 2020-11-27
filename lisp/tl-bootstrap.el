@@ -109,7 +109,6 @@
 (require '50spellcheck)
 (require '50buffer)
 (require '50smartparens)
-(require '50tab-completion)
 (require '50tempo)
 (require '50tex)
 (require '50tools)
