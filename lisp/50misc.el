@@ -151,10 +151,7 @@
 (setq global-auto-revert-non-file-buffers t)
 
 ;;; mailcap
-(use-package mailcap
-  :defer 7
-  :config
-  (mailcap-parse-mailcaps "~/.mailcap" t))
+(setq mailcap-parse-mailcaps "~/.mailcap" t)
 
 ;;; syntax table
 ;; (modify-syntax-entry ?_ "w")            ; now '_' is not considered a word-delimiter
@@ -1055,7 +1052,7 @@ Current position is preserved."
   (global-set-key "\M-\C-y" 'kill-ring-search))
 
 (use-package undo-tree
-  :defer 3
+  :defer t
   :init
   (progn
     (setq-default undo-tree-visualizer-timestamps t)
