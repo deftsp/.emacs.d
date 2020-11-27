@@ -65,13 +65,15 @@
   (add-hook 'vterm-mode-hook 'tl/vterm-mode-init))
 
 (use-package multi-vterm
-  :config
+  :defer t
+  :init
   (with-eval-after-load 'evil
 	(evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
 	(evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
     (evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)))
 
 (use-package vterm-toggle
+  :defer t
   :commands (vterm-toggle vterm-toggle-cd))
 
 (provide '50shell)
