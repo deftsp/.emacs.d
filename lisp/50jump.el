@@ -20,6 +20,7 @@
     (define-key global-map (kbd "M-g o") 'dumb-jump-go-prefer-external-other-window)))
 
 (use-package smart-jump
+  :commands (smart-jump-go smart-jump-back smart-jump-references smart-jump-peek)
   :config
   (setq smart-jump-default-mode-list
         '(lisp-mode
