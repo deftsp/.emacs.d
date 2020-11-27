@@ -219,7 +219,10 @@
 (straight-use-package 'asciidoc)
 (straight-use-package 'embrace)
 (straight-use-package '(git-undo-el :type git :host github :repo "jwiegley/git-undo-el"))
+(straight-use-package '(vterm :post-build ((let ((vterm-always-compile-module t)) (require 'vterm)))))
 (straight-use-package 'multi-vterm)
+(straight-use-package 'vterm-toggle)
+
 (straight-use-package 'shell-pop)
 (straight-use-package 'auto-complete)
 (straight-use-package 'epc)
@@ -350,7 +353,6 @@
 (straight-use-package 'counsel-etags)
 (straight-use-package 'io-mode)
 (straight-use-package 'parsec)
-(straight-use-package 'vterm-toggle)
 (straight-use-package 'counsel-gtags)
 (straight-use-package '(irfc :type git :host github :repo "yskkin/irfc"))
 (straight-use-package '(irfc-x :type git :host github :repo "kai2nenobu/irfc-x"))

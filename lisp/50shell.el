@@ -56,23 +56,22 @@
         ;; Prevent premature horizontal scrolling
         hscroll-margin 0))
 
-(when (file-exists-p "~/.emacs.d/emacs-libvterm")
-  (use-package vterm
-    :load-path  "~/.emacs.d/emacs-libvterm"
-    :init
-	;; (setq vterm-keymap-exceptions nil)
-    (setq vterm-kill-buffer-on-exit t)
-    :config
-    (add-hook 'vterm-mode-hook 'tl/vterm-mode-init))
+(use-package vterm
+  :commands (vterm vterm-other-window)
+  :init
+  ;; (setq vterm-keymap-exceptions nil)
+  (setq vterm-kill-buffer-on-exit t)
+  :config
+  (add-hook 'vterm-mode-hook 'tl/vterm-mode-init))
 
-  (use-package multi-vterm
-	:config
-    (with-eval-after-load 'evil
-	  (evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
-	  (evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
-      (evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)))
+(use-package multi-vterm
+  :config
+  (with-eval-after-load 'evil
+	(evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
+	(evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
+    (evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)))
 
-  (use-package vterm-toggle
-    :commands (vterm-toggle vterm-toggle-cd)))
+(use-package vterm-toggle
+  :commands (vterm-toggle vterm-toggle-cd))
 
 (provide '50shell)
