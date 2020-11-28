@@ -934,13 +934,6 @@ Current position is preserved."
    "gh"         'Info-help
    "gn"         'Info-goto-node))
 
-(use-package info+
-  :after (info)
-  :init
-  (progn
-    (setq Info-breadcrumbs-in-header-flag t
-          Info-fontify-angle-bracketed-flag nil)))
-
 ;; (defun find-subdirs-containing (dir pattern)
 ;;   "Return a list of all deep subdirectories of DIR that contain
 ;; files that match PATTERN."

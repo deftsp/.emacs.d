@@ -8,20 +8,21 @@
 ;; <http://www.gnu.org/software/emacs/manual/html_node/Kill-Buffer.html>
 (require 'midnight)
 
-;; By default, `clean-buffer-list' will kill buffers that haven't been visited in 3 days, or in the last
-;; hour in the case of special buffer that are specified by `clean-buffer-list-kill-buffer-names'
-(setq clean-buffer-list-delay-general 2)
-;; special buffers are cleaned every 6 hours
-(setq clean-buffer-list-delay-special (* 6 3600))
-
-(setq midnight-period (* 3 60 60))      ; occur every 3 hours default 86400 (24 hours)
-;; note period timer will occuer, even the time when set the timer (boot the emacs) is after
-;; "09:30am". see more..  run-at-time.
-;; (midnight-delay-set 'midnight-delay "09:30am")
-;; set midnight-delay after 3 hours
-(midnight-delay-set 'midnight-delay (tl/future-time-string (* 3 60 60)))
-
-
+(use-package midnight
+  :defer 3
+  :init
+  ;; By default, `clean-buffer-list' will kill buffers that haven't been visited in 3 days, or in the last
+  ;; hour in the case of special buffer that are specified by `clean-buffer-list-kill-buffer-names'
+  (setq clean-buffer-list-delay-general 2)
+  ;; special buffers are cleaned every 6 hours
+  (setq clean-buffer-list-delay-special (* 6 3600))
+  (setq midnight-period (* 3 60 60))      ; occur every 3 hours default 86400 (24 hours)
+  :config
+  ;; note period timer will occuer, even the time when set the timer (boot the emacs) is after
+  ;; "09:30am". see more..  run-at-time.
+  ;; (midnight-delay-set 'midnight-delay "09:30am")
+  ;; set midnight-delay after 3 hours
+  (midnight-delay-set 'midnight-delay (tl/future-time-string (* 3 60 60))))
 
 ;; As of 2009-10-02, DeskTop mode does not preserve the value of 'buffer-display-time' for buffers,
 ;; so the buffer's "age" is effectively restarted. This means that buffers restored by a Desktop

@@ -6,6 +6,7 @@
 
 ;; ffap -- find file at point
 (use-package ffap
+  :defer 3
   :init
   ;; C-u C-x C-f finds the file at point via the ffap package), relative filenames work also
   (setq ffap-require-prefix t)

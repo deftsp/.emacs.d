@@ -344,7 +344,6 @@
 (straight-use-package 'pamparam)
 (straight-use-package 'visual-regexp)
 (straight-use-package 'company-quickhelp)
-(straight-use-package 'info+)
 (straight-use-package 'pandoc-mode)
 (straight-use-package 'vkill)
 (straight-use-package 'company-tabnine)

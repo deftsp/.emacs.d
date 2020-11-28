@@ -9,10 +9,10 @@
 (require 'general)
 (require 'hydra)
 
-(use-package benchmark-init
-  :config
-  ;; To disable collection of benchmark data after init is done.
-  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+;; (use-package benchmark-init
+;;   :config
+;;   ;; To disable collection of benchmark data after init is done.
+;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
 ;;; FIXME: can not work with key-chord
 ;; $socat -u UNIX-RECV:./that-file-you-named-earlier STDOUT

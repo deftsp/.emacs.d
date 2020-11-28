@@ -200,3 +200,11 @@ If `help-window-select' is non-nil, also select the help window."
 ;; buffers.
 (setq ag-highlight-search t)
 (setq ag-reuse-window 't)
+
+
+(use-package info+
+  :after (info)
+  :init
+  (progn
+    (setq Info-breadcrumbs-in-header-flag t
+          Info-fontify-angle-bracketed-flag nil)))

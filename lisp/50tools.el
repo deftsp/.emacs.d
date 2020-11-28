@@ -911,6 +911,7 @@ such character is found, following options are shown:
 ;; L >= 6 : helm-swoop or swiper
 ;; https://github.com/tam17aki/ace-isearch
 (use-package ace-isearch
+  :defer 3
   :diminish ace-isearch-mode
   :init
   (progn
