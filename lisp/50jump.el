@@ -21,6 +21,13 @@
 
 (use-package smart-jump
   :commands (smart-jump-go smart-jump-back smart-jump-references smart-jump-peek)
+  :init
+  (general-define-key
+   :states '(normal)
+   "M-." 'smart-jump-go
+   "M-," 'smart-jump-back
+   "M-?" 'smart-jump-references
+   "M-P" ' smart-jump-peek)
   :config
   (setq smart-jump-default-mode-list
         '(lisp-mode
