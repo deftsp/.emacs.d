@@ -1282,4 +1282,10 @@ inputting math (Unicode) symbols." t))
   :config
   (explain-pause-mode +1))
 
+(use-package esup
+  :defer t
+  :commands (esup)
+  :init
+  (setq esup-depth 1))
+
 (provide '50tools)
