@@ -551,6 +551,7 @@ If the universal prefix argument is used then kill the buffer too."
 (defvar dottl-switch-to-buffer-prefers-purpose nil)
 (use-package window-purpose
   ;; :diminish window-purpose
+  :defer 3
   :init
   (progn
     (tl/set-leader-keys

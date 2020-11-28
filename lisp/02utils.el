@@ -30,7 +30,7 @@
   ;; FIXME: the value of `esup-child-max-depth' will be set to `esup-depth'. However, it will cause
   ;; "error=(void-variable diff-minor-mode-map)". And set esup-child-max-depth directly to work around it
   (setq esup-child-max-depth 2)
-  (setq esup-depth 2))
+  (setq esup-depth 1))
 
 (use-package use-package-chords
   :config (key-chord-mode +1))

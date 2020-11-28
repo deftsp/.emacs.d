@@ -939,8 +939,7 @@ Current position is preserved."
   :init
   (progn
     (setq Info-breadcrumbs-in-header-flag t
-          Info-fontify-angle-bracketed-flag nil
-          Info-breadcrumbs-in-mode-line-mode nil)))
+          Info-fontify-angle-bracketed-flag nil)))
 
 ;; (defun find-subdirs-containing (dir pattern)
 ;;   "Return a list of all deep subdirectories of DIR that contain
