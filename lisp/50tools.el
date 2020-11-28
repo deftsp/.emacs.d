@@ -1272,20 +1272,4 @@ inputting math (Unicode) symbols." t))
 (use-package marionette
   :defer t
   :commands (marionette-with-page marionette-request))
-
-;;; FIXME: can not work with key-chord
-;; $socat -u UNIX-RECV:./that-file-you-named-earlier STDOUT
-(use-package explain-pause-mode
-  :commands (explain-pause-top)
-  :init
-  ;; (explain-pause-log-to-socket "./some-socket-file-you-know-where-it-is")
-  :config
-  (explain-pause-mode +1))
-
-(use-package esup
-  :defer t
-  :commands (esup)
-  :init
-  (setq esup-depth 1))
-
 (provide '50tools)

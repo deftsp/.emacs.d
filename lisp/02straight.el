@@ -167,6 +167,7 @@
 ;; (straight-use-package 'ropemacs)
 ;; (straight-use-package 'ropemode)
 (straight-use-package 'ample-regexps)
+(straight-use-package 'benchmark-init)
 (straight-use-package 'fvwm-mode)
 (straight-use-package 'magit-popup)
 (straight-use-package 'amx)

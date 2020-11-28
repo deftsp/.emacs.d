@@ -9,6 +9,29 @@
 (require 'general)
 (require 'hydra)
 
+(use-package benchmark-init
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
+;;; FIXME: can not work with key-chord
+;; $socat -u UNIX-RECV:./that-file-you-named-earlier STDOUT
+(use-package explain-pause-mode
+  :commands (explain-pause-top)
+  :init
+  ;; (explain-pause-log-to-socket "./some-socket-file-you-know-where-it-is")
+  :config
+  (explain-pause-mode +1))
+
+(use-package esup
+  :defer t
+  :commands (esup)
+  :init
+  ;; FIXME: the value of `esup-child-max-depth' will be set to `esup-depth'. However, it will cause
+  ;; "error=(void-variable diff-minor-mode-map)". And set esup-child-max-depth directly to work around it
+  (setq esup-child-max-depth 2)
+  (setq esup-depth 2))
+
 (use-package use-package-chords
   :config (key-chord-mode +1))
 
