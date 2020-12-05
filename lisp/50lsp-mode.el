@@ -16,6 +16,7 @@
         ;; use `company-ctags' only.
         ;; N.B. `company-lsp' is automatically enabled if installed
         ;; lsp-enable-completion-at-point nil
+        lsp-file-watch-threshold 5000
         lsp-restart 'auto-restart
         lsp-enable-links nil            ; use ffip instead
         lsp-headerline-breadcrumb-enable t
@@ -30,6 +31,10 @@
          ;; (rust-mode . lsp)
          (lsp-mode . lsp-enable-which-key-integration))
   :config
+  ;; don't scan 3rd party javascript libraries
+  ;; (push "[/\\\\][^/\\\\]*\\.\\(json\\|html\\|jade\\)$" lsp-file-watch-ignored) ; json
+  (push "[/\\\\]pgdata" lsp-file-watch-ignored)
+
   (use-package lsp-rust
     :init
     (setq lsp-rust-server 'rust-analyzer
