@@ -405,9 +405,13 @@
 
    ;; ivy
    '(ivy-action ((t (:foreground "PaleGoldenrod"))))
-   '(ivy-virtual ((t (:foreground "#536393"))))
+   '(ivy-virtual ((t (:foreground "#437789"))))
    '(ivy-grep-info ((t (:foreground "#337799"))))
    `(ivy-current-match ((t (:foreground "#dddddd" :background ,magenta :weight bold))))
+   `(ivy-minibuffer-match-face-1 ((t (:foreground "#93e0e3" :background "#333343"))))
+   `(ivy-minibuffer-match-face-2 ((t (:foreground "#f0dfaf"))))
+   `(ivy-minibuffer-match-face-3 ((t (:foreground "#94bff3"))))
+   `(ivy-minibuffer-match-face-4 ((t (:foreground "#dca3a3"))))
 
    ;; counsel
    '(counsel-outline-default ((t (:foreground "#648fc3"))))
