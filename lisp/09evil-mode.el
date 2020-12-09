@@ -336,7 +336,6 @@ kill internal buffers too."
           (helm-grep-mode            . emacs)
           (ibuffer-mode              . evilified)
           (bookmark-bmenu-mode       . evilified)
-          (calendar-mode             . evilified)
           (dired-mode                . evilified)
           (dired-sidebar-mode        . evilified)
           (easy-hugo-mode            . emacs)
@@ -439,7 +438,7 @@ kill internal buffers too."
 (use-package evil-collection
   :after evil
   :init
-  (setq evil-collection-mode-list '(info magit-todos vterm (pdf pdf-view)))
+  (setq evil-collection-mode-list '(calendar info magit-todos vterm (pdf pdf-view)))
   :config
   (evil-collection-init))
 

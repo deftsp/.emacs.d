@@ -69,8 +69,6 @@
 (require '50hideshow)
 ;; (require '50input-method)
 (require '50markdown-mode)
-(require '50prescient)
-(require '51ivy)
 (require '50javascript)
 (require '50jump)
 (require '50key-chord)
@@ -123,6 +121,8 @@
 (require '50window)
 (require '50xcode)
 (require '50pdf)
+(require '51ivy)
+(require '52prescient)
 
 ;; (require '52emms)
 
