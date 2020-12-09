@@ -69,6 +69,7 @@
 (require '50hideshow)
 ;; (require '50input-method)
 (require '50markdown-mode)
+(require '50prescient)
 (require '51ivy)
 (require '50javascript)
 (require '50jump)

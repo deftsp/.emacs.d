@@ -187,17 +187,8 @@
          (= dd cd)
          (cons mark (format entry diff (diary-ordinal-suffix diff))))))
 
-(use-package calendar
-  :defer t
-  :config
-  (use-package cal-china)
-  (with-eval-after-load "evil-evilified-state"
-    (evilified-state-evilify calendar-mode calendar-mode-map
-      (kbd "j")   'calendar-forward-week
-      (kbd "k")   'calendar-backward-week
-      (kbd "h")   'calendar-backward-day
-      (kbd "j")   'calendar-forward-week
-      (kbd "J")   'org-journal-read-entry)))
+(use-package cal-china
+  :after (calendar))
 
 ;; Calendar 模式支持各种方式来更改当前日期
 ;;（这里的"前"是指还没有到来的那一天，"后"是指已经过去的日子）

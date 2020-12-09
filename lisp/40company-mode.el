@@ -93,6 +93,7 @@
 
 
 ;; TODO: when enable company-fuzzy, nothing pop out. Maybe be conflict with company-tabnine
+;; https://github.com/jcs-elpa/company-fuzzy
 ;; (use-package company-fuzzy
 ;;   :after company
 ;;   :init
