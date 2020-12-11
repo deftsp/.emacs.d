@@ -831,6 +831,51 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
             (org-agenda-sorting-strategy '(user-defined-up))
             (org-agenda-prefix-format "%-11c%5(tl/org-todo-age) "))))) )
 
+;; Base on https://github.com/tumashu/emacs-helper/blob/0f69885eceab7e20fa998ff9c79e977622952346/eh-org.el#L776
+(defun tl/org-agenda-format-date-aligned (date)
+  (require 'cal-iso)
+  (let* ((dayname (calendar-day-name date))
+         (day (cadr date))
+         (day-of-week (calendar-day-of-week date))
+         (month (car date))
+         ;; (monthname (calendar-month-name month))
+         (year (nth 2 date))
+         (iso-week (org-days-to-iso-week
+                    (calendar-absolute-from-gregorian date)))
+         ;; (weekyear (cond ((and (= month 1) (>= iso-week 52))
+         ;;                  (1- year))
+         ;;                 ((and (= month 12) (<= iso-week 1))
+         ;;                  (1+ year))
+         ;;                 (t year)))
+         (cn-date (calendar-chinese-from-absolute
+                   (calendar-absolute-from-gregorian date)))
+         ;; (cn-year (cadr cn-date))
+         (cn-month (cl-caddr cn-date))
+         (cn-day (cl-cadddr cn-date))
+         ;; (cn-month-name
+         ;;  ["正月" "二月" "三月" "四月" "五月" "六月"
+         ;;   "七月" "八月" "九月" "十月" "冬月" "腊月"])
+         (cn-day-name
+          ["初一" "初二" "初三" "初四" "初五" "初六" "初七" "初八" "初九" "初十"
+           "十一" "十二" "十三" "十四" "十五" "十六" "十七" "十八" "十九" "二十"
+           "廿一" "廿二" "廿三" "廿四" "廿五" "廿六" "廿七" "廿八" "廿九" "三十"
+           "卅一" "卅二" "卅三" "卅四" "卅五" "卅六" "卅七" "卅八" "卅九" "卅十"])
+         (extra (format "(%s%s%s)"
+                        ;; (if (or (eq org-agenda-current-span 'day)
+                        ;;         (= day-of-week 1)
+                        ;;         (= cn-day 1))
+                        ;;     (aref cn-month-name (1-  (floor cn-month)))
+                        ;;   "")
+                        (if (or (= day-of-week 1)
+                                (= cn-day 1))
+                            (if (integerp cn-month) "" "[闰]")
+                          "")
+                        (aref cn-day-name (1- cn-day))
+                        (if (= day-of-week 1)
+                            (format "，第%02d 周" iso-week)
+                          ""))))
+    (format "%04d-%02d-%02d %-10s %s"
+            year month day dayname extra)))
 
 ;; https://www.reddit.com/r/orgmode/comments/6ybjjw/aligned_agenda_view_anyway_to_make_this_more/
 (use-package org-agenda
@@ -844,7 +889,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           org-agenda-inhibit-startup t
           ;; org-agenda-use-tag-inheritance nil ; set this on a per-command in org-agenda-custom-commands
           org-agenda-show-all-dates t
-          org-agenda-span 'day ; 'week
+          org-agenda-span 'day          ; 'week
           org-agenda-start-with-log-mode nil
           org-agenda-start-with-clockreport-mode nil
           org-agenda-view-columns-initially nil
@@ -870,6 +915,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           org-agenda-show-future-repeats 'next
           org-agenda-prefer-last-repeat nil)
 
+    (setq org-agenda-format-date 'tl/org-agenda-format-date-aligned)
+
     (setq org-agenda-time-grid '((daily today) ; remove-match
                                  (700 800 1000 1200 1400 1600 1800 2000)
                                  "......"
@@ -883,9 +930,9 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
             ;; (agenda . " %i %-12:c%-12t% s") ; agenda
             (agenda  . "  %-13:c%?-12t% s")
 		    ;; (timeline . "%-9:T%?-2t% s")   ; timeline
-            (todo . " %i %-13:c")           ; todo, alltodo
-            (tags . " %i %-13:c")           ; tags, tags-todo, stuck
-            (search . " %i %-13:c")))       ; search
+            (todo . " %i %-13:c")       ; todo, alltodo
+            (tags . " %i %-13:c")       ; tags, tags-todo, stuck
+            (search . " %i %-13:c")))   ; search
 
     ;; (setq org-agenda-category-icon-alist
     ;;       '(("Visitors" "~/.emacs.d/icons/org/visitors.png" nil nil :ascent center)
@@ -946,7 +993,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
           (org-capture nil "a"))))
 
     ;; evilify agenda mode
-    (org-defkey org-agenda-mode-map "|" nil) ;'org-agenda-filter-remove-all
+    (org-defkey org-agenda-mode-map "|" nil)  ;'org-agenda-filter-remove-all
     (org-defkey org-agenda-mode-map "\\" nil) ;'org-agenda-query-not-cmd
     (org-defkey org-agenda-mode-map (kbd "C-n") nil)
     (org-defkey org-agenda-mode-map (kbd "G") nil) ;'org-agenda-toggle-time-grid
@@ -1011,7 +1058,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
         ;; <HJKL> change todo items and priorities.
         ;; M-<jk> drag lines.
         ;; M-<hl> cannot demote/promote, we use it for "do-date".
-        "J" 'org-agenda-priority-down ; default bind to 'org-agenda-clock-goto
+        "J" 'org-agenda-priority-down   ; default bind to 'org-agenda-clock-goto
         "K" 'org-agenda-priority-up
         "H" 'org-agenda-do-date-earlier
         "L" 'org-agenda-do-date-later
@@ -1034,14 +1081,14 @@ If VANILLA is non-nil, run the standard `org-capture'."
         "i" 'org-agenda-diary-entry
         "a" 'org-agenda-add-note
         "A" 'org-agenda-append-agenda
-        "C" 'tl/org-agenda-capture ; default to 'org-agenda-convert-date
+        "C" 'tl/org-agenda-capture      ; default to 'org-agenda-convert-date
 
         ;; mark
         "m" 'org-agenda-bulk-toggle
         "~" 'org-agenda-bulk-toggle-all ; default bind to 'org-agenda-limit-interactively
         "*" 'org-agenda-bulk-mark-all
         "%" 'org-agenda-bulk-mark-regexp
-        "M" 'org-agenda-bulk-unmark-all  ; default bind to 'org-agenda-phases-of-moon
+        "M" 'org-agenda-bulk-unmark-all ; default bind to 'org-agenda-phases-of-moon
         "x" 'org-agenda-bulk-action
 
         ;; refresh
@@ -1080,14 +1127,14 @@ If VANILLA is non-nil, run the standard `org-capture'."
         "F" 'org-agenda-filter-remove-all
 
         ;; clock
-        "I" 'org-agenda-clock-in ; Original binding
-        "O" 'org-agenda-clock-out ; Original binding
+        "I" 'org-agenda-clock-in        ; Original binding
+        "O" 'org-agenda-clock-out       ; Original binding
         "cg" 'org-agenda-clock-goto
         "cc" 'org-agenda-clock-cancel
         "cr" 'org-agenda-clockreport-mode
 
         ;; go and show
-        "." 'org-agenda-goto-today ; TODO: What about evil-repeat?
+        "." 'org-agenda-goto-today      ; TODO: What about evil-repeat?
         "gc" 'org-agenda-goto-calendar
         "gC" 'org-agenda-convert-date
         "gd" 'org-agenda-goto-date

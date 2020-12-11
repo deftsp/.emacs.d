@@ -81,6 +81,11 @@
       calendar-week-start-day 1 ; a week in the calendar begins from Monday
       calendar-remove-frame-by-deleting t)
 
+;; (setq calendar-day-name-array ["周日" "周一" "周二" "周三" "周四" "周五" "周六"])
+
+;; (setq calendar-month-name-array ["一月" "二月" "三月" "四月" "五月" "六月"
+;;                                  "七月" "八月" "九月" "十月" "十一月" "十二月"])
+
 ;; Longshizhen latitude +29.2 longitude +105.1
 (setq calendar-location-name "Chengdu"
       ;; 设置所在地的经纬度和地名，calendar 可以根据这些信息告知你每天的日出和日落的时间, 日月食的预
