@@ -381,6 +381,7 @@
 
       ;; Subtree editing
       "sa" 'org-archive-subtree
+      "sA" 'tl/org-archive-completed-in-buffer
       "sb" 'org-tree-to-indirect-buffer
       "sh" 'org-promote-subtree
       "sj" 'org-move-subtree-down
