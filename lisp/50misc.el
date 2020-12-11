@@ -464,6 +464,37 @@ vi style of % jumping to matching brace."
 ;; Use cperl-mode instead of perl-mode
 ;; (defalias 'perl-mode 'cperl-mode)
 
+(use-package so-long
+  :defer 5
+  :config
+  (global-so-long-mode +1)
+  (setq so-long-threshold 400)      ; reduce false positives w/ larger threshold
+  ;; Don't disable syntax highlighting and line numbers, or make the buffer
+  ;; read-only, in `so-long-minor-mode', so we can have a basic editing
+  ;; experience in them, at least. It will remain off in `so-long-mode',
+  ;; however, because long files have a far bigger impact on Emacs performance.
+  ;; ...and insist that save-place not operate in large/long files
+  (add-to-list 'so-long-variable-overrides '(save-place-alist . nil))
+  ;; Text files could possibly be too long too
+  (add-to-list 'so-long-target-modes 'text-mode)
+  ;; But disable everything else that may be unnecessary/expensive for large
+  ;; or wide buffers.
+  (setq so-long-minor-modes
+        (append so-long-minor-modes
+                '(flycheck-mode
+                  flyspell-mode
+                  spell-fu-mode
+                  eldoc-mode
+                  smartparens-mode
+                  highlight-numbers-mode
+                  better-jumper-local-mode
+                  ws-butler-mode
+                  auto-composition-mode
+                  undo-tree-mode
+                  highlight-indent-guides-mode
+                  hl-fill-column-mode)))
+  (global-so-long-mode +1))
+
 ;;; whitespace mode
 ;; If you don't like having lines of code/text with whitespace at the ends, Emacs highlight the offending whitespace.
 ;; When set, the variable's value becomes buffer local, so set it to true in the mode-hooks for your preferred modes.
@@ -477,13 +508,13 @@ vi style of % jumping to matching brace."
   :init
   (progn
     (setq whitespace-style (quote (face spaces lines-tail tabs trailing newline space-mark tab-mark newline-mark)))
-    (setq whitespace-line-column nil) ; use `fill-column' variable value
+    (setq whitespace-line-column nil)   ; use `fill-column' variable value
     (setq whitespace-display-mappings
           ;; all numbers are unicode codepoint in decimal. e.g. (insert-char 182 1)
-          '((space-mark 32 [183] [46])     ; 32   SPACE「 」, 183 MIDDLE DOT「·」, 46 FULL STOP「.」
-            (space-mark 160 [164] [95])    ; 160  NO-BREAK SPACE「 」, 164 MIDDLE DOT「¤」, 95 FULL STOP「_」
-            (newline-mark 10 [182 10])     ; 10   LINE FEED, 182 PILCROW SIGN「¶」
-            (tab-mark 9 [9655 9] [92 9])   ; 9 TAB, 9655 WHITE RIGHT-POINTING TRIANGLE「▷」
+          '((space-mark 32 [183] [46]) ; 32   SPACE「 」, 183 MIDDLE DOT「·」, 46 FULL STOP「.」
+            (space-mark 160 [164] [95]) ; 160  NO-BREAK SPACE「 」, 164 MIDDLE DOT「¤」, 95 FULL STOP「_」
+            (newline-mark 10 [182 10])  ; 10   LINE FEED, 182 PILCROW SIGN「¶」
+            (tab-mark 9 [9655 9] [92 9]) ; 9 TAB, 9655 WHITE RIGHT-POINTING TRIANGLE「▷」
             ))))
 
 ;; auto delete trailing whitespace
