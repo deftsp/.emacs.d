@@ -3,79 +3,77 @@
 ;; https://github.com/justbur/emacs-which-key
 (use-package which-key
   :init
-  (progn
-    (setq which-key-special-keys nil
-          which-key-use-C-h-for-paging t
-          which-key-prevent-C-h-from-cycling t
-          which-key-popup-type 'minibuffer
-          which-key-max-description-length 32
-          which-key-echo-keystrokes 0.02
-          which-key-idle-delay 0.8
-          which-key-sort-order #'which-key-prefix-then-key-order
-          which-key-allow-evil-operators t
-          which-key-show-operator-state-maps nil))
+  (setq which-key-special-keys nil
+        which-key-use-C-h-for-paging t
+        which-key-prevent-C-h-from-cycling t
+        which-key-popup-type 'minibuffer
+        which-key-max-description-length 32
+        which-key-echo-keystrokes 0.02
+        which-key-idle-delay 0.8
+        which-key-sort-order #'which-key-prefix-then-key-order
+        which-key-allow-evil-operators t
+        which-key-show-operator-state-maps nil)
   :config
-  (progn
-    (add-to-list 'which-key-replacement-alist '(("TAB" . nil) . ("↹" . nil)))
-    (add-to-list 'which-key-replacement-alist '(("RET" . nil) . ("⏎" . nil)))
-    (add-to-list 'which-key-replacement-alist '(("DEL" . nil) . ("⇤" . nil)))
-    (add-to-list 'which-key-replacement-alist '(("SPC" . nil) . ("␣" . nil)))
+  (add-to-list 'which-key-replacement-alist '(("TAB" . nil) . ("↹" . nil)))
+  (add-to-list 'which-key-replacement-alist '(("RET" . nil) . ("⏎" . nil)))
+  (add-to-list 'which-key-replacement-alist '(("DEL" . nil) . ("⇤" . nil)))
+  (add-to-list 'which-key-replacement-alist '(("SPC" . nil) . ("␣" . nil)))
 
-    ;; And remove the modifier key(s) before the last nr in the sequence
-    (push '(("\\(.*\\)C-0 .. C-5" . "digit-argument") .
-            ("\\1C-0..5" . "digit-argument"))
-          which-key-replacement-alist)
+  ;; And remove the modifier key(s) before the last nr in the sequence
+  (push '(("\\(.*\\)C-0 .. C-5" . "digit-argument") .
+          ("\\1C-0..5" . "digit-argument"))
+        which-key-replacement-alist)
 
-    (push '(("\\(.*\\)C-7 .. C-9" . "digit-argument") .
-            ("\\1C-7..9" . "digit-argument"))
-          which-key-replacement-alist)
+  (push '(("\\(.*\\)C-7 .. C-9" . "digit-argument") .
+          ("\\1C-7..9" . "digit-argument"))
+        which-key-replacement-alist)
 
-    (push '(("\\(.*\\)C-M-0 .. C-M-9" . "digit-argument") .
-            ("\\1C-M-0..9" . "digit-argument"))
-          which-key-replacement-alist)
+  (push '(("\\(.*\\)C-M-0 .. C-M-9" . "digit-argument") .
+          ("\\1C-M-0..9" . "digit-argument"))
+        which-key-replacement-alist)
 
-    ;; Rename the entry for M-1 in the SPC h k Top-level bindings,
-    ;; and for 1 in the SPC- palorymacs root, to 1..9
-    (push '(("\\(.*\\)1" . "winum-select-window-1") .
-            ("\\11..9" . "select window 1..9"))
-          which-key-replacement-alist)
+  ;; Rename the entry for M-1 in the SPC h k Top-level bindings,
+  ;; and for 1 in the SPC- palorymacs root, to 1..9
+  (push '(("\\(.*\\)1" . "winum-select-window-1") .
+          ("\\11..9" . "select window 1..9"))
+        which-key-replacement-alist)
 
-    ;; Hide the entries for M-[2-9] in the SPC h k Top-level bindings,
-    ;; and for [2-9] in the SPC- tl root
-    (push '((nil . "winum-select-window-[2-9]") . t)
-          which-key-replacement-alist)
+  ;; Hide the entries for M-[2-9] in the SPC h k Top-level bindings,
+  ;; and for [2-9] in the SPC- tl root
+  (push '((nil . "winum-select-window-[2-9]") . t)
+        which-key-replacement-alist)
 
-    ;; SPC b- buffers
-    ;; rename the buffer-to-window-1 entry, to 1..9
-    (push '(("\\(.*\\)1" . "buffer-to-window-1") .
-            ("\\11..9" . "buffer to window 1..9"))
-          which-key-replacement-alist)
+  ;; SPC b- buffers
+  ;; rename the buffer-to-window-1 entry, to 1..9
+  (push '(("\\(.*\\)1" . "buffer-to-window-1") .
+          ("\\11..9" . "buffer to window 1..9"))
+        which-key-replacement-alist)
 
-    ;; hide the "[2-9] -> buffer-to-window-[2-9]" entries
-    (push '((nil . "buffer-to-window-[2-9]") . t)
-          which-key-replacement-alist)
+  ;; hide the "[2-9] -> buffer-to-window-[2-9]" entries
+  (push '((nil . "buffer-to-window-[2-9]") . t)
+        which-key-replacement-alist)
 
-    ;; rename the wg-switch-to-workgroup-at-index-0 entry, to 0..9
-    (push '(("\\(.*\\)0" . "wg-switch-to-workgroup-at-index-0") .
-            ("\\10..9" . "switch to workgroup 0..9"))
-          which-key-replacement-alist)
+  ;; rename the wg-switch-to-workgroup-at-index-0 entry, to 0..9
+  (push '(("\\(.*\\)0" . "wg-switch-to-workgroup-at-index-0") .
+          ("\\10..9" . "switch to workgroup 0..9"))
+        which-key-replacement-alist)
 
-    ;; hide the "[1-9] -> buffer-to-window-[2-9]" entries
-    (push '((nil . "wg-switch-to-workgroup-at-index-[1-9]") . t)
-          which-key-replacement-alist)
-
-
-    ;; hide the "[2-9] -> buffer-to-window-[2-9]" entries
-    (push '((nil . "buffer-to-window-[2-9]") . t)
-          which-key-replacement-alist)
+  ;; hide the "[1-9] -> buffer-to-window-[2-9]" entries
+  (push '((nil . "wg-switch-to-workgroup-at-index-[1-9]") . t)
+        which-key-replacement-alist)
 
 
-    ;; SPC k- lisp
-    ;; rename "1 .. 9 -> digit-argument" to "1..9 -> digit-argument"
-    (push '(("\\(.*\\)1 .. 9" . "evil-lisp-state-digit-argument") .
-            ("\\11..9" . "digit-argument"))
-          which-key-replacement-alist)
-    (which-key-mode +1)))
+  ;; hide the "[2-9] -> buffer-to-window-[2-9]" entries
+  (push '((nil . "buffer-to-window-[2-9]") . t)
+        which-key-replacement-alist)
+
+
+  ;; SPC k- lisp
+  ;; rename "1 .. 9 -> digit-argument" to "1..9 -> digit-argument"
+  (push '(("\\(.*\\)1 .. 9" . "evil-lisp-state-digit-argument") .
+          ("\\11..9" . "digit-argument"))
+        which-key-replacement-alist)
+  (which-key-mode +1))
 
 ;;; Code:
 ;; We define prefix commands only for the sake of which-key
@@ -961,8 +959,8 @@ undo-tree-_u_ndo undo-tree-_r_edo
       (goto-char mk))))
 
 (defhydra hydra-rectangle (:body-pre (rectangle-mark-mode 1)
-                                     :color pink
-                                     :post (deactivate-mark))
+                           :color pink
+                           :post (deactivate-mark))
   "
   ^_k_^     _d_elete    _s_tring
 _h_   _l_   _o_k        _y_ank
