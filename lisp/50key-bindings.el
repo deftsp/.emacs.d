@@ -816,6 +816,7 @@ _`_ evil-visual-mark-mode:             %`evil-visual-mark-mode
 _a_ abbrev-mode:                       %`abbrev-mode
 _d_ debug-on-error:                    %`debug-on-error
 _f_ auto-fill-mode:                    %`auto-fill-function
+_F_ display-fill-column-indicator      %`display-fill-column-indicator-mode
 _n_ narrow-or-widen-dwim:              %(buffer-narrowed-p)
 _g_ golden-ratio-mode:                 %`golden-ratio-mode
 _i_ aggressive-indent-mode:            %`aggressive-indent-mode
@@ -833,6 +834,7 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
     ("c" column-number-mode "colnum")
     ("d" toggle-debug-on-error "debug")
     ("f" auto-fill-mode "fill")
+    ("F" display-fill-column-indicator-mode "fci")
     ("n" tl/narrow-or-widen-dwim "")
     ("g" golden-ratio-mode "golden-ratio")
     ("hi" highlight-indent-guides-mode "hl-indent")
