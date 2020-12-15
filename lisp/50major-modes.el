@@ -1,5 +1,12 @@
 ;;; 50major-modes.el ---
 
+(defun tl//progn-mode-init ()
+  (display-fill-column-indicator-mode +1))
+
+(use-package prog-mode
+  :init
+  (add-hook 'prog-mode-hook 'tl//progn-mode-init))
+
 ;;; imenu
 (use-package imenu
   :defer t

@@ -516,6 +516,9 @@
    ;; narrow-indirect
    `(ni-mode-line-buffer-id ((t (:foreground "RosyBrown" :box nil))))
 
+   ;; display-fill-column-indicator-mode
+   `(fill-column-indicator ((t (:foreground ,base01 :weight bold))))
+
    ;; rainbow-delimiters
    '(rainbow-delimiters-unmatched-face ((t (:foreground unspecified :inherit show-paren-mismatch :strike-through t))))
 

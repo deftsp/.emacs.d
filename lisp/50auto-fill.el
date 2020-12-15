@@ -29,13 +29,16 @@
       (forward-paragraph)
       (fill-paragraph nil))))
 
-(use-package fill-column-indicator
-  :init
-  (progn
-    (setq fci-rule-width 2
-          fci-dash-pattern 0.75
-          ;; fci-rule-color "#586e75" ; set by theme
-          fci-rule-use-dashes t)))
+(setq-default display-fill-column-indicator-character ?╎) ; ┆ ┊
+
+;; instead by display-fill-column-indicator-mode which is native implementation
+;; (use-package fill-column-indicator
+;;   :init
+;;   (progn
+;;     (setq fci-rule-width 2
+;;           fci-dash-pattern 0.75
+;;           ;; fci-rule-color "#586e75" ; set by theme
+;;           fci-rule-use-dashes t)))
 
 ;; unfill paragraph
 ;; It works where a line ends with a newline character ("\n") and paragraphs are separated by blank lines. To make a

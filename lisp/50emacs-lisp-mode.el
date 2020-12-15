@@ -27,6 +27,8 @@
      ))
 
 (defun tl/emacs-lisp-mode-init ()
+  (setq fill-column 120)
+  ;; (setq emacs-lisp-docstring-fill-column 65)
   ;; (set (make-local-variable 'lisp-indent-function)
   ;;      'common-lisp-indent-function)
 
