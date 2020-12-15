@@ -2,4 +2,4 @@
 ;;; For more information see (info "(emacs) Directory Variables")
 
 ((emacs-lisp-mode
-  (fill-column . 80)))
+  (fill-column . 120)))
