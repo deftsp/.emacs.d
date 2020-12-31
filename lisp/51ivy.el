@@ -204,7 +204,7 @@
     :init
     (setq ivy-virtual-abbreviate 'full
           ivy-rich-path-style 'abbrev
-          ivy-rich-parse-remote-file-path t)
+          ivy-rich-parse-remote-file-path nil)
     :config
     (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
     (setq ivy-rich-display-transformers-list
@@ -227,15 +227,15 @@
               (ivy-rich-counsel-find-file-truename (:face font-lock-doc-face))))
             counsel-M-x
             (:columns
-             ((counsel-M-x-transformer (:width 40))
+             ((counsel-M-x-transformer (:width 0.4))
               (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
             counsel-describe-function
             (:columns
-             ((counsel-describe-function-transformer (:width 40))
+             ((counsel-describe-function-transformer (:width 0.4))
               (ivy-rich-counsel-function-docstring (:face font-lock-doc-face))))
             counsel-describe-variable
             (:columns
-             ((counsel-describe-variable-transformer (:width 40))
+             ((counsel-describe-variable-transformer (:width 0.4))
               (ivy-rich-counsel-variable-docstring (:face font-lock-doc-face))))
             counsel-recentf
             (:columns
