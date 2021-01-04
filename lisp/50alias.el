@@ -86,11 +86,9 @@
 ;; traverselisp
 (defalias 'tdr 'traverse-deep-rfind)
 
-;; el-get
-(defalias 'egi 'el-get-install)
-(defalias 'egu 'el-get-update)
-(defalias 'egr 'el-get-remove)
-(defalias 'egfr 'el-get-find-recipe-file)
+;; straight
+(defalias 'spp   'straight-pull-package)
+(defalias 'sppad 'straight-pull-package-and-deps)
 
 ;; swiper
 (defalias 'ag 'counsel-ag)

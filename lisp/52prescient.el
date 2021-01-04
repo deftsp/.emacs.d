@@ -8,7 +8,9 @@
   :defer t
   :init
   (setq prescient-history-length 200)
-  (setq prescient-filter-method '(literal regexp initialism fuzzy)))
+  (setq prescient-filter-method '(literal regexp initialism fuzzy))
+  :config
+  (prescient-persist-mode +1))
 
 ;; must load Counsel before ivy-prescient.el
 (use-package ivy-prescient
@@ -20,11 +22,6 @@
   :after company
   :config
   (company-prescient-mode +1))
-
-;; (use-package prescient-persist-mode
-;;   :after selectrum
-;;   :config
-;;   (prescient-persist-mode +1))
 
 (provide '52prescient)
 
