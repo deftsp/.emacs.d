@@ -72,6 +72,12 @@
     "gl" 'pdf-view-goto-label
     "gt" 'pdf-view-goto-page
 
+    ;; Slicing image
+    "sm" 'pdf-view-set-slice-using-mouse
+    "sb" 'pdf-view-set-slice-from-bounding-box
+    "sr" 'pdf-view-reset-slice
+
+
     "d" 'pdf-view-scroll-up-or-next-page
     "e" 'pdf-view-scroll-down-or-previous-page))
 
@@ -80,6 +86,13 @@
   (set (make-local-variable 'evil-normal-state-cursor) (list nil))
   (set (make-local-variable 'evil-evilified-state-cursor) (list nil))
   (pdf-view-midnight-minor-mode +1)
+
+  (when (fboundp 'turn-off-evil-snipe-override-mode)
+    (turn-off-evil-snipe-override-mode))
+
+  (when (fboundp 'turn-off-evil-snipe-mode)
+    (turn-off-evil-snipe-mode))
+
   (display-line-numbers-mode -1))
 
 (defun tl/pdf-outline-buffer-init ()

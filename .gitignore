@@ -117,3 +117,4 @@ straight/
 org-roam.db
 org-roam.db-shm
 org-roam.db-wal
+var/
