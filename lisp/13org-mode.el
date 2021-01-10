@@ -918,7 +918,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
     (setq org-agenda-format-date 'tl/org-agenda-format-date-aligned)
 
-    (setq org-agenda-time-grid '((daily today require-timed remove-match)
+    (setq org-agenda-time-grid '((daily today remove-match) ; require-timed
                                  (300 600 900 1200 1500 1800 2100 2400)
                                  "......"
                                  "----------------"))
@@ -2261,7 +2261,7 @@ prepended to the element after the #+HEADER: tag."
   :defer t
   :init
   (progn
-    (setq org-journal-dir (concat org-directory "/roam/")
+    (setq org-journal-dir (concat org-directory "/roam/daily/")
           org-journal-file-format "%Y-%m-%d.org"
           org-journal-date-prefix "#+TITLE: "
           org-journal-date-format "%A, %B %d %Y"
