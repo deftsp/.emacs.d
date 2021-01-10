@@ -448,7 +448,7 @@
 (straight-use-package 'pylookup)
 (straight-use-package 'diredfl)
 (straight-use-package 'lispyville)
-(straight-use-package 'pymacs)
+;; (straight-use-package 'pymacs)
 
 
 
