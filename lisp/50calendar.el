@@ -21,23 +21,54 @@
 
 ;; (add-hook 'today-visible-calendar-hook 'calendar-mark-today)
 
+;; sunrise and sunset
+;; https://github.com/AbstProcDo/Master-Emacs-From-Scratch-with-Solid-Procedures/blob/master/05.Emacs-as-Agenda-by-Org.org
+
+(defun tl/diary-sunrise ()
+  (let ((dss (diary-sunrise-sunset)))
+    (with-temp-buffer
+      (insert dss)
+      (goto-char (point-min))
+      (while (re-search-forward " ([^)]*)" nil t)
+        (replace-match "" nil nil))
+      (goto-char (point-min))
+      (search-forward ",")
+      (buffer-substring (point-min) (match-beginning 0)))))
+
+(defun tl/diary-sunset ()
+  (let ((dss (diary-sunrise-sunset))
+        start end)
+    (with-temp-buffer
+      (insert dss)
+      (goto-char (point-min))
+      (while (re-search-forward " ([^)]*)" nil t)
+        (replace-match "" nil nil))
+      (goto-char (point-min))
+      (search-forward ", ")
+      (setq start (match-end 0))
+      (search-forward " at")
+      (setq end (match-beginning 0))
+      (goto-char start)
+      (capitalize-word 1)
+      (buffer-substring start end))))
+
 ;;; Appointments
 (use-package appt
   :defer 3
   :init
   (setq appt-display-diary t
         appt-display-duration 10
-        appt-display-format 'window  ; use a separate window to remind appointments
-        appt-message-warning-time 15 ; warn 15 min in advance
+        appt-display-format 'window     ; use a separate window to remind appointments
+        appt-message-warning-time 15    ; warn 15 min in advance
         appt-display-interval 5
-        appt-audible t ; beep to indicate appointment
+        appt-audible t                  ; beep to indicate appointment
         appt-display-mode-line t)
 
   ;; designate the window function for tl/appt-send-notification
   (defun tl/appt-display (min-to-app new-time msg)
     (tl/terminal-notification
-     (format "'Appointment in %s minutes'" min-to-app)    ;; passed to -title in terminal-notifier call
-     (format "'%s'" msg)))                                ;; passed to -message in terminal-notifier call
+     (format "'Appointment in %s minutes'" min-to-app) ;; passed to -title in terminal-notifier call
+     (format "'%s'" msg)))                             ;; passed to -message in terminal-notifier call
 
   (if (eq system-type 'darwin)
       (setq appt-disp-window-function #'tl/appt-display)

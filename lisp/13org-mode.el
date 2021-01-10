@@ -909,7 +909,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
           org-agenda-start-on-weekday nil
           org-agenda-restore-windows-after-quit t
           org-agenda-repeating-timestamp-show-all nil
-          org-agenda-use-time-grid nil
+          org-agenda-use-time-grid t
           org-agenda-block-separator ?▰
           org-agenda-dim-blocked-tasks t ; 'invisible
           org-agenda-window-frame-fractions '(0.6 . 0.85) ; the min and max height of the agenda window as a fraction of frame height.
@@ -918,8 +918,8 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
     (setq org-agenda-format-date 'tl/org-agenda-format-date-aligned)
 
-    (setq org-agenda-time-grid '((daily today) ; remove-match
-                                 (700 800 1000 1200 1400 1600 1800 2000)
+    (setq org-agenda-time-grid '((daily today require-timed remove-match)
+                                 (300 600 900 1200 1500 1800 2100 2400)
                                  "......"
                                  "----------------"))
 
