@@ -202,7 +202,7 @@
    '(org-level-8 ((t (:inherit outline-8   :foreground "#f0dfaf"))))
    '(org-level-9 ((t (:inherit outline-8   :foreground "#93e0e3"))))
    '(org-date ((t (:foreground "#00bfee"))))
-   `(org-link ((t (:inherit link :foreground unspecified :underline t :weight normal))))
+   `(org-link ((t (:foreground "#93a1a1" :underline nil :weight normal))))
    '(org-habit-alert-face ((t (:foreground "#228822" :background "gold"))))
    `(org-agenda-structure ((t (:foreground "#26bbf8" :background ,base02 :weight bold))))
    '(org-scheduled ((t (:foreground "#8abeb2"))))
