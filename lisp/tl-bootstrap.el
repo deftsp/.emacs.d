@@ -22,6 +22,7 @@
 (require '11cc-mode)
 (require '11cedet)
 (require '13org-mode)
+(require '13org-agenda)
 (require '13org-brain)
 (require '13org-roam)
 
