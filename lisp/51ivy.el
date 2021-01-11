@@ -26,8 +26,9 @@
 (use-package counsel
   :diminish counsel-mode
   :commands (counsel-describe-function counsel-describe-variable)
-  :bind (("C-h f" . counsel-describe-function)
-         ("C-h v" . counsel-describe-variable))
+  :bind (("C-h f"   . counsel-describe-function)
+         ("C-h v"   . counsel-describe-variable)
+         ("C-x C-f" . counsel-find-file))
   :init
   (progn
     (setq counsel-outline-face-style 'verbatim)
