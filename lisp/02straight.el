@@ -162,7 +162,7 @@
 (straight-use-package 'docsetutil)
 (straight-use-package 'loop)
 (straight-use-package 'quick-peek)
-(straight-use-package 'ace-window)
+(straight-use-package '(ace-window :type git :host github :repo "deftsp/ace-window" :branch "shihpin"))
 (straight-use-package 'doom-modeline)
 (straight-use-package 'rainbow-delimiters)
 (straight-use-package 'ack-menu)
