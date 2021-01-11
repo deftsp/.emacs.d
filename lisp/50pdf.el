@@ -14,13 +14,11 @@
   (setq-default pdf-view-display-size 'fit-width)
   (setq pdf-annot-activate-created-annotations t)
 
-
-
+  (setq pdf-view-resize-factor 1.12)
 
   ;; Enable hiDPI support, but at the cost of memory! See politza/pdf-tools#51
   (setq pdf-view-use-scaling t
         pdf-view-use-imagemagick nil)
-
 
   (add-hook 'pdf-view-mode-hook 'tl/pdf-view-mode-init)
   (add-hook 'pdf-view-mode-hook 'tl/pdf-cleanup-windows-h)
