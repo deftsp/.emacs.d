@@ -211,7 +211,9 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
       "Vw" 'pyvenv-workon)
     ;; setup shell correctly on environment switch
     (dolist (func '(pyvenv-activate pyvenv-deactivate pyvenv-workon))
-      (advice-add func :after 'tl/python-setup-everything))))
+      (advice-add func :after 'tl/python-setup-everything)))
+  :config
+  (pyvenv-mode +1))
 
 ;; https://github.com/tsgates/pylookup
 (use-package pylookup
@@ -301,7 +303,6 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
     (anaconda-eldoc-mode +1))
 
   (smartparens-mode +1)
-  (turn-on-evil-matchit-mode)
 
   (tl//python-imenu-create-index-use-semantic-maybe)
   ;; Anaconda provides more useful information but can not do it properly when
