@@ -878,27 +878,6 @@ buffer which do not already have one. When `arg' nil only adds ids if the
                    :protocol "org-anki"
                    :function org-protocol-org-anki))))
 
-
-;; Since macOS 10.14, can not send keystroke to Firefox with system event. Use
-;; hammerspoon instead
-(defun pl/org-as-mac-firefox-get-frontmost-url ()
-  (let ((result
-	     (do-applescript
-	      (concat
-	       "set oldClipboard to the clipboard\n"
-	       "set frontmostApplication to path to frontmost application\n"
-           "do shell script \"~/bin/hs -c 'ff_url.cp_firefox_frontmost_url_to_clipboard()'\"\n"
-           "delay 0.4\n"
-	       "set links to the clipboard\n"
-	       "set the clipboard to oldClipboard\n"
-	       "activate application (frontmostApplication as text)\n"
-	       "return links as string\n"))))
-    (replace-regexp-in-string
-     "^\"\\| - Mozilla Firefox\"$\\|\"$" ""
-     (car (split-string result "[\r\n]+" t)))))
-
-(advice-add 'org-as-mac-firefox-get-frontmost-url :override 'pl/org-as-mac-firefox-get-frontmost-url)
-
 ;;; clock
 (use-package org-clock
   :defer t
