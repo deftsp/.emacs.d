@@ -1008,37 +1008,6 @@ buffer which do not already have one. When `arg' nil only adds ids if the
 ;;   :config
 ;;   (setq org-contacts-files '("~/org/agenda/Contacts.org")))
 
-;; https://github.com/tumashu/ox-latex-chinese
-(use-package ox-latex
-  :defer t
-  :init
-  (setq org-latex-pdf-process
-        '("xelatex -interaction nonstopmode -output-directory %o %f"
-          "bibtex %b"
-          "xelatex -interaction nonstopmode -output-directory %o %f"
-          "xelatex -interaction nonstopmode -output-directory %o %f"))
-  (setq org-latex-compiler "xelatex")
-  ;; fontify source code
-  (setq org-latex-listings t)     ; 'minted
-  :config
-  ;; (add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
-  ;; (add-to-list 'org-latex-packages-alist '(("AUTO" "inputenc" t)))
-
-  ;; https://github.com/tsdye/org-article
-  ;; $ cp org-article.cls ~/Library/texmf/tex/latex/
-  ;; $ kpsewhich org-article.cls
-  (add-to-list 'org-latex-classes
-               '("org-article"
-                 "\\documentclass{org-article}
-                  [NO-DEFAULT-PACKAGES]
-                  [PACKAGES]
-                  [EXTRA]"
-                 ("\\section{%s}" . "\\section*{%s}")
-                 ("\\subsection{%s}" . "\\subsection*{%s}")
-                 ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-                 ("\\paragraph{%s}" . "\\paragraph*{%s}")
-                 ("\\subparagraph{%s}" . "\\subparagraph*{%s}"))))
-
 ;;; link
 (setq org-link-abbrev-alist
       '(("google"   . "http://www.google.com/search?q=")
