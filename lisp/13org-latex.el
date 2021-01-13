@@ -23,10 +23,15 @@
   ;; fontify source code
   (setq org-latex-listings t)           ; 'minted
   :config
-  (add-to-list 'org-latex-packages-alist '("" "listings"))
-  (add-to-list 'org-latex-packages-alist '("" "color"))
+  (add-to-list 'org-Latex-packages-alist '("" "listings"))
+  ;; (add-to-list 'org-latex-packages-alist '("" "color"))
   ;; (add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
   ;; (add-to-list 'org-latex-packages-alist '(("AUTO" "inputenc" t)))
+  (add-to-list 'org-latex-packages-alist '("" "xcolor" t))
+  (add-to-list 'org-latex-packages-alist '("" "listings" t))
+  (add-to-list 'org-latex-packages-alist '("" "fontspec" t))
+  (add-to-list 'org-latex-packages-alist '("" "indentfirst" t))
+  (add-to-list 'org-latex-packages-alist '("" "xunicode" t))
 
   ;; https://github.com/tsdye/org-article
   ;; $ cp org-article.cls ~/Library/texmf/tex/latex/
