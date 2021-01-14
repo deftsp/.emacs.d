@@ -230,3 +230,183 @@ If `help-window-select' is non-nil, also select the help window."
 
 ;; (advice-add 'org-as-mac-firefox-get-frontmost-url :override 'pl/org-as-mac-firefox-get-frontmost-url)
 ;; (advice-remove 'org-as-mac-firefox-get-frontmost-url 'pl/org-as-mac-firefox-get-frontmost-url)
+
+
+
+;; Python
+(defvar python-auto-set-local-pyenv-version 'on-visit
+  "Automatically set pyenv version from \".python-version\".
+
+Possible values are `on-visit', `on-project-switch' or `nil'.")
+
+(defvar python-auto-set-local-pyvenv-virtualenv 'on-visit
+  "Automatically set pyvenv virtualenv from \".venv\".
+
+Possible values are `on-visit', `on-project-switch' or `nil'.")
+
+(defun tl/pyenv-executable-find (command)
+  "Find executable taking pyenv shims into account."
+  (if (executable-find "pyenv")
+      (progn
+        (let ((pyenv-string (shell-command-to-string (concat "pyenv which " command))))
+          (unless (string-match "not found" pyenv-string)
+            (string-trim pyenv-string))))
+    (executable-find command)))
+
+
+(defun tl//pyenv-mode-set-local-version ()
+  "Set pyenv version from \".python-version\" by looking in parent directories."
+  (interactive)
+  (let ((root-path (locate-dominating-file default-directory
+                                           ".python-version")))
+    (when root-path
+      (let* ((file-path (expand-file-name ".python-version" root-path))
+             (version
+              (with-temp-buffer
+                (insert-file-contents-literally file-path)
+                (nth 0 (split-string (buffer-substring-no-properties
+                                      (line-beginning-position)
+                                      (line-end-position)))))))
+        (if (member version (pyenv-mode-versions))
+            (pyenv-mode-set version)
+          (message "pyenv: version `%s' is not installed (set by %s)"
+                   version file-path))))))
+
+(defun tl//pyvenv-mode-set-local-virtualenv ()
+  "Set pyvenv virtualenv from \".venv\" by looking in parent directories."
+  (interactive)
+  (let ((root-path (locate-dominating-file default-directory
+                                           ".venv")))
+    (when root-path
+      (let* ((file-path (expand-file-name ".venv" root-path))
+             (virtualenv
+              (with-temp-buffer
+                (insert-file-contents-literally file-path)
+                (buffer-substring-no-properties (line-beginning-position)
+                                                (line-end-position)))))
+        (pyvenv-workon virtualenv)))))
+
+
+(use-package pyenv-mode
+  :if (executable-find "pyenv")
+  :commands (pyenv-mode-versions)
+  :init
+  (progn
+    (pcase python-auto-set-local-pyenv-version
+      (`on-visit
+       (add-hook 'python-mode-hook 'tl//pyenv-mode-set-local-version))
+      (`on-project-switch
+       (add-hook 'projectile-after-switch-project-hook
+                 'tl//pyenv-mode-set-local-version)))
+    ;; setup shell correctly on environment switch
+    (dolist (func '(pyenv-mode-set pyenv-mode-unset))
+      (advice-add func :after 'tl/python-setup-everything))
+    (tl/set-leader-keys-for-major-mode 'python-mode
+      "vu" 'pyenv-mode-unset
+      "vs" 'pyenv-mode-set))
+  :config
+  (progn
+    ;; For a venv named 'venv3.6.2' located at '~/.pyenv/versions/venv3.6.2'
+    ;; which is linked to '~/.pyenv/versions/3.6.2/envs/venv',
+    ;; `python-shell-calculate-process-environment' will set VIRTUAL_ENV to
+    ;; '~/.pyenv/versions/venv3.6.2'. But the function init_virtualenv in
+    ;; interactiveshell.py (in IPython source) don't accept the virtualenv path
+    ;; as link, and emit warning. Here we advice `pyenv-mode-full-path' to
+    ;; return the true path instead of link.
+
+    ;; See also
+    ;; https://github.com/pyenv/pyenv-virtualenv/issues/113
+    ;; https://github.com/ipython/ipython/issues/9774
+    ;; https://github.com/ipython/ipython/pull/5939
+    (defun tl//chase-virtualenv-root (p)
+      (file-truename p))
+    ;; (advice-remove 'pyenv-mode-full-path
+    ;;                #'tl//chase-virtualenv-root)
+    (advice-add 'pyenv-mode-full-path
+                :filter-return #'tl//chase-virtualenv-root)))
+
+(use-package pyvenv
+  :defer t
+  :init
+  (progn
+    (pcase python-auto-set-local-pyvenv-virtualenv
+      (`on-visit
+       (add-hook 'python-mode-hook 'tl//pyvenv-mode-set-local-virtualenv))
+      (`on-project-switch
+       (add-hook 'projectile-after-switch-project-hook
+                 'tl//pyvenv-mode-set-local-virtualenv)))
+    (tl/set-leader-keys-for-major-mode 'python-mode
+      "Va" 'pyvenv-activate
+      "Vd" 'pyvenv-deactivate
+      "Vw" 'pyvenv-workon)
+    ;; setup shell correctly on environment switch
+    (dolist (func '(pyvenv-activate pyvenv-deactivate pyvenv-workon))
+      (advice-add func :after 'tl/python-setup-everything)))
+  :config
+  (pyvenv-mode +1))
+
+
+(use-package anaconda-mode
+  :defer t
+  :diminish anaconda-mode
+  :init
+  (progn
+    (add-hook 'python-mode-hook 'anaconda-mode))
+  :config
+  (progn
+    (tl/set-leader-keys-for-major-mode 'python-mode
+      ;; use gtags
+      "gd" 'anaconda-mode-find-definitions
+      "ga" 'anaconda-mode-find-assignments
+      "gr" 'anaconda-mode-find-references
+      "gu" 'anaconda-mode-find-references
+      "gb" 'anaconda-mode-go-back
+      "g*" 'anaconda-mode-go-back
+      "hh" 'anaconda-mode-show-doc)
+
+    (defadvice anaconda-mode-goto (before python/anaconda-mode-goto activate)
+      (evil--jumps-push))))
+
+
+(defun tl//python-setup-shell (&rest args)
+  (if (tl/pyenv-executable-find "ipython")
+      (progn (setq python-shell-interpreter "ipython")
+             (if (version< (replace-regexp-in-string "\n$" "" (shell-command-to-string "ipython --version")) "5")
+                 (setq python-shell-interpreter-args "-i")
+               (setq python-shell-interpreter-args "--simple-prompt -i")))
+    (progn
+      (setq python-shell-interpreter-args "-i")
+      (setq python-shell-interpreter "python"))))
+
+
+(defun tl//python-setup-checkers (&rest args)
+  (when (fboundp 'flycheck-set-checker-executable)
+    (let ((pylint (tl/pyenv-executable-find "pylint"))
+          (flake8 (tl/pyenv-executable-find "flake8")))
+      (when pylint
+        (flycheck-set-checker-executable "python-pylint" pylint))
+      (when flake8
+        (flycheck-set-checker-executable "python-flake8" flake8)))))
+
+(defun tl/python-setup-everything (&rest args)
+  (apply 'tl//python-setup-shell args)
+  (apply 'tl//python-setup-checkers args))
+
+
+(defun tl/python-toggle-breakpoint ()
+  "Add a break point, highlight it."
+  (interactive)
+  (let ((trace (cond ((tl/pyenv-executable-find "wdb") "import wdb; wdb.set_trace()")
+                     ((tl/pyenv-executable-find "ipdb") "import ipdb; ipdb.set_trace()")
+                     ((tl/pyenv-executable-find "pudb") "import pudb; pudb.set_trace()")
+                     ((tl/pyenv-executable-find "ipdb3") "import ipdb; ipdb.set_trace()")
+                     ((tl/pyenv-executable-find "pudb3") "import pudb; pudb.set_trace()")
+                     (t "import pdb; pdb.set_trace()")))
+        (line (thing-at-point 'line)))
+    (if (and line (string-match trace line))
+        (kill-whole-line)
+      (progn
+        (back-to-indentation)
+        (insert trace)
+        (insert "\n")
+        (python-indent-line)))))

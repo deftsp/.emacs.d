@@ -38,7 +38,11 @@
 (straight-use-package 'f)
 (straight-use-package 'ht)
 
-
+;; register my fork of ace-window before it's registered by the origin recipe. Otherwise, there will a warning like "Two
+;; different recipes given for ..."
+(straight-use-package
+ '(ace-window :type git :host github :repo "abo-abo/ace-window"
+              :fork (:host github :repo "deftsp/ace-window" :branch "shihpin")))
 (straight-use-package 'evil)
 (straight-use-package 'evil-org)
 (straight-use-package 'evil-anzu)
@@ -136,9 +140,22 @@
 (straight-use-package 'flycheck-rust)
 (straight-use-package 'flycheck-flow)
 
+
 (straight-use-package 'lsp-ivy)
 (straight-use-package 'lsp-mode)
 (straight-use-package 'lsp-ui)
+
+(straight-use-package 'dap-mode)
+
+;; Python
+(straight-use-package 'pyenv-mode)
+(straight-use-package 'pyvenv)
+(straight-use-package 'lsp-pyright)
+(straight-use-package 'pythonic)
+;; (straight-use-package 'pymacs)
+(straight-use-package 'pylookup)
+(straight-use-package 'poetry)
+(straight-use-package 'pipenv)
 
 
 (straight-use-package '(unicad :type git :host github :repo "ukari/unicad"))
@@ -148,11 +165,9 @@
 (straight-use-package 'pdf-tools)
 (straight-use-package 'docker)
 (straight-use-package 'list-utils)
-(straight-use-package 'pythonic)
 (straight-use-package 'ace-isearch)
 (straight-use-package 'docker-tramp)
 (straight-use-package 'livid-mode)
-(straight-use-package 'pyvenv)
 (straight-use-package 'ace-link)
 (straight-use-package 'dockerfile-mode)
 ;; https://raw.githubusercontent.com/llvm-mirror/llvm/master/utils/emacs/llvm-mode.el
@@ -162,7 +177,6 @@
 (straight-use-package 'docsetutil)
 (straight-use-package 'loop)
 (straight-use-package 'quick-peek)
-(straight-use-package '(ace-window :type git :host github :repo "deftsp/ace-window" :branch "shihpin"))
 (straight-use-package 'doom-modeline)
 (straight-use-package 'rainbow-delimiters)
 (straight-use-package 'ack-menu)
@@ -441,14 +455,11 @@
 (straight-use-package 'yasnippet-snippets)
 (straight-use-package 'dired-quick-sort)
 (straight-use-package 'linkd)
-(straight-use-package 'pyenv-mode)
 (straight-use-package 'zoutline)
 (straight-use-package '(dired-sidebar :type git :host github :repo "deftsp/dired-sidebar" :branch "shihpin"))
 (straight-use-package 'lispy)
-(straight-use-package 'pylookup)
 (straight-use-package 'diredfl)
 (straight-use-package 'lispyville)
-;; (straight-use-package 'pymacs)
 
 
 
