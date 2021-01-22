@@ -93,7 +93,7 @@
       (add-hook 'org-clock-cancel-hook 'tl/org-clock-force-mode-line-update)
       (add-hook 'org-clock-out-hook 'tl/org-clock-force-mode-line-update)
 
-      ;; (advice-remove 'org-clock-update-mode-line #'tl//update-hammerspoon-org-clock-bar)
+      ;; (advice-remove 'org-clock-update-mode-line #'tl/update-hammerspoon-org-clock-bar)
       (advice-add 'org-clock-update-mode-line :after #'tl/update-hammerspoon-org-clock-bar))))
 
 
