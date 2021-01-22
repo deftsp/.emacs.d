@@ -325,27 +325,6 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
     (advice-add 'pyenv-mode-full-path
                 :filter-return #'tl//chase-virtualenv-root)))
 
-(use-package pyvenv
-  :defer t
-  :init
-  (progn
-    (pcase python-auto-set-local-pyvenv-virtualenv
-      (`on-visit
-       (add-hook 'python-mode-hook 'tl//pyvenv-mode-set-local-virtualenv))
-      (`on-project-switch
-       (add-hook 'projectile-after-switch-project-hook
-                 'tl//pyvenv-mode-set-local-virtualenv)))
-    (tl/set-leader-keys-for-major-mode 'python-mode
-      "Va" 'pyvenv-activate
-      "Vd" 'pyvenv-deactivate
-      "Vw" 'pyvenv-workon)
-    ;; setup shell correctly on environment switch
-    (dolist (func '(pyvenv-activate pyvenv-deactivate pyvenv-workon))
-      (advice-add func :after 'tl/python-setup-everything)))
-  :config
-  (pyvenv-mode +1))
-
-
 (use-package anaconda-mode
   :defer t
   :diminish anaconda-mode
