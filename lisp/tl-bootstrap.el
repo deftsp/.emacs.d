@@ -24,6 +24,7 @@
 (require '13org-mode)
 (require '13org-agenda)
 (require '13org-brain)
+(require '13org-clock)
 (require '13org-latex)
 (require '13org-roam)
 
