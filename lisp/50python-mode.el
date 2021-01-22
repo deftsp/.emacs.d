@@ -1,94 +1,25 @@
 ;;; 50python-mode.el ---
 
-;; Copyright (C) 2012  Shihpin Tseng
+;; Copyright (C) 2021  Shihpin Tseng
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
-;; Keywords:
 
 ;;; Code:
 
-;;; python-mode from https://gitlab.com/python-mode-devs/python-mode
-;; (let ((p (expand-file-name "~/.emacs.d/site-lisp/python-mode")))
-;;   (add-to-list 'load-path p)
-;;   (add-to-list 'auto-mode-alist
-;;                '("\\.py$" . python-mode))
-;;   (add-to-list 'interpreter-mode-alist
-;;                '("python" . python-mode))
-;;   (setq py-install-directory p)
-;;   (setq py-shell-name "ipython")
+;;; Links
+;; [[https://gitlab.com/nathanfurnal/dotemacs/-/snippets/2060535][Emacs python config ($2060535) · Snippets · Nathan Furnal / dotemacs · GitLab]]
+;; [[https://towardsdatascience.com/python-environment-101-1d68bda3094d][Python Environment 101. How are pyenv and pipenv different and… ]]
 
-;;   (autoload 'python-mode "python-mode"
-;;     "Support for the Python programming language, <http://www.python.org/>" t))
+;;; virtual environment
+;; cd ~/foo && pipenv install
+;; a directory named .venv will be create in ./foo/.venv
+;; M-x pipenv-activate # active it
 
-(defvar python-auto-set-local-pyenv-version 'on-visit
-  "Automatically set pyenv version from \".python-version\".
-
-Possible values are `on-visit', `on-project-switch' or `nil'.")
-
-(defvar python-auto-set-local-pyvenv-virtualenv 'on-visit
-  "Automatically set pyvenv virtualenv from \".venv\".
-
-Possible values are `on-visit', `on-project-switch' or `nil'.")
-
-
-;; from http://pedrokroger.net/2010/07/configuring-emacs-as-a-python-ide-2/
 (defun tl/python-annotate-pdb ()
   "Highlight break point lines."
   (interactive)
   (highlight-lines-matching-regexp "import \\(pdb\\|ipdb\\|pudb\\|wdb\\)")
   (highlight-lines-matching-regexp "\\(pdb\\|ipdb\\|pudb\\|wdb\\).set_trace()"))
-
-(defun tl/pyenv-executable-find (command)
-  "Find executable taking pyenv shims into account."
-  (if (executable-find "pyenv")
-      (progn
-        (let ((pyenv-string (shell-command-to-string (concat "pyenv which " command))))
-          (unless (string-match "not found" pyenv-string)
-            (string-trim pyenv-string))))
-    (executable-find command)))
-
-(defun tl//python-setup-shell (&rest args)
-  (if (tl/pyenv-executable-find "ipython")
-      (progn (setq python-shell-interpreter "ipython")
-             (if (version< (replace-regexp-in-string "\n$" "" (shell-command-to-string "ipython --version")) "5")
-                 (setq python-shell-interpreter-args "-i")
-               (setq python-shell-interpreter-args "--simple-prompt -i")))
-    (progn
-      (setq python-shell-interpreter-args "-i")
-      (setq python-shell-interpreter "python"))))
-
-
-(defun tl//python-setup-checkers (&rest args)
-  (when (fboundp 'flycheck-set-checker-executable)
-    (let ((pylint (tl/pyenv-executable-find "pylint"))
-          (flake8 (tl/pyenv-executable-find "flake8")))
-      (when pylint
-        (flycheck-set-checker-executable "python-pylint" pylint))
-      (when flake8
-        (flycheck-set-checker-executable "python-flake8" flake8)))))
-
-(defun tl/python-setup-everything (&rest args)
-  (apply 'tl//python-setup-shell args)
-  (apply 'tl//python-setup-checkers args))
-
-
-(defun tl/python-toggle-breakpoint ()
-  "Add a break point, highlight it."
-  (interactive)
-  (let ((trace (cond ((tl/pyenv-executable-find "wdb") "import wdb; wdb.set_trace()")
-                     ((tl/pyenv-executable-find "ipdb") "import ipdb; ipdb.set_trace()")
-                     ((tl/pyenv-executable-find "pudb") "import pudb; pudb.set_trace()")
-                     ((tl/pyenv-executable-find "ipdb3") "import ipdb; ipdb.set_trace()")
-                     ((tl/pyenv-executable-find "pudb3") "import pudb; pudb.set_trace()")
-                     (t "import pdb; pdb.set_trace()")))
-        (line (thing-at-point 'line)))
-    (if (and line (string-match trace line))
-        (kill-whole-line)
-      (progn
-        (back-to-indentation)
-        (insert trace)
-        (insert "\n")
-        (python-indent-line)))))
 
 ;; from https://www.snip2code.com/Snippet/127022/Emacs-auto-remove-unused-import-statemen
 (defun tl/python-remove-unused-imports()
@@ -101,119 +32,6 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
                                (shell-quote-argument (buffer-file-name))))
         (revert-buffer t t t))
     (message "Error: Cannot find autoflake executable.")))
-
-
-(defun tl//pyenv-mode-set-local-version ()
-  "Set pyenv version from \".python-version\" by looking in parent directories."
-  (interactive)
-  (let ((root-path (locate-dominating-file default-directory
-                                           ".python-version")))
-    (when root-path
-      (let* ((file-path (expand-file-name ".python-version" root-path))
-             (version
-              (with-temp-buffer
-                (insert-file-contents-literally file-path)
-                (nth 0 (split-string (buffer-substring-no-properties
-                                      (line-beginning-position)
-                                      (line-end-position)))))))
-        (if (member version (pyenv-mode-versions))
-            (pyenv-mode-set version)
-          (message "pyenv: version `%s' is not installed (set by %s)"
-                   version file-path))))))
-
-(defun tl//pyvenv-mode-set-local-virtualenv ()
-  "Set pyvenv virtualenv from \".venv\" by looking in parent directories."
-  (interactive)
-  (let ((root-path (locate-dominating-file default-directory
-                                           ".venv")))
-    (when root-path
-      (let* ((file-path (expand-file-name ".venv" root-path))
-             (virtualenv
-              (with-temp-buffer
-                (insert-file-contents-literally file-path)
-                (buffer-substring-no-properties (line-beginning-position)
-                                                (line-end-position)))))
-        (pyvenv-workon virtualenv)))))
-
-
-(use-package anaconda-mode
-  :defer t
-  :diminish anaconda-mode
-  :init
-  (progn
-    (add-hook 'python-mode-hook 'anaconda-mode))
-  :config
-  (progn
-    (tl/set-leader-keys-for-major-mode 'python-mode
-      ;; use gtags
-      "gd" 'anaconda-mode-find-definitions
-      "ga" 'anaconda-mode-find-assignments
-      "gr" 'anaconda-mode-find-references
-      "gu" 'anaconda-mode-find-references
-      "gb" 'anaconda-mode-go-back
-      "g*" 'anaconda-mode-go-back
-      "hh" 'anaconda-mode-show-doc)
-
-    (defadvice anaconda-mode-goto (before python/anaconda-mode-goto activate)
-      (evil--jumps-push))))
-
-(use-package pyenv-mode
-  :if (executable-find "pyenv")
-  :commands (pyenv-mode-versions)
-  :init
-  (progn
-    (pcase python-auto-set-local-pyenv-version
-      (`on-visit
-       (add-hook 'python-mode-hook 'tl//pyenv-mode-set-local-version))
-      (`on-project-switch
-       (add-hook 'projectile-after-switch-project-hook
-                 'tl//pyenv-mode-set-local-version)))
-    ;; setup shell correctly on environment switch
-    (dolist (func '(pyenv-mode-set pyenv-mode-unset))
-      (advice-add func :after 'tl/python-setup-everything))
-    (tl/set-leader-keys-for-major-mode 'python-mode
-      "vu" 'pyenv-mode-unset
-      "vs" 'pyenv-mode-set))
-  :config
-  (progn
-    ;; For a venv named 'venv3.6.2' located at '~/.pyenv/versions/venv3.6.2'
-    ;; which is linked to '~/.pyenv/versions/3.6.2/envs/venv',
-    ;; `python-shell-calculate-process-environment' will set VIRTUAL_ENV to
-    ;; '~/.pyenv/versions/venv3.6.2'. But the function init_virtualenv in
-    ;; interactiveshell.py (in IPython source) don't accept the virtualenv path
-    ;; as link, and emit warning. Here we advice `pyenv-mode-full-path' to
-    ;; return the true path instead of link.
-
-    ;; See also
-    ;; https://github.com/pyenv/pyenv-virtualenv/issues/113
-    ;; https://github.com/ipython/ipython/issues/9774
-    ;; https://github.com/ipython/ipython/pull/5939
-    (defun tl//chase-virtualenv-root (p)
-      (file-truename p))
-    ;; (advice-remove 'pyenv-mode-full-path
-    ;;                #'tl//chase-virtualenv-root)
-    (advice-add 'pyenv-mode-full-path
-                :filter-return #'tl//chase-virtualenv-root)))
-
-(use-package pyvenv
-  :defer t
-  :init
-  (progn
-    (pcase python-auto-set-local-pyvenv-virtualenv
-      (`on-visit
-       (add-hook 'python-mode-hook 'tl//pyvenv-mode-set-local-virtualenv))
-      (`on-project-switch
-       (add-hook 'projectile-after-switch-project-hook
-                 'tl//pyvenv-mode-set-local-virtualenv)))
-    (tl/set-leader-keys-for-major-mode 'python-mode
-      "Va" 'pyvenv-activate
-      "Vd" 'pyvenv-deactivate
-      "Vw" 'pyvenv-workon)
-    ;; setup shell correctly on environment switch
-    (dolist (func '(pyvenv-activate pyvenv-deactivate pyvenv-workon))
-      (advice-add func :after 'tl/python-setup-everything)))
-  :config
-  (pyvenv-mode +1))
 
 ;; https://github.com/tsgates/pylookup
 (use-package pylookup
@@ -240,11 +58,13 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
     ;; do not warning me, I like delay set it.
     ;; (setq python-shell-prompt-detect-failure-warning nil)
     (setq python-indent-guess-indent-offset nil
+          ;; remove guess indent python message
+          python-indent-guess-indent-offset-verbose nil
           python-indent-offset 4)
     (setq python-shell-completion-native-enable nil))
   :config
   (progn
-    (tl//python-setup-shell) ; slow
+    ;; (tl//python-setup-shell) ; slow
     (tl/declare-prefix-for-mode 'python-mode "mc" "execute")
     (tl/declare-prefix-for-mode 'python-mode "md" "debug")
     (tl/declare-prefix-for-mode 'python-mode "mh" "help")
@@ -257,7 +77,7 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
       "'"  'tl/python-start-or-switch-repl
       "cc" 'tl/python-execute-file
       "cC" 'tl/python-execute-file-focus
-      "db" 'tl/python-toggle-breakpoint
+      ;; "db" 'tl/python-toggle-breakpoint
       "ri" 'tl/python-remove-unused-imports
       "sB" 'tl/python-shell-send-buffer-switch
       "sb" 'python-shell-send-buffer
@@ -272,8 +92,7 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
     (define-key inferior-python-mode-map (kbd "C-l") 'tl/comint-clear-buffer)
     (define-key inferior-python-mode-map (kbd "C-r") 'comint-history-isearch-backward)))
 
-(put 'project-venv-name 'safe-local-variable 'stringp)
-
+;; (put 'project-venv-name 'safe-local-variable 'stringp)
 
 (defun tl/python-imenu-create-index ()
   (if (bound-and-true-p semantic-mode)
@@ -298,9 +117,9 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
   (subword-mode +1)
   (eldoc-mode +1)
 
-  (when (fboundp 'anaconda-mode)
-    (anaconda-mode +1)
-    (anaconda-eldoc-mode +1))
+  ;; (when (fboundp 'anaconda-mode)
+  ;;   (anaconda-mode +1)
+  ;;   (anaconda-eldoc-mode +1))
 
   (smartparens-mode +1)
 
@@ -423,7 +242,6 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
       (inferior-python-mode))))
 
 
-
 (defadvice python-indent-dedent-line-backspace
     (around python/sp-backward-delete-char activate)
   (let ((pythonp (or (not smartparens-strict-mode)
@@ -435,6 +253,62 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 ;;; pdb
 ;; (setq gud-pdb-command-name "ipdb3")
 
+(use-package pyvenv
+  :after python
+  :commands (pyvenv-activate pyvenv-workon pyvenv-deactivate)
+  :init
+  (add-hook 'python-mode-local-vars-hook #'pyvenv-track-virtualenv)
+  :config
+  (pyvenv-mode +1))
+
+
+(use-package pipenv
+  :commands (pipenv-activate
+             pipenv-deactivate
+             pipenv-shell
+             pipenv-lock
+             pipenv-run
+             pipenv-open
+             pipenv-install
+             pipenv-uninstall)
+  :hook (python-mode . pipenv-mode)
+  :init
+  (setq pipenv-executable "~/.asdf/shims/pipenv")
+  (tl/set-leader-keys-for-major-mode 'python-mode
+    "ea" 'pipenv-activate
+    "ed" 'pipenv-deactivate
+    "ei" 'pipenv-install
+    "el" 'pipenv-lock
+    "eo" 'pipenv-open
+    "er" 'pipenv-run
+    "es" 'pipenv-shell
+    "eu" 'pipenv-uninstall))
+
+;; Language server for Python
+;; Read the docs for the different variables set in the config.
+(defun tl//enable-lsp-pyright ()
+  (require 'lsp-pyright)
+  (lsp-deferred))
+
+(use-package lsp-pyright
+  :defer t
+  :hook (python-mode . tl//enable-lsp-pyright)
+  :config
+  ;; (setq lsp-clients-python-library-directories '("/usr/" "~/miniconda3/pkgs"))
+  (setq lsp-pyright-disable-language-service nil
+	    lsp-pyright-disable-organize-imports nil
+	    lsp-pyright-auto-import-completions t
+	    ;; lsp-pyright-venv-path "~/miniconda3/envs"
+	    lsp-pyright-use-library-code-for-types t))
+
+(use-package poetry
+  :after python
+  :init
+  (add-hook 'python-mode-hook #'poetry-tracking-mode))
 
 (provide '50python-mode)
 ;;; 50python-mode.el ends here
+
+;; Local Variables:
+;; coding: utf-8-unix
+;; End:

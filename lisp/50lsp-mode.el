@@ -5,7 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 (use-package lsp-mode
-  :commands lsp
+  :commands (lsp lsp-deferred)
   :init
   (setq lsp-log-io nil
         lsp-enable-folding nil
@@ -20,6 +20,7 @@
         lsp-restart 'auto-restart
         lsp-enable-links nil            ; use ffip instead
         lsp-headerline-breadcrumb-enable t
+        lsp-headerline-breadcrumb-icons-enable nil
         lsp-modeline-code-actions-enable nil
         lsp-completion-show-kind nil
         lsp-enable-semantic-highlighting nil)
@@ -27,9 +28,10 @@
   (setq lsp-prefer-capf t)
   ;; This variable determines how often lsp-mode will refresh the highlights, lenses, links, etc while you type.
   (setq lsp-idle-delay 0.500)
-  :hook (
+  :hook ((lsp-mode . lsp-enable-which-key-integration)
+         ;; (python-mode . lsp-deferred)
          ;; (rust-mode . lsp)
-         (lsp-mode . lsp-enable-which-key-integration))
+         )
   :config
   ;; don't scan 3rd party javascript libraries
   ;; (push "[/\\\\][^/\\\\]*\\.\\(json\\|html\\|jade\\)$" lsp-file-watch-ignored) ; json
@@ -164,5 +166,11 @@
   (tl//lsp-avy-document-symbol nil))
 
 
+;; Integration with the debug server
+(use-package dap-mode
+  :defer t
+  :after lsp-mode
+  :config
+  (dap-auto-configure-mode))
 
 (provide '50lsp-mode)
