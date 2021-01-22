@@ -662,110 +662,115 @@ buffer which do not already have one. When `arg' nil only adds ids if the
 (use-package org-capture
   :defer 5
   :init
-  (progn
-    (define-key global-map (kbd "C-c c") 'org-capture)
-    ;; https://lists.gnu.org/archive/html/emacs-orgmode/2010-08/msg00469.html
-    (defun tl/find-today-trading-journal ()
-      "Find today's trading journal."
-      (let ((p (concat org-directory
-                       (format-time-string
-                        "/trading-journal/%Y-%m-%d.org"))))
-        (find-file p)
-        (goto-char (point-min))))
+  (define-key global-map (kbd "C-c c") 'org-capture)
+  ;; https://lists.gnu.org/archive/html/emacs-orgmode/2010-08/msg00469.html
+  (defun tl/find-today-trading-journal ()
+    "Find today's trading journal."
+    (let ((p (concat org-directory
+                     (format-time-string
+                      "/trading-journal/%Y-%m-%d.org"))))
+      (find-file p)
+      (goto-char (point-min))))
 
-    (defun tl/find-memo-file ()
-      "Find today's trading journal."
-      (let ((p (concat org-directory
-                       (format-time-string
-                        "/Memo/%Y%m%d.org"))))
-        (find-file p)
-        (goto-char (point-min))))
+  (defun tl/find-memo-file ()
+    "Find today's trading journal."
+    (let ((p (concat org-directory
+                     (format-time-string
+                      "/Memo/%Y%m%d.org"))))
+      (find-file p)
+      (goto-char (point-min))))
 
-    (defun org-hugo-new-subtree-post-capture-template ()
-      "Returns `org-capture' template string for new Hugo post.
+  (defun org-hugo-new-subtree-post-capture-template ()
+    "Returns `org-capture' template string for new Hugo post.
      See `org-capture-templates' for more information."
-      (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
-             (date (format-time-string (org-time-stamp-format :long :inactive) (org-current-time)))
-             (fname (org-hugo-slug title)))
-        (mapconcat #'identity
-                   `(
-                     ,(concat "* TODO " title "     :@essay:")
-                     ":PROPERTIES:"
-                     ,(concat ":EXPORT_FILE_NAME: " fname)
-                     ":END:"
-                     "%?\n")          ;Place the cursor here finally
-                   "\n")))
+    (let* ((title (read-from-minibuffer "Post Title: ")) ;Prompt to enter the post title
+           (date (format-time-string (org-time-stamp-format :long :inactive) (org-current-time)))
+           (fname (org-hugo-slug title)))
+      (mapconcat #'identity
+                 `(
+                   ,(concat "* TODO " title "     :@essay:")
+                   ":PROPERTIES:"
+                   ,(concat ":EXPORT_FILE_NAME: " fname)
+                   ":END:"
+                   "%?\n")          ;Place the cursor here finally
+                 "\n")))
 
-    (defun org-journal-find-location ()
-      ;; Open today's journal, but specify a non-nil prefix argument in order to
-      ;; inhibit inserting the heading; org-capture will insert the heading.
-      (org-journal-new-entry t)
-      ;; Position point on the journal's top-level heading so that org-capture
-      ;; will add the new entry as a child entry.
-      (goto-char (point-min)))
+  (defun org-journal-find-location ()
+    ;; Open today's journal, but specify a non-nil prefix argument in order to
+    ;; inhibit inserting the heading; org-capture will insert the heading.
+    (org-journal-new-entry t)
+    ;; Position point on the journal's top-level heading so that org-capture
+    ;; will add the new entry as a child entry.
+    (goto-char (point-min)))
 
-    (setq org-capture-templates
-          `(("a" "Add Task" entry
-             (file+headline "~/org/agenda/GTD.org" "Tasks")
-             "* TODO %?\nSCHEDULED: %t \n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
-             :prepend t
-             :empty-lines-after 1)
+  (setq org-capture-templates
+        `(("a" "Add Task" entry
+           (file+headline "~/org/agenda/GTD.org" "Tasks")
+           "* TODO %?\nSCHEDULED: %t \n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
+           :prepend t
+           :empty-lines-after 1)
+          ("c" "Add Task with Clock In" entry
+           (file+headline "~/org/agenda/GTD.org" "Tasks")
+           "* TODO %?\nSCHEDULED: %t \n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
+           :prepend t
+           :clock-in t
+           :clock-keep t
+           :empty-lines-after 1)
+          ("t" "Todo" entry (file+headline "~/org/agenda/GTD.org" "Inbox")
+           "* TODO %?\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
+           :prepend t
+           :empty-lines-after 1)
+          ("T" "Trading Journal" plain (function tl/find-today-trading-journal)
+           "* %U\n%i%?"
+           :prepend t
+           :unnarrowed nil
+           :kill-buffer t
+           :empty-lines-after 1)
+          ;; use org-journal now
+          ;; http://www.howardism.org/Technical/Emacs/journaling-org.html
+          ;; ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
+          ;;  "* %?\n%i\n%U"
+          ;;  :kill-buffer t
+          ;;  :empty-lines-after 1)
+          ;; ("J" "Journal with Annotation" entry (file+olp+datetree "~/org/journal.org")
+          ;;  "* %?\n%U\n%i\n%a"
+          ;;  :kill-buffer t
+          ;;  :empty-lines-after 1)
+          ("j" "Journal entry" entry (function org-journal-find-location)
+           "* %(format-time-string org-journal-time-format)%^{Title}\n%i%?")
+          ("m" "Memo" plain #'tl/find-memo-file
+           "* %T\n%?\n%a\n\n"
+           :prepend t
+           :unnarrowed t
+           :kill-buffer t
+           :empty-lines-after 1)
+          ;; ("p" "Phone call" entry (file+headline "~/org/agenda/GTD.org" "Inbox")
+          ;;  "* PHONE %? :PHONE:\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
+          ;;  :clock-in t
+          ;;  :clock-resume t
+          ;;  :empty-lines-after 1)
+          ;; work with org-protocol and emacs-mac port have default register to macOS
+          ;; https://github.com/sprig/org-capture-extension
+          ("p" "Hugo post" entry (file+olp "posts/micro.org" "Posts") (function org-hugo-new-subtree-post-capture-template))
+          ("P" "Protocol Clip" entry (file+headline ,(concat org-directory "/Notes.org") "Inbox")
+           "* %?\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:\nSource: %:annotation\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE"
+           :empty-lines-after 1)
 
-            ("t" "Todo" entry (file+headline "~/org/agenda/GTD.org" "Inbox")
-             "* TODO %?\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
-             :prepend t
-             :empty-lines-after 1)
-            ("T" "Trading Journal" plain (function tl/find-today-trading-journal)
-             "* %U\n%i%?"
-             :prepend t
-             :unnarrowed nil
-             :kill-buffer t
-             :empty-lines-after 1)
-            ;; use org-journal now
-            ;; http://www.howardism.org/Technical/Emacs/journaling-org.html
-            ;; ("j" "Journal" entry (file+olp+datetree "~/org/journal.org")
-            ;;  "* %?\n%i\n%U"
-            ;;  :kill-buffer t
-            ;;  :empty-lines-after 1)
-            ;; ("J" "Journal with Annotation" entry (file+olp+datetree "~/org/journal.org")
-            ;;  "* %?\n%U\n%i\n%a"
-            ;;  :kill-buffer t
-            ;;  :empty-lines-after 1)
-            ("j" "Journal entry" entry (function org-journal-find-location)
-             "* %(format-time-string org-journal-time-format)%^{Title}\n%i%?")
-            ("m" "Memo" plain #'tl/find-memo-file
-             "* %T\n%?\n%a\n\n"
-             :prepend t
-             :unnarrowed t
-             :kill-buffer t
-             :empty-lines-after 1)
-            ;; ("p" "Phone call" entry (file+headline "~/org/agenda/GTD.org" "Inbox")
-            ;;  "* PHONE %? :PHONE:\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
-            ;;  :clock-in t
-            ;;  :clock-resume t
-            ;;  :empty-lines-after 1)
-            ;; work with org-protocol and emacs-mac port have default register to macOS
-            ;; https://github.com/sprig/org-capture-extension
-            ("p" "Hugo post" entry (file+olp "posts/micro.org" "Posts") (function org-hugo-new-subtree-post-capture-template))
-            ("P" "Protocol Clip" entry (file+headline ,(concat org-directory "/Notes.org") "Inbox")
-             "* %?\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:\nSource: %:annotation\n\n#+BEGIN_QUOTE\n%i\n#+END_QUOTE"
-             :empty-lines-after 1)
-
-	        ("L" "Protocol Link" entry (file+headline ,(concat org-directory "/agenda/GTD.org") "Inbox")
-             "* TODO %?%:annotation\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
-             :prepend t
-             :empty-lines-after 1)
-            ("r" "Remind" entry (file+headline "~/org/agenda/GTD.org" "Remind")
-             "* %?\nSCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
-             :empty-lines-after 1)
-            ("h" "Habit" entry (file+headline "~/org/agenda/GTD.org" "Habit")
-             "* %?\nSCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:"
-             :empty-lines-after 1)
-            ("w" "Web page" entry
-             (file "~/org/Pages.org")
-             "* %a :website:\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:\n%?\n\n%:initial")
-            ("W" "Review: Weekly Review" entry (file+olp+datetree "~/org/WeeklyReview.org")
-             (file "~/org/templates/weekly-review-template.org")))))
+	      ("L" "Protocol Link" entry (file+headline ,(concat org-directory "/agenda/GTD.org") "Inbox")
+           "* TODO %?%:annotation\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
+           :prepend t
+           :empty-lines-after 1)
+          ("r" "Remind" entry (file+headline "~/org/agenda/GTD.org" "Remind")
+           "* %?\nSCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:"
+           :empty-lines-after 1)
+          ("h" "Habit" entry (file+headline "~/org/agenda/GTD.org" "Habit")
+           "* %?\nSCHEDULED: %(format-time-string \"<%Y-%m-%d .+1d/3d>\")\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:STYLE: habit\n:REPEAT_TO_STATE: NEXT\n:END:"
+           :empty-lines-after 1)
+          ("w" "Web page" entry
+           (file "~/org/Pages.org")
+           "* %a :website:\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:\n%?\n\n%:initial")
+          ("W" "Review: Weekly Review" entry (file+olp+datetree "~/org/WeeklyReview.org")
+           (file "~/org/templates/weekly-review-template.org"))))
   :config
   (progn
     ;; ",k" not work some time, call `evil-normalize-keymaps' to force refresh
@@ -1032,41 +1037,6 @@ buffer which do not already have one. When `arg' nil only adds ids if the
       (org-display-inline-images))))
 
 
-;;; get the clock summary by tags
-(defun tl/org-clock-summary-by-tags (include-tags timerange &optional tstart tend noinsert)
-  "Get the clock summary by tags."
-  (interactive "P")
-  (let* ((timerange-numeric-value (prefix-numeric-value timerange))
-         (files (org-add-archive-files (org-agenda-files)))
-         (tags-time-alist (mapcar (lambda (tag) `(,tag . 0)) include-tags))
-         (output-string "")
-         (seconds-of-day 86400)
-         (tstart (or tstart (org-time-today)))
-         (tend (or tend (+ tstart seconds-of-day)))
-         h m done-something)
-    (dolist (file files)
-      (let ((org-agenda-buffer (if (file-exists-p file)
-                                   (org-get-agenda-file-buffer file)
-                                 (error "No such file %s" file))))
-        (with-current-buffer org-agenda-buffer
-          (dolist (current-tag include-tags)
-            (org-clock-sum tstart tend #'(lambda ()
-                                           (let ((head-tags (org-get-tags-at)))
-                                             (member current-tag head-tags))))
-            (setcdr (assoc current-tag tags-time-alist)
-                    (+ org-clock-file-total-minutes (cdr (assoc current-tag tags-time-alist))))))))
-    (dolist (item tags-time-alist)
-      (unless (equal (cdr item) 0)
-        (setq done-something t)
-        (setq h (/ (cdr item) 60)
-              m (- (cdr item) (* 60 h)))
-        (setq output-string (concat output-string (format "[-%s-] %.2d:%.2d\n" (car item) h m)))))
-    (unless done-something
-      (setq output-string (concat output-string "[-Nothing-] Done nothing!!!\n")))
-    (unless noinsert
-      (insert output-string))
-    output-string))
-
 ;; http://kitchingroup.cheme.cmu.edu/blog/2017/04/09/A-better-return-in-org-mode
 ;; (define-key org-mode-map (kbd "RET") 'tl/org-return)
 (defun tl/org-return ()
@@ -1221,7 +1191,7 @@ prepended to the element after the #+HEADER: tag."
 ;;; org-journal
 ;; https://github.com/bastibe/org-journal
 (use-package org-journal
-  :defer t
+  :after (org)
   :init
   (progn
     (setq org-journal-dir (concat org-directory "/roam/daily/")
@@ -1231,6 +1201,7 @@ prepended to the element after the #+HEADER: tag."
           org-journal-time-prefix "* "
           org-journal-time-format "%R "
           org-journal-carryover-items "TODO=\"TODO\"|TODO=\"NEXT\"|TODO=\"WAITING\"|TODO=\"HOLD\""
+          ;; add the current and all future journal entries to org-agenda-files
           org-journal-enable-agenda-integration t)
     (tl/declare-prefix "oj" "org-journal")
     (tl/declare-prefix "aoj" "org-journal")

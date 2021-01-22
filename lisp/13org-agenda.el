@@ -4,74 +4,73 @@
 (use-package org-agenda
   :after (org)
   :init
-  (progn
-    (setq org-agenda-files `(,(concat org-directory "/agenda"))
-          ;; speedup and optimization
-          ;; https://punchagan.muse-amuse.in/posts/how-i-learnt-to-use-emacs-profiler.html
-          ;; http://orgmode.org/worg/agenda-optimization.html
-          org-agenda-inhibit-startup t
-          ;; org-agenda-use-tag-inheritance nil ; set this on a per-command in org-agenda-custom-commands
-          org-agenda-show-all-dates t
-          org-agenda-span 'day          ; 'week
-          org-agenda-start-with-log-mode nil
-          org-agenda-start-with-clockreport-mode nil
-          org-agenda-view-columns-initially nil
-          ;; exclude scheduled items from the global TODO list.
-          org-agenda-todo-ignore-scheduled 'all
-          org-agenda-todo-ignore-with-date t
-          ;; org-agenda-todo-ignore-deadlines 'all
-          ;; org-agenda-tags-todo-honor-ignore-options t
-          org-agenda-skip-scheduled-if-done t
-          org-agenda-skip-deadline-if-done t
-          org-agenda-skip-timestamp-if-done t
-          org-agenda-todo-list-sublevels t
-          ;; I use the diary only for sexp entries and holidays, and Ι have put them into org file.
-          org-agenda-include-diary nil
-          ;; agenda view always starts out by showing me the next seven days.
-          org-agenda-start-on-weekday nil
-          org-agenda-restore-windows-after-quit t
-          org-agenda-repeating-timestamp-show-all nil
-          org-agenda-use-time-grid t
-          org-agenda-block-separator ?▰
-          org-agenda-dim-blocked-tasks t ; 'invisible
-          org-agenda-window-frame-fractions '(0.6 . 0.85) ; the min and max height of the agenda window as a fraction of frame height.
-          org-agenda-show-future-repeats 'next
-          org-agenda-prefer-last-repeat nil)
+  (setq org-agenda-files `(,(concat org-directory "/agenda"))
+        ;; speedup and optimization
+        ;; https://punchagan.muse-amuse.in/posts/how-i-learnt-to-use-emacs-profiler.html
+        ;; http://orgmode.org/worg/agenda-optimization.html
+        org-agenda-inhibit-startup t
+        ;; org-agenda-use-tag-inheritance nil ; set this on a per-command in org-agenda-custom-commands
+        org-agenda-show-all-dates t
+        org-agenda-span 'day          ; 'week
+        org-agenda-start-with-log-mode nil
+        org-agenda-start-with-clockreport-mode nil
+        org-agenda-view-columns-initially nil
+        ;; exclude scheduled items from the global TODO list.
+        org-agenda-todo-ignore-scheduled 'all
+        org-agenda-todo-ignore-with-date t
+        ;; org-agenda-todo-ignore-deadlines 'all
+        ;; org-agenda-tags-todo-honor-ignore-options t
+        org-agenda-skip-scheduled-if-done t
+        org-agenda-skip-deadline-if-done t
+        org-agenda-skip-timestamp-if-done t
+        org-agenda-todo-list-sublevels t
+        ;; I use the diary only for sexp entries and holidays, and Ι have put them into org file.
+        org-agenda-include-diary nil
+        ;; agenda view always starts out by showing me the next seven days.
+        org-agenda-start-on-weekday nil
+        org-agenda-restore-windows-after-quit t
+        org-agenda-repeating-timestamp-show-all nil
+        org-agenda-use-time-grid t
+        org-agenda-block-separator ?▰
+        org-agenda-dim-blocked-tasks t ; 'invisible
+        org-agenda-window-frame-fractions '(0.6 . 0.85) ; the min and max height of the agenda window as a fraction of frame height.
+        org-agenda-show-future-repeats 'next
+        org-agenda-prefer-last-repeat nil)
 
-    (setq org-agenda-format-date 'tl/org-agenda-format-date-aligned)
+  (setq org-agenda-format-date 'tl/org-agenda-format-date-aligned)
 
-    (setq org-agenda-time-grid '((daily today remove-match) ; require-timed
-                                 (300 600 900 1200 1500 1800 2100 2400)
-                                 "......"
-                                 "----------------"))
+  (setq org-agenda-time-grid '((daily today remove-match) ; require-timed
+                               (300 600 900 1200 1500 1800 2100 2400)
+                               "......"
+                               "----------------"))
 
-    ;; (setq org-agenda-deadline-leaders '("!D!: " "D%2d: " "")) ; default ("Deadline:  " "In %3d d.: " "%2d d. ago: ")
-    ;; (setq org-agenda-scheduled-leaders '("Scheduled: " "Sched.%2dx: ")) ; default '("Scheduled: " "Sched.%2dx: ")
-    ;; (org-agenda-todo-keyword-format "")
-    (setq org-agenda-prefix-format
-          '(
-            ;; (agenda . " %i %-12:c%-12t% s") ; agenda
-            (agenda  . "  %-13:c%?-12t% s")
-		    ;; (timeline . "%-9:T%?-2t% s")   ; timeline
-            (todo . " %i %-13:c")       ; todo, alltodo
-            (tags . " %i %-13:c")       ; tags, tags-todo, stuck
-            (search . " %i %-13:c")))   ; search
+  ;; (setq org-agenda-deadline-leaders '("!D!: " "D%2d: " "")) ; default ("Deadline:  " "In %3d d.: " "%2d d. ago: ")
+  ;; (setq org-agenda-scheduled-leaders '("Scheduled: " "Sched.%2dx: ")) ; default '("Scheduled: " "Sched.%2dx: ")
+  ;; (org-agenda-todo-keyword-format "")
+  (setq org-agenda-prefix-format
+        '(
+          ;; (agenda . " %i %-12:c%-12t% s") ; agenda
+          (agenda  . "  %-13:c%?-12t% s")
+		  ;; (timeline . "%-9:T%?-2t% s")   ; timeline
+          (todo . " %i %-13:c")       ; todo, alltodo
+          (tags . " %i %-13:c")       ; tags, tags-todo, stuck
+          (search . " %i %-13:c")))   ; search
 
-    ;; (setq org-agenda-category-icon-alist
-    ;;       '(("Visitors" "~/.emacs.d/icons/org/visitors.png" nil nil :ascent center)
-    ;;         ("\\(Party\\|Celeb\\)" "~/.emacs.d/icons/org/party.png" nil nil :ascent center)
-    ;;         ("Org" "~/.emacs.d/icons/org/org.png" nil nil :ascent center)
-    ;;         ("Medical" "~/.emacs.d/icons/org/medical.png" nil nil :ascent center)
-    ;;         ("Music" "~/.emacs.d/icons/org/music.png" nil nil :ascent center)
-    ;;         ("Trip" "~/.emacs.d/icons/org/trip.png" nil nil :ascent center)
-    ;;         ("Train" "~/.emacs.d/icons/org/train.png" nil nil :ascent center)
-    ;;         ("Anniv" "~/.emacs.d/icons/org/anniversary.png" nil nil :ascent center)
-    ;;         ("Debian" "~/.emacs.d/icons/org/debian.png" nil nil :ascent center)
-    ;;         ("Plants" "~/.emacs.d/icons/org/tree.png" nil nil :ascent center)
-    ;;         ("Reading" "~/.emacs.d/icons/org/book.png" nil nil :ascent center)
-    ;;         ("\\(Holidays\\|Vacation\\)" "~/.emacs.d/icons/org/holidays.png" nil nil :ascent center)
-    ;;         (".*" '(space . (:width (16))))))
-    (tl/set-org-agenda-custom-commands))
+  ;; (setq org-agenda-category-icon-alist
+  ;;       '(("Visitors" "~/.emacs.d/icons/org/visitors.png" nil nil :ascent center)
+  ;;         ("\\(Party\\|Celeb\\)" "~/.emacs.d/icons/org/party.png" nil nil :ascent center)
+  ;;         ("Org" "~/.emacs.d/icons/org/org.png" nil nil :ascent center)
+  ;;         ("Medical" "~/.emacs.d/icons/org/medical.png" nil nil :ascent center)
+  ;;         ("Music" "~/.emacs.d/icons/org/music.png" nil nil :ascent center)
+  ;;         ("Trip" "~/.emacs.d/icons/org/trip.png" nil nil :ascent center)
+  ;;         ("Train" "~/.emacs.d/icons/org/train.png" nil nil :ascent center)
+  ;;         ("Anniv" "~/.emacs.d/icons/org/anniversary.png" nil nil :ascent center)
+  ;;         ("Debian" "~/.emacs.d/icons/org/debian.png" nil nil :ascent center)
+  ;;         ("Plants" "~/.emacs.d/icons/org/tree.png" nil nil :ascent center)
+  ;;         ("Reading" "~/.emacs.d/icons/org/book.png" nil nil :ascent center)
+  ;;         ("\\(Holidays\\|Vacation\\)" "~/.emacs.d/icons/org/holidays.png" nil nil :ascent center)
+  ;;         (".*" '(space . (:width (16))))))
+  (tl/set-org-agenda-custom-commands)
   :config
   (progn
     (defun tl/org-agenda-mode-init ()
@@ -348,7 +347,6 @@ If VANILLA is non-nil, run the standard `org-capture'."
       "gr" 'org-agenda-redo
       "." 'org-agenda-goto-today
       "gd" 'org-agenda-goto-date)))
-
 
 (defun tl/set-org-agenda-custom-commands ()
   ;; Use tags-todo like this (tags-todo "+PRIORITY={A}") will be very slow,
@@ -879,6 +877,35 @@ Headline^^            Visit entry^^               Filter^^                    Da
   ("gr" org-agenda-redo)
   ("." org-agenda-goto-today)
   ("gd" org-agenda-goto-date))
+
+
+;; time grid color block when `org-agenda-log-mode' on
+;; https://zhuanlan.zhihu.com/p/143258279
+;; https://emacs-china.org/t/org-agenda/8679/29
+(defun tl/org-agenda-time-grid-spacing ()
+  "Set different line spacing w.r.t. time duration."
+  (save-excursion
+    (let* ((background (alist-get 'background-mode (frame-parameters)))
+           (background-dark-p (string= background "dark"))
+           (colors (list "#1ABC9C" "#2ECC71" "#3498DB" "#9966ff"))
+           pos
+           duration)
+      (nconc colors colors)
+      (goto-char (point-min))
+      (while (setq pos (next-single-property-change (point) 'duration))
+        (goto-char pos)
+        (when (and (not (equal pos (point-at-eol)))
+                   (setq duration (org-get-at-bol 'duration)))
+          (let ((line-height (if (< duration 30) 1.0 (+ 0.5 (/ duration 60))))
+                (ov (make-overlay (point-at-bol) (1+ (point-at-eol)))))
+            (overlay-put ov 'face `(:background ,(car colors)
+                                    :foreground
+                                    ,(if background-dark-p "black" "white")))
+            (setq colors (cdr colors))
+            (overlay-put ov 'line-height line-height)
+            (overlay-put ov 'line-spacing (1- line-height))))))))
+
+(add-hook 'org-agenda-finalize-hook #'tl/org-agenda-time-grid-spacing)
 
 
 (provide '13org-agenda)

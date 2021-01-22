@@ -5,7 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-(defvar tl/org-clock-linkage-with-hammerspoon nil)
+(defvar tl/org-clock-linkage-with-hammerspoon t)
 
 
 ;;; clock
@@ -78,7 +78,6 @@
          (if org-clock-task-overrun "true" "false"))))
 
     (defun tl/org-clock-force-mode-line-update ()
-      (setq org-mode-line-string nil)
       (org-clock-update-mode-line)
       (tl/update-hammerspoon-org-clock-bar))
 
@@ -119,6 +118,40 @@
         org-mru-clock-predicate 'tl/org-mru-clock-exclude
         org-mru-clock-completing-read #'ivy-completing-read))
 
+;;; get the clock summary by tags
+(defun tl/org-clock-summary-by-tags (include-tags timerange &optional tstart tend noinsert)
+  "Get the clock summary by tags."
+  (interactive "P")
+  (let* ((timerange-numeric-value (prefix-numeric-value timerange))
+         (files (org-add-archive-files (org-agenda-files)))
+         (tags-time-alist (mapcar (lambda (tag) `(,tag . 0)) include-tags))
+         (output-string "")
+         (seconds-of-day 86400)
+         (tstart (or tstart (org-time-today)))
+         (tend (or tend (+ tstart seconds-of-day)))
+         h m done-something)
+    (dolist (file files)
+      (let ((org-agenda-buffer (if (file-exists-p file)
+                                   (org-get-agenda-file-buffer file)
+                                 (error "No such file %s" file))))
+        (with-current-buffer org-agenda-buffer
+          (dolist (current-tag include-tags)
+            (org-clock-sum tstart tend #'(lambda ()
+                                           (let ((head-tags (org-get-tags-at)))
+                                             (member current-tag head-tags))))
+            (setcdr (assoc current-tag tags-time-alist)
+                    (+ org-clock-file-total-minutes (cdr (assoc current-tag tags-time-alist))))))))
+    (dolist (item tags-time-alist)
+      (unless (equal (cdr item) 0)
+        (setq done-something t)
+        (setq h (/ (cdr item) 60)
+              m (- (cdr item) (* 60 h)))
+        (setq output-string (concat output-string (format "[-%s-] %.2d:%.2d\n" (car item) h m)))))
+    (unless done-something
+      (setq output-string (concat output-string "[-Nothing-] Done nothing!!!\n")))
+    (unless noinsert
+      (insert output-string))
+    output-string))
 
 
 

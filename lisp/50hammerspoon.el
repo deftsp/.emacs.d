@@ -19,7 +19,7 @@
 
         (error "illegal hammerspoon params")))
     (tl/with-suppress-message "Shell command succeeded with"
-      (shell-command (format "open -g \"%s\"" url)))))
+      (shell-command (format "open -g \"%s\"" (url-encode-url url))))))
 
 (defun tl/notify-hammerspoon-did-init ()
   (tl/open-hammerspoon-url "emacs_did_init"))
