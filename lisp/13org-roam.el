@@ -48,14 +48,14 @@
         '(("a" "Annotation" plain (function org-roam-capture--get-point)
            "%U ${body}\n"
            :file-name "${slug}"
-           :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n#+ROAM_ALIAS:\n\n"
+           :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS: other\n#+ROAM_ALIAS:\n\n"
            :immediate-finish t
            :unnarrowed t)
           ("r" "ref" plain
            (function org-roam-capture--get-point)
            ""
            :file-name "caps/${slug}"
-           :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n\n"
+           :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n#+CREATED: %u\n#+ROAM_TAGS: other\n#+LAST_MODIFIED: %U\n\n"
            :unnarrowed t)))
   :config
   (require 'org-roam-protocol)
