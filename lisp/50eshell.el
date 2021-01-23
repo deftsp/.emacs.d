@@ -201,180 +201,178 @@ is achieved by adding the relevant text properties."
 (use-package eshell
   :defer t
   :init
-  (progn
-    (setq eshell-cmpl-cycle-completions nil
-          eshell-error-if-no-glob t
-          eshell-history-size 500
-          eshell-save-history-on-exit t
-          eshell-scroll-to-bottom-on-input 'all
-          ;; auto truncate after 20k lines
-          eshell-buffer-maximum-lines 20000
-          eshell-hist-ignoredups t
-          eshell-prefer-lisp-functions nil
-          eshell-destroy-buffer-when-process-dies nil
-          ;; buffer shorthand -> echo foo > #'buffer
-          ;; eshell-buffer-shorthand t ; seem removed in Emacs26
-          ;; my prompt is easy enough to see
-          eshell-highlight-prompt nil
-          ;; treat 'echo' like shell echo
-          eshell-plain-echo-behavior t
-          ;; cache directory
-          eshell-directory-name (concat tl-cache-directory "eshell/"))
+  (setq eshell-cmpl-cycle-completions nil
+        eshell-error-if-no-glob t
+        eshell-history-size 500
+        eshell-save-history-on-exit t
+        eshell-scroll-to-bottom-on-input 'all
+        ;; auto truncate after 20k lines
+        eshell-buffer-maximum-lines 20000
+        eshell-hist-ignoredups t
+        eshell-prefer-lisp-functions nil
+        eshell-destroy-buffer-when-process-dies nil
+        ;; buffer shorthand -> echo foo > #'buffer
+        ;; eshell-buffer-shorthand t ; seem removed in Emacs26
+        ;; my prompt is easy enough to see
+        eshell-highlight-prompt nil
+        ;; treat 'echo' like shell echo
+        eshell-plain-echo-behavior t
+        ;; cache directory
+        eshell-directory-name (concat tl-cache-directory "eshell/"))
 
-    (when shell-protect-eshell-prompt
-      (add-hook 'eshell-after-prompt-hook 'tl//protect-eshell-prompt))
+  (when shell-protect-eshell-prompt
+    (add-hook 'eshell-after-prompt-hook 'tl//protect-eshell-prompt))
 
-    (autoload 'eshell-delchar-or-maybe-eof "em-rebind")
-    (add-hook 'eshell-mode-hook 'tl/eshell-mode-init))
+  (autoload 'eshell-delchar-or-maybe-eof "em-rebind")
+  (add-hook 'eshell-mode-hook 'tl/eshell-mode-init)
   :config
-  (progn
-    ;; Work around bug in eshell's preoutput-filter code.
-    ;; Eshell doesn't call preoutput-filter functions in the context of the eshell
-    ;; buffer. This breaks the xterm color filtering when the eshell buffer is updated
-    ;; when it's not currently focused.
-    ;; To remove if/when fixed upstream.
-    (defun eshell-output-filter@tl-with-buffer (fn process string)
-      (let ((proc-buf (if process (process-buffer process)
-                        (current-buffer))))
-        (when proc-buf
-          (with-current-buffer proc-buf
-            (funcall fn process string)))))
-    (advice-add
-     #'eshell-output-filter
-     :around
-     #'eshell-output-filter@tl-with-buffer)
+  ;; Work around bug in eshell's preoutput-filter code.
+  ;; Eshell doesn't call preoutput-filter functions in the context of the eshell
+  ;; buffer. This breaks the xterm color filtering when the eshell buffer is updated
+  ;; when it's not currently focused.
+  ;; To remove if/when fixed upstream.
+  (defun eshell-output-filter@tl-with-buffer (fn process string)
+    (let ((proc-buf (if process (process-buffer process)
+                      (current-buffer))))
+      (when proc-buf
+        (with-current-buffer proc-buf
+          (funcall fn process string)))))
+  (advice-add
+   #'eshell-output-filter
+   :around
+   #'eshell-output-filter@tl-with-buffer)
 
-    (require 'esh-opt)
+  (require 'esh-opt)
 
-    ;; quick commands
-    (defalias 'eshell/e 'find-file-other-window)
-    (defalias 'eshell/d 'dired)
+  ;; quick commands
+  (defalias 'eshell/e 'find-file-other-window)
+  (defalias 'eshell/d 'dired)
 
-    (require 'em-alias)
-    (require 'esh-io)
-    (eshell/alias "e" "find-file $1")
-    (eshell/alias "ff" "find-file $1")
-    (eshell/alias "emacs" "find-file $1")
-    (eshell/alias "ee" "find-file-other-window $1")
-    (eshell/alias "gd" "magit-diff-unstaged")
-    (eshell/alias "gds" "magit-diff-staged")
-    (eshell/alias "d" "dired $1")
+  (require 'em-alias)
+  (require 'esh-io)
+  (eshell/alias "e" "find-file $1")
+  (eshell/alias "ff" "find-file $1")
+  (eshell/alias "emacs" "find-file $1")
+  (eshell/alias "ee" "find-file-other-window $1")
+  (eshell/alias "gd" "magit-diff-unstaged")
+  (eshell/alias "gds" "magit-diff-staged")
+  (eshell/alias "d" "dired $1")
 
-    ;; The 'ls' executable requires the Gnu version on the Mac
-    (let ((ls (if (file-exists-p "/usr/local/bin/gls")
-                  "/usr/local/bin/gls"
-                "/bin/ls")))
-      (eshell/alias "ll" (concat ls " -AlohG --color=always")))
+  ;; The 'ls' executable requires the Gnu version on the Mac
+  (let ((ls (if (file-exists-p "/usr/local/bin/gls")
+                "/usr/local/bin/gls"
+              "/bin/ls")))
+    (eshell/alias "ll" (concat ls " -AlohG --color=always")))
 
-    ;; don't pause the output through the $PAGER variable
-    (setenv "PAGER" "cat")
+  ;; don't pause the output through the $PAGER variable
+  (setenv "PAGER" "cat")
 
-    ;; support `em-smart'
-    (when shell-enable-smart-eshell
-      (require 'em-smart)
-      (setq eshell-where-to-jump 'begin
-            eshell-review-quick-commands nil
-            eshell-smart-space-goes-to-end t)
-      (add-hook 'eshell-mode-hook 'eshell-smart-initialize))
+  ;; support `em-smart'
+  (when shell-enable-smart-eshell
+    (require 'em-smart)
+    (setq eshell-where-to-jump 'begin
+          eshell-review-quick-commands nil
+          eshell-smart-space-goes-to-end t)
+    (add-hook 'eshell-mode-hook 'eshell-smart-initialize))
 
-    ;; Visual commands
-    (require 'em-term)
-    ;; Eshell would get somewhat confused if I ran the following commands
-    ;; directly through the normal Elisp library, as these need the better
-    ;; handling of ansiterm
-    (mapc (lambda (x) (push x eshell-visual-commands))
-          '("el" "elinks" "htop" "less" "ssh" "tmux" "top" "tail"))
+  ;; Visual commands
+  (require 'em-term)
+  ;; Eshell would get somewhat confused if I ran the following commands
+  ;; directly through the normal Elisp library, as these need the better
+  ;; handling of ansiterm
+  (mapc (lambda (x) (push x eshell-visual-commands))
+        '("el" "elinks" "htop" "less" "ssh" "tmux" "top" "tail"))
 
-    (setq eshell-visual-subcommands
-          '(("git" "log" "diff" "show"
-             "l" "lol" "d" "dc") ; aliases
-            ("sudo" "vi" "visudo")))
-    ;; automatically truncate buffer after output
-    (when (boundp 'eshell-output-filter-functions)
-      (push 'eshell-truncate-buffer eshell-output-filter-functions))
+  (setq eshell-visual-subcommands
+        '(("git" "log" "diff" "show"
+           "l" "lol" "d" "dc") ; aliases
+          ("sudo" "vi" "visudo")))
+  ;; automatically truncate buffer after output
+  (when (boundp 'eshell-output-filter-functions)
+    (push 'eshell-truncate-buffer eshell-output-filter-functions))
 
-    (use-package eshell-autojump)
+  (use-package eshell-autojump)
 
-    ;; http://www.modernemacs.com/post/custom-eshell/
-    (use-package eshell-prompt-extras
-      :init
-      (defface tl/eshell-base-face
-        '((t :foreground "black"
-             :background "aquamarine"
-             :font "Knack Nerd Font"))
-        "Base face for shell."
-        :group 'eshell-prompt)
+  ;; http://www.modernemacs.com/post/custom-eshell/
+  (use-package eshell-prompt-extras
+    :init
+    (defface tl/eshell-base-face
+      '((t :foreground "black"
+           :background "aquamarine"
+           :font "Knack Nerd Font"))
+      "Base face for shell."
+      :group 'eshell-prompt)
 
-      (defface epe-user-face
-        '((t :inherit tl/eshell-base-face :foreground "red"))
-        "Face of user in prompt."
-        :group 'eshell-prompt)
+    (defface epe-user-face
+      '((t :inherit tl/eshell-base-face :foreground "red"))
+      "Face of user in prompt."
+      :group 'eshell-prompt)
 
-      (defface epe-host-face
-        '((t :inherit tl/eshell-base-face  :foreground "blue"))
-        "Face of host in prompt."
-        :group 'eshell-prompt)
+    (defface epe-host-face
+      '((t :inherit tl/eshell-base-face  :foreground "blue"))
+      "Face of host in prompt."
+      :group 'eshell-prompt)
 
-      (defface epe-time-face
-        '((t :inherit tl/eshell-base-face :foreground "yellow"))
-        "Face of time in prompt."
-        :group 'eshell-prompt)
+    (defface epe-time-face
+      '((t :inherit tl/eshell-base-face :foreground "yellow"))
+      "Face of time in prompt."
+      :group 'eshell-prompt)
 
-      (defface epe-delimiter-face
-        '((t :inherit tl/eshell-base-face  :foreground "yellow"))
-        "Face of delimiter in prompt."
-        :group 'eshell-prompt)
+    (defface epe-delimiter-face
+      '((t :inherit tl/eshell-base-face  :foreground "yellow"))
+      "Face of delimiter in prompt."
+      :group 'eshell-prompt)
 
-      (defun paloryemac//eshell-prompt-function ()
-        "A eshell-prompt theme with full path, smiliar to oh-my-zsh theme."
-        (setq eshell-prompt-regexp "^\n┌─.*\n.* λ[#]* ")
-        (concat
-         (if (epe-remote-p)
-             (progn
-               (concat
-                (epe-colorize-with-face (epe-remote-user) 'epe-user-face)
-                (epe-colorize-with-face "@" 'epe-host-face)
-                (epe-colorize-with-face (epe-remote-host) 'epe-host-face)))
+    (defun paloryemac//eshell-prompt-function ()
+      "A eshell-prompt theme with full path, smiliar to oh-my-zsh theme."
+      (setq eshell-prompt-regexp "^\n┌─.*\n.* λ[#]* ")
+      (concat
+       (if (epe-remote-p)
            (progn
              (concat
-              (epe-colorize-with-face  "\n┌─" 'epe-delimiter-face)
-              (epe-colorize-with-face (format-time-string "%H:%M:%S" (current-time)) 'epe-time-face)
-              (epe-colorize-with-face  " " 'epe-delimiter-face)
-              (epe-colorize-with-face (user-login-name) 'epe-user-face)
+              (epe-colorize-with-face (epe-remote-user) 'epe-user-face)
               (epe-colorize-with-face "@" 'epe-host-face)
-              (epe-colorize-with-face (system-name) 'epe-host-face))))
+              (epe-colorize-with-face (epe-remote-host) 'epe-host-face)))
+         (progn
+           (concat
+            (epe-colorize-with-face  "\n┌─" 'epe-delimiter-face)
+            (epe-colorize-with-face (format-time-string "%H:%M:%S" (current-time)) 'epe-time-face)
+            (epe-colorize-with-face  " " 'epe-delimiter-face)
+            (epe-colorize-with-face (user-login-name) 'epe-user-face)
+            (epe-colorize-with-face "@" 'epe-host-face)
+            (epe-colorize-with-face (system-name) 'epe-host-face))))
+       (concat
+        (epe-colorize-with-face ":" 'epe-dir-face)
+        (epe-colorize-with-face (concat (epe-fish-path (eshell/pwd))) 'epe-dir-face)
+        (epe-colorize-with-face  "\n" 'epe-delimiter-face))
+       (epe-colorize-with-face  "└─" 'epe-delimiter-face)
+       (when epe-show-python-info
+         (when (fboundp 'epe-venv-p)
+           (when (and (epe-venv-p) venv-current-name)
+             (epe-colorize-with-face (concat "(" venv-current-name ") ") 'epe-venv-face))))
+       (when (epe-git-p)
          (concat
           (epe-colorize-with-face ":" 'epe-dir-face)
-          (epe-colorize-with-face (concat (epe-fish-path (eshell/pwd))) 'epe-dir-face)
-          (epe-colorize-with-face  "\n" 'epe-delimiter-face))
-         (epe-colorize-with-face  "└─" 'epe-delimiter-face)
-         (when epe-show-python-info
-           (when (fboundp 'epe-venv-p)
-             (when (and (epe-venv-p) venv-current-name)
-               (epe-colorize-with-face (concat "(" venv-current-name ") ") 'epe-venv-face))))
-         (when (epe-git-p)
-           (concat
-            (epe-colorize-with-face ":" 'epe-dir-face)
-            (epe-colorize-with-face
-             (concat (epe-git-branch)
-                     (epe-git-dirty)
-                     (epe-git-untracked)
-                     (let ((unpushed (epe-git-unpushed-number)))
-                       (unless (= unpushed 0)
-                         (concat ":" (number-to-string unpushed)))))
-             'epe-git-face)))
-         (epe-colorize-with-face " λ" 'epe-symbol-face)
-         (epe-colorize-with-face (if (= (user-uid) 0) "#" "") 'epe-sudo-symbol-face)
-         " "))
+          (epe-colorize-with-face
+           (concat (epe-git-branch)
+                   (epe-git-dirty)
+                   (epe-git-untracked)
+                   (let ((unpushed (epe-git-unpushed-number)))
+                     (unless (= unpushed 0)
+                       (concat ":" (number-to-string unpushed)))))
+           'epe-git-face)))
+       (epe-colorize-with-face " λ" 'epe-symbol-face)
+       (epe-colorize-with-face (if (= (user-uid) 0) "#" "") 'epe-sudo-symbol-face)
+       " "))
 
-      (setq eshell-highlight-prompt nil
-            eshell-prompt-function 'paloryemac//eshell-prompt-function))
+    (setq eshell-highlight-prompt nil
+          eshell-prompt-function 'paloryemac//eshell-prompt-function))
 
-    (use-package eshell-fringe-status
-      :defer t
-      :commands (eshell-fringe-status-mode)
-      :init
-      (add-hook 'eshell-mode-hook 'eshell-fringe-status-mode))))
+  (use-package eshell-fringe-status
+    :defer t
+    :commands (eshell-fringe-status-mode)
+    :init
+    (add-hook 'eshell-mode-hook 'eshell-fringe-status-mode)))
 
 
 
@@ -400,12 +398,11 @@ is achieved by adding the relevant text properties."
 
 (use-package xterm-color
   :init
-  (progn
-    ;; Comint and Shell
-    (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter)
-    (setq comint-output-filter-functions
-          (remove 'ansi-color-process-output comint-output-filter-functions))
-    (add-hook 'eshell-mode-hook 'tl/init-eshell-xterm-color)))
+  ;; Comint and Shell
+  (add-hook 'comint-preoutput-filter-functions 'xterm-color-filter)
+  (setq comint-output-filter-functions
+        (remove 'ansi-color-process-output comint-output-filter-functions))
+  (add-hook 'eshell-mode-hook 'tl/init-eshell-xterm-color))
 
 ;;; eshell here
 ;; http://www.howardism.org/Technical/Emacs/eshell-fun.html
