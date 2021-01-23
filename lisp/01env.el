@@ -101,15 +101,6 @@
 ;; The "exec-path" is used by emacs itself to find programs it needs for its features, such as spell
 ;; checking, file compression, compiling, grep, diff, etc.
 
-;; disable it, see: [[https://github.com/syl20bnr/spacemacs/issues/8315][Evil commands are very slow · Issue #8315 · syl20bnr/spacemacs]]
-;; (with-eval-after-load 'exec-path-from-shell
-;;   (when (memq window-system '(mac ns))
-;;     (add-to-list 'exec-path-from-shell-variables "GOROOT")
-;;     (setq exec-path-from-shell-check-startup-files nil)
-;;     ;; List of environment variables which are copied from the shell.
-;;     (push "HISTFILE" exec-path-from-shell-variables)
-;;     (exec-path-from-shell-initialize)))
-
 (when (eq system-type 'darwin)
   (setenv "INFOPATH" (concat (expand-file-name "~/share/info:") (getenv "INFOPATH"))))
 
