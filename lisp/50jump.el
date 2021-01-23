@@ -17,6 +17,11 @@
     (define-key global-map (kbd "M-g x") 'dumb-jump-go-prefer-external)
     (define-key global-map (kbd "M-g o") 'dumb-jump-go-prefer-external-other-window)))
 
+
+;; FIXME: remove it after smart-jump can be required
+(require 'xref)
+(load "~/.emacs.d/straight/build/smart-jump/smart-jump.el")
+
 (use-package smart-jump
   :commands (smart-jump-go smart-jump-back smart-jump-references)
   :init
