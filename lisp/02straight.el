@@ -32,6 +32,19 @@
 (straight-use-package 'use-package)
 (straight-use-package 'use-package-chords)
 
+;; [[https://github.com/syl20bnr/spacemacs/issues/8315][Evil commands are very slow · Issue #8315 · syl20bnr/spacemacs]]
+;; emacs-mac which have the window-system as `mac' port have the correctly path
+;; emacs-plus which have the window-system as `ns' have the wrong PATH unless it start from the terminal
+(use-package exec-path-from-shell
+  :straight exec-path-from-shell
+  :if (memq window-system '(ns))
+  :config
+  (add-to-list 'exec-path-from-shell-variables "GOROOT")
+  (setq exec-path-from-shell-check-startup-files nil)
+  ;; List of environment variables which are copied from the shell.
+  (push "HISTFILE" exec-path-from-shell-variables)
+  (exec-path-from-shell-initialize))
+
 (straight-use-package 'async)
 (straight-use-package 'a)
 (straight-use-package 's)
@@ -97,8 +110,8 @@
 (straight-use-package '(org-link-minor-mode :type git :host github :repo "seanohalpin/org-link-minor-mode"))
 (straight-use-package '(org-protocol-capture-html :type git :host github :repo "alphapapa/org-protocol-capture-html"))
 (straight-use-package 'org-ql)
-(straight-use-package 'org-roam)
-(straight-use-package 'org-roam-server)
+(straight-use-package '(org-roam :no-native-compile t))
+(straight-use-package '(org-roam-server :no-native-compile t))
 (straight-use-package '(org-spacer :type git :host github :repo "dustinlacewell/org-spacer.el"))
 (straight-use-package 'org-super-agenda)
 (straight-use-package 'org-trello)
@@ -416,7 +429,6 @@
 (straight-use-package 'pkg-info)
 (straight-use-package 'winum)
 (straight-use-package 'dash-at-point)
-(straight-use-package 'exec-path-from-shell)
 (straight-use-package 'json-rpc)
 (straight-use-package 'platformio-mode)
 (straight-use-package 'with-editor)
@@ -437,7 +449,7 @@
 (straight-use-package 'ws-butler)
 (straight-use-package 'diff-hl)
 (straight-use-package 'key-chord)
-(straight-use-package 'powerline)
+(straight-use-package '(powerline :no-native-compile t))
 (straight-use-package 'xterm-color)
 (straight-use-package 'diminish)
 (straight-use-package 'fill-column-indicator)

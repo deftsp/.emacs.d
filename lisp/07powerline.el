@@ -17,10 +17,10 @@
 
 (use-package powerline
   :init
-  (progn
-    (setq powerline-text-scale-factor 0.8
-          ;; powerline-default-separator 'utf-8 ; 'arrow
-          powerline-height 20)))
+  (setq powerline-text-scale-factor 0.8
+        ;; powerline-default-separator 'utf-8 ; 'arrow
+        ;; powerline-image-apple-rgb t
+        powerline-height 20))
 
 (defvar powerline-git-state-mark-modeline t
   "When t git state mark on will work with powrline instead of in the front of
