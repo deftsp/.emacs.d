@@ -119,3 +119,4 @@ org-roam.db-shm
 org-roam.db-wal
 var/
 .dap-breakpoints
+eln-cache/
