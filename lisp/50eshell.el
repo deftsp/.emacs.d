@@ -217,8 +217,7 @@ is achieved by adding the relevant text properties."
         eshell-highlight-prompt nil
         ;; treat 'echo' like shell echo
         eshell-plain-echo-behavior t
-        ;; cache directory
-        eshell-directory-name (concat tl-cache-directory "eshell/"))
+        eshell-directory-name (concat user-emacs-directory "eshell/"))
 
   (when shell-protect-eshell-prompt
     (add-hook 'eshell-after-prompt-hook 'tl//protect-eshell-prompt))
@@ -250,6 +249,7 @@ is achieved by adding the relevant text properties."
 
   (require 'em-alias)
   (require 'esh-io)
+  ;; have already permanent to ~/.emacs.d/eshell/alias
   (eshell/alias "e" "find-file $1")
   (eshell/alias "ff" "find-file $1")
   (eshell/alias "emacs" "find-file $1")
