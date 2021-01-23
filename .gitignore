@@ -120,3 +120,4 @@ org-roam.db-wal
 var/
 .dap-breakpoints
 eln-cache/
+eshell/
