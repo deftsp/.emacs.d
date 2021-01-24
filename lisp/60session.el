@@ -201,7 +201,8 @@
     (workgroups-mode +1)))
 
 ;; make sure workgroups2 runs before desktop
-(add-hook 'after-init-hook 'tl/turn-on-workgroups-mode)
+;; not work with Emacs28
+;; (add-hook 'after-init-hook 'tl/turn-on-workgroups-mode)
 
 (provide '60session)
 
