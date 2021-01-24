@@ -40,6 +40,8 @@
   :if (memq window-system '(ns))
   :config
   (add-to-list 'exec-path-from-shell-variables "GOROOT")
+  (add-to-list 'exec-path-from-shell-variables "LIBRARY_PATH")
+  (add-to-list 'exec-path-from-shell-variables "LD_LIBRARY_PATH")
   (setq exec-path-from-shell-check-startup-files nil)
   ;; List of environment variables which are copied from the shell.
   (push "HISTFILE" exec-path-from-shell-variables)
@@ -96,9 +98,11 @@
 (straight-use-package 'undo-fu)
 
 
-(straight-use-package 'org)
+(straight-use-package '(org :build (:not native-compile)))
 ;; (straight-use-package 'org-contrib) ; since 9.5
-(straight-use-package 'org-plus-contrib)
+;; (straight-use-package 'org-plus-contrib)
+(straight-use-package '(org-plus-contrib :build (:not native-compile)))
+
 
 (straight-use-package 'org-brain)
 (straight-use-package 'org-mru-clock)
@@ -171,7 +175,7 @@
 (straight-use-package 'poetry)
 (straight-use-package 'pipenv)
 
-
+(straight-use-package '(powerline :build (:not native-compile)))
 (straight-use-package '(unicad :type git :host github :repo "ukari/unicad"))
 (straight-use-package 'rainbow-mode)
 (straight-use-package 'magit)
@@ -355,7 +359,7 @@
 (straight-use-package 'highlight-indentation)
 (straight-use-package 'transpose-frame)
 (straight-use-package 'cmake-mode)
-(straight-use-package 'hindent)
+;; (straight-use-package '(hindent :no-native-compile t))
 ;; (straight-use-package 'treemacs)
 (straight-use-package 'cnfonts)
 (straight-use-package 'hl-line+)
@@ -440,7 +444,7 @@
 (straight-use-package 'explain-pause-mode)
 (straight-use-package 'jump-char)
 (straight-use-package 'pos-tip)
-(straight-use-package 'workgroups2)
+(straight-use-package '(workgroups2 :build (:not native-compile)))
 (straight-use-package 'deft)
 (straight-use-package 'eyebrowse)
 (straight-use-package 'kaleidoscope)
@@ -448,7 +452,6 @@
 (straight-use-package 'ws-butler)
 (straight-use-package 'diff-hl)
 (straight-use-package 'key-chord)
-(straight-use-package 'powerline)
 (straight-use-package 'xterm-color)
 (straight-use-package 'diminish)
 (straight-use-package 'fill-column-indicator)
