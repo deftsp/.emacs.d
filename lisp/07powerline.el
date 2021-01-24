@@ -5,11 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;;; Code:
-;; currently when ns-use-srgb-colorspace is t separator color are wrong
-;; see https://github.com/milkypostman/powerline/issues/54.
-
-;; install this fork https://github.com/unic0rn/powerline instead, and installed
-;; patched fonts from https://github.com/Lokaltog/powerline-fonts .
+;; installed patched fonts from https://github.com/Lokaltog/powerline-fonts .
 
 ;; vc.*face inherit the face of mode-line, it cause powerline-vc can not change
 ;; it's background and foreground. Defining vc-state-base-face not to inherit
@@ -19,7 +15,8 @@
   :init
   (setq powerline-text-scale-factor 0.8
         ;; powerline-default-separator 'utf-8 ; 'arrow
-        ;; powerline-image-apple-rgb t
+        powerline-image-apple-rgb nil
+        ns-use-srgb-colorspace t
         powerline-height 20))
 
 (defvar powerline-git-state-mark-modeline t
