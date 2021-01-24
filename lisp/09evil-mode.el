@@ -81,7 +81,7 @@
 ;; FIXME: as Official Emacs 24.4, if set color color,  when multile
 ;; windows (> 6), C-h evil-mode `q' then quit the help window will be very slow
 ;; see more https://bitbucket.org/lyro/evil/issue/487/after-set-colors-for-different-state-by
-(if (eq window-system 'mac) ; emacs-mac-port (https://github.com/railwaycat/emacs-mac-port)
+(if (member window-system '(ns mac))   ; emacs-mac-port (https://github.com/railwaycat/emacs-mac-port)
     (setq evil-emacs-state-cursor    `(box    ,(face-attribute 'tl/evil-emacs-tag    :foreground))
           evil-normal-state-cursor   `(box    ,(face-attribute 'tl/evil-normal-tag   :foreground))
           evil-insert-state-cursor   `(box    ,(face-attribute 'tl/evil-insert-tag   :foreground))

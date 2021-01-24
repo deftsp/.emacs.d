@@ -582,6 +582,10 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
 ;;   (define-prefix-command 'ctl-z-map)
 ;;   (global-set-key (kbd "C-z") 'ctl-z-map))
 
+;; emacs-mac-port have already bind M-h
+(when (eq window-system 'ns)
+  (global-set-key (kbd "M-h") 'ns-do-hide-emacs))
+
 ;;; view mode
 ;; rebind "C-x C-q" to `view-mode' instead of `read-only-mode'
 (define-key ctl-x-map "\C-q" 'view-mode)
