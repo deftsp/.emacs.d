@@ -247,23 +247,6 @@ is achieved by adding the relevant text properties."
   (defalias 'eshell/e 'find-file-other-window)
   (defalias 'eshell/d 'dired)
 
-  (require 'em-alias)
-  (require 'esh-io)
-  ;; have already permanent to ~/.emacs.d/eshell/alias
-  (eshell/alias "e" "find-file $1")
-  (eshell/alias "ff" "find-file $1")
-  (eshell/alias "emacs" "find-file $1")
-  (eshell/alias "ee" "find-file-other-window $1")
-  (eshell/alias "gd" "magit-diff-unstaged")
-  (eshell/alias "gds" "magit-diff-staged")
-  (eshell/alias "d" "dired $1")
-
-  ;; The 'ls' executable requires the Gnu version on the Mac
-  (let ((ls (if (file-exists-p "/usr/local/bin/gls")
-                "/usr/local/bin/gls"
-              "/bin/ls")))
-    (eshell/alias "ll" (concat ls " -AlohG --color=always")))
-
   ;; don't pause the output through the $PAGER variable
   (setenv "PAGER" "cat")
 
@@ -498,7 +481,29 @@ file to edit."
     (shell-command-to-string cmd)))
 
 
-(defun eshell/dired () (dired (eshell/pwd)))
+(defun eshell/dired ()
+  (dired (eshell/pwd)))
+
+
+;; (require 'em-alias)
+;; (require 'esh-io)
+;; have already permanent to ~/.emacs.d/eshell/alias
+;; N.B. every `eshell/alias' will cause the file ~/.emacs.d/eshell/alias be save once
+;; (eshell/alias "e" "find-file $1")
+;; (eshell/alias "ff" "find-file $1")
+;; (eshell/alias "emacs" "find-file $1")
+;; (eshell/alias "ee" "find-file-other-window $1")
+;; (eshell/alias "gd" "magit-diff-unstaged")
+;; (eshell/alias "gds" "magit-diff-staged")
+;; (eshell/alias "d" "dired $1")
+
+;; ;; The 'ls' executable requires the Gnu version on the Mac
+;; (let ((ls (if (file-exists-p "/usr/local/bin/gls")
+;;               "/usr/local/bin/gls"
+;;             "/bin/ls")))
+;;   (eshell/alias "ll" (concat ls " -AlohG --color=always")))
+
+
 
 ;;; Predicate Filters and Modifiers
 
