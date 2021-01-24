@@ -14,6 +14,11 @@
 ;; want to see how often GC happens
 ;; (setq garbage-collection-messages nil)
 
+(setq comp-deferred-compilation nil)
+(with-eval-after-load 'comp
+  ;; https://github.com/raxod502/straight.el/issues/680
+  (add-to-list 'comp-deferred-compilation-deny-list "\\(?:[^z-a]*-autoloads\\.el$\\)"))
+
 ;; always load the newer one between .el and .elc
 (setq load-prefer-newer t)
 
@@ -32,6 +37,8 @@
 (when (featurep 'xemacs)
   (error "This .emacs file (probably) does not work with XEmacs."))
 
+(when (version< emacs-version "28.0.50")
+  (error "This .emacs file (probably) work with Emacs >= 28.0.50"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; what kind of system are we using?  start with these, as it will influence
