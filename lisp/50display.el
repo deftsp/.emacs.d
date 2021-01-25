@@ -17,7 +17,7 @@
                               (ns-appearance . dark) ;; or light - depending on your theme
                               ;; https://github.com/railwaycat/homebrew-emacsmacport/issues/124
                               ;; https://github.com/railwaycat/homebrew-emacsmacport/issues/139
-                              (menu-bar-lines . ,(if (eq window-system 'mac) 1 0))
+                              (menu-bar-lines . ,(if (member window-system '(mac ns)) 1 0))
                               (width . 201)
                               (height . 51)
                               (top . 22) ; (frame-parameter nil 'top)
