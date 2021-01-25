@@ -584,7 +584,10 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
 
 ;; emacs-mac-port have already bind M-h
 (when (eq window-system 'ns)
-  (global-set-key (kbd "M-h") 'ns-do-hide-emacs))
+  (general-define-key
+   :states 'normal
+   :keymaps 'override
+   "M-h" 'ns-do-hide-emacs))
 
 ;;; view mode
 ;; rebind "C-x C-q" to `view-mode' instead of `read-only-mode'
