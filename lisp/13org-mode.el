@@ -258,7 +258,16 @@
       (let ((inhibit-message t))
         (org-save-all-org-buffers)))
 
-    (add-function :after after-focus-change-function 'tl//org-save-all-org-buffers-quietly) ; Sacha Chua
+    (defun tl//after-focus-out-save-all-org-buffers ()
+      (let ((focus-out t))
+        (with-no-warnings
+          (dolist (f (frame-list) focus-out)
+            (setq focus-out (and focus-out (not (frame-focus-state f))))))
+        (when focus-out
+          (tl//org-save-all-org-buffers-quietly))))
+
+    (add-function :after after-focus-change-function 'tl//after-focus-out-save-all-org-buffers) ; Sacha Chua
+    ;; (remove-function after-focus-change-function 'tl//org-save-all-org-buffers-quietly)
 
     (use-package evil-org
       :diminish evil-org-mode
