@@ -258,16 +258,17 @@
       (let ((inhibit-message t))
         (org-save-all-org-buffers)))
 
-    (defun tl//after-focus-out-save-all-org-buffers ()
-      (let ((focus-out t))
-        (with-no-warnings
-          (dolist (f (frame-list) focus-out)
-            (setq focus-out (and focus-out (not (frame-focus-state f))))))
-        (when focus-out
-          (tl//org-save-all-org-buffers-quietly))))
+    ;; (defun tl//after-focus-out-save-all-org-buffers ()
+    ;;   (let ((focus-out t))
+    ;;     (with-no-warnings
+    ;;       (dolist (f (frame-list) focus-out)
+    ;;         (setq focus-out (and focus-out (not (frame-focus-state f))))))
+    ;;     (when focus-out
+    ;;       (tl//org-save-all-org-buffers-quietly))))
 
-    (add-function :after after-focus-change-function 'tl//after-focus-out-save-all-org-buffers) ; Sacha Chua
-    ;; (remove-function after-focus-change-function 'tl//org-save-all-org-buffers-quietly)
+    ;; (add-function :after after-focus-change-function 'tl//after-focus-out-save-all-org-buffers) ; Sacha Chua
+    ;; (remove-function after-focus-change-function 'tl//after-focus-out-save-all-org-buffers)
+    (add-hook 'tl/emacs-deactivate-hook 'tl//org-save-all-org-buffers-quietly)
 
     (use-package evil-org
       :diminish evil-org-mode
@@ -847,10 +848,6 @@ buffer which do not already have one. When `arg' nil only adds ids if the
                (call-interactively 'org-clock-in-last))
               ((string= action "org-clock-bar-clock-out")
                (call-interactively 'org-clock-out))
-              ((string= action "activated")
-               (tl/on-emacs-activated))
-              ;; ((string= action "deactivated")
-              ;;  (tl/on-emacs-deactivated))
               ((string= action "select-previous-input-source")
                (tl/on-select-previous-input-source data)))))
 
