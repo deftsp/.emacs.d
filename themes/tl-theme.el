@@ -502,7 +502,7 @@
    '(flycheck-inline-info ((t (:inherit compilation-info :slant italic))))
 
    ;; flyspell
-   '(flyspell-incorrect ((t (:weight bold :underline (:style wave :color "#f0f030")))))
+   '(flyspell-incorrect ((t (:weight bold :underline (:style wave :color "#00ffff")))))
 
    ;; quick-peek
    '(quick-peek-background-face ((t (:background "#23384d" :height 0.9 :slant italic :extend t))))
