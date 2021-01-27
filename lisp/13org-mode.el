@@ -846,10 +846,10 @@ buffer which do not already have one. When `arg' nil only adds ids if the
                (call-interactively 'tl/update-hammerspoon-org-clock-bar))
               ((string= action "org-clock-bar-clock-in-last")
                (call-interactively 'org-clock-in-last))
+              ;; ((string= action "select-previous-input-source")
+              ;;  (tl/on-select-previous-input-source data))
               ((string= action "org-clock-bar-clock-out")
-               (call-interactively 'org-clock-out))
-              ((string= action "select-previous-input-source")
-               (tl/on-select-previous-input-source data)))))
+               (call-interactively 'org-clock-out)))))
 
     (add-to-list 'org-protocol-protocol-alist
                  '("Handle action from hammerspoon"
