@@ -53,6 +53,25 @@
 (straight-use-package 'f)
 (straight-use-package 'ht)
 
+(straight-use-package '(org-plus-contrib :build (:not native-compile)))
+(straight-use-package 'org-brain)
+(straight-use-package 'org-mru-clock)
+(straight-use-package '(org-bullets :type git :host github :repo "deftsp/org-bullets" :branch "shihpin"))
+(straight-use-package 'org-clock-convenience)
+(straight-use-package 'org-download)
+(straight-use-package 'org-fancy-priorities)
+(straight-use-package 'org-journal)
+(straight-use-package 'org-link-beautify)
+(straight-use-package '(org-link-minor-mode :type git :host github :repo "seanohalpin/org-link-minor-mode"))
+(straight-use-package '(org-protocol-capture-html :type git :host github :repo "alphapapa/org-protocol-capture-html"))
+(straight-use-package 'org-ql)
+(straight-use-package 'org-roam)
+(straight-use-package 'org-roam-server)
+(straight-use-package '(org-spacer :type git :host github :repo "dustinlacewell/org-spacer.el"))
+(straight-use-package 'org-super-agenda)
+(straight-use-package 'org-trello)
+(straight-use-package 'ob-http)
+
 ;; register my fork of ace-window before it's registered by the origin recipe. Otherwise, there will a warning like "Two
 ;; different recipes given for ..."
 (straight-use-package
@@ -97,32 +116,6 @@
 ;; (straight-use-package 'undo-tree)
 (straight-use-package 'undo-fu)
 
-
-(straight-use-package '(org :build (:not native-compile)))
-;; (straight-use-package 'org-contrib) ; since 9.5
-;; (straight-use-package 'org-plus-contrib)
-(straight-use-package '(org-plus-contrib :build (:not native-compile)))
-
-
-(straight-use-package 'org-brain)
-(straight-use-package 'org-mru-clock)
-(straight-use-package '(org-bullets :type git :host github :repo "deftsp/org-bullets" :branch "shihpin"))
-(straight-use-package 'org-clock-convenience)
-(straight-use-package 'org-download)
-(straight-use-package 'org-fancy-priorities)
-(straight-use-package 'org-journal)
-(straight-use-package 'org-link-beautify)
-(straight-use-package '(org-link-minor-mode :type git :host github :repo "seanohalpin/org-link-minor-mode"))
-(straight-use-package '(org-protocol-capture-html :type git :host github :repo "alphapapa/org-protocol-capture-html"))
-(straight-use-package 'org-ql)
-(straight-use-package 'org-roam)
-(straight-use-package 'org-roam-server)
-(straight-use-package '(org-spacer :type git :host github :repo "dustinlacewell/org-spacer.el"))
-(straight-use-package 'org-super-agenda)
-(straight-use-package 'org-trello)
-(straight-use-package 'ob-http)
-
-
 ;; (straight-use-package 'flx) ; insteaded by prescient.el
 (straight-use-package 'prescient)
 
@@ -133,8 +126,6 @@
 (straight-use-package 'ivy-rich)
 (straight-use-package 'counsel-tramp)
 (straight-use-package 'ivy-prescient)
-
-;; (straight-use-package 'selectrum-prescient)
 
 (straight-use-package 'company)
 (straight-use-package 'company-posframe)
