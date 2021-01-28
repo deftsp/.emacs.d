@@ -299,7 +299,7 @@
     (defun tl/org-mode-init ()
       (semantic-mode -1)
       (org-num-mode  +1)
-      (display-line-numbers-mode -1))
+      (display-line-numbers-mode +1))
 
     (add-to-list 'org-mode-hook 'tl/org-mode-init)
 
