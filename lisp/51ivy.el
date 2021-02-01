@@ -125,6 +125,16 @@
               ""))
             (t nil)))))
 
+;; TODO: use fuz.el instead prescient.el
+;; [[https://github.com/rustify-emacs/fuz.el][rustify-emacs/fuz.el: Fast and precise fuzzy scoring/matching utils for Emacs, powered by rust]]
+;; (use-package ivy-fuz
+;;   :after ivy
+;;   :init
+;;   (setq ivy-sort-matches-functions-alist '((t . ivy-fuz-sort-fn)))
+;;   (setq ivy-re-builders-alist '((t . ivy-fuz-regex-fuzzy)))
+;;   :config
+;;   (add-to-list 'ivy-highlight-functions-alist '(ivy-fuz-regex-fuzzy . ivy-fuz-highlight-fn)))
+
 (use-package ivy
   :defer t
   :diminish ivy-mode

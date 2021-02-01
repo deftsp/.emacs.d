@@ -118,6 +118,7 @@
 
 ;; (straight-use-package 'flx) ; insteaded by prescient.el
 (straight-use-package 'prescient)
+;; (straight-use-package 'ivy-fuz)
 
 (straight-use-package 'swiper)
 (straight-use-package 'ivy-hydra)
