@@ -587,6 +587,7 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   (general-define-key
    :states 'normal
    :keymaps 'override
+   "M-`" 'other-frame
    "M-h" 'ns-do-hide-emacs))
 
 ;;; view mode
