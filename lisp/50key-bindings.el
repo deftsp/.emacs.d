@@ -585,7 +585,7 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
 ;; emacs-mac-port have already bind M-h
 (when (eq window-system 'ns)
   (general-define-key
-   :states 'normal
+   :states '(normal emacs)
    :keymaps 'override
    "M-`" 'other-frame
    "M-h" 'ns-do-hide-emacs))
