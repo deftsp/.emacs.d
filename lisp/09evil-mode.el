@@ -359,6 +359,7 @@ kill internal buffers too."
           (haskell-interactive-mode  . insert)
           (helpful-mode              . motion)
           (message-mode              . emacs)
+          (org-agenda-mode           . normal)
           (nrepl-mode                . insert)
           (prodigy-mode              . evilified)
           (prodigy-view-mode         . evilified)
