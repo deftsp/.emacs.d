@@ -270,6 +270,9 @@ If VANILLA is non-nil, run the standard `org-capture'."
 
      ;; 'org-save-all-org-buffers ; Original binding "C-x C-s"
 
+     ;; todo
+     "t"  'org-agenda-todo
+
      ;; Others
      "+" 'org-agenda-manipulate-query-add
      "-" 'org-agenda-manipulate-query-subtract
