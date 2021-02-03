@@ -826,17 +826,6 @@ buffer which do not already have one. When `arg' nil only adds ids if the
     ;; https://github.com/alphapapa/org-protocol-capture-html
     (use-package org-protocol-capture-html)
 
-    (defun tl/on-select-previous-input-source (data)
-      "Swith to insert when switch to Rime input method"
-      (let ((source-id (plist-get data :source-id)))
-        (when (string-equal source-id "im.rime.inputmethod.Squirrel.Rime")
-          (let ((state (bound-and-true-p evil-state)))
-            (when (and state
-                       (eq state 'normal)
-                       (not (minibufferp))
-                       (not isearch-mode))
-              (call-interactively 'evil-insert))))))
-
     ;; open -g 'org-protocol://hammerspoon?action=org-clock-goto'
     (defun org-protocol-hammerspoon (data)
       "Handle event from Hammerspoon"
@@ -847,8 +836,6 @@ buffer which do not already have one. When `arg' nil only adds ids if the
                (call-interactively 'tl/update-hammerspoon-org-clock-bar))
               ((string= action "org-clock-bar-clock-in-last")
                (call-interactively 'org-clock-in-last))
-              ;; ((string= action "select-previous-input-source")
-              ;;  (tl/on-select-previous-input-source data))
               ((string= action "org-clock-bar-clock-out")
                (call-interactively 'org-clock-out)))))
 
