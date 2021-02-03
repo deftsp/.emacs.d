@@ -445,17 +445,18 @@
       ;; attachments
       "A" 'org-attach
       ;; insertion
-      "id" 'org-insert-drawer
-      "ie" 'org-set-effort
-      "if" 'org-footnote-new
-      "ih" 'org-insert-heading
-      "iH" 'org-insert-heading-after-current
-      "ii" 'tl/org-insert-image
-      "iK" 'tl/insert-keybinding-org
-      "il" 'org-insert-link
-      "ip" 'org-set-property
-      "is" 'org-insert-subheading
-      "it" 'org-set-tags
+      "id"  'org-insert-drawer
+      "iDr" 'tl/org-insert-resources-drawer-at-point
+      "ie"  'org-set-effort
+      "if"  'org-footnote-new
+      "ih"  'org-insert-heading
+      "iH"  'org-insert-heading-after-current
+      "ii"  'tl/org-insert-image
+      "iK"  'tl/insert-keybinding-org
+      "il"  'org-insert-link
+      "ip"  'org-set-property
+      "is"  'org-insert-subheading
+      "it"  'org-set-tags
 
       ;; region manipulation
       "xb" (tl|org-emphasize tl/org-bold ?*)
