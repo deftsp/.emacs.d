@@ -19,8 +19,8 @@
 
 
 ;; FIXME: remove it after smart-jump can be required
-(require 'xref)
-(load "~/.emacs.d/straight/build/smart-jump/smart-jump.el")
+;; (require 'xref)
+;; (load "~/.emacs.d/straight/build/smart-jump/smart-jump.el")
 
 (use-package smart-jump
   :commands (smart-jump-go smart-jump-back smart-jump-references)
