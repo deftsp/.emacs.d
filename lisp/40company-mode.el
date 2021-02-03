@@ -84,6 +84,9 @@
         (company-quickhelp-mode +1)
         (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))))
 
+(use-package company-emoji
+  :after company)
+
 ;;; company-flx -- instead by company-fuzzy
 ;; (use-package company-flx
 ;;   :init
@@ -107,6 +110,7 @@
   '(company-tabnine
     company-capf
     company-files
+    company-emoji
     ;; company-dabbrev ; which complete some string sypmbol
     company-yasnippet))
 

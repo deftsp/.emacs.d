@@ -140,6 +140,7 @@
 (straight-use-package 'company-ghc)
 (straight-use-package 'company-ledger)
 (straight-use-package 'company-ghci)
+(straight-use-package 'company-emoji)
 
 
 (straight-use-package 'flycheck)
