@@ -147,7 +147,8 @@
                              target
                              fontspec nil 'prepend)))
        '(((target . symbol)
-          (rescale . 0.8))          ; not works for some font size
+          (rescale . 0.8)
+          (fontname . "Apple Color Emoji")) ; not works for some font size
          ;; Note: "« »" not coverd by mplus Nerd Font
          ;; ((target . (#x0080 . #x00ff))) ; Latin-1 Supplement,   see above comment
          ((target . (#xe5fa . #xe62b))) ; Seti-UI + Custom
