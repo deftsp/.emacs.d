@@ -390,8 +390,8 @@ If VANILLA is non-nil, run the standard `org-capture'."
         `((" " "Daily agenda and all TODOs"
            ((agenda "" ((org-agenda-span 'day)
                         ;; (org-agenda-prefix-format " %(let ((scheduled (org-get-scheduled-time (point)))) (if scheduled (format-time-string \"%Y-%m-%d\" scheduled) \"\")) %i %-12:c")
-                        (org-agenda-sorting-strategy '(
-                                                       time-up
+                        ;; (org-agenda-skip-function '(or (org-agenda-skip-entry-if 'deadline)))
+                        (org-agenda-sorting-strategy '(time-up
                                                        priority-down
                                                        todo-state-down
                                                        effort-up
@@ -423,7 +423,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
                                                      (tl/org-agenda-skip-if-blocked)
                                                      ;; (org-agenda-skip-entry-if 'regexp "\\* NEXT")
                                                      (org-agenda-skip-entry-if 'scheduled 'deadline)))
-                      (org-agenda-overriding-header "ALL Other Tasks:")
+                      (org-agenda-overriding-header "Inbox:")
                       (org-agenda-sorting-strategy '(priority-down
                                                      category-keep)))))
            ;; ((org-agenda-compact-blocks t))
