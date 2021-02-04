@@ -269,7 +269,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
      "p" 'org-agenda-date-prompt
      "P" 'org-agenda-show-the-flagging-note
 
-     ;; 'org-save-all-org-buffers ; Original binding "C-x C-s"
+     "s"  'org-save-all-org-buffers ; Original binding "C-x C-s"
 
      ;; todo
      "t"  'org-agenda-todo
