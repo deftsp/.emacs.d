@@ -155,6 +155,8 @@
 (straight-use-package 'lsp-ivy)
 (straight-use-package 'lsp-mode)
 (straight-use-package 'lsp-ui)
+;; https://github.com/merrickluo/lsp-tailwindcss
+(straight-use-package '(lsp-tailwindcss :type git :host github :repo "merrickluo/lsp-tailwindcss"))
 
 (straight-use-package 'dap-mode)
 
