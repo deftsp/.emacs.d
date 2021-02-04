@@ -280,6 +280,11 @@
       (progn
         (evil-org-set-key-theme '(navigation textobjects todo additional))))
 
+    (general-define-key
+     :states '(visual)
+     :keymaps 'org-mode-map
+     "t" 'org-todo)
+
     (use-package org-download
       :config
       (org-download-enable))
