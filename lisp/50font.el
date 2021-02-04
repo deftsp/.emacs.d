@@ -159,6 +159,17 @@
          ((target . (#xe0a0 . #xe0d7))) ; Powerline Extra Symbols
          ((target . (#x23ed . #x2b5c))) ; IEC Power Symbols
          ((target . (#xf300 . #xf317))) ; Font Linux
+         ((target . (#x2300 . #x23ff))  ; Miscellaneous Technical
+          (rescale . 1.0)               ;
+          (fontname . "PragmataPro Mono"))
+         ((target . (#x2190 . #x21ff))  ; Arrows
+          (rescale . 1.0)               ;
+          (fontname . "PragmataPro Mono"))
+
+         ((target . (#x2460 . #x24ea))  ; Enclosed Alphanumerics
+          (rescale . 1.0)               ;
+          (fontname . "PragmataPro Mono"))
+
          ((target . (#x2500 . #x257f))
           (rescale . 1.0)               ; BOX DRAWINGS, ┌ └
           (fontname . "PragmataPro Mono"))
@@ -169,15 +180,27 @@
           (rescale . 1.0)
           (fontname . "PragmataPro Mono"))
          ;; "☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷"
-         ((target . (#x2600 . #x26ff))
+         ((target . (#x2600 . #x269f))
           (fontname . "FreeMono")
           (fontsize-index . 0))
+         ((target . (#x26a0 . #x26bf))
+          (rescale . 1.0)
+          (fontname . "PragmataPro Mono"))
+         ((target . (#x26c0 . #x26cf))
+          (rescale . 1.0)
+          (fontname . "PragmataPro"))
          ((target . (#x2700 . #x27bf))  ; Dingbats
           (rescale . 0.9)
           (fontname . "Everson Mono"))
          ((target . (#x2622 . #x2622))  ; ☢
           (fontname . "DejaVu Sans Mono")
-          (rescale . 0.98)))))
+          (rescale . 0.98))
+         ((target . (#x2900 . #x297f))  ; Supplemental Arrows-B
+          (rescale . 1.0)
+          (fontname . "PragmataPro Mono"))
+         ((target . (#x2b00 . #x2e2f))  ; Misc. Symbols and Arrows
+          (rescale . 1.0)
+          (fontname . "PragmataPro Mono")))))
 
     (add-hook 'cnfonts-set-font-finish-hook
               'tl/cnfonts-set-extra-fonts)
