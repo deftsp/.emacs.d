@@ -352,6 +352,34 @@ If VANILLA is non-nil, run the standard `org-capture'."
       "." 'org-agenda-goto-today
       "gd" 'org-agenda-goto-date)))
 
+;; https://emacs.stackexchange.com/a/9792/361
+(defun tl/org-agenda-level-ident ()
+  (let ((level (org-current-level)))
+    (if (> level 1)
+        (concat (make-string (* 2 (1- level))  #x20) "►")
+      "")))
+
+;; https://emacs.stackexchange.com/a/9793/361
+(defun tl/org-entry-subtree-in-state-get (state property)
+  (save-excursion
+    (save-restriction
+      (org-narrow-to-subtree)
+      (goto-char (point-max))
+      (save-match-data
+        (cl-loop while (re-search-backward org-heading-regexp nil t)
+                 when (string-equal state (org-get-todo-state))
+                 collect (org-entry-get (point) property))))))
+
+
+(defun tl/org-effort-sum-current-item-in-state (state)
+  (org-duration-from-minutes
+   (cl-loop for minutes in (tl/org-entry-subtree-in-state-get state "Effort")
+            sum (org-duration-to-minutes (or minutes "0:00")))))
+
+(defun tl/org-agenda-projects-prefix ()
+  (format "[%s] %s" (tl/org-effort-sum-current-item-in-state "TODO") (tl/org-agenda-level-ident)))
+
+
 (defun tl/set-org-agenda-custom-commands ()
   ;; Use tags-todo like this (tags-todo "+PRIORITY={A}") will be very slow,
   ;; however add more restricts, like CATEGORY, it works fine
@@ -361,6 +389,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
   (setq org-agenda-custom-commands
         `((" " "Daily agenda and all TODOs"
            ((agenda "" ((org-agenda-span 'day)
+                        ;; (org-agenda-prefix-format " %(let ((scheduled (org-get-scheduled-time (point)))) (if scheduled (format-time-string \"%Y-%m-%d\" scheduled) \"\")) %i %-12:c")
                         (org-agenda-sorting-strategy '(
                                                        time-up
                                                        priority-down
@@ -373,9 +402,8 @@ If VANILLA is non-nil, run the standard `org-capture'."
                         (org-agenda-overriding-header "NEXT Tasks:")))
             (tags-todo "CATEGORY=\"Proj\"&LEVEL<=3"
                        ((org-agenda-sorting-strategy '(priority-down tag-up))
-                        ;; with "%l%l" the item of level 1 will takes two spaces, the length of catatory should be 13-2
-                        (org-agenda-prefix-format " %i %-11:c%l%l")
-                        ;; (org-agenda-prefix-format " %(let ((scheduled (org-get-scheduled-time (point)))) (if scheduled (format-time-string \"%Y-%m-%d\" scheduled) \"\")) %i %-12:c")
+                        ;; N.B. that there is a third bug or oddity here: you can only use %(expression) once
+                        (org-agenda-prefix-format " %i %(tl/org-agenda-projects-prefix)")
                         (org-agenda-skip-function '(or
                                                     (org-agenda-skip-entry-if 'todo 'done )))
                         (org-agenda-overriding-header "Projects:")))
