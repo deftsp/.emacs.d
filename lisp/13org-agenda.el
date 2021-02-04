@@ -56,6 +56,7 @@
           (tags . " %i %-13:c")       ; tags, tags-todo, stuck
           (search . " %i %-13:c")))   ; search
 
+  (setq org-agenda-breadcrumbs-separator " ⊇ ")
   ;; (setq org-agenda-category-icon-alist
   ;;       '(("Visitors" "~/.emacs.d/icons/org/visitors.png" nil nil :ascent center)
   ;;         ("\\(Party\\|Celeb\\)" "~/.emacs.d/icons/org/party.png" nil nil :ascent center)
@@ -370,11 +371,14 @@ If VANILLA is non-nil, run the standard `org-capture'."
             (tags-todo "TODO=\"NEXT\""
                        ((org-agenda-sorting-strategy '(priority-down tag-up))
                         (org-agenda-overriding-header "NEXT Tasks:")))
-            (tags "CATEGORY=\"Projects\""
-                  ((org-agenda-sorting-strategy '(priority-down tag-up))
-                   (org-agenda-skip-function '(or
-                                               (org-agenda-skip-entry-if 'todo 'done )))
-                   (org-agenda-overriding-header "Projects:")))
+            (tags-todo "CATEGORY=\"Proj\"&LEVEL<=3"
+                       ((org-agenda-sorting-strategy '(priority-down tag-up))
+                        ;; with "%l%l" the item of level 1 will takes two spaces, the length of catatory should be 13-2
+                        (org-agenda-prefix-format " %i %-11:c%l%l")
+                        ;; (org-agenda-prefix-format " %(let ((scheduled (org-get-scheduled-time (point)))) (if scheduled (format-time-string \"%Y-%m-%d\" scheduled) \"\")) %i %-12:c")
+                        (org-agenda-skip-function '(or
+                                                    (org-agenda-skip-entry-if 'todo 'done )))
+                        (org-agenda-overriding-header "Projects:")))
 
             ;; (tags "+PRIORITY=\"A\"+CATEGORY={Inbox\\|Task\\|Project}"
             ;;       ((org-agenda-skip-function
@@ -625,7 +629,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (defun tl/org-agenda-skip-project ()
   "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
   (let ((subtree-end (save-excursion (org-end-of-subtree t))))
-    (if (string= (org-entry-get nil "CATEGORY") "Projects")
+    (if (string= (org-entry-get nil "CATEGORY") "Proj")
         subtree-end
       nil)))
 
