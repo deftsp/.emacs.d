@@ -60,6 +60,7 @@
   :commands (vterm vterm-other-window)
   :init
   ;; (setq vterm-keymap-exceptions nil)
+  (setq vterm-max-scrollback 20000)
   (setq vterm-kill-buffer-on-exit t)
   :config
   (add-hook 'vterm-mode-hook 'tl/vterm-mode-init))
