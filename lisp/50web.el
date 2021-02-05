@@ -262,6 +262,7 @@ If ARG is a numerical prefix argument then specify the indentation level."
   :after (web-mode)
   :config
   (tl/set-leader-keys-for-major-mode 'web-mode
+    "p"  'eslintd-fix
     "ef" 'eslintd-fix))
 
 (provide '50web)
