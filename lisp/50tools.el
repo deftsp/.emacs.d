@@ -119,7 +119,18 @@ space and marks next symbol."
   :init
   (setq display-line-numbers-type 'relative
         display-line-numbers-width-start nil
+        display-line-numbers-widen t
         display-line-numbers-grow-only t)
+  :config
+  (with-eval-after-load 'evil
+    (defun tl/display-line-number-relative ()
+      (setq-local display-line-numbers 'relative))
+
+    (defun tl/display-line-number-absolute ()
+      (setq-local display-line-numbers t))
+
+    (add-hook 'evil-insert-state-entry-hook #'tl/display-line-number-absolute)
+    (add-hook 'evil-insert-state-exit-hook #'tl/display-line-number-relative))
   (global-display-line-numbers-mode +1))
 
 ;;; uniquify
