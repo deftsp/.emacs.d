@@ -4,7 +4,15 @@
 ;; tic -o ~/.terminfo /Applications/Emacs.app/Contents/Resources/etc/e/eterm-color.ti
 ;; to get rid of weird characters
 
-(setq shell-command-switch "-cf")
+;; zsh --help
+;; `-c' take first argument as a command to execute
+;; `-f' equivalent to --no-rcs and it is equivalent to th e--norc option in Bash.
+;;      it will prevents the zsh startup files from being sourced.
+
+;; N.B. `call-process' and `call-process-shell-command' will not use value of `process-variable'.
+;; It just run the command from the shell in separate process. If we set `-f' option to `shell-command-switch',
+;; the environment variables set in `~/.zprofile' will not be read.
+(setq shell-command-switch "-c")        ; "-cf"
 (setq shell-command-completion-mode t)  ; Allow completion for some shell-command functions.
 
 (defun tl/shell-mode-init  ()
