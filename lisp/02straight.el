@@ -180,7 +180,6 @@
 (straight-use-package 'list-utils)
 (straight-use-package 'ace-isearch)
 (straight-use-package 'docker-tramp)
-(straight-use-package 'livid-mode)
 (straight-use-package 'ace-link)
 (straight-use-package 'dockerfile-mode)
 ;; https://raw.githubusercontent.com/llvm-mirror/llvm/master/utils/emacs/llvm-mode.el
@@ -402,7 +401,6 @@
 (straight-use-package 'wcheck-mode)
 (straight-use-package 'counsel-projectile)
 (straight-use-package 'parseedn)
-(straight-use-package 'web-beautify)
 (straight-use-package 'pcre2el)
 (straight-use-package 'web-mode)
 (straight-use-package 'crosshairs)

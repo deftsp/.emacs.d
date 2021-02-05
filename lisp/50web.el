@@ -66,9 +66,8 @@
   :init
   (progn
     (with-eval-after-load 'flycheck
-      (flycheck-add-mode 'javascript-eslint 'web-mode)
       ;; (flycheck-add-mode 'css-csslint 'web-mode)
-      )
+      (flycheck-add-mode 'javascript-eslint 'web-mode))
 
     ;; have 2 space indent also for element’s attributes,concatenations and
     ;; contiguous function calls
@@ -81,6 +80,23 @@
             ("lineup-ternary"    . t)
             ("case-extra-offset" . t)))
 
+    (setq-default web-mode-comment-formats
+                  '(("java" . "/*")
+                    ("javascript" . "//")
+                    ("jsx" . "/*" )
+                    ("php" . "/*")
+                    ("css" . "/*")))
+    (setq web-mode-markup-indent-offset 2
+          web-mode-css-indent-offset 2
+          ;; script offset indentation (for JavaScript, Java, PHP, etc.)
+          web-mode-code-indent-offset 2)
+
+    ;; treat <> as jsx
+    ;; (setq web-mode-content-types-alist
+    ;;       '(("jsx" . ".*\\.js\\'")))
+    (setq web-mode-script-padding 2
+          web-mode-style-padding 1
+          web-mode-block-padding 0)
 
     (defun tl/init-web-mode ()
       "Hooks for Web mode."
@@ -88,26 +104,7 @@
       (company-mode +1)
       (eldoc-mode +1)
       (show-smartparens-mode -1) ; </> of jsx error
-      (setq-default flycheck-disabled-checkers '(jsx-tide tsx-tide handlebars))
-
-      (setq-default web-mode-comment-formats
-                    '(("java" . "/*")
-                      ("javascript" . "/*")
-                      ("jsx" . "/*" )
-                      ("php" . "/*")
-                      ("css" . "/*")))
-
-      (setq web-mode-markup-indent-offset 2
-            web-mode-css-indent-offset 2
-            ;; script offset indentation (for JavaScript, Java, PHP, etc.)
-            web-mode-code-indent-offset 2))
-
-    ;; treat <> as jsx
-    (setq web-mode-content-types-alist
-          '(("jsx" . ".*\\.js\\'")))
-    (setq web-mode-script-padding 2
-          web-mode-style-padding 1
-          web-mode-block-padding 0))
+      (setq flycheck-disabled-checkers '(jsx-tide tsx-tide handlebars))))
 
   (add-hook 'web-mode-hook 'tl/init-web-mode)
   :config
@@ -259,38 +256,13 @@ If ARG is a numerical prefix argument then specify the indentation level."
   (tl/set-leader-keys-for-major-mode 'json-mode
     "hp" 'jsons-print-path))
 
-;; https://github.com/yasuyk/web-beautify
-(use-package web-beautify
-  :defer t
-  ;; :init
-  ;; (progn
-  ;;   (tl/set-leader-keys-for-major-mode 'js2-mode
-  ;;     "=" 'web-beautify-js)
-  ;;   (tl/set-leader-keys-for-major-mode 'json-mode
-  ;;     "=" 'web-beautify-js)
-  ;;   (tl/set-leader-keys-for-major-mode 'web-mode
-  ;;     "=" 'web-beautify-html)
-  ;;   (tl/set-leader-keys-for-major-mode 'css-mode
-  ;;     "=" 'web-beautify-css))
-  )
-
-
+;; npm install -g eslint_d@9.1.2
 (use-package eslintd-fix
   :commands (eslintd-fix eslintd-fix-mode)
   :after (web-mode)
   :config
   (tl/set-leader-keys-for-major-mode 'web-mode
     "ef" 'eslintd-fix))
-
-;; Live evaluation of JS buffer change.
-(use-package livid-mode
-  :commands (livid-mode)
-  :defer t
-  :init
-  (progn
-    (with-eval-after-load 'js2-mode
-      (tl/set-leader-keys-for-major-mode 'js2-mode
-        "sa" 'livid-mode))))
 
 (provide '50web)
 ;;; 50web.el ends here

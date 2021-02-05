@@ -401,3 +401,29 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
                    (not (minibufferp))
                    (not isearch-mode))
           (call-interactively 'evil-insert))))))
+
+
+;; https://github.com/yasuyk/web-beautify
+(use-package web-beautify
+  :defer t
+  ;; :init
+  ;; (progn
+  ;;   (tl/set-leader-keys-for-major-mode 'js2-mode
+  ;;     "=" 'web-beautify-js)
+  ;;   (tl/set-leader-keys-for-major-mode 'json-mode
+  ;;     "=" 'web-beautify-js)
+  ;;   (tl/set-leader-keys-for-major-mode 'web-mode
+  ;;     "=" 'web-beautify-html)
+  ;;   (tl/set-leader-keys-for-major-mode 'css-mode
+  ;;     "=" 'web-beautify-css))
+  )
+
+;; Live evaluation of JS buffer change.
+(use-package livid-mode
+  :commands (livid-mode)
+  :defer t
+  :init
+  (progn
+    (with-eval-after-load 'js2-mode
+      (tl/set-leader-keys-for-major-mode 'js2-mode
+        "sa" 'livid-mode))))
