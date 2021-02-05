@@ -197,74 +197,6 @@ recover evil state to it, otherwiser change to evil-emacs-state."
   (let (evil-mode-map-alist)
     (call-interactively (key-binding (this-command-keys)))))
 
-;; https://github.com/noctuid/general.el
-(use-package general
-  :config
-  (progn
-    (general-evil-setup t)
-    (nmap
-      "H"    "^"
-      ;; make sure that Evil's normal state never touches TAB, just wire this fall-through binding
-      ;; "TAB" 'tl/evil-undefine
-      "gL"  'org-mac-grab-link
-      "gd"  'smart-jump-go
-      ;; "gD"  'smart-jump-go-other-window
-      "gO"  'ff-find-other-file
-      "Q" "gqap"
-      ;; "s" "gvfd"
-      ;; "S" "vabsba"
-      "+" 'evil-numbers/inc-at-pt ; default `evil-next-line-first-non-blank'
-      "-" 'evil-numbers/dec-at-pt ; default `evil-previous-line-first-non-blank'
-      ;; "C-e" 'evil-end-of-line
-
-      ;; q is being used at many places to close things, and sometimes it so
-      ;; happens that evil mode is turned on in that window at the same time,
-      ;; which results in recording a macro instead of closing the window.
-      "q" nil ; `q' is binded to `evil-record-macro'
-      ;; "s" nil ; default `evil-substitute' remove default binding so I can override it
-      ;; "S" nil ; default `evil-change-whole-line' remove default binding so I can override it
-      )
-
-    (mmap
-      "TAB" 'indent-for-tab-command
-      ;; reserved for evil-snipe
-      ;; "s" 'evil-avy-goto-char-timer
-      ;; "S" 'evil-avy-goto-word-or-subword-1
-
-      [C-i] 'evil-jump-forward ; bind evil-jump-forward for GUI only.
-      "C-v" nil)
-
-    (vmap
-      ")"  "S)"
-      "v" 'evil-visual-block ; make it easy to switch to visual-char-block mode from visual-char
-      "Q" "gq")
-
-    (imap
-      "C-v" nil
-      "C-k" nil
-      "C-o" nil
-      "C-r" nil
-      "C-y" nil
-      "C-e" nil
-      "C-n" nil
-      "C-p" nil
-      "C-x C-n" nil
-      "C-x C-p" nil
-      "C-t" nil
-      "C-d" nil
-      "C-a" nil
-      "C-w" nil
-      "C-o" 'tl/open-line-with-indent
-      [remap newline] nil
-      [remap newline-and-indent] nil)
-
-    (omap
-      "." 'evil-avy-goto-word-or-subword-1
-      "l" 'evil-avy-goto-line
-      "c" 'evil-avy-goto-char
-      "SPC" 'evil-avy-goto-char-timer
-      ",w" 'evil-avy-goto-subword-0)))
-
 ;; (use-package evil-easymotion
 ;;   :config
 ;;   (evilem-default-keybindings ""))
@@ -393,35 +325,99 @@ kill internal buffers too."
 
 (use-package evil
   :init
-  (progn
-    (tl/evil-init))
+  (tl/evil-init)
   :config
-  (progn
-    ;; FIXME: `evil-set-undo-system' will not called if set before evil load. set it directly
-    (evil-set-undo-system 'undo-fu)
-    (set-default 'evil-undo-system 'undo-fu)
+  ;; FIXME: `evil-set-undo-system' will not called if set before evil load. set it directly
+  (evil-set-undo-system 'undo-fu)
+  (set-default 'evil-undo-system 'undo-fu)
 
-    ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
-    (define-key evil-insert-state-map [remap evil-complete-previous] 'hippie-expand)
-    (use-package evil-evilified-state)
-    (tl/evil-set-initial-state)
-    (dolist (m (list minibuffer-local-map
-                     minibuffer-local-ns-map
-                     minibuffer-local-completion-map
-                     minibuffer-local-must-match-map
-                     minibuffer-local-isearch-map))
-      ;; 'tl/keyboard-escape-quit
-      (define-key m (kbd "<escape>") 'keyboard-escape-quit))
+  ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
+  (define-key evil-insert-state-map [remap evil-complete-previous] 'hippie-expand)
+  (use-package evil-evilified-state)
+  (tl/evil-set-initial-state)
+  (dolist (m (list minibuffer-local-map
+                   minibuffer-local-ns-map
+                   minibuffer-local-completion-map
+                   minibuffer-local-must-match-map
+                   minibuffer-local-isearch-map))
+    ;; 'tl/keyboard-escape-quit
+    (define-key m (kbd "<escape>") 'keyboard-escape-quit))
 
-    ;; (define-key evil-normal-state-map "p" 'evil-paste-after)
-    ;; (define-key evil-normal-state-map "P" 'evil-paste-before)
+  ;; (define-key evil-normal-state-map "p" 'evil-paste-after)
+  ;; (define-key evil-normal-state-map "P" 'evil-paste-before)
 
-    ;; alternate binding to search next occurrence with isearch without
-    ;; exiting isearch
-    (define-key isearch-mode-map (kbd "S-<return>") 'isearch-repeat-forward)
-    (define-key isearch-mode-map (kbd "M-S-<return>") 'isearch-repeat-backward)
-    ;; Escape from isearch-mode("/" and "?" in evil-mode) like vim
-    (define-key isearch-mode-map (kbd "<escape>") 'isearch-cancel))
+  ;; alternate binding to search next occurrence with isearch without
+  ;; exiting isearch
+  (define-key isearch-mode-map (kbd "S-<return>") 'isearch-repeat-forward)
+  (define-key isearch-mode-map (kbd "M-S-<return>") 'isearch-repeat-backward)
+  ;; Escape from isearch-mode("/" and "?" in evil-mode) like vim
+  (define-key isearch-mode-map (kbd "<escape>") 'isearch-cancel)
+
+  (general-evil-setup t)
+
+  (nmap
+    "H"    "^"
+    ;; make sure that Evil's normal state never touches TAB, just wire this fall-through binding
+    ;; "TAB" 'tl/evil-undefine
+    "gL"  'org-mac-grab-link
+    "gd"  'smart-jump-go
+    ;; "gD"  'smart-jump-go-other-window
+    "gO"  'ff-find-other-file
+    "Q" "gqap"
+    ;; "s" "gvfd"
+    ;; "S" "vabsba"
+    "+" 'evil-numbers/inc-at-pt         ; default `evil-next-line-first-non-blank'
+    "-" 'evil-numbers/dec-at-pt         ; default `evil-previous-line-first-non-blank'
+    ;; "C-e" 'evil-end-of-line
+
+    ;; q is being used at many places to close things, and sometimes it so
+    ;; happens that evil mode is turned on in that window at the same time,
+    ;; which results in recording a macro instead of closing the window.
+    "q" nil                    ; `q' is binded to `evil-record-macro'
+    ;; "s" nil ; default `evil-substitute' remove default binding so I can override it
+    ;; "S" nil ; default `evil-change-whole-line' remove default binding so I can override it
+    )
+
+  (mmap
+    "TAB" 'indent-for-tab-command
+    ;; reserved for evil-snipe
+    ;; "s" 'evil-avy-goto-char-timer
+    ;; "S" 'evil-avy-goto-word-or-subword-1
+
+    [C-i] 'evil-jump-forward            ; bind evil-jump-forward for GUI only.
+    "C-v" nil)
+
+  (vmap
+    ")"  "S)"
+    "v" 'evil-visual-block              ; make it easy to switch to visual-char-block mode from visual-char
+    "Q" "gq")
+
+  (imap
+    "C-v" nil
+    "C-k" nil
+    "C-o" nil
+    "C-r" nil
+    "C-y" nil
+    "C-e" nil
+    "C-n" nil
+    "C-p" nil
+    "C-x C-n" nil
+    "C-x C-p" nil
+    "C-t" nil
+    "C-d" nil
+    "C-a" nil
+    "C-w" nil
+    "C-o" 'tl/open-line-with-indent
+    [remap newline] nil
+    [remap newline-and-indent] nil)
+
+  (omap
+    "." 'evil-avy-goto-word-or-subword-1
+    "l" 'evil-avy-goto-line
+    "c" 'evil-avy-goto-char
+    "SPC" 'evil-avy-goto-char-timer
+    ",w" 'evil-avy-goto-subword-0)
+
 
   (general-define-key
    :keymaps '(evil-ex-completion-map evil-ex-search-keymap)
@@ -430,10 +426,8 @@ kill internal buffers too."
    "C-b" #'evil-backward-char
    "C-f" #'evil-forward-char
    "M-j" #'next-complete-history-element
-   "M-k" #'previous-complete-history-element))
+   "M-k" #'previous-complete-history-element)
 
-;;; enable evil mode
-(when (fboundp 'evil-mode)
   (evil-mode +1))
 
 (use-package evil-collection

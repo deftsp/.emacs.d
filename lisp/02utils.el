@@ -4,10 +4,12 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-;; TODO: after refactor, following core packages should be located in a
-;; specify module
-(require 'general)
-(require 'hydra)
+(use-package hydra)
+
+;; https://github.com/noctuid/general.el
+(use-package general
+  :config
+  (general-override-mode +1))
 
 ;; (use-package benchmark-init
 ;;   :config
