@@ -421,7 +421,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
                                                      (tl/org-agenda-skip-subtree-if-priority ?A)
                                                      (tl/org-agenda-skip-project)
                                                      (tl/org-agenda-skip-if-blocked)
-                                                     ;; (org-agenda-skip-entry-if 'regexp "\\* NEXT")
+                                                     (org-agenda-skip-entry-if 'regexp "\\* NEXT")
                                                      (org-agenda-skip-entry-if 'scheduled 'deadline)))
                       (org-agenda-overriding-header "Inbox:")
                       (org-agenda-sorting-strategy '(priority-down
