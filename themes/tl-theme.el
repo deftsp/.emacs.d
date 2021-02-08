@@ -379,6 +379,8 @@
 
    ;; lsp
    '(lsp-modeline-code-actions-face ((t (:foreground "#75cc55" :background "#bbbbbb"))))
+   '(lsp-ui-doc-background ((t (:background "#073642"))))
+
 
    ;; cedet
    '(pulse-highlight-start-face ((t (:background "#222222"))))

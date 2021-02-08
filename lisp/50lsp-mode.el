@@ -19,6 +19,7 @@
         lsp-file-watch-threshold 5000
         lsp-restart 'auto-restart
         lsp-enable-links nil            ; use ffip instead
+        ;; lsp-eldoc-render-all t
         lsp-headerline-breadcrumb-enable t
         lsp-headerline-breadcrumb-icons-enable nil
         lsp-modeline-code-actions-enable nil
@@ -60,6 +61,10 @@
     "hh" #'lsp-describe-thing-at-point
     "hd" #'lsp-ui-doc-show
     ;; jump
+    "j." #'smart-jump-go
+    "j," #'smart-jump-back
+    "j?" #'smart-jump-references
+    "jr" #'smart-jump-references
     ;; backend
     "bd" #'lsp-describe-session
     "br" #'lsp-workspace-restart
@@ -87,13 +92,23 @@
   :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol))
 
 (use-package lsp-ui
-  :defer t
+  :after lsp
   :commands lsp-ui-mode
   :init
-  (setq lsp-ui-sideline-delay 0.2
+  (setq lsp-ui-peek-always-show t
+        lsp-ui-sideline-delay 0.2
         lsp-ui-sideline-enable t
+        lsp-ui-sideline-show-diagnostics t
+        lsp-ui-sideline-show-hover t
+        lsp-ui-sideline-show-code-actions t
         lsp-ui-flycheck-list-position 'right
-        lsp-ui-doc-enable nil)
+        lsp-ui-imenu-window-width 32
+        lsp-ui-imenu-auto-refresh 'after-save
+        lsp-ui-doc-position 'bottom
+        lsp-ui-doc-use-childframe nil
+        ;; https://github.com/emacs-lsp/lsp-ui/issues/310
+        lsp-ui-doc-border "#43586d" ; FIXME: native not work, should swith to emacs-mac-port?
+        lsp-ui-doc-enable t)
   :config
   (progn
     (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
