@@ -177,6 +177,13 @@
   :config
   (mapcar (lambda (str) (add-to-list 'ivy-ignore-buffers str)) tl/ignore-buffer-or-file-regexp)
 
+  (defun tl/ignore-dired-sidebar-buffer (str)
+    "Return non-nil if STR names a dired-sidebar buffer.
+This function is intended for use with `ivy-ignore-buffers'."
+    (let ((buf (get-buffer str)))
+      (and buf (eq (buffer-local-value 'major-mode buf) 'dired-sidebar-mode))))
+  (add-to-list 'ivy-ignore-buffers #'tl/ignore-dired-sidebar-buffer)
+
   (define-key ivy-minibuffer-map (kbd "C-w") 'ivy-occur)
   (define-key ivy-minibuffer-map [escape] 'minibuffer-keyboard-quit)
   (define-key ivy-minibuffer-map (kbd "M-j") 'ivy-next-line)
