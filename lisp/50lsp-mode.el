@@ -92,7 +92,7 @@
   :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol))
 
 (use-package lsp-ui
-  :after lsp
+  :after lsp-mode
   :commands lsp-ui-mode
   :init
   (setq lsp-ui-peek-always-show t
