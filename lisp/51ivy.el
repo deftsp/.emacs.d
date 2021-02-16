@@ -225,19 +225,17 @@ This function is intended for use with `ivy-ignore-buffers'."
           ivy-rich-parse-remote-file-path nil)
     :config
     (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
+    ;; N.B. update `ivy-rich-display-transformers-list', have to toggle `ivy-rich-mode' to take effect
     (setq ivy-rich-display-transformers-list
           '(ivy-switch-buffer
             (:columns
-             ((ivy-switch-buffer-transformer (:width 30))
+             ((ivy-rich-candidate (:width 30))
               (ivy-rich-switch-buffer-size (:width 7))
               (ivy-rich-switch-buffer-indicators (:width 4 :face error :align right))
-              ;; (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
-              ;; (ivy-rich-switch-buffer-project (:width 15 :face success))
-              ;; (ivy-rich-switch-buffer-path (:width
-              ;;                               (lambda (x)
-              ;;                                 (ivy-rich-switch-buffer-shorten-path
-              ;;                                  x (ivy-rich-minibuffer-width 0.3)))))
-              )
+              (ivy-rich-switch-buffer-major-mode (:width 12 :face warning))
+              (ivy-rich-switch-buffer-project (:width 25 :face success))
+              (ivy-rich-switch-buffer-path (:width (lambda (x) (ivy-rich-switch-buffer-shorten-path
+                                                                x (ivy-rich-minibuffer-width 0.3))))))
              :predicate
              (lambda (cand) (get-buffer cand)))
             counsel-find-file
