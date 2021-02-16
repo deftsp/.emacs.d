@@ -121,3 +121,4 @@ var/
 .dap-breakpoints
 eln-cache/
 eshell/
+.extension/
