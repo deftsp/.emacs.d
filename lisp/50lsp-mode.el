@@ -97,7 +97,7 @@
   :init
   (setq lsp-ui-peek-always-show t
         lsp-ui-sideline-delay 0.2
-        lsp-ui-sideline-enable t
+        lsp-ui-sideline-enable nil      ; annoying when window width is small
         lsp-ui-sideline-show-diagnostics t
         lsp-ui-sideline-show-hover t
         lsp-ui-sideline-show-code-actions t

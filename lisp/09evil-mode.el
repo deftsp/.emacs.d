@@ -454,12 +454,12 @@ kill internal buffers too."
 
 ;;; evil-surround
 (use-package evil-surround
-  :defer 2
+  :after evil
   :config
   ;; evil-surround-pairs-alist is a buffer local variable
-  (setq-default evil-surround-pairs-alist (cl-adjoin
-                                           '(?~ . ("``" . "``"))
-                                           evil-surround-pairs-alist))
+  ;; (setq-default evil-surround-pairs-alist (cl-adjoin
+  ;;                                          '(?~ . ("``" . "``"))
+  ;;                                          evil-surround-pairs-alist))
   (with-eval-after-load 'org
     (defun tl/add-org-surrounds ()
       (push '(?: . tl//surround-drawer) evil-surround-pairs-alist)
