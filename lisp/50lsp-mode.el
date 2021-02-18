@@ -201,7 +201,7 @@
                                      :cwd nil))
   (load "~/.emacs.d/private-dap-debug-template.el")
 
-  (tl/set-leader-keys-for-minor-mode 'dap-mode
+  (tl/set-leader-keys-for-minor-mode 'rustic-mode
     ;; transient state
     "d."  #'dap-hydra
     ;; repl
