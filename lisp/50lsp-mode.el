@@ -105,7 +105,7 @@
         lsp-ui-imenu-window-width 32
         lsp-ui-imenu-auto-refresh 'after-save
         lsp-ui-doc-position 'bottom
-        lsp-ui-doc-use-childframe nil
+        lsp-ui-doc-use-childframe t
         ;; https://github.com/emacs-lsp/lsp-ui/issues/310
         lsp-ui-doc-border "#43586d" ; FIXME: native not work, should swith to emacs-mac-port?
         lsp-ui-doc-enable t)
