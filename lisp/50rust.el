@@ -60,7 +60,7 @@
     "vm" 'tl/toggle-mut))
 
 (use-package rustic-cargo
-  :defer t
+  :after rustic
   :config
   (tl/declare-prefix-for-mode 'rustic-mode "mc" "cargo")
 
