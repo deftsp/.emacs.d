@@ -56,7 +56,13 @@
       "pd"   'projectile-find-dir
       "pD"   'projectile-dired
       "pe"   'projectile-edit-dir-locals
-      "pf"   'projectile-find-file
+      ;; I prefer to put the git sub-repos in main repo and adding the directories of sub-repos to .gitignore, without
+      ;; using git submodule or git subtree. That is to say, the files in sub-repos is not in main repo. However,
+      ;; `projectile-find-file' internally using git to list file which can not find files in sub-repos. The
+      ;; ".projectile" file will not work if using the "alien" indexing method. But I do want to find them. I'm using
+      ;; find-file-in-project now.
+
+      ;; "pf"   'projectile-find-file
       "pF"   'projectile-find-file-dwim
       "pg"   'projectile-find-tag
       "pG"   'projectile-regenerate-tags
@@ -85,6 +91,11 @@
   (progn
     (counsel-projectile-mode +1)))
 
+(use-package find-file-in-project
+  :commands (find-file-in-project-at-point find-file-in-project)
+  :init
+  (setq ffip-use-rust-fd t)
+  (tl/set-leader-keys "pf" 'find-file-in-project))
 
 ;; (use-package dotenv
 ;;   :ensure nil

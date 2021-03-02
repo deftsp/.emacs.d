@@ -399,7 +399,6 @@
 (straight-use-package '(irfc-x :type git :host github :repo "kai2nenobu/irfc-x"))
 (straight-use-package 'parseclj)
 (straight-use-package 'wcheck-mode)
-(straight-use-package 'counsel-projectile)
 (straight-use-package 'parseedn)
 (straight-use-package 'pcre2el)
 (straight-use-package 'web-mode)
@@ -458,7 +457,6 @@
 (straight-use-package 'dired-hacks)
 (straight-use-package 'flutter)
 (straight-use-package 'link-hint)
-(straight-use-package 'projectile)
 (straight-use-package 'yasnippet-snippets)
 (straight-use-package 'dired-quick-sort)
 (straight-use-package 'linkd)
@@ -468,7 +466,8 @@
 (straight-use-package 'diredfl)
 (straight-use-package 'lispyville)
 
-
-
+(straight-use-package 'projectile)
+(straight-use-package 'counsel-projectile)
+(straight-use-package 'find-file-in-project)
 
 (provide '02straight)
