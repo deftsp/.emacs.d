@@ -37,8 +37,8 @@
   (progn
     (when (eq system-type 'darwin)
       (setq projectile-tags-command "/usr/local/bin/ctags -Re %s"))
-    (setq  projectile-indexing-method 'alien
-           projectile-generic-command "find . -type f")
+    (setq projectile-indexing-method 'alien
+          projectile-generic-command "fd . -0 --type f --color=never")
     (setq projectile-sort-order 'recentf
           projectile-mode-line-prefix " Proj"
           projectile-cache-file (concat tl-cache-directory
