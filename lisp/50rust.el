@@ -7,7 +7,7 @@
 
 (use-package rustic
   :mode ("\\.rs$" . rustic-mode)
-  :commands rustic-run-cargo-command rustic-cargo-outdated
+  :commands (rustic-run-cargo-command rustic-cargo-outdated)
   :init
   (setq rustic-lsp-server 'rust-analyzer)
   (setq rustic-lsp-client 'lsp-mode)
@@ -48,8 +48,8 @@
 
   (add-hook 'rustic-mode-hook 'tl/rustic-mode-init)
 
-
-  (add-to-list 'flycheck-checkers 'rustic-clippy)
+  ;; use lsp-mode with rust-analyzer instead of rustic-clippy
+  ;; (push 'rustic-clippy flycheck-checkers)
 
   (tl/declare-prefix-for-mode 'rustic-mode "mv" "variable")
   (tl/set-leader-keys-for-major-mode 'rustic-mode
