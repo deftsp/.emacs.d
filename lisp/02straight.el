@@ -72,6 +72,10 @@
 (straight-use-package 'org-trello)
 (straight-use-package 'ob-http)
 
+;; TODO: compatibility only, delete some day
+(straight-use-package '(smartparens :type git :host github :repo "deftsp/smartparens" :branch "shihpin"))
+(straight-use-package '(flymake :type git :host github :repo "deftsp/flymake" :branch "shihpin"))
+
 ;; register my fork of ace-window before it's registered by the origin recipe. Otherwise, there will a warning like "Two
 ;; different recipes given for ..."
 (straight-use-package
@@ -308,7 +312,6 @@
 (straight-use-package 'eshell-prompt-extras)
 (straight-use-package 'grammarly)
 (straight-use-package 'notify)
-(straight-use-package 'smartparens)
 (straight-use-package 'babel)
 (straight-use-package 'eslintd-fix)
 (straight-use-package 'graphql)
