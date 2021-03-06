@@ -61,7 +61,9 @@
           (insert "\n　")
         (error "Run in *Clock Task Select* buffer only.")))
 
-    (defun tl/update-hammerspoon-org-clock-bar ()
+    ;; N.B. `tl/update-hammerspoon-org-clock-bar' will set to the after advice of `org-clock-update-mode-line', I have
+    ;; to make it have the same argument to `org-clock-update-mode-line'.
+    (defun tl/update-hammerspoon-org-clock-bar (&optional refresh)
       (interactive)
       (let ((text (if (and (boundp 'org-mode-line-string)
                            org-mode-line-string
@@ -69,7 +71,7 @@
                            (memq 'org-mode-line-string global-mode-string)
                            (org-clocking-p))
                       (substring-no-properties org-mode-line-string)
-                    "Nothing !!!")))
+                    "nothing !!!")))
         (tl/open-hammerspoon-url
          "org_clock_update"
          "agenda_next_info"
