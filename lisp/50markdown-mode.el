@@ -22,7 +22,10 @@
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
          ("\\.markdown\\'" . markdown-mode))
-  :init (setq markdown-command "multimarkdown")
+  :init
+  (setq markdown-command "multimarkdown"
+        ;; https://github.com/jrblevin/markdown-mode/issues/578
+        markdown-nested-imenu-heading-index nil)
   :config
   (setq markdown-max-image-size '(600 . 400))
   (tl/set-leader-keys-for-major-mode 'markdown-mode

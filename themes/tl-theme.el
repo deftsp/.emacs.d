@@ -522,6 +522,11 @@
    ;; display-fill-column-indicator-mode
    `(fill-column-indicator ((t (:foreground ,base01 :weight bold))))
 
+   '(imenu-list-entry-face-0 ((t (:foreground "#53a0a3"))))
+   '(imenu-list-entry-face-1 ((t (:foreground "#b06f9f"))))
+   '(imenu-list-entry-face-2 ((t (:foreground "#547fb3"))))
+   '(imenu-list-entry-face-3 ((t (:foreground "#ac9383"))))
+
    ;; rainbow-delimiters
    '(rainbow-delimiters-unmatched-face ((t (:foreground unspecified :inherit show-paren-mismatch :strike-through t))))
 

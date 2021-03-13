@@ -11,8 +11,17 @@
 (use-package imenu
   :defer t
   :init
-  (progn
-    (setq imenu-max-items 40)))
+  ;; (add-hook 'markdown-mode-hook 'imenu-add-menubar-index)
+  (setq imenu-auto-rescan t
+        imenu-max-items 40))
+
+(use-package imenu-list
+  :after imenu
+  :bind (("C-'" . imenu-list-smart-toggle))
+  :config
+  (setq imenu-list-focus-after-activation t
+        imenu-list-auto-resize nil))
+
 
 ;;; auto insert the matching closing delimiter
 ;; electric pair mode is a global minor mode
