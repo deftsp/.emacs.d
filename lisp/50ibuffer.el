@@ -246,7 +246,7 @@
                                 " " filename-and-process)
                           (mark " " (name 16 -1) " " filename)))
   (setq ibuffer-show-empty-filter-groups nil)
-  (setq ibuffer-saved-filter-groups tl//ibuffer-gnus-styled-groups)
+  ;; (setq ibuffer-saved-filter-groups tl//ibuffer-gnus-styled-groups)
   :config
   ;; "M-o" already for ace-window
   (define-key ibuffer-mode-map (kbd "M-o") nil)
@@ -272,12 +272,12 @@
 
   (defun tl//ibuffer-init-h ()
     (ibuffer-vc-set-filter-groups-by-vc-root)
-    (unless (eq ibuffer-sorting-mode 'alphabetic)
-      (ibuffer-do-sort-by-alphabetic))
 
     ;; (ibuffer-switch-to-saved-filter-groups
     ;;  "default")
-    (ibuffer-auto-mode +1))
+    ;; (ibuffer-auto-mode +1)
+    (unless (eq ibuffer-sorting-mode 'alphabetic)
+      (ibuffer-do-sort-by-alphabetic)))
 
   (add-hook 'ibuffer-mode-hook 'tl//ibuffer-init-h))
 
