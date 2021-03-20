@@ -55,6 +55,7 @@
   (tl/set-leader-keys-for-major-mode 'rustic-mode
     ;; backend
     "bI" 'lsp-rust-analyzer-status
+    "b." 'lsp-rust-analyzer-reload-workspace
     "p"  'rustic-format-buffer
     "cm" 'tl/maximize-rustic-compilation-window
     "vm" 'tl/toggle-mut))
