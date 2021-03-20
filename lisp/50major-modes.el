@@ -12,7 +12,7 @@
   :defer t
   :init
   ;; (add-hook 'markdown-mode-hook 'imenu-add-menubar-index)
-  (setq imenu-auto-rescan t
+  (setq imenu-auto-rescan nil
         imenu-max-items 40))
 
 (use-package imenu-list
@@ -20,6 +20,7 @@
   :bind (("C-'" . imenu-list-smart-toggle))
   :config
   (setq imenu-list-focus-after-activation t
+        imenu-list-size 0.15
         imenu-list-auto-resize nil))
 
 
