@@ -433,7 +433,7 @@ kill internal buffers too."
 (use-package evil-collection
   :after evil
   :init
-  (setq evil-collection-mode-list '(calendar info magit-todos vterm (pdf pdf-view)))
+  (setq evil-collection-mode-list '(calendar info magit magit-todos vterm (pdf pdf-view)))
   :config
   (evil-collection-init))
 

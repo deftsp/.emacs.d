@@ -99,7 +99,6 @@
 (straight-use-package '(evil-jumper :type git :host github :repo "bling/evil-jumper"))
 (straight-use-package 'evil-leader)
 (straight-use-package 'evil-lion)
-(straight-use-package 'evil-magit)
 (straight-use-package 'evil-matchit)
 (straight-use-package 'evil-mc)
 (straight-use-package 'evil-nerd-commenter)

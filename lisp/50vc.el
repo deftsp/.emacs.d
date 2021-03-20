@@ -144,10 +144,6 @@
     (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
     (add-to-list 'magit-repository-directories '("~/.emacs.d" . 0)) ; C-u C-u M-x magit-status will ignore it
     (add-to-list 'magit-repository-directories '("~/opt/emacs" . 0))
-    ;; optional: this is the evil state that evil-magit will use
-    ;; (setq evil-magit-state 'normal)
-    ;; optional: disable additional bindings for yanking text
-    ;; (setq evil-magit-use-y-for-yank nil)
     (use-package magit-todos
       :init
       (progn
@@ -158,8 +154,7 @@
       (progn
         ;; (magit-todos-mode +1); use magit-todos-list instead
         (setq magit-todos-section-map nil)))
-    (use-package transient)
-    (use-package evil-magit)))
+    (use-package transient)))
 
 (use-package with-editor
   :defer t
