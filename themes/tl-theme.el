@@ -381,6 +381,8 @@
    '(lsp-modeline-code-actions-face ((t (:foreground "#75cc55" :background "#bbbbbb"))))
    '(lsp-ui-doc-background ((t (:background "#073642"))))
 
+   ;; lsp-rust
+   `(lsp-rust-analyzer-inlay-face ((t (:foreground ,base01 :height 0.8 :slant italic))))
 
    ;; cedet
    '(pulse-highlight-start-face ((t (:background "#222222"))))

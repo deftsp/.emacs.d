@@ -41,6 +41,13 @@
   (use-package lsp-rust
     :init
     (setq lsp-rust-server 'rust-analyzer
+          lsp-rust-analyzer-server-display-inlay-hints t
+          lsp-rust-analyzer-proc-macro-enable t
+          lsp-rust-analyzer-inlay-hints-mode t
+          lsp-rust-analyzer-display-chaining-hints t
+          lsp-rust-analyzer-display-parameter-hints t
+          lsp-rust-analyzer-cargo-run-build-scripts t
+          lsp-rust-analyzer-cargo-watch-enable t
           lsp-rust-analyzer-cargo-watch-command "clippy"
           lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")))
 

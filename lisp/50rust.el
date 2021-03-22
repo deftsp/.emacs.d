@@ -53,6 +53,7 @@
 
   (tl/declare-prefix-for-mode 'rustic-mode "mv" "variable")
   (tl/set-leader-keys-for-major-mode 'rustic-mode
+    "th" 'lsp-rust-analyzer-inlay-hints-mode
     ;; backend
     "bI" 'lsp-rust-analyzer-status
     "b." 'lsp-rust-analyzer-reload-workspace
