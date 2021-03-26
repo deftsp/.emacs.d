@@ -200,7 +200,6 @@
 (straight-use-package 'reformatter)
 (straight-use-package 'add-node-modules-path)
 (straight-use-package '(dotenv :type git :host github :repo "pkulev/dotenv.el"))
-(straight-use-package 'flyspell-correct)
 (straight-use-package 'request)
 (straight-use-package 'adoc-mode)
 (straight-use-package 'dumb-jump)
@@ -471,5 +470,10 @@
 (straight-use-package 'projectile)
 (straight-use-package 'counsel-projectile)
 (straight-use-package 'find-file-in-project)
+
+(straight-use-package 'flyspell-correct)
+(straight-use-package 'wucuo)
+
+
 
 (provide '02straight)

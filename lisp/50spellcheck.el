@@ -19,14 +19,15 @@
     ;; save new words in pdict without questioning
     (setq ispell-silently-savep t)
 
+    ;; Using https://github.com/redguardtoo/wucuo instead
     ;; programming language modes use flyspell-prog-mode and not normal spell-check.
-    (add-hook 'prog-mode-hook 'flyspell-prog-mode)
+    ;; (add-hook 'prog-mode-hook 'flyspell-prog-mode)
 
-    (defun tl/flyspell-mode-init ()
-      ;; (auto-dictionary-mode +1)
-      )
+    ;; (defun tl/flyspell-mode-init ()
+    ;;   ;; (auto-dictionary-mode +1)
+    ;;   )
 
-    (add-hook 'flyspell-mode-hook 'tl/flyspell-mode-init)
+    ;; (add-hook 'flyspell-mode-hook 'tl/flyspell-mode-init)
 
     (defun tl/toggle-flyspell-mode ()
       (interactive)
@@ -55,6 +56,14 @@
       "Ss" 'flyspell-correct-at-point
       "St" 'tl/toggle-flyspell-mode)))
 
+
+;; wucuo base on flyspell, turn off flyspell-prog-mode and flyspell-mode before using this program. the configuration
+;; for flyspell still works.
+(use-package wucuo
+  :commands (wucuo-start)
+  :init
+  (add-hook 'prog-mode-hook #'wucuo-start)
+  (add-hook 'text-mode-hook #'wucuo-start))
 
 (use-package flyspell-correct
   :after flyspell
