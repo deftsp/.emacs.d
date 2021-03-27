@@ -319,7 +319,6 @@
 (straight-use-package 'esup)
 (straight-use-package 'graphviz-dot-mode)
 (straight-use-package 'splitter)
-(straight-use-package 'bind-map)
 (straight-use-package 'etags-table)
 (straight-use-package 'growl)
 ;; (straight-use-package 'om)
