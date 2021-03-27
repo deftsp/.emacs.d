@@ -67,23 +67,10 @@ not in a rust project."
   ;; (advice-remove #'rustic-compilation #'tl//rustic-compilation-buffer-crate)
   (advice-add #'rustic-compilation :override #'tl//rustic-compilation-buffer-crate)
 
-
-
-  (tl/declare-prefix-for-mode 'rustic-mode "mh" "help")
-
-
   (define-key rustic-compilation-mode-map "q" 'tl/quit-rustic-compilation-window)
   (define-key rustic-cargo-outdated-mode-map"q" 'tl/quit-rustic-compilation-window)
   ;; (define-key rustic-cargo-test-mode-map "q" nil)
   ;; (define-key rustic-cargo-clippy-mode-map "q" nil)
-
-
-  ;; rustic-compilation-mode
-  (with-eval-after-load "evil-evilified-state"
-    (evilified-state-evilify rustic-compilation-mode rustic-compilation-mode-map
-      "gg" 'evil-goto-first-line
-      "gr" 'rustic-recompile
-      "G" 'evil-goto-line))
 
   (defun tl/rustic-mode-init ()
     (smartparens-strict-mode +1)
@@ -96,32 +83,50 @@ not in a rust project."
   ;; use lsp-mode with rust-analyzer instead of rustic-clippy
   ;; (push 'rustic-clippy flycheck-checkers)
 
-  (tl/declare-prefix-for-mode 'rustic-mode "mv" "variable")
-  (tl/set-leader-keys-for-major-mode 'rustic-mode
-    "th" 'lsp-rust-analyzer-inlay-hints-mode
-    ;; backend
-    "bI" 'lsp-rust-analyzer-status
-    "b." 'lsp-rust-analyzer-reload-workspace
-    "p"  'rustic-format-buffer
-    "cm" 'tl/maximize-rustic-compilation-window
-    "vm" 'tl/toggle-mut))
+  (general-define-key
+   :states 'normal
+   :keymaps 'rustic-compilation-mode-map
+   "gg" 'evil-goto-first-line
+   "gr" 'rustic-recompile
+   "G" 'evil-goto-line)
+
+  (general-define-key
+   :states 'normal
+   :keymaps 'rustic-mode-map
+   :prefix ","
+   "b" '(:ignore t :which-key "backend")
+   "bI" 'lsp-rust-analyzer-status
+   "b." 'lsp-rust-analyzer-reload-workspace
+
+   "h" '(:ignore t :which-key "help")
+
+   "t" '(:ignore t :which-key "toggle")
+   "th" 'lsp-rust-analyzer-inlay-hints-mode
+
+   "p"  'rustic-format-buffer
+   "v"  '(:ignore t :which-key "variable")
+   "vm" 'tl/toggle-mut))
 
 (use-package rustic-cargo
   :after rustic
   :config
-  (tl/declare-prefix-for-mode 'rustic-mode "mc" "cargo")
 
-  (tl/set-leader-keys-for-major-mode 'rustic-mode
-    "ca" 'tl/cargo-audit
-    "cb" 'rustic-cargo-build
-    "cB" 'rustic-cargo-bench
-    "cc" 'rustic-cargo-check
-    "cC" 'rustic-cargo-clippy
-    "cd" 'rustic-cargo-doc
-    "cf" 'rustic-cargo-fmt
-    "cn" 'rustic-cargo-new
-    "co" 'rustic-cargo-outdated
-    "cr" 'rustic-cargo-run)
+  (general-define-key
+   :states 'normal
+   :keymaps 'rustic-mode-map
+   :prefix ","
+   "c" '(:ignore t :which-key "cargo")
+   "ca" 'tl/cargo-audit
+   "cb" 'rustic-cargo-build
+   "cB" 'rustic-cargo-bench
+   "cc" 'rustic-cargo-check
+   "cC" 'rustic-cargo-clippy
+   "cd" 'rustic-cargo-doc
+   "cf" 'rustic-cargo-fmt
+   "cm" 'tl/maximize-rustic-compilation-window
+   "cn" 'rustic-cargo-new
+   "co" 'rustic-cargo-outdated
+   "cr" 'rustic-cargo-run)
 
   (defun tl/cargo-process-quit ()
     (interactive)
@@ -171,7 +176,6 @@ not in a rust project."
       (window-configuration-to-register ??)
       (select-window (get-buffer-window buf))
       (delete-other-windows))))
-
 
 
 (provide '50rust)
