@@ -62,11 +62,11 @@
 
   (tl/declare-prefix-for-mode 'org-mode "mr" "org-roam")
 
-  (tl/set-leader-keys-for-major-mode 'org-mode
+  (tl/set-leader-keys-for-mode 'org-mode
     "ri" 'org-roam-insert
     "rI" 'org-roam-insert-immediate)
 
-  (tl/set-leader-keys-for-minor-mode 'org-mode
+  (tl/set-leader-keys-for-mode 'org-mode
     "rb" 'org-roam-switch-to-buffer
     "rc" 'org-roam-capture
     "rf" 'org-roam-find-file

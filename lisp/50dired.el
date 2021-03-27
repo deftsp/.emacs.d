@@ -28,7 +28,7 @@
   (defun tl/dired-mode-hook-init ())
 
   (progn
-    (tl/set-leader-keys-for-major-mode 'dired-mode
+    (tl/set-leader-keys-for-mode 'dired-mode
       "u" 'tl/dired-up-directory-reuse-dir-buffer
       "z" 'reveal-in-osx-finder)
     (define-key dired-mode-map (kbd "^") 'tl/dired-up-directory-reuse-dir-buffer)
@@ -354,7 +354,7 @@ dired buffer to be opened."
   (add-hook 'dired-sidebar-mode-hook 'tl/dired-sidebar-init)
 
   :config
-  (tl/set-leader-keys-for-major-mode 'dired-sidebar-mode
+  (tl/set-leader-keys-for-mode 'dired-sidebar-mode
     "u" 'dired-sidebar-up-directory)
 
   (defun tl/dired-sidebar-preview-file ()

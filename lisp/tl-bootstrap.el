@@ -13,9 +13,9 @@
 (require '02base)
 (require '02straight)
 (require '02utils)
+(require '02binding-funcs)
 (require '03frame)
 (require '05core-funcs)
-(require '05core-keybindings)
 (require '07powerline)
 (require '09evil-mode)
 

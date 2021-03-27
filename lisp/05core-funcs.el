@@ -104,7 +104,7 @@ Supported properties:
 `:evil-leader-for-mode CONS CELL'
     One or several cons cells (MODE . KEY) where MODE is a major-mode symbol
     and KEY is a key sequence string to be set with
-    `tl/set-leader-keys-for-major-mode'.
+    `tl/set-leader-keys-for-mode'.
 
 `:global-key STRING'
     One or several key sequence strings to be set with `global-set-key'.
@@ -122,7 +122,7 @@ Supported properties:
            (tl/set-leader-keys key ',func))))
      (when evil-leader-for-mode
        `((dolist (val ',evil-leader-for-mode)
-           (tl/set-leader-keys-for-major-mode
+           (tl/set-leader-keys-for-mode
              (car val) (cdr val) ',func))))
      (when global-key
        `((dolist (key ',global-key)

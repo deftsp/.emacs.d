@@ -28,7 +28,7 @@
         markdown-nested-imenu-heading-index nil)
   :config
   (setq markdown-max-image-size '(600 . 400))
-  (tl/set-leader-keys-for-major-mode 'markdown-mode
+  (tl/set-leader-keys-for-mode 'markdown-mode
     "r" 'tl/markdown-refresh
     "Ti" 'markdown-toggle-inline-images))
 

@@ -6,11 +6,6 @@
 
 (use-package hydra)
 
-;; https://github.com/noctuid/general.el
-(use-package general
-  :config
-  (general-override-mode +1))
-
 ;; (use-package benchmark-init
 ;;   :config
 ;;   ;; To disable collection of benchmark data after init is done.

@@ -349,7 +349,7 @@
                       ("mtt" . "toggle")
                       ("mx" . "text")))
       (tl/declare-prefix-for-mode 'org-mode (car prefix) (cdr prefix)))
-    (tl/set-leader-keys-for-major-mode 'org-mode
+    (tl/set-leader-keys-for-mode 'org-mode
       "C-l" 'tl/reflash-indentation
 
       "'" 'org-edit-special
@@ -801,7 +801,7 @@ buffer which do not already have one. When `arg' nil only adds ids if the
 
     (add-hook 'org-capture-after-finalize-hook 'tl//org-capture-after-finalize-h)
 
-    (tl/set-leader-keys-for-minor-mode 'org-capture-mode
+    (tl/set-leader-keys-for-mode 'org-capture-mode
       dottl-major-mode-leader-key 'org-capture-finalize
       "a" 'org-capture-kill
       "c" 'org-capture-finalize
@@ -1097,7 +1097,7 @@ Will work on both org-mode and any mode that accepts plain html."
   :config
   (progn
     (add-to-list 'org-src-lang-modes (quote ("dot" . graphviz-dot)))
-    (tl/set-leader-keys-for-minor-mode 'org-src-mode
+    (tl/set-leader-keys-for-mode 'org-src-mode
       dottl-major-mode-leader-key 'org-edit-src-exit
       "c" 'org-edit-src-exit
       "a" 'org-edit-src-abort
@@ -1211,15 +1211,15 @@ prepended to the element after the #+HEADER: tag."
       "aojs" 'org-journal-search-forever))
   :config
   (progn
-    (tl/set-leader-keys-for-major-mode 'org-journal-mode
+    (tl/set-leader-keys-for-mode 'org-journal-mode
       "j" 'org-journal-new-entry
       "n" 'org-journal-open-next-entry
       "p" 'org-journal-open-previous-entry)
 
     ;; set the parent keymap, so we can use the keybinding of ", *" binded in org-mode
-    (set-keymap-parent tl-org-journal-mode-map tl-org-mode-map)
+    ;; (set-keymap-parent tl-org-journal-mode-map tl-org-mode-map)
 
-    (tl/set-leader-keys-for-major-mode 'calendar-mode
+    (tl/set-leader-keys-for-mode 'calendar-mode
       "r" 'org-journal-read-entry
       "i" 'org-journal-new-date-entry
       "n" 'org-journal-next-entry
@@ -1236,12 +1236,13 @@ prepended to the element after the #+HEADER: tag."
       (bind-key "s-c" 'org-anki-capture-region)
       (with-eval-after-load 'evil
         (evil-define-key 'normal org-anki-mode-map "gr" 'org-anki-refresh-buffer))
-      (tl/set-leader-keys-for-major-mode 'org-anki-mode
+      (tl/set-leader-keys-for-mode 'org-anki-mode
         dottl-major-mode-leader-key 'org-anki-send-capture-and-quit
         "r" 'org-anki-refresh
         "k" 'org-anki-quit
         "a" 'org-anki-add-word)
-      (set-keymap-parent tl-org-anki-mode-map tl-org-mode-map))))
+      ;; (set-keymap-parent tl-org-anki-mode-map tl-org-mode-map)
+      )))
 
 ;;; evil surround
 (defun tl//surround-drawer ()

@@ -210,7 +210,7 @@ This function is intended for use with `ivy-ignore-buffers'."
 
   (with-eval-after-load 'evil
     (evil-make-overriding-map ivy-occur-mode-map 'normal))
-  (tl/set-leader-keys-for-major-mode 'ivy-occur-grep-mode
+  (tl/set-leader-keys-for-mode 'ivy-occur-grep-mode
     "w" 'ivy-wgrep-change-to-wgrep-mode)
 
   (use-package ivy-hydra

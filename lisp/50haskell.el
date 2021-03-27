@@ -95,7 +95,7 @@ Available options are `ghci', `intero', `dante', and `ghc-mod'")
       (interactive)
       (haskell-process-do-type 1))
 
-    (tl/set-leader-keys-for-major-mode 'haskell-mode
+    (tl/set-leader-keys-for-mode 'haskell-mode
       "gg"  'haskell-mode-jump-to-def-or-tag
 
       "gi"  'haskell-navigate-imports
@@ -157,16 +157,16 @@ Available options are `ghci', `intero', `dante', and `ghc-mod'")
      "t" 'haskell-debug/trace)
 
     ;; Switch back to editor from REPL
-    (tl/set-leader-keys-for-major-mode 'haskell-interactive-mode
+    (tl/set-leader-keys-for-mode 'haskell-interactive-mode
       "ss"  'haskell-interactive-switch-back)
-    (tl/set-leader-keys-for-major-mode 'intero-repl-mode
+    (tl/set-leader-keys-for-mode 'intero-repl-mode
       "ss"  'intero-repl-switch-back)
 
-    (tl/set-leader-keys-for-major-mode 'haskell-cabal
+    (tl/set-leader-keys-for-mode 'haskell-cabal
       "C"  'haskell-compile)
 
     ;; Cabal-file bindings
-    (tl/set-leader-keys-for-major-mode 'haskell-cabal-mode
+    (tl/set-leader-keys-for-mode 'haskell-cabal-mode
       ;; "="   'haskell-cabal-subsection-arrange-lines ;; Does a bad job, 'gg=G' works better
       "d"   'haskell-cabal-add-dependency
       "b"   'haskell-cabal-goto-benchmark-section
@@ -255,7 +255,7 @@ Available options are `ghci', `intero', `dante', and `ghc-mod'")
 (defun tl-haskell//setup-dante ()
   (dante-mode +1)
   (dolist (mode haskell-modes)
-    (tl/set-leader-keys-for-major-mode mode
+    (tl/set-leader-keys-for-mode mode
       "ht" 'dante-type-at
       "hT" 'spacemacs-haskell//dante-insert-type
       "hi" 'dante-info
@@ -266,7 +266,7 @@ Available options are `ghci', `intero', `dante', and `ghc-mod'")
 (defun tl-haskell//setup-intero ()
   (intero-mode +1)
   (dolist (mode haskell-modes)
-    (tl/set-leader-keys-for-major-mode mode
+    (tl/set-leader-keys-for-mode mode
       "hi" 'intero-info
       "ht" 'intero-type-at
       "hT" 'haskell-intero/insert-type
@@ -274,14 +274,14 @@ Available options are `ghci', `intero', `dante', and `ghc-mod'")
       "sb" 'intero-repl-load))
 
   (dolist (mode (cons 'haskell-cabal-mode haskell-modes))
-    (tl/set-leader-keys-for-major-mode mode
+    (tl/set-leader-keys-for-mode mode
       "sc"  nil
       "ss"  'haskell-intero/display-repl
       "sS"  'haskell-intero/pop-to-repl))
 
   (dolist (mode (append haskell-modes '(haskell-cabal-mode intero-repl-mode)))
     (tl/declare-prefix-for-mode mode "mi" "haskell/intero")
-    (tl/set-leader-keys-for-major-mode mode
+    (tl/set-leader-keys-for-mode mode
       "ic"  'intero-cd
       "id"  'intero-devel-reload
       "ik"  'intero-destroy
@@ -298,7 +298,7 @@ Available options are `ghci', `intero', `dante', and `ghc-mod'")
   (ghc-init)
   (dolist (mode haskell-modes)
     (tl/declare-prefix-for-mode mode "mm" "haskell/ghc-mod")
-    (tl/set-leader-keys-for-major-mode mode
+    (tl/set-leader-keys-for-mode mode
       "mt" 'ghc-insert-template-or-signature
       "mu" 'ghc-initial-code-from-signature
       "ma" 'ghc-auto
@@ -415,7 +415,7 @@ Available options are `ghci', `intero', `dante', and `ghc-mod'")
 (defun tl-haskell//setup-ghc-mod ()
   (ghc-init)
   (tl/declare-prefix-for-mode 'haskell-mode "mm" "haskell/ghc-mod")
-  (tl/set-leader-keys-for-major-mode 'haskell-mode
+  (tl/set-leader-keys-for-mode 'haskell-mode
     "mt" 'ghc-insert-template-or-signature
     "mu" 'ghc-initial-code-from-signature
     "ma" 'ghc-auto
@@ -480,7 +480,7 @@ Available options are `ghci', `intero', `dante', and `ghc-mod'")
 
 ;;; hindent
 (with-eval-after-load 'hindent
-  (tl/set-leader-keys-for-major-mode 'haskell-mode "f" 'hindent-reformat-decl))
+  (tl/set-leader-keys-for-mode 'haskell-mode "f" 'hindent-reformat-decl))
 
 
 ;;; Check

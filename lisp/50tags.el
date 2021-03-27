@@ -97,7 +97,7 @@ Prompt for TAGNAME if not given."
             ;; (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
             ;; (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
             (dolist (mode '(c-mode c++-mode makefile-bsdmake-mode dired-mode))
-              (tl/set-leader-keys-for-major-mode mode
+              (tl/set-leader-keys-for-mode mode
                 "gC" 'counsel-gtags-create-tags
                 "gd" 'counsel-gtags-dwim
                 "gD" 'counsel-gtags-find-definition

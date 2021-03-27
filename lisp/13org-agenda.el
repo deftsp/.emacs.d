@@ -286,7 +286,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
       (tl/declare-prefix-for-mode 'org-agenda-mode
         (car prefix) (cdr prefix)))
 
-    (tl/set-leader-keys-for-major-mode 'org-agenda-mode
+    (tl/set-leader-keys-for-mode 'org-agenda-mode
       "C-c C-t" 'org-todo-yesterday
 
       "a" 'org-agenda

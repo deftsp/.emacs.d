@@ -113,7 +113,7 @@
     (tl/declare-prefix-for-mode 'web-mode "mg" "goto")
     (tl/declare-prefix-for-mode 'web-mode "mh" "dom")
     (tl/declare-prefix-for-mode 'web-mode "mr" "refactor")
-    (tl/set-leader-keys-for-major-mode 'web-mode
+    (tl/set-leader-keys-for-mode 'web-mode
       "."  'tl/web-mode/body
       "eh" 'web-mode-dom-errors-show
       "gb" 'web-mode-element-beginning
@@ -189,7 +189,7 @@
 
     (tl/declare-prefix-for-mode 'js2-mode "ms" "skewer")
     (tl/declare-prefix-for-mode 'js2-mode "me" "eval")
-    (tl/set-leader-keys-for-major-mode 'js2-mode
+    (tl/set-leader-keys-for-mode 'js2-mode
       "'" 'tl/skewer-start-repl
       "ee" 'skewer-eval-last-expression
       "eE" 'skewer-eval-print-last-expression
@@ -210,7 +210,7 @@
     (add-hook 'web-mode-hook 'skewer-html-mode))
   :config
   (progn
-    (tl/set-leader-keys-for-minor-mode 'skewer-html-mode
+    (tl/set-leader-keys-for-mode 'skewer-html-mode
       "et" 'skewer-html-eval-tag)))
 
 (use-package skewer-css
@@ -221,7 +221,7 @@
     (add-hook 'css-mode-hook 'skewer-css-mode))
   :config
   (progn
-    (tl/set-leader-keys-for-minor-mode 'skewer-css-mode
+    (tl/set-leader-keys-for-mode 'skewer-css-mode
       "ee" 'skewer-css-eval-current-declaration
       "ex" 'skewer-css-eval-current-rule
       "eb" 'skewer-css-eval-buffer
@@ -245,13 +245,13 @@ If ARG is a numerical prefix argument then specify the indentation level."
           (save-excursion (json-reformat-region (point-min) (point-max)))
         (json-reformat-region start end))))
 
-  (tl/set-leader-keys-for-major-mode 'json-mode
+  (tl/set-leader-keys-for-mode 'json-mode
     "=" 'tl/json-reformat-dwim))
 
 (use-package json-snatcher
   :defer t
   :init
-  (tl/set-leader-keys-for-major-mode 'json-mode
+  (tl/set-leader-keys-for-mode 'json-mode
     "hp" 'jsons-print-path))
 
 ;; npm install -g eslint_d@9.1.2
@@ -259,7 +259,7 @@ If ARG is a numerical prefix argument then specify the indentation level."
   :commands (eslintd-fix eslintd-fix-mode)
   :after (web-mode)
   :config
-  (tl/set-leader-keys-for-major-mode 'web-mode
+  (tl/set-leader-keys-for-mode 'web-mode
     "p"  'eslintd-fix
     "ef" 'eslintd-fix))
 

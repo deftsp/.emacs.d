@@ -1,5 +1,16 @@
 ;;; 50key-bindings.el ---
 
+
+(defun tl/translate-C-i (_)
+  "The raw key sequence does not include <tab> or <kp-tab>, and we
+are in the gui, translate to [C-i]. Otherwise, [9] (TAB)."
+  (interactive)
+  (if (and (not (cl-position 'tab (this-single-command-raw-keys)))
+           (not (cl-position 'kp-tab (this-single-command-raw-keys)))
+           (display-graphic-p))
+      [C-i] [?\C-i]))
+(define-key key-translation-map [?\C-i] 'tl/translate-C-i)
+
 ;; https://github.com/justbur/emacs-which-key
 (use-package which-key
   :init

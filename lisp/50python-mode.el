@@ -40,7 +40,7 @@
   :init
   (progn
     ;; (setq pylookup-search-options '("--insensitive" "0" "--desc" "0"))
-    (tl/set-leader-keys-for-major-mode 'python-mode
+    (tl/set-leader-keys-for-mode 'python-mode
       "hH" 'pylookup-lookup))
   :config
   (progn
@@ -72,7 +72,7 @@
     (tl/declare-prefix-for-mode 'python-mode "mr" "refactor")
     (tl/declare-prefix-for-mode 'python-mode "mv" "pyenv")
     (tl/declare-prefix-for-mode 'python-mode "mV" "pyvenv")
-    (tl/set-leader-keys-for-major-mode 'python-mode
+    (tl/set-leader-keys-for-mode 'python-mode
       "'"  'tl/python-start-or-switch-repl
       "cc" 'tl/python-execute-file
       "cC" 'tl/python-execute-file-focus
@@ -152,7 +152,7 @@
   :defer t
   :init
   (progn
-    (tl/set-leader-keys-for-major-mode 'cython-mode
+    (tl/set-leader-keys-for-mode 'cython-mode
       "hh" 'anaconda-mode-view-doc
       "gu" 'anaconda-mode-usages
       "gg"  'anaconda-mode-goto)))
@@ -273,7 +273,7 @@
   :hook (python-mode . pipenv-mode)
   :init
   (setq pipenv-executable "~/.asdf/shims/pipenv")
-  (tl/set-leader-keys-for-major-mode 'python-mode
+  (tl/set-leader-keys-for-mode 'python-mode
     "ea" 'pipenv-activate
     "ed" 'pipenv-deactivate
     "ei" 'pipenv-install

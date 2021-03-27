@@ -52,7 +52,7 @@
           lsp-rust-analyzer-cargo-watch-command "clippy"
           lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")))
 
-  (tl/set-leader-keys-for-minor-mode 'lsp-mode
+  (tl/set-leader-keys-for-mode 'lsp-mode
     ;; format
     "=b" #'lsp-format-buffer
     "=r" #'lsp-format-region

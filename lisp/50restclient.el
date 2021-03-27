@@ -29,7 +29,7 @@
       (interactive)
       (restclient-http-send-current t t))
 
-    (tl/set-leader-keys-for-major-mode 'restclient-mode
+    (tl/set-leader-keys-for-mode 'restclient-mode
       "n" 'restclient-jump-next
       "p" 'restclient-jump-prev
       "s" 'restclient-http-send-current-stay-in-window

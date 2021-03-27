@@ -59,7 +59,7 @@
     (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
       (tl/declare-prefix-for-mode mode "mg" "find-symbol")
       (tl/declare-prefix-for-mode mode "mh" "help")
-      (tl/set-leader-keys-for-major-mode mode
+      (tl/set-leader-keys-for-mode mode
         "hh" 'elisp-slime-nav-describe-elisp-thing-at-point))))
 
 ;;; auto compile el file
@@ -151,7 +151,7 @@ Requires smartparens because all movement is done using `sp-forward-symbol'."
     (tl/declare-prefix-for-mode mode "mc" "compile")
     (tl/declare-prefix-for-mode mode "me" "eval")
     (tl/declare-prefix-for-mode mode "mt" "tests")
-    (tl/set-leader-keys-for-major-mode mode
+    (tl/set-leader-keys-for-mode mode
       "cc" 'emacs-lisp-byte-compile
       ;; "e$" 'lisp-state-eval-sexp-end-of-line
       "eb" 'eval-buffer
@@ -177,7 +177,7 @@ Requires smartparens because all movement is done using `sp-forward-symbol'."
   :init
   (progn
     (dolist (mode '(emacs-lisp-mode lisp-interaction-mode))
-      (tl/set-leader-keys-for-major-mode mode
+      (tl/set-leader-keys-for-mode mode
         "hC" 'helpful-command
         "hf" 'helpful-callable
         "hF" 'helpful-function

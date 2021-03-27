@@ -31,7 +31,7 @@
     (tl/declare-prefix-for-mode 'js2-mode "mr" "refactor")
     (tl/declare-prefix-for-mode 'js2-mode "mz" "folding")
     ;; key bindings
-    (tl/set-leader-keys-for-major-mode 'js2-mode
+    (tl/set-leader-keys-for-mode 'js2-mode
       "w" 'js2-mode-toggle-warnings-and-errors
       "zc" 'js2-mode-hide-element
       "zo" 'js2-mode-show-element
@@ -69,7 +69,7 @@
     (tl/declare-prefix-for-mode 'js2-mode "mx" "text")
     (tl/declare-prefix-for-mode 'js2-mode "mxm" "move")
     ;; key bindings
-    (tl/set-leader-keys-for-major-mode 'js2-mode
+    (tl/set-leader-keys-for-mode 'js2-mode
       "r3i" 'js2r-ternary-to-if
       "rag" 'js2r-add-to-globals-annotation
       "rao" 'js2r-arguments-to-object

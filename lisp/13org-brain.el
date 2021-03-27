@@ -24,7 +24,7 @@
   (tl/set-leader-keys "aob" 'org-brain-visualize)
 
   :config
-  (tl/set-leader-keys-for-major-mode 'org-brain-visualize-mode
+  (tl/set-leader-keys-for-mode 'org-brain-visualize-mode
     "mp" 'org-brain-change-local-parent
     "mr" 'org-brain-refile
     "sr" 'org-brain-refile)
