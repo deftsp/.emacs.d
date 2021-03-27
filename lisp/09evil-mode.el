@@ -433,6 +433,7 @@ kill internal buffers too."
   :after evil
   :init
   ;; (setq evil-collection-mode-list '(calendar info magit magit-todos vterm (pdf pdf-view)))
+  (setq evil-collection-key-blacklist '("M-o" ))
   :config
   (evil-collection-init))
 
@@ -953,27 +954,7 @@ to replace the symbol under cursor"
          (clojure-mode . lispy-mode))
   :config
   (setq lispy-close-quotes-at-end-p t)
-  (define-key lispy-mode-map-lispy (kbd "M-o") nil)
   (add-hook 'lispy-mode-hook #'turn-off-smartparens-mode))
-
-
-;;; lispyville: [[https://github.com/noctuid/lispyville][noctuid/lispyville: lispy + evil = lispyville]]
-(use-package lispyville
-  :after (evil)
-  :diminish
-  :hook (lispy-mode . lispyville-mode)
-  :config
-  (lispyville-set-key-theme
-   '((operators normal)
-     ;; c-w
-     (prettify insert)
-     (atom-movement normal visual)
-     slurp/barf-lispy
-     (wrap normal insert)
-     ;; additional
-     ;; additional-insert
-     (additional-wrap normal insert)
-     (escape insert))))
 
 ;; auto-complete word in Emacs mini-buffer when using Evil
 ;; http://blog.binchen.org/posts/auto-complete-word-in-emacs-mini-buffer-when-using-evil.html

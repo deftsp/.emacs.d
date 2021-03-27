@@ -427,3 +427,21 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
     (with-eval-after-load 'js2-mode
       (tl/set-leader-keys-for-major-mode 'js2-mode
         "sa" 'livid-mode))))
+
+;;; lispyville: [[https://github.com/noctuid/lispyville][noctuid/lispyville: lispy + evil = lispyville]]
+(use-package lispyville
+  :after (evil)
+  :diminish
+  :hook (lispy-mode . lispyville-mode)
+  :config
+  (lispyville-set-key-theme
+   '((operators normal)
+     ;; c-w
+     (prettify insert)
+     (atom-movement normal visual)
+     slurp/barf-lispy
+     (wrap normal insert)
+     ;; additional
+     ;; additional-insert
+     (additional-wrap normal insert)
+     (escape insert))))

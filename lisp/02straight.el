@@ -463,9 +463,8 @@
 (straight-use-package 'linkd)
 (straight-use-package 'zoutline)
 (straight-use-package '(dired-sidebar :type git :host github :repo "deftsp/dired-sidebar" :branch "shihpin"))
-(straight-use-package 'lispy)
 (straight-use-package 'diredfl)
-(straight-use-package 'lispyville)
+(straight-use-package 'lispy)
 
 (straight-use-package 'projectile)
 (straight-use-package 'counsel-projectile)

@@ -209,54 +209,56 @@
                                      :cwd nil))
   (load "~/.emacs.d/private-dap-debug-template.el")
 
-  (tl/set-leader-keys-for-minor-mode 'rustic-mode
-    ;; transient state
-    "d."  #'dap-hydra
-    ;; repl
-    "d'"  #'dap-ui-repl
-    ;; abandon
-    "da"  #'dap-disconnect
-    "dA"  #'dap-delete-all-sessions
-    ;; breakpoints
-    "dbb" #'dap-breakpoint-toggle
-    "dbc" #'dap-breakpoint-condition
-    "dbl" #'dap-breakpoint-log-message
-    "dbh" #'dap-breakpoint-hit-condition
-    "dba" #'dap-breakpoint-add
-    "dbd" #'dap-breakpoint-delete
-    "dbD" #'dap-breakpoint-delete-all
-    ;; debuging/running
-    "ddd" #'dap-debug
-    "dde" #'dap-debug-edit-template
-    "ddl" #'dap-debug-last
-    "ddr" #'dap-debug-recent
-    ;; eval
-    "dee" #'dap-eval
-    "der" #'dap-eval-region
-    "det" #'dap-eval-thing-at-point
-    "det" #'dap-ui-expressions-add
-    ;; inspect
-    "dIi" #'dap-ui-inspect
-    "dIr" #'dap-ui-inspect-region
-    "dIt" #'dap-ui-inspect-thing-at-point
-    ;; stepping
-    "dc"  #'dap-continue
-    "di"  #'dap-step-in
-    "do"  #'dap-step-out
-    "dr"  #'dap-restart-frame
-    "ds"  #'dap-next
-    "dv"  #'dap-ui-inspect-thing-at-point
-    ;; switching
-    "dSs" #'dap-switch-session
-    "dSt" #'dap-switch-thread
-    "dSf" #'dap-switch-frame
-    ;; toggles
-    "dTm" 'spacemacs/toggle-dap-mouse
-    ;; windows
-    "dwo" #'dap-go-to-output-buffer
-    "dwl" #'dap-ui-locals
-    "dws" #'dap-ui-sessions
-    "dwb" #'dap-ui-breakpoints)
+  (general-define-key
+   :states 'normal
+   :keymaps 'rustic-mode-map
+   :prefix ","
+   "d" '(:ignore t :which-key "debug")
+   ;; repl
+   "d'"  #'dap-ui-repl
+   ;; abandon
+   "da"  #'dap-disconnect
+   "dA"  #'dap-delete-all-sessions
+   ;; breakpoints
+   "dbb" #'dap-breakpoint-toggle
+   "dbc" #'dap-breakpoint-condition
+   "dbl" #'dap-breakpoint-log-message
+   "dbh" #'dap-breakpoint-hit-condition
+   "dba" #'dap-breakpoint-add
+   "dbd" #'dap-breakpoint-delete
+   "dbD" #'dap-breakpoint-delete-all
+   ;; debuging/running
+   "ddd" #'dap-debug
+   "dde" #'dap-debug-edit-template
+   "ddl" #'dap-debug-last
+   "ddr" #'dap-debug-recent
+   ;; eval
+   "dee" #'dap-eval
+   "der" #'dap-eval-region
+   "det" #'dap-eval-thing-at-point
+   "det" #'dap-ui-expressions-add
+   ;; inspect
+   "dIi" #'dap-ui-inspect
+   "dIr" #'dap-ui-inspect-region
+   "dIt" #'dap-ui-inspect-thing-at-point
+   ;; stepping
+   "dc"  #'dap-continue
+   "di"  #'dap-step-in
+   "do"  #'dap-step-out
+   "dr"  #'dap-restart-frame
+   "ds"  #'dap-next
+   "dv"  #'dap-ui-inspect-thing-at-point
+   ;; switching
+   "dSs" #'dap-switch-session
+   "dSt" #'dap-switch-thread
+   "dSf" #'dap-switch-frame
+   ;; toggles
+   "dTm" 'spacemacs/toggle-dap-mouse
+   ;; windows
+   "dwo" #'dap-go-to-output-buffer
+   "dwl" #'dap-ui-locals
+   "dws" #'dap-ui-sessions
+   "dwb" #'dap-ui-breakpoints)
 
   (dap-mode +1))
 
