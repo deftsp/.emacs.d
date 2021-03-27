@@ -278,13 +278,6 @@ mouse-1: Display Line and Column Mode Menu")
   :group 'powerline)
 
 
-(defface powerline-evil-iedit-face
-  '((((class color))
-     :foreground "blue" :background "yellow" :weight bold :inherit mode-line)
-    (t (:weight bold)))
-  "face to fontify evil iedit state"
-  :group 'powerline)
-
 (defun powerline-evil-face (active)
   (let* ((state (if (boundp 'evil-state)
                     (symbol-name evil-state)

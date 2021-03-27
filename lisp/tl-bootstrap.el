@@ -83,6 +83,7 @@
 ;; (require '50minibuffer-line)
 (require '50misc)
 (require '50mmm-mode)
+(require '50multi-edit)
 ;; (require '50mode-line)
 ;; (require '50doom-modeline)
 (require '50narrowing)

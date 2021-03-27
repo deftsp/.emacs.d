@@ -63,10 +63,6 @@
   `((t (:weight bold :foreground "orange")))
   "Evil lispy mode indicator face")
 
-(defface tl/evil-iedit-tag
-  `((t (:weight bold :foreground "yellow")))
-  "Evil iedit mode indicator face")
-
 ;;; visual indicators
 (setq evil-mode-line-format 'before
       evil-emacs-state-tag    (propertize "« E »" 'face 'tl/evil-emacs-tag)
@@ -75,8 +71,7 @@
       evil-motion-state-tag   (propertize "« M »" 'face 'tl/evil-motion-tag)
       evil-visual-state-tag   (propertize "« V »" 'face 'tl/evil-visual-tag)
       evil-operator-state-tag (propertize "« O »" 'face 'tl/evil-operator-tag)
-      evil-replace-state-tag  (propertize "« R »" 'face 'tl/evil-replace-tag)
-      evil-iedit-state-tag    (propertize "« E »" 'face 'tl/evil-iedit-tag))
+      evil-replace-state-tag  (propertize "« R »" 'face 'tl/evil-replace-tag))
 
 ;; FIXME: as Official Emacs 24.4, if set color color,  when multile
 ;; windows (> 6), C-h evil-mode `q' then quit the help window will be very slow
@@ -89,8 +84,7 @@
           evil-visual-state-cursor   `(hollow ,(face-attribute 'tl/evil-visual-tag   :foreground))
           evil-replace-state-cursor  `(hbar   ,(face-attribute 'tl/evil-replace-tag  :foreground))
           evil-operator-state-cursor `(hollow ,(face-attribute 'tl/evil-operator-tag :foreground))
-          evil-lispy-state-cursor    `(box    ,(face-attribute 'tl/evil-lispy-tag    :foreground))
-          evil-iedit-state-cursor    `(box    ,(face-attribute 'tl/evil-iedit-tag    :foreground)))
+          evil-lispy-state-cursor    `(box    ,(face-attribute 'tl/evil-lispy-tag    :foreground)))
   (setq evil-default-cursor '(box "#cd0000") ; emacs official
         evil-emacs-state-cursor    'box
         evil-normal-state-cursor   'box
@@ -99,8 +93,7 @@
         evil-visual-state-cursor   'hollow
         evil-replace-state-cursor  'hbar
         evil-operator-state-cursor 'hbar
-        evil-lisp-state-cursor     'hbar
-        evil-iedit-state-cursor    'box))
+        evil-lisp-state-cursor     'hbar))
 
 ;; Getting :n[ew] to work
 ;; As of this writing, Evil does not allow you to shorten ':new' to ':n', but you can define a command that does.
@@ -235,21 +228,6 @@ kill internal buffers too."
                (not (eq major-mode dottl-scratch-mode))
                (fboundp dottl-scratch-mode))
       (funcall dottl-scratch-mode))))
-
-;; only active in certain evil states which defined in bind-map-default-evil-states
-(with-eval-after-load 'evil
-  (defun tl-bootstrap/init-bind-map ()
-    (use-package bind-map
-      :config
-      (bind-map tl-default-map
-        :prefix-cmd tl-cmds
-        :keys (dottl-emacs-leader-key)
-        :evil-keys (dottl-leader-key)
-        :override-minor-modes t
-        :override-mode-name tl-leader-override-mode)))
-
-  (tl-bootstrap/init-bind-map))
-
 
 ;;; default mode
 (defun tl/evil-set-initial-state ()
@@ -434,7 +412,7 @@ kill internal buffers too."
   :init
   ;; (setq evil-collection-mode-list '(calendar info magit magit-todos vterm (pdf pdf-view)))
   (setq evil-collection-setup-minibuffer t)
-  (setq evil-collection-key-blacklist '("M-o" ))
+  (setq evil-collection-key-blacklist '("M-o" "gz" "gr"))
   :config
   (evil-collection-init))
 
@@ -812,20 +790,6 @@ to replace the symbol under cursor"
   (evil-find-char-pinyin-toggle-snipe-integration t)
   (evil-find-char-pinyin-mode +1))
 
-;; evil-iedit-state
-(use-package iedit
-  :defer 3
-  :config
-  (use-package evil-iedit-state
-    :init
-    (setq iedit-current-symbol-default t
-          iedit-only-at-symbol-boundaries t
-          iedit-toggle-key-default nil)
-    :config
-    ;; activate leader in iedit and iedit-insert states
-    (define-key evil-iedit-state-map
-      (kbd dottl-leader-key) tl-default-map)))
-
 (use-package evil-visualstar
   :defer 3
   :config
@@ -1001,18 +965,6 @@ to replace the symbol under cursor"
   :commands (evil-visual-mark-mode)
   :init
   (setq evil-visual-mark-exclude-marks '("^" "[" "]")))
-
-(use-package evil-mc
-  :defer 3
-  :init
-  (progn
-    (setq evil-mc-one-cursor-show-mode-line-text nil)
-    (setq evil-mc-enable-bar-cursor nil))
-  :config
-  (progn
-    (advice-add 'evil-mc-undo-all-cursors :after #'anzu--reset-mode-line)
-    (add-hook 'prog-mode-hook 'turn-on-evil-mc-mode)
-    (add-hook 'text-mode-hook 'turn-on-evil-mc-mode)))
 
 (with-eval-after-load 'wgrep
   (evil-define-key 'normal wgrep-mode-map ",," 'wgrep-finish-edit)

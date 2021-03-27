@@ -445,3 +445,66 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
      ;; additional-insert
      (additional-wrap normal insert)
      (escape insert))))
+
+;; evil-iedit-state
+(use-package iedit
+  :defer 3
+  :config
+  (use-package evil-iedit-state
+    :init
+    (setq iedit-current-symbol-default t
+          iedit-only-at-symbol-boundaries t
+          iedit-toggle-key-default nil)
+    :config
+    ;; activate leader in iedit and iedit-insert states
+    (define-key evil-iedit-state-map
+      (kbd dottl-leader-key) tl-default-map)))
+
+;;; mutiple cursors
+(use-package multiple-cursors
+  :defer t
+  :init
+  (progn
+    ;; Mark more like this
+    (global-set-key (kbd "C-*") 'mc/mark-all-like-this)
+    (global-set-key (kbd "C-<") 'mc/mark-previous-like-this)
+    (global-set-key (kbd "C->") 'mc/mark-next-like-this)
+    ;; (global-set-key (kbd "M-å") 'mc/mark-all-in-region)
+    (global-set-key (kbd "C-M-m") 'mc/mark-more-like-this-extended)
+
+    (defvar tl/mutiple-cursors-keymap (make-sparse-keymap)
+      "Keymap for key chord prefix commands in haskell mode.")
+    (define-key tl/mutiple-cursors-keymap (kbd "l") 'mc/edit-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "c") 'mc/edit-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "M-C") 'mc/edit-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "C-e") 'mc/edit-ends-of-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "e") 'mc/edit-ends-of-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "C-a") 'mc/edit-beginnings-of-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "a") 'mc/edit-beginnings-of-lines)
+    (define-key tl/mutiple-cursors-keymap (kbd "SPC") 'set-rectangular-region-anchor)
+    (define-key tl/mutiple-cursors-keymap (kbd "m") 'set-rectangular-region-anchor)
+
+    (global-set-key (kbd "M-C") tl/mutiple-cursors-keymap)
+    (key-chord-define-global ";c" tl/mutiple-cursors-keymap))
+  :config
+  (progn
+    (with-eval-after-load "evil"
+      (add-hook 'multiple-cursors-mode-enabled-hook
+                'tl/evil-switch-to-insert-maybe))
+
+    (add-to-list 'mc/unsupported-minor-modes 'autopair-mode)
+    (add-to-list 'mc/unsupported-minor-modes 'smartparens-mode)
+    ;; (add-to-list 'mc/unsupported-minor-modes 'evil-mode)
+    (add-to-list 'mc/unsupported-minor-modes 'smartparens-strict-mode)))
+
+(global-set-key (kbd "C-S-SPC") 'tl/set-rectangular-region-anchor)
+;; Rectangular region mode
+(defun tl/evil-switch-to-insert-maybe ()
+  (when (and (fboundp 'evil-mode) evil-mode)
+    (if (not (memq evil-state '(insert emacs)))
+        (evil-insert 1))))
+
+(defun tl/set-rectangular-region-anchor ()
+  (interactive)
+  (tl/evil-switch-to-insert-maybe)
+  (set-rectangular-region-anchor))
