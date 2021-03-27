@@ -433,6 +433,7 @@ kill internal buffers too."
   :after evil
   :init
   ;; (setq evil-collection-mode-list '(calendar info magit magit-todos vterm (pdf pdf-view)))
+  (setq evil-collection-setup-minibuffer t)
   (setq evil-collection-key-blacklist '("M-o" ))
   :config
   (evil-collection-init))
@@ -953,8 +954,7 @@ to replace the symbol under cursor"
          (racket-mode . lispy-mode)
          (clojure-mode . lispy-mode))
   :config
-  (setq lispy-close-quotes-at-end-p t)
-  (add-hook 'lispy-mode-hook #'turn-off-smartparens-mode))
+  (setq lispy-close-quotes-at-end-p t))
 
 ;; auto-complete word in Emacs mini-buffer when using Evil
 ;; http://blog.binchen.org/posts/auto-complete-word-in-emacs-mini-buffer-when-using-evil.html
