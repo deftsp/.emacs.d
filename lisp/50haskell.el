@@ -141,18 +141,20 @@ Available options are `ghci', `intero', `dante', and `ghc-mod'")
       "rb" 'hlint-refactor-refactor-buffer
       "rr" 'hlint-refactor-refactor-at-point)
 
-    (evilified-state-evilify haskell-debug-mode haskell-debug-mode-map
-      "RET" 'haskell-debug/select
-      "a" 'haskell-debug/abandon
-      "b" 'haskell-debug/break-on-function
-      "c" 'haskell-debug/continue
-      "d" 'haskell-debug/delete
-      "n" 'haskell-debug/next
-      "N" 'haskell-debug/previous
-      "p" 'haskell-debug/previous
-      "r" 'haskell-debug/refresh
-      "s" 'haskell-debug/step
-      "t" 'haskell-debug/trace)
+    (general-define-key
+     :states 'normal
+     :keymaps 'haskell-debug-mode-map
+     "RET" 'haskell-debug/select
+     "a" 'haskell-debug/abandon
+     "b" 'haskell-debug/break-on-function
+     "c" 'haskell-debug/continue
+     "d" 'haskell-debug/delete
+     "n" 'haskell-debug/next
+     "N" 'haskell-debug/previous
+     "p" 'haskell-debug/previous
+     "r" 'haskell-debug/refresh
+     "s" 'haskell-debug/step
+     "t" 'haskell-debug/trace)
 
     ;; Switch back to editor from REPL
     (tl/set-leader-keys-for-major-mode 'haskell-interactive-mode

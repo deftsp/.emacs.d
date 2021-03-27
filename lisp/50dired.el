@@ -123,24 +123,25 @@ dired buffer to be opened."
     (defun tl/dired-up-directory-reuse-dir-buffer ()
       (interactive) (find-alternate-file ".."))
 
-    (with-eval-after-load "evil-evilified-state"
-      (evilified-state-evilify dired-mode dired-mode-map
-        (kbd "S-SPC") 'tl/jump-to-org-agenda
-        (kbd "%")     'nil
-        (kbd "j")     'dired-hacks-next-file
-        (kbd "k")     'dired-hacks-previous-file
-        (kbd "^")     'tl/dired-up-directory-reuse-dir-buffer
-        (kbd "gu")    'tl/dired-up-directory-reuse-dir-buffer
-        (kbd "l")     'dired-find-file
-        ;; (kbd "i")     'dired-omit-mode
-        (kbd "I")     'dired-maybe-insert-subdir
-        (kbd "/")     'dired-narrow
-        (kbd "M-r")   'dired-do-redisplay
-        (kbd "o")     'tl/dired-find-file-ace-window
-        (kbd "r")     'wdired-change-to-wdired-mode
-        (kbd "gg")    'tl/dired-back-to-top
-        (kbd "gr")    'revert-buffer
-        (kbd "G")     'tl/dired-jump-to-bottom))
+    (general-define-key
+     :states 'normal
+     :keymaps 'dired-mode-map
+     (kbd "S-SPC") 'tl/jump-to-org-agenda
+     (kbd "%")     'nil
+     (kbd "j")     'dired-hacks-next-file
+     (kbd "k")     'dired-hacks-previous-file
+     (kbd "^")     'tl/dired-up-directory-reuse-dir-buffer
+     (kbd "gu")    'tl/dired-up-directory-reuse-dir-buffer
+     (kbd "l")     'dired-find-file
+     ;; (kbd "i")     'dired-omit-mode
+     (kbd "I")     'dired-maybe-insert-subdir
+     (kbd "/")     'dired-narrow
+     (kbd "M-r")   'dired-do-redisplay
+     (kbd "o")     'tl/dired-find-file-ace-window
+     (kbd "r")     'wdired-change-to-wdired-mode
+     (kbd "gg")    'tl/dired-back-to-top
+     (kbd "gr")    'revert-buffer
+     (kbd "G")     'tl/dired-jump-to-bottom)
 
     (use-package dired-narrow
       :defer t

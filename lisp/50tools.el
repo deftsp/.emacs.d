@@ -1172,18 +1172,13 @@ inputting math (Unicode) symbols." t))
     (setq irfc-directory "~/Documents/RFC")
     (setq irfc-assoc-mode t))
   :config
-  (progn
-    (with-eval-after-load "evil-evilified-state"
-      (evilified-state-evilify irfc-mode irfc-mode-map
-        (kbd "gp")  'irfc-page-goto
-        (kbd "gn")   'irfc-page-next
-        (kbd "gp")   'irfc-page-prev
-        (kbd "gv")   'irfc-visit
-        (kbd "j")   nil
-        (kbd "k")   nil
-        (kbd "h")   nil
-        (kbd "l")   nil))))
-
+  (general-define-key
+   :states 'normal
+   :keymaps 'irfc-mode-map
+   "gp" 'irfc-page-goto
+   "gn" 'irfc-page-next
+   "gp" 'irfc-page-prev
+   "gv" 'irfc-visit))
 
 ;;; reveal-in-finder
 ;; https://github.com/kaz-yos/reveal-in-osx-finder

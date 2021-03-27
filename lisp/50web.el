@@ -182,12 +182,10 @@
     (add-hook 'js2-mode-hook 'skewer-mode))
   :config
   (progn
-
-    (with-eval-after-load "evil-evilified-state"
-      (evilified-state-evilify-map skewer-clients-mode-map
-        :mode skewer-clients-mode
-        :bindings
-        "gr" (lookup-key skewer-clients-mode-map "g")))
+    (general-define-key
+     :states 'normal
+     :keymaps 'skewer-clients-mode-map
+     "gr" (lookup-key skewer-clients-mode-map "g"))
 
     (tl/declare-prefix-for-mode 'js2-mode "ms" "skewer")
     (tl/declare-prefix-for-mode 'js2-mode "me" "eval")

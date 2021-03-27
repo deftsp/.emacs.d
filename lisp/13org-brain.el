@@ -22,8 +22,6 @@
         org-brain-file-entries-use-title nil)
 
   (tl/set-leader-keys "aob" 'org-brain-visualize)
-  (with-eval-after-load 'evil
-    (evil-set-initial-state 'org-brain-visualize-mode 'evilified))
 
   :config
   (tl/set-leader-keys-for-major-mode 'org-brain-visualize-mode
@@ -31,19 +29,17 @@
     "mr" 'org-brain-refile
     "sr" 'org-brain-refile)
 
-  (with-eval-after-load "evil-evilified-state"
-    (evilified-state-evilify-map org-brain-visualize-mode-map
-      :mode org-brain-visualize-mode
-      :bindings
-      ;; (kbd "C-h") nil
-      "gr" 'revert-buffer
-      "j" 'forward-button
-      "k" 'backward-button
-      "l" 'org-brain-add-resource
-      "h" 'org-brain-add-child-headline
-      "n" 'org-brain-pin
-      "v" 'org-brain-visualize
-      "V" 'org-brain-visualize-follow))
+  (general-define-key
+   :states 'normal
+   :keymaps 'org-brain-visualize-mode-map
+   "gr" 'revert-buffer
+   "j" 'forward-button
+   "k" 'backward-button
+   "l" 'org-brain-add-resource
+   "h" 'org-brain-add-child-headline
+   "n" 'org-brain-pin
+   "v" 'org-brain-visualize
+   "V" 'org-brain-visualize-follow)
 
   ;; ascii-art-to-unicode
   ;; (use-package ascii-art-to-unicode)

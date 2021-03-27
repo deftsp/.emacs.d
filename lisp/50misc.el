@@ -1096,11 +1096,12 @@ Current position is preserved."
   ;; t means save bookmarks when Emacs is killed, 1 save bookmark every time you
   ;; set bookmark, not only when you exit emacs
   (setq bookmark-save-flag 1)
-  (with-eval-after-load "evil-evilified-state"
-    (evilified-state-evilify bookmark-bmenu-mode bookmark-bmenu-mode-map
-      (kbd "v")   'bookmark-bmenu-select
-      (kbd "L")   'bookmark-bmenu-load)))
 
+  (general-define-key
+   :states 'normal
+   :keymaps 'bookmark-bmenu-mode-map
+   (kbd "v")   'bookmark-bmenu-select
+   (kbd "L")   'bookmark-bmenu-load))
 
 ;;; uniq lines
 (defun tl-uniq-lines (beg end)

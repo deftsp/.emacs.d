@@ -106,32 +106,30 @@
         ;; evilify bind it
         (define-key elfeed-search-mode-map  "G" nil)))
 
-    (evilified-state-evilify-map elfeed-search-mode-map
-      :mode elfeed-search-mode
-      :eval-after-load elfeed-search
-      :bindings
-      "Q"  'tl/elfeed-save-db-and-bury
-      "A"  'tl/elfeed-mark-all-as-read
-      "c"  'elfeed-db-compact
-      "gr" 'elfeed-update
-      "gR" 'elfeed-search-update--force
-      "gu" 'elfeed-unjam
-      "o"  'elfeed-load-opml
-      "q"  'tl/elfeed-quit
-      "m"  'tl/elfeed-toggle-star
-      "f"  'tl/hydra-elfeed/body
-      "w"  'elfeed-web-start
-      "W"  'elfeed-web-stop)
-
-    (evilified-state-evilify-map elfeed-show-mode-map
-      :mode elfeed-show-mode
-      :eval-after-load elfeed-show
-      :bindings
-      "q" 'quit-window
-      (kbd "C-j") 'elfeed-show-next
-      (kbd "C-k") 'elfeed-show-prev)
+    (general-define-key
+     :states 'normal
+     :keymaps 'elfeed-search-mode-map
+     "Q"  'tl/elfeed-save-db-and-bury
+     "A"  'tl/elfeed-mark-all-as-read
+     "c"  'elfeed-db-compact
+     "gr" 'elfeed-update
+     "gR" 'elfeed-search-update--force
+     "gu" 'elfeed-unjam
+     "o"  'elfeed-load-opml
+     "q"  'tl/elfeed-quit
+     "m"  'tl/elfeed-toggle-star
+     "f"  'tl/hydra-elfeed/body
+     "w"  'elfeed-web-start
+     "W"  'elfeed-web-stop)
 
 
+    (general-define-key
+     :states 'normal
+     :keymaps 'elfeed-show-mode-map
+
+     "q" 'quit-window
+     (kbd "C-j") 'elfeed-show-next
+     (kbd "C-k") 'elfeed-show-prev)
 
     (add-hook 'elfeed-new-entry-hook
               (elfeed-make-tagger :feed-url "cnbeta\\.com"

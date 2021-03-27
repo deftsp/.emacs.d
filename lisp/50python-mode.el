@@ -44,7 +44,6 @@
       "hH" 'pylookup-lookup))
   :config
   (progn
-    (evilified-state-evilify pylookup-mode pylookup-mode-map)
     (setq pylookup-dir (concat user-emacs-directory "pylookup/")
           pylookup-program (concat pylookup-dir "pylookup.py")
           pylookup-db-file (concat pylookup-dir "pylookup.db"))

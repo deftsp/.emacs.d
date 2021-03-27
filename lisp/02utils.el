@@ -89,13 +89,6 @@
 
 ;; (use-package el-patch)
 
-(use-package evil-evilified-state
-  :after evil
-  :config
-  (progn
-    (define-key evil-evilified-state-map-original [escape] 'evil-force-evilified-state)))
-
-
 ;; Michael Hoffman at the comment of
 ;; http://endlessparentheses.com/understanding-letf-and-how-it-replaces-flet.html
 

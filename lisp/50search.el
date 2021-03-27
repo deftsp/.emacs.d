@@ -247,13 +247,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
                  "*.log"))
       (add-to-list 'grep-find-ignored-files v))
     ;; bind the keys like wdired
-    (define-key grep-mode-map (kbd "C-x C-q") 'wgrep-change-to-wgrep-mode)
-    (with-eval-after-load "evil-evilified-state"
-      (evilified-state-evilify grep-mode grep-mode-map
-        (kbd "n")   nil
-        (kbd "p")   nil
-        (kbd "h")   nil
-        (kbd "l")   nil))))
+    (define-key grep-mode-map (kbd "C-x C-q") 'wgrep-change-to-wgrep-mode)))
 
 ;; ace-pinyin
 (use-package ace-pinyin
@@ -282,29 +276,33 @@ Argument REPLACE String used to replace the matched strings in the buffer.
   :defer t
   :commands (deadgrep)
   :init
-  (with-eval-after-load "evil-evilified-state"
-    (evilified-state-evilify deadgrep-mode deadgrep-mode-map
-      (kbd "RET") 'deadgrep-visit-result
-      (kbd "<S-return>") 'deadgrep-visit-result-other-window
-      "go" 'deadgrep-visit-result-other-window
-      "gr" 'deadgrep-restart
-      (kbd "C-j") 'deadgrep-forward
-      (kbd "C-k") 'deadgrep-backward
-      (kbd "TAB") 'deadgrep-toggle-file-results
+  (general-define-key
+   :states 'normal
+   :keymaps 'deadgrep-mode-map
+   (kbd "RET") 'deadgrep-visit-result
+   (kbd "<S-return>") 'deadgrep-visit-result-other-window
+   "go" 'deadgrep-visit-result-other-window
+   "gr" 'deadgrep-restart
+   (kbd "C-j") 'deadgrep-forward
+   (kbd "C-k") 'deadgrep-backward
+   (kbd "TAB") 'deadgrep-toggle-file-results
 
-      "i" 'deadgrep-edit-mode
+   "i" 'deadgrep-edit-mode
 
-      ;; FIXME: Maybe we should bind this to something?
-      ;; (define-key map (kbd "C-c C-k") #'deadgrep-kill-process)
+   ;; FIXME: Maybe we should bind this to something?
+   ;; (define-key map (kbd "C-c C-k") #'deadgrep-kill-process)
 
-      ;; Quit
-      "q" 'quit-window
+   ;; Quit
+   "q" 'quit-window
 
-      "ZQ" 'evil-quit)
+   "ZQ" 'evil-quit)
 
-    (evilified-state-evilify deadgrep-edit-mode deadgrep-edit-mode-map
-      (kbd "RET") 'deadgrep-visit-result
-      (kbd "<escape>") 'deadgrep-mode)))
+  (general-define-key
+   :states 'normal
+   :keymaps 'deadgrep-edit-mode-map
+   (kbd "RET") 'deadgrep-visit-result
+   (kbd "<escape>") 'deadgrep-mode)
+  )
 
 ;; https://github.com/dajva/rg.el
 (use-package rg
@@ -319,26 +317,27 @@ Argument REPLACE String used to replace the matched strings in the buffer.
   (setq rg-hide-command t
         rg-show-columns nil)
   :config
-  (with-eval-after-load "evil-evilified-state"
-    (evilified-state-evilify rg-mode rg-mode-map
-      "g>" 'rg-forward-history
-      "g<" 'rg-back-history
+  (general-define-key
+   :states 'normal
+   :keymaps 'rg-mode-map
+   "g>" 'rg-forward-history
+   "g<" 'rg-back-history
 
-      "j" 'compilation-next-error
-      "k" 'compilation-previous-error
+   "j" 'compilation-next-error
+   "k" 'compilation-previous-error
 
-      "h" 'rg-next-file
-      "l" 'rg-prev-file
-      "m" 'rg-menu
+   "h" 'rg-next-file
+   "l" 'rg-prev-file
+   "m" 'rg-menu
 
-      "gg" 'evil-goto-first-line
-      "gr" 'rg-recompile
-      "G" 'evil-goto-line
+   "gg" 'evil-goto-first-line
+   "gr" 'rg-recompile
+   "G" 'evil-goto-line
 
-      "e" 'wgrep-change-to-wgrep-mode
-      ;; Quit
-      "q" 'color-rg-quit
-      "ZQ" 'evil-quit))
+   "e" 'wgrep-change-to-wgrep-mode
+   ;; Quit
+   "q" 'color-rg-quit
+   "ZQ" 'evil-quit)
 
   (rg-define-search rg-emacs-config
     "Search the emacs config."

@@ -82,7 +82,6 @@
 
 (defun tl/pdf-view-mode-init ()
   (set (make-local-variable 'evil-normal-state-cursor) (list nil))
-  (set (make-local-variable 'evil-evilified-state-cursor) (list nil))
   (pdf-view-midnight-minor-mode +1)
 
   (when (fboundp 'turn-off-evil-snipe-override-mode)
