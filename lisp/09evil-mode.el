@@ -412,9 +412,16 @@ kill internal buffers too."
   :init
   ;; (setq evil-collection-mode-list '(calendar info magit magit-todos vterm (pdf pdf-view)))
   (setq evil-collection-setup-minibuffer t)
+  (setq evil-collection-key-whitelist '())
   (setq evil-collection-key-blacklist '("M-o" "gz" "gr"))
   :config
-  (evil-collection-init))
+  (evil-collection-init)
+  (evil-collection-define-key 'normal 'Info-mode-map "o" 'ace-link-info)
+  (evil-collection-define-key 'normal 'xref--xref-buffer-mode-map "o" 'ace-link-xref)
+  (evil-collection-define-key 'normal 'compilation-mode-map "o" 'ace-link-compilation)
+  (evil-collection-define-key 'normal 'woman-mode-map "o" 'ace-link-woman)
+  (evil-collection-define-key 'normal 'helpful-mode-map "o" 'ace-link-help)
+  (evil-collection-define-key 'normal 'help-mode-map "o" 'ace-link-help))
 
 (use-package evil-escape
   :commands (evil-escape)
