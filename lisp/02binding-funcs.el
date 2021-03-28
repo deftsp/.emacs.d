@@ -7,7 +7,8 @@
 
 (defmacro tl/set-leader-keys (&rest bindings)
   `(general-define-key
-    :keymaps '(normal insert emacs)
+    :states '(normal insert emacs)
+    :keymaps 'override
     :prefix dottl-leader-key
     :non-normal-prefix dottl-emacs-leader-key
     ,@bindings))
