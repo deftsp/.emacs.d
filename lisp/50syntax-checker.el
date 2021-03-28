@@ -70,10 +70,10 @@ If the error list is visible, hide it.  Otherwise, show it."
 ;;   (set-face-attribute 'flycheck-posframe-error-face nil :inherit 'error)
 ;;   (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
 
-;; (use-package flycheck-inline
-;;   :after flycheck
-;;   :init
-;;   (add-hook 'flycheck-mode-hook #'flycheck-inline-mode))
+(use-package flycheck-inline
+  :after flycheck
+  :init
+  (add-hook 'flycheck-mode-hook #'flycheck-inline-mode))
 
 ;; quick-peek can not work with display-line-numbers-mode
 ;; [[https://github.com/cpitclaudel/quick-peek/issues/14][Emacs 26 display-line-numbers-mode breaks quick-peek · Issue #14 · cpitclaudel/quick-peek]]
