@@ -193,7 +193,7 @@
   (setq display-time-mail-directory "~/Mail/inbox/new/"))
 
 (setq display-time-string-forms
-      '((format-time-string "%y/%m/%d " now)
+      '((format-time-string " %y/%m/%d " now)
         " " 24-hours ":" minutes
         (if time-zone " ") time-zone (if time-zone " ")
         load
