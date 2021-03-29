@@ -42,6 +42,7 @@
   (use-package lsp-rust
     :init
     (setq lsp-rust-server 'rust-analyzer
+          ;; lsp-rust-target-dir "/tmp/rust-analyzer-check" ; seems not work
           lsp-rust-analyzer-server-display-inlay-hints t
           lsp-rust-analyzer-proc-macro-enable t
           lsp-rust-analyzer-inlay-hints-mode t
