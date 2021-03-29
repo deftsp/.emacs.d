@@ -236,6 +236,9 @@ dired buffer to be opened."
       ;; `F' default to dired-do-find-marked-files
       (define-key dired-mode-map (kbd "f") dired-filter-map)
       (define-key dired-mode-map (kbd "F") dired-filter-mark-map)
+      (evil-collection-define-key 'normal 'dired-mode-map
+        "f" dired-filter-map  ; bind to map, do not quote it
+        "F" dired-filter-mark-map)
       (add-hook 'dired-mode-hook 'dired-filter-mode))
 
     (when (eq system-type 'darwin)
