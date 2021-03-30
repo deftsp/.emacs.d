@@ -43,6 +43,9 @@
     :init
     (setq lsp-rust-server 'rust-analyzer
           ;; lsp-rust-target-dir "/tmp/rust-analyzer-check" ; seems not work
+          ;;Yew project (target to wasm32-unknown-unknown), rust-analyzer will given wrong
+          ;;warning of "unresolved-import"
+          lsp-rust-analyzer-diagnostics-disabled ["unresolved-import"]
           lsp-rust-analyzer-server-display-inlay-hints t
           lsp-rust-analyzer-proc-macro-enable t
           lsp-rust-analyzer-inlay-hints-mode t

@@ -28,10 +28,8 @@
           company-tooltip-limit 20
           company-minimum-prefix-length 1
           company-selection-wrap-around t
-          company-posframe-show-indicator t
           ;; company-backends (delete 'company-ropemacs company-backends)
           ;; company-backends (delete 'company-capf company-backends)
-          company-posframe-show-indicator nil
           company-idle-delay 0.2))
   :config
   (progn
@@ -49,6 +47,19 @@
     (add-to-list 'company-begin-commands 'company-complete)
     (add-to-list 'company-backends 'company-cmake)
 
+    ;; (use-package company-quickhelp
+    ;;   :config
+    ;;   (progn
+    ;;     (company-quickhelp-mode +1)
+    ;;     (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))
+
+    (use-package company-posframe
+      :diminish company-posframe-mode
+      :init
+      (setq company-posframe-quickhelp-delay nil
+            company-posframe-show-indicator nil)
+      :config
+      (define-key company-active-map (kbd "C-c h") #'company-posframe-quickhelp-show))
 
     (if (window-system)
         (company-posframe-mode +1)
@@ -56,6 +67,7 @@
       ;; Allows TAB to select and complete at the same time.
       ;; 'tng' means 'tab and go'
       (company-tng-configure-default))
+
 
     ;; https://github.com/TommyX12/company-tabnine
     ;; workaround for company-transformers
@@ -73,16 +85,7 @@
       (apply func args))
 
     (advice-add #'company--transform-candidates :around #'tl-company--transform-candidates)
-    (advice-add #'company-tabnine :around #'tl-company-tabnine)
-
-    (use-package company-posframe
-      :diminish company-posframe-mode)
-
-    (use-package company-quickhelp
-      :config
-      (progn
-        (company-quickhelp-mode +1)
-        (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))))
+    (advice-add #'company-tabnine :around #'tl-company-tabnine)))
 
 (use-package company-emoji
   :after company)
