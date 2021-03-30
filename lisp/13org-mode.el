@@ -274,11 +274,13 @@
       :diminish evil-org-mode
       :after org
       :init
-      (progn
-        (add-hook 'org-mode-hook 'tl//evil-org-mode))
+      (add-hook 'org-mode-hook 'tl//evil-org-mode)
       :config
-      (progn
-        (evil-org-set-key-theme '(navigation textobjects todo additional))))
+      (evil-org-set-key-theme '(navigation return textobjects additional todo calendar))
+      (general-define-key
+       :states '(normal)
+       :keymaps 'org-mode-map
+       "RET" 'evil-org-return))
 
     (general-define-key
      :states '(visual)
@@ -483,23 +485,23 @@
     (tl/declare-prefix "ao" "org")
     (tl/declare-prefix "aok" "clock")
     (tl/set-leader-keys
-      ;; org-agenda
-      "ao#" 'org-agenda-list-stuck-projects
-      "ao/" 'org-occur-in-agenda-files
-      "aoa" 'org-agenda-list
-      "aoc" 'org-capture
-      "aoe" 'org-store-agenda-views
-      "aoi" 'org-insert-link-global
-      "aoki" 'org-clock-in-last
-      "aokj" 'org-clock-jump-to-current-clock
-      "aoko" 'org-clock-out
-      "aol" 'org-store-link
-      "aom" 'org-tags-view
-      "aoo" 'org-agenda
-      "aos" 'org-search-view
-      "aot" 'org-todo-list
-      ;; SPC C- capture/colors
-      "Cc" 'org-capture)
+     ;; org-agenda
+     "ao#" 'org-agenda-list-stuck-projects
+     "ao/" 'org-occur-in-agenda-files
+     "aoa" 'org-agenda-list
+     "aoc" 'org-capture
+     "aoe" 'org-store-agenda-views
+     "aoi" 'org-insert-link-global
+     "aoki" 'org-clock-in-last
+     "aokj" 'org-clock-jump-to-current-clock
+     "aoko" 'org-clock-out
+     "aol" 'org-store-link
+     "aom" 'org-tags-view
+     "aoo" 'org-agenda
+     "aos" 'org-search-view
+     "aot" 'org-todo-list
+     ;; SPC C- capture/colors
+     "Cc" 'org-capture)
 
     ;; We add this key mapping because an Emacs user can change
     ;; `dottl-major-mode-emacs-leader-key' to `C-c' and the key binding
