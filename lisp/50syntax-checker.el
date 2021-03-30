@@ -61,19 +61,23 @@ If the error list is visible, hide it.  Otherwise, show it."
 ;;; flycheck-posframe can not work will with company-posframe
 ;;; lsp-ui-sideline-mode to show the message on the right
 ;; https://github.com/alexmurray/flycheck-posframe
-;; (use-package flycheck-posframe
-;;   :after flycheck
-;;   :config
-;;   (setq flycheck-posframe-warning-prefix "➤ ")
-;;   (setq flycheck-posframe-error-prefix "➤ ")
-;;   (set-face-attribute 'flycheck-posframe-warning-face nil :inherit 'warning)
-;;   (set-face-attribute 'flycheck-posframe-error-face nil :inherit 'error)
-;;   (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
-
-(use-package flycheck-inline
+(use-package flycheck-posframe
   :after flycheck
-  :init
-  (add-hook 'flycheck-mode-hook #'flycheck-inline-mode))
+  :config
+  (setq flycheck-posframe-warning-prefix "⚠ ") ; ➤
+  (setq flycheck-posframe-error-prefix "❌ ")
+  (setq flycheck-posframe-border-width 0 )
+  (setq flycheck-posframe-position 'window-bottom-left-corner) ; 'point-bottom-left-corner
+  (set-face-attribute 'flycheck-posframe-warning-face nil :inherit 'warning)
+  (set-face-attribute 'flycheck-posframe-error-face nil :inherit 'error)
+  (add-hook 'flycheck-mode-hook #'flycheck-posframe-mode))
+
+;;; flycheck-inline "insert" the "message lines" to the normal code, and when the point move away, the added "message
+;;; lines" will be deleted. It make the screen jump, feels bad to me.
+;; (use-package flycheck-inline
+;;   :after flycheck
+;;   :init
+;;   (add-hook 'flycheck-mode-hook #'flycheck-inline-mode))
 
 ;; quick-peek can not work with display-line-numbers-mode
 ;; [[https://github.com/cpitclaudel/quick-peek/issues/14][Emacs 26 display-line-numbers-mode breaks quick-peek · Issue #14 · cpitclaudel/quick-peek]]

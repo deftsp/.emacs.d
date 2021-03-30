@@ -499,6 +499,7 @@
    '(flycheck-posframe-error-face ((t (:inherit compilation-error :slant italic))))
    '(flycheck-posframe-warning-face ((t (:inherit compilation-warning :slant italic))))
    '(flycheck-posframe-info-face ((t (:inherit compilation-info :slant italic))))
+   '(flycheck-posframe-background-face ((t (:background "#103b46"))))
 
 
    ;; flycheck-inline
