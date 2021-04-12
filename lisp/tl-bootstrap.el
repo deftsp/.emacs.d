@@ -38,11 +38,9 @@
 (require '50asm-mode)
 (require '50auto-fill)
 ;; (require '50auto-insert)
-;; (require '50bbdb)
 (require '50calendar)
 
 (require '50clojure)
-;; (require '50common-lisp)
 (require '50completion)
 (require '50deft)
 (require '50dictionary)
@@ -55,7 +53,6 @@
 (require '50emacs-lisp-mode)
 (require '50emacsclient)
 (require '50epg)
-;; (require '50erc)
 (require '50eshell)
 (require '50tags)
 (require '50ffap)
@@ -88,7 +85,6 @@
 ;; (require '50doom-modeline)
 (require '50narrowing)
 (require '50net-utils)
-;; (require '50nethack)
 (require '50nxml)
 (require '50ocaml)
 (require '50outline-mode)
@@ -131,7 +127,6 @@
 ;; (require '52emms)
 
 (require '60session)
-;; (require '62winring)
 (require '99face)
 (require '100align)
 
