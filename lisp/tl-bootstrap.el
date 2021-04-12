@@ -29,9 +29,6 @@
 (require '13org-roam)
 
 (require '40company-mode)
-(when (eq system-type 'gnu/linux)
-  (require '42ecb.el))
-
 (require '50abbrev)
 (require '50alias)
 (require '50android)
