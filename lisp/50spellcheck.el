@@ -5,6 +5,11 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+;; Aspell is a Free and Open Source spell checker designed to eventually replace Ispell.
+;; aspell dictionary path
+;; ~/.aspell.en.pws: Format of the Personal Dictionary
+;; ~/.aspell.en.prepl: Format of the Personal Replacement Dictionary
+
 (use-package flyspell
   :defer t
   :diminish (flyspell-mode . " S")
@@ -46,15 +51,15 @@
     (tl/declare-prefix "S" "spelling")
     (tl/declare-prefix "Sa" "add word to dict")
     (tl/set-leader-keys
-      "Sab" 'tl/add-word-to-dict-buffer
-      "Sag" 'tl/add-word-to-dict-global
-      "Sas" 'tl/add-word-to-dict-session
-      "Sb" 'flyspell-buffer
-      "Sc"  'flyspell-correct-wrapper
-      "Sd" 'spell-checking/change-dictionary
-      "Sn" 'flyspell-goto-next-error
-      "Ss" 'flyspell-correct-at-point
-      "St" 'tl/toggle-flyspell-mode)))
+     "Sab" 'tl/add-word-to-dict-buffer
+     "Sag" 'tl/add-word-to-dict-global
+     "Sas" 'tl/add-word-to-dict-session
+     "Sb" 'flyspell-buffer
+     "Sc"  'flyspell-correct-wrapper
+     "Sd" 'spell-checking/change-dictionary
+     "Sn" 'flyspell-goto-next-error
+     "Ss" 'flyspell-correct-at-point
+     "St" 'tl/toggle-flyspell-mode)))
 
 
 ;; wucuo base on flyspell, turn off flyspell-prog-mode and flyspell-mode before using this program. the configuration
