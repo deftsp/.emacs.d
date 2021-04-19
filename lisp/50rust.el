@@ -24,49 +24,6 @@
   (setq rustic-indent-method-chain t
         rustic-format-trigger nil)
   :config
-  (defun tl//rustic-buffer-crate (&optional nodefault)
-    "Get the workspace root.
-If NODEFAULT is t, return nil instead of `default-directory' if directory is
-not in a rust project."
-    (let ((dir (locate-dominating-file
-                (or buffer-file-name default-directory) "Cargo.toml")))
-      (if dir
-          (expand-file-name dir)
-        (if nodefault
-            nil default-directory))))
-
-  ;; Basically equal to`rust-compilation', but use buffer crate instead of buffer workspace
-  (defun tl//rustic-compilation-buffer-crate (command &optional args)
-    "Start a compilation process with COMMAND.
-
-:no-display - don't display buffer when starting compilation process
-:buffer - name for process buffer
-:process - name for compilation process
-:mode - mode for process buffer
-:directory - set `default-directory'
-:sentinel - process sentinel
-"
-    (let ((buf (get-buffer-create
-                (or (plist-get args :buffer) rustic-compilation-buffer-name)))
-          (process (or (plist-get args :process) rustic-compilation-process-name))
-          (mode (or (plist-get args :mode) 'rustic-compilation-mode))
-          (directory (or (plist-get args :directory) (tl//rustic-buffer-crate)))
-          (sentinel (or (plist-get args :sentinel) #'compilation-sentinel)))
-      (rustic-compilation-setup-buffer buf directory mode)
-      (setq next-error-last-buffer buf)
-      (unless (plist-get args :no-display)
-        (funcall rustic-compile-display-method buf))
-      (with-current-buffer buf
-        (rustic-make-process :name process
-                             :buffer buf
-                             :command command
-                             :filter #'rustic-compilation-filter
-                             :sentinel sentinel))))
-
-
-  ;; (advice-remove #'rustic-compilation #'tl//rustic-compilation-buffer-crate)
-  (advice-add #'rustic-compilation :override #'tl//rustic-compilation-buffer-crate)
-
   (define-key rustic-compilation-mode-map "q" 'tl/quit-rustic-compilation-window)
   (define-key rustic-cargo-outdated-mode-map"q" 'tl/quit-rustic-compilation-window)
   ;; (define-key rustic-cargo-test-mode-map "q" nil)
