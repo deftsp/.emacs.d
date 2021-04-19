@@ -506,68 +506,26 @@ kill internal buffers too."
 
 
 ;;; evil-nerd-commenter
-(global-set-key (kbd "M-;") 'tl/comment-or-uncomment-lines)
+(global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
 (use-package evil-nerd-commenter
   :defer t
-  :commands evilnc-comment-operator
+  :commands (evilnc-comment-or-uncomment-lines evilnc-comment-operator)
   :init
   (progn
-    ;; double all the commenting functions so that the inverse operations
-    ;; can be called without setting a flag
-    (defun tl/comment-or-uncomment-lines-inverse (&optional arg)
-      (interactive "p")
-      (let ((evilnc-invert-comment-line-by-line t))
-        (evilnc-comment-or-uncomment-lines arg)))
-
-    (defun tl/comment-or-uncomment-lines (&optional arg)
-      (interactive "p")
-      (let ((evilnc-invert-comment-line-by-line nil))
-        (evilnc-comment-or-uncomment-lines arg)))
-
-    (defun tl/copy-and-comment-lines-inverse (&optional arg)
-      (interactive "p")
-      (let ((evilnc-invert-comment-line-by-line t))
-        (evilnc-copy-and-comment-lines arg)))
-
-    (defun tl/copy-and-comment-lines (&optional arg)
-      (interactive "p")
-      (let ((evilnc-invert-comment-line-by-line nil))
-        (evilnc-copy-and-comment-lines arg)))
-
-    (defun tl/quick-comment-or-uncomment-to-the-line-inverse
-        (&optional arg)
-      (interactive "p")
-      (let ((evilnc-invert-comment-line-by-line t))
-        (evilnc-comment-or-uncomment-to-the-line arg)))
-
-    (defun tl/quick-comment-or-uncomment-to-the-line (&optional arg)
-      (interactive "p")
-      (let ((evilnc-invert-comment-line-by-line nil))
-        (evilnc-comment-or-uncomment-to-the-line arg)))
-
-    (defun tl/comment-or-uncomment-paragraphs-inverse (&optional arg)
-      (interactive "p")
-      (let ((evilnc-invert-comment-line-by-line t))
-        (evilnc-comment-or-uncomment-paragraphs arg)))
-
-    (defun tl/comment-or-uncomment-paragraphs (&optional arg)
-      (interactive "p")
-      (let ((evilnc-invert-comment-line-by-line nil))
-        (evilnc-comment-or-uncomment-paragraphs arg)))
-
-
     (define-key evil-normal-state-map "gc" 'evilnc-comment-operator)
     (define-key evil-normal-state-map "gy" 'evilnc-copy-and-comment-lines)
     (tl/set-leader-keys
-      ";"  'evilnc-comment-operator
-      "cl" 'tl/comment-or-uncomment-lines
-      "cL" 'tl/comment-or-uncomment-lines-inverse
-      "cp" 'tl/comment-or-uncomment-paragraphs
-      "cP" 'tl/comment-or-uncomment-paragraphs-inverse
-      "ct" 'tl/quick-comment-or-uncomment-to-the-line
-      "cT" 'tl/quick-comment-or-uncomment-to-the-line-inverse
-      "cy" 'tl/copy-and-comment-lines
-      "cY" 'tl/copy-and-comment-lines-inverse)))
+      "ci" 'evilnc-comment-or-uncomment-lines
+      "cl" 'evilnc-quick-comment-or-uncomment-to-the-line
+      "cc" 'evilnc-copy-and-comment-lines
+      "cp" 'evilnc-comment-or-uncomment-paragraphs
+      "cr" 'comment-or-uncomment-region
+      "cv" 'evilnc-toggle-invert-comment-line-by-line
+      "c." 'evilnc-copy-and-comment-operator
+      ;; SPC ; SPC: comment out current line
+      ;; SPC ; 9 j: comment out the next9  lines
+      ;; SPC ; a o: comment out the current symbol
+      ";"  'evilnc-comment-operator)))
 
 ;;; evil-indent-plus wihch replace evil-indent-textobject
 (use-package evil-indent-plus

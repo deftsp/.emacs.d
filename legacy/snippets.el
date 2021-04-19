@@ -553,3 +553,19 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 
 ;;   ;; (advice-remove #'rustic-compilation #'tl//rustic-compilation-buffer-crate)
 ;;   (advice-add #'rustic-compilation :override #'tl//rustic-compilation-buffer-crate)
+
+;;; comment current line
+;; Original idea from
+;; http://www.opensubscriber.com/message/emacs-devel@gnu.org/10971693.html
+(global-set-key (kbd "M-;") 'tl/comment-dwim)
+(defun tl/comment-dwim (&optional arg)
+  "Replacement for the comment-dwim command.
+   If no region is selected and current line is not blank and we are not at the end of the line,
+   then comment current line.
+   Replaces default behaviour of comment-dwim, when it inserts comment at the end of the line."
+  (interactive "*P")
+  (comment-normalize-vars)
+
+  (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
+      (comment-or-uncomment-region (line-beginning-position) (line-end-position))
+    (comment-dwim arg)))

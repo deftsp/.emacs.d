@@ -224,6 +224,8 @@ This function is intended for use with `ivy-ignore-buffers'."
           ivy-rich-path-style 'abbrev
           ivy-rich-parse-remote-file-path nil)
     :config
+    (ivy-rich-project-root-cache-mode +1)
+
     (setcdr (assq t ivy-format-functions-alist) #'ivy-format-function-line)
     ;; N.B. update `ivy-rich-display-transformers-list', have to toggle `ivy-rich-mode' to take effect
     (setq ivy-rich-display-transformers-list
