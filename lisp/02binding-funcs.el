@@ -12,6 +12,7 @@
     :prefix dottl-leader-key
     :non-normal-prefix dottl-emacs-leader-key
     ,@bindings))
+(put 'tl/set-leader-keys 'lisp-indent-function 'defun)
 
 (defmacro tl/set-leader-keys-for-mode (mode &rest bindings)
   `(general-define-key
@@ -19,7 +20,6 @@
     :keymaps (intern (format "%s-map" ,mode))
     :prefix ","
     ,@bindings))
-
 (put 'tl/set-leader-keys-for-mode 'lisp-indent-function 'defun)
 
 (defun tl/declare-prefix (prefix name &optional long-name)
