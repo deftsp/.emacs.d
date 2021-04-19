@@ -506,7 +506,7 @@ kill internal buffers too."
 
 
 ;;; evil-nerd-commenter
-(global-set-key (kbd "M-;") 'evilnc-comment-or-uncomment-lines)
+(global-set-key (kbd "M-;") 'tl/comment-or-uncomment-lines)
 (use-package evil-nerd-commenter
   :defer t
   :commands evilnc-comment-operator
