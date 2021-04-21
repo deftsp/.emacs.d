@@ -4,11 +4,6 @@
 
 (use-package dired
   :defer t
-  :bind (:map dired-mode-map
-         ("r" . wdired-change-to-wdired-mode)
-         ("s" . hydra-dired-quick-sort/body)
-         ("ESC ESC i s" . tl/image-scale)
-         ("M-O" . tl/open-in-external-application))
   :init
   (progn
     ;; Enable `a' in dired-mode, to open files/dirs in the same buffer.
@@ -126,6 +121,8 @@ dired buffer to be opened."
     (general-define-key
      :states 'normal
      :keymaps 'dired-mode-map
+     (kbd "ESC ESC i s") 'tl/image-scale
+     (kbd "M-O")   'tl/open-in-external-application
      (kbd "S-SPC") 'tl/jump-to-org-agenda
      (kbd "%")     'nil
      (kbd "j")     'dired-hacks-next-file
@@ -139,6 +136,7 @@ dired buffer to be opened."
      (kbd "M-r")   'dired-do-redisplay
      (kbd "o")     'tl/dired-find-file-ace-window
      (kbd "r")     'wdired-change-to-wdired-mode
+     (kbd "s")     'hydra-dired-quick-sort/body
      (kbd "gg")    'tl/dired-back-to-top
      (kbd "gr")    'revert-buffer
      (kbd "G")     'tl/dired-jump-to-bottom)

@@ -207,8 +207,7 @@ offer a list of recently clocked tasks to clock into. "
   "ot"    'vterm-toggle
 
   "rc"    'org-roam-capture
-  "rj"    'org-roam-jump-to-index
-  "rf"    'org-roam-find-file)
+  "rf"    'org-roam-node-find)
 
 
 (tl/set-leader-keys

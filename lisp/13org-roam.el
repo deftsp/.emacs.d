@@ -8,9 +8,20 @@
 ;; org-roam-db-build-cache
 (use-package org-roam
   :diminish org-roam-mode
-  :hook (after-init . org-roam-mode)
-  :custom (org-roam-directory (concat org-directory "/roam/"))
+  :after org
+  :commands
+  (org-roam-buffer
+   org-roam-setup
+   org-roam-capture
+   org-roam-node-find)
   :init
+  (setq org-roam-directory (concat org-directory "/roam/"))
+  (setq org-roam-file-extensions '("org"))
+  (setq org-roam-node-display-template "${title:48}   ${tags:42}")
+  (setq org-roam-mode-sections
+        (list #'org-roam-backlinks-insert-section
+              #'org-roam-reflinks-insert-section
+              #'org-roam-unlinked-references-insert-section))
   (setq org-roam-completion-system 'ivy
         org-roam-index-file "index.org"
         org-roam-graph-executable "neato" ; dot
@@ -38,44 +49,50 @@
           ("sep" . "20")))
 
   (setq org-roam-capture-templates
-        '(("d" "default" plain
-           (function org-roam-capture--get-point)
-           "%?"
-           :file-name "%<%Y%m%d%H%M%S>-${slug}"
-           :head "#+TITLE: ${title}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n#+ROAM_TAGS: other\n\n"
-           :unnarrowed t))
-        org-roam-capture-ref-templates
-        '(("a" "Annotation" plain (function org-roam-capture--get-point)
-           "%U ${body}\n"
-           :file-name "${slug}"
-           :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n#+ROAM_TAGS: other\n#+ROAM_ALIAS:\n\n"
+        '(("d" "default" plain "%?" :if-new
+           (file+head
+            "%<%Y%m%d%H%M%S>-${slug}.org"
+            "#+TITLE: ${title}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n#+FILETAGS: other\n\n")
+           :unnarrowed t)))
+
+  ;; The value of key ROAM_REFS in PROPERTIES will contain the URL.
+
+  ;; ${foo} will look for the foo property in the `org-roam-note',if the property does not exist, the user will be
+  ;; prompted to fill in the string value.
+  ;; FIXME: Using %:body to the value from URL is not work
+  (setq org-roam-capture-ref-templates
+        '(("a" "Annotation" plain "%U %:body\n%?"
+           :if-new (file+head
+                    "caps/${slug}.org"
+                    "#+TITLE: ${title}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n#+FILETAGS: other\n\n\n")
            :immediate-finish t
            :unnarrowed t)
-          ("r" "ref" plain
-           (function org-roam-capture--get-point)
-           ""
-           :file-name "caps/${slug}"
-           :head "#+TITLE: ${title}\n#+ROAM_KEY: ${ref}\n#+CREATED: %u\n#+ROAM_TAGS: other\n#+LAST_MODIFIED: %U\n\n"
+          ("r" "ref" plain "%?"
+           :if-new (file+head
+                    "caps/${slug}.org"
+                    "#+TITLE: ${title}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n#+FILETAGS: other\n\n")
            :unnarrowed t)))
   :config
   (require 'org-roam-protocol)
 
+  ;; for org-roam-buffer-toggle
+  (add-to-list 'display-buffer-alist
+               '(("\\*org-roam\\*"
+                  (display-buffer-in-direction)
+                  (direction . right)
+                  (window-width . 0.33)
+                  (window-height . fit-window-to-buffer))))
+
   (tl/declare-prefix-for-mode 'org-mode "mr" "org-roam")
 
   (tl/set-leader-keys-for-mode 'org-mode
-    "ri" 'org-roam-insert
-    "rI" 'org-roam-insert-immediate)
-
-  (tl/set-leader-keys-for-mode 'org-mode
-    "rb" 'org-roam-switch-to-buffer
     "rc" 'org-roam-capture
-    "rf" 'org-roam-find-file
-    "rg" 'org-roam-graph-show
-    "rl" 'org-roam
-    "rd" 'org-roam-find-directory
-    "rj" 'org-roam-jump-to-index
-    "rg" 'org-roam-graph
-    "rr" 'org-roam-find-ref))
+    "rf" 'org-roam-node-find
+    "ri" 'org-roam-node-insert
+    "rl" 'org-roam-buffer-toggle
+    "rr" 'org-roam-ref-find)
+
+  (org-roam-setup))
 
 (use-package org-roam-server
   :defer t

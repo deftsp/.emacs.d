@@ -742,6 +742,7 @@ to replace the symbol under cursor"
       (evil-snipe-override-mode +1) ; replaces evil-mode's f/F/t/T/;/, with snipe
       (add-hook 'magit-mode-hook 'turn-off-evil-snipe-override-mode)
       (add-hook 'magit-mode-hook 'turn-off-evil-snipe-mode)
+      (add-hook 'dired-mode-hook 'turn-off-evil-snipe-mode)
       (add-hook 'git-rebase-mode-hook 'turn-off-evil-snipe-override-mode)
       (add-hook 'git-rebase-mode-hook 'turn-off-evil-snipe-mode))))
 
