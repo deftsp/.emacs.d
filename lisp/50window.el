@@ -548,76 +548,64 @@ If the universal prefix argument is used then kill the buffer too."
                     #'ivy-purpose-switch-buffer-with-some-purpose)))
 
 ;; https://github.com/bmag/emacs-purpose
-(defvar dottl-switch-to-buffer-prefers-purpose nil)
 (use-package window-purpose
   ;; :diminish window-purpose
   :defer 3
   :init
-  (progn
-    (tl/set-leader-keys
-      "wpp" #'purpose-x-popwin-close-windows
+  (tl/set-leader-keys
+    "wpp" #'purpose-x-popwin-close-windows
 
-      "rb" 'purpose-switch-buffer-with-purpose
-      "rB" 'switch-buffer-without-purpose
-      "rd" 'purpose-toggle-window-purpose-dedicated
-      "rD" 'purpose-delete-non-dedicated-windows
-      "rp" 'purpose-switch-buffer-with-some-purpose
-      "rP" 'purpose-set-window-purpose))
+    "rb" 'purpose-switch-buffer-with-purpose
+    "rB" 'switch-buffer-without-purpose
+    "rd" 'purpose-toggle-window-purpose-dedicated
+    "rD" 'purpose-delete-non-dedicated-windows
+    "rp" 'purpose-switch-buffer-with-some-purpose
+    "rP" 'purpose-set-window-purpose)
   :config
-  (progn
-    (purpose-mode +1)
+  ;; purpose-user-mode-purposes: recognize purpose according to major mode
+  ;; purpose-user-mode-purposes: recognize purpose according to buffer name (for exact names)
+  ;; purpose-user-regexp-purposes: recognize purpose according to buffer name (for name patterns)
+  (add-to-list 'purpose-user-mode-purposes '(help-mode . popup))
+  (add-to-list 'purpose-user-mode-purposes '(helpful-mode . popup))
+  (add-to-list 'purpose-user-mode-purposes '(rg-mode . popup))
+  (add-to-list 'purpose-user-regexp-purposes '("\\*org-roam\\*" . popup))
 
-    ;; purpose-user-mode-purposes: recognize purpose according to major mode
-    ;; purpose-user-mode-purposes: recognize purpose according to buffer name (for exact names)
-    ;; purpose-user-regexp-purposes: recognize purpose according to buffer name (for name patterns)
-    (add-to-list 'purpose-user-mode-purposes '(help-mode . popup))
-    (add-to-list 'purpose-user-mode-purposes '(helpful-mode . popup))
-    (add-to-list 'purpose-user-mode-purposes '(rg-mode . popup))
-    (add-to-list 'purpose-user-regexp-purposes '("\\*org-roam\\*" . popup))
+  (setq purpose-use-default-configuration t)
+  (purpose-compile-user-configuration)
 
+  ;; change `switch-to-buffer' display preferences. This affects actions
+  ;; like `tl/alternate-buffer', and opening buffers from Dired
+  (setcdr (assq 'switch-to-buffer purpose-action-sequences)
+          '(purpose-display-maybe-same-window
+            purpose-display-reuse-window-buffer
+            purpose-display-reuse-window-purpose
+            purpose-display-maybe-other-window
+            purpose-display-maybe-other-frame
+            purpose-display-maybe-pop-up-window
+            purpose-display-maybe-pop-up-frame))
 
-    (setq purpose-use-default-configuration t)
-    (purpose-compile-user-configuration)
+  ;; overriding `purpose-mode-map' with empty keymap, so it doesn't conflict
+  ;; with original `C-x C-f', `C-x b', etc. and `semantic' key bindings.
+  (setcdr purpose-mode-map nil)
 
-    ;; change `switch-to-buffer' display preferences according to
-    ;; `dottl-switch-to-buffer-prefers-purpose'. This affects actions
-    ;; like `tl/alternate-buffer', and opening buffers from Dired
-    (setcdr (assq 'switch-to-buffer purpose-action-sequences)
-            (if dottl-switch-to-buffer-prefers-purpose
-                '(purpose-display-reuse-window-buffer
-                  purpose-display-reuse-window-purpose
-                  purpose-display-maybe-same-window
-                  purpose-display-maybe-other-window
-                  purpose-display-maybe-other-frame
-                  purpose-display-maybe-pop-up-window
-                  purpose-display-maybe-pop-up-frame)
-              '(purpose-display-maybe-same-window
-                purpose-display-reuse-window-buffer
-                purpose-display-reuse-window-purpose
-                purpose-display-maybe-other-window
-                purpose-display-maybe-other-frame
-                purpose-display-maybe-pop-up-window
-                purpose-display-maybe-pop-up-frame)))
-    ;; overriding `purpose-mode-map' with empty keymap, so it doesn't conflict
-    ;; with original `C-x C-f', `C-x b', etc. and `semantic' key bindings.
-    (setcdr purpose-mode-map nil)
+  (use-package window-purpose-x
+    :init
+    (progn
+      (setq purpose-x-popwin-position 'bottom
+            ;; if `compilation-window-height' are set, the
+            ;; `purpose-x-popwin-height' will be ignore
+            purpose-x-popwin-height 0.66
+            purpose-x-popwin-width 0.45))
+    :config
+    (progn
+      (add-to-list 'purpose-x-popwin-major-modes 'helpful-mode)
+      (add-to-list 'purpose-x-popwin-major-modes 'org-anki-mode)
+      ;; (purpose-x-popupify-purpose 'search #'purpose-display-at-right)
+      ;; Activate `popwin' emulation.
+      (purpose-x-popwin-setup)
+      (purpose-x-kill-setup)))
 
-    (use-package window-purpose-x
-      :init
-      (progn
-        (setq purpose-x-popwin-position 'bottom
-              ;; if `compilation-window-height' are set, the
-              ;; `purpose-x-popwin-height' will be ignore
-              purpose-x-popwin-height 0.66
-              purpose-x-popwin-width 0.45))
-      :config
-      (progn
-        (add-to-list 'purpose-x-popwin-major-modes 'helpful-mode)
-        (add-to-list 'purpose-x-popwin-major-modes 'org-anki-mode)
-        ;; (purpose-x-popupify-purpose 'search #'purpose-display-at-right)
-        ;; Activate `popwin' emulation.
-        (purpose-x-popwin-setup)
-        (purpose-x-kill-setup)))))
+  (purpose-mode +1))
 
 ;; (use-package dimmer
 ;;   :init
