@@ -10,55 +10,52 @@
 ;; https://truongtx.me/2014/08/23/setup-emacs-as-an-sql-database-client
 
 (use-package sql-indent
-  :defer t
+  :after sql
   :commands (sqlind-minor-mode)
   :init
-  (progn
-    (setq-default sqlind-basic-offset 4)))
+  (setq-default sqlind-basic-offset 4))
 
 (use-package sql
   :defer t
   :config
-  (progn
-    (setq sql-electric-stuff (quote semicolon)
-          sql-input-ring-file-name "~/.sql_history"
-          sql-product 'postgres
-          sql-pop-to-buffer-after-send-region t)
-    (setq sql-postgres-login-params
-          '((user :default "postgres")
-            (database :default "postgres")
-            (server :default "localhost")
-            (port :default 5433)))
+  (setq sql-electric-stuff (quote semicolon)
+        sql-input-ring-file-name "~/.sql_history"
+        sql-product 'postgres
+        sql-pop-to-buffer-after-send-region t)
+  (setq sql-postgres-login-params
+        '((user :default "postgres")
+          (database :default "postgres")
+          (server :default "localhost")
+          (port :default 5433)))
 
-    ;; (sql-set-product-feature 'postgres :prompt-regexp "^[-[:alnum:]_]*=[#>] ")
-    ;; (sql-set-product-feature 'postgres :prompt-cont-regexp
-    ;;                          "^[-[:alnum:]_]*[-(][#>] ")
+  ;; (sql-set-product-feature 'postgres :prompt-regexp "^[-[:alnum:]_]*=[#>] ")
+  ;; (sql-set-product-feature 'postgres :prompt-cont-regexp
+  ;;                          "^[-[:alnum:]_]*[-(][#>] ")
 
-    (defun tl/sql-interactive-mode-init ()
-      (toggle-truncate-lines t)
-      (setq-local show-trailing-whitespace nil))
-
-    (add-hook 'sql-interactive-mode-hook
-              'tl/sql-interactive-mode-init)
-
-    (defun tl/sql-mode-init ()
-      ;; (sqlind-minor-mode +1)
-      )
-
-    (add-hook 'sql-mode-hook 'tl/sql-mode-init)
-
-    (setq sql-connection-alist
-          '((localhost (sql-product 'postgres)
-                       (sql-port 5433)
-                       (sql-server "localhost")
-                       (sql-user "postgres")
-                       (sql-database "scratch"))
-            (server2 (sql-product 'postgres)
-                     (sql-port 5432)
+  (setq sql-connection-alist
+        '((localhost (sql-product 'postgres)
+                     (sql-port 5433)
                      (sql-server "localhost")
-                     (sql-user "user")
-                     (sql-database "db2"))
-            (dotenv-server ())))))
+                     (sql-user "postgres")
+                     (sql-database "scratch"))
+          (server2 (sql-product 'postgres)
+                   (sql-port 5432)
+                   (sql-server "localhost")
+                   (sql-user "user")
+                   (sql-database "db2"))))
+
+  (defun tl/sql-interactive-mode-init ()
+    (toggle-truncate-lines t)
+    (setq-local show-trailing-whitespace nil))
+
+  (add-hook 'sql-interactive-mode-hook
+            'tl/sql-interactive-mode-init)
+
+  (defun tl/sql-mode-init ()
+    ;; (sqlind-minor-mode +1)
+    )
+
+  (add-hook 'sql-mode-hook 'tl/sql-mode-init))
 
 (use-package dotenv
   :after (sql))
