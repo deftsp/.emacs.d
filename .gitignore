@@ -117,6 +117,7 @@ straight/
 org-roam.db
 org-roam.db-shm
 org-roam.db-wal
+org-roam.db-journal
 var/
 .dap-breakpoints
 eln-cache/

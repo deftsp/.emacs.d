@@ -19,9 +19,10 @@
   (setq org-roam-file-extensions '("org"))
   (setq org-roam-node-display-template "${title:48}   ${tags:42}")
   (setq org-roam-mode-sections
-        '(org-roam-backlinks-insert-section
-          ;; org-roam-unlinked-references-insert-section
-          org-roam-reflinks-insert-section))
+        '(org-roam-backlinks-section
+          org-roam-reflinks-section
+          ;; org-roam-unlinked-references-section
+          ))
   (setq org-roam-completion-system 'ivy
         org-roam-index-file "index.org"
         org-roam-graph-executable "neato" ; dot
@@ -94,19 +95,19 @@
 
   (org-roam-setup))
 
-(use-package org-roam-server
-  :defer t
-  :commands (org-roam-server-mode)
-  :config
-  (setq org-roam-server-host "127.0.0.1"
-        org-roam-server-port 5050
-        org-roam-server-export-inline-images t
-        org-roam-server-authenticate nil
-        org-roam-server-network-poll t
-        org-roam-server-network-arrows nil
-        org-roam-server-network-label-truncate t
-        org-roam-server-network-label-truncate-length 60
-        org-roam-server-network-label-wrap-length 20))
+;; (use-package org-roam-server
+;;   :defer t
+;;   :commands (org-roam-server-mode)
+;;   :config
+;;   (setq org-roam-server-host "127.0.0.1"
+;;         org-roam-server-port 5050
+;;         org-roam-server-export-inline-images t
+;;         org-roam-server-authenticate nil
+;;         org-roam-server-network-poll t
+;;         org-roam-server-network-arrows nil
+;;         org-roam-server-network-label-truncate t
+;;         org-roam-server-network-label-truncate-length 60
+;;         org-roam-server-network-label-wrap-length 20))
 
 (defun tl/open-with-firefox (path)
   (let ((process-connection-type nil))

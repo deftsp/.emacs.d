@@ -53,6 +53,9 @@
 (straight-use-package 'f)
 (straight-use-package 'ht)
 
+(straight-use-package '(emacsql :files (:defaults "*.el" "sqlite")))
+(straight-use-package 'emacsql-sqlite3)
+
 (straight-use-package '(org-plus-contrib :build (:not native-compile)))
 (straight-use-package 'org-brain)
 (straight-use-package 'org-mru-clock)
@@ -66,11 +69,15 @@
 (straight-use-package '(org-protocol-capture-html :type git :host github :repo "alphapapa/org-protocol-capture-html"))
 (straight-use-package 'org-ql)
 (straight-use-package '(org-roam :type git :host github :repo "org-roam/org-roam" :branch "v2"))
-(straight-use-package 'org-roam-server)
+;; (straight-use-package 'org-roam-server)
 (straight-use-package '(org-spacer :type git :host github :repo "dustinlacewell/org-spacer.el"))
 (straight-use-package 'org-super-agenda)
 (straight-use-package 'org-trello)
 (straight-use-package 'ob-http)
+
+(straight-use-package 'sql-indent)
+(straight-use-package 'sqlformat)
+
 
 ;; TODO: compatibility only, delete some day
 (straight-use-package '(smartparens :type git :host github :repo "deftsp/smartparens" :branch "shihpin"))
@@ -263,12 +270,10 @@
 (straight-use-package 'mmm-mode)
 (straight-use-package 'seq)
 (straight-use-package 'arduino-mode)
-(straight-use-package 'emacsql)
 (straight-use-package 'git-modes)
 (straight-use-package 'mmt)
 (straight-use-package 'sesman)
 (straight-use-package 'ascii-art-to-unicode)
-(straight-use-package 'emacsql-sqlite3)
 (straight-use-package 'git-timemachine)
 ;; (straight-use-package 'moz-repl)
 (straight-use-package 'session)
@@ -321,10 +326,8 @@
 (straight-use-package 'etags-table)
 (straight-use-package 'growl)
 ;; (straight-use-package 'om)
-(straight-use-package 'sql-indent)
 (straight-use-package '(boxquote :type git :host github :repo "davep/boxquote.el" :branch "main"))
 (straight-use-package 'hamlet-mode)
-(straight-use-package 'sqlformat)
 (straight-use-package 'browse-kill-ring)
 (straight-use-package 'haskell-emacs)
 ;; (straight-use-package 'swank-js)
