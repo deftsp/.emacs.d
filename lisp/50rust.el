@@ -83,7 +83,10 @@
    "cm" 'tl/maximize-rustic-compilation-window
    "cn" 'rustic-cargo-new
    "co" 'rustic-cargo-outdated
-   "cr" 'rustic-cargo-run)
+   "cr" 'rustic-cargo-run
+   "cT" 'rustic-cargo-test
+   "ct" 'rustic-cargo-current-test)
+
 
   (defun tl/cargo-process-quit ()
     (interactive)
