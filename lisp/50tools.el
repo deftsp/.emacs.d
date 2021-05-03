@@ -1197,6 +1197,10 @@ inputting math (Unicode) symbols." t))
   (setq typit-dict-dir "~/.emacs.d/typit-dict"
         typit-dict "number-symbol.txt"))
 
+(use-package persistent-scratch
+  :init
+  :config
+  (persistent-scratch-setup-default))
 
 (use-package graphviz-dot-mode
   :defer t

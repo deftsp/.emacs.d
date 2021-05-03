@@ -259,7 +259,6 @@
 (straight-use-package 'elisp-refs)
 (straight-use-package 'ghub+)
 (straight-use-package 'memoize)
-(straight-use-package 'scratch)
 (straight-use-package 'anzu)
 (straight-use-package 'elisp-slime-nav)
 (straight-use-package 'git-gutter)
@@ -465,6 +464,9 @@
 (straight-use-package '(dired-sidebar :type git :host github :repo "deftsp/dired-sidebar" :branch "shihpin"))
 (straight-use-package 'diredfl)
 (straight-use-package 'lispy)
+
+(straight-use-package 'scratch)
+(straight-use-package 'persistent-scratch)
 
 (straight-use-package 'projectile)
 (straight-use-package 'counsel-projectile)

@@ -29,6 +29,7 @@
   (setq org-export-coding-system coding)
   (set-charset-priority 'unicode)
   (add-to-list 'process-coding-system-alist `("git" . ,coding))
+  (add-to-list 'auto-coding-alist `("\\.org\\'" . ,coding))
   (add-to-list 'auto-coding-alist `("COMMIT_EDITMSG" . ,coding)))
 
 (tl/set-coding-system 'utf-8)
