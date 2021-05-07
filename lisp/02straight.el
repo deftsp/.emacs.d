@@ -1,4 +1,4 @@
-;;; 02straight.el ---                                -*- lexical-binding: t; -*-
+;;; 02straight.el ---                                -*- lexical-binding: t; coding: utf-8-unix; -*-
 
 ;; Copyright (C) 2020  Shihpin Tseng
 
@@ -56,7 +56,8 @@
 (straight-use-package '(emacsql :files (:defaults "*.el" "sqlite")))
 (straight-use-package 'emacsql-sqlite3)
 
-(straight-use-package '(org-plus-contrib :build (:not native-compile)))
+(straight-use-package '(org :build (:not native-compile)))
+(straight-use-package '(org-contrib :build (:not native-compile)))
 (straight-use-package 'org-brain)
 (straight-use-package 'org-mru-clock)
 (straight-use-package '(org-bullets :type git :host github :repo "deftsp/org-bullets" :branch "shihpin"))
