@@ -381,6 +381,14 @@
    '(lsp-modeline-code-actions-face ((t (:foreground "#75cc55" :background "#bbbbbb"))))
    '(lsp-ui-doc-background ((t (:background "#073642"))))
 
+   `(lsp-ui-peek-header ((t (:background ,inactive2 :foreground "#ffffff"))))
+   `(lsp-ui-peek-footer ((t (:background ,inactive2 :foreground "#000000"))))
+   `(lsp-ui-peek-selection ((t (:background ,violet :foreground "#ffffff"))))
+   `(lsp-ui-peek-highlight ((t (:background ,red
+                                :foreground "#002266"
+                                :distant-foreground ,violet
+                                :box '(:line-width -1 :color "#ff0000")))))
+
    ;; lsp-rust
    `(lsp-rust-analyzer-inlay-face ((t (:foreground ,base01 :height 0.8 :slant italic))))
 
@@ -577,5 +585,3 @@
 ;; eval: (auto-fill-mode -1)
 ;; End:
 ;;; tl-theme.el ends here.
-
-; LocalWords:  flyspell flycheck

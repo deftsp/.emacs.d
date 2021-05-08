@@ -75,7 +75,8 @@
     "j." #'smart-jump-go
     "j," #'smart-jump-back
     "j?" #'smart-jump-references
-    "jr" #'smart-jump-references
+    ;; "jr" #'smart-jump-references
+    "jr" #'lsp-ui-peek-find-references
     ;; backend
     "bd" #'lsp-describe-session
     "br" #'lsp-workspace-restart
