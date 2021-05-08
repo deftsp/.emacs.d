@@ -59,6 +59,7 @@
 
    "t" '(:ignore t :which-key "toggle")
    "th" 'lsp-rust-analyzer-inlay-hints-mode
+   "tr" 'lsp-rust-analyzer-related-tests
 
    "p"  'rustic-format-buffer
    "v"  '(:ignore t :which-key "variable")
