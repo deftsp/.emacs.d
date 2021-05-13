@@ -79,16 +79,31 @@
 (straight-use-package 'sql-indent)
 (straight-use-package 'sqlformat)
 
-
-;; TODO: compatibility only, delete some day
-(straight-use-package '(smartparens :type git :host github :repo "deftsp/smartparens" :branch "shihpin"))
-(straight-use-package '(flymake :type git :host github :repo "deftsp/flymake" :branch "shihpin"))
-
 ;; register my fork of ace-window before it's registered by the origin recipe. Otherwise, there will a warning like "Two
 ;; different recipes given for ..."
 (straight-use-package
  '(ace-window :type git :host github :repo "abo-abo/ace-window"
               :fork (:host github :repo "deftsp/ace-window" :branch "shihpin")))
+
+(straight-use-package '(treemacs :files (:defaults "Changelog.org"
+                                         "icons"
+                                         "src/elisp/treemacs*.el"
+                                         "src/scripts/treemacs*.py"
+                                         "treemacs-pkg.el"
+                                         "src/extra/*")
+                                 :includes (treemacs-all-the-icons
+                                            treemacs-evil
+                                            treemacs-icons-dired
+                                            treemacs-magit
+                                            treemacs-persp
+                                            treemacs-pesrpective
+                                            treemacs-projectile)))
+;; (straight-use-package 'treemacs)
+
+;; TODO: compatibility only, delete some day
+(straight-use-package '(smartparens :type git :host github :repo "deftsp/smartparens" :branch "shihpin"))
+(straight-use-package '(flymake :type git :host github :repo "deftsp/flymake" :branch "shihpin"))
+
 (straight-use-package 'evil)
 (straight-use-package 'evil-org)
 (straight-use-package 'evil-anzu)
@@ -356,7 +371,6 @@
 (straight-use-package 'transpose-frame)
 (straight-use-package 'cmake-mode)
 ;; (straight-use-package '(hindent :no-native-compile t))
-;; (straight-use-package 'treemacs)
 (straight-use-package 'cnfonts)
 (straight-use-package 'hl-line+)
 (straight-use-package 'treepy)
@@ -465,6 +479,7 @@
 (straight-use-package '(dired-sidebar :type git :host github :repo "deftsp/dired-sidebar" :branch "shihpin"))
 (straight-use-package 'diredfl)
 (straight-use-package 'lispy)
+
 
 (straight-use-package 'scratch)
 (straight-use-package 'persistent-scratch)

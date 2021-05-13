@@ -129,6 +129,8 @@
 ;;; which func mode
 (setq which-func-modes t) ; enabled in any major mode that supports it.
 (setq which-func-unknown "⊤") ; "n/a"
+(add-to-list 'which-func-non-auto-modes 'treemacs-mode)
+
 ;; We remove Which Function Mode from the mode line, because it's mostly invisible here anyway.
 ;; (setq mode-line-misc-info (assq-delete-all 'which-func-mode mode-line-misc-info))
 
@@ -139,7 +141,8 @@
         '((which-func-mode ("" which-func-format " ")))))
 (add-hook 'prog-mode-hook 'tl/set-header-line-format)
 (add-hook 'org-mode-hook 'tl/set-header-line-format)
-(which-function-mode +1)
+
+(which-function-mode +1) ; which function mode is a global minor mode
 
 ;;; fringe
 (setq-default indicate-buffer-boundaries 'left)

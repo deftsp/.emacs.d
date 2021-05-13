@@ -101,7 +101,10 @@
 
 (use-package lsp-ivy
   :defer t
-  :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol))
+  :commands (lsp-ivy-workspace-symbol lsp-ivy-global-workspace-symbol)
+  :init
+  (tl/set-leader-keys-for-mode 'lsp-mode
+    "js" #'lsp-ivy-workspace-symbol))
 
 (use-package lsp-ui
   :after lsp-mode
@@ -270,5 +273,15 @@
   :after dap-mode
   :hook (dap-mode . dap-ui-mode)
   :hook (dap-ui-mode . dap-ui-controls-mode))
+
+(use-package lsp-treemacs
+  :after (lsp-mode treemacs)
+  :init
+  (setq lsp-treemacs-theme "Iconless")
+
+  (tl/set-leader-keys-for-mode 'lsp-mode
+    "el" #'lsp-treemacs-errors-list)
+  :config
+  (lsp-treemacs-sync-mode +1))
 
 (provide '50lsp-mode)

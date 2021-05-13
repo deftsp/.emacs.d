@@ -333,7 +333,7 @@ dired buffer to be opened."
     (dired-sidebar-follow-file))
 
   (tl/set-leader-keys
-    "ft"    #'dired-sidebar-toggle-sidebar
+    ;; "ft"    #'dired-sidebar-toggle-sidebar
     "ors"   #'tl/do-dired-sidebar-follow-file
     "sf"    #'tl/do-dired-sidebar-follow-file)
 
