@@ -84,25 +84,7 @@
 (when (file-exists-p custom-file)
   (load custom-file 'noerror))
 
-
-;;; temporary fix bug
-;; when el-get initialize ace-window, it'll compain can not find ace-jump-mode
-;; (let ((p (expand-file-name"~/.emacs.d/el-get/ace-jump-mode")))
-;;   (when (file-exists-p p)
-;;     (add-to-list 'load-path p)))
-
 (require 'tl-bootstrap)
-;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
-
-
-;; A fun startup message, somewhat reminiscent of "The Matrix: Reloaded"
-(defconst animate-n-steps 3)
-(defun emacs-reloaded ()
-  (animate-string (concat ";; Initialization successful, welcome to "
-                          (substring (emacs-version) 0 14) ".") 0 0)
-  (newline-and-indent) (newline-and-indent))
-
-(add-hook 'after-init-hook 'emacs-reloaded)
 
 (setq debug-on-error nil)                 ; was set to t at top of buffer
 

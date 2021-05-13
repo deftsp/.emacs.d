@@ -127,22 +127,27 @@
         trash-directory "~/.Trash/__emacs_trash"))
 
 ;;; which func mode
-(setq which-func-modes t) ; enabled in any major mode that supports it.
-(setq which-func-unknown "⊤") ; "n/a"
-(add-to-list 'which-func-non-auto-modes 'treemacs-mode)
+(use-package which-func
+  :init
+  (setq which-func-modes t) ; enabled in any major mode that supports it.
+  ;; We remove Which Function Mode from the mode line, because it's mostly invisible here anyway.
+  ;; (setq mode-line-misc-info (assq-delete-all 'which-func-mode mode-line-misc-info))
+  (setq which-func-unknown "⊤") ; "n/a"
+  :config
+  (add-to-list 'which-func-non-auto-modes 'treemacs-mode)
 
-;; We remove Which Function Mode from the mode line, because it's mostly invisible here anyway.
-;; (setq mode-line-misc-info (assq-delete-all 'which-func-mode mode-line-misc-info))
+;;; header-line-format
+  ;; setq-default header-line-format will cause hydra message window can only show one line
+  ;; (setq-default header-line-format '((which-func-mode ("" which-func-format " "))))
+  (defun tl/set-header-line-format ()
+    (setq header-line-format
+          '((which-func-mode ("" which-func-format " ")))))
+  (add-hook 'prog-mode-hook 'tl/set-header-line-format)
+  (add-hook 'org-mode-hook 'tl/set-header-line-format)
 
-;; setq-default header-line-format will cause hydra message window can only show one line
-;; (setq-default header-line-format '((which-func-mode ("" which-func-format " "))))
-(defun tl/set-header-line-format ()
-  (setq header-line-format
-        '((which-func-mode ("" which-func-format " ")))))
-(add-hook 'prog-mode-hook 'tl/set-header-line-format)
-(add-hook 'org-mode-hook 'tl/set-header-line-format)
+  ;; which function mode is a global minor mode
+  (which-function-mode +1))
 
-(which-function-mode +1) ; which function mode is a global minor mode
 
 ;;; fringe
 (setq-default indicate-buffer-boundaries 'left)

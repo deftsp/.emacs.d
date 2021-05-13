@@ -569,3 +569,21 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
   (if (and (not (region-active-p)) (not (looking-at "[ \t]*$")))
       (comment-or-uncomment-region (line-beginning-position) (line-end-position))
     (comment-dwim arg)))
+
+;; A fun startup message, somewhat reminiscent of "The Matrix: Reloaded"
+(defconst animate-n-steps 3)
+;; (defun emacs-reloaded ()
+;;   (animate-string (concat ";; Initialization successful, welcome to "
+;;                           (substring (emacs-version) 0 14) ".") 0 0)
+;;   (newline-and-indent) (newline-and-indent))
+
+;; (add-hook 'after-init-hook 'emacs-reloaded)
+
+;; (mapc 'load (directory-files "~/.emacs.d/site-lisp" t "\.el$"))
+
+
+;;; temporary fix bug
+;; when el-get initialize ace-window, it'll compain can not find ace-jump-mode
+;; (let ((p (expand-file-name"~/.emacs.d/el-get/ace-jump-mode")))
+;;   (when (file-exists-p p)
+;;     (add-to-list 'load-path p)))
