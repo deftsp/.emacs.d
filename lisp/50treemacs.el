@@ -11,7 +11,7 @@
   :defer t
   :init
   (tl/set-leader-keys
-    "ft"    #'treemacs
+    "ft"    #'treemacs-select-window
     "fT"    #'treemacs
     "fB"    #'treemacs-bookmark
     "f C-t" #'treemacs-find-file)

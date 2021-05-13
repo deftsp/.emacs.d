@@ -59,6 +59,10 @@
   `((t (:weight bold :foreground "maroon")))
   "Evil operator mode indicator face")
 
+(defface tl/evil-treemacs-tag
+  `((t (:weight bold :foreground "#00cbcb")))
+  "Evil treemacs mode indicator face")
+
 (defface tl/evil-lispy-tag
   `((t (:weight bold :foreground "orange")))
   "Evil lispy mode indicator face")
@@ -84,6 +88,8 @@
           evil-visual-state-cursor   `(hollow ,(face-attribute 'tl/evil-visual-tag   :foreground))
           evil-replace-state-cursor  `(hbar   ,(face-attribute 'tl/evil-replace-tag  :foreground))
           evil-operator-state-cursor `(hollow ,(face-attribute 'tl/evil-operator-tag :foreground))
+          ;; FIXME: not works after recreate treemacs window
+          evil-treemacs-state-cursor `(box    ,(face-attribute 'tl/evil-treemacs-tag :foreground))
           evil-lispy-state-cursor    `(box    ,(face-attribute 'tl/evil-lispy-tag    :foreground)))
   (setq evil-default-cursor '(box "#cd0000") ; emacs official
         evil-emacs-state-cursor    'box
@@ -93,6 +99,7 @@
         evil-visual-state-cursor   'hollow
         evil-replace-state-cursor  'hbar
         evil-operator-state-cursor 'hbar
+        evil-treemacs-state-cursor 'box
         evil-lisp-state-cursor     'hbar))
 
 ;; Getting :n[ew] to work
