@@ -5,7 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
-;;; treemacs
+;;; treemacs: https://github.com/Alexander-Miller/treemacs
 (use-package treemacs
   :commands (treemacs  treemacs--window-number-ten)
   :defer t
@@ -22,6 +22,8 @@
         treemacs-icon-tag-node-closed-png (propertize "+ " 'face 'font-lock-keyword-face)
         treemacs-icon-tag-leaf-png        (propertize "🞄 " 'face 'font-lock-keyword-face)
         treemacs-no-png-images t
+        treemacs-deferred-git-apply-delay 0.5
+        treemacs-max-git-entries               5000
         treemacs-indentation-string " "
         treemacs-indentation 2
         treemacs-follow-after-init t
@@ -41,6 +43,9 @@
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (treemacs-fringe-indicator-mode t)
+  (treemacs-git-mode 'deferred)
+
+  (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action)
 
   (defun tl/treemacs-mode-init ()
     ;; (setq mode-line-format nil)
