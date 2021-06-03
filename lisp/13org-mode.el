@@ -1260,22 +1260,20 @@ prepended to the element after the #+HEADER: tag."
   (evil-org-mode +1)
   (evil-normalize-keymaps))
 
-(use-package org-bullets
+
+(use-package org-superstar
   :defer t
   :init
-  (progn
-    (setq org-bullets-face-name nil
-          org-bullets-invisible-leading-stars t)
-    ;; http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters
-    ;; https://zhangda.wordpress.com/2016/02/15/configurations-for-beautifying-emacs-org-mode/
-    ;; "⬢" "⭓" "■"
-    ;; "◉" "◎" "⚫" "○" "►" "◇"
-    ;; "✺" "✹" "✸" "✷" "✶" "✭" "✦" "■" "▼" "●"
-    ;; "⊢" "⋮" "⋱" "⋱" "⋱"
-    ;; "☯" "☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷"
-    (setq org-bullets-bullet-list
-          '("☱" "☲" "☳" "☴" "☵" "☶" "☷"))
-    (add-hook 'org-mode-hook 'org-bullets-mode)))
+  ;; http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters
+  ;; https://zhangda.wordpress.com/2016/02/15/configurations-for-beautifying-emacs-org-mode/
+  ;; "⬢" "⭓" "■"
+  ;; "◉" "◎" "⚫" "○" "►" "◇"
+  ;; "✺" "✹" "✸" "✷" "✶" "✭" "✦" "■" "▼" "●"
+  ;; "⊢" "⋮" "⋱" "⋱" "⋱"
+  ;; "☯" "☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷"
+  (setq org-superstar-headline-bullets-list '("☱" "☲" "☳" "☴" "☵" "☶" "☷"))
+  (setq inhibit-compacting-font-caches t)
+  (add-hook 'org-mode-hook 'org-superstar-mode))
 
 ;; https://github.com/kiwanami/emacs-calfw
 (defun tl/calfw-calendar ()

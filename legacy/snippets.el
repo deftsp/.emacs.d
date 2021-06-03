@@ -587,3 +587,20 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 ;; (let ((p (expand-file-name"~/.emacs.d/el-get/ace-jump-mode")))
 ;;   (when (file-exists-p p)
 ;;     (add-to-list 'load-path p)))
+
+;; (use-package org-bullets
+;;   :defer t
+;;   :init
+;;   (progn
+;;     (setq org-bullets-face-name nil
+;;           org-bullets-invisible-leading-stars t)
+;;     ;; http://nadeausoftware.com/articles/2007/11/latency_friendly_customized_bullets_using_unicode_characters
+;;     ;; https://zhangda.wordpress.com/2016/02/15/configurations-for-beautifying-emacs-org-mode/
+;;     ;; "⬢" "⭓" "■"
+;;     ;; "◉" "◎" "⚫" "○" "►" "◇"
+;;     ;; "✺" "✹" "✸" "✷" "✶" "✭" "✦" "■" "▼" "●"
+;;     ;; "⊢" "⋮" "⋱" "⋱" "⋱"
+;;     ;; "☯" "☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷"
+;;     (setq org-bullets-bullet-list
+;;           '("☱" "☲" "☳" "☴" "☵" "☶" "☷"))
+;;     (add-hook 'org-mode-hook 'org-bullets-mode)))

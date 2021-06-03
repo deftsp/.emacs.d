@@ -60,7 +60,7 @@
 (straight-use-package '(org-contrib :build (:not native-compile)))
 (straight-use-package 'org-brain)
 (straight-use-package 'org-mru-clock)
-(straight-use-package '(org-bullets :type git :host github :repo "deftsp/org-bullets" :branch "shihpin"))
+(straight-use-package 'org-superstar)
 (straight-use-package 'org-clock-convenience)
 (straight-use-package 'org-download)
 (straight-use-package 'org-fancy-priorities)
