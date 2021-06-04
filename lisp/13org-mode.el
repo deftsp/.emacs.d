@@ -1272,6 +1272,12 @@ prepended to the element after the #+HEADER: tag."
   ;; "⊢" "⋮" "⋱" "⋱" "⋱"
   ;; "☯" "☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷"
   (setq org-superstar-headline-bullets-list '("☱" "☲" "☳" "☴" "☵" "☶" "☷"))
+  ;; (setq org-superstar-leading-bullet ?\s)
+  ;; (setq org-superstar-leading-bullet " ․")
+  (setq org-superstar-remove-leading-stars t)
+  ;; If you use Org Indent you also need to add this, otherwise the
+  ;; above has no effect while Indent is enabled.
+  ;; (setq org-indent-mode-turns-on-hiding-stars nil)
   (setq inhibit-compacting-font-caches t)
   (add-hook 'org-mode-hook 'org-superstar-mode))
 
