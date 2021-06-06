@@ -209,7 +209,7 @@
    '(org-scheduled-previously ((t (:foreground "#ae799f"))))
    '(org-scheduled-today ((t (:foreground "#46bbd2"))))
    '(org-upcoming-deadline ((t (:foreground "#e99e93"))))
-   '(org-agenda-calendar-sexp ((t (:foreground "#c37496"))))
+   '(org-agenda-calendar-sexp ((t (:foreground "#33a4c6"))))
    '(org-agenda-date ((t (:foreground "#36abf2" :weight bold))))
    '(org-agenda-date-today ((t (:foreground "#e8d882" :weight bold))))
    '(org-agenda-dimmed-todo-face ((t (:foreground "#778888" :weight bold))))
