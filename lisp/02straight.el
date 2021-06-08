@@ -118,7 +118,6 @@
 (straight-use-package 'evil-fringe-mark)
 (straight-use-package 'evil-goggles)
 (straight-use-package 'evil-indent-plus)
-(straight-use-package '(evil-jumper :type git :host github :repo "bling/evil-jumper"))
 (straight-use-package 'evil-leader)
 (straight-use-package 'evil-lion)
 (straight-use-package 'evil-matchit)
@@ -140,6 +139,8 @@
 
 ;; (straight-use-package 'undo-tree)
 (straight-use-package 'undo-fu)
+
+(straight-use-package 'better-jumper)
 
 ;; (straight-use-package 'flx) ; insteaded by prescient.el
 (straight-use-package 'prescient)
