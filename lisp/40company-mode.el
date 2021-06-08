@@ -16,76 +16,75 @@
 (use-package company
   :defer t
   :init
-  (progn
-    (setq company-show-numbers t
-          company-clang-insert-arguments nil
-          company-require-match nil ; company-explicit-action-p; Don't require match, so you can still move your cursor as expected.
-          company-tooltip-align-annotations t ; Align annotation to the right side.
-          company-tooltip-minimum-width 60
-          company-tooltip-maximum-width 60
-          ;; company-eclim-auto-save nil ; Stop eclim auto save.
-          company-dabbrev-downcase nil
-          company-tooltip-limit 20
-          company-minimum-prefix-length 1
-          company-selection-wrap-around t
-          ;; company-backends (delete 'company-ropemacs company-backends)
-          ;; company-backends (delete 'company-capf company-backends)
-          company-idle-delay 0.2))
+  (setq company-show-numbers t
+        company-clang-insert-arguments nil
+        company-require-match nil ; company-explicit-action-p; Don't require match, so you can still move your cursor as expected.
+        company-tooltip-align-annotations t ; Align annotation to the right side.
+        company-tooltip-minimum-width 60
+        company-tooltip-maximum-width 60
+        ;; company-eclim-auto-save nil ; Stop eclim auto save.
+        company-dabbrev-downcase nil
+        company-tooltip-limit 20
+        company-minimum-prefix-length 1
+        company-selection-wrap-around t
+        company-format-margin-function #'company-text-icons-margin
+        ;; company-backends (delete 'company-ropemacs company-backends)
+        ;; company-backends (delete 'company-capf company-backends)
+        company-idle-delay 0.2)
   :config
-  (progn
-    (define-key company-active-map (kbd "M-j") 'company-select-next)
-    (define-key company-active-map (kbd "M-k") 'company-select-previous)
+  (define-key company-active-map (kbd "M-j") 'company-select-next)
+  (define-key company-active-map (kbd "M-k") 'company-select-previous)
 
-    ;; https://github.com/tj64/outshine/issues/38
-    ;; company-mode explicitly lists all commands which should trigger idle
-    ;; completion. Among this list is self-insert-command, which is rebound to
-    ;; outshine-self-insert-command by outshine.
-    (add-to-list 'company-begin-commands 'outshine-self-insert-command)
-    ;; Enable key-chord "jk" which binded to `company-complete' work,
-    ;; `company-manual-begin' will not begin when `last-command' started with
-    ;; "company-"
-    (add-to-list 'company-begin-commands 'company-complete)
-    (add-to-list 'company-backends 'company-cmake)
+  ;; https://github.com/tj64/outshine/issues/38
+  ;; company-mode explicitly lists all commands which should trigger idle
+  ;; completion. Among this list is self-insert-command, which is rebound to
+  ;; outshine-self-insert-command by outshine.
+  (add-to-list 'company-begin-commands 'outshine-self-insert-command)
+  ;; Enable key-chord "jk" which binded to `company-complete' work,
+  ;; `company-manual-begin' will not begin when `last-command' started with
+  ;; "company-"
+  (add-to-list 'company-begin-commands 'company-complete)
+  (add-to-list 'company-backends 'company-cmake)
 
-    ;; (use-package company-quickhelp
-    ;;   :config
-    ;;   (progn
-    ;;     (company-quickhelp-mode +1)
-    ;;     (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))
+  ;; (use-package company-quickhelp
+  ;;   :config
+  ;;   (progn
+  ;;     (company-quickhelp-mode +1)
+  ;;     (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))
 
-    (use-package company-posframe
-      :diminish company-posframe-mode
-      :init
-      (setq company-posframe-quickhelp-delay nil
-            company-posframe-show-indicator nil)
-      :config
-      (define-key company-active-map (kbd "C-c h") #'company-posframe-quickhelp-show))
+  (use-package company-posframe
+    :diminish company-posframe-mode
+    :init
+    (setq company-posframe-quickhelp-delay nil
+          company-posframe-show-indicator nil)
+    :config
+    (define-key company-active-map (kbd "C-c h") #'company-posframe-quickhelp-show))
 
-    (if (window-system)
-        (company-posframe-mode +1)
-      ;; Use the tab-and-go frontend.
-      ;; Allows TAB to select and complete at the same time.
-      ;; 'tng' means 'tab and go'
-      (company-tng-configure-default))
+  (if (window-system)
+      (company-posframe-mode +1)
+    ;; Use the tab-and-go frontend.
+    ;; Allows TAB to select and complete at the same time.
+    ;; 'tng' means 'tab and go'
+    (company-tng-configure-default))
 
 
-    ;; https://github.com/TommyX12/company-tabnine
-    ;; workaround for company-transformers
-    ;; company-transformers or plugins that use it (such as company-flx-mode) can interfere with TabNine's sorting.
-    (setq company-tabnine--disable-next-transform nil)
-    (defun tl-company--transform-candidates (func &rest args)
-      (if (not company-tabnine--disable-next-transform)
-          (apply func args)
-        (setq company-tabnine--disable-next-transform nil)
-        (car args)))
+  ;; https://github.com/TommyX12/company-tabnine
+  ;; workaround for company-transformers
+  ;; company-transformers or plugins that use it (such as company-flx-mode) can interfere with TabNine's sorting.
+  (setq company-tabnine--disable-next-transform nil)
+  (defun tl-company--transform-candidates (func &rest args)
+    (if (not company-tabnine--disable-next-transform)
+        (apply func args)
+      (setq company-tabnine--disable-next-transform nil)
+      (car args)))
 
-    (defun tl-company-tabnine (func &rest args)
-      (when (eq (car args) 'candidates)
-        (setq company-tabnine--disable-next-transform t))
-      (apply func args))
+  (defun tl-company-tabnine (func &rest args)
+    (when (eq (car args) 'candidates)
+      (setq company-tabnine--disable-next-transform t))
+    (apply func args))
 
-    (advice-add #'company--transform-candidates :around #'tl-company--transform-candidates)
-    (advice-add #'company-tabnine :around #'tl-company-tabnine)))
+  (advice-add #'company--transform-candidates :around #'tl-company--transform-candidates)
+  (advice-add #'company-tabnine :around #'tl-company-tabnine))
 
 (use-package company-emoji
   :after company)
