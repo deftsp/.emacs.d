@@ -39,6 +39,37 @@
   (add-hook 'text-mode-hook 'turn-on-evil-mc-mode)
 
   :config
+  ;; https://philjackson.github.io//elisp/evil-mc/smartparens/emacs/2021/06/05/smartparens-and-evil-mc/
+  ;; (dolist (cmd '(sp-up-sexp
+  ;;                sp-copy-sexp
+  ;;                sp-down-sexp
+  ;;                sp-join-sexp
+  ;;                sp-kill-sexp
+  ;;                sp-next-sexp
+  ;;                sp-split-sexp
+  ;;                sp-wrap-curly
+  ;;                sp-wrap-round
+  ;;                sp-raise-sexp
+  ;;                sp-clone-sexp
+  ;;                sp-wrap-square
+  ;;                sp-splice-sexp
+  ;;                sp-end-of-sexp
+  ;;                sp-forward-sexp
+  ;;                sp-backward-sexp
+  ;;                sp-convolute-sexp
+  ;;                sp-transpose-sexp
+  ;;                sp-kill-whole-line
+  ;;                sp-beginning-of-sexp
+  ;;                sp-forward-barf-sexp
+  ;;                sp-forward-slurp-sexp
+  ;;                sp-backward-barf-sexp
+  ;;                sp-backward-slurp-sexp
+  ;;                sp-splice-sexp-killing-forward
+  ;;                sp-splice-sexp-killing-backward))
+  ;;   (add-to-list
+  ;;    'evil-mc-custom-known-commands
+  ;;    `(,cmd (:default . evil-mc-execute-call))))
+
   (advice-add 'evil-mc-undo-all-cursors :after #'tl/anzu-reset-mode-line))
 
 (defun tl/anzu-reset-mode-line ()
