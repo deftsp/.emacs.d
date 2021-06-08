@@ -41,7 +41,7 @@
                        :order 2))
 
 
-[[https://github.com/gilbertw1/better-jumper][;; gilbertw1/better-jumper: A configurable jump list implementation for Emacs]]
+;; [[https://github.com/gilbertw1/better-jumper][gilbertw1/better-jumper: A configurable jump list implementation for Emacs]]
 (use-package better-jumper
   :hook (after-init . better-jumper-mode)
   :init

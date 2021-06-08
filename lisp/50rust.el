@@ -68,6 +68,18 @@
 (use-package rustic-cargo
   :after rustic
   :config
+  (defun pl/rustic-cargo-current-test-nocapture ()
+    "Run 'cargo test' for the test near point."
+    (interactive)
+    (rustic-compilation-process-live)
+    (-if-let (func-name (rustic-cargo--get-current-fn-fullname))
+        (let* ((command (list rustic-cargo-bin "test" "--" "--nocapture" func-name))
+               (c (append command (split-string rustic-test-arguments)))
+               (buf rustic-test-buffer-name)
+               (proc rustic-test-process-name)
+               (mode 'rustic-cargo-test-mode))
+          (rustic-compilation c (list :buffer buf :process proc :mode mode)))
+      (message "Could not find test at point.")))
 
   (general-define-key
    :states 'normal
@@ -86,7 +98,8 @@
    "co" 'rustic-cargo-outdated
    "cr" 'rustic-cargo-run
    "cT" 'rustic-cargo-test
-   "ct" 'rustic-cargo-current-test)
+   "ct" 'rustic-cargo-current-test
+   "c." 'pl/rustic-cargo-current-test-nocapture)
 
 
   (defun tl/cargo-process-quit ()

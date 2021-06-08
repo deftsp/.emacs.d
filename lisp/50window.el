@@ -568,6 +568,9 @@ If the universal prefix argument is used then kill the buffer too."
   (add-to-list 'purpose-user-mode-purposes '(help-mode . popup))
   (add-to-list 'purpose-user-mode-purposes '(helpful-mode . popup))
   (add-to-list 'purpose-user-mode-purposes '(rg-mode . popup))
+  (add-to-list 'purpose-user-mode-purposes '(flycheck-error-list-mode . popup))
+  (add-to-list 'purpose-user-regexp-purposes '("\\*rust-compilation\\*" . popup))
+  (add-to-list 'purpose-user-regexp-purposes '("\\*cargo-test\\*" . popup))
   (add-to-list 'purpose-user-regexp-purposes '("\\*org-roam\\*" . popup))
 
   (setq purpose-use-default-configuration t)
