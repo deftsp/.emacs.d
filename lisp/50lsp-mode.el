@@ -113,7 +113,7 @@
   :init
   (setq lsp-ui-peek-always-show t
         lsp-ui-sideline-delay 0.2
-        lsp-ui-sideline-enable nil      ; annoying when window width is small
+        lsp-ui-sideline-enable t      ; annoying when window width is small
         lsp-ui-sideline-show-diagnostics t
         lsp-ui-sideline-show-hover t
         lsp-ui-sideline-show-code-actions t
@@ -124,7 +124,7 @@
         lsp-ui-doc-use-childframe t
         ;; https://github.com/emacs-lsp/lsp-ui/issues/310
         lsp-ui-doc-border "#43586d" ; FIXME: native not work, should swith to emacs-mac-port?
-        lsp-ui-doc-enable t)
+        lsp-ui-doc-enable nil)
   :config
   (progn
     (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
