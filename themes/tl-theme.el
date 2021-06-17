@@ -388,6 +388,7 @@
                                 :foreground "#002266"
                                 :distant-foreground ,violet
                                 :box '(:line-width -1 :color "#ff0000")))))
+   `(lsp-ui-sideline-global ((t (:background ,inactive2))))
 
    ;; lsp-rust
    `(lsp-rust-analyzer-inlay-face ((t (:foreground ,base01 :height 0.8 :slant italic))))

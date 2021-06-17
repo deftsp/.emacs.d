@@ -356,8 +356,8 @@ If VANILLA is non-nil, run the standard `org-capture'."
 (defun tl/org-agenda-level-ident ()
   (let ((level (org-current-level)))
     (if (> level 1)
-        (concat (make-string (* 2 (1- level))  #x20) "►")
-      "")))
+        (concat (make-string (* 2 (1- level))  #x20) "· ") ; ○►
+        "")))
 
 ;; https://emacs.stackexchange.com/a/9793/361
 (defun tl/org-entry-subtree-in-state-get (state property)
