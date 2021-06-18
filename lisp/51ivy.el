@@ -151,6 +151,7 @@
           (counsel-rg . ivy--regex-ignore-order)
           (counsel-outline . tl/ivy--regex-pinyin)
           (counsel-org-goto . tl/ivy--regex-pinyin)
+          (org-roam-node-find . ivy--regex-plus)
           (t . ivy--regex-fuzzy)))
 
   (setq ivy-initial-inputs-alist nil)
