@@ -604,3 +604,9 @@ Possible values are `on-visit', `on-project-switch' or `nil'.")
 ;;     (setq org-bullets-bullet-list
 ;;           '("☱" "☲" "☳" "☴" "☵" "☶" "☷"))
 ;;     (add-hook 'org-mode-hook 'org-bullets-mode)))
+
+(use-package doom-todo-ivy
+  :defer t
+  :commands (doom/ivy-tasks))
+
+(straight-use-package '(doom-todo-ivy :type git :host github :repo "jsmestad/doom-todo-ivy"))

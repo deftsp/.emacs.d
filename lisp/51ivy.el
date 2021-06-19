@@ -295,10 +295,6 @@ C-u C-u -> Start swiper without any arguments (stock behavior)"
     (16 (swiper)) ; C-u C-u
     (t  (swiper (modi/get-symbol-at-point)))))
 
-(use-package doom-todo-ivy
-  :defer t
-  :commands (doom/ivy-tasks))
-
 (provide '51ivy)
 
 ;; Local Variables: **

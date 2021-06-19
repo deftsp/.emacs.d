@@ -218,7 +218,6 @@
 (straight-use-package 'doom-modeline)
 (straight-use-package 'rainbow-delimiters)
 (straight-use-package 'ack-menu)
-(straight-use-package '(doom-todo-ivy :type git :host github :repo "jsmestad/doom-todo-ivy"))
 (straight-use-package 'flymake-easy)
 (straight-use-package 'reformatter)
 (straight-use-package 'add-node-modules-path)

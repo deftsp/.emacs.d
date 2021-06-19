@@ -140,21 +140,21 @@
       "gU"  'magit-unstage-file)
     (global-set-key (kbd "C-x G") 'magit-status))
   :config
-  (progn
-    (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
-    (add-to-list 'magit-repository-directories '("~/.emacs.d" . 0)) ; C-u C-u M-x magit-status will ignore it
-    (add-to-list 'magit-repository-directories '("~/opt/emacs" . 0))
-    (use-package magit-todos
-      :init
-      (progn
-        ;; FIXME: https://github.com/alphapapa/magit-todos/issues/24
-        (setq magit-todos-ignored-keywords
-              '("NOTE" "DONE" "FAIL" "PROG")))
-      :config
-      (progn
-        ;; (magit-todos-mode +1); use magit-todos-list instead
-        (setq magit-todos-section-map nil)))
-    (use-package transient)))
+  (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
+  (add-to-list 'magit-repository-directories '("~/.emacs.d" . 0)) ; C-u C-u M-x magit-status will ignore it
+  (add-to-list 'magit-repository-directories '("~/opt/emacs" . 0)))
+
+;; M-x magit-todos-list
+(use-package magit-todos
+  :defer 5
+  :commands (maigt-todos-list)
+  :init
+  ;; FIXME: https://github.com/alphapapa/magit-todos/issues/24
+  (setq magit-todos-ignored-keywords '("NOTE" "DONE" "FAIL" "PROG"))
+  :config
+  ;; automatically inserts the to-do list in Magit status buffers
+  ;; (magit-todos-mode +1)
+  (setq magit-todos-section-map nil))
 
 (use-package with-editor
   :defer t

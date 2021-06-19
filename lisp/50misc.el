@@ -129,11 +129,24 @@
 ;;; which func mode
 (use-package which-func
   :init
-  (setq which-func-modes t) ; enabled in any major mode that supports it.
+  (setq which-func-modes
+        '(c-mode
+          c++-mode
+          org-mode
+          lua-mode
+          rust-mode
+          rustic-mode
+          web-mode
+          sql-mode
+          org-mode
+          emacs-lisp-mode))
+  ;; N.B. enable all in some mode will get warning: "which-func-ff-hook error: (wrong-type-argument (or eieio-object class) nil obj)"
+  ;; (setq which-func-modes t) ; enabled in any major mode that supports it.
   ;; We remove Which Function Mode from the mode line, because it's mostly invisible here anyway.
   ;; (setq mode-line-misc-info (assq-delete-all 'which-func-mode mode-line-misc-info))
-  (setq which-func-unknown "⊤") ; "n/a"
+  (setq which-func-unknown "⊤") ; "n/a" "N/A"
   :config
+  (add-to-list 'which-func-non-auto-modes 'magit-status-mode)
   (add-to-list 'which-func-non-auto-modes 'treemacs-mode)
 
 ;;; header-line-format
