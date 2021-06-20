@@ -68,7 +68,7 @@
     "\\<\\(NOTE\\)"
     "\\<\\(NOTES\\)"
     "\\<\\(DEBUG\\)"
-    "\\<\\(OUTPUT\\)"
+    ;; "\\<\\(OUTPUT\\)"
     "\\<\\(IMPORTANT\\)"))
 
 (defun tl/commentaires-keywords-detect (strings)
