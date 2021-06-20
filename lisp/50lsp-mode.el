@@ -12,6 +12,7 @@
         lsp-diagnostics-provider :flycheck  ; :none, no real time syntax check
         lsp-enable-symbol-highlighting nil ; turn off for better performance
         lsp-modeline-diagnostics-enable nil
+        lsp-enable-indentation nil
         lsp-enable-snippet nil          ; use yasnippet instead
         ;; use `company-ctags' only.
         ;; N.B. `company-lsp' is automatically enabled if installed
