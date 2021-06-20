@@ -7,33 +7,34 @@
 (use-package wcheck-mode
   :defer t
   :init
-  (progn
-    (setq-default wcheck-language "Highlight Commentaires")
-    (add-hook 'prog-mode-hook 'wcheck-mode)
-    (defvar tl/wcheck-mode-map (make-keymap) "wcheck mode key map")
-    (define-key tl/wcheck-mode-map "s" 'wcheck-mode)
-    (define-key tl/wcheck-mode-map "l" 'wcheck-change-language)
-    (define-key tl/wcheck-mode-map "c" 'wcheck-actions)
-    (define-key tl/wcheck-mode-map "a" 'wcheck-actions)
-    (define-key tl/wcheck-mode-map "n" 'wcheck-jump-forward)
-    (define-key tl/wcheck-mode-map "p" 'wcheck-jump-backward)
-    (with-eval-after-load "key-chord"
-      (key-chord-define-global ",w" tl/wcheck-mode-map))))
+  (setq-default wcheck-language "Highlight Commentaires")
+  (add-hook 'prog-mode-hook 'wcheck-mode)
+
+  (defvar tl/wcheck-mode-map (make-keymap) "wcheck mode key map")
+  (define-key tl/wcheck-mode-map "s" 'wcheck-mode)
+  (define-key tl/wcheck-mode-map "l" 'wcheck-change-language)
+  (define-key tl/wcheck-mode-map "c" 'wcheck-actions)
+  (define-key tl/wcheck-mode-map "a" 'wcheck-actions)
+  (define-key tl/wcheck-mode-map "n" 'wcheck-jump-forward)
+  (define-key tl/wcheck-mode-map "p" 'wcheck-jump-backward)
+  (with-eval-after-load "key-chord"
+    (key-chord-define-global ",w" tl/wcheck-mode-map)))
 
 (setq wcheck-language-data-defaults
       '((read-or-skip-faces
-         (latex-mode read
-                     nil ; normal text
-                     font-latex-bold-face
-                     font-latex-italic-face
-                     font-latex-sectioning-0-face
-                     font-latex-sectioning-1-face
-                     font-latex-sectioning-2-face
-                     font-latex-sectioning-3-face
-                     font-latex-sectioning-4-face
-                     font-latex-sectioning-5-face
-                     font-latex-slide-title-face
-                     font-lock-type-face))))
+         (latex-mode
+          read
+          nil ; normal text
+          font-latex-bold-face
+          font-latex-italic-face
+          font-latex-sectioning-0-face
+          font-latex-sectioning-1-face
+          font-latex-sectioning-2-face
+          font-latex-sectioning-3-face
+          font-latex-sectioning-4-face
+          font-latex-sectioning-5-face
+          font-latex-slide-title-face
+          font-lock-type-face))))
 
 (setq wcheck-language-data
       '(("Highlight Commentaires"

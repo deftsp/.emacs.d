@@ -150,7 +150,8 @@
   :commands (maigt-todos-list)
   :init
   ;; FIXME: https://github.com/alphapapa/magit-todos/issues/24
-  (setq magit-todos-ignored-keywords '("NOTE" "DONE" "FAIL" "PROG"))
+  (setq magit-todos-ignored-keywords '("NOTE" "DONE" "FAIL" "PROG")
+		magit-todos-exclude-globs '("legacies/*"))
   :config
   ;; automatically inserts the to-do list in Magit status buffers
   ;; (magit-todos-mode +1)
