@@ -166,8 +166,8 @@ If the universal prefix argument is used then kill the buffer too."
 ;;; scroll other window
 ;; C-M-v   scroll-other-window
 ;; C-M-S-v scroll-other-window-down  ; use 'C-h b' to found it
-(global-set-key (kbd "H-M-,") '(lambda() (interactive) (scroll-other-window -1)))
-(global-set-key (kbd "H-M-.") '(lambda() (interactive) (scroll-other-window 1)))
+;; (global-set-key (kbd "H-M-,") (lambda() (interactive) (scroll-other-window -1)))
+;; (global-set-key (kbd "H-M-.") (lambda() (interactive) (scroll-other-window 1)))
 
 ;;; toggle window dedicaton
 ;; set-window-dedicated-p

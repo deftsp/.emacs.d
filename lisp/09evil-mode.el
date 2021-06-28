@@ -430,6 +430,10 @@ kill internal buffers too."
   (evil-collection-define-key 'normal 'helpful-mode-map "o" 'ace-link-help)
   (evil-collection-define-key 'normal 'help-mode-map "o" 'ace-link-help))
 
+(use-package evil-collection-unimpaired
+  :defer t
+  :diminish evil-collection-unimpaired-mode)
+
 (use-package evil-escape
   :commands (evil-escape)
   :diminish evil-escape-mode

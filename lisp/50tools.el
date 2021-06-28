@@ -108,7 +108,7 @@ space and marks next symbol."
 ;; quietly without user interaction.
 ;; https://github.com/ukari/unicad/tree/master
 (use-package unicad
-  :diminish
+  :diminish unicad-mode
   :config
   (unicad-mode +1))
 

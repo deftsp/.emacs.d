@@ -57,6 +57,7 @@
 
 
 ;;; vterm
+;; TODO: https://mullikine.github.io/posts/use-yasnippets-in-term/
 ;; [[https://github.com/akermu/emacs-libvterm][akermu/emacs-libvterm: Emacs libvterm integration]]
 ;; [[https://github.com/jixiuf/vterm-toggle][jixiuf/vterm-toggle: toggles between the vterm buffer and whatever buffer you are editing.]]
 (defun tl/vterm-mode-init ()

@@ -614,7 +614,7 @@ buffer which do not already have one. When `arg' nil only adds ids if the
         (?C . (:foreground "#fefb00" :weight bold))))
 
 (use-package org-fancy-priorities
-  :diminish
+  :diminish org-fancy-priorities-mode
   :after org
   :defer t
   :defines org-fancy-priorities-list

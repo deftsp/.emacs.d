@@ -44,6 +44,7 @@
 ;; [[https://github.com/gilbertw1/better-jumper][gilbertw1/better-jumper: A configurable jump list implementation for Emacs]]
 (use-package better-jumper
   :hook (after-init . better-jumper-mode)
+  :diminish better-jumper-local-mode
   :init
   (global-set-key [remap evil-jump-forward]  #'better-jumper-jump-forward)
   (global-set-key [remap evil-jump-backward] #'better-jumper-jump-backward)

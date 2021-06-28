@@ -65,6 +65,7 @@
 ;; wucuo base on flyspell, turn off flyspell-prog-mode and flyspell-mode before using this program. the configuration
 ;; for flyspell still works.
 (use-package wucuo
+  :diminish wucuo-mode
   :commands (wucuo-start)
   :init
   (add-hook 'prog-mode-hook #'wucuo-start)
