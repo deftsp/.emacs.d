@@ -21,6 +21,7 @@
         lsp-restart 'auto-restart
         lsp-enable-links nil            ; use ffip instead
         ;; lsp-eldoc-render-all t
+        lsp-eldoc-hook nil ; do not show doc in minibuffer
         lsp-eldoc-enable-hover nil
         lsp-headerline-breadcrumb-enable t
         lsp-headerline-breadcrumb-icons-enable nil

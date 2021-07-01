@@ -404,6 +404,7 @@ vi style of % jumping to matching brace."
   (yank 2))
 
 ;;; mouse
+;; (setq mouse-drag-copy-region nil)
 ;; (mouse-avoidance-mode 'animate) ;; disable it until fix the bug in `org-capture' buffer 'C-x C-q' error
 (when window-system
   (setq mouse-yank-at-point t)
