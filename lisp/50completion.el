@@ -254,6 +254,8 @@
 
 (autoload 'yas-hippie-try-expand "yasnippet")
 
+
+;; M-x yas-reload-all
 (use-package yasnippet
   :defer 5
   :diminish (yas-minor-mode . "") " Y"

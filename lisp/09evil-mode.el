@@ -1085,6 +1085,17 @@ if COUNT is negative. "
 (with-eval-after-load 'edebug
   (add-hook 'edebug-mode-hook 'tl/evil-state-cycle))
 
+[[https://philjackson.github.io//evil/emacs/2021/07/11/start-evil-substitution-on-selection/][;; Start evil substitution on selection | Snippets and other bits]]
+;; (with-eval-after-load 'evil
+;;   (evil-global-set-key 'normal (kbd ",s") 'start-ex-sub-on-region)
+;;   (evil-define-operator tl/start-ex-sub-on-region (beg end)
+;;     (let ((region (buffer-substring beg end)))
+;;       (evil-ex (concat "%s/"
+;;                        (replace-regexp-in-string
+;;                         "\/"
+;;                         "\\\\/"
+;;                         (regexp-quote region))
+;;                        "/")))))
 
 (provide '09evil-mode)
 ;;; 09evil-mode.el ends here
