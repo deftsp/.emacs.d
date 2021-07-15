@@ -204,6 +204,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
      "a" 'org-agenda-add-note
      "A" 'org-agenda-append-agenda
      "C" 'tl/org-agenda-capture         ; default to 'org-agenda-convert-date
+     "E" 'org-agenda-entry-text-mode
 
      ;; mark
      "m" 'org-agenda-bulk-toggle

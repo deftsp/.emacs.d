@@ -566,10 +566,26 @@ kill internal buffers too."
   "Text object to select the whole buffer."
   (evil-range (point-min) (point-max) type))
 
+;; (evil-define-text-object tl:evil-textobj-defun (count &optional _beg _end type)
+;;   "Text object to select the whole buffer."
+;;   (cl-destructuring-bind (beg . end)
+;;       (bounds-of-thing-at-point 'defun)
+;;     (evil-range beg end type)))
 (evil-define-text-object tl:evil-textobj-defun (count &optional _beg _end type)
   "Text object to select the whole buffer."
   (cl-destructuring-bind (beg . end)
-      (bounds-of-thing-at-point 'defun)
+      (if (eq major-mode 'rustic-mode)
+          (let ((rustic-top-item-beg-exclude-use-re
+                 "\\s-*\\(?:priv\\|pub\\)?\\s-*\\(?:async\\|e\\(?:num\\|xtern\\)\\|fn\\|impl\\|mod\\|st\\(?:atic\\|ruct\\)\\|t\\(?:rait\\|ype\\)\\|u\\(?:nion\\)\\)\\_>"))
+            (save-excursion
+              (cons
+               (progn
+                 (rustic-beginning-of-defun 1 rustic-top-item-beg-exclude-use-re)
+                 (point))
+               (progn
+                 (rustic-end-of-defun)
+                 (point)))))
+        (bounds-of-thing-at-point 'defun))
     (evil-range beg end type)))
 
 (define-key evil-inner-text-objects-map "m" 'tl:evil-textobj-defun)
@@ -1085,7 +1101,7 @@ if COUNT is negative. "
 (with-eval-after-load 'edebug
   (add-hook 'edebug-mode-hook 'tl/evil-state-cycle))
 
-[[https://philjackson.github.io//evil/emacs/2021/07/11/start-evil-substitution-on-selection/][;; Start evil substitution on selection | Snippets and other bits]]
+;; [[https://philjackson.github.io//evil/emacs/2021/07/11/start-evil-substitution-on-selection/][;; Start evil substitution on selection | Snippets and other bits]]
 ;; (with-eval-after-load 'evil
 ;;   (evil-global-set-key 'normal (kbd ",s") 'start-ex-sub-on-region)
 ;;   (evil-define-operator tl/start-ex-sub-on-region (beg end)

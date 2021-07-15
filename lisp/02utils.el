@@ -82,7 +82,9 @@
   :config
   (key-chord-mode +1))
 
-;; (use-package el-patch)
+(use-package el-patch
+  :init
+  (setq el-patch-enable-use-package-integration t))
 
 ;; Michael Hoffman at the comment of
 ;; http://endlessparentheses.com/understanding-letf-and-how-it-replaces-flet.html
