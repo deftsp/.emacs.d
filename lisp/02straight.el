@@ -69,7 +69,7 @@
 (straight-use-package '(org-link-minor-mode :type git :host github :repo "seanohalpin/org-link-minor-mode"))
 (straight-use-package '(org-protocol-capture-html :type git :host github :repo "alphapapa/org-protocol-capture-html"))
 (straight-use-package 'org-ql)
-(straight-use-package '(org-roam :type git :host github :repo "org-roam/org-roam" :branch "v2"))
+(straight-use-package '(org-roam :type git :host github :repo "org-roam/org-roam" :branch "master"))
 ;; (straight-use-package 'org-roam-server)
 (straight-use-package '(org-spacer :type git :host github :repo "dustinlacewell/org-spacer.el"))
 (straight-use-package 'org-super-agenda)
