@@ -56,8 +56,10 @@
 (straight-use-package '(emacsql :files (:defaults "*.el" "sqlite")))
 (straight-use-package 'emacsql-sqlite3)
 
-(straight-use-package '(org :build (:not native-compile)))
-(straight-use-package '(org-contrib :build (:not native-compile)))
+;; (straight-use-package '(org :build (:not native-compile)))
+;; (straight-use-package '(org-contrib :build (:not native-compile)))
+(straight-use-package 'org)
+(straight-use-package 'org-contrib)
 (straight-use-package 'org-brain)
 (straight-use-package 'org-mru-clock)
 (straight-use-package 'org-superstar)

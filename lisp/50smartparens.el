@@ -106,77 +106,75 @@
   :diminish (smartparens-mode . "")
   :commands (sp-split-sexp sp-newline sp-up-sexp smartparens-global-mode)
   :init
-  (progn
-    ;; settings
-    (setq sp-show-pair-delay  0.2
-          ;; fix paren highlighting in normal mode
-          sp-show-pair-from-inside t
-          sp-cancel-autoskip-on-backward-movement nil
-          sp-highlight-pair-overlay nil
-          sp-highlight-wrap-overlay nil
-          sp-highlight-wrap-tag-overlay nil)
+  ;; settings
+  (setq sp-show-pair-delay  0.2
+        ;; fix paren highlighting in normal mode
+        sp-show-pair-from-inside t
+        sp-cancel-autoskip-on-backward-movement nil
+        sp-highlight-pair-overlay nil
+        sp-highlight-wrap-overlay nil
+        sp-highlight-wrap-tag-overlay nil)
 
-    (tl/set-leader-keys
-      "js" 'sp-split-sexp
-      "jn" 'sp-newline))
+  (tl/set-leader-keys
+    "js" 'sp-split-sexp
+    "jn" 'sp-newline)
   :config
-  (progn
-    (require 'smartparens-config)
+  (require 'smartparens-config)
 
-    (defun tl//smartparens-disable-before-expand-snippet ()
-      "Handler for `yas-before-expand-snippet-hook'.
+  (defun tl//smartparens-disable-before-expand-snippet ()
+    "Handler for `yas-before-expand-snippet-hook'.
 Disable smartparens and remember its initial state."
-      ;; Remember the initial smartparens state only once, when expanding a top-level snippet.
-      (setq tl--smartparens-enabled-initially smartparens-mode)
-      (when smartparens-mode
-        (smartparens-mode -1)))
+    ;; Remember the initial smartparens state only once, when expanding a top-level snippet.
+    (setq tl--smartparens-enabled-initially smartparens-mode)
+    (when smartparens-mode
+      (smartparens-mode -1)))
 
 
-    (defun tl//smartparens-restore-after-exit-snippet ()
-      "Handler for `yas-after-exit-snippet-hook'.
+  (defun tl//smartparens-restore-after-exit-snippet ()
+    "Handler for `yas-after-exit-snippet-hook'.
  Restore the initial state of smartparens."
-      (when tl--smartparens-enabled-initially
-        (smartparens-mode +1)))
+    (when tl--smartparens-enabled-initially
+      (smartparens-mode +1)))
 
-    (with-eval-after-load 'yasnippet
-      (add-hook 'yas-before-expand-snippet-hook
-                #'tl//smartparens-disable-before-expand-snippet)
-      (add-hook 'yas-after-exit-snippet-hook
-                #'tl//smartparens-restore-after-exit-snippet))
+  (with-eval-after-load 'yasnippet
+    (add-hook 'yas-before-expand-snippet-hook
+              #'tl//smartparens-disable-before-expand-snippet)
+    (add-hook 'yas-after-exit-snippet-hook
+              #'tl//smartparens-restore-after-exit-snippet))
 
-    (add-to-list 'sp-ignore-modes-list 'haskell-mode)
-    ;; (define-key evil-insert-state-map ")" 'tl/smart-closing-parenthesis)
-    (tl//adaptive-smartparent-pair-overlay-face)
-    ;; (smartparens-global-strict-mode t) ; strict mode can not worked with subword
-    (show-smartparens-global-mode +1)
-    ;; don't create a pair with single quote in minibuffer
-    (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
-    (sp-pair "{" nil :post-handlers
-             '(:add (tl/smartparens-pair-newline-and-indent "RET")))
-    (sp-pair "[" nil :post-handlers
-             '(:add (tl/smartparens-pair-newline-and-indent "RET")))
-    ;; markdown-mode
-    (sp-with-modes '(markdown-mode gfm-mode rst-mode)
-      (sp-local-pair "*" "*" :bind "C-*")
-      (sp-local-tag "2" "**" "**")
-      (sp-local-tag "s" "```scheme" "```")
-      (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
+  (add-to-list 'sp-ignore-modes-list 'haskell-mode)
+  ;; (define-key evil-insert-state-map ")" 'tl/smart-closing-parenthesis)
+  (tl//adaptive-smartparent-pair-overlay-face)
+  ;; (smartparens-global-strict-mode t) ; strict mode can not worked with subword
+  (show-smartparens-global-mode +1)
+  ;; don't create a pair with single quote in minibuffer
+  (sp-local-pair 'minibuffer-inactive-mode "'" nil :actions nil)
+  (sp-pair "{" nil :post-handlers
+           '(:add (tl/smartparens-pair-newline-and-indent "RET")))
+  (sp-pair "[" nil :post-handlers
+           '(:add (tl/smartparens-pair-newline-and-indent "RET")))
+  ;; markdown-mode
+  (sp-with-modes '(markdown-mode gfm-mode rst-mode)
+    (sp-local-pair "*" "*" :bind "C-*")
+    (sp-local-tag "2" "**" "**")
+    (sp-local-tag "s" "```scheme" "```")
+    (sp-local-tag "<"  "<_>" "</_>" :transform 'sp-match-sgml-tags))
 
-    ;; tex-mode latex-mode
-    (sp-with-modes '(tex-mode plain-tex-mode latex-mode)
-      (sp-local-tag "i" "\"<" "\">"))
+  ;; tex-mode latex-mode
+  (sp-with-modes '(tex-mode plain-tex-mode latex-mode)
+    (sp-local-tag "i" "\"<" "\">"))
 
-    ;; html-mode
-    (sp-with-modes '(html-mode sgml-mode)
-      (sp-local-pair "<" ">"))
+  ;; html-mode
+  (sp-with-modes '(html-mode sgml-mode)
+    (sp-local-pair "<" ">"))
 
-    ;; haskell-mode
-    (sp-with-modes '(haskell-mode inferior-haskell-mode)
-      (sp-local-pair "\\{-" "-\\}"))
+  ;; haskell-mode
+  (sp-with-modes '(haskell-mode inferior-haskell-mode)
+    (sp-local-pair "\\{-" "-\\}"))
 
-    ;; lisp modes
-    (sp-with-modes sp--lisp-modes
-      (sp-local-pair "(" nil :bind "C-("))))
+  ;; lisp modes
+  (sp-with-modes sp--lisp-modes
+    (sp-local-pair "(" nil :bind "C-(")))
 
 (smartparens-global-mode +1)
 
@@ -191,7 +189,7 @@ Disable smartparens and remember its initial state."
 
 
 (use-package sexp-transient-state
-  :after (smartparens evil )
+  :after (smartparens evil)
   :init
   (tl/set-leader-keys "k" 'sexp-transient-state/body)
 
