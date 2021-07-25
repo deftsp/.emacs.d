@@ -750,27 +750,27 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          ;; (cn-year (cadr cn-date))
          (cn-month (cl-caddr cn-date))
          (cn-day (cl-cadddr cn-date))
-         ;; (cn-month-name
-         ;;  ["正月" "二月" "三月" "四月" "五月" "六月"
-         ;;   "七月" "八月" "九月" "十月" "冬月" "腊月"])
+         (cn-month-name
+          ["正月" "二月" "三月" "四月" "五月" "六月"
+           "七月" "八月" "九月" "十月" "冬月" "腊月"])
          (cn-day-name
           ["初一" "初二" "初三" "初四" "初五" "初六" "初七" "初八" "初九" "初十"
            "十一" "十二" "十三" "十四" "十五" "十六" "十七" "十八" "十九" "二十"
            "廿一" "廿二" "廿三" "廿四" "廿五" "廿六" "廿七" "廿八" "廿九" "三十"
            "卅一" "卅二" "卅三" "卅四" "卅五" "卅六" "卅七" "卅八" "卅九" "卅十"])
-         (extra (format "(%s%s%s)"
-                        ;; (if (or (eq org-agenda-current-span 'day)
-                        ;;         (= day-of-week 1)
-                        ;;         (= cn-day 1))
-                        ;;     (aref cn-month-name (1-  (floor cn-month)))
-                        ;;   "")
+         (extra (format "(农历%s%s%s%s)"
+                        (if (or (eq org-agenda-current-span 'day)
+                                (= day-of-week 1)
+                                (= cn-day 1))
+                            (aref cn-month-name (1-  (floor cn-month)))
+                          "")
                         (if (or (= day-of-week 1)
                                 (= cn-day 1))
                             (if (integerp cn-month) "" "[闰]")
                           "")
                         (aref cn-day-name (1- cn-day))
                         (if (= day-of-week 1)
-                            (format "，第%02d 周" iso-week)
+                            (format "，第 %02d 周" iso-week)
                           ""))))
     (format "%04d-%02d-%02d %-10s %s"
             year month day dayname extra)))
