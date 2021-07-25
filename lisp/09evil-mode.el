@@ -300,7 +300,6 @@ kill internal buffers too."
         evil-move-beyond-eol t
         evil-want-integration t
         evil-want-keybinding nil ;; evil-collection instead
-        evil-undo-system 'undo-fu
         evil-want-visual-char-semi-exclusive t
         evil-want-C-i-jump t
         evil-cross-lines t
@@ -312,9 +311,8 @@ kill internal buffers too."
   :init
   (tl/evil-init)
   :config
-  ;; FIXME: `evil-set-undo-system' will not called if set before evil load. set it directly
-  (evil-set-undo-system 'undo-fu)
-  (set-default 'evil-undo-system 'undo-fu)
+  (evil-set-undo-system 'undo-tree)
+  (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode)
 
   ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
   (define-key evil-insert-state-map [remap evil-complete-previous] 'hippie-expand)

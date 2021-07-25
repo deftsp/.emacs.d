@@ -489,7 +489,6 @@ vi style of % jumping to matching brace."
 (use-package so-long
   :defer 5
   :config
-  (global-so-long-mode +1)
   (setq so-long-threshold 400)      ; reduce false positives w/ larger threshold
   ;; Don't disable syntax highlighting and line numbers, or make the buffer
   ;; read-only, in `so-long-minor-mode', so we can have a basic editing
@@ -1100,17 +1099,13 @@ Current position is preserved."
   (global-set-key "\M-\C-y" 'kill-ring-search))
 
 (use-package undo-tree
-  :defer t
-  :init
-  (progn
-    (setq-default undo-tree-visualizer-timestamps t)
-    (setq-default undo-tree-visualizer-diff t)
-    (setq undo-tree-mode-lighter " UT"))
   :bind (("s-z" . undo-tree-undo)
          ("s-Z" . undo-tree-redo))
-  :config
-  (progn
-    (global-undo-tree-mode t)))
+  :hook (after-init . global-undo-tree-mode )
+  :init
+  (setq-default undo-tree-visualizer-timestamps t)
+  (setq-default undo-tree-visualizer-diff t)
+  (setq undo-tree-mode-lighter " UT"))
 
 (use-package bookmark
   :defer t
