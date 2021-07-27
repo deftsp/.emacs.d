@@ -19,11 +19,7 @@
   (setq org-roam-file-extensions '("org"))
   (setq org-roam-node-display-template "${title:48}   ${tags:42}")
   (setq org-roam-v2-ack t)
-  (setq org-roam-mode-sections
-        '(org-roam-backlinks-section
-          org-roam-reflinks-section
-          ;; org-roam-unlinked-references-section
-          ))
+  (setq org-roam-completion-everywhere t)
   (setq org-roam-completion-system 'ivy
         org-roam-index-file "index.org"
         org-roam-graph-executable "neato" ; dot

@@ -173,8 +173,8 @@
     (setq ivy-views nil))
 
   (tl/set-leader-keys
-    "fr" 'counsel-recentf
-    "rl" 'ivy-resume)
+    ;; "rl" 'ivy-resume
+    "fr" 'counsel-recentf)
   :config
   (mapcar (lambda (str) (add-to-list 'ivy-ignore-buffers str)) tl/ignore-buffer-or-file-regexp)
 
