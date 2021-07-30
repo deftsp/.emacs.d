@@ -29,9 +29,6 @@
   (setq esup-child-max-depth 2)
   (setq esup-depth 1))
 
-(use-package use-package-chords
-  :config (key-chord-mode +1))
-
 ;;; [[https://superuser.com/questions/669701/emacs-disable-some-minibuffer-messages][Emacs - Disable Some Minibuffer Messages]]
 (defun tl/suppress-messages (old-fun &rest args)
   (cl-flet ((silence (&rest args1) (ignore)))
@@ -81,6 +78,9 @@
     (setq key-chord-two-keys-delay 0.08))
   :config
   (key-chord-mode +1))
+
+(use-package use-package-chords
+  :after key-chord)
 
 (use-package el-patch
   :init
