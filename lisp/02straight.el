@@ -77,7 +77,7 @@
                         :host github
                         :repo "org-roam/org-roam"
                         :branch "master"
-                        :files (:defaults "*.el" "extensions")))
+                        :files (:defaults "*.el" "extensions/*.el")))
 ;; (straight-use-package 'org-roam-server)
 (straight-use-package '(org-spacer :type git :host github :repo "dustinlacewell/org-spacer.el"))
 (straight-use-package 'org-super-agenda)

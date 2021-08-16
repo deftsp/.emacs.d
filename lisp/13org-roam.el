@@ -71,7 +71,7 @@
                     "#+TITLE: ${title}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n#+FILETAGS: other\n\n")
            :unnarrowed t)))
   :config
-  (require 'org-roam-protocol)
+  (use-package org-roam-protocol)
 
   ;; for org-roam-buffer-toggle
   (add-to-list 'display-buffer-alist
