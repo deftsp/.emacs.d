@@ -90,7 +90,6 @@
     "rl" 'org-roam-buffer-toggle
     "rr" 'org-roam-ref-find)
 
-  (org-roam-setup)
   (org-roam-db-autosync-mode +1))
 
 ;; (use-package org-roam-server

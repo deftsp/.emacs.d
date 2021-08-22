@@ -790,6 +790,8 @@ buffer which do not already have one. When `arg' nil only adds ids if the
            "* %a :website:\n:PROPERTIES:\n:ID: %(org-id-new)\n:CREATED:  %U\n:END:\n%?\n\n%:initial")
           ("W" "Review: Weekly Review" entry (file+olp+datetree "~/org/WeeklyReview.org")
            (file "~/org/templates/weekly-review-template.org"))))
+  (require 'private-org-capture-templates)
+
   :config
   (progn
     ;; ",k" not work some time, call `evil-normalize-keymaps' to force refresh

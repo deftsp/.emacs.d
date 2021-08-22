@@ -73,6 +73,7 @@
 
 (add-to-list 'load-path user-package-directory)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
+(add-to-list 'load-path "~/.emacs.d/private/")
 
 
 (if (fboundp 'normal-top-level-add-subdirs-to-load-path)

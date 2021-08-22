@@ -217,7 +217,7 @@
                                      :gdbpath "rust-lldb"
                                      :target nil
                                      :cwd nil))
-  (load "~/.emacs.d/private-dap-debug-template.el")
+  (require 'private-dap-debug-template)
 
   (general-define-key
    :states 'normal
