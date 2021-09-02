@@ -145,8 +145,9 @@
 (straight-use-package 'evil-visual-mark-mode)
 (straight-use-package 'evil-visualstar)
 
-(straight-use-package 'undo-tree)
-;; (straight-use-package 'undo-fu)
+;; (straight-use-package 'undo-tree)
+(straight-use-package 'undo-fu)
+(straight-use-package 'undo-fu-session)
 
 (straight-use-package 'better-jumper)
 

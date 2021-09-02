@@ -175,8 +175,8 @@ offer a list of recently clocked tasks to clock into. "
 
 ;; applications
 (tl/set-leader-keys
-  "ac" 'calc-dispatch
-  "au"  'undo-tree-visualize)
+  ;; "au"  'undo-tree-visualize
+  "ac" 'calc-dispatch)
 
 
 ;; SPC o and SPC m o are reserved for the user
@@ -946,8 +946,8 @@ undo-tree-_u_ndo undo-tree-_r_edo
    ("p" hydra-projectile/body nil)
    ("s" tl/switch-to-scratch nil)
    ("t" hydra-toggle/body "toggle")
-   ("u" undo-tree-undo nil :color red)
-   ("r" undo-tree-redo nil :color red)
+   ;; ("u" undo-tree-undo nil :color red)
+   ;; ("r" undo-tree-redo nil :color red)
    ("<escape>" nil "cancel")
    ("q"        nil "cancel")))
 

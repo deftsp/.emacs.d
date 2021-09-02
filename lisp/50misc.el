@@ -1098,14 +1098,21 @@ Current position is preserved."
     (interactive))
   (global-set-key "\M-\C-y" 'kill-ring-search))
 
-(use-package undo-tree
-  :bind (("s-z" . undo-tree-undo)
-         ("s-Z" . undo-tree-redo))
-  :hook (after-init . global-undo-tree-mode )
-  :init
-  (setq-default undo-tree-visualizer-timestamps t)
-  (setq-default undo-tree-visualizer-diff t)
-  (setq undo-tree-mode-lighter " UT"))
+;; (use-package undo-tree
+;;   :bind (("s-z" . undo-tree-undo)
+;;          ("s-Z" . undo-tree-redo))
+;;   :hook (after-init . global-undo-tree-mode )
+;;   :init
+;;   (setq-default undo-tree-visualizer-timestamps t)
+;;   (setq-default undo-tree-visualizer-diff t)
+;;   (setq undo-tree-mode-lighter " UT"))
+
+(use-package undo-fu-session
+  :config
+  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
+
+(global-undo-fu-session-mode)
+
 
 (use-package bookmark
   :defer t
