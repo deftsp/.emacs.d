@@ -576,13 +576,15 @@ If VANILLA is non-nil, run the standard `org-capture'."
          (window-config
           (if (= (length attrs) 1)
               'reorganize-frame
-            (dolist (attr attrs)
-              (let ((name (assoc-default 'name attr))
-                    (frames (assoc-default 'frames attr)))
-                (when (member (selected-frame) frames)
-                  (if (string= name dottl-org-agenda-screen-name)
-                      (return 'only-window)
-                    (return 'other-frame))))))))
+            (if (string= (system-name)  "PaloryN9")
+                (dolist (attr attrs)
+                  (let ((name (assoc-default 'name attr))
+                        (frames (assoc-default 'frames attr)))
+                    (when (member (selected-frame) frames)
+                      (if (string= name dottl-org-agenda-screen-name)
+                          (return 'only-window)
+                        (return 'other-frame)))))
+              'reorganize-frame))))
     (setq org-agenda-window-setup window-config)))
 
 ;; (tl/update-org-agenda-window-setup)
