@@ -582,8 +582,8 @@ If VANILLA is non-nil, run the standard `org-capture'."
                         (frames (assoc-default 'frames attr)))
                     (when (member (selected-frame) frames)
                       (if (string= name dottl-org-agenda-screen-name)
-                          (return 'only-window)
-                        (return 'other-frame)))))
+                          (cl-return 'only-window)
+                        (cl-return 'other-frame)))))
               'reorganize-frame))))
     (setq org-agenda-window-setup window-config)))
 

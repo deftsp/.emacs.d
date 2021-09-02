@@ -930,8 +930,8 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
    "
 org-agend_a_ org-_c_apture org-clock-_g_oto
 _p_rojectile _s_cratch
-undo-tree-_u_ndo undo-tree-_r_edo
 "
+   ;; undo-tree-_u_ndo undo-tree-_r_edo
    ("SPC" mark-sexp "mark sexp" :color red)
    ("+" cnfonts-increase-fontsize :color red)
    ("-" cnfonts-decrease-fontsize :color red)

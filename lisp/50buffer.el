@@ -122,7 +122,7 @@ A SPLIT argument with the value: `left',
 buffer in a split window."
   (interactive)
   (let ((newbuf (generate-new-buffer "untitled")))
-    (case split
+    (cl-case split
       ('left  (split-window-horizontally))
       ('below (tl/split-window-vertically-and-switch))
       ('above (split-window-vertically))

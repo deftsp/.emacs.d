@@ -78,7 +78,7 @@
       (dolist (regexp tl/commentaires-keywords)
         (when (string-match regexp string)
           (push (match-string-no-properties 1 string) found)
-          (return))))))
+          (cl-return))))))
 
 (provide '50wcheck-mode)
 ;;; 50wcheck-mode.el ends here

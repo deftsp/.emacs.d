@@ -831,7 +831,7 @@ such character is found, following options are shown:
                  "/Library/Frameworks"))
       (add-to-list 'cc-search-directories l t)))
 
-  (pushnew
+  (cl-pushnew
    '("\\.mm\\'"   (".h")) cc-other-file-alist :test 'equal)
   ;; TODO: ugly setf. pushnew put it in beginning of the list, however here need
   ;; the end
@@ -904,14 +904,14 @@ such character is found, following options are shown:
     (setq avy-case-fold-search nil)
     (setq avy-timeout-seconds 0.3)
     (setq avy-keys
-          (nconc (loop for i from ?a to ?z collect i)
-                 (loop for i from ?A to ?Z collect i)
-                 (loop for i from ?\! to ?\@ collect i)
-                 (loop for i from ?\[ to ?\` collect i)
-                 (loop for i from ?\{ to ?\~ collect i)))
+          (nconc (cl-loop for i from ?a to ?z collect i)
+                 (cl-loop for i from ?A to ?Z collect i)
+                 (cl-loop for i from ?\! to ?\@ collect i)
+                 (cl-loop for i from ?\[ to ?\` collect i)
+                 (cl-loop for i from ?\{ to ?\~ collect i)))
     (setq avy-keys-alist
-          `((avy-goto-word-1 . ,(nconc (loop for i from ?a to ?z collect i)
-                                       (loop for i from ?A to ?Z collect i)))))
+          `((avy-goto-word-1 . ,(nconc (cl-loop for i from ?a to ?z collect i)
+                                       (cl-loop for i from ?A to ?Z collect i)))))
     (setq avy-style 'at-full)
     (setq avy-styles-alist '((avy-goto-char-2 . post)))))
 
@@ -1173,7 +1173,7 @@ inputting math (Unicode) symbols." t))
   (setq minimap-window-location 'left)
   :config
   (with-eval-after-load 'winum
-    (pushnew minimap-buffer-name winum-ignored-buffers)))
+    (cl-pushnew minimap-buffer-name winum-ignored-buffers)))
 
 
 (use-package link-hint

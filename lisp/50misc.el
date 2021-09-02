@@ -844,7 +844,7 @@ This command is to be used interactively."
             (setq t-a-p (substring t-a-p 0 -1)))
           (kill-new t-a-p)
           (message "%s" t-a-p)
-          (return nil)))
+          (cl-return nil)))
       (setq event (read-event nil))
       (when (setq thing (cdr (assoc event things)))
         (clear-this-command-keys t)
