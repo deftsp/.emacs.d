@@ -97,8 +97,8 @@ Flycheck according to the Cargo project layout."
     "Run 'cargo test' for the test near point."
     (interactive)
     (rustic-compilation-process-live)
-    (-if-let (func-name (rustic-cargo--get-current-fn-fullname))
-        (let* ((command (list rustic-cargo-bin "test" "--" "--nocapture" func-name))
+    (-if-let (test-to-run (rustic-cargo--get-test-target))
+        (let* ((command (list rustic-cargo-bin "test" "--" "--nocapture" test-to-run))
                (c (append command (split-string rustic-test-arguments)))
                (buf rustic-test-buffer-name)
                (proc rustic-test-process-name)
