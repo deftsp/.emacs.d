@@ -205,6 +205,13 @@
 (straight-use-package 'poetry)
 (straight-use-package 'pipenv)
 
+(straight-use-package
+ '(rime :type git
+        :host github
+        :repo "DogLooksGood/emacs-rime"
+        :files ("*.el" "Makefile" "lib.c")))
+
+
 ;; (straight-use-package '(powerline :build (:not native-compile)))
 (straight-use-package 'powerline)
 (straight-use-package '(unicad :type git :host github :repo "ukari/unicad"))

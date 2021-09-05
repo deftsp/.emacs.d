@@ -539,6 +539,11 @@
    '(imenu-list-entry-face-2 ((t (:foreground "#547fb3"))))
    '(imenu-list-entry-face-3 ((t (:foreground "#ac9383"))))
 
+   `(rime-default-face ((t (:foreground ,base0 :background ,base02))))
+   `(rime-code-face ((t (:foreground ,magenta))))
+   `(rime-candidate-num-face ((t (:foreground ,base1))))
+   `(rime-comment-face ((t (:foreground ,base1))))
+
    ;; rainbow-delimiters
    '(rainbow-delimiters-unmatched-face ((t (:foreground unspecified :inherit show-paren-mismatch :strike-through t))))
 

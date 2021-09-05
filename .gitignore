@@ -126,3 +126,5 @@ eln-cache/
 eshell/
 .extension/
 .persistent-scratch
+
+librime/
