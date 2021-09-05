@@ -5,6 +5,8 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+(global-set-key (kbd "s-/") 'toggle-input-method)
+
 (defun tl/on-select-previous-input-source (data)
   "Swith to insert when switch to Rime input method"
   (let ((source-id (plist-get data :source-id)))
@@ -19,22 +21,22 @@
 
 
 (use-package rime
-  :demand :after (which-key)
+  :after (which-key)
+  :demand
   :custom
   (rime-user-data-dir "~/Library/Rime/")
   (rime-librime-root "~/.emacs.d/librime/dist")
   (rime-emacs-module-header-root "/Applications/Emacs.app/Contents/Resources/include")
   (rime-show-preedit t)
-  :bind
-  :map rime-mode-map
-  ("C-." . 'rime-send-keybinding) ; 中英文标点切换
-  ("S-SPC" . 'rime-send-keybinding) ; 全半角切换
-  ("C-s" . 'rime-send-keybinding) ; 输入法菜单
-  ("C-l" . 'rime-inline-ascii)
-  ("M-j" . 'rime-force-enable) ; 强制切换到中文模式
-  (:map rime-active-mode-map
-   ("C-l" . 'rime-inline-ascii)
-   ("S-SPC" . 'rime-send-keybinding))
+  :bind (:map rime-mode-map
+	     ("C-." . 'rime-send-keybinding) ; 中英文标点切换
+	     ("S-SPC" . 'rime-send-keybinding) ; 全半角切换
+	     ("C-s" . 'rime-send-keybinding) ; 输入法菜单
+	     ("C-l" . 'rime-inline-ascii)
+	     ("M-j" . 'rime-force-enable) ; 强制切换到中文模式
+	     :map rime-active-mode-map
+	     ("C-l" . 'rime-inline-ascii)
+	     ("S-SPC" . 'rime-send-keybinding))
   :config
   ;; Emacs will automatically set default-input-method to rfc1345 if locale is
   ;; UTF-8. https://github.com/purcell/emacs.d/issues/320
