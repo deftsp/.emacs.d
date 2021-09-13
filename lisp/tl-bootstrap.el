@@ -32,7 +32,7 @@
 (require '50abbrev)
 (require '50alias)
 (require '50auto-fill)
-;; (require '50auto-insert)
+(require '50auto-insert)
 (require '50calendar)
 
 (require '50clojure)
