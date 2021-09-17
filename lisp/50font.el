@@ -58,7 +58,7 @@
   (progn
     (setq cnfonts-verbose nil
           cnfonts-default-step tl/default-cnfonts-fontsize-step
-          cnfonts-use-face-font-rescale nil ; not work on macOS
+          cnfonts-use-face-font-rescale t
           cnfonts-profiles '("program" "org-mode" "read-book")))
   :config
   (progn

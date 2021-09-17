@@ -62,8 +62,8 @@
   ;;FIXME: font size not work
   (setq rime-posframe-properties
         (list
-         ;; :font "Sarasa Gothic SC-13"
-         :font "PragmataPro-16"
+         ;; :font "Sarasa Gothic SC-28"
+         :font "PragmataPro-18"
          :internal-border-width 10))
 
   (setq rime-show-candidate 'posframe
