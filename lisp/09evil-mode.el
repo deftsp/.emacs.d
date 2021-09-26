@@ -1060,6 +1060,39 @@ if COUNT is negative. "
     (setq evil-textobj-syntax-i-key "h")
     (setq evil-textobj-syntax-a-key "h")))
 
+;; [[https://github.com/akicho8/string-inflection][akicho8/string-inflection: underscore -> UPCASE -> CamelCase conversion of names]]
+;; [[https://github.com/ninrod/evil-string-inflection][;; ninrod/evil-string-inflection: evil operator to cycle *-case in text objects]]
+
+(use-package string-inflection
+  :diminish
+  :config
+  (defun pl/string-inflection-rust-style-cycle-function (str)
+    "foo_bar => FOO_BAR => FooBar => foo_bar"
+    (string-inflection-ruby-style-cycle-function str))
+
+  (defun pl/string-inflection-all-cycle-function (str)
+    "switching by major-mode"
+    (interactive)
+    (cond
+     ;; for rust
+     ((eq major-mode 'rustic-mode)
+      (pl/string-inflection-rust-style-cycle-function str))
+     (t
+      ;; default
+      (string-inflection-all-cycle-function str))))
+
+  (with-eval-after-load 'evil
+    (define-key evil-normal-state-map (kbd "g~") 'pl/evil-operator-string-inflection)
+    (evil-define-operator pl/evil-operator-string-inflection (beg end _type)
+      "Define a new evil operator that cicles underscore -> UPCASE -> CamelCase."
+      :move-point nil
+      (interactive "<R>")
+      (let ((str (buffer-substring-no-properties beg end)))
+        (save-excursion
+          (delete-region beg end)
+          (insert (pl/string-inflection-all-cycle-function str)))))))
+
+
 (use-package evil-owl
   :diminish
   :after evil

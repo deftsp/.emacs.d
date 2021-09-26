@@ -144,6 +144,9 @@
 (straight-use-package 'evil-vimish-fold)
 (straight-use-package 'evil-visual-mark-mode)
 (straight-use-package 'evil-visualstar)
+;; (straight-use-package 'evil-string-inflection)
+(straight-use-package 'string-inflection)
+
 
 ;; (straight-use-package 'undo-tree)
 (straight-use-package 'undo-fu)
