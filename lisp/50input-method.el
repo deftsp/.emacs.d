@@ -33,7 +33,7 @@
 	     ("S-SPC" . 'rime-send-keybinding) ; 全半角切换
 	     ("C-s" . 'rime-send-keybinding) ; 输入法菜单
 	     ("C-l" . 'rime-inline-ascii)
-	     ("M-j" . 'rime-force-enable) ; 强制切换到中文模式
+	     ("C-s-l" . 'rime-force-enable) ; 强制切换到中文模式
 	     :map rime-active-mode-map
 	     ("C-l" . 'rime-inline-ascii)
 	     ("S-SPC" . 'rime-send-keybinding))
@@ -58,6 +58,7 @@
                                   rime-predicate-punctuation-after-space-cc-p
                                   rime-predicate-prog-in-code-p
                                   rime-predicate-after-ascii-char-p))
+
   (defun rime-predicate-which-key-activate-p () which-key--automatic-display)
   ;;FIXME: font size not work
   (setq rime-posframe-properties

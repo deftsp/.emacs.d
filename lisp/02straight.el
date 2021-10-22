@@ -354,7 +354,6 @@
 (straight-use-package 'graphql)
 (straight-use-package 'nyan-mode)
 (straight-use-package 'spinner)
-(straight-use-package 'beacon)
 (straight-use-package 'esup)
 (straight-use-package 'graphviz-dot-mode)
 (straight-use-package 'splitter)

@@ -1146,13 +1146,6 @@ inputting math (Unicode) symbols." t))
   (setq pangu-spacing-real-insert-separtor t)
   (global-pangu-spacing-mode 1))
 
-;;; beacon
-;; (use-package beacon
-;;   :defer 7
-;;   :config
-;;   (beacon-mode +1))
-
-
 (use-package company-ledger
   :after (company beancount))
 
