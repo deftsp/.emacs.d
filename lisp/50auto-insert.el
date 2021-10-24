@@ -1,11 +1,12 @@
 ;;; 50auto-insert.el ---
 
 (use-package autoinsert
+  :custom
+  (auto-insert-alist nil) ; do not use the default value
   :init
-  (add-hook 'find-file-hooks 'auto-insert)
-  ;; (add-hook 'write-file-hooks 'copyright-update)
   (setq auto-insert-query nil)
   (setq auto-insert-directory "~/.emacs.d/templates/")
+  ;; (add-hook 'write-file-hooks 'copyright-update)
   :config
   ;;(define-auto-insert "\\.el" lisp-template.el")
   ;;(define-auto-insert "\\.c" "c-template.c")
