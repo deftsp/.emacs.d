@@ -144,6 +144,10 @@
   (add-to-list 'magit-repository-directories '("~/.emacs.d" . 0)) ; C-u C-u M-x magit-status will ignore it
   (add-to-list 'magit-repository-directories '("~/opt/emacs" . 0)))
 
+;; (use-package magit-delta
+;;   :after (magit)
+;;   :hook (magit-mode . magit-delta-mode))
+
 ;; M-x magit-todos-list
 (use-package magit-todos
   :defer 5

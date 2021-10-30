@@ -219,7 +219,10 @@
 (straight-use-package 'powerline)
 (straight-use-package '(unicad :type git :host github :repo "ukari/unicad"))
 (straight-use-package 'rainbow-mode)
+
 (straight-use-package 'magit)
+(straight-use-package 'magit-delta)
+
 (straight-use-package 'rust-mode)
 (straight-use-package 'rustic)
 (straight-use-package 'pdf-tools)
