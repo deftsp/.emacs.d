@@ -576,16 +576,14 @@ kill internal buffers too."
   "Text object to select the whole buffer."
   (cl-destructuring-bind (beg . end)
       (if (eq major-mode 'rustic-mode)
-          (let ((rustic-top-item-beg-exclude-use-re
-                 "\\s-*\\(?:priv\\|pub\\)?\\s-*\\(?:async\\|e\\(?:num\\|xtern\\)\\|fn\\|impl\\|mod\\|st\\(?:atic\\|ruct\\)\\|t\\(?:rait\\|ype\\)\\|u\\(?:nion\\)\\)\\_>"))
-            (save-excursion
-              (cons
-               (progn
-                 (rustic-beginning-of-defun 1 rustic-top-item-beg-exclude-use-re)
-                 (point))
-               (progn
-                 (rustic-end-of-defun)
-                 (point)))))
+          (save-excursion
+            (cons
+             (progn
+               (rust-beginning-of-defun 1)
+               (point))
+             (progn
+               (rustic-end-of-defun)
+               (point))))
         (bounds-of-thing-at-point 'defun))
     (evil-range beg end type)))
 
