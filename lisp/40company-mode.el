@@ -113,7 +113,7 @@
     company-capf
     company-files
     company-emoji
-    ;; company-dabbrev ; which complete some string sypmbol
+    ;; company-dabbrev ; which complete some string symbol
     company-yasnippet))
 
 (defvar tl/company-prog-common-backends
