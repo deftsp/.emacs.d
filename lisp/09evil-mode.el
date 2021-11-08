@@ -424,8 +424,13 @@ kill internal buffers too."
   (setq evil-collection-key-blacklist '("M-o" "gz" "gr"))
   :config
   (evil-collection-init)
-  ;; FIXME: the binding for magit not work
-  (evil-define-key evil-collection-magit-state magit-mode-map "gr" 'magit-refresh)
+  ;; FIXME: the binding for magit not work, it seems the loading of magit wil overwrite it
+  ;; (evil-define-key evil-collection-magit-state magit-mode-map "gr" 'magit-refresh)
+  ;; (evil-collection-define-key 'normal 'magit-mode-map "gr" 'magit-refresh)
+  ;; (general-define-key
+  ;;  :states '(normal)
+  ;;  "gr" 'magit-status-mode-map)
+
   (evil-collection-define-key 'normal 'Info-mode-map "o" 'ace-link-info)
   (evil-collection-define-key 'normal 'xref--xref-buffer-mode-map "o" 'ace-link-xref)
   (evil-collection-define-key 'normal 'compilation-mode-map "o" 'ace-link-compilation)
