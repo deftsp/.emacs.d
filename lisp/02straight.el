@@ -112,6 +112,8 @@
 (straight-use-package '(smartparens :type git :host github :repo "deftsp/smartparens" :branch "shihpin"))
 (straight-use-package '(flymake :type git :host github :repo "deftsp/flymake" :branch "shihpin"))
 
+(straight-use-package '(vline :type git :host github :repo "buzztaiki/vline"))
+
 (straight-use-package 'evil)
 (straight-use-package 'evil-org)
 (straight-use-package 'evil-anzu)
@@ -428,7 +430,7 @@
 (straight-use-package 'vkill)
 ;; (straight-use-package 'intero)
 (straight-use-package 'pangu-spacing)
-(straight-use-package 'vline)
+;; (straight-use-package 'vline)
 (straight-use-package 'counsel-etags)
 (straight-use-package 'io-mode)
 (straight-use-package 'parsec)
