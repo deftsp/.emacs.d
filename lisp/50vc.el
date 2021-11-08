@@ -144,6 +144,11 @@
   (add-to-list 'magit-repository-directories '("~/.emacs.d" . 0)) ; C-u C-u M-x magit-status will ignore it
   (add-to-list 'magit-repository-directories '("~/opt/emacs" . 0)))
 
+(use-package git-commit
+  :defer 5
+  :config
+  (global-git-commit-mode +1))
+
 ;; (use-package magit-delta
 ;;   :after (magit)
 ;;   :hook (magit-mode . magit-delta-mode))
@@ -169,8 +174,8 @@
     (add-hook 'with-editor-mode-hook 'evil-insert-state)
     ;; add Evil bindings to accept/cancel commit
     (evil-define-key 'normal with-editor-mode-map
-      (kbd "RET") 'with-editor-finish
-      [escape] 'with-editor-cancel)
+      ;; [escape] 'with-editor-cancel
+      (kbd "RET") 'with-editor-finish)
 
     (add-hook 'with-editor-mode-hook 'evil-normalize-keymaps)
     (let ((mm-key dottl-major-mode-leader-key))

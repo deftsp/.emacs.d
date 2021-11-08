@@ -61,7 +61,7 @@
    "th" 'lsp-rust-analyzer-inlay-hints-mode
    "tr" 'lsp-rust-analyzer-related-tests
 
-   "p"  'rustic-format-buffer
+   "p"  'tl/rustic-format-buffer
    "v"  '(:ignore t :which-key "variable")
    "vm" 'tl/toggle-mut)
   :config/el-patch
@@ -175,6 +175,15 @@ Flycheck according to the Cargo project layout."
       (window-configuration-to-register ??)
       (select-window (get-buffer-window buf))
       (delete-other-windows))))
+
+(defun tl/rustic-format-buffer ()
+  "Update diff-hl after format.
+
+It's a dirty hack, `rustic-format-start-process' do not giving a finish hook"
+  (interactive)
+  (rustic-format-buffer)
+  (with-current-buffer (current-buffer)
+    (run-with-timer 2 nil #'diff-hl-update)))
 
 
 (provide '50rust)
