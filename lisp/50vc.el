@@ -151,7 +151,9 @@
 
 ;; (use-package magit-delta
 ;;   :after (magit)
-;;   :hook (magit-mode . magit-delta-mode))
+;;   :hook (magit-mode . magit-delta-mode)
+;;   :init
+;;   (setq magit-delta-default-light-theme "Solarized (dark)"))
 
 ;; M-x magit-todos-list
 (use-package magit-todos
