@@ -140,7 +140,7 @@
                                      :size fontsize
                                      :weight 'normal
                                      :slant 'normal)))
-           (when (and fontname (not (cnfonts--fontspec-valid-p fontspec)))
+           (when (and fontname (not (fontp fontspec)))
              (error "字体 %S 不存在！" fontname))
 
            (set-fontset-font "fontset-default"
