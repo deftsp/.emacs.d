@@ -243,7 +243,7 @@
    '(font-lock-builtin-face ((t (:foreground "#5ca0b3"))))
    `(font-lock-comment-face ((t (:foreground ,base01))))
    `(font-lock-comment-delimiter-face ((t (:foreground ,base1))))
-   '(font-lock-constant-face ((t (:foreground "#22ccee"))))
+   '(font-lock-constant-face ((t (:foreground "#5299bc" :weight bold))))
    '(font-lock-doc-face ((t (:foreground "turquoise4"))))
    '(font-lock-function-name-face ((t (:foreground "#f08484"))))
    '(font-lock-keyword-face ((t (:foreground "#aede5d"))))
@@ -252,8 +252,8 @@
    `(font-lock-regexp-grouping-construct ((t (:foreground ,yellow :weight bold))))
    `(font-lock-regexp-grouping-backslash ((t (:foreground ,green :weight bold))))
    '(font-lock-string-face ((t (:foreground "#a800a8"))))
-   '(font-lock-type-face ((t (:foreground "#4492e1"))))
-   '(font-lock-variable-name-face ((t (:foreground "DodgerBlue2"))))
+   '(font-lock-type-face ((t (:foreground "#288cb0"))))
+   '(font-lock-variable-name-face ((t (:foreground "#9077ce"))))
    '(font-lock-warning-face ((t (:foreground "Pink"))))
 
    `(c-annotation-face ((t (:inherit font-lock-constant-face))))
@@ -543,6 +543,9 @@
    `(rime-code-face ((t (:foreground ,magenta))))
    `(rime-candidate-num-face ((t (:foreground ,base1))))
    `(rime-comment-face ((t (:foreground ,base1))))
+
+   ;; tree-sitter-hl
+   '(tree-sitter-hl-face:property ((t (:inherit font-lock-constant-face))))
 
    ;; rainbow-delimiters
    '(rainbow-delimiters-unmatched-face ((t (:foreground unspecified :inherit show-paren-mismatch :strike-through t))))

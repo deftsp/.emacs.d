@@ -160,6 +160,13 @@
 (straight-use-package 'prescient)
 ;; (straight-use-package 'ivy-fuz)
 
+;; tree-sitter
+(straight-use-package 'tree-sitter)
+(straight-use-package 'tree-sitter-langs)
+(straight-use-package 'evil-textobj-tree-sitter)
+(straight-use-package '(grammatical-edit :type git :host github :repo "manateelazycat/grammatical-edit"))
+
+
 (straight-use-package 'swiper)
 (straight-use-package 'ivy-hydra)
 (straight-use-package 'ivy-purpose)

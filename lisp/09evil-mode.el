@@ -572,28 +572,56 @@ kill internal buffers too."
   "Text object to select the whole buffer."
   (evil-range (point-min) (point-max) type))
 
-;; (evil-define-text-object tl:evil-textobj-defun (count &optional _beg _end type)
-;;   "Text object to select the whole buffer."
-;;   (cl-destructuring-bind (beg . end)
-;;       (bounds-of-thing-at-point 'defun)
-;;     (evil-range beg end type)))
-(evil-define-text-object tl:evil-textobj-defun (count &optional _beg _end type)
+
+(evil-define-text-object tl:evil-textobj-defun-outer (count &optional _beg _end type)
   "Text object to select the whole buffer."
   (cl-destructuring-bind (beg . end)
       (if (eq major-mode 'rustic-mode)
-          (save-excursion
-            (cons
-             (progn
-               (rust-beginning-of-defun 1)
-               (point))
-             (progn
-               (rustic-end-of-defun)
-               (point))))
+          (let ((range (tl/textbobj-function-outer)))
+            (cons (car range) (cadr range)))
+        ;; (save-excursion
+        ;;   (cons
+        ;;    (progn
+        ;;      (rust-beginning-of-defun 1)
+        ;;      (point))
+        ;;    (progn
+        ;;      (rustic-end-of-defun)
+        ;;      (point))))
+
         (bounds-of-thing-at-point 'defun))
     (evil-range beg end type)))
 
-(define-key evil-inner-text-objects-map "m" 'tl:evil-textobj-defun)
-(define-key evil-outer-text-objects-map "m" 'tl:evil-textobj-defun)
+(evil-define-text-object tl:evil-textobj-defun-inner (count &optional _beg _end type)
+  "Text object to select the whole buffer."
+  (cl-destructuring-bind (beg . end)
+      (if (eq major-mode 'rustic-mode)
+          (let ((range (tl/textbobj-function-inner)))
+            (cons (car range) (cadr range)))
+        ;; (save-excursion
+        ;;   (cons
+        ;;    (progn
+        ;;      (rust-beginning-of-defun 1)
+        ;;      (point))
+        ;;    (progn
+        ;;      (rustic-end-of-defun)
+        ;;      (point))))
+
+        (bounds-of-thing-at-point 'defun))
+    (evil-range beg end type)))
+
+(define-key evil-outer-text-objects-map "m" 'tl:evil-textobj-defun-outer)
+(define-key evil-inner-text-objects-map "m" 'tl:evil-textobj-defun-inner)
+
+
+;; https://github.com/meain/evil-textobj-tree-sitter
+(use-package evil-textobj-tree-sitter
+  :after tree-sitter
+  :config
+  ;; bind `function.outer`(entire function block) to `m` for use in things like `vaf`, `yaf`
+  (fset 'tl/textbobj-function-outer (evil-textobj-tree-sitter-get-textobj "function.outer"))
+  ;; bind `function.inner`(function block without name and args) to `m` for use in things like `vif`, `yif`
+  (fset 'tl/textbobj-function-inner (evil-textobj-tree-sitter-get-textobj "function.inner")))
+
 
 ;; (evil-define-text-object tl/evil-textobj-a-defun (count &optional beg end type)
 ;;   (evil-select-an-object 'evil-defun beg end type count))
