@@ -252,8 +252,8 @@
    `(font-lock-regexp-grouping-construct ((t (:foreground ,yellow :weight bold))))
    `(font-lock-regexp-grouping-backslash ((t (:foreground ,green :weight bold))))
    '(font-lock-string-face ((t (:foreground "#a800a8"))))
-   '(font-lock-type-face ((t (:foreground "#288cb0"))))
-   '(font-lock-variable-name-face ((t (:foreground "#9077ce"))))
+   '(font-lock-type-face ((t (:foreground "#9077ce"))))
+   '(font-lock-variable-name-face ((t (:foreground "#288cb0"))))
    '(font-lock-warning-face ((t (:foreground "Pink"))))
 
    `(c-annotation-face ((t (:inherit font-lock-constant-face))))
