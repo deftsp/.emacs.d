@@ -14,9 +14,6 @@
         lsp-modeline-diagnostics-enable nil
         lsp-enable-indentation nil
         lsp-enable-snippet nil          ; use yasnippet instead
-        ;; use `company-ctags' only.
-        ;; N.B. `company-lsp' is automatically enabled if installed
-        ;; lsp-enable-completion-at-point nil
         lsp-file-watch-threshold 5000
         lsp-restart 'auto-restart
         lsp-enable-links nil            ; use ffip instead
@@ -26,10 +23,13 @@
         lsp-headerline-breadcrumb-enable t
         lsp-headerline-breadcrumb-icons-enable nil
         lsp-modeline-code-actions-enable nil
-        lsp-completion-show-kind nil
+
         lsp-enable-semantic-highlighting nil)
 
-  (setq lsp-prefer-capf t)
+  ;; N.B. `company-lsp' is automatically enabled if installed
+  (setq lsp-completion-provider :capf
+        lsp-completion-show-kind t)
+
   ;; This variable determines how often lsp-mode will refresh the highlights, lenses, links, etc while you type.
   (setq lsp-idle-delay 0.500)
   :hook ((lsp-mode . lsp-enable-which-key-integration)

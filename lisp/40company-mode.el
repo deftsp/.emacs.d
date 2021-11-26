@@ -56,7 +56,8 @@
     :diminish company-posframe-mode
     :init
     (setq company-posframe-quickhelp-delay nil
-          company-posframe-show-indicator nil)
+          company-posframe-show-metadata nil
+          company-posframe-show-indicator t)
     :config
     (define-key company-active-map (kbd "C-c h") #'company-posframe-quickhelp-show))
 
@@ -194,7 +195,9 @@
 
 (add-hook 'rustic-mode-hook 'tl/company-rustic-mode-setup)
 (defun tl/company-rustic-mode-setup ()
-  (let ((backends tl/company-common-backends))
+  (let ((backends '((company-tabnine company-capf)
+                    :separated
+                    company-yasnippet)))
     (setq-local company-backends backends)))
 
 (provide '40company-mode)
