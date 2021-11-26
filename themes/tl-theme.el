@@ -549,6 +549,7 @@
 
    ;; tree-sitter-hl
    '(tree-sitter-hl-face:property ((t (:inherit font-lock-constant-face))))
+   '(tree-sitter-hl-face:function.call ((t (:inherit font-lock-function-name-face))))
 
    ;; rainbow-delimiters
    '(rainbow-delimiters-unmatched-face ((t (:foreground unspecified :inherit show-paren-mismatch :strike-through t))))
