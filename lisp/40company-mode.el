@@ -196,7 +196,7 @@
 (add-hook 'rustic-mode-hook 'tl/company-rustic-mode-setup)
 (defun tl/company-rustic-mode-setup ()
   (let ((backends '((company-tabnine company-capf)
-                    :separated
+                    :separate
                     company-yasnippet)))
     (setq-local company-backends backends)))
 
