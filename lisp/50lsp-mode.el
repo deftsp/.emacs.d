@@ -122,6 +122,7 @@
         lsp-ui-flycheck-list-position 'right
         lsp-ui-imenu-window-width 32
         lsp-ui-imenu-auto-refresh 'after-save
+        lsp-ui-peek-list-width 60
         lsp-ui-doc-position 'bottom
         lsp-ui-doc-use-childframe t
         ;; https://github.com/emacs-lsp/lsp-ui/issues/310
