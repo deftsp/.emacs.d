@@ -60,7 +60,6 @@
 ;; (straight-use-package '(org-contrib :build (:not native-compile)))
 (straight-use-package 'org)
 (straight-use-package 'org-contrib)
-(straight-use-package 'org-brain)
 (straight-use-package 'org-mru-clock)
 (straight-use-package 'org-superstar)
 (straight-use-package 'org-clock-convenience)
@@ -108,9 +107,8 @@
                                             treemacs-projectile)))
 ;; (straight-use-package 'treemacs)
 
-;; TODO: compatibility only, delete some day
-(straight-use-package '(smartparens :type git :host github :repo "deftsp/smartparens" :branch "shihpin"))
-(straight-use-package '(flymake :type git :host github :repo "deftsp/flymake" :branch "shihpin"))
+(straight-use-package 'smartparens)
+(straight-use-package 'flymake)
 
 (straight-use-package '(vline :type git :host github :repo "buzztaiki/vline"))
 
