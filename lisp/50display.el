@@ -22,7 +22,7 @@
                               (height . 51)
                               (top . 22) ; (frame-parameter nil 'top)
                               (left . 0)
-                              (alpha . (,dottl-active-transparency . ,dottl-inactive-transparency)) ; first number is for the active window and the second for the inactive
+                              (alpha . (100 . 100)) ; first number is for the active window and the second for the inactive
                               (mouse-color . "gray80")
                               ;; http://emacsredux.com/blog/2015/01/18/customizing-the-fringes/
                               (left-fringe . 8) ; default width (8 pixels).
@@ -47,6 +47,15 @@
   (setq tooltip-frame-parameters  '((name . "tooltip")
                                     (internal-border-width . 1)
                                     (border-width . 0))))
+
+
+(defun tl/toggle-transparency (&optional frame)
+  (interactive)
+  (let ((current-alpha (frame-parameter frame 'alpha))
+        (default-alpha `(,dottl-active-transparency . ,dottl-inactive-transparency)))
+    (if (equal current-alpha default-alpha)
+        (set-frame-parameter frame 'alpha '(100 . 100))
+      (set-frame-parameter frame 'alpha default-alpha))))
 
 ;; Test
 ;; (modify-frame-parameters

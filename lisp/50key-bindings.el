@@ -864,6 +864,7 @@ _w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespac
     ("C-p" smartparens-global-mode "global smartparens")
     ("r" dired-toggle-read-only "read only") ; generalized version of `read-only-mode'.
     ("t" toggle-truncate-lines "truncate")
+    ("T" tl/toggle-transparency "Transparency")
     ("w" whitespace-mode "whitespace")
     ("s" tl/toggle-saturate-rainbow-delimiters-color "strong color")
     ("S" tl/toggle-flyspell-mode "flyspell")
