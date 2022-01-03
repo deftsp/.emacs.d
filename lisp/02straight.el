@@ -82,6 +82,7 @@
 (straight-use-package 'org-super-agenda)
 (straight-use-package 'org-trello)
 (straight-use-package 'ob-http)
+(straight-use-package 'org-transclusion)
 
 (straight-use-package 'sql-indent)
 (straight-use-package 'sqlformat)

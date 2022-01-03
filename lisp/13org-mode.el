@@ -1448,6 +1448,16 @@ it can be passed in POS."
   :hook ((emacs-lisp-mode . org-link-minor-mode)
          (sql-mode . org-link-minor-mode)))
 
+(use-package org-transclusion
+  :after org
+  :config
+  (general-define-key
+   :states '(normal)
+   :keymaps 'org-mode-map
+   :prefix ","
+   "na" 'org-transclusion-add
+   "nt" 'org-transclusion-mode
+   "nn" 'org-transclusion-mode))
 
 ;; TODO: not work as expect
 ;; enforce the number of blanks lines after elements in an org-mode document
