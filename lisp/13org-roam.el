@@ -8,10 +8,9 @@
 ;; org-roam-db-build-cache
 (use-package org-roam
   :diminish org-roam-mode
-  :after org
+  :defer 5
   :commands
   (org-roam-buffer
-   org-roam-setup
    org-roam-capture
    org-roam-node-find)
   :init
@@ -90,7 +89,8 @@
     "rl" 'org-roam-buffer-toggle
     "rr" 'org-roam-ref-find)
 
-  (org-roam-db-autosync-mode +1))
+  (org-roam-db-autosync-mode +1)
+  (require 'org-roam-protocol))
 
 ;; (use-package org-roam-server
 ;;   :defer t

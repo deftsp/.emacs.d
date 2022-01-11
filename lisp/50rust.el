@@ -22,6 +22,7 @@
                            "cyan3"
                            "white"])
   (setq rustic-indent-method-chain t
+        rustic-cargo-run-use-comint t
         rustic-format-trigger nil)
   :config
   (define-key rustic-compilation-mode-map "q" 'tl/quit-rustic-compilation-window)
