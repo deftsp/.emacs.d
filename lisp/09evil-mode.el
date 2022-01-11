@@ -573,39 +573,32 @@ kill internal buffers too."
   (evil-range (point-min) (point-max) type))
 
 
+
+;; (save-excursion
+;;   (cons
+;;    (progn
+;;      (rust-beginning-of-defun 1)
+;;      (point))
+;;    (progn
+;;      (rustic-end-of-defun)
+;;      (point))))
+
+
 (evil-define-text-object tl:evil-textobj-defun-outer (count &optional _beg _end type)
   "Text object to select the whole buffer."
   (cl-destructuring-bind (beg . end)
-      (if (eq major-mode 'rustic-mode)
+      (if (and (eq major-mode 'rustic-mode) (and (boundp 'tree-sitter-mode) tree-sitter-mode) )
           (let ((range (tl/textbobj-function-outer)))
             (cons (car range) (cadr range)))
-        ;; (save-excursion
-        ;;   (cons
-        ;;    (progn
-        ;;      (rust-beginning-of-defun 1)
-        ;;      (point))
-        ;;    (progn
-        ;;      (rustic-end-of-defun)
-        ;;      (point))))
-
         (bounds-of-thing-at-point 'defun))
     (evil-range beg end type)))
 
 (evil-define-text-object tl:evil-textobj-defun-inner (count &optional _beg _end type)
   "Text object to select the whole buffer."
   (cl-destructuring-bind (beg . end)
-      (if (eq major-mode 'rustic-mode)
+      (if (and (eq major-mode 'rustic-mode) (and (boundp 'tree-sitter-mode) tree-sitter-mode))
           (let ((range (tl/textbobj-function-inner)))
             (cons (car range) (cadr range)))
-        ;; (save-excursion
-        ;;   (cons
-        ;;    (progn
-        ;;      (rust-beginning-of-defun 1)
-        ;;      (point))
-        ;;    (progn
-        ;;      (rustic-end-of-defun)
-        ;;      (point))))
-
         (bounds-of-thing-at-point 'defun))
     (evil-range beg end type)))
 
