@@ -34,7 +34,7 @@
   (setq lsp-idle-delay 0.500)
   :hook ((lsp-mode . lsp-enable-which-key-integration)
          ;; (python-mode . lsp-deferred)
-         ;; (rust-mode . lsp)
+         ;; (rust-mode . lsp) ; rustic will setup it
          )
   :config
   ;; don't scan 3rd party javascript libraries

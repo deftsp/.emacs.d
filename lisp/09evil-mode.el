@@ -1116,32 +1116,31 @@ if COUNT is negative. "
           (delete-region beg end)
           (insert (pl/string-inflection-all-cycle-function str)))))))
 
+;; (use-package evil-owl
+;;   :diminish
+;;   :after evil
+;;   :config
+;;   (setq evil-owl-display-method 'posframe)
 
-(use-package evil-owl
-  :diminish
-  :after evil
-  :config
-  (setq evil-owl-display-method 'posframe)
+;;   (if (eq evil-owl-display-method 'window)
+;;       (progn
+;;         (setq evil-owl-max-string-length 500)
+;;         (add-to-list 'display-buffer-alist
+;;                      '("*evil-owl*"
+;;                        (display-buffer-in-side-window)
+;;                        (side . bottom)
+;;                        (window-height . 0.3))))
+;;     (setq evil-owl-extra-posframe-args '(:width 60 :height 30)
+;;           evil-owl-max-string-length 50))
 
-  (if (eq evil-owl-display-method 'window)
-      (progn
-        (setq evil-owl-max-string-length 500)
-        (add-to-list 'display-buffer-alist
-                     '("*evil-owl*"
-                       (display-buffer-in-side-window)
-                       (side . bottom)
-                       (window-height . 0.3))))
-    (setq evil-owl-extra-posframe-args '(:width 60 :height 30)
-          evil-owl-max-string-length 50))
+;;   (setq evil-owl-idle-delay 0.3)
+;;   (setq evil-owl-header-format      "# %s"
+;;         evil-owl-register-format    "  %r: %s"
+;;         evil-owl-local-mark-format  "  %m: [l: %-5l, c: %-5c]"
+;;         evil-owl-global-mark-format "  %m: [l: %-5l, c: %-5c] %b"
+;;         evil-owl-separator          "\n")
 
-  (setq evil-owl-idle-delay 0.3)
-  (setq evil-owl-header-format      "# %s"
-        evil-owl-register-format    "  %r: %s"
-        evil-owl-local-mark-format  "  %m: [l: %-5l, c: %-5c]"
-        evil-owl-global-mark-format "  %m: [l: %-5l, c: %-5c] %b"
-        evil-owl-separator          "\n")
-
-  (evil-owl-mode +1))
+;;   (evil-owl-mode +1))
 
 ;;; defun text-object
 (with-eval-after-load 'evil
