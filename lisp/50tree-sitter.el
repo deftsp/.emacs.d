@@ -5,17 +5,18 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+;; FIXME: tree-sitter--after-change is buggy when replace-match
 ;; https://emacs-tree-sitter.github.io/
 ;; https://www.masteringemacs.org/article/tree-sitter-complications-of-parsing-languages
 (use-package tree-sitter
-  :hook ((c-mode c++-mode css-mode html-mode js2-mode son-mode rust-mode) . tree-sitter-mode)
+  ;; :hook ((c-mode c++-mode css-mode html-mode js2-mode son-mode rust-mode) . tree-sitter-mode)
   :config
   (require 'tree-sitter-langs)
   (add-to-list 'tree-sitter-major-mode-language-alist '(mhtml-mode . html)))
 
 (use-package tree-sitter-hl
-  :after tree-sitter
-  :hook ((css-mode python-mode rust-mode) . tree-sitter-hl-mode))
+  ;; :hook ((css-mode python-mode rust-mode) . tree-sitter-hl-mode)
+  :after tree-sitter)
 
 
 ;; https://emacs-china.org/t/tree-sitter/19014
