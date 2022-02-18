@@ -32,9 +32,9 @@
 
   (defun tl/rustic-mode-init ()
     (smartparens-strict-mode +1)
-    (rainbow-delimiters-mode -1)
     (when (fboundp 'org-link-minor-mode)
-      (org-link-minor-mode +1)))
+      (org-link-minor-mode +1))
+    (rainbow-delimiters-mode -1))
 
   (add-hook 'rustic-mode-hook 'tl/rustic-mode-init)
 

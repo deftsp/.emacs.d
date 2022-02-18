@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 #name : impl-display-for
-#key : impldisplay
+#key : impl_display
 #contributor : Robert Krahn
 # --
 impl std::fmt::Display for ${1:Name} {
