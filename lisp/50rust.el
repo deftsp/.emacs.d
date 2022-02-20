@@ -5,6 +5,20 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords: languages
 
+;;; Code:
+
+(use-package rust-mode
+  :defer t
+  :init
+  (defface tl/rust-exclaim-face
+    '((t :inherit font-lock-keyword-face))
+    "Face for the exclaim reference mark."
+    :group 'rust-mode)
+  :config
+  ;; the symbol in macro like "write!" will be affected.
+  ;; (push '("!" . ?¬) rust-prettify-symbols-alist)
+  (push '("\\!" . 'tl/rust-exclaim-face) rust-font-lock-keywords))
+
 (use-package rustic
   :mode ("\\.rs$" . rustic-mode)
   :commands (rustic-run-cargo-command rustic-cargo-outdated)
@@ -31,6 +45,7 @@
   ;; (define-key rustic-cargo-clippy-mode-map "q" nil)
 
   (defun tl/rustic-mode-init ()
+    ;; (prettify-symbols-mode +1)
     (smartparens-strict-mode +1)
     (when (fboundp 'org-link-minor-mode)
       (org-link-minor-mode +1))

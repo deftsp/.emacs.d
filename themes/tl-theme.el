@@ -396,6 +396,9 @@
    ;; lsp-rust
    `(lsp-rust-analyzer-inlay-face ((t (:foreground ,base01 :height 0.8 :slant italic))))
 
+   ;; rust
+   '(tl/rust-exclaim-face ((t (:foreground "#73c0c3" :weight bold))))
+
    ;; cedet
    '(pulse-highlight-start-face ((t (:background "#222222"))))
    '(semantic-tag-boundary-face ((t (:overline "#227777"))))
