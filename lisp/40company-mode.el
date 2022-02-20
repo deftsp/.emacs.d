@@ -195,7 +195,7 @@
 
 (add-hook 'rustic-mode-hook 'tl/company-rustic-mode-setup)
 (defun tl/company-rustic-mode-setup ()
-  // adding 'company-capf' to enable 'lsp' backend
+  ;; adding 'company-capf' to enable 'lsp' backend
   (let ((backends '((company-tabnine)
                     (:separate company-yasnippet))))
     (setq-local company-backends backends)))
