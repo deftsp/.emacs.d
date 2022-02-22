@@ -192,11 +192,15 @@
     (when (fboundp 'company-tide)
       (add-to-list 'company-backends 'company-tide))))
 
+(use-package company-tabnine-capf
+  :after company)
 
 (add-hook 'rustic-mode-hook 'tl/company-rustic-mode-setup)
 (defun tl/company-rustic-mode-setup ()
-  ;; adding 'company-capf' to enable 'lsp' backend
-  (let ((backends '((company-tabnine)
+  (let ((backends '((company-tabnine-capf
+                     ;; company-tabnine
+                     ;; company-capf
+                     )
                     (:separate company-yasnippet))))
     (setq-local company-backends backends)))
 
