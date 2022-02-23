@@ -192,9 +192,11 @@
     (when (fboundp 'company-tide)
       (add-to-list 'company-backends 'company-tide))))
 
+;; company-tabnine-capf: a company backend for combine tabnine and capf
 (use-package company-tabnine-capf
   :after company)
 
+;; Using TabNine::no_sem to disable the semantic completion of TabNine for rust
 (add-hook 'rustic-mode-hook 'tl/company-rustic-mode-setup)
 (defun tl/company-rustic-mode-setup ()
   (let ((backends '((company-tabnine-capf

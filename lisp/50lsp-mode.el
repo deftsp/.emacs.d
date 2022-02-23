@@ -26,9 +26,9 @@
 
         lsp-enable-semantic-highlighting nil)
 
-  ;; N.B. `company-lsp' is automatically enabled if installed
-  (setq lsp-completion-provider :capf
-        lsp-completion-show-kind t)
+  (setq lsp-completion-show-kind t
+        ;; when set to :capf, the `company-capf' will be add to the company-backends automatically.
+        lsp-completion-provider :none)
 
   ;; This variable determines how often lsp-mode will refresh the highlights, lenses, links, etc while you type.
   (setq lsp-idle-delay 0.500)
