@@ -403,15 +403,15 @@ kill internal buffers too."
     "SPC" 'evil-avy-goto-char-timer
     ",w" 'evil-avy-goto-subword-0)
 
-
-  (general-define-key
-   :keymaps '(evil-ex-completion-map evil-ex-search-keymap)
-   "C-a" #'evil-beginning-of-line
-   "C-e" #'evil-end-of-line
-   "C-b" #'evil-backward-char
-   "C-f" #'evil-forward-char
-   "M-j" #'next-complete-history-element
-   "M-k" #'previous-complete-history-element)
+  ;; the `d' and `f' behavior is strange with following setting
+  ;; (general-define-key
+  ;;  :keymaps '(evil-ex-completion-map evil-ex-search-keymap)
+  ;;  "C-a" #'evil-beginning-of-line
+  ;;  "C-e" #'evil-end-of-line
+  ;;  "C-b" #'evil-backward-char
+  ;;  "C-f" #'evil-forward-char
+  ;;  "M-j" #'next-complete-history-element
+  ;;  "M-k" #'previous-complete-history-element)
 
   (evil-mode +1))
 
