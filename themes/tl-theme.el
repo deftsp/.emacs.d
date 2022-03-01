@@ -554,6 +554,11 @@
    '(tree-sitter-hl-face:property ((t (:inherit font-lock-constant-face))))
    '(tree-sitter-hl-face:function.call ((t (:inherit font-lock-function-name-face))))
 
+   ;; magit
+   '(magit-diff-hunk-heading ((t (:foreground "#121212" :background "#453445" :slant italic :weight bold))))
+   '(magit-diff-hunk-heading-highlight ((t (:foreground "#121212" :background "#38899e" :slant italic :weight bold))))
+   '(magit-diff-hunk-heading-selection ((t (:foreground "#121212" :background "#2277ce" :slant italic :weight bold))))
+
    ;; rainbow-delimiters
    '(rainbow-delimiters-unmatched-face ((t (:foreground unspecified :inherit show-paren-mismatch :strike-through t))))
 
