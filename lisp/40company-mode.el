@@ -197,11 +197,12 @@
   :after company)
 
 ;; Using TabNine::no_sem to disable the semantic completion of TabNine for rust
+;; company-tabnine is not async
 (add-hook 'rustic-mode-hook 'tl/company-rustic-mode-setup)
 (defun tl/company-rustic-mode-setup ()
-  (let ((backends '((company-tabnine-capf
+  (let ((backends '((company-capf
+                     ;; company-tabnine-capf
                      ;; company-tabnine
-                     ;; company-capf
                      )
                     (:separate company-yasnippet))))
     (setq-local company-backends backends)))
