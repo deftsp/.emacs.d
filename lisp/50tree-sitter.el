@@ -9,15 +9,18 @@
 ;; https://emacs-tree-sitter.github.io/
 ;; https://www.masteringemacs.org/article/tree-sitter-complications-of-parsing-languages
 (use-package tree-sitter
-  ;; :hook ((c-mode c++-mode css-mode html-mode js2-mode son-mode rust-mode) . tree-sitter-mode)
+  :hook ((c-mode c++-mode css-mode html-mode js2-mode son-mode rust-mode) . tree-sitter-mode)
   :config
   (require 'tree-sitter-langs)
   (add-to-list 'tree-sitter-major-mode-language-alist '(mhtml-mode . html)))
 
 (use-package tree-sitter-hl
-  ;; :hook ((css-mode python-mode rust-mode) . tree-sitter-hl-mode)
-  :after tree-sitter)
-
+  :hook ((css-mode python-mode rust-mode) . tree-sitter-hl-mode)
+  :after tree-sitter
+  :config
+  ;; The unary logical negation operator ! in rust.
+  (tree-sitter-hl-add-patterns 'rust
+    ["!" @operator]))
 
 ;; https://emacs-china.org/t/tree-sitter/19014
 ;; (use-package grammatical-edit
