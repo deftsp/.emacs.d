@@ -6,8 +6,10 @@
 ;; Keywords:
 
 ;; FIXME: tree-sitter--after-change is buggy when replace-match
+;; tsc-dyn-dir: The directory where ‘tsc-dyn’ module is resided
 ;; https://emacs-tree-sitter.github.io/
 ;; https://www.masteringemacs.org/article/tree-sitter-complications-of-parsing-languages
+;; https://github.com/emacs-tree-sitter/elisp-tree-sitter/blob/master/core/Cargo.toml
 (use-package tree-sitter
   :hook ((c-mode c++-mode css-mode html-mode js2-mode son-mode rust-mode) . tree-sitter-mode)
   :config
