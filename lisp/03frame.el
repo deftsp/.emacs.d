@@ -47,6 +47,7 @@
   (setq tl//after-focus-events-timer nil)
   (let ((flst (frame-list)))
     (if (and tl//emacs-deactivated-saved-frame
+             (frame-live-p tl//emacs-deactivated-saved-frame)
              (-any? (lambda (f) (eq (frame-focus-state f) t)) flst))
         (progn
           ;; (message "emacs reactivated")
