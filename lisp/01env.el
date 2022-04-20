@@ -9,6 +9,7 @@
 (set-language-environment 'UTF-8) ; Chinese-GB, English
 
 ;;; ENV
+(setenv "LSP_USE_PLISTS" "true")
 ;; (setenv "SBCL_HOME" "/usr/lib/sbcl")
 
 ;; this gives matlab access to the X11 windowing system, so I can see figures, etc.
