@@ -12,27 +12,27 @@
 (use-package flycheck
   :defer t
   :init
-  (progn
-    (setq flycheck-emacs-lisp-load-path 'inherit)
-    (when (fboundp 'global-flycheck-mode)
-      (add-hook 'after-init-hook #'global-flycheck-mode))
-    ;; (set-default 'flycheck-check-syntax-automatically nil)
-    (setq flycheck-standard-error-navigation nil)
+  (setq flycheck-emacs-lisp-load-path 'inherit)
+  (when (fboundp 'global-flycheck-mode)
+    (add-hook 'after-init-hook #'global-flycheck-mode))
+  ;; (setq flycheck-check-syntax-automatically '(save idle-change new-line mode-enabled))
+  (setq flycheck-standard-error-navigation nil)
 
-    ;; https://github.com/mantoni/eslint_d.js
-    (setq flycheck-javascript-eslint-executable "eslint_d")
+  ;; https://github.com/mantoni/eslint_d.js
+  (setq flycheck-javascript-eslint-executable "eslint_d")
 
-    ;; key bindings
-    (tl/set-leader-keys
-      "eb" 'flycheck-buffer
-      "ec" 'flycheck-clear
-      "eh" 'flycheck-describe-checker
-      "el" 'tl/toggle-flycheck-error-list
-      "eL" 'tl/goto-flycheck-error-list
-      "es" 'flycheck-select-checker
-      "eS" 'flycheck-set-checker-executable
-      "ev" 'flycheck-verify-setup
-      "ex" 'flycheck-explain-error-at-point))
+
+  ;; key bindings
+  (tl/set-leader-keys
+    "eb" 'flycheck-buffer
+    "ec" 'flycheck-clear
+    "eh" 'flycheck-describe-checker
+    "el" 'tl/toggle-flycheck-error-list
+    "eL" 'tl/goto-flycheck-error-list
+    "es" 'flycheck-select-checker
+    "eS" 'flycheck-set-checker-executable
+    "ev" 'flycheck-verify-setup
+    "ex" 'flycheck-explain-error-at-point)
   :config
   (general-define-key
    :states 'normal
