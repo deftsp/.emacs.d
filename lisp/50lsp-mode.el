@@ -7,8 +7,9 @@
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :init
-  (setq lsp-use-plists t
-        lsp-log-io nil
+  (setq lsp-log-io nil
+        ;; after `lsp-use-plists', will make lsp watch for rust not work!!!
+        lsp-use-plists nil
         lsp-enable-folding nil
         lsp-diagnostics-provider :flycheck  ; :none, no real time syntax check
         lsp-enable-symbol-highlighting nil ; turn off for better performance
