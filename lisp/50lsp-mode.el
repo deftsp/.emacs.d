@@ -55,7 +55,7 @@
           lsp-rust-analyzer-display-parameter-hints t
           lsp-rust-analyzer-cargo-run-build-scripts t
           lsp-rust-analyzer-cargo-watch-enable t
-          lsp-rust-analyzer-cargo-watch-command "clippy"
+          lsp-rust-analyzer-cargo-watch-command "clippy" ; "clippy" or "check"
           lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")))
 
   (tl/set-leader-keys-for-mode 'lsp-mode
