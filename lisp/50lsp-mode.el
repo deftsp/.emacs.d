@@ -25,7 +25,7 @@
         lsp-headerline-breadcrumb-icons-enable nil
         lsp-modeline-code-actions-enable nil
 
-        lsp-enable-semantic-highlighting nil)
+        lsp-semantic-tokens-enable nil)
 
   (setq lsp-completion-show-kind t
         ;; when set to :capf, the `company-capf' will be add to the company-backends automatically.
