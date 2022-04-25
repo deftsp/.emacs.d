@@ -1442,11 +1442,11 @@ it can be passed in POS."
 
 
 ;; org-link-minor-mode
-(use-package org-link-minor-mode
-  :defer t
-  :diminish org-link-minor-mode
-  :hook ((emacs-lisp-mode . org-link-minor-mode)
-         (sql-mode . org-link-minor-mode)))
+;; (use-package org-link-minor-mode
+;;   :defer t
+;;   :diminish org-link-minor-mode
+;;   :hook ((emacs-lisp-mode . org-link-minor-mode)
+;;          (sql-mode . org-link-minor-mode)))
 
 (use-package org-transclusion
   :after org
