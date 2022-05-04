@@ -828,7 +828,7 @@ it marks the next ARG lines after the ones already marked."
 (setq hydra-hint-display-type 'lv)
 
 (with-eval-after-load "hydra"
-  (defhydra hydra-toggle (:color blue)
+  (defhydra hydra-toggle (:color blue :pre (require 'aggressive-indent))
     "
 _`_ evil-visual-mark-mode:             %`evil-visual-mark-mode
 _a_ abbrev-mode:                       %`abbrev-mode

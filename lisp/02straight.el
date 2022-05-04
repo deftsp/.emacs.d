@@ -52,6 +52,7 @@
 (straight-use-package 's)
 (straight-use-package 'f)
 (straight-use-package 'ht)
+(straight-use-package 'compat)
 
 (straight-use-package '(emacsql :files (:defaults "*.el" "sqlite")))
 (straight-use-package 'emacsql-sqlite3)
@@ -68,6 +69,7 @@
 (straight-use-package 'org-journal)
 (straight-use-package 'org-link-beautify)
 ;; (straight-use-package '(org-link-minor-mode :type git :host github :repo "seanohalpin/org-link-minor-mode"))
+(straight-use-package 'orglink)
 (straight-use-package '(org-protocol-capture-html :type git :host github :repo "alphapapa/org-protocol-capture-html"))
 (straight-use-package 'org-ql)
 ;; (straight-use-package '(org-roam :type git :host github :repo "org-roam/org-roam" :branch "master"))

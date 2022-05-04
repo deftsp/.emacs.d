@@ -1440,13 +1440,19 @@ it can be passed in POS."
   (when (derived-mode-p 'org-mode)
     (tl/org-set-time-file-property "LAST_MODIFIED")))
 
-
-;; org-link-minor-mode
+;; org-link-minor-mode seems not works with 0.9.3 for now (2022-05-05)
 ;; (use-package org-link-minor-mode
 ;;   :defer t
 ;;   :diminish org-link-minor-mode
 ;;   :hook ((emacs-lisp-mode . org-link-minor-mode)
 ;;          (sql-mode . org-link-minor-mode)))
+
+(use-package orglink
+  :after org
+  :diminish orglink-mode
+  :config
+  (setq orglink-activate-in-modes '(emacs-lisp-mode rust-mode))
+  (global-orglink-mode +1))
 
 (use-package org-transclusion
   :after org
