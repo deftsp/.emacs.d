@@ -43,6 +43,8 @@
   ;; (push "[/\\\\][^/\\\\]*\\.\\(json\\|html\\|jade\\)$" lsp-file-watch-ignored) ; json
   (push "[/\\\\]pgdata" lsp-file-watch-ignored)
 
+  ;; https://emacs-lsp.github.io/lsp-mode/page/lsp-rust-analyzer/
+  ;; https://rust-analyzer.github.io/manual.html
   (use-package lsp-rust
     :init
     (setq lsp-rust-server 'rust-analyzer
