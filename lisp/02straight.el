@@ -50,7 +50,12 @@
 (straight-use-package 'async)
 (straight-use-package 'a)
 (straight-use-package 's)
-(straight-use-package 'f)
+(straight-use-package '(f
+                        :type git
+                        :host github
+                        :repo "rejeep/f.el"
+                        :branch "master"
+                        :files (:defaults "f.el" "f-shortdoc.el")))
 (straight-use-package 'ht)
 (straight-use-package 'compat)
 
