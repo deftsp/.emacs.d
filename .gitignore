@@ -125,6 +125,6 @@ var/
 eln-cache/
 eshell/
 .extension/
-.persistent-scratch
+.persistent-scratch*
 
 librime/

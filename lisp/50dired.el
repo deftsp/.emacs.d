@@ -320,7 +320,7 @@ dired buffer to be opened."
   :commands (dired-sidebar-toggle-sidebar dired-sidebar-jump-to-sidebar)
   :init
   (setq dired-sidebar-tui-update-delay 0.0)
-  (setq dired-sidebar-width 36)
+  (setq dired-sidebar-width 42)
   (setq dired-sidebar-theme 'nerd)
   (setq dired-sidebar-subtree-line-prefix "  ➜ ")
   ;; (setq dired-sidebar-use-term-integration t)
