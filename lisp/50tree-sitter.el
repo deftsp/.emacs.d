@@ -12,6 +12,7 @@
 ;; https://github.com/emacs-tree-sitter/elisp-tree-sitter/blob/master/core/Cargo.toml
 (use-package tree-sitter
   :hook ((c-mode c++-mode css-mode html-mode js2-mode son-mode rust-mode) . tree-sitter-mode)
+  :diminish tree-sitter-mode
   :config
   (require 'tree-sitter-langs)
   (add-to-list 'tree-sitter-major-mode-language-alist '(mhtml-mode . html)))

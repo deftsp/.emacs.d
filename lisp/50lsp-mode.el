@@ -58,10 +58,6 @@
           lsp-rust-analyzer-display-parameter-hints t
           lsp-rust-analyzer-cargo-run-build-scripts t
           lsp-rust-analyzer-cargo-watch-enable t
-          ;; FIXME: the default value of `lsp-rust-analyzer-import-merge-behaviour' is "full", which will lead to
-          ;; following error:  /imports/granularity/group: unknown variant `full2`, expected one of `preserve`, `item`,
-          ;; `crate`, `module`. But it should be set by `lsp-rust-analyzer-import-granularity' isn't it?
-          lsp-rust-analyzer-import-merge-behaviour "crate"
           lsp-rust-analyzer-cargo-watch-command "clippy" ; "clippy" or "check"
           lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")))
 
