@@ -24,7 +24,7 @@
   :after (which-key)
   :demand
   :custom
-  (rime-user-data-dir "~/Library/Rime/")
+  (rime-user-data-dir "~/.emacs.d/rime/")
   (rime-librime-root "~/.emacs.d/librime/dist")
   (rime-emacs-module-header-root "/Applications/Emacs.app/Contents/Resources/include")
   (rime-show-preedit t)
