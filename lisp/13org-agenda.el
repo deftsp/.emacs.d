@@ -574,7 +574,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
 (defun tl/update-org-agenda-window-setup (&rest args)
   (let* ((attrs (display-monitor-attributes-list))
          (window-config
-          (if (= (length attrs) 1)
+          (if (< (length attrs) 3)
               'reorganize-frame
             (if (string= (system-name)  "PaloryN9")
                 (dolist (attr attrs)
