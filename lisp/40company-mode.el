@@ -110,8 +110,7 @@
 ;;   (global-company-fuzzy-mode +1))
 
 (defvar tl/company-common-backends
-  '(company-tabnine
-    company-capf
+  '(company-capf
     company-files
     company-emoji
     ;; company-dabbrev ; which complete some string symbol

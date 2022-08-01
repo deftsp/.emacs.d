@@ -61,15 +61,15 @@
      "Ss" 'flyspell-correct-at-point
      "St" 'tl/toggle-flyspell-mode)))
 
-
+;; it cause save big org-mode buffer very slow
 ;; wucuo base on flyspell, turn off flyspell-prog-mode and flyspell-mode before using this program. the configuration
 ;; for flyspell still works.
-(use-package wucuo
-  :diminish wucuo-mode
-  :commands (wucuo-start)
-  :init
-  (add-hook 'prog-mode-hook #'wucuo-start)
-  (add-hook 'text-mode-hook #'wucuo-start))
+;; (use-package wucuo
+;;   :diminish wucuo-mode
+;;   :commands (wucuo-start)
+;;   :init
+;;   (add-hook 'prog-mode-hook #'wucuo-start)
+;;   (add-hook 'text-mode-hook #'wucuo-start))
 
 (use-package flyspell-correct
   :after flyspell
