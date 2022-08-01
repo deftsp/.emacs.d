@@ -523,8 +523,8 @@
 (straight-use-package 'scratch)
 (straight-use-package 'persistent-scratch)
 
-(straight-use-package 'projectile)
-(straight-use-package 'counsel-projectile)
+;; (straight-use-package 'projectile)
+;; (straight-use-package 'counsel-projectile)
 (straight-use-package 'find-file-in-project)
 
 (straight-use-package 'flyspell-correct)
