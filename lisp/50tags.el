@@ -81,32 +81,32 @@ Prompt for TAGNAME if not given."
         (counsel-gtags-find-reference (substring-no-properties cursor-symbol))
       (call-interactively 'counsel-gtags-find-reference))))
 
-;; (use-package counsel-gtags
-;;   :defer t
-;;   :diminish counsel-gtags-mode
-;;   :init (progn
-;;           (setq counsel-gtags-ignore-case t
-;;                 counse1-gtags-auto-update t)
-;;           (defun tl//turn-counsel-gtags-mode-on ()
-;;             (counsel-gtags-mode +1))
-;;           (add-hook 'c++-mode-hook 'counsel-gtags-mode)
-;;           (add-hook 'c-mode-common-hook 'tl//turn-counsel-gtags-mode-on))
-;;   :config (progn
-;;             ;; (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
-;;             ;; (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
-;;             ;; (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
-;;             ;; (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
-;;             (dolist (mode '(c-mode c++-mode makefile-bsdmake-mode dired-mode))
-;;               (tl/set-leader-keys-for-mode mode
-;;                 "gC" 'counsel-gtags-create-tags
-;;                 "gd" 'counsel-gtags-dwim
-;;                 "gD" 'counsel-gtags-find-definition
-;;                 "gf" 'counsel-gtags-find-file
-;;                 "gu" 'counsel-gtags-update-tags
-;;                 "gr" 'tl/counsel-gtags-find-reference-quiet
-;;                 "gn" 'counsel-gtags-go-forward
-;;                 "gp" 'counsel-gtags-go-backward
-;;                 "gy" 'counsel-gtags-find-symbol))))
+(use-package counsel-gtags
+  :defer t
+  :diminish counsel-gtags-mode
+  :init (progn
+          (setq counsel-gtags-ignore-case t
+                counse1-gtags-auto-update t)
+          (defun tl//turn-counsel-gtags-mode-on ()
+            (counsel-gtags-mode +1))
+          (add-hook 'c++-mode-hook 'counsel-gtags-mode)
+          (add-hook 'c-mode-common-hook 'tl//turn-counsel-gtags-mode-on))
+  :config (progn
+            ;; (define-key counsel-gtags-mode-map (kbd "M-t") 'counsel-gtags-find-definition)
+            ;; (define-key counsel-gtags-mode-map (kbd "M-r") 'counsel-gtags-find-reference)
+            ;; (define-key counsel-gtags-mode-map (kbd "M-s") 'counsel-gtags-find-symbol)
+            ;; (define-key counsel-gtags-mode-map (kbd "M-,") 'counsel-gtags-go-backward)
+            (dolist (mode '(c-mode c++-mode makefile-bsdmake-mode dired-mode))
+              (tl/set-leader-keys-for-mode mode
+                "gC" 'counsel-gtags-create-tags
+                "gd" 'counsel-gtags-dwim
+                "gD" 'counsel-gtags-find-definition
+                "gf" 'counsel-gtags-find-file
+                "gu" 'counsel-gtags-update-tags
+                "gr" 'tl/counsel-gtags-find-reference-quiet
+                "gn" 'counsel-gtags-go-forward
+                "gp" 'counsel-gtags-go-backward
+                "gy" 'counsel-gtags-find-symbol))))
 
 ;;; ggtags
 ;; emacs frontend to GNU Global source code tagging system
@@ -155,24 +155,24 @@ Prompt for TAGNAME if not given."
 ;;   :config
 ;;   (define-key ggtags-mode-map [menu-bar ggtags] nil))
 
-;; (use-package etags
-;;   :defer t
-;;   :init (progn
-;;           ;; (setq tags-table-list '("." ".." "../.."))
-;;           ;; always add a new tags table to the current list instead of start a new one
-;;           (setq tags-revert-without-query t)
-;;           (setq tags-add-tables t))
-;;   :config (progn
-;;             (use-package etags-table
-;;               :init (progn
-;;                       (setq etags-table-search-up-depth 10))
-;;               :config
-;;               (progn
-;;                 ;; If it matches, all the rest of the list elements are put on `tags-table-list'
-;;                 (add-to-list  'etags-table-alist `(".*\\.[mh]$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS")))
-;;                 (add-to-list  'etags-table-alist `(".*\\.mm$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS")))
-;;                 (add-to-list  'etags-table-alist `(".*\\.hs$" ,(expand-file-name "~/.emacs.d/share/tags/yesod.TAGS")
-;;                                                    ,(expand-file-name "~/.emacs.d/share/tags/persistent.TAGS")))))))
+(use-package etags
+  :defer t
+  :init (progn
+          ;; (setq tags-table-list '("." ".." "../.."))
+          ;; always add a new tags table to the current list instead of start a new one
+          (setq tags-revert-without-query t)
+          (setq tags-add-tables t))
+  :config (progn
+            (use-package etags-table
+              :init (progn
+                      (setq etags-table-search-up-depth 10))
+              :config
+              (progn
+                ;; If it matches, all the rest of the list elements are put on `tags-table-list'
+                (add-to-list  'etags-table-alist `(".*\\.[mh]$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS")))
+                (add-to-list  'etags-table-alist `(".*\\.mm$" ,(expand-file-name "~/.emacs.d/share/tags/objc.TAGS")))
+                (add-to-list  'etags-table-alist `(".*\\.hs$" ,(expand-file-name "~/.emacs.d/share/tags/yesod.TAGS")
+                                                   ,(expand-file-name "~/.emacs.d/share/tags/persistent.TAGS")))))))
 
 ;;; counsel-etags
 ;; https://github.com/redguardtoo/counsel-etags
@@ -183,19 +183,19 @@ Prompt for TAGNAME if not given."
 ;; We try to setup Emacs global variable tags-file-name if it’s nil.
 ;; If it’s not nil, we respect existing value of tags-file-name. Please note we
 ;; don’t support tags-table-list.
-;; (use-package counsel-etags
-;;   :defer t
-;;   :commands (counsel-etags-find-tag-at-point)
-;;   :init
-;;   (progn
-;;     ;; (defun tl/counsel-etags-add-update-tags-hook ()
-;;     ;;   ;; after-save-hook is a local variable
-;;     ;;   (add-hook 'after-save-hook 'counsel-etags-virtual-update-tags 'append 'local))
-;;     ;; (add-hook 'prog-mode-hook 'tl/counsel-etags-add-update-tags-hook)
-;;     ;; (setq counsel-etags-update-tags-backend
-;;     ;;       (lambda () (shell-command "find . -type f -iname \"*.[ch]\" | etags -")))
-;;     ;; 300 seconds, OPTIONAL
-;;     (setq counsel-etags-update-interval 300)))
+(use-package counsel-etags
+  :defer t
+  :commands (counsel-etags-find-tag-at-point)
+  :init
+  (progn
+    ;; (defun tl/counsel-etags-add-update-tags-hook ()
+    ;;   ;; after-save-hook is a local variable
+    ;;   (add-hook 'after-save-hook 'counsel-etags-virtual-update-tags 'append 'local))
+    ;; (add-hook 'prog-mode-hook 'tl/counsel-etags-add-update-tags-hook)
+    ;; (setq counsel-etags-update-tags-backend
+    ;;       (lambda () (shell-command "find . -type f -iname \"*.[ch]\" | etags -")))
+    ;; 300 seconds, OPTIONAL
+    (setq counsel-etags-update-interval 300)))
 
 
 
