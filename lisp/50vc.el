@@ -168,6 +168,11 @@
   ;; (magit-todos-mode +1)
   (setq magit-todos-section-map nil))
 
+
+(use-package git-timemachine
+  :defer t
+  :commands (git-timemachine))
+
 (use-package with-editor
   :defer t
   :config

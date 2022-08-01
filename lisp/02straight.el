@@ -328,7 +328,7 @@
 (straight-use-package 'mmt)
 (straight-use-package 'sesman)
 (straight-use-package 'ascii-art-to-unicode)
-(straight-use-package 'git-timemachine)
+(straight-use-package '(git-timemachine :host nil :type git :repo "https://codeberg.org/pidu/git-timemachine.git"))
 ;; (straight-use-package 'moz-repl)
 (straight-use-package 'session)
 (straight-use-package 'asciidoc)
