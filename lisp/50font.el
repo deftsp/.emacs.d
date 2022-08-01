@@ -75,11 +75,10 @@
       "Reset fontsize with chinese-fonts-setup."
       (interactive)
       (when (display-graphic-p)
-        (let* ((profile-name tl/default-cnfonts-profile-name)
-               (profile-step (cnfonts--get-profile-step profile-name))
-               (reset-step (- tl/default-cnfonts-fontsize-step profile-step)))
-          (cnfonts--select-profile profile-name)
-          (cnfonts--step-fontsize reset-step))))
+        (let* ((fontsizes-list (cnfonts--get-fontsizes tl/default-cnfonts-fontsize)))
+          (cnfonts--select-profile tl/default-cnfonts-profile-name)
+          (when fontsizes-list (cnfonts--set-font fontsizes-list)))))
+
 
     ;; https://nerdfonts.com/
     ;; https://github.com/ryanoasis/nerd-fonts

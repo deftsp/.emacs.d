@@ -40,7 +40,7 @@ emacs.")
 (defvar tl/default-cnfonts-profile-name "program"
   "Default cnfonts profile name used by chinse-font-setup.")
 
-(defvar tl/default-cnfonts-fontsize-step 6
+(defvar tl/default-cnfonts-fontsize 14
   "Default cnfonts fontsize step used by chinse-font-setup.")
 
 
