@@ -57,7 +57,7 @@
   :init
   (progn
     (setq cnfonts-verbose nil
-          cnfonts-default-step tl/default-cnfonts-fontsize-step
+          cnfonts-default-fontsize tl/default-cnfonts-fontsize
           cnfonts-use-face-font-rescale t
           cnfonts-profiles '("program" "org-mode" "read-book")))
   :config
