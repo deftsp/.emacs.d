@@ -1515,7 +1515,7 @@ it can be passed in POS."
   (org-insert-drawer nil "RESOURCES"))
 
 (use-package org-mac-link
-  :commands (org-mac-grab-link))
+  :commands (org-mac-link-get-link))
 
 (provide '13org-mode)
 
