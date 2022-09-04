@@ -73,7 +73,6 @@
 (straight-use-package 'org-fancy-priorities)
 (straight-use-package 'org-journal)
 (straight-use-package 'org-mac-link)
-;; (straight-use-package 'org-link-beautify)
 ;; (straight-use-package '(org-link-minor-mode :type git :host github :repo "seanohalpin/org-link-minor-mode"))
 (straight-use-package 'orglink)
 (straight-use-package '(org-protocol-capture-html :type git :host github :repo "alphapapa/org-protocol-capture-html"))
@@ -91,6 +90,7 @@
 (straight-use-package 'org-trello)
 (straight-use-package 'ob-http)
 (straight-use-package 'org-transclusion)
+(straight-use-package '(org-link-beautify :host nil :type git :repo "https://repo.or.cz/org-link-beautify.git"))
 
 (straight-use-package 'sql-indent)
 (straight-use-package 'sqlformat)

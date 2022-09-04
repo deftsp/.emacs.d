@@ -913,9 +913,9 @@ buffer which do not already have one. When `arg' nil only adds ids if the
       '(("google"   . "http://www.google.com/search?q=")
         ("baidu"    . "http://www.baidu.com/s?wd=")))
 
-;; (use-package org-link-beautify
-;;   :after (org)
-;;   :hook (org-mode . org-link-beautify-enable))
+(use-package org-link-beautify
+  :after (org)
+  :hook (org-mode . org-link-beautify-enable))
 
 (with-eval-after-load "org"
   ;; https://emacs.stackexchange.com/questions/33064/fontify-broken-links-in-org-mode
