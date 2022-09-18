@@ -34,6 +34,7 @@
       enable-local-variables :safe)
 
 (add-to-list 'safe-local-eval-forms '(auto-fill-mode -1))
+(add-to-list 'safe-local-eval-forms '(org-link-beautify-disable))
 
 ;; https://unix.stackexchange.com/a/108308
 ;; https://emacsredux.com/blog/2014/05/16/opening-large-files/
