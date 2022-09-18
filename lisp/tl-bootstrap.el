@@ -77,6 +77,7 @@
 (require '50perl)
 (require '50prodigy)
 (require '50project)
+(require '50persistent-scratch)
 (require '50python-mode)
 (require '50restclient)
 (require '50rust)
