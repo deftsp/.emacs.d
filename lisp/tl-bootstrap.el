@@ -101,6 +101,7 @@
 (require '50web)
 (require '50window)
 (require '50pdf)
+(require '50xwidget)
 (require '51ivy)
 (require '52prescient)
 
