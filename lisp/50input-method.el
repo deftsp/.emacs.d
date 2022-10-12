@@ -53,11 +53,11 @@
                                   rime-predicate-hydra-p
                                   rime-predicate-which-key-activate-p
                                   rime-predicate-current-uppercase-letter-p
-                                  rime-predicate-after-alphabet-char-p
                                   rime-predicate-space-after-cc-p
                                   rime-predicate-punctuation-after-space-cc-p
-                                  rime-predicate-prog-in-code-p
-                                  rime-predicate-after-ascii-char-p))
+                                  ;; rime-predicate-after-alphabet-char-p
+                                  ;; rime-predicate-after-ascii-char-p
+                                  rime-predicate-prog-in-code-p))
 
   (defun rime-predicate-which-key-activate-p () which-key--automatic-display)
   ;;FIXME: font size not work
