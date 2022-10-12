@@ -549,6 +549,10 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
  "<f6>"    'first-error
  "<S-f6>"  'last-error
 
+ "<f7>"    'profiler-start
+ "<S-f7>"  'profiler-stop
+ "<f8>"    'profiler-report
+
  ;; "<f9>"    'door-gnus
  "<S-f9>"  'ascii-table-show
  "<C-f9>"  'shell

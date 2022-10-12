@@ -13,8 +13,8 @@
 ;; location resulte with `C-x `M-g n' `M-g p' `M-g'  `C-c C-c'.
 (use-package isearch
   :defer t
-  :bind (("<f7>" . 'tl/isearch-forward-current-symbol-keep-offset)
-         ("<f8>" . 'tl/isearch-backward-current-symbol-keep-offset))
+  ;; :bind (("<f7>" . 'tl/isearch-forward-current-symbol-keep-offset)
+  ;;        ("<f8>" . 'tl/isearch-backward-current-symbol-keep-offset))
   :init
   ;; enable the use of vertical scrolling during incremental, but I bind C-v M-v
   ;; to other command.
