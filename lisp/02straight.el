@@ -47,6 +47,12 @@
   (push "HISTFILE" exec-path-from-shell-variables)
   (exec-path-from-shell-initialize))
 
+(straight-use-package '(asdf-vm :type git :host github :repo "delonnewman/asdf-vm.el"))
+;; it will set the path of user installed python package
+(use-package asdf-vm
+  :config
+  (asdf-vm-init))
+
 (straight-use-package 'async)
 (straight-use-package 'a)
 (straight-use-package 's)
@@ -205,6 +211,11 @@
 (straight-use-package 'flycheck-rust)
 (straight-use-package 'flycheck-flow)
 
+(straight-use-package
+ '(lsp-bridge :type git
+              :host github
+              :repo "manateelazycat/lsp-bridge"
+              :files (:defaults "*")))
 
 (straight-use-package 'lsp-ivy)
 (straight-use-package 'lsp-mode)
