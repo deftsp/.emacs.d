@@ -26,8 +26,8 @@
 (require '13org-clock)
 (require '13org-latex)
 (require '13org-roam)
-
-(require '40company-mode)
+(unless (eq dottl-lsp-client 'lsp-bridge)
+  (require '40company-mode))
 (require '50abbrev)
 (require '50alias)
 (require '50auto-fill)

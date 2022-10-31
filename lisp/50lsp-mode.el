@@ -5,6 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 (use-package lsp-mode
+  :if (eq dottl-lsp-client 'lsp-mode)
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-log-io nil

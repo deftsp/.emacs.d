@@ -24,8 +24,14 @@
   :commands (rustic-run-cargo-command rustic-cargo-outdated)
   :init
   (setq rustic-lsp-server 'rust-analyzer)
-  (setq rustic-lsp-client 'lsp-mode)
-  ;; (setq rustic-lsp-client nil)          ; setting to nil to disable LSP
+
+  (let ((client
+         (pcase dottl-lsp-client
+           ('lsp-mode  'lsp-mode)
+           ('lsp-bridge nil)
+           (_ nil))))
+    (setq rustic-lsp-client client))
+
 
   (setq rustic-ansi-faces ["black"
                            "#bb0000"
