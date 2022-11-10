@@ -834,21 +834,22 @@ it marks the next ARG lines after the ones already marked."
 (with-eval-after-load "hydra"
   (defhydra hydra-toggle (:color blue :pre (require 'aggressive-indent))
     "
-_`_ evil-visual-mark-mode:             %`evil-visual-mark-mode
-_a_ abbrev-mode:                       %`abbrev-mode
-_d_ debug-on-error:                    %`debug-on-error
-_f_ auto-fill-mode:                    %`auto-fill-function
-_F_ display-fill-column-indicator      %`display-fill-column-indicator-mode
-_n_ narrow-or-widen-dwim:              %(buffer-narrowed-p)
-_g_ golden-ratio-mode:                 %`golden-ratio-mode
-_i_ aggressive-indent-mode:            %`aggressive-indent-mode
-_G_ debug-on-quit:                     %`debug-on-quit
-_r_ read-only-mode:                    %`buffer-read-only
-_s_ rainbow-delimiters-string-color    %`--tl/rainbow-delimiters-strong-color
-_S_ flyspell                           %`flyspell-mode
-_p_ smartparens:                       %`smartparens-mode
-_t_ truncate-lines:                    %`truncate-lines
-_w_ whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespace-mode)
+_`_  evil-visual-mark-mode:             %`evil-visual-mark-mode
+_a_  abbrev-mode:                       %`abbrev-mode
+_d_  debug-on-error:                    %`debug-on-error
+_f_  auto-fill-mode:                    %`auto-fill-function
+_F_  display-fill-column-indicator      %`display-fill-column-indicator-mode
+_n_  narrow-or-widen-dwim:              %(buffer-narrowed-p)
+_g_  golden-ratio-mode:                 %`golden-ratio-mode
+_hi_ highlight-indent-guides-mode      %`highlight-indent-guides-mode
+_i_  aggressive-indent-mode:            %`aggressive-indent-mode
+_G_  debug-on-quit:                     %`debug-on-quit
+_r_  read-only-mode:                    %`buffer-read-only
+_s_  rainbow-delimiters-string-color    %`--tl/rainbow-delimiters-strong-color
+_S_  flyspell                           %`flyspell-mode
+_p_  smartparens:                       %`smartparens-mode
+_t_  truncate-lines:                    %`truncate-lines
+_w_  whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespace-mode)
 
 "
     ("`" evil-visual-mark-mode "abbrev")

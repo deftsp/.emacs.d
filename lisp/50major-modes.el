@@ -157,7 +157,8 @@
   (progn
     (defun tl//turn-on-highlight-indent-guides-mode ()
       (highlight-indent-guides-mode +1))
-    (add-hook 'prog-mode-hook 'tl//turn-on-highlight-indent-guides-mode)
+    ;; it is slow, turn on manually
+    ;; (add-hook 'prog-mode-hook 'tl//turn-on-highlight-indent-guides-mode)
 
     (setq highlight-indent-guides-method 'column) ; 'fill, 'column or 'character
     (setq highlight-indent-guides-auto-odd-face-perc 6)
