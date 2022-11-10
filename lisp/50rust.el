@@ -7,17 +7,17 @@
 
 ;;; Code:
 
-(use-package rust-mode
-  :defer t
-  :init
-  (defface tl/rust-exclaim-face
-    '((t :inherit font-lock-keyword-face))
-    "Face for the exclaim reference mark."
-    :group 'rust-mode)
-  :config
-  ;; the symbol in macro like "write!" will be affected.
-  ;; (push '("!" . ?¬) rust-prettify-symbols-alist)
-  (push '("\\!" . 'tl/rust-exclaim-face) rust-font-lock-keywords))
+;; (use-package rust-mode
+;;   :defer t
+;;   :init
+;;   (defface tl/rust-exclaim-face
+;;     '((t :inherit font-lock-keyword-face))
+;;     "Face for the exclaim reference mark."
+;;     :group 'rust-mode)
+;;   :config
+;;   ;; the symbol in macro like "write!" will be affected.
+;;   ;; (push '("!" . ?¬) rust-prettify-symbols-alist)
+;;   (push '("\\!" . 'tl/rust-exclaim-face) rust-font-lock-keywords))
 
 (use-package rustic
   :mode ("\\.rs$" . rustic-mode)
