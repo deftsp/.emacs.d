@@ -841,8 +841,8 @@ _f_  auto-fill-mode:                    %`auto-fill-function
 _F_  display-fill-column-indicator      %`display-fill-column-indicator-mode
 _n_  narrow-or-widen-dwim:              %(buffer-narrowed-p)
 _g_  golden-ratio-mode:                 %`golden-ratio-mode
-_hi_ highlight-indent-guides-mode      %`highlight-indent-guides-mode
-_i_  aggressive-indent-mode:            %`aggressive-indent-mode
+_i_  highlight-indent-guides-mode       %`highlight-indent-guides-mode
+_I_  aggressive-indent-mode:            %`aggressive-indent-mode
 _G_  debug-on-quit:                     %`debug-on-quit
 _r_  read-only-mode:                    %`buffer-read-only
 _s_  rainbow-delimiters-string-color    %`--tl/rainbow-delimiters-strong-color
@@ -860,10 +860,10 @@ _w_  whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespa
     ("F" display-fill-column-indicator-mode "fci")
     ("n" tl/narrow-or-widen-dwim "")
     ("g" golden-ratio-mode "golden-ratio")
-    ("hi" highlight-indent-guides-mode "hl-indent")
+    ("i" highlight-indent-guides-mode "hl-indent")
     ;; ("hi" highlight-indentation-mode "hl-indent")
     ;; ("hc" highlight-indentation-current-column-mode "hl-indent-column")
-    ("i" aggressive-indent-mode "")
+    ("I" aggressive-indent-mode "")
     ("G" toggle-debug-on-quit "debug-quit")
     ("p" smartparens-mode "")
     ("C-p" smartparens-global-mode "global smartparens")

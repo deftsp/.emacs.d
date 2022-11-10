@@ -151,20 +151,19 @@
 
 ;; TODO: sql-mode have to disable and re-enable to make it work
 (use-package highlight-indent-guides
-  :defer t
+  :defer 3
   :diminish highlight-indent-guides-mode
   :init
-  (progn
-    (defun tl//turn-on-highlight-indent-guides-mode ()
-      (highlight-indent-guides-mode +1))
-    ;; it is slow, turn on manually
-    ;; (add-hook 'prog-mode-hook 'tl//turn-on-highlight-indent-guides-mode)
+  (defun tl//turn-on-highlight-indent-guides-mode ()
+    (highlight-indent-guides-mode +1))
+  ;; it is slow, turn on manually
+  ;; (add-hook 'prog-mode-hook 'tl//turn-on-highlight-indent-guides-mode)
 
-    (setq highlight-indent-guides-method 'column) ; 'fill, 'column or 'character
-    (setq highlight-indent-guides-auto-odd-face-perc 6)
-    (setq highlight-indent-guides-auto-even-face-perc 3)
-    (setq highlight-indent-guides-auto-character-face-perc 4)
-    (setq highlight-indent-guides-character ?\|)))
+  (setq highlight-indent-guides-method 'column) ; 'fill, 'column or 'character
+  (setq highlight-indent-guides-auto-odd-face-perc 6)
+  (setq highlight-indent-guides-auto-even-face-perc 3)
+  (setq highlight-indent-guides-auto-character-face-perc 4)
+  (setq highlight-indent-guides-character ?\|))
 
 ;; (use-package highlight-indentation
 ;;   :defer t)
