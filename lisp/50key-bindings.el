@@ -175,7 +175,7 @@ offer a list of recently clocked tasks to clock into. "
 
 ;; applications
 (tl/set-leader-keys
-  ;; "au"  'undo-tree-visualize
+  "au"  'undo-tree-visualize
   "ac" 'calc-dispatch)
 
 
@@ -936,8 +936,8 @@ _w_  whitespace-mode:                   %(and (boundp 'whitespace-mode) whitespa
    "
 org-agend_a_ org-_c_apture org-clock-_g_oto
 _p_rojectile _s_cratch
+undo-tree-_u_ndo undo-tree-_r_edo
 "
-   ;; undo-tree-_u_ndo undo-tree-_r_edo
    ("SPC" mark-sexp "mark sexp" :color red)
    ("+" cnfonts-increase-fontsize :color red)
    ("-" cnfonts-decrease-fontsize :color red)
@@ -952,8 +952,8 @@ _p_rojectile _s_cratch
    ("p" hydra-projectile/body nil)
    ("s" tl/switch-to-scratch nil)
    ("t" hydra-toggle/body "toggle")
-   ;; ("u" undo-tree-undo nil :color red)
-   ;; ("r" undo-tree-redo nil :color red)
+   ("u" undo-tree-undo nil :color red)
+   ("r" undo-tree-redo nil :color red)
    ("<escape>" nil "cancel")
    ("q"        nil "cancel")))
 

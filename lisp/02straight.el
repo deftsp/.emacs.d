@@ -163,9 +163,9 @@
 (straight-use-package 'string-inflection)
 
 
-;; (straight-use-package 'undo-tree)
-(straight-use-package 'undo-fu)
-(straight-use-package 'undo-fu-session)
+(straight-use-package 'undo-tree)
+;; (straight-use-package 'undo-fu)
+;; (straight-use-package 'undo-fu-session)
 
 (straight-use-package 'better-jumper)
 
