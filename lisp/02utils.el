@@ -66,8 +66,8 @@
 (use-package gcmh
   :diminish
   :init
-  (setq gcmh-verbose t)
-  (setq gcmh-idle-delay 320  ; 'auto, default is 15s
+  (setq gcmh-verbose t
+        gcmh-idle-delay 'auto ; 'auto, default is 15s,  320
         gcmh-auto-idle-delay-factor 10
         gcmh-low-cons-threshold #x2000000 ; 32MB
         ;; #x6400000 100MB, #x8000000 128MB, (* 16 1024 1024) ; 16MB
