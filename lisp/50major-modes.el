@@ -126,28 +126,29 @@
   :diminish symbol-overlay-mode
   :init
   (progn
-    (setq symbol-overlay-idle-time 0.25)
-    (add-hook 'prog-mode-hook (lambda () (symbol-overlay-mode t)))
-
     ;; https://github.com/wolray/symbol-overlay/issues/59
-    (with-eval-after-load 'transient
-      (define-transient-command symbol-overlay-transient ()
-        "Symbol Overlay transient"
-        ["Symbol Overlay"
-         ["Overlays"
-          ("." "Add/Remove at point" symbol-overlay-put)
-          ("k" "Remove All" symbol-overlay-remove-all)
-          ]
-         ["Move to Symbol"
-          ("n" "Next" symbol-overlay-switch-forward)
-          ("p" "Previous" symbol-overlay-switch-backward)
-          ]
-         ["Other"
-          ("m" "Hightlight symbol-at-point" symbol-overlay-mode)
-          ]
-         ])
+    ;; define-transient-command is not exist any more
+    ;; (with-eval-after-load 'transient
+    ;;   (define-transient-command symbol-overlay-transient ()
+    ;;     "Symbol Overlay transient"
+    ;;     ["Symbol Overlay"
+    ;;      ["Overlays"
+    ;;       ("." "Add/Remove at point" symbol-overlay-put)
+    ;;       ("k" "Remove All" symbol-overlay-remove-all)
+    ;;       ]
+    ;;      ["Move to Symbol"
+    ;;       ("n" "Next" symbol-overlay-switch-forward)
+    ;;       ("p" "Previous" symbol-overlay-switch-backward)
+    ;;       ]
+    ;;      ["Other"
+    ;;       ("m" "Hightlight symbol-at-point" symbol-overlay-mode)
+    ;;       ]
+    ;;      ])
 
-      (global-set-key (kbd "s-.") 'symbol-overlay-transient))))
+    ;;   (global-set-key (kbd "s-.") 'symbol-overlay-transient))
+
+    (setq symbol-overlay-idle-time 0.25)
+    (add-hook 'prog-mode-hook (lambda () (symbol-overlay-mode t)))))
 
 ;; TODO: sql-mode have to disable and re-enable to make it work
 (use-package highlight-indent-guides
