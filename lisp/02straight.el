@@ -346,7 +346,8 @@
 (straight-use-package 'asciidoc)
 (straight-use-package 'embrace)
 (straight-use-package '(git-undo-el :type git :host github :repo "jwiegley/git-undo-el"))
-(straight-use-package '(vterm :post-build ((let ((vterm-always-compile-module t)) (require 'vterm)))))
+(when (eq system-type 'darwin)
+  (straight-use-package '(vterm :post-build ((let ((vterm-always-compile-module t)) (require 'vterm))))))
 (straight-use-package 'multi-vterm)
 (straight-use-package 'vterm-toggle)
 
@@ -542,7 +543,6 @@
 (straight-use-package 'flyspell-correct)
 (straight-use-package 'wucuo)
 
-
-(straight-use-package 'exwm)
+(straight-use-package '(exwm :type git :host github :repo "deftsp/exwm" :branch "shihpin"))
 
 (provide '02straight)
