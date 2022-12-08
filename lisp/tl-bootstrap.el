@@ -45,6 +45,7 @@
 (require '50ediff)
 (require '50emacs-lisp-mode)
 (require '50emacsclient)
+(require '50exwm)
 (require '50epg)
 (require '50eshell)
 (require '50tags)

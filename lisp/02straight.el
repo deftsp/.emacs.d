@@ -543,5 +543,6 @@
 (straight-use-package 'wucuo)
 
 
+(straight-use-package 'exwm)
 
 (provide '02straight)
