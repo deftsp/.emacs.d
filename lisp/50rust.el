@@ -88,6 +88,21 @@
    "p"  'tl/rustic-format-buffer
    "v"  '(:ignore t :which-key "variable")
    "vm" 'tl/toggle-mut)
+
+  ;; https://github.com/bbatsov/projectile/issues/234
+  ;; see also: locate-dominating-stop-dir-regexp
+  (defun rustic-buffer-crate (&optional nodefault)
+    "Return the crate for the current buffer.
+When called outside a Rust project, then return `default-directory',
+or if NODEFAULT is non-nil, then fall back to returning nil."
+    (let ((dir (unless (file-remote-p default-directory)
+                 (locate-dominating-file default-directory "Cargo.toml"))))
+      (when dir
+        (setq dir (expand-file-name dir)))
+      (or dir
+          (and (not nodefault)
+               default-directory))))
+
   :config/el-patch
   ;; Bug Fix: if rename the directory using dired. it may lead to "Error in rustic-flycheck-setup: (file-missing
   ;; "Setting current directory" "No such file or directory" "/Users/test/foo/")"
