@@ -85,6 +85,7 @@
    ;; the split line of two windows. For window-system, if scroll-bar-mode off
    ;; just show a vertical line. make it as the same color to fringe
    `(vertical-border ((t (:foreground ,base02))))
+   `(scroll-bar ((t (:foreground ,base01 :background ,base02))))
 
    ;; window-divider-mode
    `(window-divider ((t (:foreground ,base03))))
