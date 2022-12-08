@@ -130,3 +130,5 @@ eshell/
 librime/
 rime/
 projects
+
+sync-to-remote.sh
