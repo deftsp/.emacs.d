@@ -17,31 +17,32 @@
    (setq window-resize-pixelwise t)))
 
 (when (memq window-system '(x w32 mac ns))
-  (setq initial-frame-alist `((tool-bar-lines . 0)
-                              (ns-transparent-titlebar . t)
-                              (ns-appearance . dark) ;; or light - depending on your theme
-                              ;; https://github.com/railwaycat/homebrew-emacsmacport/issues/124
-                              ;; https://github.com/railwaycat/homebrew-emacsmacport/issues/139
-                              (menu-bar-lines . ,(if (member window-system '(mac ns)) 1 0))
-                              (width . 201)
-                              (height . 51)
-                              (top . 22) ; (frame-parameter nil 'top)
-                              (left . 0)
-                              (alpha . (100 . 100)) ; first number is for the active window and the second for the inactive
-                              (mouse-color . "gray80")
-                              ;; http://emacsredux.com/blog/2015/01/18/customizing-the-fringes/
-                              (left-fringe . 8) ; default width (8 pixels).
-                              (right-fringe . 8)
-                              ;; natural-title-bar https://github.com/railwaycat/homebrew-emacsmacport/wiki/Natural-Title-Bar
-                              ;; defaults write org.gnu.Emacs TransparentTitleBar DARK
-                              ;; (scroll-bar-background . "#80abb6")
-                              ;; (scroll-bar-width . 12)
-                              ;; (vertical-scroll-bars . right)
-                              (vertical-scroll-bars . nil)))
+  (setq initial-frame-alist
+        `((tool-bar-lines . 0)
+          ;; https://github.com/railwaycat/homebrew-emacsmacport/issues/124
+          ;; https://github.com/railwaycat/homebrew-emacsmacport/issues/139
+          (menu-bar-lines . ,(if (member window-system '(mac ns)) 1 0))
+          (width . 201)
+          (height . 51)
+          (top . 22) ; (frame-parameter nil 'top)
+          (left . 0)
+          (alpha . (100 . 100)) ; first number is for the active window and the second for the inactive
+          (mouse-color . "gray80")
+          ;; (scroll-bar-background . "#80abb6")
+          ;; (scroll-bar-width . 12)
+          ;; http://emacsredux.com/blog/2015/01/18/customizing-the-fringes/
+          (left-fringe . 8) ; default width (8 pixels).
+          (right-fringe . 8)))
+
+  (when (eq window-system 'x)
+    (add-to-list 'initial-frame-alist '(vertical-scroll-bars . right)))
 
   (when (memq window-system '(mac ns))
-    (add-to-list 'default-frame-alist '(ns-appearance . dark)) ; nil for dark text
-    (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t)))
+    (add-to-list 'initial-frame-alist '(vertical-scroll-bars . nil))
+    ;; defaults write org.gnu.Emacs TransparentTitleBar DARK
+    ;; natural-title-bar https://github.com/railwaycat/homebrew-emacsmacport/wiki/Natural-Title-Bar
+    (add-to-list 'initial-frame-alist '(ns-appearance . dark)) ; nil for dark text
+    (add-to-list 'initial-frame-alist '(ns-transparent-titlebar . t)))
 
   ;; default-frame-alist is defined in terms of initial-frame-alist.  Don't
   ;; use copy-sequence here -- it doesn't copy the list elements, just the

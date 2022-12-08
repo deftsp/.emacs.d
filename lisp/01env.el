@@ -95,6 +95,9 @@
          w32-apps-modifier 'hyper))
   (gnu/linux
    ;; do nothing. You should set Super and Hyper from your OS
+   (setq x-super-keysym 'meta)
+   (setq x-meta-keysym 'super)
+   ;; (setq x-alt-keysym 'meta)
    nil))
 
 ;;; Difference between "exec-path" and "PATH"
