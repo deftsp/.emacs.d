@@ -211,8 +211,9 @@
 ;; check that the file specified by `display-time-mail-file' is nonempty or that the
 ;; directory `display-time-mail-directory' contains nonempty files.
 
-(when (eq system-type 'gnu/linux)
-  (setq display-time-mail-directory "~/Mail/inbox/new/"))
+(let ((dir "~/Mail/inbox/new/"))
+  (when (file-exists-p dir)
+    (setq display-time-mail-directory dir)))
 
 (setq display-time-string-forms
       '((format-time-string " %y/%m/%d " now)
@@ -229,7 +230,6 @@
                      'mouse-face 'mode-line-highlight
                      'local-map (make-mode-line-mouse-map 'mouse-2 read-mail-command)))
           "")))
-
 
 ;;; use y-or-n-p instead of yes-or-no-p
 (fset 'yes-or-no-p 'y-or-n-p)
