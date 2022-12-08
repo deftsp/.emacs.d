@@ -1100,30 +1100,30 @@ Current position is preserved."
   (global-set-key "\M-\C-y" 'kill-ring-search))
 
 ;; undo
-;; (use-package undo-fu :config
-;;   ;; Increase undo history limits to reduce likelihood of data loss
-;;   (setq undo-limit 400000           ; 400kb (default is 160kb)
-;;         undo-strong-limit 3000000   ; 3mb   (default is 240kb)
-;;         undo-outer-limit 48000000))  ; 48mb  (default is 24mb)
+(use-package undo-fu :config
+  ;; Increase undo history limits to reduce likelihood of data loss
+  (setq undo-limit 400000           ; 400kb (default is 160kb)
+        undo-strong-limit 3000000   ; 3mb   (default is 240kb)
+        undo-outer-limit 48000000))  ; 48mb  (default is 24mb)
 
-;; (use-package undo-fu-session
-;;   :config
-;;   (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
+(use-package undo-fu-session
+  :config
+  (setq undo-fu-session-incompatible-files '("/COMMIT_EDITMSG\\'" "/git-rebase-todo\\'")))
 
-;; (global-undo-fu-session-mode +1)
+(global-undo-fu-session-mode +1)
 
 ;; https://emacs-china.org/t/evil-u-undo/13293
-(use-package undo-tree
-  :bind (("s-z" . undo-tree-undo)
-         ("s-Z" . undo-tree-redo))
-  :hook (after-init . global-undo-tree-mode)
-  :init
-  (setq-default undo-tree-visualizer-timestamps t)
-  (setq-default undo-tree-visualizer-diff t)
-  (setq undo-tree-auto-save-history t)
-  (setq undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory "backups/undo-tree"))))
-  (setq undo-tree-enable-undo-in-region nil)
-  (setq undo-tree-mode-lighter " UT"))
+;; (use-package undo-tree
+;;   :bind (("s-z" . undo-tree-undo)
+;;          ("s-Z" . undo-tree-redo))
+;;   :hook (after-init . global-undo-tree-mode)
+;;   :init
+;;   (setq-default undo-tree-visualizer-timestamps t)
+;;   (setq-default undo-tree-visualizer-diff t)
+;;   (setq undo-tree-auto-save-history t)
+;;   (setq undo-tree-history-directory-alist `(("." . ,(concat user-emacs-directory "backups/undo-tree"))))
+;;   (setq undo-tree-enable-undo-in-region nil)
+;;   (setq undo-tree-mode-lighter " UT"))
 
 (use-package bookmark
   :defer t

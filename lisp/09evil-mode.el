@@ -313,10 +313,10 @@ kill internal buffers too."
   :init
   (tl/evil-init)
   :config
-  ;; (evil-set-undo-system 'undo-fu)
-  (evil-set-undo-system 'undo-tree)
-  (with-eval-after-load 'undo-tree
-    (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode))
+  (evil-set-undo-system 'undo-fu)
+  ;; (evil-set-undo-system 'undo-tree)
+  ;; (with-eval-after-load 'undo-tree
+  ;;   (add-hook 'evil-local-mode-hook 'turn-on-undo-tree-mode))
 
   ;; (setcdr evil-insert-state-map nil) ;; make insert state like emacs state
   (define-key evil-insert-state-map [remap evil-complete-previous] 'hippie-expand)
