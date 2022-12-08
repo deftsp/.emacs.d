@@ -54,6 +54,7 @@
 (require '50font)
 (require '50gdb)
 (require '50hammerspoon)
+(require '50nix-mode)
 (require '50ibuffer)
 (require '50input-method)
 (require '50hideshow)
