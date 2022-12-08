@@ -6,10 +6,15 @@
 ;; Keywords:
 
 ;;; frame parameters
-(setq frame-resize-pixelwise t
-      ;; enable `window-resize-pixelwise' will cause the help window get the
-      ;; wrong height, that is to say only show part of the last line
-      window-resize-pixelwise nil)
+(setq frame-resize-pixelwise t)
+
+(cl-case system-type
+  (darwin
+   ;; enable `window-resize-pixelwise' will cause the help window get the
+   ;; wrong height, that is to say only show part of the last line
+   (setq window-resize-pixelwise nil))
+  (gnu/linux
+   (setq window-resize-pixelwise t)))
 
 (when (memq window-system '(x w32 mac ns))
   (setq initial-frame-alist `((tool-bar-lines . 0)
