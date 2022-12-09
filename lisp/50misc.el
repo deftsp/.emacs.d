@@ -46,8 +46,8 @@
       ;; slow, especially when two windows show the same buffer
       column-number-mode nil)
 
-(if (eq system-type 'gnu/linux)
-    (display-battery-mode t))
+;; (if (eq system-type 'gnu/linux)
+;;     (display-battery-mode t))
 
 
 ;; display world time
