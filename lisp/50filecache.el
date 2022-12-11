@@ -40,6 +40,7 @@
 ;; => t, but (file-exists-p (file-truename "~/bin/datafiller/")) => nil
 (defun tl/file-cache-add-this-file ()
   (and buffer-file-name
+       (not (file-remote-p buffer-file-name))
        (file-exists-p (file-truename buffer-file-name))
        (file-cache-add-file buffer-file-name)))
 
