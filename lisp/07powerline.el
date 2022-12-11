@@ -13,11 +13,19 @@
 
 (use-package powerline
   :init
+  ;; M-x powerline-reset, after changing
   (setq powerline-text-scale-factor 0.8
         ;; powerline-default-separator 'utf-8 ; 'arrow
         powerline-image-apple-rgb nil
-        ns-use-srgb-colorspace t
-        powerline-height 20))
+        ns-use-srgb-colorspace t)
+
+  (let ((height (cl-case system-type
+                  (darwin 20)
+                  (gnu/linux 40)
+                  (t 20))))
+    ;; NOTE: the height of xpm image will be affected by `powerline-height', it might be have some problem in HiDPI
+    ;; (Linux).
+    (setq powerline-height height)))
 
 (defvar powerline-git-state-mark-modeline t
   "When t git state mark on will work with powrline instead of in the front of
