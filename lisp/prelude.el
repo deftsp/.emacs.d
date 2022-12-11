@@ -40,9 +40,11 @@ emacs.")
 (defvar tl/default-cnfonts-profile-name "program"
   "Default cnfonts profile name used by chinse-font-setup.")
 
-(defvar tl/default-cnfonts-fontsize 14
+(defvar tl/default-cnfonts-fontsize (cl-case system-type
+                                      (darwin 14)
+                                      (gnu/linux 10)
+                                      (t 14))
   "Default cnfonts fontsize step used by chinse-font-setup.")
-
 
 (defvar dottl-active-transparency 96
   "A value from the range (0..100), in increasing opacity, which describes the
