@@ -201,8 +201,8 @@
           (rescale . 1.0)
           (fontname . "PragmataPro Mono")))))
 
-    (add-hook 'cnfonts-set-font-finish-hook
-              'tl/cnfonts-set-extra-fonts)
+    ;; NOTE: it will cause the char "☢" very small in Linux
+    (add-hook 'cnfonts-set-font-finish-hook 'tl/cnfonts-set-extra-fonts)
 
     (cnfonts-enable)))
 
