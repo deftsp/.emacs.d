@@ -1,7 +1,15 @@
 ;;; 50exwm.el ---                               -*- lexical-binding: t; -*-
 
-(defun tl/exwm-config-init ()
-  "Default configuration of EXWM."
+(defun tl/exwm-init-hook ()
+  (tl/start-polybar))
+
+(defun tl/start-polybar ()
+  (interactive)
+  (start-process-shell-command "start polybar" nil "systemctl --user start polybar"))
+
+(use-package exwm
+  :if (eq system-type 'gnu/linux)
+  :config
   ;; Set the initial workspace number.
   (unless (get 'exwm-workspace-number 'saved-value)
     (setq exwm-workspace-number 4))
@@ -9,6 +17,7 @@
   (add-hook 'exwm-update-class-hook
             (lambda ()
               (exwm-workspace-rename-buffer exwm-class-name)))
+
   ;; Global keybindings.
   (unless (get 'exwm-input-global-keys 'saved-value)
     (setq exwm-input-global-keys
@@ -42,63 +51,10 @@
             ([?\C-d] . [delete])
             ([?\C-k] . [S-end delete]))))
 
-  ;; Enable EXWM
-  (exwm-enable)
-  ;; Configure Ido
-  (exwm-config-ido)
-  ;; Other configurations
-  (exwm-config-misc))
+  ;; When EXWM starts up, do some extra confifuration
+  (add-hook 'exwm-init-hook #'tl/exwm-init-hook)
 
-(defun exwm-config--fix/ido-buffer-window-other-frame ()
-  "Fix `ido-buffer-window-other-frame'."
-  (defalias 'exwm-config-ido-buffer-window-other-frame
-    (symbol-function #'ido-buffer-window-other-frame))
-  (defun ido-buffer-window-other-frame (buffer)
-    "This is a version redefined by EXWM.
-
-You can find the original one at `exwm-config-ido-buffer-window-other-frame'."
-    (with-current-buffer (window-buffer (selected-window))
-      (if (and (derived-mode-p 'exwm-mode)
-               exwm--floating-frame)
-          ;; Switch from a floating frame.
-          (with-current-buffer buffer
-            (if (and (derived-mode-p 'exwm-mode)
-                     exwm--floating-frame
-                     (eq exwm--frame exwm-workspace--current))
-                ;; Switch to another floating frame.
-                (frame-root-window exwm--floating-frame)
-              ;; Do not switch if the buffer is not on the current workspace.
-              (or (get-buffer-window buffer exwm-workspace--current)
-                  (selected-window))))
-        (with-current-buffer buffer
-          (when (derived-mode-p 'exwm-mode)
-            (if (eq exwm--frame exwm-workspace--current)
-                (when exwm--floating-frame
-                  ;; Switch to a floating frame on the current workspace.
-                  (frame-selected-window exwm--floating-frame))
-              ;; Do not switch to exwm-mode buffers on other workspace (which
-              ;; won't work unless `exwm-layout-show-all-buffers' is set)
-              (unless exwm-layout-show-all-buffers
-                (selected-window)))))))))
-
-(defun exwm-config-ido ()
-  "Configure Ido to work with EXWM."
-  (ido-mode 1)
-  (add-hook 'exwm-init-hook #'exwm-config--fix/ido-buffer-window-other-frame))
-
-(defun exwm-config-misc ()
-  "Other configurations."
-  ;; Make more room
-  (menu-bar-mode -1)
-  (tool-bar-mode -1)
-  ;; (scroll-bar-mode +1)
-  (fringe-mode +1))
-
-(use-package exwm
-  :if (eq system-type 'gnu/linux)
-  :config
-  (tl/exwm-config-init))
-
+  (exwm-enable))
 
 
 (provide '50exwm)
