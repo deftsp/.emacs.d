@@ -58,8 +58,9 @@
   (progn
     (setq cnfonts-verbose nil
           cnfonts-default-fontsize tl/default-cnfonts-fontsize
-          cnfonts-use-face-font-rescale t
           cnfonts-profiles '("program" "org-mode" "read-book")))
+  (when (eq system-type 'darwin)
+    (setq cnfonts-use-face-font-rescale nil))
   :config
   (progn
     (when window-system
