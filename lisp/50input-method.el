@@ -76,7 +76,8 @@
   (setq rime-posframe-properties
         (list
          ;; :font "Sarasa Gothic SC-28"
-         :font "PragmataPro-18"
+         ;; :font "PragmataPro-18"
+         :font "PragmataPro"
          :internal-border-width 10))
 
   (setq rime-show-candidate 'posframe
