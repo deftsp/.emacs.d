@@ -241,7 +241,6 @@
         :repo "DogLooksGood/emacs-rime"
         :files ("*.el" "Makefile" "lib.c")))
 
-
 ;; (straight-use-package '(powerline :build (:not native-compile)))
 (straight-use-package 'powerline)
 (straight-use-package '(unicad :type git :host github :repo "ukari/unicad"))
@@ -346,6 +345,8 @@
 (straight-use-package 'asciidoc)
 (straight-use-package 'embrace)
 (straight-use-package '(git-undo-el :type git :host github :repo "jwiegley/git-undo-el"))
+;; There's some problem, when building emacs-libvterm in NixOS. https://github.com/akermu/emacs-libvterm/issues/115.
+;; Using the vterm package from nix
 (when (eq system-type 'darwin)
   (straight-use-package '(vterm :post-build ((let ((vterm-always-compile-module t)) (require 'vterm))))))
 (straight-use-package 'multi-vterm)

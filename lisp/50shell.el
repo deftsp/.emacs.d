@@ -66,7 +66,6 @@
         hscroll-margin 0))
 
 (use-package vterm
-  :if (eq system-type 'darwin)
   :commands (vterm vterm-other-window)
   :init
   ;; (setq vterm-keymap-exceptions nil)
