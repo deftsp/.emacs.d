@@ -4,6 +4,7 @@
   :defer t
   :mode "\\.nix\\'"
   :config
+  ;; (setq nix-indent-function 'indent-relative)
   (general-define-key
    :states 'normal
    :keymaps 'nix-mode-map
