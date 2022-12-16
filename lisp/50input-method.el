@@ -24,10 +24,22 @@
   :after (which-key)
   :demand
   :custom
-  (rime-user-data-dir "~/.emacs.d/rime/")
-  (rime-librime-root "~/.emacs.d/librime/dist")
-  (rime-emacs-module-header-root "/Applications/Emacs.app/Contents/Resources/include")
   (rime-show-preedit t)
+  (rime-user-data-dir "~/.emacs.d/rime/")
+  (rime-librime-root
+   (case system-type
+     (darwin "~/.emacs.d/librime/dist")
+     (gnu/linux
+      (s-trim-right (shell-command-to-string "nix-build '<nixpkgs>' --no-build-output -A librime")))))
+  (rime-emacs-module-header-root
+   (case system-type
+     (darwin "/Applications/Emacs.app/Contents/Resources/include")
+     (gnu/linux
+      (concat
+       (s-trim-right
+        (shell-command-to-string "nix-build '<nixpkgs>' --no-build-output -A emacs"))
+       "/include"))))
+
   :bind (:map rime-mode-map
 	     ("C-." . 'rime-send-keybinding) ; 中英文标点切换
 	     ("S-SPC" . 'rime-send-keybinding) ; 全半角切换

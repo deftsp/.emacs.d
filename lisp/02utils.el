@@ -5,6 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 (use-package hydra)
+(use-package s)
 
 ;; (use-package benchmark-init
 ;;   :config
