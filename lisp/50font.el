@@ -60,7 +60,7 @@
           cnfonts-default-fontsize tl/default-cnfonts-fontsize
           cnfonts-profiles '("program" "org-mode" "read-book")))
   (when (eq system-type 'darwin)
-    (setq cnfonts-use-face-font-rescale nil))
+    (setq cnfonts-use-face-font-rescale t))
   :config
   (progn
     (when window-system
