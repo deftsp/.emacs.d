@@ -298,6 +298,9 @@
    ;; minimap
    `(minimap-active-region-background ((t (:background ,base02))))
 
+   ;; bookmark
+   `(bookmark-face ((t (:foreground "orange" :background ,base02))))
+
    ;; bookmark+
    '(bmkp-light-fringe-autonamed ((t (:background "#778899" :foreground "#222222"))))
    '(bmkp-light-non-fringe-autonamed ((t (:background "DarkOrange1" :foreground "Black"))))

@@ -1128,6 +1128,7 @@ Current position is preserved."
 (use-package bookmark
   :defer t
   :init
+  (require 'fringe-helper)
   ;; t means save bookmarks when Emacs is killed, 1 save bookmark every time you
   ;; set bookmark, not only when you exit emacs
   (setq bookmark-save-flag 1)
@@ -1136,7 +1137,21 @@ Current position is preserved."
    :states 'normal
    :keymaps 'bookmark-bmenu-mode-map
    (kbd "v")   'bookmark-bmenu-select
-   (kbd "L")   'bookmark-bmenu-load))
+   (kbd "L")   'bookmark-bmenu-load)
+  :config
+  (define-fringe-bitmap
+    'bookmark-fringe-mark
+    (fringe-helper-convert
+     "xx.xx..."
+     ".xx.xx.."
+     "..xx.xx."
+     "...xx.xx"
+     "..xx.xx."
+     ".xx.xx.."
+     "xx.xx...")
+    nil
+    nil
+    'center))
 
 ;;; uniq lines
 (defun tl-uniq-lines (beg end)
