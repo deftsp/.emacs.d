@@ -9,6 +9,8 @@
 (use-package pdf-tools
   :mode ("\\.[pP][dD][fF]\\'" . pdf-view-mode)
   :magic ("%PDF" . pdf-view-mode)
+  :init
+  (setq pdf-view-use-unicode-ligther nil)
   :config
   (pdf-tools-install)
   (setq-default pdf-view-display-size 'fit-width)
