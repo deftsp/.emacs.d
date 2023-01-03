@@ -327,7 +327,6 @@
 (straight-use-package 'memoize)
 (straight-use-package 'anzu)
 (straight-use-package 'elisp-slime-nav)
-(straight-use-package 'git-gutter)
 (straight-use-package 'minimap)
 (straight-use-package '(semantic-stickyfunc-enhance :type git :host github :repo "tuhdo/semantic-stickyfunc-enhance"))
 (straight-use-package 'apiwrap)

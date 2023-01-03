@@ -242,61 +242,6 @@
     (add-hook 'magit-pre-refresh-hook 'diff-hl-magit-pre-refresh)
     (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)))
 
-;;; git-gutter
-;; https://github.com/syohex/emacs-git-gutter-fringe
-;; it makes split window very slow, disable now
-;; see also https://github.com/nonsequitur/git-gutter-plus
-;; (require 'git-gutter-fringe nil t)
-;; (eval-after-load "git-gutter-fringe"
-;;   '(progn
-;;      (setq git-gutter-fr:side 'left-fringe)))
-
-;; (eval-after-load "git-gutter"
-;;   '(progn
-;;      (setq git-gutter:lighter " GG")
-;;      ;; (global-set-key (kbd "C-x C-g") 'git-gutter:toggle)
-;;      ;; (global-set-key (kbd "C-x v =") 'git-gutter:popup-hunk)
-
-;;      ;; Jump to next/previous hunk
-;;      ;; (global-set-key (kbd "C-x p") 'git-gutter:previous-hunk)
-;;      ;; (global-set-key (kbd "C-x n") 'git-gutter:next-hunk)
-
-;;      ;; Stage current hunk
-;;      ;; (global-set-key (kbd "C-x v s") 'git-gutter:stage-hunk)
-;;      ;; Revert current hunk
-;;      ;; (global-set-key (kbd "C-x v r") 'git-gutter:revert-hunk)
-;;      (global-git-gutter-mode t)))
-
-;; (key-chord-define-global "GG" 'hydra-git-gutter/body)
-
-;; (defhydra hydra-git-gutter (:body-pre (git-gutter-mode 1) :hint nil)
-;;   "
-;; Git gutter:
-;;   _j_: next hunk        _s_tage hunk     _q_uit
-;;   _k_: previous hunk    _r_evert hunk    _Q_uit and deactivate git-gutter
-;;   ^ ^                   _p_opup hunk
-;;   _h_: first hunk
-;;   _l_: last hunk        set start _R_evision
-;; "
-;;   ("j" git-gutter:next-hunk)
-;;   ("k" git-gutter:previous-hunk)
-;;   ("h" (progn (goto-char (point-min))
-;;               (git-gutter:next-hunk 1)))
-;;   ("l" (progn (goto-char (point-min))
-;;               (git-gutter:previous-hunk 1)))
-;;   ("s" git-gutter:stage-hunk)
-;;   ("r" git-gutter:revert-hunk)
-;;   ("p" git-gutter:popup-hunk)
-;;   ("R" git-gutter:set-start-revision)
-;;   ("<escape>" nil :color blue)
-;;   ("q"        nil :color blue)
-;;   ("Q" (progn (git-gutter-mode -1)
-;;               ;; git-gutter-fringe doesn't seem to
-;;               ;; clear the markup right away
-;;               (sit-for 0.1)
-;;               (git-gutter:clear))
-;;    :color blue))
-
 ;; Grep in a git repository using ivy
 (defun counsel-git-grep-function (string &optional _pred &rest _u)
   "Grep in the current git repository for STRING."
