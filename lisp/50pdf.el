@@ -35,6 +35,9 @@
     "0"  'image-bol
     "$"  'image-eol
 
+    "d" 'pdf-view-scroll-up-or-next-page
+    "e" 'pdf-view-scroll-down-or-previous-page
+
     ;; Slicing image
     "sm" 'pdf-view-set-slice-using-mouse
     "sb" 'pdf-view-set-slice-from-bounding-box
@@ -44,16 +47,21 @@
     "aD" 	'pdf-annot-delete
     "at" 	'pdf-annot-attachment-dired
     "al" 	'pdf-annot-list-annotations
-    "am" 	'pdf-annot-add-markup-annotation
-    "ao" 	'pdf-annot-add-strikeout-markup-annotation
-    "as" 	'pdf-annot-add-squiggly-markup-annotation
-    "at" 	'pdf-annot-add-text-annotation
-    "au" 	'pdf-annot-add-underline-markup-annotation
 
     ;; Fit image to window
     "fw"    'pdf-view-fit-width-to-window
     "fh"    'pdf-view-fit-height-to-window
     "fp"    'pdf-view-fit-page-to-window
+
+    ;; "q" 'kill-current-buffer
+    "gl" 'pdf-view-goto-label
+    "gt" 'pdf-view-goto-page
+
+
+    ;; Slicing image
+    "sm" 'pdf-view-set-slice-using-mouse
+    "sb" 'pdf-view-set-slice-from-bounding-box
+    "sr" 'pdf-view-reset-slice
 
     ;; Other
     "ss"    'pdf-occur
@@ -62,24 +70,15 @@
     "O"     'pdf-outline
     "n"     'pdf-view-midnight-minor-mode)
 
-
   (general-evil-define-key 'visual pdf-view-mode-map
     "ah" 	'pdf-annot-add-highlight-markup-annotation
-    "y"     'pdf-view-kill-ring-save)
+    "am" 	'pdf-annot-add-markup-annotation
+    "ao" 	'pdf-annot-add-strikeout-markup-annotation
+    "as" 	'pdf-annot-add-squiggly-markup-annotation
+    "at" 	'pdf-annot-add-text-annotation
+    "au" 	'pdf-annot-add-underline-markup-annotation
 
-  (general-evil-define-key 'normal pdf-view-mode-map
-    ;; "q" 'kill-current-buffer
-    "gl" 'pdf-view-goto-label
-    "gt" 'pdf-view-goto-page
-
-    ;; Slicing image
-    "sm" 'pdf-view-set-slice-using-mouse
-    "sb" 'pdf-view-set-slice-from-bounding-box
-    "sr" 'pdf-view-reset-slice
-
-
-    "d" 'pdf-view-scroll-up-or-next-page
-    "e" 'pdf-view-scroll-down-or-previous-page))
+    "y"     'pdf-view-kill-ring-save))
 
 
 (defun tl/pdf-view-mode-init ()
