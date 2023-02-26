@@ -560,10 +560,10 @@
 
    ;; magit
    '(magit-diff-hunk-heading ((t (:foreground "#121232"
-                                  :background "#28899e"
+                                  :background "#bbbb33"
                                   :slant italic
                                   :weight bold
-                                  :box "#9bb8be"))))
+                                  :box nil))))
    '(magit-diff-hunk-heading-highlight ((t (:inherit magit-diff-hunk-heading :foreground "#521212"))))
    '(magit-diff-hunk-heading-selection ((t (:inherit magit-diff-hunk-heading :foreground "#b292a2"))))
 
