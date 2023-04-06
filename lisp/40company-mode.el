@@ -206,5 +206,13 @@
                     (:separate company-yasnippet))))
     (setq-local company-backends backends)))
 
+(add-hook 'solidity-mode-hook 'tl/company-solidity-mode-setup)
+(defun tl/company-solidity-mode-setup ()
+  (let ((backends tl/company-common-backends))
+    (setq-local company-backends backends)
+    (when (fboundp 'company-solidity)
+      (add-to-list 'company-backends 'company-solidity))))
+
+
 (provide '40company-mode)
 ;;; 40company-mode.el ends here

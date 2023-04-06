@@ -531,6 +531,8 @@
 (straight-use-package '(dired-sidebar :type git :host github :repo "deftsp/dired-sidebar" :branch "shihpin"))
 (straight-use-package 'diredfl)
 (straight-use-package 'lispy)
+(straight-use-package '(solidity-mode :files (:defaults "*.el")))
+
 
 
 (straight-use-package 'scratch)

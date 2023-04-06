@@ -88,6 +88,7 @@
 (require '50search)
 (require '50shell)
 (require '50syntax-checker)
+(require '50solidity-mode)
 (require '50sql)
 (require '50spellcheck)
 (require '50buffer)
