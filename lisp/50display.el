@@ -8,6 +8,10 @@
 ;;; frame parameters
 (setq frame-resize-pixelwise t)
 
+;; https://emacs-china.org/t/truncate-line/24313
+;; (setq-default left-margin-width 0)
+;; (setq-default right-margin-width 0)
+
 (cl-case system-type
   (darwin
    ;; enable `window-resize-pixelwise' will cause the help window get the
