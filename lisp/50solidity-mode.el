@@ -1,15 +1,27 @@
 ;;; 50solidity-mode.el ---                               -*- lexical-binding: t; -*-
 
 ;; https://github.com/ethereum/emacs-solidity
+;; https://github.com/duaraghav8/Ethlint
+;; npm install -g solhint
+
+;; npm install -g solium
+;; npm install -g ethlint
+;; ethlint formerly named Solium
 
 (use-package solidity-mode
   :defer t
+  :init
+  (add-hook 'solidity-mode-hook 'tl/init-solidity-mode)
   :config
   (setq solidity-comment-style 'slash)
   (define-key solidity-mode-map (kbd "C-c C-g") 'solidity-estimate-gas-at-point))
 
+(defun tl/init-solidity-mode ()
+  "Hooks for solidity mode."
+  ;; use solhint only
+  (add-to-list 'flycheck-disabled-checkers 'solium-checker))
+
 ;; https://solium.readthedocs.io/en/latest/user-guide.html#installation
-;; npm install -g solium
 (use-package solidity-flycheck
   :after solidity-mode
   :config
