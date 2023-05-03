@@ -33,6 +33,8 @@
 
   (when (fboundp 'show-smartparens-mode)
     (show-smartparens-mode +1))
+  (when (fboundp 'flycheck-mode)
+    (flycheck-mode -1))
   (set (make-local-variable 'lisp-indent-function)
        #'tl/lisp-indent-function)
   (turn-on-eldoc-mode))
