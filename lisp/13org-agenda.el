@@ -399,14 +399,16 @@ If VANILLA is non-nil, run the standard `org-capture'."
                                                        habit-down
                                                        category-keep))))
             (tags-todo "TODO=\"NEXT\""
-                       ((org-agenda-sorting-strategy '(priority-down tag-up))
+                       ((org-agenda-sorting-strategy '(priority-down category-keep)) ; An entry without a cookie is treated as equivalent if it had priority ‘B’
+                        (org-agenda-skip-function '(or
+                                                    (org-agenda-skip-entry-if 'scheduled)))
                         (org-agenda-overriding-header "NEXT Tasks:")))
             (tags-todo "CATEGORY=\"Proj\"&LEVEL<=3"
                        ((org-agenda-sorting-strategy '(priority-down tag-up))
                         ;; N.B. that there is a third bug or oddity here: you can only use %(expression) once
                         (org-agenda-prefix-format " %i %(tl/org-agenda-projects-prefix)")
                         (org-agenda-skip-function '(or
-                                                    (org-agenda-skip-entry-if 'todo 'done )))
+                                                    (org-agenda-skip-entry-if 'todo 'done 'scheduled)))
                         (org-agenda-overriding-header "Projects:")))
 
             ;; (tags "+PRIORITY=\"A\"+CATEGORY={Inbox\\|Task\\|Project}"
