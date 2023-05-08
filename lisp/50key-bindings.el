@@ -952,8 +952,8 @@ _p_rojectile _s_cratch
    ("p" hydra-projectile/body nil)
    ("s" tl/switch-to-scratch nil)
    ("t" hydra-toggle/body "toggle")
-   ("u" undo-tree-undo nil :color red)
-   ("r" undo-tree-redo nil :color red)
+   ;; ("u" undo-tree-undo nil :color red)
+   ;; ("r" undo-tree-redo nil :color red)
    ("<escape>" nil "cancel")
    ("q"        nil "cancel")))
 

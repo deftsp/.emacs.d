@@ -166,6 +166,7 @@
 ;; (straight-use-package 'undo-tree)
 (straight-use-package 'undo-fu)
 (straight-use-package 'undo-fu-session)
+(straight-use-package 'vundo)
 
 (straight-use-package 'better-jumper)
 
