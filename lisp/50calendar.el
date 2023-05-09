@@ -223,6 +223,21 @@
          (= dd cd)
          (cons mark (format entry diff (diary-ordinal-suffix diff))))))
 
+;; https://emacs.stackexchange.com/questions/21488/highlighting-upcoming-dates-in-org-mode-agenda
+(defun tl/diary-lunar-anniversary-with-remind (month day &optional year mark days)
+  "diary-luna-anniversary-with-remind"
+  (let ((sexp '(tl/diary-lunar-anniversary month day year mark)))
+    (if days
+        (diary-remind sexp days)
+      (eval sexp))))
+
+(defun tl/diary-anniversary-with-remind (month day &optional year mark days)
+  "diary-luna-anniversary-with-remind"
+  (let ((sexp '(diary-anniversary month day year mark)))
+    (if days
+        (diary-remind sexp days)
+      (eval sexp))))
+
 (use-package cal-china
   :after (calendar))
 
