@@ -82,7 +82,7 @@
    "h" '(:ignore t :which-key "help")
 
    "t" '(:ignore t :which-key "toggle")
-   "th" 'lsp-rust-analyzer-inlay-hints-mode
+   "th" 'lsp-inlay-hints-mode
    "tr" 'lsp-rust-analyzer-related-tests
 
    "p"  'tl/rustic-format-buffer

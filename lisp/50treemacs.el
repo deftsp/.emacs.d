@@ -11,7 +11,8 @@
   :defer t
   :init
   (tl/set-leader-keys
-    "ft"    #'treemacs-select-window
+    ;; display only the current project
+    "ft"    #'treemacs-add-and-display-current-project-exclusively ; #'treemacs-select-window
     "fT"    #'treemacs
     "fB"    #'treemacs-bookmark
     "f C-t" #'treemacs-find-file)

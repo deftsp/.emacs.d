@@ -386,6 +386,10 @@
 
    ;; lsp
    '(lsp-modeline-code-actions-face ((t (:foreground "#75cc55" :background "#bbbbbb"))))
+   '(lsp-inlay-hint-face ((t (:foreground "#986e85" :slant italic))))
+   ;; lsp-inlay-hint-type-face
+   ;; lsp-inlay-hint-parameter-face
+
    '(lsp-ui-doc-background ((t (:background "#073642"))))
 
    `(lsp-ui-peek-header ((t (:background ,inactive2 :foreground "#ffffff"))))

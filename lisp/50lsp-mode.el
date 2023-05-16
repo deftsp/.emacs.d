@@ -19,6 +19,7 @@
         lsp-enable-snippet nil          ; use yasnippet instead
         lsp-file-watch-threshold 5000
         lsp-restart 'auto-restart
+        lsp-inlay-hints-mode nil
         lsp-enable-links nil            ; use ffip instead
         ;; lsp-eldoc-render-all t
         lsp-eldoc-hook nil ; do not show doc in minibuffer
@@ -53,7 +54,6 @@
           ;;Yew project (target to wasm32-unknown-unknown), rust-analyzer will given wrong
           ;;warning of "unresolved-import"
           lsp-rust-analyzer-diagnostics-disabled ["unresolved-import"]
-          lsp-rust-analyzer-server-display-inlay-hints nil ; toggle with `lsp-rust-analyzer-inlay-hints-mode'
           lsp-rust-analyzer-proc-macro-enable t
           lsp-rust-analyzer-display-chaining-hints t
           lsp-rust-analyzer-display-parameter-hints t
