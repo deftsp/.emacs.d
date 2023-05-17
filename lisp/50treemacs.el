@@ -17,12 +17,7 @@
     "fB"    #'treemacs-bookmark
     "f C-t" #'treemacs-find-file)
   :config
-  (setq treemacs-icon-open-png   (propertize "⊖ " 'face 'treemacs-directory-face)
-        treemacs-icon-closed-png (propertize "⊕ " 'face 'treemacs-directory-face)
-        treemacs-icon-tag-node-open-png   (propertize "− " 'face 'font-lock-keyword-face)
-        treemacs-icon-tag-node-closed-png (propertize "+ " 'face 'font-lock-keyword-face)
-        treemacs-icon-tag-leaf-png        (propertize "🞄 " 'face 'font-lock-keyword-face)
-        treemacs-no-png-images t
+  (setq treemacs-no-png-images nil
         treemacs-deferred-git-apply-delay 0.5
         treemacs-max-git-entries               5000
         treemacs-indentation-string " "
@@ -41,6 +36,38 @@
         treemacs-goto-tag-strategy 'refetch-index
         treemacs-collapse-dirs (if (executable-find "python") 3 0))
 
+  ;; (setq treemacs-icon-open-png (propertize "⊖ " 'face 'treemacs-directory-face)
+  ;;       treemacs-icon-closed-png (propertize "⊕ " 'face 'treemacs-directory-face)
+  ;;       treemacs-icon-tag-node-open-png   (propertize "− " 'face 'font-lock-keyword-face)
+  ;;       treemacs-icon-tag-node-closed-png (propertize "+ " 'face 'font-lock-keyword-face)
+  ;;       treemacs-icon-tag-leaf-png        (propertize "🞄 " 'face 'font-lock-keyword-face))
+
+  ;; root-open
+  ;; root-closed
+  ;; dir-closed
+  ;; dir-open
+  ;; fallback
+  ;; tag-open
+  ;; tag-closed
+  ;; tag-leaf
+  ;; error
+  ;; info
+  ;; warning
+
+  ;; (treemacs-create-theme "Simple"
+  ;;   :icon-directory (treemacs-join-path treemacs-dir "icons/default")
+  ;;   :config
+  ;;   (progn
+  ;;     (treemacs-create-icon :icon "+" :extensions (root-open))
+  ;;     (treemacs-create-icon :icon "-" :extensions (root-closed))
+
+  ;;     (treemacs-create-icon :icon "+" :extensions (dir-closed))
+  ;;     (treemacs-create-icon :icon "-" :extensions (dir-open))))
+
+  ;; (treemacs-load-theme "Simple")
+  ;; (treemacs-load-theme "Default")
+
+  (treemacs-resize-icons 14)
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
   (treemacs-fringe-indicator-mode t)
