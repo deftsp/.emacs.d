@@ -62,8 +62,7 @@
    `(default ((t (:background ,base03 :foreground ,base0))))
    '(cursor ((t (:foreground unspecified :background "#cd0000"))))
 
-   ;; '(variable-pitch ((t (:family "Source Sans Pro" :height 180 :weight light))))
-   `(variable-pitch ((t (:family "Roboto Condensed"))))
+   '(variable-pitch ((t (:family unspecified :slant normal :weight normal :height 1.0 :width normal))))
    '(fixed-pitch ((t (:family unspecified :slant normal :weight normal :height 1.0 :width normal))))
 
    ;; mode-line
