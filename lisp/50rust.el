@@ -24,6 +24,7 @@
   :commands (rustic-run-cargo-command rustic-cargo-outdated)
   :init
   (setq rustic-lsp-server 'rust-analyzer)
+  (setq rustic-cargo-check-arguments "--benches --tests")
 
   (let ((client
          (pcase dottl-lsp-client
