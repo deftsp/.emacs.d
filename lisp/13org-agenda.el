@@ -408,6 +408,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
                         ;; N.B. that there is a third bug or oddity here: you can only use %(expression) once
                         (org-agenda-prefix-format " %i %(tl/org-agenda-projects-prefix)")
                         (org-agenda-skip-function '(or
+                                                    (org-agenda-skip-entry-if 'regexp "\\* NEXT")
                                                     (org-agenda-skip-entry-if 'todo 'done 'scheduled)))
                         (org-agenda-overriding-header "Projects:")))
 
