@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+#name : impl-default-for
+#key : impl_default
+#contributor : Shihpin Tseng
+# --
+impl Default for ${1:Name} {
+    fn default() -> Self {
+
+    }
+}
