@@ -15,6 +15,10 @@
 
 ;; install GnuPG >= 2.1
 
+;; fix gnpu 2.4.1 freeze
+;; https://old.reddit.com/r/emacs/comments/15hoeby/gnupg_versions_241_and_higher_break_writing_files/
+;; (fset 'epg-wait-for-status 'ignore)
+
 (setq epa-pinentry-mode 'loopback)
 
 
