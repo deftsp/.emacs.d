@@ -120,7 +120,7 @@
     "jn" 'sp-newline)
   :config
   (require 'smartparens-config)
-
+  (require 'smartparens-rust)
   (defun tl//smartparens-disable-before-expand-snippet ()
     "Handler for `yas-before-expand-snippet-hook'.
 Disable smartparens and remember its initial state."

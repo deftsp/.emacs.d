@@ -19,6 +19,14 @@
 ;;   ;; (push '("!" . ?¬) rust-prettify-symbols-alist)
 ;;   (push '("\\!" . 'tl/rust-exclaim-face) rust-font-lock-keywords))
 
+(use-package rust-ts-mode
+  :defer t
+  :config
+  ;; remove rust-mode from `auto-mode-alist'
+  (let ((mode '("\\.rs\\'" . rust-ts-mode)))
+    (when (member mode auto-mode-alist)
+      (setq auto-mode-alist (remove mode auto-mode-alist)))))
+
 (use-package rustic
   :mode ("\\.rs$" . rustic-mode)
   :commands (rustic-run-cargo-command rustic-cargo-outdated)
@@ -32,7 +40,6 @@
            ('lsp-bridge nil)
            (_ nil))))
     (setq rustic-lsp-client client))
-
 
   (setq rustic-ansi-faces ["black"
                            "#bb0000"
