@@ -24,13 +24,11 @@
       "aDr" 'docker-restart
       "aDs" 'docker-start)))
 
-(use-package docker-tramp
-  :defer t)
+;; ‘docker-tramp’ has been obsoleted, please use integrated package ‘tramp-container’
 
 (use-package dockerfile-mode
   :defer t
-  :config (evil-leader/set-key-for-mode 'dockerfile-mode
-            "mcb" 'dockerfile-build-buffer))
+  :config (evil-leader/set-key-for-mode 'dockerfile-mode "mcb" 'dockerfile-build-buffer))
 
 (provide '50docker)
 ;;; 50docker.el ends here

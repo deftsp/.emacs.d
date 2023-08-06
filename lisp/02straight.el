@@ -256,7 +256,6 @@
 (straight-use-package 'docker)
 (straight-use-package 'list-utils)
 (straight-use-package 'ace-isearch)
-(straight-use-package 'docker-tramp)
 (straight-use-package 'ace-link)
 (straight-use-package 'dockerfile-mode)
 ;; https://raw.githubusercontent.com/llvm-mirror/llvm/master/utils/emacs/llvm-mode.el
