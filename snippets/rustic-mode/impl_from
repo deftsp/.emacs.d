@@ -4,7 +4,9 @@
 #contributor : Robert Krahn
 # --
 impl From<${1:from}> for ${2:For} {
-    fn from(${3:arg}: $1) -> Self {
-        $2 {$0}
+    fn from(${3:value}: $1) -> Self {
+        Self {
+            ${0:code}
+        }
     }
 }
