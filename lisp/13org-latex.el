@@ -23,7 +23,7 @@
   ;; fontify source code
   (setq org-latex-listings t)           ; 'minted
   :config
-  (add-to-list 'org-Latex-packages-alist '("" "listings"))
+  (add-to-list 'org-latex-packages-alist '("" "listings"))
   ;; (add-to-list 'org-latex-packages-alist '("" "color"))
   ;; (add-to-list 'org-latex-packages-alist '("newfloat" "minted"))
   ;; (add-to-list 'org-latex-packages-alist '(("AUTO" "inputenc" t)))
