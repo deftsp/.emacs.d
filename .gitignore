@@ -126,6 +126,7 @@ eln-cache/
 eshell/
 .extension/
 .persistent-scratch*
+tree-sitter/
 
 librime/
 rime/

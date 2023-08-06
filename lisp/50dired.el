@@ -288,6 +288,7 @@ dired buffer to be opened."
                       "\\|"
                       (regexp-opt '("^TAGS$" "^cscope.out$")))))
       :config
+      (require 'dired-aux)
       (progn
         (setq dired-guess-shell-alist-user ; use ! to call guess command
               `((,(regexp-opt '(".gif" ".png" ".bmp" ".jpg" ".tif" ".jpeg"))
