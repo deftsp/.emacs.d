@@ -219,10 +219,10 @@
    '(org-block-begin-line ((t (:background "#30424e"))))
    '(org-block-end-line ((t (:background "#30424e"))))
    '(org-ellipsis ((t (:underline nil :foreground "#c5e666" :background unspecified))))
-   '(org-mode-line-clock ((t (:background nil :foreground "#268bd2"))))
+   '(org-mode-line-clock ((t (:background unspecified :foreground "#268bd2"))))
    '(org-time-grid ((t (:background unspecified :foreground "#386375"))))
 
-   '(org-journal-calendar-entry-face ((t (:background nil :foreground "#a5e692" :weight bold))))
+   '(org-journal-calendar-entry-face ((t (:background unspecified :foreground "#a5e692" :weight bold))))
 
 
    '(warning ((t (:foreground "VioletRed" :weight bold))))
@@ -243,17 +243,22 @@
    '(font-lock-builtin-face ((t (:foreground "#5ca0b3"))))
    `(font-lock-comment-face ((t (:foreground ,base01))))
    `(font-lock-comment-delimiter-face ((t (:foreground ,base1))))
+   `(font-lock-delimiter-face ((t (:foreground "#c0b090"))))
    '(font-lock-constant-face ((t (:foreground "#5299bc"))))
    '(font-lock-doc-face ((t (:foreground "turquoise4"))))
    '(font-lock-function-name-face ((t (:foreground "#f08484"))))
+   '(font-lock-function-call-face ((t (:foreground "#f08484"))))
    '(font-lock-keyword-face ((t (:foreground "#aede5d"  :weight bold))))
+   '(font-lock-property-use-face ((t (:foreground "#8e9e9d"))))
+   '(font-lock-number-face ((t (:foreground "#beae3d"))))
+   '(font-lock-operator-face ((t (:foreground "#ce8e7d" :weight bold))))
    `(font-lock-negation-char-face ((t (:foreground ,yellow :weight bold))))
    '(font-lock-preprocessor-face ((t (:foreground "#79C96D"))))
    `(font-lock-regexp-grouping-construct ((t (:foreground ,yellow :weight bold))))
    `(font-lock-regexp-grouping-backslash ((t (:foreground ,green :weight bold))))
    '(font-lock-string-face ((t (:foreground "#a800a8"))))
    '(font-lock-type-face ((t (:foreground "#479ec0")))) ; #9077ce,  #259bb3
-   '(font-lock-variable-name-face ((t (:foreground "#8f9b93"))))
+   '(font-lock-variable-name-face ((t (:foreground "#839496"))))
    '(font-lock-warning-face ((t (:foreground "Pink"))))
 
    `(c-annotation-face ((t (:inherit font-lock-constant-face))))
@@ -469,7 +474,7 @@
    `(diff-hl-unknown ((t (:foreground)) ,violet :background ,violet))
 
    ;; eshell-prompt-extras
-   `(tl/eshell-base-face ((t (:foreground ,base0 :background nil :font "mplus Nerd Font" :size 14))))
+   `(tl/eshell-base-face ((t (:foreground ,base0 :background unspecified :font "mplus Nerd Font" :size 14))))
    `(epe-symbol-face ((t (:foreground "#d01ce2" :inherit tl/eshell-base-face))))
    `(epe-user-face ((t (:foreground "#648fc3" :inherit tl/eshell-base-face))))
    `(epe-host-face ((t (:foreground "#648fc3" :inherit tl/eshell-base-face))))

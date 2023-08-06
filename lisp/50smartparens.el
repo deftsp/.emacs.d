@@ -70,8 +70,8 @@
 (defun tl//adaptive-smartparent-pair-overlay-face ()
   (set-face-attribute 'sp-pair-overlay-face nil
                       :inherit 'lazy-highlight
-                      :background nil
-                      :foreground nil))
+                      :background 'unspecified
+                      :foreground 'unspecified))
 
 (defun tl/smartparens-pair-newline (id action context)
   (save-excursion
