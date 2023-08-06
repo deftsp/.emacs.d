@@ -96,7 +96,7 @@
 (straight-use-package 'org-trello)
 (straight-use-package 'ob-http)
 (straight-use-package 'org-transclusion)
-(straight-use-package '(org-link-beautify :host nil :type git :repo "https://repo.or.cz/org-link-beautify.git"))
+;; (straight-use-package '(org-link-beautify :host nil :type git :repo "https://repo.or.cz/org-link-beautify.git"))
 
 (straight-use-package 'sql-indent)
 (straight-use-package 'sqlformat)
