@@ -83,7 +83,7 @@
 (require '50persistent-scratch)
 (require '50python-mode)
 (require '50restclient)
-;; (require '50rust)
+(require '50rust)
 (require '50rustic)
 (require '50scheme)
 (require '50search)

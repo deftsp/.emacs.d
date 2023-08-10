@@ -8,8 +8,6 @@
 ;;; Code:
 
 (use-package rustic
-  :mode ("\\.rs$" . rustic-mode)
-  :commands (rustic-run-cargo-command rustic-cargo-outdated)
   :init
   (setq rustic-lsp-server 'rust-analyzer)
   (setq rustic-cargo-check-arguments "--benches --tests")
@@ -67,6 +65,22 @@
    "b" '(:ignore t :which-key "backend")
    "bI" 'lsp-rust-analyzer-status
    "b." 'lsp-rust-analyzer-reload-workspace
+
+   "c" '(:ignore t :which-key "cargo")
+   "ca" 'tl/cargo-audit
+   "cb" 'rustic-cargo-build
+   "cB" 'rustic-cargo-bench
+   "cc" 'rustic-cargo-check
+   "cC" 'rustic-cargo-clippy
+   "cd" 'rustic-cargo-doc
+   "cf" 'rustic-cargo-fmt
+   "cm" 'tl/maximize-rustic-compilation-window
+   "cn" 'rustic-cargo-new
+   "co" 'rustic-cargo-outdated
+   "cr" 'rustic-cargo-run
+   "cT" 'rustic-cargo-test
+   "ct" 'rustic-cargo-current-test
+   "c." 'pl/rustic-cargo-current-test-nocapture
 
    "h" '(:ignore t :which-key "help")
 
@@ -134,27 +148,6 @@ Flycheck according to the Cargo project layout."
           (rustic-compilation c (list :buffer buf :process proc :mode mode)))
       (message "Could not find test at point.")))
 
-  (general-define-key
-   :states 'normal
-   :keymaps 'rustic-mode-map
-   :prefix ","
-   "c" '(:ignore t :which-key "cargo")
-   "ca" 'tl/cargo-audit
-   "cb" 'rustic-cargo-build
-   "cB" 'rustic-cargo-bench
-   "cc" 'rustic-cargo-check
-   "cC" 'rustic-cargo-clippy
-   "cd" 'rustic-cargo-doc
-   "cf" 'rustic-cargo-fmt
-   "cm" 'tl/maximize-rustic-compilation-window
-   "cn" 'rustic-cargo-new
-   "co" 'rustic-cargo-outdated
-   "cr" 'rustic-cargo-run
-   "cT" 'rustic-cargo-test
-   "ct" 'rustic-cargo-current-test
-   "c." 'pl/rustic-cargo-current-test-nocapture)
-
-
   (defun tl/cargo-process-quit ()
     (interactive)
     (if (and (= 1 (length (window-list)))
@@ -162,16 +155,6 @@ Flycheck according to the Cargo project layout."
         (jump-to-register ?_)
       (quit-window))))
 
-
-(defun tl/toggle-mut ()
-  "Toggles the mutability of the variable defined on the current line"
-  (interactive)
-  (save-excursion
-    (back-to-indentation)
-    (forward-word)
-    (if (string= " mut" (buffer-substring (point) (+ (point) 4)))
-        (delete-region (point) (+ (point) 4))
-      (insert " mut"))))
 
 (defun tl/cargo-audit ()
   "Run 'cargo audit' for the current project."

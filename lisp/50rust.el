@@ -28,11 +28,6 @@
   ;; (push '("!" . ?¬) rust-prettify-symbols-alist)
   ;; (push '("\\!" . 'tl/rust-exclaim-face) rust-font-lock-keywords)
 
-  ;; use the rust-mode instead of rust-ts-mode
-  (let ((mode '("\\.rs\\'" . rust-ts-mode)))
-    (when (member mode auto-mode-alist)
-      (setq auto-mqode-alist (remove mode auto-mode-alist))))
-
   (general-define-key
    :states 'normal
    :keymaps 'rust-mode-map
