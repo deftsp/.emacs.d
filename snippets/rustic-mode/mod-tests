@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: mod-tests
-# key: mod-tests
+# key: mod_tests
 # --
 #[cfg(test)]
 mod tests {
