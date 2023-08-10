@@ -70,6 +70,9 @@
 
 ;; (straight-use-package '(org :build (:not native-compile)))
 ;; (straight-use-package '(org-contrib :build (:not native-compile)))
+
+;; or see the `straight-built-in-pseudo-packages' variable
+;; straight-use-package '(org :type built-in))
 (straight-use-package 'org)
 (straight-use-package 'org-contrib)
 (straight-use-package 'org-mru-clock)
