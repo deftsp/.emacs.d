@@ -51,6 +51,7 @@
   (setq major-mode-remap-alist
         '((c-mode          . c-ts-mode)
           (c++-mode        . c++-ts-mode)
+          ;; rust-ts-mode is build-in mode
           ;; (rust-mode       . rust-ts-mode)
           (cmake-mode      . cmake-ts-mode)
           (conf-toml-mode  . toml-ts-mode)
@@ -86,8 +87,9 @@
 ;; https://github.com/manateelazycat/fingertip
 (use-package treesit-auto
   :config
-  (setq treesit-auto-install 'prompt)
-  (global-treesit-auto-mode))
+  ;; NOTE: when global-treesit-auto-mode enabled, rust-mode will be rempap to the build-in rust-ts-mode.
+  ;; (global-treesit-auto-mode)
+  (setq treesit-auto-install 'prompt))
 
 
 ;; (setq treesit-language-source-alist
@@ -142,6 +144,7 @@
   (treesit-parser-create 'rust))
 
 (add-hook 'rustic-mode-hook 'tl/create-rust-treesit-parser)
+(add-hook 'rust-mode-hook 'tl/create-rust-treesit-parser)
 
 
 (provide '50treesit)
