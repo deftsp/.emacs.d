@@ -11,6 +11,7 @@
   :init
   (setq rustic-lsp-server 'rust-analyzer)
   (setq rustic-cargo-check-arguments "--benches --tests")
+  (setq rustic-treesitter-derive t)
 
   (let ((client
          (pcase dottl-lsp-client

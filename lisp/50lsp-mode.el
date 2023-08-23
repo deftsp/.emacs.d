@@ -39,7 +39,7 @@
   :hook ((lsp-mode . lsp-enable-which-key-integration)
          ;; (python-mode . lsp-deferred)
          ;; (rust-mode . lsp) ; rustic will setup it
-         (rustic-mode . lsp))
+         (rustic-mode . lsp-deferred))
   :config
   ;; don't scan 3rd party javascript libraries
   ;; (push "[/\\\\][^/\\\\]*\\.\\(json\\|html\\|jade\\)$" lsp-file-watch-ignored) ; json
