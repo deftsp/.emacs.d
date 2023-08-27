@@ -259,7 +259,7 @@
    '(font-lock-string-face ((t (:foreground "#a800a8"))))
    '(font-lock-type-face ((t (:foreground "#479ec0")))) ; #9077ce,  #259bb3
    '(font-lock-variable-name-face ((t (:foreground "#839496"))))
-   '(font-lock-warning-face ((t (:foreground "Pink"))))
+   '(font-lock-warning-face ((t (:foreground "Pink" :weight bold))))
 
    `(c-annotation-face ((t (:inherit font-lock-constant-face))))
 
