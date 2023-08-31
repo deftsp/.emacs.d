@@ -1144,7 +1144,8 @@ inputting math (Unicode) symbols." t))
   :diminish
   :config
   (setq pangu-spacing-real-insert-separtor t)
-  (global-pangu-spacing-mode 1))
+  ;; it will cause org-mode can not align when mix English an Chinese
+  (global-pangu-spacing-mode -1))
 
 (use-package company-ledger
   :after (company beancount))
