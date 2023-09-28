@@ -3,7 +3,7 @@
 ;;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
 
-(setq read-process-output-max (* 1024 1024 2)) ;; 2mb
+(setq read-process-output-max (* 2 1024 1024)) ;; 2mb
 
 (setq byte-compile-warnings '(cl-functions))
 ;; want to see how often GC happens
