@@ -736,6 +736,18 @@ that was stored with tl/point-to-register."
 (add-hook 'write-file-hooks 'time-stamp)
 (add-hook 'before-save-hook 'time-stamp)
 
+;; /usr/share/zoneinfo
+(setq world-clock-list
+      '(("Asia/Chongqing" "China")
+        ("UTC" "UTC")
+        ("America/Los_Angeles" "Seattle")
+        ("America/New_York" "New York")
+        ("Asia/Tokyo" "Tokyo")
+        ("Europe/London" "London")
+        ("Europe/Paris" "Paris")))
+(setq world-clock-timer-second 1)
+(setq world-clock-time-format " %a, %b %d %H:%M:%S %Z") ; "%A %d %B %R %Z"
+
 ;;; file variable
 (defun tl/insert-file-variable ()
   "Insert file variable string \"-*- Major-Mode-Name -*-\" with
