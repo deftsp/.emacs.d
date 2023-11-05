@@ -77,6 +77,9 @@
 (if window-system
     (progn
       (setq window-divider-default-places 'right-only
+            ;; window-divider-default-bottom-width 4
+            ;; window-divider-default-right-width 4
+            ;; window-divider-default-places t
             window-divider-default-right-width 4)
       (window-divider-mode +1))
   ;; console window split line
