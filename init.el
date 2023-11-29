@@ -3,6 +3,8 @@
 ;;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
 
+(require 'cl)
+
 (setq read-process-output-max (* 2 1024 1024)) ;; 2mb
 
 (setq byte-compile-warnings '(cl-functions))
