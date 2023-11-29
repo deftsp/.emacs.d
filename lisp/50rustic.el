@@ -13,6 +13,9 @@
   (setq rustic-cargo-check-arguments "--benches --tests")
   (setq rustic-treesitter-derive t)
 
+  ;; lsp-mode use `rustic-indent-offset', but it is defined in rustic-rust-mode and for emacs 29 it will not be require
+  (defvaralias 'rustic-indent-offset 'rust-indent-offset)
+
   (let ((client
          (pcase dottl-lsp-client
            ('lsp-mode  'lsp-mode)
@@ -40,7 +43,7 @@
 
   (defun tl/rustic-mode-init ()
     ;; (prettify-symbols-mode +1)
-    (smartparens-strict-mode +1)
+    ;; (smartparens-strict-mode +1)
     (when (fboundp 'pangu-spacing-mode)
       (pangu-spacing-mode -1))
     ;; (when (fboundp 'org-link-minor-mode)

@@ -346,7 +346,7 @@
 (straight-use-package 'ascii-art-to-unicode)
 (straight-use-package '(git-timemachine :host nil :type git :repo "https://codeberg.org/pidu/git-timemachine.git"))
 ;; (straight-use-package 'moz-repl)
-(straight-use-package 'session)
+;; (straight-use-package 'session)
 (straight-use-package 'asciidoc)
 (straight-use-package 'embrace)
 (straight-use-package '(git-undo-el :type git :host github :repo "jwiegley/git-undo-el"))

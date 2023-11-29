@@ -85,6 +85,7 @@
 
 
 ;; https://github.com/manateelazycat/fingertip
+;; M-x `treesit-install-language-grammar' to update per language. check out ~/.emacs.d/tree-sitter
 (use-package treesit-auto
   :config
   ;; NOTE: when global-treesit-auto-mode enabled, rust-mode will be rempap to the build-in rust-ts-mode.

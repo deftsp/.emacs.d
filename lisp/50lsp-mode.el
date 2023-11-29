@@ -123,6 +123,7 @@
   :commands lsp-ui-mode
   :init
   (setq lsp-ui-peek-always-show t
+        lsp-ui-peek-fontify 'always ; 'on-demand
         lsp-ui-sideline-delay 0.2
         lsp-ui-sideline-enable t      ; annoying when window width is small
         lsp-ui-sideline-show-diagnostics t
