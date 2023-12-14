@@ -73,6 +73,10 @@
 
 ;; or see the `straight-built-in-pseudo-packages' variable
 ;; straight-use-package '(org :type built-in))
+
+;; Pin the org versin to ca873f7
+;; https://github.com/org-roam/org-roam/issues/2361
+;; https://old.reddit.com/r/emacs/comments/15jyzz7/strange_orgroam_bug_with_links_and_more/
 (straight-use-package 'org)
 (straight-use-package 'org-contrib)
 (straight-use-package 'org-mru-clock)
