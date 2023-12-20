@@ -411,6 +411,13 @@
    ;; rust
    '(tl/rust-exclaim-face ((t (:foreground "#73c0c3" :weight bold))))
 
+   ;; lsp-bridge
+   '(lsp-bridge-ref-font-lock-header-line-text ((t (:foreground "#2aa198" :bold t))))
+   '(lsp-bridge-ref-font-lock-header-line-edit-mode ((t (:foreground "#f3a496" :bold t))))
+   '(lsp-bridge-ref-font-lock-command ((t (:foreground "#75cc55" :bold t))))
+   '(lsp-bridge-ref-font-lock-match ((t (:foreground "#55ac35" :bold t))))
+   '(lsp-bridge-ref-font-lock-file ((t (:foreground "#608fbf" :bold t))))
+
    ;; cedet
    '(pulse-highlight-start-face ((t (:background "#222222"))))
    '(semantic-tag-boundary-face ((t (:overline "#227777"))))

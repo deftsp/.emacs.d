@@ -108,6 +108,7 @@ network-security.data
 vimish-fold/
 request/
 .lsp-session-v*
+lsp-bridge-known-projects.el
 transient/
 .purpose-layout
 layouts/
