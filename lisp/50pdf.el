@@ -70,6 +70,10 @@
     "O"     'pdf-outline
     "n"     'pdf-view-midnight-minor-mode)
 
+  (general-evil-define-key 'normal pdf-view-mode-map
+    "d" 'pdf-view-scroll-up-or-next-page
+    "e" 'pdf-view-scroll-down-or-previous-page)
+
   (general-evil-define-key 'visual pdf-view-mode-map
     "ah" 	'pdf-annot-add-highlight-markup-annotation
     "am" 	'pdf-annot-add-markup-annotation
