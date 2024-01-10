@@ -3,6 +3,14 @@
 ;; Emacs HEAD (27+) introduces early-init.el, which is run before init.el,
 ;; before package and UI initialization happens.
 
+;;; ENV
+;; https://emacs-lsp.github.io/lsp-mode/page/performance/#use-plists-for-deserialization
+(setenv "LSP_USE_PLISTS" "true")
+
+;; (setenv "SBCL_HOME" "/usr/lib/sbcl")
+;; this gives matlab access to the X11 windowing system, so I can see figures, etc.
+;; (setenv "DISPLAY" ":0.0")
+
 ;; doom-emacs: A big contributor to startup times is garbage collection. We up
 ;; the gc threshold to temporarily prevent it from running, then reset it later
 ;; by enabling `gcmh-mode'. Not resetting it will cause stuttering/freezes.

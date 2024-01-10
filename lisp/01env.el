@@ -8,13 +8,6 @@
 (setenv "LC_CTYPE" (or (getenv "LC_CTYPE") "en_US.UTF-8"))
 (set-language-environment 'UTF-8) ; Chinese-GB, English
 
-;;; ENV
-;; (setenv "LSP_USE_PLISTS" "true")
-;; (setenv "SBCL_HOME" "/usr/lib/sbcl")
-
-;; this gives matlab access to the X11 windowing system, so I can see figures, etc.
-;; (setenv "DISPLAY" ":0.0")
-
 ;;; coding system
 (setq default-process-coding-system '(utf-8-unix . utf-8-unix))
 (defun tl/set-coding-system (coding)

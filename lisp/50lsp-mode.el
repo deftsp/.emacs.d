@@ -9,8 +9,8 @@
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-log-io nil
-        ;; after `lsp-use-plists', will make lsp watch for rust not work!!!
-        lsp-use-plists nil
+        ;; rebuild lsp-mode lsp-ivy lsp-ui lsp-treemacs flycheck  flycheck-rust lsp-tailwindcs
+        lsp-use-plists t
         lsp-enable-folding nil
         lsp-diagnostics-provider :flycheck  ; :none, no real time syntax check
         lsp-enable-symbol-highlighting nil ; turn off for better performance
@@ -45,26 +45,38 @@
   ;; (push "[/\\\\][^/\\\\]*\\.\\(json\\|html\\|jade\\)$" lsp-file-watch-ignored) ; json
   (push "[/\\\\]pgdata" lsp-file-watch-ignored)
 
-  ;; https://emacs-lsp.github.io/lsp-mode/page/lsp-rust-analyzer/
-  ;; https://rust-analyzer.github.io/manual.html
-  (use-package lsp-rust
-    :init
-    (setq lsp-rust-server 'rust-analyzer
-          ;; lsp-rust-target-dir "/tmp/rust-analyzer-check" ; seems not work
-          ;;Yew project (target to wasm32-unknown-unknown), rust-analyzer will given wrong
-          ;;warning of "unresolved-import"
-          lsp-rust-analyzer-diagnostics-disabled ["unresolved-import"]
-          lsp-rust-analyzer-proc-macro-enable t
-          lsp-rust-analyzer-display-chaining-hints t
-          lsp-rust-analyzer-display-parameter-hints t
-          lsp-rust-analyzer-cargo-run-build-scripts t
-          lsp-rust-analyzer-cargo-watch-enable t
-          lsp-rust-analyzer-cargo-watch-command "clippy" ; "clippy" or "check"
-          ;; lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")
-          lsp-rust-analyzer-server-command '("rustup run stable rust-analyzer")
-          ;; lsp-rust-analyzer-server-command '("rust-analyzer")
-          )
-    )
+  ;; https://github.com/blahgeek/emacs-lsp-booster
+  ;;;;; emacs-lsp-booster config start
+  (defun lsp-booster--advice-json-parse (old-fn &rest args)
+    "Try to parse bytecode instead of json."
+    (or
+     (when (equal (following-char) ?#)
+       (let ((bytecode (read (current-buffer))))
+         (when (byte-code-function-p bytecode)
+           (funcall bytecode))))
+     (apply old-fn args)))
+  (advice-add (if (progn (require 'json)
+                         (fboundp 'json-parse-buffer))
+                  'json-parse-buffer
+                'json-read)
+              :around
+              #'lsp-booster--advice-json-parse)
+
+  (defun lsp-booster--advice-final-command (old-fn cmd &optional test?)
+    "Prepend emacs-lsp-booster command to lsp CMD."
+    (let ((orig-result (funcall old-fn cmd test?)))
+      (if (and (not test?)                             ;; for check lsp-server-present?
+               (not (file-remote-p default-directory)) ;; see lsp-resolve-final-command, it would add extra shell wrapper
+               lsp-use-plists
+               (not (functionp 'json-rpc-connection))  ;; native json-rpc
+               (executable-find "emacs-lsp-booster"))
+          (progn
+            (message "Using emacs-lsp-booster for %s!" orig-result)
+            (cons "emacs-lsp-booster" orig-result))
+        orig-result)))
+  (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
+  ;;;;; emacs-lsp-booster config end
+
 
   (tl/set-leader-keys-for-mode 'lsp-mode
     ;; format
@@ -208,6 +220,28 @@
 (defun tl/lsp-avy-goto-symbol ()
   (interactive)
   (tl//lsp-avy-document-symbol nil))
+
+
+;; https://emacs-lsp.github.io/lsp-mode/page/lsp-rust-analyzer/
+;; https://rust-analyzer.github.io/manual.html
+(use-package lsp-rust
+  :after lsp-mode
+  :init
+  (setq lsp-rust-server 'rust-analyzer
+        ;; lsp-rust-target-dir "/tmp/rust-analyzer-check" ; seems not work
+        ;;Yew project (target to wasm32-unknown-unknown), rust-analyzer will given wrong
+        ;;warning of "unresolved-import"
+        lsp-rust-analyzer-diagnostics-disabled ["unresolved-import"]
+        lsp-rust-analyzer-proc-macro-enable t
+        lsp-rust-analyzer-display-chaining-hints t
+        lsp-rust-analyzer-display-parameter-hints t
+        lsp-rust-analyzer-cargo-run-build-scripts t
+        lsp-rust-analyzer-cargo-watch-enable t
+        lsp-rust-analyzer-cargo-watch-command "clippy" ; "clippy" or "check"
+        ;; lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")
+        ;; lsp-rust-analyzer-server-command '("rust-analyzer")
+        lsp-rust-analyzer-server-command '("rustup run stable rust-analyzer")))
+
 
 
 ;; Integration with the debug server
