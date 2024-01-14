@@ -289,6 +289,7 @@
   (require 'lsp-pyright)
   (lsp-deferred))
 
+;; M-x lsp-update-server to update pyright
 (use-package lsp-pyright
   :defer t
   :hook (python-mode . tl//enable-lsp-pyright)

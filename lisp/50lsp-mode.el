@@ -38,6 +38,7 @@
   (setq lsp-idle-delay 0.500)
   :hook ((lsp-mode . lsp-enable-which-key-integration)
          ;; (python-mode . lsp-deferred)
+         (python-ts-mode . lsp-deferred)
          ;; (rust-mode . lsp) ; rustic will setup it
          (rustic-mode . lsp-deferred))
   :config
