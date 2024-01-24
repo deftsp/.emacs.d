@@ -70,7 +70,6 @@
                     "#+TITLE: ${title}\n#+CREATED: %u\n#+LAST_MODIFIED: %U\n#+FILETAGS: other\n\n")
            :unnarrowed t)))
   :config
-  (use-package org-roam-protocol)
 
   ;; for org-roam-buffer-toggle
   (add-to-list 'display-buffer-alist
@@ -89,8 +88,10 @@
     "rl" 'org-roam-buffer-toggle
     "rr" 'org-roam-ref-find)
 
-  (org-roam-db-autosync-mode +1)
-  (require 'org-roam-protocol))
+  (org-roam-db-autosync-mode +1))
+
+(use-package org-roam-protocol
+  :after org)
 
 ;; (use-package org-roam-server
 ;;   :defer t
