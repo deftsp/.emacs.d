@@ -7,8 +7,8 @@
 
 ;; org-roam-db-build-cache
 (use-package org-roam
+  :after org
   :diminish org-roam-mode
-  :defer 5
   :commands
   (org-roam-buffer
    org-roam-capture
