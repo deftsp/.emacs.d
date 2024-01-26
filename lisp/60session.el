@@ -176,33 +176,33 @@
     (desktop-save-mode +1)))
 
 ;;; workgroups2
-(use-package workgroups2
-  :chords ((".w" . wg-prefixed-map))
-  :bind (:map wg-prefixed-map
-         ("s" . wg-save-session))
-  :init
-  ;; use '(wg-workgroup-name (wg-current-workgroup))' to get workgroup name
-  (setq wg-mode-line-display-on (not (featurep 'powerline))
-        wg-modeline-string "")
-  (setq wg-flag-modified t)               ; Display modified flags as well
-  (setq wg-mode-line-decor-left-brace "#" ; "♯"
-        wg-mode-line-decor-right-brace ""
-        wg-mode-line-decor-divider ":")
+;; latest workgroups2 delete some command, I might try other one
+;; (use-package workgroups2
+;;   :chords ((".w" . wg-prefixed-map))
+;;   :bind (:map wg-prefixed-map
+;;          ("s" . wg-save-session))
+;;   :init
+;;   ;; use '(wg-workgroup-name (wg-current-workgroup))' to get workgroup name
+;;   (setq wg-mode-line-display-on (not (featurep 'powerline))
+;;         wg-modeline-string "")
+;;   (setq wg-flag-modified t)               ; Display modified flags as well
+;;   (setq wg-mode-line-decor-left-brace "#" ; "♯"
+;;         wg-mode-line-decor-right-brace ""
+;;         wg-mode-line-decor-divider ":")
 
-  (setq wg-session-load-on-start (not (daemonp)) ; set to nil, if you emacs started as daemon
-        wg-session-file (expand-file-name "~/.emacs.d/workgroups2")
-        ;; wg-prefix-key (kbd "C-c w")
-        wg-prefix-key (kbd "s-w")
-        wg-emacs-exit-save-behavior nil
-        wg-workgroups-mode-exit-save-behavior 'save))
+;;   (setq wg-session-load-on-start (not (daemonp)) ; set to nil, if you emacs started as daemon
+;;         wg-session-file (expand-file-name "~/.emacs.d/workgroups2")
+;;         ;; wg-prefix-key (kbd "C-c w")
+;;         wg-prefix-key (kbd "s-w")
+;;         wg-emacs-exit-save-behavior nil
+;;         wg-workgroups-mode-exit-save-behavior 'save))
 
-(defun tl/turn-on-workgroups-mode ()
-  (interactive)
-  (when (fboundp 'workgroups-mode)
-    (workgroups-mode +1)))
+;; (defun tl/turn-on-workgroups-mode ()
+;;   (interactive)
+;;   (when (fboundp 'workgroups-mode)
+;;     (workgroups-mode +1)))
 
 ;; make sure workgroups2 runs before desktop
-;; not work with Emacs28
 ;; (add-hook 'after-init-hook 'tl/turn-on-workgroups-mode)
 
 (provide '60session)
