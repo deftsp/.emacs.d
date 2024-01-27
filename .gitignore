@@ -133,4 +133,6 @@ librime/
 rime/
 projects
 
+devdocs-browser/
+
 sync-to-remote.sh

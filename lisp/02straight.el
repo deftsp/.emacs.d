@@ -361,6 +361,8 @@
 (straight-use-package 'multi-vterm)
 (straight-use-package 'vterm-toggle)
 
+(straight-use-package '(emacs-devdocs-browser :type git :host github :repo "blahgeek/emacs-devdocs-browser"))
+
 (straight-use-package 'shell-pop)
 (straight-use-package 'auto-complete)
 (straight-use-package 'epc)
