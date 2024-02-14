@@ -110,31 +110,28 @@ or if NODEFAULT is non-nil, then fall back to returning nil."
           (and (not nodefault)
                default-directory))))
 
-  :config/el-patch
   ;; Bug Fix: if rename the directory using dired. it may lead to "Error in rustic-flycheck-setup: (file-missing
   ;; "Setting current directory" "No such file or directory" "/Users/test/foo/")"
-
-  ;; NOTE: if eval following code with C-x C-e, when eval the function will lead to `rustic-flycheck-setup: Can’t use
-  ;; ‘el-patch-swap’ outside of an ‘el-patch’'
-  ;; It must be evaled by the `use-package' with the ":config/el-path"
-  (defun rustic-flycheck-setup ()
+  (defun tl/rustic-flycheck-setup ()
     "Setup Rust in Flycheck.
 
 If the current file is part of a Cargo project, configure
 Flycheck according to the Cargo project layout."
-    (el-patch-swap
-      (interactive)
-      ;; We should avoid raising any error in this function, as in combination
-      ;; with `global-flycheck-mode' it will render Emacs unusable (see
-      ;; https://github.com/flycheck/flycheck-rust/issues/40#issuecomment-253760883).
-      (with-demoted-errors "Error in rustic-flycheck-setup: %S"
-        (-when-let* ((file-name (buffer-file-name))
-                     (is-file-exists (file-exists-p file-name))
-                     (target (rustic-flycheck-find-cargo-target file-name)))
-          (let-alist target
-            (setq-local flycheck-rust-features .required-features)
-            (setq-local flycheck-rust-crate-type .kind)
-            (setq-local flycheck-rust-binary-name .name)))))))
+    (interactive)
+    ;; We should avoid raising any error in this function, as in combination
+    ;; with `global-flycheck-mode' it will render Emacs unusable (see
+    ;; https://github.com/flycheck/flycheck-rust/issues/40#issuecomment-253760883).
+    (with-demoted-errors "Error in rustic-flycheck-setup: %S"
+      (-when-let* ((file-name (buffer-file-name))
+                   (is-file-exists (file-exists-p file-name))
+                   (target (rustic-flycheck-find-cargo-target file-name)))
+        (let-alist target
+          (setq-local flycheck-rust-features .required-features)
+          (setq-local flycheck-rust-crate-type .kind)
+          (setq-local flycheck-rust-binary-name .name)))))
+
+  ;; (advice-remove 'rustic-flycheck-setup #'tl/rustic-flycheck-setup)
+  (advice-add 'rustic-flycheck-setup :override #'tl/rustic-flycheck-setup))
 
 (use-package rustic-cargo
   :after rustic
