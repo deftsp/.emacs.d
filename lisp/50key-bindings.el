@@ -443,6 +443,7 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "fg" 'rgrep
   "fl" 'find-file-literally
   "fz" 'reveal-in-osx-finder
+  "fD" 'tl/recentf-cleanup-non-exist-files
   ;; "fE" 'tl/sudo-edit
   ;; "fo" 'tl/open-in-external-app
   ;; "fR" 'tl/rename-current-buffer-file
