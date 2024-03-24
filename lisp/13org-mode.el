@@ -605,14 +605,31 @@ buffer which do not already have one. When `arg' nil only adds ids if the
 
 
 ;;; Priority
+;; https://christopherfin.com/emacs/programmer_priorities.html
+
+;; P0 Most urgent. Do not leave your desk before this is done.
+;; P1 Important.
+;; P2 If you don't have anything else, these should be worked on.
+;; P3 Probably can be deleted…you won't get to them.
+;; P4 Untriaged. This is the default state.
+
 ;; Note: `org-priority-faces' default to `nil' and if it is `nil' when mouse
 ;; over the agenda item, it cause tons of Invalid face reference: nil in
 ;; *Message* buffer. see also `org-agenda-fontify-priorities'
 ;; The entry default to B when no priority specified
 (setq org-priority-faces
-      '((?A . (:foreground "#ff40ff" :weight bold))
-        (?B . (:foreground "#00f900" :weight bold))
-        (?C . (:foreground "#fefb00" :weight bold))))
+      '((?0 . (:foreground "#ff0000" :weight bold))
+        (?1 . (:foreground "#ff8c00" :weight bold))
+        (?2 . (:foreground "#009900" :weight bold))
+        (?3 . (:foreground "#828282" :weight bold))
+        (?4 . (:foreground "#828282" :weight bold))))
+
+;; P4 is a peculiar "untriaged" default, because in programmer circles, P4 is more important that P3 and P2s. It's
+;; essentially an unknown priority, so it could be a terribly important issue. Therefore, I've made the default "blank"
+;; priority at P2 level. You can make the call on your priorities.
+(setq org-priority-highest 0
+      org-priority-default 2
+      org-priority-lowest 4)
 
 (use-package org-fancy-priorities
   :diminish org-fancy-priorities-mode
@@ -621,17 +638,12 @@ buffer which do not already have one. When `arg' nil only adds ids if the
   :defines org-fancy-priorities-list
   :hook (org-mode . org-fancy-priorities-mode)
   :config
-  ;; (char-displayable-p ?❗)
-  (setq org-fancy-priorities-list '((?A . "⬆")
-                                    (?B . "·")
-                                    (?C . "⬇")
-                                    (?D . "☕")
-                                    (?1 . "·")
-                                    (?2 . "⮬")
-                                    (?3 . "⮮")
-                                    (?4 . "☕")
-                                    (?I . "Important"))))
-
+  (setq org-fancy-priorities-list
+        '((?0 . "P0")
+          (?1 . "P1")
+          (?2 . "P2")
+          (?3 . "P3")
+          (?4 . "P4"))))
 
 ;;; org-habit
 (setq org-habit-preceding-days 21
