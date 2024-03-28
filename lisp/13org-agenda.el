@@ -428,8 +428,8 @@ If VANILLA is non-nil, run the standard `org-capture'."
                                                      (org-agenda-skip-entry-if 'regexp "\\* NEXT")
                                                      (org-agenda-skip-entry-if 'scheduled 'deadline)))
                       (org-agenda-overriding-header "Inbox:")
-                      (org-agenda-sorting-strategy '(priority-down
-                                                     category-keep)))))
+                      (org-agenda-sorting-strategy '(category-down
+                                                     priority-down)))))
            ;; ((org-agenda-compact-blocks t))
            ((org-agenda-block-separator ?▰)))
           ("A" "Today's Priority #A Tasks" agenda ""
