@@ -239,7 +239,6 @@
     (add-to-list 'org-modules 'org-annotate-file)
     (add-to-list 'org-modules 'org-id)
     (add-to-list 'org-modules 'ol-man)
-    (add-to-list 'org-modules 'org-eval)
     (add-to-list 'org-modules 'org-panel)
     (add-to-list 'org-modules 'org-expiry)
     (add-to-list 'org-modules 'org-toc)
