@@ -71,6 +71,13 @@
   ;;         ("Reading" "~/.emacs.d/icons/org/book.png" nil nil :ascent center)
   ;;         ("\\(Holidays\\|Vacation\\)" "~/.emacs.d/icons/org/holidays.png" nil nil :ascent center)
   ;;         (".*" '(space . (:width (16))))))
+
+  ;; (setq org-agenda-category-icon-alist
+  ;;       `(("Work" ,(list (all-the-icons-faicon "cogs")) nil nil :ascent center)
+  ;;         ("Personal" ,(list (all-the-icons-material "person")) nil nil :ascent center)
+  ;;         ("Calendar" ,(list (all-the-icons-faicon "calendar")) nil nil :ascent center)
+  ;;         ("Reading" ,(list (all-the-icons-faicon "book")) nil nil :ascent center)))
+
   (tl/set-org-agenda-custom-commands)
   :config
   (progn
@@ -358,7 +365,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
   (let ((level (org-current-level)))
     (if (> level 1)
         (concat (make-string (* 2 (1- level))  #x20) "· ") ; ○►
-        "")))
+      "")))
 
 ;; https://emacs.stackexchange.com/a/9793/361
 (defun tl/org-entry-subtree-in-state-get (state property)
