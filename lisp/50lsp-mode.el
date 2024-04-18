@@ -228,10 +228,15 @@
 (use-package lsp-rust
   :after lsp-mode
   :init
+  (put 'lsp-rust-features 'safe-local-variable (lambda (x) (or (vectorp x) (and (stringp x) (string= x "all")))))
+
   (setq lsp-rust-server 'rust-analyzer
         ;; lsp-rust-target-dir "/tmp/rust-analyzer-check" ; seems not work
         ;;Yew project (target to wasm32-unknown-unknown), rust-analyzer will given wrong
         ;;warning of "unresolved-import"
+
+        ;; lsp-rust-features "all"
+        ;; lsp-rust-all-features t
         lsp-rust-analyzer-diagnostics-disabled ["unresolved-import"]
         lsp-rust-analyzer-proc-macro-enable t
         lsp-rust-analyzer-display-chaining-hints t
