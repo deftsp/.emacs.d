@@ -223,7 +223,9 @@
  '(lsp-bridge :type git
               :host github
               :repo "manateelazycat/lsp-bridge"
-              :files (:defaults "*")))
+              ;; :files (:defaults "*")
+              :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
+              :build (:not compile)))
 
 (straight-use-package 'lsp-ivy)
 (straight-use-package 'lsp-mode)
