@@ -34,8 +34,16 @@
                        :should-jump t
                        :heuristic 'point
                        :async 500
-                       :order 2))
-
+                       :order 2)
+  (when (eq dottl-lsp-client 'lsp-bridge)
+    (smart-jump-register :modes '(rust-mode rustic-mode)
+                         :jump-fn 'lsp-bridge-find-def
+                         :pop-fn 'lsp-bridge-find-def-return
+                         :refs-fn 'lsp-bridge-find-references
+                         :should-jump t
+                         :heuristic 'point
+                         :async 500
+                         :order 2)))
 
 ;; [[https://github.com/gilbertw1/better-jumper][gilbertw1/better-jumper: A configurable jump list implementation for Emacs]]
 (use-package better-jumper
