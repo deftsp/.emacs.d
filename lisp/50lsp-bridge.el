@@ -4,7 +4,36 @@
 
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
-;; gpip install epc orjson
+;; gpip install --upgrade epc orjson sexpdata six setuptools paramiko rapidfuzz
+
+;; https://github.com/tjtrabue/dotfiles/blob/develop/link/emacs/plugin-notebook/my-lsp.org
+(defun tl/define-hydra-lsp-bridge-peek ()
+  "Define the hydgra for `lsp-bridge-peek'."
+  (interactive "P")
+  (defhydra hydra-lsp-bridge-peek (:color pink :hint nil)
+    "
+^Primary^      ^Movement^            ^Actions^              ^Tree^
+^^^^^^^^------------------------------------------------------------------------
+_P_:   peek   _j_: next line        _l_:        jump        _u_: next branch
+_q_:   abort  _k_: prev line        _<return>_: jump        _i_: prev branch
+_C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
+^ ^           _K_: prev file line   _t_:        through     _p_: prev node
+"
+    ("P"        lsp-bridge-peek)
+    ("C-g"      lsp-bridge-peek-abort :exit t)
+    ("j"        lsp-bridge-peek-list-next-line)
+    ("k"        lsp-bridge-peek-list-prev-line)
+    ("J"        lsp-bridge-peek-file-content-next-line)
+    ("K"        lsp-bridge-peek-file-content-prev-line)
+    ("l"        lsp-bridge-peek-jump)
+    ("<return>" lsp-bridge-peek-jump)
+    ("h"        lsp-bridge-peek-jump-back)
+    ("t"        lsp-bridge-peek-through)
+    ("u"        lsp-bridge-peek-tree-next-branch)
+    ("i"        lsp-bridge-peek-tree-previous-branch)
+    ("o"        lsp-bridge-peek-tree-next-node)
+    ("p"        lsp-bridge-peek-tree-previous-node)
+    ("q"        lsp-bridge-peek-abort :exit t)))
 
 (use-package lsp-bridge
   :if (eq dottl-lsp-client 'lsp-bridge)
@@ -13,10 +42,10 @@
         ;; lsp-bridge-enable-log t
         lsp-bridge-enable-inlay-hint nil
         lsp-bridge-enable-diagnostics t)
-  :general
+  :general-config
   (general-def lsp-bridge-mode-map
-    "M-." 'lsp-bridge-find-def
-    "M-," 'lsp-bridge-find-def-return
+    ;; "M-." 'lsp-bridge-find-def
+    ;; "M-," 'lsp-bridge-find-def-return
     "M-]" 'lsp-bridge-diagnostic-jump-next
     "M-[" 'lsp-bridge-diagnostic-jump-prev
     "M-r" 'lsp-bridge-find-references
@@ -28,8 +57,9 @@
     "C-l" 'acm-complete)
   (general-def 'normal lsp-bridge-mode-map
     ;; "ga" 'xref-find-apropos
-    "gd" 'lsp-bridge-find-def
-    "gD" 'lsp-bridge-find-def-other-window
+    ;; "gd" 'lsp-bridge-find-def
+    ;; "gD" 'lsp-bridge-find-def-other-window
+    "gd" 'smart-jump-go
     "K"  'lsp-bridge-lookup-documentation
     "gj" 'lsp-bridge-diagnostic-jump-next
     "gk" 'lsp-bridge-diagnostic-jump-prev
@@ -123,35 +153,6 @@
 
   (tl/define-hydra-lsp-bridge-peek)
   (global-lsp-bridge-mode))
-
-;; https://github.com/tjtrabue/dotfiles/blob/develop/link/emacs/plugin-notebook/my-lsp.org
-(defun tl/define-hydra-lsp-bridge-peek ()
-  "Define the hydgra for `lsp-bridge-peek'."
-  (interactive "P")
-  (defhydra hydra-lsp-bridge-peek (:color pink :hint nil)
-    "
-^Primary^      ^Movement^            ^Actions^              ^Tree^
-^^^^^^^^------------------------------------------------------------------------
-_P_:   peek   _j_: next line        _l_:        jump        _u_: next branch
-_q_:   abort  _k_: prev line        _<return>_: jump        _i_: prev branch
-_C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
-^ ^           _K_: prev file line   _t_:        through     _p_: prev node
-"
-    ("P"        lsp-bridge-peek)
-    ("C-g"      lsp-bridge-peek-abort :exit t)
-    ("j"        lsp-bridge-peek-list-next-line)
-    ("k"        lsp-bridge-peek-list-prev-line)
-    ("J"        lsp-bridge-peek-file-content-next-line)
-    ("K"        lsp-bridge-peek-file-content-prev-line)
-    ("l"        lsp-bridge-peek-jump)
-    ("<return>" lsp-bridge-peek-jump)
-    ("h"        lsp-bridge-peek-jump-back)
-    ("t"        lsp-bridge-peek-through)
-    ("u"        lsp-bridge-peek-tree-next-branch)
-    ("i"        lsp-bridge-peek-tree-previous-branch)
-    ("o"        lsp-bridge-peek-tree-next-node)
-    ("p"        lsp-bridge-peek-tree-previous-node)
-    ("q"        lsp-bridge-peek-abort :exit t)))
 
 
 
