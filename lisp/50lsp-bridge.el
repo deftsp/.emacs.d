@@ -41,7 +41,15 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
   (setq acm-enable-quick-access t
         ;; lsp-bridge-enable-log t
         lsp-bridge-enable-inlay-hint nil
-        lsp-bridge-enable-diagnostics t)
+        lsp-bridge-enable-diagnostics t
+        lsp-bridge-enable-completion-in-minibuffer nil
+        lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame
+        lsp-bridge-enable-with-tramp t
+        lsp-bridge-enable-org-babel t
+        acm-backend-yas-match-by-trigger-keyword t
+        acm-enable-tabnine nil
+        acm-enable-codeium nil)
+
   :general-config
   (general-def lsp-bridge-mode-map
     ;; "M-." 'lsp-bridge-find-def
@@ -89,9 +97,8 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
     "u"        'lsp-bridge-ref-unfilter
     "x"        'lsp-bridge-ref-filter-match-files)
   :config
-  (add-hook 'lsp-bridge-mode-hook
-            (lambda ()
-              (add-hook 'xref-backend-functions #'lsp-bridge-xref-backend nil t)))
+  (add-to-list 'lsp-bridge-multi-lang-server-extension-list '(("html") . "html_tailwindcss"))
+  (add-to-list 'lsp-bridge-multi-lang-server-extension-list '(("css") . "css_tailwindcss"))
 
   ;; (evil-define-key 'motion 'lsp-bridge-mode (kbd "C-]") 'lsp-bridge-find-define)
   ;; (evil-define-key 'motion 'lsp-bridge-mode (kbd "g d") 'lsp-bridge-find-define)
@@ -133,7 +140,7 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
     "br" #'lsp-bridge-restart-process
     ;; "bs" #'lsp-workspace-shutdown
     ;; ;; refactor
-    ;; "rr" #'lsp-rename
+    "rr" #'lsp-bridge-rename
     ;; ;; toggles
     ;; "Td" #'lsp-ui-doc-mode
     ;; "Ts" #'lsp-ui-sideline-mode
