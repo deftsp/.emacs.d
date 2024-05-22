@@ -39,9 +39,13 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
   :if (eq dottl-lsp-client 'lsp-bridge)
   :init
   (setq acm-enable-quick-access t
-        ;; lsp-bridge-enable-log t
+        lsp-bridge-enable-log nil
         lsp-bridge-enable-inlay-hint nil
         lsp-bridge-enable-diagnostics t
+
+        lsp-bridge-diagnostic-enable-overlays nil
+        lsp-bridge-enable-hover-diagnostic nil
+
         lsp-bridge-enable-completion-in-minibuffer nil
         lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame
         lsp-bridge-enable-with-tramp t
@@ -160,7 +164,5 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
 
   (tl/define-hydra-lsp-bridge-peek)
   (global-lsp-bridge-mode))
-
-
 
 (provide '50lsp-bridge)
