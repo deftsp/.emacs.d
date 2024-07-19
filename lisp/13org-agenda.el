@@ -410,14 +410,14 @@ If VANILLA is non-nil, run the standard `org-capture'."
                         (org-agenda-skip-function '(or
                                                     (org-agenda-skip-entry-if 'scheduled)))
                         (org-agenda-overriding-header "NEXT Tasks:")))
-            (tags-todo "CATEGORY=\"Proj\"&LEVEL<=3"
-                       ((org-agenda-sorting-strategy '(priority-down tag-up))
-                        ;; N.B. that there is a third bug or oddity here: you can only use %(expression) once
-                        (org-agenda-prefix-format " %i %(tl/org-agenda-projects-prefix)")
-                        (org-agenda-skip-function '(or
-                                                    (org-agenda-skip-entry-if 'regexp "\\* NEXT")
-                                                    (org-agenda-skip-entry-if 'todo 'done 'scheduled)))
-                        (org-agenda-overriding-header "Projects:")))
+            ;; (tags-todo "CATEGORY=\"Proj\"&LEVEL<=3"
+            ;;            ((org-agenda-sorting-strategy '(priority-down tag-up))
+            ;;             ;; N.B. that there is a third bug or oddity here: you can only use %(expression) once
+            ;;             (org-agenda-prefix-format " %i %(tl/org-agenda-projects-prefix)")
+            ;;             (org-agenda-skip-function '(or
+            ;;                                         (org-agenda-skip-entry-if 'regexp "\\* NEXT")
+            ;;                                         (org-agenda-skip-entry-if 'todo 'done 'scheduled)))
+            ;;             (org-agenda-overriding-header "Projects:")))
 
             ;; (tags "+PRIORITY=\"A\"+CATEGORY={Inbox\\|Task\\|Project}"
             ;;       ((org-agenda-skip-function
@@ -430,7 +430,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
             (alltodo ""
                      ((org-agenda-skip-function '(or (tl/org-agenda-skip-subtree-if-habit)
                                                      (tl/org-agenda-skip-subtree-if-priority ?A)
-                                                     (tl/org-agenda-skip-project)
+                                                     ;; (tl/org-agenda-skip-project)
                                                      (tl/org-agenda-skip-if-blocked)
                                                      (org-agenda-skip-entry-if 'regexp "\\* NEXT")
                                                      (org-agenda-skip-entry-if 'scheduled 'deadline)))
