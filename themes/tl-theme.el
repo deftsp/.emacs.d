@@ -574,13 +574,16 @@
    '(tree-sitter-hl-face:function.call ((t (:inherit font-lock-function-name-face))))
 
    ;; magit
-   '(magit-diff-hunk-heading ((t (:foreground "#121232"
-                                  :background "#bbbb33"
+   '(magit-diff-hunk-heading ((t (:foreground "#000010"
+                                  :background "#006661"
                                   :slant italic
                                   :weight bold
+                                  :height 1.05
                                   :box nil))))
-   '(magit-diff-hunk-heading-highlight ((t (:inherit magit-diff-hunk-heading :foreground "#521212"))))
+   '(magit-diff-hunk-heading-highlight ((t (:inherit magit-diff-hunk-heading :foreground "#ccc212"))))
    '(magit-diff-hunk-heading-selection ((t (:inherit magit-diff-hunk-heading :foreground "#b292a2"))))
+   '(magit-diff-added-highlight ((t (:foreground "#cceecc" :background "#336633"))))
+   '(magit-diff-removed-highlight ((t (:foreground "#eecccc" :background "#663333"))))
 
    ;; rainbow-delimiters
    '(rainbow-delimiters-unmatched-face ((t (:foreground unspecified :inherit show-paren-mismatch :strike-through t))))
