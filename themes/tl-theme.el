@@ -250,7 +250,7 @@
    '(font-lock-function-call-face ((t (:foreground "#f08484"))))
    '(font-lock-keyword-face ((t (:foreground "#aede5d"  :weight bold))))
    '(font-lock-property-use-face ((t (:foreground "#8e9e9d"))))
-   '(font-lock-number-face ((t (:foreground "#beae3d"))))
+   '(font-lock-number-face ((t (:foreground "#7ebecd"))))
    '(font-lock-operator-face ((t (:foreground "#ce8e7d" :weight bold))))
    `(font-lock-negation-char-face ((t (:foreground ,yellow :weight bold))))
    '(font-lock-preprocessor-face ((t (:foreground "#79C96D" :slant italic))))
