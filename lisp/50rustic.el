@@ -12,7 +12,6 @@
   (setq rustic-lsp-server 'rust-analyzer)
   (setq rustic-cargo-check-arguments "--benches --tests")
   ;; (setq rustic-cargo-check-arguments "--benches --tests --all-features")
-  (setq rustic-treesitter-derive t)
 
   ;; lsp-mode use `rustic-indent-offset', but it is defined in rustic-rust-mode and for emacs 29 it will not be require
   (defvaralias 'rustic-indent-offset 'rust-indent-offset)

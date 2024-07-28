@@ -261,9 +261,14 @@
 
 (straight-use-package 'rust-mode)
 ;; (straight-use-package 'rustic)
+;; (straight-use-package
+;;  '(rustic :type git :host github :repo "brotzeit/rustic"
+;;           :fork (:host github :repo "deftsp/rustic" :branch "shihpin")))
+
+;; brotzeit/rustic is unmaintained, use this ford instead.
 (straight-use-package
- '(rustic :type git :host github :repo "brotzeit/rustic"
-          :fork (:host github :repo "deftsp/rustic" :branch "shihpin")))
+ '(rustic :type git :host github :repo "emacs-rustic/rustic"))
+
 (straight-use-package 'pdf-tools)
 (straight-use-package 'docker)
 (straight-use-package 'list-utils)
