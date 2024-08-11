@@ -579,6 +579,7 @@
                                   :slant italic
                                   :weight bold
                                   :height 1.05
+                                  :underline nil
                                   :box nil))))
    '(magit-diff-hunk-heading-highlight ((t (:inherit magit-diff-hunk-heading :foreground "#ccc212"))))
    '(magit-diff-hunk-heading-selection ((t (:inherit magit-diff-hunk-heading :foreground "#b292a2"))))

@@ -149,11 +149,22 @@
   :config
   (global-git-commit-mode +1))
 
-;; (use-package magit-delta
-;;   :after (magit)
-;;   :hook (magit-mode . magit-delta-mode)
-;;   :init
-;;   (setq magit-delta-default-light-theme "Solarized (dark)"))
+(use-package magit-delta
+  :after (magit)
+  :hook (magit-mode . magit-delta-mode)
+  :init
+  ;; https://dandavison.github.io/delta/full---help-output.html
+  (setq magit-delta-delta-args
+        `("--max-line-distance" "0.6"
+          ;; do not use the color emited by delta, and use magit's
+          "--true-color" ,(if xterm-color--support-truecolor "always" "never")
+          "--color-only"
+          ;; "--diff-so-fancy"
+          "--features" "magit-delta"))
+
+  (setq magit-delta-hide-plus-minus-markers nil)
+  (setq magit-delta-default-light-theme "Solarized (light)")
+  (setq magit-delta-default-dark-theme "Solarized (dark)"))
 
 ;; M-x magit-todos-list
 (use-package magit-todos
