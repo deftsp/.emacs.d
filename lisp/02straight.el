@@ -182,10 +182,16 @@
 ;; (straight-use-package 'ivy-fuz)
 
 ;; tree-sitter
+(straight-use-package 'treesit-auto)
 ;; (straight-use-package 'tree-sitter)
 ;; (straight-use-package 'tree-sitter-langs)
-(straight-use-package 'treesit-auto)
 ;; (straight-use-package 'evil-textobj-tree-sitter)
+(straight-use-package
+ '(evil-textobj-tree-sitter
+   :type git
+   :host github
+   :repo "meain/evil-textobj-tree-sitter"
+   :files (:defaults "queries" "treesit-queries")))
 (straight-use-package '(fingertip :type git :host github :repo "manateelazycat/fingertip"))
 
 (straight-use-package 'swiper)
