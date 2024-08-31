@@ -18,6 +18,7 @@
 (use-package rust-mode
   :defer t
   :init
+  (setq rust-rustfmt-switches '("--edition" "2021"))
   (setq rust-mode-treesitter-derive t)
   ;; (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
   ;; (defface tl/rust-exclaim-face
