@@ -276,6 +276,8 @@
  '(rustic :type git :host github :repo "emacs-rustic/rustic"))
 
 (straight-use-package 'pdf-tools)
+(straight-use-package 'saveplace-pdf-view)
+
 (straight-use-package 'docker)
 (straight-use-package 'list-utils)
 (straight-use-package 'ace-isearch)
