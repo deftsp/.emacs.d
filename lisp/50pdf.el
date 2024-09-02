@@ -27,7 +27,8 @@
   (add-hook 'pdf-outline-buffer-mode-hook 'tl/pdf-outline-buffer-init)
 
   ;; solarized dark + bright front
-  (setq pdf-view-midnight-colors '("#93a4a6" . "#002b36")) ; #839496
+  ;; if change `pdf-view-midnight-colors',  re-open the pdf file to take effect
+  (setq pdf-view-midnight-colors '("#c3d4d6" . "#002b36")) ; #839496
 
   (general-evil-define-key 'normal pdf-view-mode-map
     :prefix ","
