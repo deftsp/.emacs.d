@@ -114,24 +114,6 @@
     (when (and contents-buffer (buffer-live-p contents-buffer))
       (kill-buffer contents-buffer))))
 
-;; When `pdf-view-goto-page' be called, the pdf seems not finish render which cause fail to goto-page
-;; (add-hook 'pdf-view-change-page-hook 'tl//pdf-remember-page-number-h)
-;; (defun tl//pdf-remember-page-number-h ()
-;;   (when-let (page (and buffer-file-name (pdf-view-current-page)))
-;;     (tl-store-put buffer-file-name page nil "pdf-view")))
-
-
-;; (add-hook 'pdf-view-mode-hook 'tl//pdf-restore-page-number-h)
-
-;; ;; Persist current page for PDF files viewed in Emacs
-;; (defvar tl--pdf--page-restored-p nil)
-;; (defun tl//pdf-restore-page-number-h ()
-;;   (when-let (page (and buffer-file-name (tl-store-get buffer-file-name "pdf-view")))
-;;     (and (not tl--pdf--page-restored-p)
-;;          (<= page (or (pdf-cache-number-of-pages) 1))
-;;          (pdf-view-goto-page page)
-;;          (setq-local tl--pdf--page-restored-p t))))
-
 ;; NOTE: use counsel-bookmark to open the bookmarked pdf will jump to bookmarked page. Using counsel-recentf to open the
 ;; page before quit instead
 (use-package saveplace-pdf-view
