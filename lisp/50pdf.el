@@ -28,7 +28,7 @@
 
   ;; solarized dark + bright front
   ;; if change `pdf-view-midnight-colors',  re-open the pdf file to take effect
-  (setq pdf-view-midnight-colors '("#c3d4d6" . "#002b36")) ; #839496
+  (setq pdf-view-midnight-colors '("#d3e4e6" . "#002b36")) ; #839496
 
   (general-evil-define-key 'normal pdf-view-mode-map
     :prefix ","
@@ -132,8 +132,11 @@
 ;;          (pdf-view-goto-page page)
 ;;          (setq-local tl--pdf--page-restored-p t))))
 
-;; counsel-bookmark, counsel-file-file seems not work with save-place-mode
+;; NOTE: use counsel-bookmark to open the bookmarked pdf will jump to bookmarked page. Using counsel-recentf to open the
+;; page before quit instead
 (use-package saveplace-pdf-view
+  :preface
+  (require 'bookmark)
   :after pdf-view)
 
 (provide '50pdf)
