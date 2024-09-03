@@ -106,31 +106,37 @@ the modeline")
          'mouse-face 'mode-line-highlight)))
 
 (defpowerline tl/powerline-position
-  (concat
-   (if (and column-number-mode line-number-mode)
-       (propertize
-        (format " %%l/%d %%c/%d "
-                (count-lines (point-min) (point-max))
-                (- (line-end-position) (line-beginning-position)))
-        'local-map mode-line-column-line-number-mode-map
-        'mouse-face 'mode-line-highlight
-        'help-echo "Line number and Column number\n\
-mouse-1: Display Line and Column Mode Menu")
-     (if line-number-mode
+  (if (eq major-mode 'pdf-view-mode)
+      (format " %d/%s " (pdf-view-current-page)
+              (or (ignore-errors
+                    (number-to-string (pdf-cache-number-of-pages)))
+                  "???")
+              (pdf-cache-number-of-pages))
+    (concat
+     (if (and column-number-mode line-number-mode)
          (propertize
-          " L%l "
+          (format " %%l/%d %%c/%d "
+                  (count-lines (point-min) (point-max))
+                  (- (line-end-position) (line-beginning-position)))
           'local-map mode-line-column-line-number-mode-map
           'mouse-face 'mode-line-highlight
-          'help-echo "Line Number\n\
-mouse-1: Display Line and Column Mode Menu")
-       (if column-number-mode
+          'help-echo "Line number and Column number\n\
+    mouse-1: Display Line and Column Mode Menu")
+       (if line-number-mode
            (propertize
-            " C%c "
+            " L%l "
             'local-map mode-line-column-line-number-mode-map
             'mouse-face 'mode-line-highlight
-            'help-echo "Column number\n\
-mouse-1: Display Line and Column Mode Menu")
-         "")))))
+            'help-echo "Line Number\n\
+    mouse-1: Display Line and Column Mode Menu")
+         (if column-number-mode
+             (propertize
+              " C%c "
+              'local-map mode-line-column-line-number-mode-map
+              'mouse-face 'mode-line-highlight
+              'help-echo "Column number\n\
+    mouse-1: Display Line and Column Mode Menu")
+           ""))))))
 
 (defpowerline tl/powerline-file-size
   (concat
@@ -453,6 +459,8 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                            (list (funcall separator-left
                                           evil-face
                                           file-base-info-face)))))
+                ,(powerline-raw global-mode-string face1 'r)
+
                 ,(powerline-raw mode-line-front-space file-base-info-face)
                 ,(tl/powerline-client file-base-info-face)
                 ,(tl/powerline-remote file-base-info-face)
