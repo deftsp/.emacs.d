@@ -66,7 +66,7 @@
 ;;; east asian ambiguous settings
 ;; (use-package east-asian-ambiguous)
 
-;;; modifier
+;; modifier
 (cl-case system-type
   (darwin
    (setq mac-function-modifier 'hyper) ; 'none, super
@@ -92,6 +92,21 @@
    (setq x-meta-keysym 'super)
    ;; (setq x-alt-keysym 'meta)
    nil))
+
+
+;; https://emacs-china.org/t/topic/25811/10
+;; https://github.com/doomemacs/doomemacs/blob/a940ac5614c0bb34358682e42e9d7791f56d135a/lisp/doom-start.el
+;; PERF: Disable bidirectional text scanning for a modest performance boost.
+;;   I've set this to `nil' in the past, but the `bidi-display-reordering's docs
+;;   say that is an undefined state and suggest this to be just as good:
+(setq-default bidi-display-reordering 'left-to-right
+              bidi-paragraph-direction 'left-to-right)
+
+;; PERF: Disabling BPA makes redisplay faster, but might produce incorrect
+;;   reordering of bidirectional text with embedded parentheses (and other
+;;   bracket characters whose 'paired-bracket' Unicode property is non-nil).
+(setq bidi-inhibit-bpa t)  ; Emacs 27+ only
+
 
 ;;; Difference between "exec-path" and "PATH"
 ;; The value of "PATH" is used by emacs when you are running a shell in emacs, similar to when you
