@@ -459,8 +459,6 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                            (list (funcall separator-left
                                           evil-face
                                           file-base-info-face)))))
-                ,(powerline-raw global-mode-string face1 'r)
-
                 ,(powerline-raw mode-line-front-space file-base-info-face)
                 ,(tl/powerline-client file-base-info-face)
                 ,(tl/powerline-remote file-base-info-face)
