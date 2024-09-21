@@ -127,7 +127,8 @@ space and marks next symbol."
       (setq-local display-line-numbers 'relative))
 
     (defun tl/display-line-number-absolute ()
-      (setq-local display-line-numbers t))
+      (when (not (member major-mode  '(pdf-view-mode)))
+        (setq-local display-line-numbers t)))
 
     (add-hook 'evil-insert-state-entry-hook #'tl/display-line-number-absolute)
     (add-hook 'evil-insert-state-exit-hook #'tl/display-line-number-relative))
