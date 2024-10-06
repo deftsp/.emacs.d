@@ -353,4 +353,17 @@
 (with-eval-after-load "sgml-mode"
   (add-hook 'sgml-mode-hook 'tl/init-sgml-mode))
 
+;; Idle time after which deferred fontification should take place.
+;; https://old.reddit.com/r/emacs/comments/14c4l8j/way_to_make_emacs_feel_smoother/
+(setq jit-lock-defer-time 0)
+(with-eval-after-load 'evil
+  (defun pl/fontification_deferred_with_idle_time ()
+    (setq jit-lock-defer-time 0.25))
+
+  (defun pl/fontification_deferred_input_pending_only ()
+    (setq jit-lock-defer-time 0))
+
+  (add-hook 'evil-insert-state-entry-hook 'pl/deferred_fontification_with_idle_time nil t)
+  (add-hook 'evil-exit-state-entry-hook 'pl/fontification_deferred_input_pending_only nil t))
+
 (provide '50major-modes)
