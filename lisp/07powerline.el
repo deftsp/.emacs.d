@@ -463,6 +463,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                 ,(tl/powerline-client file-base-info-face)
                 ,(tl/powerline-remote file-base-info-face)
                 ,(tl/powerline-frame-id file-base-info-face)
+                ;; In pdf-view-mode, it will show as ":" only
                 ,(powerline-raw mode-line-mule-info file-base-info-face)
                 ,(tl/mode-line-modified file-base-info-face)
                 ,(tl/powerline-position file-base-info-face)
