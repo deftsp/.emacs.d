@@ -123,11 +123,15 @@ space and marks next symbol."
         display-line-numbers-grow-only t)
   :config
   (with-eval-after-load 'evil
+    (defun tl/should-enable-display-line-number ()
+      (not (s-prefix-p "pdf-" (symbol-name major-mode))))
+
     (defun tl/display-line-number-relative ()
-      (setq-local display-line-numbers 'relative))
+      (when (tl/should-enable-display-line-number)
+        (setq-local display-line-numbers 'relative)))
 
     (defun tl/display-line-number-absolute ()
-      (when (not (member major-mode  '(pdf-view-mode)))
+      (when (tl/should-enable-display-line-number)
         (setq-local display-line-numbers t)))
 
     (add-hook 'evil-insert-state-entry-hook #'tl/display-line-number-absolute)
