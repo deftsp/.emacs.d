@@ -44,8 +44,6 @@
   (defun tl/rustic-mode-init ()
     ;; (prettify-symbols-mode +1)
     ;; (smartparens-strict-mode +1)
-    (when (fboundp 'pangu-spacing-mode)
-      (pangu-spacing-mode -1))
     ;; (when (fboundp 'org-link-minor-mode)
     ;;   (org-link-minor-mode +1))
     (rainbow-delimiters-mode -1))

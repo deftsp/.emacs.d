@@ -1145,12 +1145,14 @@ inputting math (Unicode) symbols." t))
 
 ;;; pangu-spacing
 ;; emacs minor-mode to add space between Chinese and English characters.
-(use-package pangu-spacing
-  :diminish
-  :config
-  (setq pangu-spacing-real-insert-separtor t)
-  ;; it will cause org-mode can not align when mix English an Chinese
-  (global-pangu-spacing-mode -1))
+;; disable for the performance problem
+;; try warplish? https://github.com/manateelazycat/wraplish
+;; (use-package pangu-spacing
+;;   :diminish
+;;   :config
+;;   (setq pangu-spacing-real-insert-separtor t)
+;;   ;; it will cause org-mode can not align when mix English an Chinese
+;;   (global-pangu-spacing-mode -1))
 
 (use-package company-ledger
   :after (company beancount))
