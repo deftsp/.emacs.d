@@ -30,7 +30,8 @@
 
         lsp-semantic-tokens-enable nil)
 
-  (setq lsp-completion-show-kind t
+  (setq lsp-completion-enable t
+        lsp-completion-show-kind t
         ;; when set to :capf, the `company-capf' will be add to the company-backends automatically.
         lsp-completion-provider :none)
 
