@@ -5,6 +5,7 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;; gpip install --upgrade epc orjson sexpdata six setuptools paramiko rapidfuzz watchdog
+;; uv pip install --system --upgrade epc orjson sexpdata six setuptools paramiko rapidfuzz watchdog
 
 ;; https://github.com/tjtrabue/dotfiles/blob/develop/link/emacs/plugin-notebook/my-lsp.org
 (defun tl/define-hydra-lsp-bridge-peek ()
