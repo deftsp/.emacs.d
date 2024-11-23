@@ -121,26 +121,27 @@
   :config
   (require 'smartparens-config)
   (require 'smartparens-rust)
-  (defun tl//smartparens-disable-before-expand-snippet ()
-    "Handler for `yas-before-expand-snippet-hook'.
-Disable smartparens and remember its initial state."
-    ;; Remember the initial smartparens state only once, when expanding a top-level snippet.
-    (setq tl--smartparens-enabled-initially smartparens-mode)
-    (when smartparens-mode
-      (smartparens-mode -1)))
+  ;; It might cause smartparens-mode fail to restore??
+  ;;   (defun tl//smartparens-disable-before-expand-snippet ()
+  ;;     "Handler for `yas-before-expand-snippet-hook'.
+  ;; Disable smartparens and remember its initial state."
+  ;;     ;; Remember the initial smartparens state only once, when expanding a top-level snippet.
+  ;;     (setq tl--smartparens-enabled-initially smartparens-mode)
+  ;;     (when smartparens-mode
+  ;;       (smartparens-mode -1)))
 
 
-  (defun tl//smartparens-restore-after-exit-snippet ()
-    "Handler for `yas-after-exit-snippet-hook'.
- Restore the initial state of smartparens."
-    (when tl--smartparens-enabled-initially
-      (smartparens-mode +1)))
+  ;;   (defun tl//smartparens-restore-after-exit-snippet ()
+  ;;     "Handler for `yas-after-exit-snippet-hook'.
+  ;;  Restore the initial state of smartparens."
+  ;;     (when tl--smartparens-enabled-initially
+  ;;       (smartparens-mode +1)))
 
-  (with-eval-after-load 'yasnippet
-    (add-hook 'yas-before-expand-snippet-hook
-              #'tl//smartparens-disable-before-expand-snippet)
-    (add-hook 'yas-after-exit-snippet-hook
-              #'tl//smartparens-restore-after-exit-snippet))
+  ;;   (with-eval-after-load 'yasnippet
+  ;;     (add-hook 'yas-before-expand-snippet-hook
+  ;;               #'tl//smartparens-disable-before-expand-snippet)
+  ;;     (add-hook 'yas-after-exit-snippet-hook
+  ;;               #'tl//smartparens-restore-after-exit-snippet))
 
   (add-to-list 'sp-ignore-modes-list 'haskell-mode)
   ;; (define-key evil-insert-state-map ")" 'tl/smart-closing-parenthesis)
