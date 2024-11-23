@@ -92,6 +92,10 @@
   :init
   (setq el-patch-enable-use-package-integration t))
 
+(use-package mise
+  :config
+  (add-hook 'after-init-hook #'global-mise-mode))
+
 ;; Michael Hoffman at the comment of
 ;; http://endlessparentheses.com/understanding-letf-and-how-it-replaces-flet.html
 

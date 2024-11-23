@@ -572,6 +572,9 @@
 (straight-use-package 'flyspell-correct)
 (straight-use-package 'wucuo)
 
+
+(straight-use-package 'mise)
+
 (straight-use-package '(exwm :type git :host github :repo "deftsp/exwm" :branch "shihpin"))
 
 (provide '02straight)
