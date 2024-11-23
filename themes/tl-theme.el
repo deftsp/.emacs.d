@@ -469,6 +469,8 @@
    '(flymake-warnline ((t (:background "#333300" :foreground "#ccccff"))))
    '(flymake-errline ((t (:background "#402222" :foreground "#cceecc"))))
 
+   `(eldoc-box-border ((t (:background ,base01))))
+
    ;; git-gutter-fringe
    '(git-gutter-fr:modified ((t (:foreground "Magenta"))))
    '(git-gutter-fr:added ((t (:foreground "cyan"))))

@@ -131,6 +131,7 @@
 
 (straight-use-package 'smartparens)
 (straight-use-package 'flymake)
+(straight-use-package '(flymake-posframe :type git :host github :repo "Ladicle/flymake-posframe"))
 
 (straight-use-package '(vline :type git :host github :repo "buzztaiki/vline"))
 
@@ -233,6 +234,15 @@
               :files (:defaults "*.el" "*.py" "acm" "core" "langserver" "multiserver" "resources")
               :build (:not compile)))
 
+(straight-use-package
+ `(lspce :type git :host github :repo "zbelial/lspce"
+         :files (:defaults ,(pcase system-type
+                              ('gnu/linux "lspce-module.so")
+                              ('darwin "lspce-module.dylib")))
+         :pre-build ,(pcase system-type
+                       ('gnu/linux '(("cargo" "build" "--release") ("cp" "./target/release/liblspce_module.so" "./lspce-module.so")))
+                       ('darwin '(("cargo" "build" "--release") ("cp" "./target/release/liblspce_module.dylib" "./lspce-module.dylib"))))))
+
 (straight-use-package 'lsp-ivy)
 (straight-use-package 'lsp-mode)
 (straight-use-package 'lsp-ui)
@@ -328,7 +338,14 @@
 (straight-use-package 'gcmh)
 (straight-use-package 'magit-todos)
 (straight-use-package 'anaconda-mode)
+
 (straight-use-package 'eldoc-eval)
+(straight-use-package 'eldoc-box)
+
+(straight-use-package 'sideline)
+(straight-use-package '(sideline-eldoc :type git :host github :repo "ginqi7/sideline-eldoc"))
+(straight-use-package '(sideline-flymake :type git :host github :repo "emacs-sideline/sideline-flymake"))
+
 (straight-use-package 'geiser)
 ;; (straight-use-package 'major-mode-icons)
 (straight-use-package 'rsense)

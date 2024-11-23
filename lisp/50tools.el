@@ -1102,6 +1102,9 @@ inputting math (Unicode) symbols." t))
       (diminish 'undo-tree-mode))
     (with-eval-after-load "beacon"
       (diminish 'beacon-mode))
+    (with-eval-after-load "eldoc-box"
+      (diminish 'eldoc-box-hover-mode)
+      (diminish 'eldoc-box-hover-at-point-mode))
     (with-eval-after-load "ace-pinyin"
       (diminish 'ace-pinyin-mode))
     (with-eval-after-load "highlight-symbol"
