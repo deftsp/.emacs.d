@@ -90,7 +90,7 @@
 (require '50scheme)
 (require '50search)
 (require '50shell)
-(require '50syntax-checker)
+(require '50flycheck)
 (require '50flymake)
 (require '50solidity-mode)
 (require '50sql)

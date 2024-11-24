@@ -1,4 +1,4 @@
-;;; 50syntax-checker.el ---
+;;; 50flycheck.el ---
 
 ;; Copyright (C) 2017  Shihpin Tseng
 
@@ -97,5 +97,5 @@ If the error list is visible, hide it.  Otherwise, show it."
 ;; (use-package flycheck-grammarly
 ;;   :after flycheck)
 
-(provide '50syntax-checker)
-;;; 50syntax-checker ends here
+(provide '50flycheck)
+;;; 50flycheck ends here
