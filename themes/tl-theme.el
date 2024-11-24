@@ -482,6 +482,12 @@
    `(diff-hl-delete ((t (:foreground ,yellow :background ,yellow))))
    `(diff-hl-unknown ((t (:foreground)) ,violet :background ,violet))
 
+   ;; acm
+   `(acm-frame-border-face ((t (:background ,base02))))
+
+   ;; child frame
+   `(child-frame-border ((t (:background ,base02))))
+
    ;; eshell-prompt-extras
    `(tl/eshell-base-face ((t (:foreground ,base0 :background unspecified :font "mplus Nerd Font" :size 14))))
    `(epe-symbol-face ((t (:foreground "#d01ce2" :inherit tl/eshell-base-face))))

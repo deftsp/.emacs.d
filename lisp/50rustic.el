@@ -54,8 +54,10 @@
 
   (add-hook 'rustic-mode-hook 'tl/rustic-mode-init)
 
-  ;; use lsp-mode with rust-analyzer instead of rustic-clippy
-  ;; (push 'rustic-clippy flycheck-checkers)
+  ;; for lsp-mode with rust-analyzer instead of rustic-clippy
+  (with-eval-after-load 'flycheck
+    (when (not (eq dottl-lsp-client 'lsp-mode))
+      (push 'rustic-clippy flycheck-checkers)))
 
   (general-define-key
    :states 'normal

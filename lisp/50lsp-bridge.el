@@ -44,7 +44,7 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
         lsp-bridge-enable-inlay-hint nil
         lsp-bridge-enable-diagnostics t
 
-        lsp-bridge-diagnostic-enable-overlays t
+        lsp-bridge-diagnostic-enable-overlays nil
         lsp-bridge-enable-hover-diagnostic nil
 
         lsp-bridge-enable-completion-in-minibuffer nil
