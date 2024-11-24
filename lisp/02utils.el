@@ -547,23 +547,6 @@ If FORCE is non-nil, overwrite any existing line-height properties."
 
                              )))))
 
-
-;;; TODO: recursive
-(defun handle-square-bracket (from to expr)
-  (let ((open-bracket (search-forward "[" nil t))
-        (next-bracket (search-forward-regexp "\\[\\|\\]" nil t))
-        (expr (if expr expr "")))
-
-    ;; (concat expr )
-
-      (if (string= next-bracket "[")
-          (handle-square-bracket (match-beginning 1) to)
-
-        )
-
-
-    ))
-
 ;;; special region to eval
 (defun objc-to-cpp (from to)
   "convert objc code to cpp code."
