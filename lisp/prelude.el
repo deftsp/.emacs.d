@@ -57,7 +57,7 @@ can be toggled through `toggle-transparency'.")
 transparency level of a frame when it's inactive or deselected. Transparency
 can be toggled through `toggle-transparency'.")
 
-(defvar dottl-lsp-client 'lsp-mode "lsp client `lsp-mode', `lsp-bridge' or `lspce'")
+(defvar dottl-lsp-client 'lsp-bridge "lsp client `lsp-mode', `lsp-bridge' or `lspce'")
 
 (provide 'prelude)
 ;;; 00prelude.el ends here

@@ -135,8 +135,7 @@ space and marks next symbol."
         (setq-local display-line-numbers t)))
 
     (add-hook 'evil-insert-state-entry-hook #'tl/display-line-number-absolute)
-    (add-hook 'evil-insert-state-exit-hook #'tl/display-line-number-relative))
-  (global-display-line-numbers-mode +1))
+    (add-hook 'evil-insert-state-exit-hook #'tl/display-line-number-relative)))
 
 ;;; uniquify
 ;; add parent directory name to the buffers of the same name

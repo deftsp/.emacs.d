@@ -39,8 +39,7 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
 (use-package lsp-bridge
   :if (eq dottl-lsp-client 'lsp-bridge)
   :init
-  (setq acm-enable-quick-access t
-        lsp-bridge-enable-log nil
+  (setq lsp-bridge-enable-log nil
         lsp-bridge-enable-inlay-hint nil
         lsp-bridge-enable-diagnostics t
 
@@ -51,6 +50,9 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
         lsp-bridge-signature-show-function 'lsp-bridge-signature-show-with-frame
         lsp-bridge-enable-with-tramp t
         lsp-bridge-enable-org-babel t
+
+        acm-enable-quick-access t
+        acm-quick-access-use-number-select nil
         acm-backend-yas-match-by-trigger-keyword t
         acm-enable-tabnine nil
         acm-enable-codeium nil)
@@ -65,9 +67,17 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
     "M-R" 'lsp-bridge-diagnostic-list
     "M-v" 'acm-select-next-page)
   (general-def acm-mode-map
-    "C-j" 'acm-select-next
-    "C-k" 'acm-select-prev
+    "C-j" 'acm-doc-scroll-up
+    "C-k" 'acm-doc-scroll-down
+    "M-k" 'acm-select-prev
+    "M-k" 'acm-select-prev
     "C-l" 'acm-complete)
+  ;; These keybindings take effect when the code actions popup menu is in use.
+  (general-def lsp-bridge-call-hierarchy-mode-map
+    ;; Use `C-j' and `C-k' to navigate the code actions and call hierarchy popup
+    ;; menus.
+    "M-j" 'lsp-bridge-call-hierarchy-next
+    "M-k" 'lsp-bridge-call-hierarchy-prev)
   (general-def 'normal lsp-bridge-mode-map
     ;; "ga" 'xref-find-apropos
     ;; "gd" 'lsp-bridge-find-def
@@ -96,6 +106,8 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
     "i"        'lsp-bridge-ref-insert-current-line
     "j"        'lsp-bridge-ref-jump-next-keyword
     "k"        'lsp-bridge-ref-jump-prev-keyword
+    "M-j"      'lsp-bridge-ref-jump-next-keyword
+    "M-k"      'lsp-bridge-ref-jump-prev-keyword
     "l"        'lsp-bridge-ref-jump-next-file
     "q"        'lsp-bridge-ref-quit
     "r"        'lsp-bridge-ref-replace-all-matches
@@ -115,11 +127,11 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
   ;; (evil-define-key 'insert 'corfu-mode (kbd "C-p") 'corfu-previous)
 
   ;; lsp-bridge 发现 lsp-bridge-get-project-path-by-filepath 返回 nil 的时候就会继续查找 git 命令的查询结果。
-  (setq lsp-bridge-get-project-path-by-filepath 'tl/lsp-bridge-get-project-path-by-filepath)
+  ;; (setq lsp-bridge-get-project-path-by-filepath 'tl/lsp-bridge-get-project-path-by-filepath)
 
-  (load "~/.emacs.d/lsp-bridge-known-projects.el")
-  (defun tl/lsp-bridge-get-project-path-by-filepath (filepath)
-    (--first (string-prefix-p it filepath) tl/lsp-bridge-known-projects))
+  ;; (load "~/.emacs.d/lsp-bridge-known-projects.el")
+  ;; (defun tl/lsp-bridge-get-project-path-by-filepath (filepath)
+  ;;   (--first (string-prefix-p it filepath) tl/lsp-bridge-known-projects))
 
   (tl/set-leader-keys-for-mode 'lsp-bridge-mode
     ;; code actions

@@ -1,6 +1,7 @@
 ;;; 50major-modes.el ---
 
 (defun tl//progn-mode-init ()
+  (display-line-numbers-mode +1)
   (display-fill-column-indicator-mode +1))
 
 (use-package prog-mode
