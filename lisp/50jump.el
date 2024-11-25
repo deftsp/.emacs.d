@@ -36,7 +36,7 @@
                        :async 500
                        :order 2)
   (when (eq dottl-lsp-client 'lsp-bridge)
-    (smart-jump-register :modes '(rust-mode rustic-mode)
+    (smart-jump-register :modes '(rust-mode rustic-mode lua-mode)
                          :jump-fn 'lsp-bridge-find-def
                          :pop-fn 'lsp-bridge-find-def-return
                          :refs-fn 'lsp-bridge-find-references
