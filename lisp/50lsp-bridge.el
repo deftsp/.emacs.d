@@ -7,6 +7,11 @@
 ;; gpip install --upgrade epc orjson sexpdata six setuptools paramiko rapidfuzz watchdog
 ;; uv pip install --system --upgrade epc orjson sexpdata six setuptools paramiko rapidfuzz watchdog
 
+;; python
+;; uv pip install --system basedpyright ruff-lsp
+
+;; lsp-bridge-install-tabnine
+
 ;; https://github.com/tjtrabue/dotfiles/blob/develop/link/emacs/plugin-notebook/my-lsp.org
 (defun tl/define-hydra-lsp-bridge-peek ()
   "Define the hydgra for `lsp-bridge-peek'."
@@ -52,9 +57,10 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
         lsp-bridge-enable-org-babel t
 
         acm-enable-quick-access t
+        acm-quick-access-modifier 'control
         acm-quick-access-use-number-select nil
         acm-backend-yas-match-by-trigger-keyword t
-        acm-enable-tabnine nil
+        acm-enable-tabnine t
         acm-enable-codeium nil)
 
   :general-config
