@@ -10,7 +10,6 @@
 ;; https://github.com/sumneko/lua-language-server/wiki/Build-and-Run-(Standalone)
 (use-package lua-mode
   :defer t
-  :hook ((lua-mode) . lsp)
   :init
   (setq lua-default-application "luajit")
   (setq lua-indent-level 4
@@ -25,17 +24,7 @@
   (add-hook 'lua-mode-hook 'tl/lua-mode-init)
   (define-key lua-mode-map (kbd "C-c C-z") 'lua-show-process-buffer)
 
-  (require 'f)
-  (use-package lsp-lua
-    :init
-    (setq lsp-clients-lua-language-server-install-dir
-          "~/opt/lua-language-server/"
-
-          lsp-clients-lua-language-server-bin
-          (f-join lsp-clients-lua-language-server-install-dir "bin/macOS/lua-language-server")
-
-          lsp-clients-lua-language-server-main-location
-          (f-join lsp-clients-lua-language-server-install-dir "main.lua"))))
+  (require 'f))
 
 (defun tl/lua-mode-init ()
   (if (fboundp 'flycheck-mode)
