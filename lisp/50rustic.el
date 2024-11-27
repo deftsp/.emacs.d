@@ -70,9 +70,6 @@
    :states 'normal
    :keymaps 'rustic-mode-map
    :prefix ","
-   "b" '(:ignore t :which-key "backend")
-   "bI" 'lsp-rust-analyzer-status
-   "b." 'lsp-rust-analyzer-reload-workspace
 
    "c" '(:ignore t :which-key "cargo")
    "ca" 'tl/cargo-audit
@@ -91,10 +88,6 @@
    "c." 'pl/rustic-cargo-current-test-nocapture
 
    "h" '(:ignore t :which-key "help")
-
-   "t" '(:ignore t :which-key "toggle")
-   "th" 'lsp-inlay-hints-mode
-   "tr" 'lsp-rust-analyzer-related-tests
 
    "p"  'tl/rustic-format-buffer
    "v"  '(:ignore t :which-key "variable")

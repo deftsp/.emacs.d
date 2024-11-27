@@ -103,12 +103,18 @@
     ;; "jr" #'smart-jump-references
     "jr" #'lsp-ui-peek-find-references
     ;; backend
+    "b" '(:ignore t :which-key "backend")
     "bd" #'lsp-describe-session
     "br" #'lsp-workspace-restart
     "bs" #'lsp-workspace-shutdown
+    "bI" 'lsp-rust-analyzer-status
+    "b." 'lsp-rust-analyzer-reload-workspace
     ;; refactor
     "rr" #'lsp-rename
     ;; toggles
+    "t" '(:ignore t :which-key "toggle")
+    "th" 'lsp-inlay-hints-mode
+    "tr" 'lsp-rust-analyzer-related-tests
     "Td" #'lsp-ui-doc-mode
     "Ts" #'lsp-ui-sideline-mode
     ;; "TF" #'spacemacs/lsp-ui-doc-func
