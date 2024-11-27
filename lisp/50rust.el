@@ -34,15 +34,7 @@
    :states 'normal
    :keymaps 'rust-mode-map
    :prefix ","
-   "b" '(:ignore t :which-key "backend")
-   "bI" 'lsp-rust-analyzer-status
-   "b." 'lsp-rust-analyzer-reload-workspace
-
    "h" '(:ignore t :which-key "help")
-
-   "t" '(:ignore t :which-key "toggle")
-   "th" 'lsp-inlay-hints-mode
-   "tr" 'lsp-rust-analyzer-related-tests
 
    "p"  'tl/rust-format-buffer-with-diff-hl-update
    "v"  '(:ignore t :which-key "variable")
