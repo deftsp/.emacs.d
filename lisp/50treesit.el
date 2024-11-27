@@ -13,6 +13,13 @@
 
 (use-package treesit
   :config
+  ;; https://manateelazycat.github.io/2023/09/02/treesit/
+  (defun pl//find-parent-node-match (node-types)
+    (treesit-parent-until
+     (treesit-node-at (point))
+     (lambda (parent)
+       (member (treesit-node-type parent) node-types))))
+
   (setq treesit-font-lock-level 4)
 
   ;; M-x `treesit-install-language-grammar` to install language grammar.

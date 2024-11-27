@@ -84,8 +84,7 @@
    "co" 'rustic-cargo-outdated
    "cr" 'rustic-cargo-run
    "cT" 'rustic-cargo-test
-   "ct" 'rustic-cargo-current-test
-   "c." 'pl/rustic-cargo-current-test-nocapture
+   "ct" 'pl/rustic-cargo-current-test-nocapture ; 'rustic-cargo-current-test
 
    "h" '(:ignore t :which-key "help")
 
@@ -133,11 +132,25 @@ Flycheck according to the Cargo project layout."
 (use-package rustic-cargo
   :after rustic
   :config
+  (defun pl//cargo--get-test-target()
+    "Return either a full fn name or a mod name, whatever is closer to the point."
+    (let* ((mod-node (pl//find-parent-node-match '("mod_item")))
+           (fn-node (treesit-defun-at-point))
+           (path (cond ((and mod-node fn-node)
+                        (concat
+                         (treesit-defun-name mod-node)
+                         "::"
+                         (treesit-defun-name fn-node)))
+                       (fn-node (treesit-defun-name fn-node))
+                       (t (treesit-defun-name mod-node)))))
+      (when path
+        (concat (file-name-base (buffer-name)) "::" path))))
+
   (defun pl/rustic-cargo-current-test-nocapture ()
     "Run 'cargo test' for the test near point."
     (interactive)
     (rustic-compilation-process-live)
-    (-if-let (test-to-run (rustic-cargo--get-test-target))
+    (-if-let (test-to-run (pl//cargo--get-test-target))
         (let* ((command (list rustic-cargo-bin "test" "--" "--nocapture" test-to-run))
                (c (append command (split-string rustic-test-arguments)))
                (buf rustic-test-buffer-name)
