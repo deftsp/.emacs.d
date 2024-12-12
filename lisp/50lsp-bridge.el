@@ -46,7 +46,7 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
   :init
   (setq lsp-bridge-enable-log nil
         lsp-bridge-enable-inlay-hint nil
-        lsp-bridge-enable-diagnostics t
+        lsp-bridge-enable-diagnostics nil
 
         lsp-bridge-diagnostic-enable-overlays nil
         lsp-bridge-enable-hover-diagnostic nil
@@ -56,6 +56,7 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
         lsp-bridge-enable-with-tramp t
         lsp-bridge-enable-org-babel t
 
+        acm-backend-lsp-show-progress t
         acm-enable-quick-access t
         acm-quick-access-modifier 'control
         acm-quick-access-use-number-select nil
