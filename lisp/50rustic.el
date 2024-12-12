@@ -146,12 +146,16 @@ Flycheck according to the Cargo project layout."
       (when path
         (concat (file-name-base (buffer-name)) "::" path))))
 
-  (defun pl/rustic-cargo-current-test-nocapture ()
+  (defun pl/rustic-cargo-current-test-nocapture (arg)
     "Run 'cargo test' for the test near point."
-    (interactive)
+    (interactive "p")
     (rustic-compilation-process-live)
     (-if-let (test-to-run (pl//cargo--get-test-target))
         (let* ((command (list rustic-cargo-bin "test" "--" "--nocapture" test-to-run))
+               (process-environment
+                (if (> arg 0)
+                    (nconc (list (format "HTTPS_PROXY=%s" "http://127.0.0.1:8080")) process-environment)
+                  process-environment))
                (c (append command (split-string rustic-test-arguments)))
                (buf rustic-test-buffer-name)
                (proc rustic-test-process-name)
