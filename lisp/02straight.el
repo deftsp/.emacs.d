@@ -270,7 +270,13 @@
 ;; (straight-use-package '(powerline :build (:not native-compile)))
 (straight-use-package 'powerline)
 (straight-use-package '(unicad :type git :host github :repo "ukari/unicad"))
+
 (straight-use-package 'rainbow-mode)
+;; https://github.com/DevelopmentCool2449/colorful-mode
+;; rainbow-mode can not work with hl-line, might use colorful-mode
+;; (straight-use-package 'colorful-mode)
+;; https://github.com/alphapapa/prism.el
+(straight-use-package 'prism)
 
 (straight-use-package 'magit)
 (straight-use-package 'magit-delta)
@@ -581,6 +587,7 @@
 
 (straight-use-package 'scratch)
 (straight-use-package 'persistent-scratch)
+
 
 ;; (straight-use-package 'projectile)
 ;; (straight-use-package 'counsel-projectile)
