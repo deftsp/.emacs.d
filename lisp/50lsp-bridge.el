@@ -56,7 +56,7 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
         lsp-bridge-enable-with-tramp t
         lsp-bridge-enable-org-babel t
 
-        acm-backend-lsp-show-progress t
+        acm-backend-lsp-show-progress nil
         acm-enable-quick-access t
         acm-quick-access-modifier 'control
         acm-quick-access-use-number-select nil
