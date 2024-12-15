@@ -61,7 +61,7 @@ _C-g_: abort  _J_: next file line   _h_:        jump back   _o_: next node
         acm-quick-access-modifier 'control
         acm-quick-access-use-number-select nil
         acm-backend-yas-match-by-trigger-keyword t
-        acm-enable-tabnine t
+        acm-enable-tabnine nil
         acm-enable-codeium nil)
 
   :general-config
