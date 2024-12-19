@@ -104,22 +104,24 @@
 ;; Function called (if non-nil) to perform auto-fill. It is called after
 ;; self-inserting any character specified in the `auto-fill-chars' table.
 ;; NOTE: This variable is not a hook; its value may not be a list of functions.
-(defun tl/add-blank-between-chinese-and-english-whole-line ()
+(defun tl/default-auto-fill-function ()
   (interactive)
+  ;; add blank between chinese and english for  whole-line
   (tl/add-blank-between-chinese-and-english (point-at-bol) (point-at-eol))
-  (do-auto-fill))
+  ;; (do-auto-fill)
+  t)
 
-(setq-default auto-fill-function
-              #'tl/add-blank-between-chinese-and-english-whole-line)
+;; turn auto-fill mode on in all major modes
+(setq-default auto-fill-function #'tl/default-auto-fill-function)
 
 
-(use-package prog-fill
-  :commands (prog-fill)
-  :defer t
-  :init
-  (progn
-    ;; (add-hook 'prog-mode-hook
-    ;;           (lambda () (local-set-key (kbd "M-q") #'prog-fill)))
-    ))
+;; (use-package prog-fill
+;;   :commands (prog-fill)
+;;   :defer t
+;;   :init
+;;   (progn
+;;     ;; (add-hook 'prog-mode-hook
+;;     ;;           (lambda () (local-set-key (kbd "M-q") #'prog-fill)))
+;;     ))
 
 (provide '50auto-fill)
