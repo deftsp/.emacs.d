@@ -10,6 +10,40 @@
 (use-package rust-ts-mode
   :defer t
   :config
+
+  ;; https://github.com/ZharMeny/cue-ts-mode/blob/a9874bb50503fd9e72a26aed20351bd84c65d325/cue-ts-mode.el#L87
+  ;; https://www.masteringemacs.org/article/lets-write-a-treesitter-major-mode
+  ;; https://github.com/nix-community/nix-ts-mode/blob/cea932fd683bfab84234205f5f1d161e29a5adf6/nix-ts-mode.el
+  ;; https://github.com/c3lang/c3-ts-mode/blob/15eb262f4bc0e390ae6b78657f2bccb303651426/README.md?plain=1#L90
+  ;; https://github.com/mickeynp/combobulate/blob/ca2545be196ec32945b5db109578582d7c7270b5/combobulate-query.el#L1156
+  ;; https://github.com/nverno/nvp/blob/ea8793058c2c39ca5321c4a1241e1559c659eeb5/modes/rust/nvp-rust-ts.el#L11
+
+  (add-to-list 'rust-ts-mode--font-lock-settings
+               (car (treesit-font-lock-rules
+                     :language 'rust
+                     :override t
+                     ;; Choose a feature name here (see docs for 'treesit-font-lock-rules')
+                     :feature 'tl/negation-operator
+                     ;; NOTE: my own custom face is not work
+                     ;; See "37.5 Pattern Matching Tree-sitter Nodes" in the Emacs manual
+                     ;; M-x treesit-explore-mode
+
+                     ;; it works for "&&", "+", ...
+                     ;; '((binary_expression operator: _ @font-lock-negation-char-face))
+                     ;; Not works. Why?
+                     ;; '((unary_expression operator: _ @font-lock-negation-char-face))
+                     ;; FIXME: it will include the macro println!
+                     '(["!"] @font-lock-negation-char-face)))
+               t)
+
+  (defun tl/rust-ts-mode-init ()
+    ;; add the feature to feature level 4
+    (cl-pushnew 'tl/negation-operator (nth 3 treesit-font-lock-feature-list))
+    (treesit-font-lock-recompute-features)
+    (font-lock-flush))
+
+  (add-hook 'rust-ts-mode-hook 'tl/rust-ts-mode-init)
+
   ;; remove rust-ts-mode from `auto-mode-alist'
   (let ((mode '("\\.rs\\'" . rust-ts-mode)))
     (when (member mode auto-mode-alist)
