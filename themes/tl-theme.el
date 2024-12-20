@@ -252,7 +252,7 @@
    '(font-lock-property-use-face ((t (:foreground "#8e9e9d"))))
    '(font-lock-number-face ((t (:foreground "#7ebecd"))))
    '(font-lock-operator-face ((t (:foreground "#ce8e7d" :weight bold))))
-   `(font-lock-negation-char-face ((t (:foreground ,yellow :weight bold))))
+   `(font-lock-negation-char-face ((t (:foreground "#73c0c3" :weight bold))))
    '(font-lock-preprocessor-face ((t (:foreground "#79C96D" :slant italic))))
    `(font-lock-regexp-grouping-construct ((t (:foreground ,yellow :weight bold))))
    `(font-lock-regexp-grouping-backslash ((t (:foreground ,green :weight bold))))
