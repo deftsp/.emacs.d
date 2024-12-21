@@ -9,7 +9,7 @@
   :commands (lsp lsp-deferred)
   :init
   (setq lsp-log-io nil
-        ;; rebuild lsp-mode lsp-ivy lsp-ui lsp-treemacs flycheck  flycheck-rust lsp-tailwindcs
+        ;; rebuild lsp-mode lsp-ivy lsp-ui lsp-treemacs flycheck flycheck-rust lsp-tailwindcs
         lsp-use-plists t
         lsp-enable-folding nil
         lsp-diagnostics-provider :flycheck  ; :none, no real time syntax check
