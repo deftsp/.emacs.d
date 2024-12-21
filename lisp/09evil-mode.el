@@ -545,11 +545,11 @@ kill internal buffers too."
       ;; SPC ; a o: comment out the current symbol
       ";"  'evilnc-comment-operator)))
 
-;;; evil-indent-plus wihch replace evil-indent-textobject
-(use-package evil-indent-plus
-  :defer 3
-  :init
-  (evil-indent-plus-default-bindings))
+;; ;;; evil-indent-plus which replace evil-indent-textobject
+;; (use-package evil-indent-plus
+;;   :defer 3
+;;   :init
+;;   (evil-indent-plus-default-bindings))
 
 ;;; evil-matchit
 (use-package evil-matchit
@@ -738,11 +738,6 @@ to replace the symbol under cursor"
     (company-abort)))
 
 (add-hook 'evil-insert-state-exit-hook 'tl/abort-company-on-insert-state-exit)
-
-(with-eval-after-load 'evil
-  (with-eval-after-load "helm-swoop"
-    ;; When doing evil-search, hand the word over to helm-swoop
-    (define-key evil-motion-state-map (kbd "H-i") 'helm-swoop-from-evil-search)))
 
 ;;; visual-line-mode
 ;; from https://github.com/tarleb/evil-rebellion
