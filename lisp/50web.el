@@ -94,6 +94,8 @@
     ;; treat <> as jsx
     ;; (setq web-mode-content-types-alist
     ;;       '(("jsx" . ".*\\.js\\'")))
+    (setq web-mode-content-types-alist
+          '(("jsx" . "\\.[c|m]js[x]?\\'")))
     (setq web-mode-script-padding 2
           web-mode-style-padding 1
           web-mode-block-padding 0)
