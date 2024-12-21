@@ -336,27 +336,27 @@
 ;;   :hook (dap-ui-mode . dap-ui-controls-mode))
 
 ;; lsp-treemacs-deps-list
-(use-package lsp-treemacs
-  :after (lsp-mode treemacs)
-  :commands (lsp-treemacs-errors-list
-             lsp-treemacs-symbols
-             lsp-treemacs-references
-             lsp-treemacs-implementations
-             lsp-treemacs-call-hierarchy
-             lsp-treemacs-type-hierarchy)
-  :init
-  (setq lsp-treemacs-theme "Iconless")
+;; (use-package lsp-treemacs
+;;   :after (lsp-mode treemacs)
+;;   :commands (lsp-treemacs-errors-list
+;;              lsp-treemacs-symbols
+;;              lsp-treemacs-references
+;;              lsp-treemacs-implementations
+;;              lsp-treemacs-call-hierarchy
+;;              lsp-treemacs-type-hierarchy)
+;;   :init
+;;   (setq lsp-treemacs-theme "Iconless")
 
-  (tl/set-leader-keys-for-mode 'lsp-mode
-    "el" #'lsp-treemacs-errors-list
-    "w" '(:ignore t :which-key "treemacs")
-    "we" #'lsp-treemacs-errors-list
-    "ws" #'lsp-treemacs-symbols
-    "wr" #'lsp-treemacs-references
-    "wi" #'lsp-treemacs-implementations
-    "wc" #'lsp-treemacs-call-hierarchy
-    "wt" #'lsp-treemacs-type-hierarchy)
-  :config
-  (lsp-treemacs-sync-mode +1))
+;;   (tl/set-leader-keys-for-mode 'lsp-mode
+;;     "el" #'lsp-treemacs-errors-list
+;;     "w" '(:ignore t :which-key "treemacs")
+;;     "we" #'lsp-treemacs-errors-list
+;;     "ws" #'lsp-treemacs-symbols
+;;     "wr" #'lsp-treemacs-references
+;;     "wi" #'lsp-treemacs-implementations
+;;     "wc" #'lsp-treemacs-call-hierarchy
+;;     "wt" #'lsp-treemacs-type-hierarchy)
+;;   :config
+;;   (lsp-treemacs-sync-mode +1))
 
 (provide '50lsp-mode)
