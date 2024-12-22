@@ -79,6 +79,8 @@
   (advice-add 'lsp-resolve-final-command :around #'lsp-booster--advice-final-command)
   ;;;;; emacs-lsp-booster config end
 
+  (general-def 'normal lsp-mode-map
+    "gr" 'lsp-ui-peek-find-references)
 
   (tl/set-leader-keys-for-mode 'lsp-mode
     ;; format
