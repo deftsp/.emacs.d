@@ -112,6 +112,7 @@
 (require '50xwidget)
 (require '50eldoc)
 (require '50sideline)
+(require '50vlf)
 (require '51ivy)
 (require '52prescient)
 

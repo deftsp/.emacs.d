@@ -599,6 +599,9 @@
 
 (straight-use-package 'mise)
 
+;; https://github.com/m00natic/vlfi/blob/master/vlf.el
+(straight-use-package 'vlf)
+
 (straight-use-package '(exwm :type git :host github :repo "deftsp/exwm" :branch "shihpin"))
 
 (provide '02straight)
