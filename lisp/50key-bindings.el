@@ -838,7 +838,7 @@ it marks the next ARG lines after the ones already marked."
 _`_  evil-visual-mark-mode:             %`evil-visual-mark-mode
 _a_  abbrev-mode:                       %`abbrev-mode
 _d_  debug-on-error:                    %`debug-on-error
-_f_  auto-fill-mode:                    %`auto-fill-function
+_f_  auto-fill-mode:                    %(not (null auto-fill-function))
 _F_  display-fill-column-indicator      %`display-fill-column-indicator-mode
 _n_  narrow-or-widen-dwim:              %(buffer-narrowed-p)
 _g_  golden-ratio-mode:                 %`golden-ratio-mode
