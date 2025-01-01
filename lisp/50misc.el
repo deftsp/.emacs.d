@@ -160,7 +160,7 @@
   (add-hook 'org-mode-hook 'tl/set-header-line-format)
 
   ;; which function mode is a global minor mode
-  (which-function-mode +1))
+  (which-function-mode -1))
 
 
 ;;; fringe

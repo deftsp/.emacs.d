@@ -418,7 +418,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                               'powerline-inactive2))
          (anzu-face (if active 'powerline-anzu-face 'powerline-inactive2))
          (buffer-id-face (if active 'powerline-buffer-id-face 'powerline-inactive1))
-         (which-func-face (if active 'which-func 'powerline-inactive1))
+         ;; (which-func-face (if active 'which-func 'powerline-inactive1))
          (file-base-info-face (if active
                                   'powerline-file-base-info-face
                                 'powerline-inactive2))
@@ -470,10 +470,10 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                 ,(funcall separator-left file-base-info-face buffer-id-face)
                 ,(powerline-buffer-id buffer-id-face 'l)
 
-                ,(powerline-raw ":" buffer-id-face)
-                ,@(when (and (boundp 'which-function-mode) which-function-mode)
-                    (list (powerline-which-func which-func-face 'l)
-                          (powerline-raw " " which-func-face)))
+                ;; ,(powerline-raw ":" buffer-id-face)
+                ;; ,@(when (and (boundp 'which-function-mode) which-function-mode)
+                ;;     (list (powerline-which-func which-func-face 'l)
+                ;;           (powerline-raw " " which-func-face)))
 
                 ,(funcall separator-left buffer-id-face face2)
 
