@@ -961,19 +961,21 @@ to replace the symbol under cursor"
   (evil-vimish-fold-mode +1))
 
 ;;; evil-goggles
-(use-package evil-goggles
-  :defer 3
-  :init
-  ;; default is 'region, you can try `isearch-fail
-  (setq evil-goggles-default-face '((t (:inherit 'highlight)))) ; 'highlight
-  (setq evil-goggles-duration 0.200) ;; default is 0.200
-  (setq evil-goggles-pulse t)
-  ;; to disable the hint when yanking or deleting
-  (setq evil-goggles-blacklist `(evil-yank evil-delete))
+;; it might caused freeze when error typing? disable for test
+;; After disable it, the typing response is quicker
+;; (use-package evil-goggles
+;;   :defer 3
+;;   :init
+;;   ;; default is 'region, you can try `isearch-fail
+;;   (setq evil-goggles-default-face '((t (:inherit 'highlight)))) ; 'highlight
+;;   (setq evil-goggles-duration 0.200) ;; default is 0.200
+;;   (setq evil-goggles-pulse t)
+;;   ;; to disable the hint when yanking or deleting
+;;   (setq evil-goggles-blacklist `(evil-yank evil-delete))
 
-  :config
-  (evil-goggles-use-diff-faces)
-  (evil-goggles-mode +1))
+;;   :config
+;;   (evil-goggles-use-diff-faces)
+;;   (evil-goggles-mode +1))
 
 (use-package evil-visual-mark-mode
   :defer t
