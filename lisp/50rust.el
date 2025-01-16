@@ -37,6 +37,8 @@
                t)
 
   (defun tl/rust-ts-mode-init ()
+    ;; electric-indent-mode is turned on by default, I do like it
+    (electric-indent-local-mode -1)
     ;; add the feature to feature level 4
     (cl-pushnew 'tl/negation-operator (nth 3 treesit-font-lock-feature-list))
     (treesit-font-lock-recompute-features)
