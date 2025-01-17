@@ -120,25 +120,26 @@
 ;;; magit
 (use-package magit
   :defer t
+  :bind
+  (("M-RET" . magit-diff-visit-file-other-window))
   :init
-  (progn
-    (setq magit-completing-read-function 'ivy-completing-read) ; 'magit-ido-completing-read
-    ;; (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
-    (autoload 'magit-grep "magit" "Command for `grep'." t) ; which is not a autload function at 2013.06.25 yet
-    (tl/declare-prefix "gd" "diff")
-    (tl/declare-prefix "gf" "file")
-    (tl/set-leader-keys
-      "gb"  'git-blame
-      "gc"  'magit-clone
-      "gff" 'magit-find-file
-      "gfh" 'magit-log-buffer-file
-      "gi"  'magit-init
-      "gL"  'magit-list-repositories
-      "gm"  'magit-dispatch-popup
-      "gs"  'magit-status
-      "gS"  'magit-stage-file
-      "gU"  'magit-unstage-file)
-    (global-set-key (kbd "C-x G") 'magit-status))
+  (setq magit-completing-read-function 'ivy-completing-read) ; 'magit-ido-completing-read
+  ;; (setq magit-revision-show-gravatars '("^Author:     " . "^Commit:     "))
+  (autoload 'magit-grep "magit" "Command for `grep'." t) ; which is not a autload function at 2013.06.25 yet
+  (tl/declare-prefix "gd" "diff")
+  (tl/declare-prefix "gf" "file")
+  (tl/set-leader-keys
+    "gb"  'git-blame
+    "gc"  'magit-clone
+    "gff" 'magit-find-file
+    "gfh" 'magit-log-buffer-file
+    "gi"  'magit-init
+    "gL"  'magit-list-repositories
+    "gm"  'magit-dispatch-popup
+    "gs"  'magit-status
+    "gS"  'magit-stage-file
+    "gU"  'magit-unstage-file)
+  (global-set-key (kbd "C-x G") 'magit-status)
   :config
   (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
   (add-to-list 'magit-repository-directories '("~/.emacs.d" . 0)) ; C-u C-u M-x magit-status will ignore it
