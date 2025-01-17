@@ -417,7 +417,7 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                                 'powerline-winum-number-face
                               'powerline-inactive2))
          (anzu-face (if active 'powerline-anzu-face 'powerline-inactive2))
-         (buffer-id-face (if active 'powerline-buffer-id-face 'powerline-inactive1))
+         (buffer-id-face 'powerline-buffer-id-face)
          ;; (which-func-face (if active 'which-func 'powerline-inactive1))
          (file-base-info-face (if active
                                   'powerline-file-base-info-face
