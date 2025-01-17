@@ -41,19 +41,6 @@
   ;; (define-key rustic-cargo-test-mode-map "q" nil)
   ;; (define-key rustic-cargo-clippy-mode-map "q" nil)
 
-  (defun tl/rustic-mode-init ()
-    ;; (prettify-symbols-mode +1)
-    ;; (smartparens-strict-mode +1)
-    ;; (when (fboundp 'org-link-minor-mode)
-    ;;   (org-link-minor-mode +1))
-
-    (when (eq dottl-lsp-client 'lspce)
-      (flycheck-mode -1))
-
-    (rainbow-delimiters-mode -1))
-
-  (add-hook 'rustic-mode-hook 'tl/rustic-mode-init)
-
   ;; for lsp-mode with rust-analyzer instead of rustic-clippy
   (with-eval-after-load 'flycheck
     (when (not (eq dottl-lsp-client 'lsp-mode))
@@ -119,6 +106,7 @@ Flycheck according to the Cargo project layout."
     ;; https://github.com/flycheck/flycheck-rust/issues/40#issuecomment-253760883).
     (with-demoted-errors "Error in rustic-flycheck-setup: %S"
       (-when-let* ((file-name (buffer-file-name))
+                   ;; file-exists-p is slow?
                    (is-file-exists (file-exists-p file-name))
                    (target (rustic-flycheck-find-cargo-target file-name)))
         (let-alist target
@@ -127,7 +115,20 @@ Flycheck according to the Cargo project layout."
           (setq-local flycheck-rust-binary-name .name)))))
 
   ;; (advice-remove 'rustic-flycheck-setup #'tl/rustic-flycheck-setup)
-  (advice-add 'rustic-flycheck-setup :override #'tl/rustic-flycheck-setup))
+  ;; (advice-add 'rustic-flycheck-setup :override #'tl/rustic-flycheck-setup)
+
+  (defun tl/rustic-mode-init ()
+    ;; (prettify-symbols-mode +1)
+    ;; (smartparens-strict-mode +1)
+    ;; (when (fboundp 'org-link-minor-mode)
+    ;;   (org-link-minor-mode +1))
+
+    (when (eq dottl-lsp-client 'lspce)
+      (flycheck-mode -1))
+
+    (rainbow-delimiters-mode -1))
+
+  (add-hook 'rustic-mode-hook 'tl/rustic-mode-init))
 
 (use-package rustic-cargo
   :after rustic
