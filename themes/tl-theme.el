@@ -582,14 +582,15 @@
    '(tree-sitter-hl-face:function.call ((t (:inherit font-lock-function-name-face))))
 
    ;; magit
-   '(magit-diff-hunk-heading ((t (:foreground "#000010"
-                                  :background "#006661"
+   '(magit-diff-hunk-heading ((t (:foreground "#102030"
+                                  :background "#505651"
                                   :slant italic
                                   :weight bold
                                   :height 1.05
+                                  :overline nil
                                   :underline nil
                                   :box nil))))
-   '(magit-diff-hunk-heading-highlight ((t (:inherit magit-diff-hunk-heading :foreground "#ccc212"))))
+   '(magit-diff-hunk-heading-highlight ((t (:inherit magit-diff-hunk-heading :background "#125888" :foreground "#dc9212"))))
    '(magit-diff-hunk-heading-selection ((t (:inherit magit-diff-hunk-heading :foreground "#b292a2"))))
    '(magit-diff-added-highlight ((t (:foreground "#cceecc" :background "#336633"))))
    '(magit-diff-removed-highlight ((t (:foreground "#eecccc" :background "#663333"))))
