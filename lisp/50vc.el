@@ -150,9 +150,10 @@
   :config
   (global-git-commit-mode +1))
 
+;; magit-delta will casue magit-status very slow
 (use-package magit-delta
   :after (magit)
-  :hook (magit-mode . magit-delta-mode)
+  ;; :hook (magit-mode . magit-delta-mode)
   :init
   ;; https://dandavison.github.io/delta/full---help-output.html
   (setq magit-delta-delta-args
