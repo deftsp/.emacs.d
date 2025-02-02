@@ -549,7 +549,6 @@
 (straight-use-package 'popup)
 (straight-use-package 'worf)
 (straight-use-package 'deferred)
-(straight-use-package 'explain-pause-mode)
 (straight-use-package 'jump-char)
 (straight-use-package 'pos-tip)
 ;; (straight-use-package '(workgroups2 :build (:not native-compile)))

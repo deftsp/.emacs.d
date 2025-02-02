@@ -12,15 +12,6 @@
 ;;   ;; To disable collection of benchmark data after init is done.
 ;;   (add-hook 'after-init-hook 'benchmark-init/deactivate))
 
-;;; FIXME: can not work with key-chord
-;; $socat -u UNIX-RECV:./that-file-you-named-earlier STDOUT
-(use-package explain-pause-mode
-  :commands (explain-pause-top)
-  :init
-  ;; (explain-pause-log-to-socket "./some-socket-file-you-know-where-it-is")
-  :config
-  (explain-pause-mode +1))
-
 (use-package esup
   :defer t
   :commands (esup)
