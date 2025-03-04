@@ -14,11 +14,6 @@
 (setq native-comp-jit-compilation nil
       native-comp-async-report-warnings-errors 'slient)
 
-(require 'comp)
-(with-eval-after-load 'comp
-  ;; https://github.com/raxod502/straight.el/issues/680
-  (add-to-list 'native-comp-jit-compilation-deny-list "\\(?:[^z-a]*-autoloads\\.el$\\)"))
-
 ;; always load the newer one between .el and .elc
 ;; https://www.mattduck.com/2021-05-upgrading-to-emacs-28.html
 ;; https://github.com/bbatsov/prelude/issues/1134
