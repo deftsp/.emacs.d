@@ -526,7 +526,6 @@
 (straight-use-package 'ctable)
 (straight-use-package 'js2-mode)
 (straight-use-package 'pfuture)
-(straight-use-package 'which-key)
 ;; (straight-use-package 'dart-mode)
 (straight-use-package 'js2-refactor)
 (straight-use-package 'pinyin-search)
