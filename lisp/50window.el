@@ -459,7 +459,8 @@ If the universal prefix argument is used then kill the buffer too."
     ;;   (push l display-buffer-alist))
 
     ;; TODO: set value for ignored buffer like agenda buffer and dired-sidebar
-    (defadvice aw-update (around format-ace-window-path activate)
+
+    (defun tl//aw-update-format-ace-window-path (orig-fun &rest args)
       "add customization for ace window path"
       (avy-traverse
        (avy-tree (aw-window-list) aw-keys)
@@ -470,11 +471,10 @@ If the universal prefix argument is used then kill the buffer too."
            (format tl/aw-mode-line-format
                    (upcase (apply #'string (reverse path))))
            'face 'aw-mode-line-face)))))
-    ;; (ad-deactivate 'aw-update)
 
-    (defadvice ace-window-display-mode (after
-                                        do-not-insert-to-mode-line-with-powerline
-                                        activate)
+    (advice-add #'aw-update :around #'tl//aw-update-format-ace-window-path)
+
+    (defun ace-window-display-mode-do-not-insert-to-mode-line-with-powerline (&rest _)
       "do not auto insert ace window path into modeline with powerline."
       (when (and (boundp 'powerline-git-state-mark-modeline)
                  powerline-git-state-mark-modeline
@@ -483,6 +483,9 @@ If the universal prefix argument is used then kill the buffer too."
                      (assq-delete-all
                       'ace-window-display-mode
                       (default-value 'mode-line-format)))))
+
+    (advice-add #'ace-window-display-mode
+                :after #'ace-window-display-mode-do-not-insert-to-mode-line-with-powerline)
 
     (with-eval-after-load 'hydra
       (defhydra hydra-window-size (:color red)

@@ -162,14 +162,14 @@
   ;; Let desktop work with daemon
   ;; (command-line) starts the server process, but only "after loading the user's init file and after
   ;; processing all command line arguments".
-  (defadvice desktop-restore-file-buffer
-      (around desktop-restore-file-buffer-advice)
+  (defun desktop-restore-file-buffer-work-with-daemon (orig-un &rest args)
     "Be non-interactive while starting a daemon."
     (if (and (daemonp) (not (bound-and-true-p server-process)))
         (let ((noninteractive t))
-          ad-do-it)
-      ad-do-it))
-  (ad-activate 'desktop-restore-file-buffer)
+          (apply orig-fun args))
+      (apply orig-fun args)))
+
+  (advice-add #'desktop-restore-file-buffer :around #'desktop-restore-file-buffer-work-with-daemon)
 
   ;; Use M-x desktop-save once to save the desktop.When it exists, Emacs updates it on every exit.
   (when tl/with-desktop

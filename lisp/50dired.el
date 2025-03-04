@@ -247,8 +247,7 @@ dired buffer to be opened."
               (t (require 'ls-lisp)
                  (setq ls-lisp-use-insert-directory-program nil)))))
 
-    ;; Ask for confirm when opening some binary alike(.avi, .dvi, etc) files by accident.
-    (defadvice dired-find-file (around ask-confirm-open-binary-file)
+    (defun tl//dired-find-file-ask-confirm-open-binary-file (orig-fun &rest args)
       (let ((f (file-name-nondirectory (dired-filename-at-point))))
         (if (or (string-match
                  (concat "\\.\\("
@@ -258,9 +257,10 @@ dired buffer to be opened."
                 ;; ELF bin file
                 (string-match "ELF" (dired-show-file-type f)))
             (when (y-or-n-p (format "Really open `%s'? " f))
-              ad-do-it)
-          ad-do-it)))
-    (ad-activate 'dired-find-file)
+              (apply orig-fun args))
+          (apply orig-fun args))))
+
+    (advice-add #'dired-find-file :around #'tl//dired-find-file-ask-confirm-open-binary-file)
 
     (use-package dired-quick-sort
       :defer t
