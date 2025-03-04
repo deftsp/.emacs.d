@@ -15,6 +15,7 @@
           ;; This means: if there is a dired buffer displayed in the next window,
           ;; use its current subdir, instead of the current subdir of this dired buffer.
           dired-dwim-target t
+          dired-movement-style 'cycle
           dired-guess-shell-gnutar "tar"
           dired-listing-switches "-AlhXG --group-directories-first"
           dired-kept-versions 1))
