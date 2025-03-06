@@ -402,7 +402,7 @@
    `(lsp-ui-peek-highlight ((t (:background ,red
                                 :foreground "#002266"
                                 :distant-foreground ,violet
-                                :box '(:line-width -1 :color "#ff0000")))))
+                                :box (:line-width -1 :color "#ff0000")))))
    `(lsp-ui-sideline-global ((t (:background ,inactive2))))
 
    ;; lsp-rust
