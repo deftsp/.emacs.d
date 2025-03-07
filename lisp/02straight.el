@@ -66,7 +66,6 @@
 (straight-use-package 'compat)
 
 (straight-use-package '(emacsql :files (:defaults "*.el" "sqlite")))
-(straight-use-package 'emacsql-sqlite3)
 
 ;; (straight-use-package '(org :build (:not native-compile)))
 ;; (straight-use-package '(org-contrib :build (:not native-compile)))
@@ -95,8 +94,7 @@
                         :type git
                         :host github
                         :repo "org-roam/org-roam"
-                        :branch "master"
-                        :files (:defaults "*.el" "extensions/*.el")))
+                        :files (:defaults "extensions/*")))
 ;; (straight-use-package 'org-roam-server)
 (straight-use-package '(org-spacer :type git :host github :repo "dustinlacewell/org-spacer.el"))
 (straight-use-package 'org-super-agenda)
