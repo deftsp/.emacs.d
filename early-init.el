@@ -38,3 +38,12 @@
 ;; in this file and can conflict with later config (particularly where the
 ;; cursor color is concerned).
 (advice-add #'x-apply-session-resources :override #'ignore)
+
+;; https://old.reddit.com/r/emacs/comments/1bfk7mj/how_to_disable_the_startup_blinding_white/
+(setq default-frame-alist
+      '((ns-appearance . dark)
+        (ns-transparent-titlebar . t)
+        (foreground-color . "#839496")
+        ;; Setting the face in here prevents flashes of
+        ;; color as the theme gets activated
+        (background-color . "#002b36")))
