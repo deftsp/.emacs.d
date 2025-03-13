@@ -213,8 +213,6 @@
 (straight-use-package 'company-ghc)
 (straight-use-package 'company-ledger)
 (straight-use-package 'company-ghci)
-(straight-use-package 'company-emoji)
-
 
 (straight-use-package 'flycheck)
 (straight-use-package 'flycheck-grammarly)
@@ -358,7 +356,6 @@
 (straight-use-package 'general)
 (straight-use-package '(marionette :type git :host github :repo "xuchunyang/marionette.el"))
 (straight-use-package 'rspec-mode)
-(straight-use-package 'android-mode)
 (straight-use-package 'elfeed)
 ;; (straight-use-package 'ghc-mod)
 (straight-use-package 'markdown-mode)

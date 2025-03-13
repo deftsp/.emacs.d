@@ -87,9 +87,6 @@
   (advice-add #'company--transform-candidates :around #'tl-company--transform-candidates)
   (advice-add #'company-tabnine :around #'tl-company-tabnine))
 
-(use-package company-emoji
-  :after company)
-
 ;;; company-flx -- instead by company-fuzzy
 ;; (use-package company-flx
 ;;   :init
