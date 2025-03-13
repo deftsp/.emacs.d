@@ -528,6 +528,21 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
     (setq keycommands (cdr (cdr keycommands)))))
 
 
+(use-package profiler
+  :commands tl/toggle-profiler-start-cpu
+  :init
+  (defun tl/toggle-profiler-start-cpu ()
+    "Toggle cpu profiler."
+    (interactive)
+    (if (and (fboundp 'profiler-cpu-running-p)
+             (profiler-cpu-running-p))
+        (profiler-stop)
+      (profiler-start 'cpu))))
+
+(tl/global-set-keys
+ "C-c p p" 'tl/toggle-profiler-start-cpu
+ "C-c p r" 'profiler-report)
+
 ;; register my preferred keybindings
 (tl/global-set-keys
  "<f1>"    'anything-man ; 'woman-word-at-point
