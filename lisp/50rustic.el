@@ -130,6 +130,17 @@ Flycheck according to the Cargo project layout."
 
   (add-hook 'rustic-mode-hook 'tl/rustic-mode-init))
 
+(use-package rustic-flycheck
+  :defer t
+  :config
+  ;; After changing the dependencies in Cargo.toml,
+  ;; lsp-diagnostics wil enable and disable `flycheck-mode', which cause
+  ;; `rustic-flycheck-find-cargo-target' for every opened rust buffer.
+  ;; `rustic-flycheck-find-cargo-target' is very slow.
+
+  ;; lsp-mode will auto setup flycheck, `rustic-flycheck-setup' is not necesssary
+  (remove-hook 'flycheck-mode-hook #'rustic-flycheck-setup))
+
 (use-package rustic-cargo
   :after rustic
   :config
