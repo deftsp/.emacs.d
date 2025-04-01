@@ -87,6 +87,7 @@
     "=b" #'lsp-format-buffer
     "=r" #'lsp-format-region
     "=o" #'lsp-organize-imports
+    "p"  #'lsp-format-buffer
     ;; code actions
     "aa" #'lsp-execute-code-action
     ;; goto

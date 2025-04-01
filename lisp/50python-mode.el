@@ -62,34 +62,33 @@
           python-indent-offset 4)
     (setq python-shell-completion-native-enable nil))
   :config
-  (progn
-    ;; (tl//python-setup-shell) ; slow
-    (tl/declare-prefix-for-mode 'python-mode "mc" "execute")
-    (tl/declare-prefix-for-mode 'python-mode "md" "debug")
-    (tl/declare-prefix-for-mode 'python-mode "mh" "help")
-    (tl/declare-prefix-for-mode 'python-mode "mg" "goto")
-    (tl/declare-prefix-for-mode 'python-mode "ms" "send to REPL")
-    (tl/declare-prefix-for-mode 'python-mode "mr" "refactor")
-    (tl/declare-prefix-for-mode 'python-mode "mv" "pyenv")
-    (tl/declare-prefix-for-mode 'python-mode "mV" "pyvenv")
-    (tl/set-leader-keys-for-mode 'python-mode
-      "'"  'tl/python-start-or-switch-repl
-      "cc" 'tl/python-execute-file
-      "cC" 'tl/python-execute-file-focus
-      ;; "db" 'tl/python-toggle-breakpoint
-      "ri" 'tl/python-remove-unused-imports
-      "sB" 'tl/python-shell-send-buffer-switch
-      "sb" 'python-shell-send-buffer
-      "sF" 'tl/python-shell-send-defun-switch
-      "sf" 'python-shell-send-defun
-      "si" 'tl/python-start-or-switch-repl
-      "sR" 'tl/python-shell-send-region-switch
-      "sr" 'python-shell-send-region)
+  ;; (tl//python-setup-shell) ; slow
+  (tl/declare-prefix-for-mode 'python-mode "mc" "execute")
+  (tl/declare-prefix-for-mode 'python-mode "md" "debug")
+  (tl/declare-prefix-for-mode 'python-mode "mh" "help")
+  (tl/declare-prefix-for-mode 'python-mode "mg" "goto")
+  (tl/declare-prefix-for-mode 'python-mode "ms" "send to REPL")
+  (tl/declare-prefix-for-mode 'python-mode "mr" "refactor")
+  (tl/declare-prefix-for-mode 'python-mode "mv" "pyenv")
+  (tl/declare-prefix-for-mode 'python-mode "mV" "pyvenv")
+  (tl/set-leader-keys-for-mode 'python-mode
+    "'"  'tl/python-start-or-switch-repl
+    "cc" 'tl/python-execute-file
+    "cC" 'tl/python-execute-file-focus
+    ;; "db" 'tl/python-toggle-breakpoint
+    "ri" 'tl/python-remove-unused-imports
+    "sB" 'tl/python-shell-send-buffer-switch
+    "sb" 'python-shell-send-buffer
+    "sF" 'tl/python-shell-send-defun-switch
+    "sf" 'python-shell-send-defun
+    "si" 'tl/python-start-or-switch-repl
+    "sR" 'tl/python-shell-send-region-switch
+    "sr" 'python-shell-send-region)
 
-    (define-key inferior-python-mode-map (kbd "C-j") 'comint-next-input)
-    (define-key inferior-python-mode-map (kbd "C-k") 'comint-previous-input)
-    (define-key inferior-python-mode-map (kbd "C-l") 'tl/comint-clear-buffer)
-    (define-key inferior-python-mode-map (kbd "C-r") 'comint-history-isearch-backward)))
+  (define-key inferior-python-mode-map (kbd "C-j") 'comint-next-input)
+  (define-key inferior-python-mode-map (kbd "C-k") 'comint-previous-input)
+  (define-key inferior-python-mode-map (kbd "C-l") 'tl/comint-clear-buffer)
+  (define-key inferior-python-mode-map (kbd "C-r") 'comint-history-isearch-backward))
 
 ;; (put 'project-venv-name 'safe-local-variable 'stringp)
 
