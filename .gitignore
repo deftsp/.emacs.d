@@ -135,4 +135,6 @@ projects
 
 devdocs-browser/
 
+logview-cache.extmap
+
 sync-to-remote.sh
