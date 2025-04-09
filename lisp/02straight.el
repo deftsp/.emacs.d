@@ -457,7 +457,6 @@
 (straight-use-package 'hide-comnt)
 (straight-use-package 'thing-cmds)
 (straight-use-package 'chumpy-windows)
-(straight-use-package 'highlight)
 (straight-use-package 'tidy)
 (straight-use-package 'cl-lib)
 (straight-use-package 'highlight-indent-guides)
