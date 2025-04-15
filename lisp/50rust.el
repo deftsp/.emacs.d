@@ -8,7 +8,7 @@
 ;;; Code:
 
 (use-package rust-ts-mode
-  :defer t
+  :after (rust-mode)
   :config
 
   ;; https://github.com/ZharMeny/cue-ts-mode/blob/a9874bb50503fd9e72a26aed20351bd84c65d325/cue-ts-mode.el#L87
@@ -54,7 +54,7 @@
 (use-package rust-mode
   :defer t
   :init
-  (setq rust-rustfmt-switches '("--edition" "2021"))
+  (setq rust-rustfmt-switches '("--edition" "2024"))
   (setq rust-mode-treesitter-derive t)
   ;; (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
   ;; (defface tl/rust-exclaim-face
