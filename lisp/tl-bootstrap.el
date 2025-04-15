@@ -67,9 +67,6 @@
 (require '50key-bindings)
 (require '50major-modes)
 (require '50lua)
-(require '50lsp-mode)
-(require '50lsp-bridge)
-(require '50lspce)
 (require '50lookup)
 ;; (require '50minibuffer-line)
 (require '50misc)
@@ -115,6 +112,10 @@
 (require '50vlf)
 (require '51ivy)
 (require '52prescient)
+
+(require '50lsp-mode)
+(require '50lsp-bridge)
+(require '50lspce)
 
 ;; (require '52emms)
 
