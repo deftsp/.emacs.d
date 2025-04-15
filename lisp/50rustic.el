@@ -126,6 +126,10 @@ Flycheck according to the Cargo project layout."
     (when (eq dottl-lsp-client 'lspce)
       (flycheck-mode -1))
 
+    (with-eval-after-load 'smartparens
+      ;; Don't pair lifetime specifiers
+      (sp-local-pair 'rustic-mode "'" nil :actions nil))
+
     (rainbow-delimiters-mode -1))
 
   (add-hook 'rustic-mode-hook 'tl/rustic-mode-init))
