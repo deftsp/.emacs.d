@@ -79,7 +79,6 @@
 (require '50perl)
 (require '50prodigy)
 (require '50project)
-(require '50persistent-scratch)
 (require '50python-mode)
 (require '50restclient)
 (require '50rust)
@@ -122,5 +121,9 @@
 (require '60session)
 (require '99face)
 (require '100align)
+
+;; the `rust-mode-treesitter-derive' should be set before load `rust-mode', but persistent-scratch might require
+;; rust-mode. So, load `50persistent-scratch' in the end
+(require '50persistent-scratch)
 
 (provide 'tl-bootstrap)
