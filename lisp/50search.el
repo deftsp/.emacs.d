@@ -201,7 +201,7 @@ Argument REPLACE String used to replace the matched strings in the buffer.
   (setq anzu-mode-line-update-function 'tl/anzu-update-mode-line))
 
 (use-package evil-anzu
-  :after (evil anzu)
+  :after evil
   :config
   (global-anzu-mode +1))
 
