@@ -548,10 +548,10 @@ kill internal buffers too."
       ";"  'evilnc-comment-operator)))
 
 ;; ;;; evil-indent-plus which replace evil-indent-textobject
-;; (use-package evil-indent-plus
-;;   :defer 3
-;;   :init
-;;   (evil-indent-plus-default-bindings))
+(use-package evil-indent-plus
+  :after (evil)
+  :init
+  (evil-indent-plus-default-bindings))
 
 ;;; evil-matchit
 (use-package evil-matchit
