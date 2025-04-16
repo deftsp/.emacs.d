@@ -198,8 +198,10 @@ recover evil state to it, otherwiser change to evil-emacs-state."
     (call-interactively (key-binding (this-command-keys)))))
 
 ;; (use-package evil-easymotion
+;;   :after (evil)
 ;;   :config
-;;   (evilem-default-keybindings ""))
+;;   (evilem-default-keybindings "g SPC")
+;;   (evilem-default-keybindings "gs"))
 
 ;; (with-eval-after-load "workgroups2"
 ;;   (defun tl/activate-all-major-mode-leader ()
