@@ -83,6 +83,7 @@
   (progn
     (defun tl/org-agenda-mode-init ()
       (setq truncate-lines t)
+      (display-line-numbers-mode +1)
       (define-key org-agenda-mode-map " " 'org-agenda-cycle-show))
 
     (add-hook 'org-agenda-mode-hook 'tl/org-agenda-mode-init)
