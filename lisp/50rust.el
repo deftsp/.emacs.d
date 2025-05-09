@@ -76,6 +76,10 @@
    "v"  '(:ignore t :which-key "variable")
    "vm" 'tl/toggle-mut))
 
+;; lsp-rust-analyzer-expand-macro require rust-prog-mode
+(use-package rust-prog-mode
+  :after rust-mode)
+
 (use-package rust-cargo
   :after rust-mode
   :config
