@@ -16,7 +16,8 @@
         lsp-enable-symbol-highlighting nil ; turn off for better performance
         lsp-modeline-diagnostics-enable nil
         lsp-enable-indentation nil
-        lsp-enable-snippet nil          ; use yasnippet instead
+        ;; enable snippet for https://rust-analyzer.github.io/book/features.html#magic-completions
+        lsp-enable-snippet t
         lsp-file-watch-threshold 5000
         lsp-restart 'auto-restart
         lsp-inlay-hints-mode nil
