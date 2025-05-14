@@ -130,6 +130,10 @@ Flycheck according to the Cargo project layout."
       ;; Don't pair lifetime specifiers
       (sp-local-pair 'rustic-mode "'" nil :actions nil))
 
+    ;; `rustic-analyzer-macro-expand' depend on `rust-font-lock-keywords' which is from rust-prog-mode. But load
+    ;; rust-prog-mode will lead the rust-ts-mode font lock error
+    (setq lsp-rust-analyzer-macro-expansion-method 'lsp-rust-analyzer-macro-expansion-default)
+
     (rainbow-delimiters-mode -1))
 
   (add-hook 'rustic-mode-hook 'tl/rustic-mode-init))
