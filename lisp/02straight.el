@@ -5,6 +5,8 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+;; M-x straight-pull-recipe-repositories
+
 ;; (require 'straight-x)
 
 (setq straight-repository-branch "develop"
@@ -597,5 +599,7 @@
 (straight-use-package 'logview)
 
 (straight-use-package '(exwm :type git :host github :repo "deftsp/exwm" :branch "shihpin"))
+
+(straight-use-package '(aidermacs :type git :host github :repo "MatthewZMD/aidermacs"))
 
 (provide '02straight)

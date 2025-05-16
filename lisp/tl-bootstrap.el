@@ -121,6 +121,7 @@
 (require '60session)
 (require '99face)
 (require '100align)
+(require '50aidermacs)
 
 ;; the `rust-mode-treesitter-derive' should be set before load `rust-mode', but persistent-scratch might require
 ;; rust-mode. So, load `50persistent-scratch' in the end

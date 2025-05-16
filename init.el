@@ -84,6 +84,8 @@
 (when (file-exists-p custom-file)
   (load custom-file 'noerror))
 
+(load "~/.emacs.d/secrets.el")
+
 (require 'tl-bootstrap)
 
 (setq debug-on-error nil)                 ; was set to t at top of buffer

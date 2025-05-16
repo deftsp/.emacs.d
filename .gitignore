@@ -137,4 +137,8 @@ devdocs-browser/
 
 logview-cache.extmap
 
+.aider*
+.env
+secrets.el
+
 sync-to-remote.sh
