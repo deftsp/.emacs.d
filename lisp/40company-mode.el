@@ -109,7 +109,7 @@
 (defvar tl/company-common-backends
   '(company-capf
     company-files
-    company-emoji
+    ;; company-emoji
     ;; company-dabbrev ; which complete some string symbol
     company-yasnippet))
 
