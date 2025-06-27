@@ -7,6 +7,7 @@
   ;; :bind (("s-x" . aidermacs-transient-menu))
   ;; :bind (("C-c C-a" . aidermacs-transient-menu))
   :custom
+  (aidermacs-auto-commits nil)
   ;; See the Configuration section below
   (aidermacs-default-model "gemini-2.5-pro-exp-03-25")
   ;; (aidermacs-default-model "openrouter/google/gemini-2.5-pro-exp-03-25:free")
