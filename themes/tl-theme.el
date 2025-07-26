@@ -68,7 +68,7 @@
    ;; mode-line
    '(mode-line-buffer-id ((t (:foreground "#90377d"))))
    '(mode-line-emphasis ((t (:foreground "Magenta"))))
-   `(mode-line ((t (:foreground ,base1 :background ,base02 :box nil :height 1.0 :family "mplus Nerd Font"))))
+   `(mode-line ((t (:foreground ,base1 :background ,base02 :box nil :height 1.0 :family "ZedMono Nerd Font"))))
    `(mode-line-inactive ((t (:inherit 'mode-line :foreground ,base0  :background ,inactive1))))
    `(mode-line-highlight ((t (:inherit 'mode-line :background ,base01 :foreground ,base2))))
 
