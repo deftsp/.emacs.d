@@ -587,7 +587,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
          (window-config
           (if (< (length attrs) 3)
               'reorganize-frame
-            (if (string= (system-name)  "PaloryN9")
+            (if (string= (system-name) "PaloryN25")
                 (dolist (attr attrs)
                   (let ((name (assoc-default 'name attr))
                         (frames (assoc-default 'frames attr)))
