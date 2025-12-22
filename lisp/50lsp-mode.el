@@ -100,6 +100,8 @@
     ;; help
     "hh" #'lsp-describe-thing-at-point
     "hd" #'lsp-ui-doc-show
+    "hm" 'lsp-rust-analyzer-expand-macro
+    "hs" 'lsp-rust-analyzer-syntax-tree
     ;; jump
     "j." #'smart-jump-go
     "j," #'smart-jump-back
