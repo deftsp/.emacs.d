@@ -490,7 +490,7 @@
    `(child-frame-border ((t (:background ,base02))))
 
    ;; eshell-prompt-extras
-   `(tl/eshell-base-face ((t (:foreground ,base0 :background unspecified :font "mplus Nerd Font" :size 14))))
+   `(tl/eshell-base-face ((t (:foreground ,base0 :background unspecified :font "ZedMono Nerd Font" :size 14))))
    `(epe-symbol-face ((t (:foreground "#d01ce2" :inherit tl/eshell-base-face))))
    `(epe-user-face ((t (:foreground "#648fc3" :inherit tl/eshell-base-face))))
    `(epe-host-face ((t (:foreground "#648fc3" :inherit tl/eshell-base-face))))
