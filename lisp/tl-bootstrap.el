@@ -116,6 +116,8 @@
 (require '50lsp-bridge)
 (require '50lspce)
 
+(require '50calibre)
+
 ;; (require '52emms)
 
 (require '60session)

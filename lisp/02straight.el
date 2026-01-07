@@ -576,8 +576,7 @@
 (straight-use-package 'diredfl)
 (straight-use-package 'lispy)
 (straight-use-package '(solidity-mode :files (:defaults "*.el")))
-
-
+(straight-use-package 'calibredb)
 
 (straight-use-package 'scratch)
 (straight-use-package 'persistent-scratch)
