@@ -251,6 +251,7 @@
         ;; lsp-rust-features "all"
         ;; lsp-rust-all-features t
         lsp-rust-analyzer-diagnostics-disabled ["unresolved-import"]
+        lsp-rust-analyzer-assist-prefer-self t
         lsp-rust-analyzer-proc-macro-enable t
         lsp-rust-analyzer-display-chaining-hints t
         lsp-rust-analyzer-display-parameter-hints t
