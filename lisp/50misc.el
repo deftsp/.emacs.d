@@ -616,6 +616,7 @@ vi style of % jumping to matching brace."
             ("\\.julius$"                         . js2-mode)
             ("\\.js$"                             . web-mode)
             ("\\.jsx$"                            . web-mode)
+            ("\\.jsonc$"                          . jsonc-mode)
             ("\\.html?\\'"                        . web-mode)
             ("\\.phtml\\'"                        . web-mode)
             ("\\.tpl\\.php\\'"                    . web-mode)
