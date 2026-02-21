@@ -66,12 +66,12 @@
     (setq tl//after-focus-events-timer
           (run-at-time "0.2 sec" nil #'tl//after-focus-change-handler))))
 
-
-(when (and (boundp 'after-focus-change-function)
-           (member window-system '(ns mac)))
-  ;; focus events is delivered asynchronously with a timer to make sure it
-  ;; (remove-function after-focus-change-function 'tl//run-after-focus-change-handler-with-timer)
-  (add-function :after after-focus-change-function #'tl//run-after-focus-change-handler-with-timer))
+(with-eval-after-load 'frame
+  (when (and (boundp 'after-focus-change-function)
+             (member window-system '(ns mac)))
+    ;; focus events is delivered asynchronously with a timer to make sure it
+    ;; (remove-function after-focus-change-function 'tl//run-after-focus-change-handler-with-timer)
+    (add-function :after after-focus-change-function #'tl//run-after-focus-change-handler-with-timer)))
 
 (provide '03frame)
 ;;; 03frame.el ends here
