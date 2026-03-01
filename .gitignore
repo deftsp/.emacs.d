@@ -142,3 +142,5 @@ logview-cache.extmap
 secrets.el
 
 sync-to-remote.sh
+
+.agent-shell/
