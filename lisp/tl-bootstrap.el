@@ -118,6 +118,8 @@
 
 (require '50calibre)
 
+(require '50llm)
+
 ;; (require '52emms)
 
 (require '60session)
