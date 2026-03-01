@@ -78,7 +78,11 @@
 ;; Pin the org versin to ca873f7
 ;; https://github.com/org-roam/org-roam/issues/2361
 ;; https://old.reddit.com/r/emacs/comments/15jyzz7/strange_orgroam_bug_with_links_and_more/
-(straight-use-package 'org)
+(straight-use-package '(org
+                        :type git
+                        :host nil
+                        :local-repo "org"
+                        :repo "https://git.savannah.gnu.org/git/emacs/org-mode.git"))
 (straight-use-package 'org-contrib)
 (straight-use-package 'org-mru-clock)
 (straight-use-package 'org-superstar)
