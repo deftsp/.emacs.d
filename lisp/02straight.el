@@ -330,7 +330,10 @@
 (straight-use-package 'eglot)
 (straight-use-package 'fuzzy)
 (straight-use-package 'mag-menu)
+
 (straight-use-package 'rg)
+(straight-use-package 'ast-grep)
+
 (straight-use-package 'all-the-icons-dired)
 (straight-use-package 'ein)
 (straight-use-package 'fuzzy-match)
