@@ -118,7 +118,7 @@
 
 (require '50calibre)
 
-(require '50llm)
+(require '50agent-shell)
 
 ;; (require '52emms)
 

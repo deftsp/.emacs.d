@@ -1,4 +1,4 @@
-;;; 50llm.el ---                                    -*- lexical-binding: t; -*-
+;;; 50agent-shell.el ---                                    -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2026  Shihpin Tseng
 
@@ -92,5 +92,5 @@
   ;; Options: 'left, 'right, 'top, 'bottom, or nil
   (setq agent-shell-manager-side 'bottom))
 
-(provide '50llm)
-;;; 50llm.el ends here
+(provide '50agent-shell)
+;;; 50agent-shell.el ends here
