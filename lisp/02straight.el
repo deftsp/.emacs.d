@@ -602,6 +602,8 @@
 ;; LLM
 (straight-use-package 'agent-shell)
 (straight-use-package '(agent-shell-manager :type git :host github :repo "jethrokuan/agent-shell-manager"))
+(straight-use-package 'ai-code)
+(straight-use-package 'gptel)
 
 
 ;; https://github.com/m00natic/vlfi/blob/master/vlf.el

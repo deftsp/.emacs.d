@@ -119,6 +119,8 @@
 (require '50calibre)
 
 (require '50agent-shell)
+(require '50ai-code)
+(require '50gptel)
 
 ;; (require '52emms)
 

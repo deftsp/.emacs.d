@@ -799,15 +799,15 @@ such character is found, following options are shown:
 ;; (define-key global-map (kbd "<C-down>") 'tl/decrement-number-at-point)
 
 ;;; incr-dwim
-(autoload 'incr-dwim "incr"
-  "Use `incr-try-alist' to find most possible method to increase thing at point or region" t)
-(autoload 'decr-dwim "incr" t)
-(eval-after-load "incr"
-  '(setq incr-enable-feature
-    '(number rotate roman date han-number)))
+;; (autoload 'incr-dwim "incr"
+;;   "Use `incr-try-alist' to find most possible method to increase thing at point or region" t)
+;; (autoload 'decr-dwim "incr" t)
+;; (eval-after-load "incr"
+;;   '(setq incr-enable-feature
+;;     '(number rotate roman date han-number)))
 
-(global-set-key (kbd "C-c x") 'incr-dwim)
-(global-set-key (kbd "C-c z") 'decr-dwim)
+;; (global-set-key (kbd "C-c x") 'incr-dwim)
+;; (global-set-key (kbd "C-c z") 'decr-dwim)
 
 
 ;;; ff-find-other-file and friends
