@@ -479,7 +479,8 @@
 (straight-use-package 'hl-line+)
 (straight-use-package 'treepy)
 (straight-use-package 'coffee-mode)
-(straight-use-package 'hl-todo)
+;; use wcheck-mode to highlight TODO in comments
+;; (straight-use-package 'hl-todo)
 (straight-use-package 'ts)
 (straight-use-package 'col-highlight)
 (straight-use-package 'hlint-refactor)
