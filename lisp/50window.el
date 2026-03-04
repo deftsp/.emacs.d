@@ -43,20 +43,23 @@ then this function does nothing."
 ;; Origial from https://gist.github.com/3402786 An Emacs function to temporarily make
 ;; one buffer fullscreen. You can quickly restore the old window setup.
 (defun tl/toggle-maximize-buffer (&optional buffer-or-name)
-  "Maximize buffer"
-  (interactive)
+  "Maximize buffer.
+按下 C-u 执行时，将忽略窗口参数（如 no-delete-other-windows）强行关闭 AI 窗口。"
+  (interactive "P") ; "P" 会将原始前缀参数传给 current-prefix-arg
   (if (and (= 1 (length (window-list)))
            (assoc ?_ register-alist))
       (jump-to-register ?_)
     (progn
       (window-configuration-to-register ?_)
 
-      (when buffer-or-name
+      ;; 如果传入了 buffer-or-name 且不是前缀参数，则跳转
+      (when (and buffer-or-name (not (listp buffer-or-name)) (not (numberp buffer-or-name)))
         (let* ((win (get-buffer-window buffer-or-name)))
-          (select-window win)))
+          (when win (select-window win))))
 
-      (delete-other-windows))))
-
+      ;; 只要按了 C-u (current-prefix-arg 不为 nil)，就强制清理
+      (let ((ignore-window-parameters (if current-prefix-arg t nil)))
+        (delete-other-windows)))))
 
 ;; originally from magnars and modified by ffevotte for dedicated windows
 ;; support, it has quite diverged by now
