@@ -61,6 +61,12 @@ then this function does nothing."
       (let ((ignore-window-parameters (if current-prefix-arg t nil)))
         (delete-other-windows)))))
 
+(defun tl/toggle-maximize-buffer-force ()
+  "强制执行 tl/toggle-maximize-buffer，模拟按下 C-u 的效果。"
+  (interactive)
+  (let ((current-prefix-arg '(4))) ;; '(4) 是 C-u 的标准内部表示
+    (call-interactively 'tl/toggle-maximize-buffer)))
+
 ;; originally from magnars and modified by ffevotte for dedicated windows
 ;; support, it has quite diverged by now
 (defun tl/rotate-windows-forward (count)

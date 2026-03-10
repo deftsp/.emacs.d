@@ -501,6 +501,7 @@ if prefix argument ARG is given, switch to it in an other, possibly new window."
   "wl"           'evil-window-right
   "w <right>"    'evil-window-right
   "wm"           'tl/toggle-maximize-buffer
+  "wM"           'tl/toggle-maximize-buffer-force
   "wc"           'tl/toggle-centered-buffer-mode
   "wC"           'tl/toggle-centered-buffer-mode-frame
   "wo"           'other-frame
