@@ -145,7 +145,6 @@
   (setq cal-china-x-chinese-holidays
         '((holiday-fixed 1 1   "元旦")
           (holiday-fixed 3 8   "妇女节")
-          (holiday-fixed 3 12  "植树节")
           (holiday-fixed 4 1   "愚人节")
           (holiday-fixed 5 1   "劳动节")
           (holiday-fixed 5 4   "青年节")
