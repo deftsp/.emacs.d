@@ -11,6 +11,15 @@
 ;; it's background and foreground. Defining vc-state-base-face not to inherit
 ;; will slove that.
 
+;; 颜色缓存机制：Powerline 的这些分隔符（如三角形）实际上是动态生成的 XPM 图像。
+
+;; 当启动 emacs --daemon 时，并没有真正的 GUI 窗口（Frame）。此时 Powerline 尝试计算颜色并生成图片，由于没有 GUI 环境，
+;; 它可能退回到一个默认的灰色或黑色背景。
+
+;; 不匹配的背景：当你通过 emacsclient 打开一个新窗口时，它加载了你的彩色主题，但 Powerline 依然在使用 Daemon 启动时生成
+;; 的那些“旧颜色”图片。
+
+;; TODO: switch to telephone-line or doom-modeline?
 (use-package powerline
   :init
   ;; M-x powerline-reset, after changing
@@ -520,6 +529,9 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
 
 (use-package powerline-themes
   :config
+  ;; FIXME: emacs client frame 的 XPM 背景色不正常, window-setup-hook 延迟加载背景色正常，但 scratch mode-line 仍然
+  ;; default mode-line
+  ;; (add-hook 'window-setup-hook 'tl/setup-powerline-evil-theme)
   (tl/setup-powerline-evil-theme))
 
 (defun tl/force-update-mode-line  ()
