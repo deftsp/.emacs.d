@@ -118,6 +118,7 @@
     (setq vc-msg-git-show-commit-function 'magit-show-commit)))
 
 ;;; magit
+;; 针对 bare repo 不好用, 如打开 dotfiles repo
 (use-package magit
   :defer t
   :bind
