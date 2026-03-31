@@ -231,8 +231,6 @@
   :config
   (progn
     (use-package 50calendar)
-    (when (eq system-type 'darwin)
-      (add-to-list 'org-modules 'org-mac-link))
     (add-to-list 'org-modules 'org-habit)
     (add-to-list 'org-modules 'org-expiry)
     (add-to-list 'org-modules 'org-mouse)
@@ -1527,9 +1525,6 @@ it can be passed in POS."
 (defun tl/org-insert-resources-drawer-at-point ()
   (interactive)
   (org-insert-drawer nil "RESOURCES"))
-
-(use-package org-mac-link
-  :commands (org-mac-link-get-link))
 
 (provide '13org-mode)
 

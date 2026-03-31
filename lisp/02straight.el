@@ -90,7 +90,6 @@
 (straight-use-package 'org-download)
 (straight-use-package 'org-fancy-priorities)
 (straight-use-package 'org-journal)
-(straight-use-package 'org-mac-link)
 ;; (straight-use-package '(org-link-minor-mode :type git :host github :repo "seanohalpin/org-link-minor-mode"))
 (straight-use-package 'orglink)
 (straight-use-package '(org-protocol-capture-html :type git :host github :repo "alphapapa/org-protocol-capture-html"))

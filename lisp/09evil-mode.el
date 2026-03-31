@@ -347,7 +347,6 @@ kill internal buffers too."
     "H"    "^"
     ;; make sure that Evil's normal state never touches TAB, just wire this fall-through binding
     ;; "TAB" 'tl/evil-undefine
-    "gL"  'org-mac-link-get-link
     "gd"  'smart-jump-go
     ;; "gD"  'smart-jump-go-other-window
     "gO"  'ff-find-other-file
