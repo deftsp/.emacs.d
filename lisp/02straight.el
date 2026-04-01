@@ -472,7 +472,7 @@
 (straight-use-package 'clojure-mode)
 (straight-use-package 'highlight-indentation)
 (straight-use-package 'transpose-frame)
-(straight-use-package 'cmake-mode)
+;; (straight-use-package 'cmake-mode)
 ;; (straight-use-package '(hindent :no-native-compile t))
 (straight-use-package 'cnfonts)
 (straight-use-package 'hl-line+)
