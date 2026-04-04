@@ -121,6 +121,7 @@
 (require '50agent-shell)
 (require '50ai-code)
 (require '50gptel)
+(require '50opencode)
 
 ;; (require '52emms)
 
