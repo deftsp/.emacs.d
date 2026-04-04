@@ -9,6 +9,10 @@
 
 (use-package agent-shell
   :commands (agent-shell-opencode-start-agent)
+  :bind (:map agent-shell-mode-map
+         ("RET" . newline)
+         ("C-c C-c" . shell-maker-submit)
+         ("C-c C-k" . agent-shell-interrupt))
   :config
   (setq agent-shell-opencode-authentication
         (agent-shell-opencode-make-authentication :none t))
@@ -17,7 +21,11 @@
   ;; (setq agent-shell-transcript-file-path-function nil)
 
   ;; "opencode/claude-sonnet-4-6"
-  (setq agent-shell-opencode-default-model-id "deepseek/deepseek-reasoner")
+  ;; "deepseek/deepseek-reasoner"
+  ;; using the default model in opencode.jsonc
+  (setq agent-shell-opencode-default-model-id nil)
+
+  (setq agent-shell-preferred-agent-config (agent-shell-opencode-make-agent-config))
 
   ;; (defun tl/agent-shell-start-gemini-agent ()
   ;;   "Start an interactive Gemini CLI agent shell."
@@ -56,11 +64,16 @@
     (evil-define-key 'normal agent-shell-mode-map (kbd "TAB") #'agent-shell-next-item)
     (evil-define-key 'normal agent-shell-mode-map (kbd "j") #'agent-shell-next-item)
     (evil-define-key 'normal agent-shell-mode-map (kbd "k") #'agent-shell-previous-item)
-    (evil-define-key 'normal agent-shell-mode-map (kbd "C-c C-c") #'agent-shell-interrupt)
+    (evil-define-key 'normal agent-shell-mode-map (kbd "C-c C-k") #'agent-shell-interrupt)
     (evil-define-key 'normal agent-shell-mode-map (kbd "m") #'agent-shell-set-session-mode)
     (evil-define-key 'normal agent-shell-mode-map (kbd "v") #'agent-shell-set-session-model)
     (evil-define-key 'normal agent-shell-mode-map (kbd "C-<tab>") #'agent-shell-cycle-session-mode)
     (evil-define-key 'normal agent-shell-mode-map (kbd "o") #'agent-shell-other-buffer)
+    (evil-define-key 'normal agent-shell-mode-map (kbd "RET") #'newline)
+    (evil-define-key 'normal agent-shell-mode-map (kbd "C-c C-c") #'comint-send-input)
+
+    (evil-define-key 'insert agent-shell-mode-map (kbd "RET") #'newline)
+    (evil-define-key 'insert agent-shell-mode-map (kbd "C-c C-c") #'shell-maker-submit)
 
     ;; agent-shell-viewport-view-mode keybindings
     (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "TAB") #'agent-shell-viewport-next-item)
@@ -74,14 +87,8 @@
     (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "v") #'agent-shell-viewport-set-session-model)
     (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "C-<tab>") #'agent-shell-viewport-cycle-session-mode)
     (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "o") #'agent-shell-other-buffer)
-    (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "C-c C-c") #'agent-shell-viewport-interrupt)
-    (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "q") #'bury-buffer)
-
-    (evil-define-key 'insert agent-shell-mode-map (kbd "RET") #'newline)
-    (evil-define-key 'insert agent-shell-mode-map (kbd "S-<return>") #'comint-send-input)
-
-    (evil-define-key 'normal agent-shell-mode-map (kbd "RET") #'newline)
-    (evil-define-key 'normal agent-shell-mode-map (kbd "S-<return>") #'comint-send-input)))
+    (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "C-c C-k") #'agent-shell-viewport-interrupt)
+    (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "q") #'bury-buffer)))
 
 ;; https://github.com/jethrokuan/agent-shell-manager
 (use-package agent-shell-manager
@@ -90,7 +97,24 @@
   ;; Use dedicated window with user-controlled placement
   (setq agent-shell-manager-side nil)
   ;; Options: 'left, 'right, 'top, 'bottom, or nil
-  (setq agent-shell-manager-side 'bottom))
+  (setq agent-shell-manager-side 'bottom)
+
+  (with-eval-after-load 'evil
+    (general-define-key
+     :states '(normal)
+     :keymaps 'agent-shell-manager-mode-map
+     "RET" #'agent-shell-manager-goto
+     "gr" #'agent-shell-manager-refresh
+     "q"      #'quit-window
+     "x"      #'agent-shell-manager-kill
+     "c"      #'agent-shell-manager-new
+     "r"      #'agent-shell-manager-restart
+     "d"      #'agent-shell-manager-delete-killed
+     "m"      #'agent-shell-manager-set-mode
+     "M"      #'agent-shell-manager-set-model
+     "C-c C-c" #'agent-shell-manager-interrupt
+     "t"      #'agent-shell-manager-view-traffic
+     "l"      #'agent-shell-manager-toggle-logging)))
 
 (provide '50agent-shell)
 ;;; 50agent-shell.el ends here
