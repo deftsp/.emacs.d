@@ -121,6 +121,12 @@
   :config
   (require 'smartparens-config)
   (require 'smartparens-rust)
+
+  ;; https://github.com/Fuco1/smartparens/blob/82d2cf084a19b0c2c3812e0550721f8a61996056/smartparens.el#L9976
+  ;; it might cause M-/ error: "Search failed: there is an unmatched expression somewhere or we are at the beginning/end of file."
+  (ad-remove-advice 'hippie-expand 'after 'sp-auto-complete-advice)
+  (ad-activate 'hippie-expand)
+
   ;; It might cause smartparens-mode fail to restore??
   ;;   (defun tl//smartparens-disable-before-expand-snippet ()
   ;;     "Handler for `yas-before-expand-snippet-hook'.
