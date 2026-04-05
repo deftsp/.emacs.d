@@ -152,6 +152,10 @@
   (add-to-list 'magit-repository-directories '("~/.emacs.d" . 0)) ; C-u C-u M-x magit-status will ignore it
   (add-to-list 'magit-repository-directories '("~/opt/emacs" . 0)))
 
+(use-package forge
+  :straight t
+  :after magit)
+
 ;; magit-delta will casue magit-status very slow
 (use-package magit-delta
   :after (magit)
