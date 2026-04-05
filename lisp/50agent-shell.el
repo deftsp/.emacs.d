@@ -57,8 +57,7 @@
 
     (add-hook 'diff-mode-hook 'tl//agent-shell-diff-with-evil-emacs-state)
 
-    ;; agent-shell-viewport-edit-mode: use Emacs state so normal text editing works
-    (add-hook 'agent-shell-viewport-edit-mode-hook #'evil-emacs-state)
+    ;; (add-hook 'agent-shell-viewport-edit-mode-hook #'evil-emacs-state)
 
     ;; agent-shell-mode keybindings
     (evil-define-key 'normal agent-shell-mode-map (kbd "TAB") #'agent-shell-next-item)
@@ -66,7 +65,7 @@
     (evil-define-key 'normal agent-shell-mode-map (kbd "k") #'agent-shell-previous-item)
     (evil-define-key 'normal agent-shell-mode-map (kbd "C-c C-k") #'agent-shell-interrupt)
     (evil-define-key 'normal agent-shell-mode-map (kbd "m") #'agent-shell-set-session-mode)
-    (evil-define-key 'normal agent-shell-mode-map (kbd "v") #'agent-shell-set-session-model)
+    (evil-define-key 'normal agent-shell-mode-map (kbd "C-c C-v") #'agent-shell-set-session-model)
     (evil-define-key 'normal agent-shell-mode-map (kbd "C-<tab>") #'agent-shell-cycle-session-mode)
     (evil-define-key 'normal agent-shell-mode-map (kbd "o") #'agent-shell-other-buffer)
     (evil-define-key 'normal agent-shell-mode-map (kbd "RET") #'newline)
@@ -84,7 +83,7 @@
     (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "r") #'agent-shell-viewport-reply)
     (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "R") #'agent-shell-viewport-refresh)
     (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "m") #'agent-shell-viewport-set-session-mode)
-    (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "v") #'agent-shell-viewport-set-session-model)
+    (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "C-c C-v") #'agent-shell-viewport-set-session-model)
     (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "C-<tab>") #'agent-shell-viewport-cycle-session-mode)
     (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "o") #'agent-shell-other-buffer)
     (evil-define-key 'normal agent-shell-viewport-view-mode-map (kbd "C-c C-k") #'agent-shell-viewport-interrupt)
