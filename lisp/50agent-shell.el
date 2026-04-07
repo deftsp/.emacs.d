@@ -8,6 +8,7 @@
 ;;; Code:
 
 (use-package agent-shell
+  :straight t
   :commands (agent-shell-opencode-start-agent)
   :bind (:map agent-shell-mode-map
          ("RET" . newline)
@@ -91,6 +92,7 @@
 
 ;; https://github.com/jethrokuan/agent-shell-manager
 (use-package agent-shell-manager
+  :straight (agent-shell-manager :type git :host github :repo "jethrokuan/agent-shell-manager")
   :commands (agent-shell-manager-toggle)
   :config
   ;; Use dedicated window with user-controlled placement
@@ -114,6 +116,12 @@
      "C-c C-c" #'agent-shell-manager-interrupt
      "t"      #'agent-shell-manager-view-traffic
      "l"      #'agent-shell-manager-toggle-logging)))
+
+(use-package agent-shell-knockknock
+  :straight (agent-shell-knockknock type git :host github :repo "xenodium/agent-shell-knockknock")
+  :after (agent-shell knockknock)
+  :hook (agent-shell-mode . agent-shell-knockknock-mode))
+
 
 (provide '50agent-shell)
 ;;; 50agent-shell.el ends here

@@ -599,9 +599,10 @@
 
 (straight-use-package 'mise)
 
+(straight-use-package
+ '(knockknock :type git :host github :repo "konrad1977/knockknock"))
+
 ;; LLM
-(straight-use-package 'agent-shell)
-(straight-use-package '(agent-shell-manager :type git :host github :repo "jethrokuan/agent-shell-manager"))
 (straight-use-package 'ai-code)
 (straight-use-package 'gptel)
 
