@@ -19,6 +19,9 @@
 (setq read-quoted-char-radix 10 ; accept decimal input when using ^q, e.g.: ^q 13 [RET] -> ^M
       ;; echo unfinished commands after this many seconds of pause.
       echo-keystrokes 0.02              ; 0.1
+      ;; defer fontification until you stop typing. In practice you never notice the delay – the highlighting catches up
+      ;; instantly – but scrolling and typing may feel smoother.
+      redisplay-skip-fontification-on-input t
       tooltip-hide-delay 20             ; default 10
       confirm-kill-emacs nil            ; alternative `yes-or-no-p' ; `y-or-n-p'
       confirm-kill-processes nil
