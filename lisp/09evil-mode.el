@@ -431,6 +431,18 @@ kill internal buffers too."
    :keymaps 'magit-status-mode-map
    "gr" 'magit-refresh)
 
+  (defun tl//do-nothing-for-ivy-posframe-mode (fn &rest args)
+    (if (and (bound-and-true-p ivy-posframe-mode)
+             (boundp 'ivy--display-function)
+             (string-match-p "^ivy-posframe"
+                             (symbol-name ivy--display-function)))
+        ;; posframe 模式：跳过 evil
+        nil
+      (apply fn args)))
+
+  (advice-add 'evil-collection-minibuffer-insert :around #'tl//do-nothing-for-ivy-posframe-mode)
+
+
   (evil-collection-define-key 'normal 'Info-mode-map "o" 'ace-link-info)
   (evil-collection-define-key 'normal 'xref--xref-buffer-mode-map "o" 'ace-link-xref)
   (evil-collection-define-key 'normal 'compilation-mode-map "o" 'ace-link-compilation)

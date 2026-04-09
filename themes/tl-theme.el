@@ -452,6 +452,7 @@
    `(ivy-minibuffer-match-face-2 ((t (:foreground "#f0dfaf"))))
    `(ivy-minibuffer-match-face-3 ((t (:foreground "#94bff3"))))
    `(ivy-minibuffer-match-face-4 ((t (:foreground "#dca3a3"))))
+   `(ivy-posframe-border ((t (:background "#073642"))))
 
    ;; counsel
    '(counsel-outline-default ((t (:foreground "#648fc3"))))

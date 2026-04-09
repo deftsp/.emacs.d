@@ -295,6 +295,30 @@ C-u C-u -> Start swiper without any arguments (stock behavior)"
     (16 (swiper)) ; C-u C-u
     (t  (swiper (modi/get-symbol-at-point)))))
 
+
+;; https://github.com/tumashu/ivy-posframe
+(use-package ivy-posframe
+  :straight t
+  :config
+  (setq ivy-posframe-border-width 4)
+
+  (setq ivy-posframe-parameters
+        '((left-fringe . 4)
+          (right-fringe . 0)))
+  ;; (setq ivy-posframe-parameters nil)
+  ;; display at `ivy-posframe-style'
+  ;; ivy-posframe-display-at-frame-bottom-left
+  ;; ivy-posframe-display-at-frame-top-center
+  ;; ivy-posframe-display-at-window-center
+  ;; ivy-posframe-display-at-frame-center
+  (setq ivy-posframe-display-functions-alist
+        '((swiper          . ivy-posframe-display-at-point)
+          (complete-symbol . ivy-posframe-display-at-point)
+          (counsel-M-x     . ivy-posframe-display)
+          (t               . ivy-posframe-display)))
+
+  (ivy-posframe-mode +1))
+
 (provide '51ivy)
 
 ;; Local Variables: **
