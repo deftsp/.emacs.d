@@ -605,20 +605,18 @@ If the universal prefix argument is used then kill the buffer too."
 
   (use-package window-purpose-x
     :init
-    (progn
-      (setq purpose-x-popwin-position 'bottom
-            ;; if `compilation-window-height' are set, the
-            ;; `purpose-x-popwin-height' will be ignore
-            purpose-x-popwin-height 0.66
-            purpose-x-popwin-width 0.45))
+    (setq purpose-x-popwin-position 'bottom
+          ;; if `compilation-window-height' are set, the
+          ;; `purpose-x-popwin-height' will be ignore
+          purpose-x-popwin-height 0.66
+          purpose-x-popwin-width 0.45)
     :config
-    (progn
-      (add-to-list 'purpose-x-popwin-major-modes 'helpful-mode)
-      (add-to-list 'purpose-x-popwin-major-modes 'org-anki-mode)
-      ;; (purpose-x-popupify-purpose 'search #'purpose-display-at-right)
-      ;; Activate `popwin' emulation.
-      (purpose-x-popwin-setup)
-      (purpose-x-kill-setup)))
+    (add-to-list 'purpose-x-popwin-major-modes 'helpful-mode)
+    (add-to-list 'purpose-x-popwin-major-modes 'org-anki-mode)
+    ;; (purpose-x-popupify-purpose 'search #'purpose-display-at-right)
+    ;; Activate `popwin' emulation.
+    (purpose-x-popwin-setup)
+    (purpose-x-kill-setup))
 
   (purpose-mode +1))
 
