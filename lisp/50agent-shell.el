@@ -150,10 +150,18 @@
   :straight (agent-shell-manager :type git :host github :repo "jethrokuan/agent-shell-manager")
   :commands (agent-shell-manager-toggle)
   :config
-  ;; Use dedicated window with user-controlled placement
+  ;; 'left, 'right, 'top, 'bottom, or nil which using dedicated window with user-controlled placement
   (setq agent-shell-manager-side nil)
-  ;; Options: 'left, 'right, 'top, 'bottom, or nil
-  (setq agent-shell-manager-side 'bottom)
+
+  ;; extract from agent-shell-manager-toggle
+  (add-to-list 'display-buffer-alist
+               '("\\*Agent-Shell Buffers\\*"
+                 (display-buffer-in-side-window)
+                 (side . bottom)
+                 (slot . 0)
+                 (window-height . 10)
+                 (preserve-size . (nil . t))
+                 (window-parameters . ((no-delete-other-windows . t) (dedicated . t)))))
 
   (with-eval-after-load 'evil
     (general-define-key
