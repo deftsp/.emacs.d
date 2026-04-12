@@ -41,12 +41,26 @@
   :straight exec-path-from-shell
   :if (memq window-system '(ns))
   :config
-  (add-to-list 'exec-path-from-shell-variables "GOROOT")
-  (add-to-list 'exec-path-from-shell-variables "LIBRARY_PATH")
-  (add-to-list 'exec-path-from-shell-variables "LD_LIBRARY_PATH")
-  (setq exec-path-from-shell-check-startup-files nil)
   ;; List of environment variables which are copied from the shell.
-  (push "HISTFILE" exec-path-from-shell-variables)
+  (dolist (var '("SSH_AUTH_SOCK"
+                 "SSH_AGENT_PID"
+                 "GPG_AGENT_INFO"
+                 "GOROOT"
+                 "LIBRARY_PATH"
+                 "LD_LIBRARY_PATH"
+                 "SCCACHE_DIR"
+                 "SCCACHE_CACHE_SIZE"
+                 "HISTFILE"
+                 "CFLAGS"
+                 "CXXFLAGS"
+                 "LDFLAGS"
+                 "LANG"
+                 "LC_CTYPE"
+                 "NIX_SSL_CERT_FILE"
+                 "NIX_PATH"))
+    (add-to-list 'exec-path-from-shell-variables var))
+
+  (setq exec-path-from-shell-check-startup-files nil)
   (exec-path-from-shell-initialize))
 
 (straight-use-package '(asdf-vm :type git :host github :repo "delonnewman/asdf-vm.el"))
