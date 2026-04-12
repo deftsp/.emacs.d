@@ -99,12 +99,29 @@
      "TAB" #'agent-shell-viewport-next-item
      "<backtab>" #'agent-shell-viewport-previous-item
 
+     "C-f" #'agent-shell-viewport-next-page
+     "C-b" #'agent-shell-viewport-previous-page
 
-     "j" #'agent-shell-viewport-next-item
-     "k" #'agent-shell-viewport-previous-item
      "n" #'agent-shell-viewport-next-item
      "p" #'agent-shell-viewport-previous-item
 
+     "gr" #'agent-shell-viewport-refresh
+
+     "C-c C-m" #'agent-shell-viewport-set-session-mode
+     "C-c C-o" #'agent-shell-other-buffer
+     "C-c C-v" #'agent-shell-viewport-set-session-model
+     "C-<tab>" #'agent-shell-viewport-cycle-session-mode
+     "C-c C-k" #'agent-shell-viewport-interrupt
+
+     "o" #'agent-shell-other-buffer
+     "q" #'bury-buffer
+     "?" #'agent-shell-viewport-help-menu)
+
+    ;; :prefix ","
+    (general-define-key
+     :states 'normal
+     :keymaps '(agent-shell-viewport-view-mode-map)
+     :prefix ","
      "f" #'agent-shell-viewport-next-page
      "b" #'agent-shell-viewport-previous-page
 
@@ -119,31 +136,19 @@
      "7" #'agent-shell-viewport-reply-7
      "8" #'agent-shell-viewport-reply-8
      "9" #'agent-shell-viewport-reply-9
-     "v" nil
-
      "m" #'agent-shell-viewport-reply-more
      "a" #'agent-shell-viewport-reply-again
      "c" #'agent-shell-viewport-reply-continue
 
-     "gr" #'agent-shell-viewport-refresh
+     "v" #'agent-shell-viewport-set-session-model))
 
-     "C-c C-m" #'agent-shell-viewport-set-session-mode
-     "C-c C-o" #'agent-shell-other-buffer
-     "C-c C-v" #'agent-shell-viewport-set-session-model
-     "C-<tab>" #'agent-shell-viewport-cycle-session-mode
-     "C-c C-k" #'agent-shell-viewport-interrupt
-
-     "o" #'agent-shell-other-buffer
-     "q" #'bury-buffer
-     "?" #'agent-shell-viewport-help-menu)
-
-    (general-define-key
-     :states '(normal)
-     :keymaps '(agent-shell-viewport-edit-mode-map)
-     "M-j" #'agent-shell-viewport-next-history
-     "M-k" #'agent-shell-viewport-previous-history
-     "M-r" #'agent-shell-viewport-search-history
-     "?" #'agent-shell-viewport-compose-help-menu)))
+  (general-define-key
+   :states '(normal)
+   :keymaps '(agent-shell-viewport-edit-mode-map)
+   "M-j" #'agent-shell-viewport-next-history
+   "M-k" #'agent-shell-viewport-previous-history
+   "M-r" #'agent-shell-viewport-search-history
+   "?" #'agent-shell-viewport-compose-help-menu))
 
 ;; https://github.com/jethrokuan/agent-shell-manager
 (use-package agent-shell-manager
