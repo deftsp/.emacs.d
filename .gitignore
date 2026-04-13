@@ -144,5 +144,6 @@ secrets.el
 sync-to-remote.sh
 
 .agent-shell/
+agent-recall/
 
 forge-database.sqlite

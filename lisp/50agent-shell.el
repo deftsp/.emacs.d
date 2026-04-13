@@ -190,6 +190,14 @@
   :after (agent-shell knockknock)
   :hook (agent-shell-mode . agent-shell-knockknock-mode))
 
+(use-package agent-recall
+  :straight (:host github :repo "Marx-A00/agent-recall")
+  :after (agent-shell)
+  :config
+  (add-hook 'agent-shell-mode-hook #'agent-recall-track-sessions)
+  (setq agent-recall-search-function 'counsel-rg)
+  (setq agent-recall-search-paths '("~/Lab" "~/.hammerspoon")))
+
 
 (provide '50agent-shell)
 ;;; 50agent-shell.el ends here
