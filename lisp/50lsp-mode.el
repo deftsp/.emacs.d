@@ -258,6 +258,7 @@
         lsp-rust-analyzer-cargo-run-build-scripts t
         lsp-rust-analyzer-cargo-watch-enable t
         lsp-rust-analyzer-cargo-watch-command "clippy" ; "clippy" or "check"
+        lsp-rust-analyzer-cargo-target-dir "target/rust-analyzer"
         ;; lsp-rust-analyzer-server-command '("~/.cargo/bin/rust-analyzer")
         ;; lsp-rust-analyzer-server-command '("rust-analyzer")
         lsp-rust-analyzer-server-command '("rustup run stable rust-analyzer")))
