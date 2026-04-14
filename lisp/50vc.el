@@ -143,6 +143,7 @@
   (global-set-key (kbd "C-x G") 'magit-status)
   :config
   (global-git-commit-mode +1)
+  (setq magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 15))
 
   ;; magit 2e091997: add to #'dabbrev-capf completion-at-point-functions,  dabbrev-capf 是给 M-/ 用的而不是 company 这会报错
   ;; 先用回 magit
