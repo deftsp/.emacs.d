@@ -72,12 +72,10 @@
                                   rime-predicate-prog-in-code-p))
 
   (defun rime-predicate-which-key-activate-p () which-key--automatic-display)
-  ;;FIXME: font size not work
   (setq rime-posframe-properties
         (list
          ;; :font "Sarasa Gothic SC-28"
-         ;; :font "PragmataPro-18"
-         :font "PragmataPro"
+         :font "PragmataPro-16"
          :internal-border-width 10))
 
   (setq rime-show-candidate 'posframe
