@@ -5,20 +5,57 @@
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 ;; Keywords:
 
+;; https://github.com/laishulu/emacs-smart-input-source
+(use-package sis
+  :straight t
+  :config
+  ;; "com.apple.keylayout.US" 是 macOS 标准英文布局 ID
+  (sis-ism-lazyman-config
+   "com.apple.keylayout.US"
+   ;; "im.rime.inputmethod.Squirrel.Rime"
+   "com.apple.keylayout.US")
+
+  ;; 2. 开启上下文感知，确保你在 Emacs 任何操作都不会意外触发系统输入法切换
+  (sis-global-respect-mode t)
+  (sis-global-context-mode t))
+
+
 (global-set-key (kbd "s-/") 'toggle-input-method)
 
-(defun tl/on-select-previous-input-source (data)
-  "Swith to insert when switch to Rime input method"
-  (let ((source-id (plist-get data :source-id)))
-    (when (string-equal source-id "im.rime.inputmethod.Squirrel.Rime")
-      (with-selected-window (selected-window)
-        (let ((state (bound-and-true-p evil-state)))
-          (when (and state
-                     (eq state 'normal)
-                     (not (minibufferp))
-                     (not isearch-mode))
-            (call-interactively 'evil-insert-state)))))))
+;; called by karabiner
+(defun tl//on-m-comma-pressed ()
+  (interactive)
+  (with-current-buffer (window-buffer (selected-window))
+    (activate-input-method "rime")
+    (let ((state (bound-and-true-p evil-state)))
+      (when (and state
+                 (eq state 'normal)
+                 (not (minibufferp))
+                 (not isearch-mode))
+        (call-interactively 'evil-insert-state)))))
 
+;; (defun tl/on-select-previous-input-source (data)
+;;   "Swith to insert when switch to Rime input method"
+;;   (let ((source-id (plist-get data :source-id)))
+;;     (when (string-equal source-id "im.rime.inputmethod.Squirrel.Rime")
+;;       (with-selected-window (selected-window)
+;;         (let ((state (bound-and-true-p evil-state)))
+;;           (when (and state
+;;                      (eq state 'normal)
+;;                      (not (minibufferp))
+;;                      (not isearch-mode))
+;;             (call-interactively 'evil-insert-state)))))))
+
+;; called by karabiner
+(defun tl//on-esc--pressed ()
+  (interactive)
+  (with-current-buffer (window-buffer (selected-window))
+    ;; 清除 Evil 记录的“上一次输入法”状态
+    ;; 这样下次进入 insert 模式时，它就不会自动恢复了
+    (when (boundp 'evil-input-method)
+      (setq evil-input-method nil))
+
+    (deactivate-input-method)))
 
 (use-package rime
   :after (which-key)
