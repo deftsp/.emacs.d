@@ -299,6 +299,7 @@ C-u C-u -> Start swiper without any arguments (stock behavior)"
 ;; https://github.com/tumashu/ivy-posframe
 (use-package ivy-posframe
   :straight t
+  :diminish ivy-posframe-mode
   :config
   (setq ivy-posframe-border-width 4)
 
