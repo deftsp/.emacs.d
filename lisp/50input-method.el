@@ -60,9 +60,13 @@
 (use-package rime
   :after (which-key)
   :demand
+  :init
+  (setq default-input-method "rime")
   :custom
   (rime-show-preedit t)
-  (rime-user-data-dir "~/.emacs.d/rime/")
+  ;; 跟 squirrel 共享
+  (rime-user-data-dir "~/Library/Rime")
+  ;; (rime-user-data-dir "~/.emacs.d/rime/")
   (rime-librime-root
    (case system-type
      (darwin "~/.emacs.d/librime/dist")
@@ -89,7 +93,6 @@
   :config
   ;; Emacs will automatically set default-input-method to rfc1345 if locale is
   ;; UTF-8. https://github.com/purcell/emacs.d/issues/320
-  (add-hook 'emacs-startup-hook (lambda () (setq default-input-method "rime")))
   ;; mod-line 输入法图标高亮, 用来区分中英文输入状态
   ;; (setq mode-line-mule-info '((:eval (rime-lighter))))
   ;; support shift-l, shift-r, control-l, control-r
