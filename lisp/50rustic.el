@@ -152,19 +152,44 @@ Flycheck according to the Cargo project layout."
 (use-package rustic-cargo
   :after rustic
   :config
-  (defun pl//cargo--get-test-target()
-    "Return either a full fn name or a mod name, whatever is closer to the point."
-    (let* ((mod-node (pl//find-parent-node-match '("mod_item")))
-           (fn-node (treesit-defun-at-point))
-           (path (cond ((and mod-node fn-node)
-                        (concat
-                         (treesit-defun-name mod-node)
-                         "::"
-                         (treesit-defun-name fn-node)))
-                       (fn-node (treesit-defun-name fn-node))
-                       (t (treesit-defun-name mod-node)))))
-      (when path
-        (concat (file-name-base (buffer-name)) "::" path))))
+  (defun pl//get-mod-path ()
+    "Return the mod path for point.
+Combines file-based ancestry (relative to the nearest src/ or tests/
+anchor, with mod/lib/main segments dropped) and any inline mod_item
+ancestors discovered via treesit. Returns nil if nothing applies.
+
+Example: for .../tests/apis/foo/bar/account.rs inside `mod tests',
+returns \"apis::foo::bar::account::tests\"."
+    (let* ((file (buffer-file-name))
+           (file-parts
+            (when (and file (string-match "/\\(src\\|tests\\)/" file))
+              (let* ((after (substring file (match-end 0)))
+                     (no-ext (file-name-sans-extension after))
+                     (parts (split-string no-ext "/")))
+                (if (member (car (last parts)) '("mod" "lib" "main"))
+                    (butlast parts)
+                  parts))))
+           (node (treesit-node-at (point)))
+           (inline-mods '()))
+      (while node
+        (when (string= (treesit-node-type node) "mod_item")
+          (push (treesit-defun-name node) inline-mods))
+        (setq node (treesit-node-parent node)))
+      (let ((all (append file-parts inline-mods)))
+        (when all
+          (string-join all "::")))))
+
+  (defun pl//cargo--get-test-target ()
+    "Return a mod::fn path suitable for `cargo test <pattern>'.
+Combines `pl//get-mod-path' with the current fn name."
+    (let* ((mod-path (pl//get-mod-path))
+           (fn-node  (treesit-defun-at-point))
+           (fn-name  (when fn-node (treesit-defun-name fn-node))))
+      (cond
+       ((and mod-path fn-name) (concat mod-path "::" fn-name))
+       (fn-name                fn-name)
+       (mod-path               mod-path)
+       (t                      nil))))
 
   (defun pl/rustic-cargo-current-test-nocapture (arg)
     "Run 'cargo test' for the test near point."
