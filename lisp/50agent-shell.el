@@ -77,7 +77,7 @@
      "m" #'agent-shell-set-session-mode
      "C-c C-v" #'agent-shell-set-session-model
      "C-<tab>" #'agent-shell-cycle-session-mode
-     "o" #'agent-shell-other-buffer
+     ;; "o" #'agent-shell-other-buffer
 
      "RET" #'newline
      "C-c C-k" #'agent-shell-interrupt
