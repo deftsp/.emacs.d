@@ -152,11 +152,17 @@
 
 ;; https://github.com/jethrokuan/agent-shell-manager
 (use-package agent-shell-manager
-  :straight (agent-shell-manager :type git :host github :repo "jethrokuan/agent-shell-manager")
+  :straight (agent-shell-manager
+             :type git :host github
+             :repo "deftsp/agent-shell-manager"
+             ;; :local-repo "~/opt/agent-shell-manager"
+             :branch "feat/vertical-layout")
   :commands (agent-shell-manager-toggle)
   :config
   ;; 'left, 'right, 'top, 'bottom, or nil which using dedicated window with user-controlled placement
   (setq agent-shell-manager-side nil)
+  ;; Use vertical (per-agent block) layout, suitable for the narrow 50-col left side window
+  (setq agent-shell-manager-layout 'vertical)
 
   (defun tl//agent-shell-manager-buffer-display-action (buffer alist)
     (let ((window (display-buffer-in-side-window
@@ -178,6 +184,28 @@
   ;; NOTE: window-purpose enable 的时候 display-buffer-alist 不会生效
   (add-to-list 'display-buffer-alist
                '("\\*Agent-Shell Buffers\\*" (tl//agent-shell-manager-buffer-display-action)))
+
+  (with-eval-after-load 'window-purpose
+    (add-to-list 'purpose-user-name-purposes
+                 '("*Agent-Shell Buffers*" . agent-shell-manager))
+    (purpose-compile-user-configuration)
+
+    (defun tl//purpose-display-agent-shell-manager-at-left (buffer alist)
+      "Display BUFFER in a left side window for agent-shell-manager."
+      (display-buffer-in-side-window
+       buffer
+       (append '((side . left)
+                 (slot . 0)
+                 (window-width . 42)
+                 (preserve-size . (t . nil))
+                 (window-parameters . ((no-delete-other-windows . t))))
+               alist)))
+
+    (add-to-list 'purpose-special-action-sequences
+                 '(agent-shell-manager
+                   purpose-display-reuse-window-buffer
+                   purpose-display-reuse-window-purpose
+                   tl//purpose-display-agent-shell-manager-at-left)))
 
   (with-eval-after-load 'evil
     (general-define-key
