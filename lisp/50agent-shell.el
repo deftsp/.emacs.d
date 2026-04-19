@@ -158,15 +158,26 @@
   ;; 'left, 'right, 'top, 'bottom, or nil which using dedicated window with user-controlled placement
   (setq agent-shell-manager-side nil)
 
-  ;; extract from agent-shell-manager-toggle
+  (defun tl//agent-shell-manager-buffer-display-action (buffer alist)
+    (let ((window (display-buffer-in-side-window
+                   buffer
+                   ;; extract from agent-shell-manager-toggle
+                   (append '((side . left)
+                             (slot . 0)
+
+                             (window-width . 50)
+                             (preserve-size . (t . nil))
+
+                             ;; (window-height . 20)
+                             ;; (preserve-size . (nil . t))
+
+                             (window-parameters . ((no-delete-other-windows . t)
+                                                   (dedicated . t))))
+                           alist))))))
+
+  ;; NOTE: window-purpose enable 的时候 display-buffer-alist 不会生效
   (add-to-list 'display-buffer-alist
-               '("\\*Agent-Shell Buffers\\*"
-                 (display-buffer-in-side-window)
-                 (side . bottom)
-                 (slot . 0)
-                 (window-height . 10)
-                 (preserve-size . (nil . t))
-                 (window-parameters . ((no-delete-other-windows . t) (dedicated . t)))))
+               '("\\*Agent-Shell Buffers\\*" (tl//agent-shell-manager-buffer-display-action)))
 
   (with-eval-after-load 'evil
     (general-define-key
