@@ -5,7 +5,7 @@
 
 (require 'cl)
 
-(setq read-process-output-max (* 2 1024 1024)) ;; 2mb
+(setq read-process-output-max (* 4 1024 1024)) ;; 4mb
 
 (setq byte-compile-warnings '(cl-functions))
 ;; want to see how often GC happens
