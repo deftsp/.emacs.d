@@ -79,6 +79,11 @@
      "C-<tab>" #'agent-shell-cycle-session-mode
      ;; "o" #'agent-shell-other-buffer
 
+     "C-p" nil
+     "C-n" nil
+     "M-p" nil
+     "M-n" nil
+
      "RET" #'newline
      "C-c C-k" #'agent-shell-interrupt
      "C-c C-c" #'shell-maker-submit
@@ -90,6 +95,8 @@
      "RET" #'newline
      "M-j" #'agent-shell-next-item
      "M-k" #'agent-shell-previous-item
+     "M-p" nil
+     "M-n" nil
      "C-c C-c" #'shell-maker-submit)
 
     ;; agent-shell-viewport-view-mode keybindings
@@ -211,6 +218,8 @@
     (general-define-key
      :states '(normal)
      :keymaps 'agent-shell-manager-mode-map
+     "TAB" #'agent-shell-manager-next-agent
+     "S-TAB" #'agent-shell-manager-previous-agent
      "RET" #'agent-shell-manager-goto
      "gr" #'agent-shell-manager-refresh
      "q"      #'quit-window
