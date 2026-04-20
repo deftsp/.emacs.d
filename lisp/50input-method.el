@@ -93,11 +93,13 @@
   :config
   ;; Emacs will automatically set default-input-method to rfc1345 if locale is
   ;; UTF-8. https://github.com/purcell/emacs.d/issues/320
+
   ;; mod-line 输入法图标高亮, 用来区分中英文输入状态
   ;; (setq mode-line-mule-info '((:eval (rime-lighter))))
-  ;; support shift-l, shift-r, control-l, control-r
-  ;; 只有当使用系统 RIME 输入法时才有效。
-  (setq rime-inline-ascii-trigger 'control-l)
+
+  ;; 只有当使用系统 RIME 输入法时才有效。该配置只是让 emacs-rime 跟 Rime 的配置同步，并不是配置在 Emacs 里按 shift-l 切
+  ;; 换临时英语模式
+  (setq rime-inline-ascii-trigger 'shift-l) ;; support shift-l, shift-r, control-l, control-r
 
   ;; If one of these functions return t, the input-method will fallback to ascii mode.
   (setq rime-disable-predicates '(rime-predicate-ace-window-p
