@@ -71,6 +71,8 @@
      :keymaps '(agent-shell-mode-map)
      "TAB" #'agent-shell-next-item
      "<backtab>" #'agent-shell-previous-item
+     "<up>" nil
+     "<down>" nil
      "M-j" #'agent-shell-next-item
      "M-k" #'agent-shell-previous-item
 
@@ -97,6 +99,8 @@
      "M-k" #'agent-shell-previous-item
      "M-p" nil
      "M-n" nil
+     "<up>" nil
+     "<down>" nil
      "C-c C-c" #'shell-maker-submit)
 
     ;; agent-shell-viewport-view-mode keybindings
