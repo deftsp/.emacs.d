@@ -94,8 +94,20 @@
   ;; Emacs will automatically set default-input-method to rfc1345 if locale is
   ;; UTF-8. https://github.com/purcell/emacs.d/issues/320
 
-  ;; mod-line 输入法图标高亮, 用来区分中英文输入状态
-  ;; (setq mode-line-mule-info '((:eval (rime-lighter))))
+  ;; (setq rime-title "ㄓ")
+
+  ;; - 启动输入法后 mode-line-mule-info 会显示 current-input-method 的 title
+  ;; - 对于 rime 输入法，显示的是其在调用 register-input-method 注册输入法的参数 rime-title, 这是静态图标
+
+  ;; - 若用(setq mode-line-mule-info '((:eval (rime-lighter)))) 直接设置，将覆盖其他有用信息,
+  ;; - 从 mode-line-mule-info 中移除 current-input-method, 输入法图标改由 powerline 通过 rime-lighter 独立渲染
+  (setq-default mode-line-mule-info
+                `(""
+                  (:propertize "%z"
+                   help-echo mode-line-mule-info-help-echo
+                   mouse-face mode-line-highlight
+                   local-map ,mode-line-coding-system-map)
+                  (:eval (mode-line-eol-desc)k)))
 
   ;; 只有当使用系统 RIME 输入法时才有效。该配置只是让 emacs-rime 跟 Rime 的配置同步，并不是配置在 Emacs 里按 shift-l 切
   ;; 换临时英语模式

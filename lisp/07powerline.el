@@ -473,6 +473,8 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
                 ,(tl/powerline-remote file-base-info-face)
                 ,(tl/powerline-frame-id file-base-info-face)
                 ;; In pdf-view-mode, it will show as ":" only
+                ,(when (and (featurep 'rime) (fboundp 'rime-lighter))
+                   (tl/powerline-raw-preserve-face (rime-lighter) file-base-info-face))
                 ,(powerline-raw mode-line-mule-info file-base-info-face)
                 ,(tl/mode-line-modified file-base-info-face)
                 ,(tl/powerline-position file-base-info-face)
@@ -547,6 +549,23 @@ mouse-2: toggle rest visibility\nmouse-3: go to end"
   (message "updated mode-line"))
 
 (global-set-key (kbd "<f5>") 'tl/force-update-mode-line)
+
+(defun tl/powerline-raw-preserve-face (str &optional face pad)
+  "Like `powerline-raw' but preserve STR's existing face properties.
+STR is a mode-line construct.  FACE is applied only to characters
+that do not already have a face property, so embedded highlighted
+segments (e.g. the rime-lighter inside `mode-line-mule-info') keep
+their own colors.  PAD can be \\='l or \\='r to add a space."
+  (when str
+    (let* ((rendered (format-mode-line str))
+           (len (length rendered)))
+      (when (> len 0)
+        (when face
+          (add-face-text-property 0 len face 'append rendered))
+        (cond
+         ((eq pad 'l) (concat " " rendered))
+         ((eq pad 'r) (concat rendered " "))
+         (t rendered))))))
 
 
 (provide '07powerline)
