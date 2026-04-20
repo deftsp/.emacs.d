@@ -83,12 +83,13 @@
 
   :bind (:map rime-mode-map
 	     ("C-." . 'rime-send-keybinding) ; 中英文标点切换
-	     ("S-SPC" . 'rime-send-keybinding) ; 全半角切换
+	     ("C-," . 'rime-send-keybinding) ; 全半角切换
 	     ("C-s" . 'rime-send-keybinding) ; 输入法菜单
 	     ("C-l" . 'rime-inline-ascii)
-	     ("C-s-l" . 'rime-force-enable) ; 强制切换到中文模式
+	     ("C-S-l" . 'rime-force-enable) ; 强制切换到中文模式
 	     :map rime-active-mode-map
 	     ("C-l" . 'rime-inline-ascii)
+         ("C-S-l" . 'rime-force-enable)
 	     ("S-SPC" . 'rime-send-keybinding))
   :config
   ;; Emacs will automatically set default-input-method to rfc1345 if locale is
@@ -107,7 +108,7 @@
                    help-echo mode-line-mule-info-help-echo
                    mouse-face mode-line-highlight
                    local-map ,mode-line-coding-system-map)
-                  (:eval (mode-line-eol-desc)k)))
+                  (:eval (mode-line-eol-desc))))
 
   ;; 只有当使用系统 RIME 输入法时才有效。该配置只是让 emacs-rime 跟 Rime 的配置同步，并不是配置在 Emacs 里按 shift-l 切
   ;; 换临时英语模式
@@ -120,10 +121,14 @@
                                   rime-predicate-which-key-activate-p
                                   rime-predicate-current-uppercase-letter-p
                                   rime-predicate-space-after-cc-p
+                                  rime-predicate-space-after-ascii-p
                                   rime-predicate-punctuation-after-space-cc-p
                                   ;; rime-predicate-after-alphabet-char-p
-                                  ;; rime-predicate-after-ascii-char-p
+                                  rime-predicate-after-ascii-char-p
                                   rime-predicate-prog-in-code-p))
+
+  (setq rime-inline-predicates '(rime-predicate-space-after-cc-p
+                                 rime-predicate-current-uppercase-letter-p))
 
   (defun rime-predicate-which-key-activate-p () which-key--automatic-display)
   (setq rime-posframe-properties
