@@ -159,7 +159,14 @@
    "M-j" #'agent-shell-viewport-next-history
    "M-k" #'agent-shell-viewport-previous-history
    "M-r" #'agent-shell-viewport-search-history
-   "?" #'agent-shell-viewport-compose-help-menu))
+   "?" #'agent-shell-viewport-compose-help-menu)
+
+  (general-define-key
+   :states '(normal)
+   :keymaps '(agent-shell-viewport-edit-mode-map)
+   :prefix ","
+   "k" #'agent-shell-viewport-compose-cancel
+   "c" #'agent-shell-viewport-compose-send))
 
 ;; https://github.com/jethrokuan/agent-shell-manager
 (use-package agent-shell-manager
