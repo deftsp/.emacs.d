@@ -20,7 +20,7 @@
   (sis-global-context-mode t))
 
 
-(global-set-key (kbd "s-/") 'toggle-input-method)
+;; (global-set-key (kbd "s-/") 'toggle-input-method)
 
 ;; called by karabiner
 (defun tl//on-m-comma-pressed ()
@@ -47,15 +47,14 @@
 ;;             (call-interactively 'evil-insert-state)))))))
 
 ;; called by karabiner
-(defun tl//on-esc--pressed ()
-  (interactive)
-  (with-current-buffer (window-buffer (selected-window))
-    ;; 清除 Evil 记录的“上一次输入法”状态
-    ;; 这样下次进入 insert 模式时，它就不会自动恢复了
-    (when (boundp 'evil-input-method)
-      (setq evil-input-method nil))
-
-    (deactivate-input-method)))
+;; (defun tl//on-esc--pressed ()
+;;   (interactive)
+;;   (with-current-buffer (window-buffer (selected-window))
+;;     ;; 清除 Evil 记录的“上一次输入法”状态
+;;     ;; 这样下次进入 insert 模式时，它就不会自动恢复了
+;;     (when (boundp 'evil-input-method)
+;;       (setq evil-input-method nil))
+;;     (deactivate-input-method)))
 
 (use-package rime
   :after (which-key)
@@ -120,15 +119,15 @@
                                   rime-predicate-hydra-p
                                   rime-predicate-which-key-activate-p
                                   rime-predicate-current-uppercase-letter-p
-                                  rime-predicate-space-after-cc-p
+                                  ;; rime-predicate-space-after-cc-p
                                   rime-predicate-space-after-ascii-p
-                                  rime-predicate-punctuation-after-space-cc-p
-                                  ;; rime-predicate-after-alphabet-char-p
-                                  rime-predicate-after-ascii-char-p
+                                  ;; rime-predicate-punctuation-after-space-cc-p
+                                  ;; 紧跟英文字符后，继续英文
+                                  rime-predicate-after-alphabet-char-p
+                                  ;; rime-predicate-after-ascii-char-p
                                   rime-predicate-prog-in-code-p))
 
-  (setq rime-inline-predicates '(rime-predicate-space-after-cc-p
-                                 rime-predicate-current-uppercase-letter-p))
+  (setq rime-inline-predicates nil)
 
   (defun rime-predicate-which-key-activate-p () which-key--automatic-display)
   (setq rime-posframe-properties
