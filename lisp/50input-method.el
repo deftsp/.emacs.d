@@ -84,13 +84,16 @@
 	     ("C-." . 'rime-send-keybinding) ; 中英文标点切换
 	     ("C-," . 'rime-send-keybinding) ; 全半角切换
 	     ("C-s" . 'rime-send-keybinding) ; 输入法菜单
-	     ("C-l" . 'rime-inline-ascii)
-	     ("C-S-l" . 'rime-force-enable) ; 强制切换到中文模式
+	     ;; ("C-S-l" . 'rime-inline-ascii)
+	     ("C-l" . 'rime-force-enable) ; 强制切换到中文模式
 	     :map rime-active-mode-map
-	     ("C-l" . 'rime-inline-ascii)
-         ("C-S-l" . 'rime-force-enable)
+	     ;; ("C-S-l" . 'rime-inline-ascii)
+         ("C-l" . 'rime-force-enable)
 	     ("S-SPC" . 'rime-send-keybinding))
   :config
+  (define-key rime-mode-map (kbd "<f13>") 'rime-inline-ascii)
+  (define-key rime-active-mode-map (kbd "<f13>") 'rime-inline-ascii)
+
   ;; Emacs will automatically set default-input-method to rfc1345 if locale is
   ;; UTF-8. https://github.com/purcell/emacs.d/issues/320
 
