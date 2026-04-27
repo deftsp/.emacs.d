@@ -92,6 +92,13 @@
      "?" #'agent-shell-help-menu)
 
     (general-define-key
+     :states '(normal)
+     :keymaps '(agent-shell-mode-map)
+     :prefix ","
+     "k" #'agent-shell-interrupt
+     "c" #'shell-maker-submit)
+
+    (general-define-key
      :states '(insert)
      :keymaps '(agent-shell-mode-map)
      "RET" #'newline

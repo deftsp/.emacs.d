@@ -123,7 +123,7 @@
                                   rime-predicate-which-key-activate-p
                                   rime-predicate-current-uppercase-letter-p
                                   ;; rime-predicate-space-after-cc-p
-                                  rime-predicate-space-after-ascii-p
+                                  ;; rime-predicate-space-after-ascii-p
                                   ;; rime-predicate-punctuation-after-space-cc-p
                                   ;; 紧跟英文字符后，继续英文
                                   rime-predicate-after-alphabet-char-p
