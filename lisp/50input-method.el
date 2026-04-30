@@ -56,6 +56,9 @@
 ;;       (setq evil-input-method nil))
 ;;     (deactivate-input-method)))
 
+;; emacs-rime 不跟 squirrel 共享安装目录，否则会锁数据库，导致 emacs-rime 或 Squirrel 其中一个无法写入自造词
+;; 执行 ~/.emacs.d/scripts/setup_emacs_rime.sh, 链接 ~/Library/Rime 下的词库及输入法定义到 ~/.emacs.d/rime
+;; M-x rime-sync, Squirrel 点击 Sync user data. 同步数据到 ~/Library/Rime/sync 下的不同文件夹，并且跟 sync 文件夹下的其他同步目录合并
 (use-package rime
   :after (which-key)
   :demand
@@ -63,12 +66,13 @@
   (setq default-input-method "rime")
   :custom
   (rime-show-preedit t)
-  ;; 跟 squirrel 共享
-  (rime-user-data-dir "~/Library/Rime")
-  ;; (rime-user-data-dir "~/.emacs.d/rime/")
+  (rime-user-data-dir "~/.emacs.d/rime/")
   (rime-librime-root
    (case system-type
-     (darwin "~/.emacs.d/librime/dist")
+     ;; (darwin "~/.emacs.d/librime/dist")
+     ;; brew install librime
+     ;; 如果是 Apple Silicon 芯片，设置 librime 目录
+     (darwin "/opt/homebrew")
      (gnu/linux
       (s-trim-right (shell-command-to-string "nix-build '<nixpkgs>' --no-build-output -A librime")))))
   (rime-emacs-module-header-root
@@ -91,6 +95,9 @@
          ("C-l" . 'rime-force-enable)
 	     ("S-SPC" . 'rime-send-keybinding))
   :config
+  ;; FIX: librime 1.16.1，在退出 Emacs 时会崩溃，加入以下代码可以解决，老版本的 1.7.1 没这个问题
+  (add-hook 'kill-emacs-hook #'rime-lib-finalize)
+
   (define-key rime-mode-map (kbd "<f13>") 'rime-inline-ascii)
   (define-key rime-active-mode-map (kbd "<f13>") 'rime-inline-ascii)
 
