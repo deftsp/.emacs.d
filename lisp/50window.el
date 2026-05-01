@@ -89,7 +89,7 @@ Dedicated (locked) windows are left untouched."
   "Rotate each window backwards.
 Dedicated (locked) windows are left untouched."
   (interactive "p")
-  (spacemacs/rotate-windows-forward (* -1 count)))
+  (tl/rotate-windows-forward (* -1 count)))
 
 ;; https://tsdh.wordpress.com/2007/03/28/deleting-windows-vertically-or-horizontally/
 (defun tl/maximize-horizontally ()
