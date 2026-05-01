@@ -133,7 +133,7 @@
                                   ;; rime-predicate-space-after-ascii-p
                                   ;; rime-predicate-punctuation-after-space-cc-p
                                   ;; 紧跟英文字符后，继续英文
-                                  rime-predicate-after-alphabet-char-p
+                                  ;; rime-predicate-after-alphabet-char-p
                                   ;; rime-predicate-after-ascii-char-p
                                   rime-predicate-prog-in-code-p))
 
