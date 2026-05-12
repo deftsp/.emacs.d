@@ -82,14 +82,19 @@
 	(evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
     (evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)))
 
+;; TODO: try https://github.com/CsBigDataHub/popterm.el
 (use-package vterm-toggle
   :defer t
   :commands (vterm-toggle vterm-toggle-cd))
 
 ;; ghostel terminal backend (libghostty):
+;; https://github.com/dakra/ghostel
+
 (use-package ghostel
   :straight (:host github :repo "dakra/ghostel"
-             :files ("lisp/*.el" "extensions/evil-ghostel/*.el" ("etc" "etc/*"))))
+             :files ("lisp/*.el" "extensions/evil-ghostel/*.el" ("etc" "etc/*")))
+  :config
+  (setq ghostel-kill-buffer-on-exit t))
 
 (use-package evil-ghostel
   :after (ghostel evil)
