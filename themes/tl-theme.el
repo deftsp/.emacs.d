@@ -502,15 +502,23 @@
    `(epe-delimiter-face ((t (:foreground ,base1 :inherit tl/eshell-base-face))))
 
    ;; ghostel
-
-   ;; ghostel-color-black         ghostel-color-bright-black
-   ;; ghostel-color-red           ghostel-color-bright-red
-   ;; ghostel-color-green         ghostel-color-bright-green
-   ;; ghostel-color-yellow        ghostel-color-bright-yellow
-   ;; ghostel-color-blue          ghostel-color-bright-blue
-   ;; ghostel-color-magenta       ghostel-color-bright-magenta
-   ;; ghostel-color-cyan          ghostel-color-bright-cyan
-   ;; ghostel-color-white         ghostel-color-bright-white
+   ;; after updating face should M-x ghostel-sync-them
+   `(ghostel-color-black         ((t (:foreground ,base02))))
+   `(ghostel-color-bright-black  ((t (:foreground ,base01))))
+   `(ghostel-color-red           ((t (:foreground ,red))))
+   `(ghostel-color-bright-red    ((t (:foreground ,orange))))
+   `(ghostel-color-green         ((t (:foreground ,green))))
+   `(ghostel-color-bright-green  ((t (:foreground ,base01))))
+   `(ghostel-color-yellow        ((t (:foreground ,yellow))))
+   `(ghostel-color-bright-yellow ((t (:foreground ,base0))))
+   `(ghostel-color-blue          ((t (:foreground ,blue))))
+   `(ghostel-color-bright-blue   ((t (:foreground ,base03))))
+   `(ghostel-color-magenta       ((t (:foreground ,magenta))))
+   `(ghostel-color-bright-magenta ((t (:foreground ,violet))))
+   `(ghostel-color-cyan          ((t (:foreground ,cyan))))
+   `(ghostel-color-bright-cyan   ((t (:foreground ,base1))))
+   `(ghostel-color-white         ((t (:foreground ,base2))))
+   `(ghostel-color-bright-white  ((t (:foreground ,base3))))
 
    ;; structured-haskell-mode
    '(shm-current-face ((t (:background "#222222"))))
