@@ -501,6 +501,17 @@
    `(epe-git-face ((t (:foreground "#22ccee" :inherit tl/eshell-base-face))))
    `(epe-delimiter-face ((t (:foreground ,base1 :inherit tl/eshell-base-face))))
 
+   ;; ghostel
+
+   ;; ghostel-color-black         ghostel-color-bright-black
+   ;; ghostel-color-red           ghostel-color-bright-red
+   ;; ghostel-color-green         ghostel-color-bright-green
+   ;; ghostel-color-yellow        ghostel-color-bright-yellow
+   ;; ghostel-color-blue          ghostel-color-bright-blue
+   ;; ghostel-color-magenta       ghostel-color-bright-magenta
+   ;; ghostel-color-cyan          ghostel-color-bright-cyan
+   ;; ghostel-color-white         ghostel-color-bright-white
+
    ;; structured-haskell-mode
    '(shm-current-face ((t (:background "#222222"))))
    '(shm-quarantine-face ((t (:background "#262230"))))

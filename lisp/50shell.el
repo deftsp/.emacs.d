@@ -86,4 +86,13 @@
   :defer t
   :commands (vterm-toggle vterm-toggle-cd))
 
+;; ghostel terminal backend (libghostty):
+(use-package ghostel
+  :straight (:host github :repo "dakra/ghostel"
+             :files ("lisp/*.el" "extensions/evil-ghostel/*.el" ("etc" "etc/*"))))
+
+(use-package evil-ghostel
+  :after (ghostel evil)
+  :hook (ghostel-mode . evil-ghostel-mode))
+
 (provide '50shell)
