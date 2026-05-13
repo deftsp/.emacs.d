@@ -94,6 +94,7 @@
   :straight (:host github :repo "dakra/ghostel"
              :files ("lisp/*.el" "extensions/evil-ghostel/*.el" ("etc" "etc/*")))
   :config
+  (setq ghostel-max-scrollback (* 20 1024 1024)) ; 20 MB
   (setq ghostel-kill-buffer-on-exit t))
 
 (use-package evil-ghostel
