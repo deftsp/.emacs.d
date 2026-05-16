@@ -20,6 +20,7 @@
 
   ;; Ask AI to run test after code changes, for a tighter build-test loop
   (setq ai-code-auto-test-type 'ask-me)
+  (setq ai-code-backends-infra-terminal-backend 'ghostel)
 
   ;; In AI session buffers, SPC in Evil normal state triggers the prompt-enter UI
   ;; (with-eval-after-load 'evil
