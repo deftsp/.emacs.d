@@ -55,41 +55,9 @@
   (interactive)
   (ansi-term "/bin/zsh"))
 
-
-;;; vterm
-;; TODO: https://mullikine.github.io/posts/use-yasnippets-in-term/
-;; [[https://github.com/akermu/emacs-libvterm][akermu/emacs-libvterm: Emacs libvterm integration]]
-;; [[https://github.com/jixiuf/vterm-toggle][jixiuf/vterm-toggle: toggles between the vterm buffer and whatever buffer you are editing.]]
-(defun tl/vterm-mode-init ()
-  (setq confirm-kill-processes nil
-        ;; Prevent premature horizontal scrolling
-        hscroll-margin 0))
-
-(use-package vterm
-  :commands (vterm vterm-other-window)
-  :init
-  ;; (setq vterm-keymap-exceptions nil)
-  (setq vterm-max-scrollback 20000)
-  (setq vterm-kill-buffer-on-exit t)
-  :config
-  (add-hook 'vterm-mode-hook 'tl/vterm-mode-init))
-
-(use-package multi-vterm
-  :defer t
-  :init
-  (with-eval-after-load 'evil
-	(evil-define-key 'normal vterm-mode-map (kbd ",c")       #'multi-vterm)
-	(evil-define-key 'normal vterm-mode-map (kbd ",n")       #'multi-vterm-next)
-    (evil-define-key 'normal vterm-mode-map (kbd ",p")       #'multi-vterm-prev)))
-
-;; TODO: try https://github.com/CsBigDataHub/popterm.el
-(use-package vterm-toggle
-  :defer t
-  :commands (vterm-toggle vterm-toggle-cd))
-
 ;; ghostel terminal backend (libghostty):
 ;; https://github.com/dakra/ghostel
-
+;; TODO: try https://github.com/CsBigDataHub/popterm.el
 (use-package ghostel
   :straight (:host github :repo "dakra/ghostel"
              :files ("lisp/*.el" "extensions/evil-ghostel/*.el" ("etc" "etc/*")))

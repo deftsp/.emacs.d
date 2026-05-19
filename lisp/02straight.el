@@ -409,12 +409,6 @@
 (straight-use-package 'asciidoc)
 (straight-use-package 'embrace)
 (straight-use-package '(git-undo-el :type git :host github :repo "jwiegley/git-undo-el"))
-;; There's some problem, when building emacs-libvterm in NixOS. https://github.com/akermu/emacs-libvterm/issues/115.
-;; Using the vterm package from nix
-(when (eq system-type 'darwin)
-  (straight-use-package '(vterm :post-build ((let ((vterm-always-compile-module t)) (require 'vterm))))))
-(straight-use-package 'multi-vterm)
-(straight-use-package 'vterm-toggle)
 
 (straight-use-package '(emacs-devdocs-browser :type git :host github :repo "blahgeek/emacs-devdocs-browser"))
 
