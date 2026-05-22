@@ -62,6 +62,17 @@
   :straight (:host github :repo "dakra/ghostel"
              :files ("lisp/*.el" "extensions/evil-ghostel/*.el" ("etc" "etc/*")))
   :config
+  (setq ghostel-module-auto-install 'ask)
+  ;; (setq ghostel-glyph-scale-floor 0.0)
+
+  ;; Pin to spinner (errors with a hint if spinner.el isn't installed):
+  (setq ghostel-progress-function #'ghostel-spinner-progress)
+  ;; Or stay on the plain text indicator:
+  ;; (setq ghostel-progress-function #'ghostel-default-progress)
+
+  ;; Pick a different spinner style — see `spinner-types' in spinner.el:
+  (setq ghostel-spinner-type 'horizontal-moving)
+
   (setq ghostel-max-scrollback (* 20 1024 1024)) ; 20 MB
   (setq ghostel-kill-buffer-on-exit t))
 
