@@ -96,7 +96,11 @@
 	     ("S-SPC" . 'rime-send-keybinding))
   :config
   ;; FIX: librime 1.16.1，在退出 Emacs 时会崩溃，加入以下代码可以解决，老版本的 1.7.1 没这个问题
-  (add-hook 'kill-emacs-hook #'rime-lib-finalize)
+  (defun tl//rime-lib-finalize ()
+    (when (fboundp 'rime-lib-finalize)
+      (rime-lib-finalize)))
+
+  (add-hook 'kill-emacs-hook #'tl//rime-lib-finalize)
 
   (define-key rime-mode-map (kbd "<f13>") 'rime-inline-ascii)
   (define-key rime-active-mode-map (kbd "<f13>") 'rime-inline-ascii)
