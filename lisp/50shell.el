@@ -72,6 +72,7 @@
 
   ;; Pick a different spinner style — see `spinner-types' in spinner.el:
   (setq ghostel-spinner-type 'horizontal-moving)
+  ;; (setq ghostel-prompt-regexp "➜ ")
 
   (setq ghostel-max-scrollback (* 20 1024 1024)) ; 20 MB
   (setq ghostel-kill-buffer-on-exit t))
