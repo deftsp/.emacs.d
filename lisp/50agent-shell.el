@@ -48,6 +48,8 @@
   ;;                                             (format "GEMINI_API_KEY=%s"
   ;;                                                     (agent-shell-google-key)))))))
 
+  (setq agent-shell-show-usage-at-turn-end t
+        agent-shell-show-context-usage-indicator 'detailed)
   (setq agent-shell-prefer-viewport-interaction t)
 
   (with-eval-after-load 'evil
