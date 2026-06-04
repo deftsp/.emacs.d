@@ -604,18 +604,27 @@
 
    ;; magit
    '(magit-diff-hunk-heading ((t (:extend t
-                                  :foreground "#41bfdf"
+                                  :foreground "#6c71c4"
                                   :background "#282c34"
                                   :slant italic
                                   :weight bold
                                   ;; :height 1.05
                                   :overline nil
-                                  :underline (:color "#268bd2" :position t)
+                                  :underline (:color "#6c71c4" :position t)
                                   :box nil))))
+
    '(magit-diff-hunk-heading-highlight ((t (:inherit magit-diff-hunk-heading :background "#125888" :foreground "#dc9212"))))
    '(magit-diff-hunk-heading-selection ((t (:inherit magit-diff-hunk-heading :foreground "#b292a2"))))
-   '(magit-diff-added-highlight ((t (:foreground "#cceecc" :background "#336633"))))
-   '(magit-diff-removed-highlight ((t (:foreground "#eecccc" :background "#663333"))))
+
+   '(magit-diff-added-highlight ((t (:extend t :foreground "#859900" :background "#0a4049"))))
+   '(magit-diff-removed-highlight ((t (:extend t :foreground "#dc322f" :background "#421a1a"))))
+   '(magit-diff-added ((t (:extend t :foreground "#6c7e00" :background "#073642"))))
+   '(magit-diff-removed ((t (:extend t :foreground "#b58900" :background "#2b1616"))))
+
+   '(magit-diff-context ((t (:extend t :foreground "#586e75"))))
+   '(magit-diff-context-highlight ((t (:extend t :foreground "#93a1a1" :background "#073642"))))
+   '(magit-diff-base ((t (:extend t :foreground "#b58900" :background "#2a2000"))))
+   '(magit-diff-base-highlight ((t (:extend t :foreground "#cb4b16" :background "#3d2010"))))
 
    ;; rainbow-delimiters
    '(rainbow-delimiters-unmatched-face ((t (:foreground unspecified :inherit show-paren-mismatch :strike-through t))))
