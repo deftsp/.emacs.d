@@ -603,13 +603,14 @@
    '(tree-sitter-hl-face:function.call ((t (:inherit font-lock-function-name-face))))
 
    ;; magit
-   '(magit-diff-hunk-heading ((t (:foreground "#102030"
-                                  :background "#505651"
+   '(magit-diff-hunk-heading ((t (:extend t
+                                  :foreground "#41bfdf"
+                                  :background "#282c34"
                                   :slant italic
                                   :weight bold
-                                  :height 1.05
+                                  ;; :height 1.05
                                   :overline nil
-                                  :underline nil
+                                  :underline (:color "#268bd2" :position t)
                                   :box nil))))
    '(magit-diff-hunk-heading-highlight ((t (:inherit magit-diff-hunk-heading :background "#125888" :foreground "#dc9212"))))
    '(magit-diff-hunk-heading-selection ((t (:inherit magit-diff-hunk-heading :foreground "#b292a2"))))

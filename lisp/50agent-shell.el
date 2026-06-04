@@ -8,7 +8,11 @@
 ;;; Code:
 
 (use-package agent-shell
-  :straight t
+  :straight (agent-shell
+             :type git :host github
+             :repo "xenodium/agent-shell"
+             :local-repo "~/opt/agent-shell"
+             :branch "shihpin")
   :commands (agent-shell-opencode-start-agent)
   :bind (:map agent-shell-mode-map
          ("RET" . newline)
