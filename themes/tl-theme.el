@@ -175,12 +175,59 @@
 
    '(cal-china-x-general-holiday-face ((t (:background "#9e3e83" :foreground "#000064"))))
 
+   ;; ==================== 1. 标准 8 色 (Normal Colors) ====================
+   ;; Black / Base02
+   `(term-color-black ((t (:foreground "#073642" :background "#073642"))))
+   `(ansi-color-black ((t (:foreground "#073642" :background "#073642"))))
+   ;; Red
+   `(term-color-red ((t (:foreground "#dc322f" :background "#dc322f"))))
+   `(ansi-color-red ((t (:foreground "#dc322f" :background "#dc322f"))))
+   ;; Green
+   `(term-color-green ((t (:foreground "#859900" :background "#859900"))))
+   `(ansi-color-green ((t (:foreground "#859900" :background "#859900"))))
+   ;; Yellow
+   `(term-color-yellow ((t (:foreground "#b58900" :background "#b58900"))))
+   `(ansi-color-yellow ((t (:foreground "#b58900" :background "#b58900"))))
+   ;; Blue
+   `(term-color-blue ((t (:foreground "#268bd2" :background "#268bd2"))))
+   `(ansi-color-blue ((t (:foreground "#268bd2" :background "#268bd2"))))
+   ;; Magenta
+   `(term-color-magenta ((t (:foreground "#d33682" :background "#d33682"))))
+   `(ansi-color-magenta ((t (:foreground "#d33682" :background "#d33682"))))
+   ;; Cyan
+   `(term-color-cyan ((t (:foreground "#2aa198" :background "#2aa198"))))
+   `(ansi-color-cyan ((t (:foreground "#2aa198" :background "#2aa198"))))
+   ;; White / Base2
+   `(term-color-white ((t (:foreground "#eee8d5" :background "#eee8d5"))))
+   `(ansi-color-white ((t (:foreground "#eee8d5" :background "#eee8d5"))))
 
+   ;; ==================== 2. 明亮 8 色 (Bright Colors) ====================
+   ;; Bright Black / Base03 (Solarized 核心背景色)
+   `(term-color-bright-black ((t (:foreground "#002b36" :background "#002b36"))))
+   `(ansi-color-bright-black ((t (:foreground "#002b36" :background "#002b36"))))
+   ;; Bright Red / Orange
+   `(term-color-bright-red ((t (:foreground "#cb4b16" :background "#cb4b16"))))
+   `(ansi-color-bright-red ((t (:foreground "#cb4b16" :background "#cb4b16"))))
+   ;; Bright Green / Base01
+   `(term-color-bright-green ((t (:foreground "#586e75" :background "#586e75"))))
+   `(ansi-color-bright-green ((t (:foreground "#586e75" :background "#586e75"))))
+   ;; Bright Yellow / Base00
+   `(term-color-bright-yellow ((t (:foreground "#657b83" :background "#657b83"))))
+   `(ansi-color-bright-yellow ((t (:foreground "#657b83" :background "#657b83"))))
+   ;; Bright Blue / Base0
+   `(term-color-bright-blue ((t (:foreground "#839496" :background "#839496"))))
+   `(ansi-color-bright-blue ((t (:foreground "#839496" :background "#839496"))))
+   ;; Bright Magenta / Violet
+   `(term-color-bright-magenta ((t (:foreground "#6c71c4" :background "#6c71c4"))))
+   `(ansi-color-bright-magenta ((t (:foreground "#6c71c4" :background "#6c71c4"))))
+   ;; Bright Cyan / Base1
+   `(term-color-bright-cyan ((t (:foreground "#93a1a1" :background "#93a1a1"))))
+   `(ansi-color-bright-cyan ((t (:foreground "#93a1a1" :background "#93a1a1"))))
+   ;; Bright White / Base3
+   `(term-color-bright-white ((t (:foreground "#fdf6e3" :background "#fdf6e3"))))
+   `(ansi-color-bright-white ((t (:foreground "#fdf6e3" :background "#fdf6e3"))))
 
-   ;; term
-   '(term-color-blue ((t (:foreground "DeepSkyBlue4"))))
-
-;;; mmm-mode
+   ;; mmm-mode
    '(mmm-default-submode-face ((t (:background "gray97"))))
 
    ;; adoc-mode
@@ -642,7 +689,37 @@
   ;;; custom theme variables
   (custom-theme-set-variables
    'tl
-   `(ansi-color-names-vector ['bg ,red ,green ,yellow ,blue ,magenta ,cyan ,base0])
+   ;; 用于 M-x shell / eshell / compilation buffer (8色)
+   `(ansi-color-names-vector
+     ["#073642"  ; black (base02)
+      "#dc322f"  ; red
+      "#859900"  ; green
+      "#b58900"  ; yellow
+      "#268bd2"  ; blue
+      "#d33682"  ; magenta
+      "#2aa198"  ; cyan
+      "#eee8d5"  ; white (base2)
+      ])
+   ;; 用于 M-x term / ansi-term (16色)
+   `(ansi-term-color-vector
+     [unspecified
+      "#073642"  ; 0: black
+      "#dc322f"  ; 1: red
+      "#859900"  ; 2: green
+      "#b58900"  ; 3: yellow
+      "#268bd2"  ; 4: blue
+      "#d33682"  ; 5: magenta
+      "#2aa198"  ; 6: cyan
+      "#eee8d5"  ; 7: white
+      "#002b36"  ; 8: bright-black
+      "#cb4b16"  ; 9: bright-red
+      "#586e75"  ; 10: bright-green
+      "#657b83"  ; 11: bright-yellow
+      "#839496"  ; 12: bright-blue
+      "#6c71c4"  ; 13: bright-magenta
+      "#93a1a1"  ; 14: bright-cyan
+      "#fdf6e3"  ; 15: bright-white
+      ])
    ;; fill-column-indicator
    `(fci-rule-color ,base01)))
 
