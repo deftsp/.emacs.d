@@ -65,7 +65,8 @@
         ("Europe/Paris" "Paris")))
 
 ;;; comint
-(setq-default comint-process-echoes t) ; comint do not echo input
+;; if set comint-process-echoes to nil, in opencode-session-mode sczi/opencode.el , the comint-send-input will freeze
+;; (setq-default comint-process-echoes nil) ; comint do not echo input
 ;; set maximum-buffer size for shell-mode (useful if some program that you're debugging spews out large amounts of output).
 (setq comint-completion-addsuffix t       ; Insert space/slash after completion
       comint-buffer-maximum-size 10240
