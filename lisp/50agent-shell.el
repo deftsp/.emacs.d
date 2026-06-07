@@ -9,10 +9,10 @@
 
 (use-package agent-shell
   :straight (agent-shell
-             :type git :host github
              :repo "xenodium/agent-shell"
-             :local-repo "~/opt/agent-shell"
-             :branch "shihpin")
+             ;; :local-repo "~/opt/agent-shell"
+             ;; :branch "shihpin"
+             :type git :host github)
   :commands (agent-shell-opencode-start-agent)
   :bind (:map agent-shell-mode-map
          ("RET" . newline)
@@ -55,6 +55,8 @@
   (setq agent-shell-show-usage-at-turn-end t
         agent-shell-show-context-usage-indicator 'detailed)
   (setq agent-shell-prefer-viewport-interaction t)
+
+  (setq agent-shell-session-restore-strategy 'full)
 
   (with-eval-after-load 'evil
     ;; Configure *agent-shell-diff* buffers to start in Emacs state
