@@ -56,7 +56,7 @@
         agent-shell-show-context-usage-indicator 'detailed)
   (setq agent-shell-prefer-viewport-interaction t)
 
-  (setq agent-shell-session-restore-strategy 'full)
+  (setq agent-shell-session-restore-verbosity 'full)
 
   (with-eval-after-load 'evil
     ;; Configure *agent-shell-diff* buffers to start in Emacs state
