@@ -559,7 +559,7 @@
    `(ghostel-color-yellow        ((t (:foreground ,yellow))))
    `(ghostel-color-bright-yellow ((t (:foreground ,base0))))
    `(ghostel-color-blue          ((t (:foreground ,blue))))
-   `(ghostel-color-bright-blue   ((t (:foreground ,base03))))
+   `(ghostel-color-bright-blue   ((t (:foreground "#46abf2"))))
    `(ghostel-color-magenta       ((t (:foreground ,magenta))))
    `(ghostel-color-bright-magenta ((t (:foreground ,violet))))
    `(ghostel-color-cyan          ((t (:foreground ,cyan))))
