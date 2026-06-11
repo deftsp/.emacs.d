@@ -103,6 +103,8 @@
      :states '(normal)
      :keymaps '(agent-shell-mode-map)
      :prefix ","
+     ;; viewport
+     "v" #'agent-shell-prompt-compose
      "k" #'agent-shell-interrupt
      "c" #'shell-maker-submit
      "r" #'agent-shell-rename-buffer)
