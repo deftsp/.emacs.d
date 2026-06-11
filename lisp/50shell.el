@@ -61,6 +61,10 @@
 (use-package ghostel
   :straight (:host github :repo "dakra/ghostel"
              :files ("lisp/*.el" "extensions/evil-ghostel/*.el" ("etc" "etc/*")))
+  :init
+  (setq ghostel-keymap-exceptions
+        '("C-c" "C-x" "C-u" "C-h" "M-x" "M-o" "M-:" "C-\\"
+          "M-o"))
   :config
   (setq ghostel-module-auto-install 'ask)
   ;; (setq ghostel-glyph-scale-floor 0.0)
