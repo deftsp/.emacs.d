@@ -104,7 +104,8 @@
      :keymaps '(agent-shell-mode-map)
      :prefix ","
      "k" #'agent-shell-interrupt
-     "c" #'shell-maker-submit)
+     "c" #'shell-maker-submit
+     "r" #'agent-shell-rename-buffer)
 
     (general-define-key
      :states '(insert)
