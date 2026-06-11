@@ -649,6 +649,8 @@
    '(tree-sitter-hl-face:property ((t (:inherit font-lock-constant-face))))
    '(tree-sitter-hl-face:function.call ((t (:inherit font-lock-function-name-face))))
 
+   '(git-commit-comment-button ((t (:inherit git-commit-comment-heading :underline nil))))
+
    ;; magit
    '(magit-diff-hunk-heading ((t (:extend t
                                   :foreground "#6c71c4"
