@@ -56,6 +56,8 @@
                  "LDFLAGS"
                  "LANG"
                  "LC_CTYPE"
+                 "OPENCODE_EXPERIMENTAL_LSP_TOOL"
+                 "OPENCODE_EXPERIMENTAL"
                  "NIX_SSL_CERT_FILE"
                  "NIX_PATH"))
     (add-to-list 'exec-path-from-shell-variables var))
