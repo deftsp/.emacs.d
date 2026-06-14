@@ -675,6 +675,24 @@
    '(magit-diff-base ((t (:extend t :foreground "#b58900" :background "#2a2000"))))
    '(magit-diff-base-highlight ((t (:extend t :foreground "#cb4b16" :background "#3d2010"))))
 
+   ;; ediff
+   '(ediff-current-diff-A ((t (:extend t :foreground "#268bd2" :background "#0a3a52"))))
+   '(ediff-current-diff-Ancestor ((t (:extend t :foreground "#b58900" :background "#2a2000"))))
+   '(ediff-current-diff-B ((t (:extend t :foreground "#2aa198" :background "#0a4238"))))
+   '(ediff-current-diff-C ((t (:extend t :foreground "#6c71c4" :background "#1a1850"))))
+   '(ediff-even-diff-A ((t (:extend t :background "#073642"))))
+   '(ediff-even-diff-Ancestor ((t (:extend t :background "#051010"))))
+   '(ediff-even-diff-B ((t (:extend t :background "#062420"))))
+   '(ediff-even-diff-C ((t (:extend t :background "#080d24"))))
+   '(ediff-fine-diff-A ((t (:extend t :foreground "#268bd2" :background "#0a4760" :weight bold))))
+   '(ediff-fine-diff-Ancestor ((t (:extend t :foreground "#b58900" :background "#332c00" :weight bold))))
+   '(ediff-fine-diff-B ((t (:extend t :foreground "#2aa198" :background "#0a5240" :weight bold))))
+   '(ediff-fine-diff-C ((t (:extend t :foreground "#6c71c4" :background "#201c58" :weight bold))))
+   '(ediff-odd-diff-A ((t (:extend t :background "#00212e"))))
+   '(ediff-odd-diff-Ancestor ((t (:extend t :background "#020b0b"))))
+   '(ediff-odd-diff-B ((t (:extend t :background "#001a18"))))
+   '(ediff-odd-diff-C ((t (:extend t :background "#060720"))))
+
    ;; rainbow-delimiters
    '(rainbow-delimiters-unmatched-face ((t (:foreground unspecified :inherit show-paren-mismatch :strike-through t))))
 
