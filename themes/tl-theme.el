@@ -53,66 +53,108 @@
       (blue    "#268bd2")
       (cyan    "#2aa198")
       (green   "#859900")
+      ;; In TTY frames prefer explicit Solarized hex colors over terminal
+      ;; palette slots, so truecolor terminals render mode-line consistently.
+      (tty-base02 "#073642")
+      (tty-base01 "#586e75")
+      (tty-base00 "#657b83")
+      (tty-base2  "#eee8d5")
+      (tty-base3  "#fdf6e3")
       (inactive1 "#43586d")
       (inactive2 "#33485d"))
 
   (custom-theme-set-faces
    'tl
    ;; basic coloring
-   `(default ((t (:background ,base03 :foreground ,base0))))
+   `(default ((((type tty)) (:background unspecified :foreground ,base0))
+              (t (:background ,base03 :foreground ,base0))))
    '(cursor ((t (:foreground unspecified :background "#cd0000"))))
 
    '(variable-pitch ((t (:family unspecified :slant normal :weight normal :height 1.0 :width normal))))
    '(fixed-pitch ((t (:family unspecified :slant normal :weight normal :height 1.0 :width normal))))
 
    ;; mode-line
-   '(mode-line-buffer-id ((t (:foreground "#90377d"))))
+   '(mode-line-buffer-id ((((type tty)) (:foreground "#d33682"))
+                          (t (:foreground "#90377d"))))
    '(mode-line-emphasis ((t (:foreground "Magenta"))))
-   `(mode-line ((t (:foreground ,base1 :background ,base02 :box nil :height 1.0 :family "ZedMono Nerd Font Propo"))))
-   `(mode-line-inactive ((t (:inherit 'mode-line :foreground ,base0  :background ,inactive1))))
-   `(mode-line-highlight ((t (:inherit 'mode-line :background ,base01 :foreground ,base2))))
+   `(mode-line ((((type tty)) (:foreground ,tty-base3 :background ,tty-base01 :box nil :height 1.0))
+                (t (:foreground ,base1 :background ,base02 :box nil :height 1.0 :family "ZedMono Nerd Font Propo"))))
+   `(mode-line-inactive ((((type tty)) (:inherit 'mode-line :foreground ,tty-base00 :background ,tty-base02))
+                         (t (:inherit 'mode-line :foreground ,base0  :background ,inactive1))))
+   `(mode-line-highlight ((((type tty)) (:inherit 'mode-line :background ,tty-base00 :foreground ,tty-base3))
+                          (t (:inherit 'mode-line :background ,base01 :foreground ,base2))))
 
    '(minibuffer-prompt ((t (:foreground "#22ccee" :weight bold))))
-   `(fringe ((t (:foreground "#00cbcb" :background ,base02))))
-   `(region ((t (:foreground unspecified :background "#244252"))))
-   '(secondary-selection ((t (:foreground unspecified :background "#485c60"))))
+   `(fringe ((((type tty)) (:foreground ,cyan :background unspecified))
+             (t (:foreground "#00cbcb" :background ,base02))))
+   `(region ((((type tty)) (:foreground unspecified :background ,base01))
+             (t (:foreground unspecified :background "#244252"))))
+   `(secondary-selection ((((type tty)) (:foreground unspecified :background ,base00))
+                          (t (:foreground unspecified :background "#485c60"))))
 
    ;; minibuffer-line
-   `(minibuffer-line ((t (:inherit 'mode-line-inactive :foreground ,base0 :background ,base03))))
+   `(minibuffer-line ((((type tty)) (:inherit 'mode-line-inactive :foreground ,base0 :background unspecified))
+                      (t (:inherit 'mode-line-inactive :foreground ,base0 :background ,base03))))
 
 
    ;; the split line of two windows. For window-system, if scroll-bar-mode off
    ;; just show a vertical line. make it as the same color to fringe
-   `(vertical-border ((t (:foreground ,base02))))
+   `(vertical-border ((((type tty)) (:foreground ,base01))
+                      (t (:foreground ,base02))))
    `(scroll-bar ((t (:foreground ,base01 :background ,base02))))
 
    ;; window-divider-mode
-   `(window-divider ((t (:foreground ,base03))))
-   `(window-divider-first-pixel ((t (:foreground ,base03))))
-   `(window-divider-last-pixel ((t (:foreground ,base03))))
+   `(window-divider ((((type tty)) (:foreground ,base01))
+                     (t (:foreground ,base03))))
+   `(window-divider-first-pixel ((((type tty)) (:foreground ,base01))
+                                 (t (:foreground ,base03))))
+   `(window-divider-last-pixel ((((type tty)) (:foreground ,base01))
+                                (t (:foreground ,base03))))
 
    ;; powerline
-   `(powerline-active1 ((t (:background "#6b6b6b" :foreground "#fefefe" :inherit mode-line))))
-   `(powerline-active2 ((t (:background "#182e3f" :foreground "#adadad" :inherit mode-line))))
-   `(powerline-inactive1 ((t (:background ,inactive1 :foreground "#bbbbbb" :inherit mode-line-inactive))))
-   `(powerline-inactive2 ((t (:background ,inactive2 :foreground "#9b9b9b" :inherit mode-line-inactive))))
-   `(powerline-evil-insert-face ((t (:foreground ,inactive2 :background "OliveDrab1" :weight bold :inherit mode-line))))
-   `(powerline-evil-normal-face ((t (:foreground ,inactive2 :background "orchid" :weight bold :inherit mode-line))))
-   `(powerline-evil-visual-face ((t (:foreground ,inactive2 :background "Purple" :weight bold :inherit mode-line))))
-   `(powerline-evil-motion-face ((t (:foreground ,inactive2 :background "Cyan" :weight bold :inherit mode-line))))
-   `(powerline-evil-emacs-face ((t (:foreground ,inactive2 :background "#7cfa42" :weight bold :inherit mode-line))))
-   `(powerline-evil-replace-face ((t (:foreground ,inactive2 :background "orchid" :weight bold :inherit mode-line))))
-   `(powerline-evil-operator-face ((t (:foreground ,inactive2 :background "maroon" :weight bold :inherit mode-line))))
-   `(powerline-evil-lisp-face ((t (:background "#adff2f" :foreground "blue" :inherit mode-line))))
-   `(powerline-evil-lispy-face ((t (:background "orange" :foreground "white" :inherit mode-line))))
-   `(powerline-file-base-info-face ((t (:background ,base00 :foreground "#fefefe" :inherit mode-line))))
+   `(powerline-active1 ((((type tty)) (:background ,tty-base01 :foreground ,tty-base3 :inherit mode-line))
+                        (t (:background "#6b6b6b" :foreground "#fefefe" :inherit mode-line))))
+   `(powerline-active2 ((((type tty)) (:background ,tty-base01 :foreground ,tty-base2 :inherit mode-line))
+                        (t (:background "#182e3f" :foreground "#adadad" :inherit mode-line))))
+   `(powerline-inactive1 ((((type tty)) (:background ,tty-base02 :foreground ,tty-base00 :inherit mode-line-inactive))
+                          (t (:background ,inactive1 :foreground "#bbbbbb" :inherit mode-line-inactive))))
+   `(powerline-inactive2 ((((type tty)) (:background ,tty-base02 :foreground ,tty-base00 :inherit mode-line-inactive))
+                          (t (:background ,inactive2 :foreground "#9b9b9b" :inherit mode-line-inactive))))
+   `(powerline-evil-insert-face ((((type tty)) (:foreground ,green :background ,tty-base01 :weight bold :inherit mode-line))
+                                 (t (:foreground ,inactive2 :background "OliveDrab1" :weight bold :inherit mode-line))))
+   `(powerline-evil-normal-face ((((type tty)) (:foreground ,magenta :background ,tty-base01 :weight bold :inherit mode-line))
+                                 (t (:foreground ,inactive2 :background "orchid" :weight bold :inherit mode-line))))
+   `(powerline-evil-visual-face ((((type tty)) (:foreground ,violet :background ,tty-base01 :weight bold :inherit mode-line))
+                                 (t (:foreground ,inactive2 :background "Purple" :weight bold :inherit mode-line))))
+   `(powerline-evil-motion-face ((((type tty)) (:foreground ,cyan :background ,tty-base01 :weight bold :inherit mode-line))
+                                 (t (:foreground ,inactive2 :background "Cyan" :weight bold :inherit mode-line))))
+   `(powerline-evil-emacs-face ((((type tty)) (:foreground ,green :background ,tty-base01 :weight bold :inherit mode-line))
+                                (t (:foreground ,inactive2 :background "#7cfa42" :weight bold :inherit mode-line))))
+   `(powerline-evil-replace-face ((((type tty)) (:foreground ,orange :background ,tty-base01 :weight bold :inherit mode-line))
+                                  (t (:foreground ,inactive2 :background "orchid" :weight bold :inherit mode-line))))
+   `(powerline-evil-operator-face ((((type tty)) (:foreground ,red :background ,tty-base01 :weight bold :inherit mode-line))
+                                   (t (:foreground ,inactive2 :background "maroon" :weight bold :inherit mode-line))))
+   `(powerline-evil-lisp-face ((((type tty)) (:background ,tty-base01 :foreground ,green :inherit mode-line))
+                               (t (:background "#adff2f" :foreground "blue" :inherit mode-line))))
+   `(powerline-evil-lispy-face ((((type tty)) (:background ,tty-base01 :foreground ,orange :inherit mode-line))
+                                (t (:background "orange" :foreground "white" :inherit mode-line))))
+   `(powerline-file-base-info-face ((((type tty)) (:background ,tty-base01 :foreground ,tty-base3 :inherit mode-line))
+                                    (t (:background ,base00 :foreground "#fefefe" :inherit mode-line))))
 
-   `(powerline-buffer-id-face ((t (:background ,base02 :foreground "#fefefe" :inherit mode-line))))
-   `(powerline-vc-face ((t (:background ,base01 :foreground "#f4bb66" :inherit mode-line))))
-   `(powerline-workgroups-face ((t (:background "#778899" :foreground "#0a3540" :inherit mode-line))))
-   `(powerline-ace-window-path-face ((t (:background "#174652" :foreground "#0a3540" :inherit mode-line))))
-   `(powerline-winum-number-face ((t (:background "#174652" :foreground "#0a3540" :inherit mode-line))))
-   `(powerline-mode-line-modified-face ((t (:foreground "#ee1280" :background unspecified))))
+   `(powerline-buffer-id-face ((((type tty)) (:background ,tty-base01 :foreground ,tty-base3 :inherit mode-line))
+                               (t (:background ,base02 :foreground "#fefefe" :inherit mode-line))))
+   `(powerline-vc-face ((((type tty)) (:background ,tty-base01 :foreground ,yellow :inherit mode-line))
+                        (t (:background ,base01 :foreground "#f4bb66" :inherit mode-line))))
+   `(powerline-workgroups-face ((((type tty)) (:background ,tty-base01 :foreground ,tty-base3 :inherit mode-line))
+                                (t (:background "#778899" :foreground "#0a3540" :inherit mode-line))))
+   `(powerline-ace-window-path-face ((((type tty)) (:background ,tty-base01 :foreground ,cyan :inherit mode-line))
+                                     (t (:background "#174652" :foreground "#0a3540" :inherit mode-line))))
+   `(powerline-winum-number-face ((((type tty)) (:background ,tty-base01 :foreground ,cyan :inherit mode-line))
+                                  (t (:background "#174652" :foreground "#0a3540" :inherit mode-line))))
+   `(powerline-anzu-face ((((type tty)) (:background ,tty-base01 :foreground ,orange :inherit mode-line))
+                          (t (:background "#dfaf8f" :foreground "#5e747a" :inherit mode-line))))
+   `(powerline-mode-line-modified-face ((((type tty)) (:foreground ,magenta :background ,tty-base01))
+                                        (t (:foreground "#ee1280" :background unspecified))))
 
    ;; evil-snipe
    `(evil-snipe-first-match-face ((t (:background "orchid" :foreground unspecified))))
@@ -126,7 +168,8 @@
    ;; toolbar
    '(tool-bar ((t (:background "DarkSlateGrey"))))
 
-   `(header-line ((t (:foreground ,base2 :background ,base02))))
+   `(header-line ((((type tty)) (:foreground ,base1 :background ,base02))
+                  (t (:foreground ,base2 :background ,base02))))
 
    ;; highlight-symbol
    `(highlight-symbol-face ((t (:background "dodgerblue3" :foreground ,base0))))
@@ -177,55 +220,87 @@
 
    ;; ==================== 1. 标准 8 色 (Normal Colors) ====================
    ;; Black / Base02
-   `(term-color-black ((t (:foreground "#073642" :background "#073642"))))
-   `(ansi-color-black ((t (:foreground "#073642" :background "#073642"))))
+   `(term-color-black ((((type tty)) (:foreground ,base02 :background ,base02))
+                       (t (:foreground "#073642" :background "#073642"))))
+   `(ansi-color-black ((((type tty)) (:foreground ,base02 :background ,base02))
+                       (t (:foreground "#073642" :background "#073642"))))
    ;; Red
-   `(term-color-red ((t (:foreground "#dc322f" :background "#dc322f"))))
-   `(ansi-color-red ((t (:foreground "#dc322f" :background "#dc322f"))))
+   `(term-color-red ((((type tty)) (:foreground ,red :background ,red))
+                     (t (:foreground "#dc322f" :background "#dc322f"))))
+   `(ansi-color-red ((((type tty)) (:foreground ,red :background ,red))
+                     (t (:foreground "#dc322f" :background "#dc322f"))))
    ;; Green
-   `(term-color-green ((t (:foreground "#859900" :background "#859900"))))
-   `(ansi-color-green ((t (:foreground "#859900" :background "#859900"))))
+   `(term-color-green ((((type tty)) (:foreground ,green :background ,green))
+                       (t (:foreground "#859900" :background "#859900"))))
+   `(ansi-color-green ((((type tty)) (:foreground ,green :background ,green))
+                       (t (:foreground "#859900" :background "#859900"))))
    ;; Yellow
-   `(term-color-yellow ((t (:foreground "#b58900" :background "#b58900"))))
-   `(ansi-color-yellow ((t (:foreground "#b58900" :background "#b58900"))))
+   `(term-color-yellow ((((type tty)) (:foreground ,yellow :background ,yellow))
+                        (t (:foreground "#b58900" :background "#b58900"))))
+   `(ansi-color-yellow ((((type tty)) (:foreground ,yellow :background ,yellow))
+                        (t (:foreground "#b58900" :background "#b58900"))))
    ;; Blue
-   `(term-color-blue ((t (:foreground "#268bd2" :background "#268bd2"))))
-   `(ansi-color-blue ((t (:foreground "#268bd2" :background "#268bd2"))))
+   `(term-color-blue ((((type tty)) (:foreground ,blue :background ,blue))
+                      (t (:foreground "#268bd2" :background "#268bd2"))))
+   `(ansi-color-blue ((((type tty)) (:foreground ,blue :background ,blue))
+                      (t (:foreground "#268bd2" :background "#268bd2"))))
    ;; Magenta
-   `(term-color-magenta ((t (:foreground "#d33682" :background "#d33682"))))
-   `(ansi-color-magenta ((t (:foreground "#d33682" :background "#d33682"))))
+   `(term-color-magenta ((((type tty)) (:foreground ,magenta :background ,magenta))
+                         (t (:foreground "#d33682" :background "#d33682"))))
+   `(ansi-color-magenta ((((type tty)) (:foreground ,magenta :background ,magenta))
+                         (t (:foreground "#d33682" :background "#d33682"))))
    ;; Cyan
-   `(term-color-cyan ((t (:foreground "#2aa198" :background "#2aa198"))))
-   `(ansi-color-cyan ((t (:foreground "#2aa198" :background "#2aa198"))))
+   `(term-color-cyan ((((type tty)) (:foreground ,cyan :background ,cyan))
+                      (t (:foreground "#2aa198" :background "#2aa198"))))
+   `(ansi-color-cyan ((((type tty)) (:foreground ,cyan :background ,cyan))
+                      (t (:foreground "#2aa198" :background "#2aa198"))))
    ;; White / Base2
-   `(term-color-white ((t (:foreground "#eee8d5" :background "#eee8d5"))))
-   `(ansi-color-white ((t (:foreground "#eee8d5" :background "#eee8d5"))))
+   `(term-color-white ((((type tty)) (:foreground ,base2 :background ,base2))
+                       (t (:foreground "#eee8d5" :background "#eee8d5"))))
+   `(ansi-color-white ((((type tty)) (:foreground ,base2 :background ,base2))
+                       (t (:foreground "#eee8d5" :background "#eee8d5"))))
 
    ;; ==================== 2. 明亮 8 色 (Bright Colors) ====================
    ;; Bright Black / Base03 (Solarized 核心背景色)
-   `(term-color-bright-black ((t (:foreground "#002b36" :background "#002b36"))))
-   `(ansi-color-bright-black ((t (:foreground "#002b36" :background "#002b36"))))
+   `(term-color-bright-black ((((type tty)) (:foreground ,base01 :background ,base01))
+                              (t (:foreground "#002b36" :background "#002b36"))))
+   `(ansi-color-bright-black ((((type tty)) (:foreground ,base01 :background ,base01))
+                              (t (:foreground "#002b36" :background "#002b36"))))
    ;; Bright Red / Orange
-   `(term-color-bright-red ((t (:foreground "#cb4b16" :background "#cb4b16"))))
-   `(ansi-color-bright-red ((t (:foreground "#cb4b16" :background "#cb4b16"))))
+   `(term-color-bright-red ((((type tty)) (:foreground ,orange :background ,orange))
+                            (t (:foreground "#cb4b16" :background "#cb4b16"))))
+   `(ansi-color-bright-red ((((type tty)) (:foreground ,orange :background ,orange))
+                            (t (:foreground "#cb4b16" :background "#cb4b16"))))
    ;; Bright Green / Base01
-   `(term-color-bright-green ((t (:foreground "#586e75" :background "#586e75"))))
-   `(ansi-color-bright-green ((t (:foreground "#586e75" :background "#586e75"))))
+   `(term-color-bright-green ((((type tty)) (:foreground ,green :background ,green))
+                              (t (:foreground "#586e75" :background "#586e75"))))
+   `(ansi-color-bright-green ((((type tty)) (:foreground ,green :background ,green))
+                              (t (:foreground "#586e75" :background "#586e75"))))
    ;; Bright Yellow / Base00
-   `(term-color-bright-yellow ((t (:foreground "#657b83" :background "#657b83"))))
-   `(ansi-color-bright-yellow ((t (:foreground "#657b83" :background "#657b83"))))
+   `(term-color-bright-yellow ((((type tty)) (:foreground ,yellow :background ,yellow))
+                               (t (:foreground "#657b83" :background "#657b83"))))
+   `(ansi-color-bright-yellow ((((type tty)) (:foreground ,yellow :background ,yellow))
+                               (t (:foreground "#657b83" :background "#657b83"))))
    ;; Bright Blue / Base0
-   `(term-color-bright-blue ((t (:foreground "#839496" :background "#839496"))))
-   `(ansi-color-bright-blue ((t (:foreground "#839496" :background "#839496"))))
+   `(term-color-bright-blue ((((type tty)) (:foreground ,blue :background ,blue))
+                             (t (:foreground "#839496" :background "#839496"))))
+   `(ansi-color-bright-blue ((((type tty)) (:foreground ,blue :background ,blue))
+                             (t (:foreground "#839496" :background "#839496"))))
    ;; Bright Magenta / Violet
-   `(term-color-bright-magenta ((t (:foreground "#6c71c4" :background "#6c71c4"))))
-   `(ansi-color-bright-magenta ((t (:foreground "#6c71c4" :background "#6c71c4"))))
+   `(term-color-bright-magenta ((((type tty)) (:foreground ,violet :background ,violet))
+                                (t (:foreground "#6c71c4" :background "#6c71c4"))))
+   `(ansi-color-bright-magenta ((((type tty)) (:foreground ,violet :background ,violet))
+                                (t (:foreground "#6c71c4" :background "#6c71c4"))))
    ;; Bright Cyan / Base1
-   `(term-color-bright-cyan ((t (:foreground "#93a1a1" :background "#93a1a1"))))
-   `(ansi-color-bright-cyan ((t (:foreground "#93a1a1" :background "#93a1a1"))))
+   `(term-color-bright-cyan ((((type tty)) (:foreground ,cyan :background ,cyan))
+                             (t (:foreground "#93a1a1" :background "#93a1a1"))))
+   `(ansi-color-bright-cyan ((((type tty)) (:foreground ,cyan :background ,cyan))
+                             (t (:foreground "#93a1a1" :background "#93a1a1"))))
    ;; Bright White / Base3
-   `(term-color-bright-white ((t (:foreground "#fdf6e3" :background "#fdf6e3"))))
-   `(ansi-color-bright-white ((t (:foreground "#fdf6e3" :background "#fdf6e3"))))
+   `(term-color-bright-white ((((type tty)) (:foreground ,base3 :background ,base3))
+                              (t (:foreground "#fdf6e3" :background "#fdf6e3"))))
+   `(ansi-color-bright-white ((((type tty)) (:foreground ,base3 :background ,base3))
+                              (t (:foreground "#fdf6e3" :background "#fdf6e3"))))
 
    ;; mmm-mode
    '(mmm-default-submode-face ((t (:background "gray97"))))
@@ -262,9 +337,12 @@
    '(org-agenda-dimmed-todo-face ((t (:foreground "#778888" :weight bold))))
    '(org-warning ((t (:foreground "#ff6347" :weight bold))))
    '(org-drill-hidden-cloze-face ((t (:foreground "#eeeeee" :background "violet red"))))
-   '(org-block ((t (:background "#20323e"))))
-   '(org-block-begin-line ((t (:background "#30424e"))))
-   '(org-block-end-line ((t (:background "#30424e"))))
+   `(org-block ((((type tty)) (:background ,base02))
+                (t (:background "#20323e"))))
+   '(org-block-begin-line ((((type tty)) (:background "#20323e"))
+                           (t (:background "#30424e"))))
+   '(org-block-end-line ((((type tty)) (:background "#20323e"))
+                         (t (:background "#30424e"))))
    '(org-ellipsis ((t (:underline nil :foreground "#c5e666" :background unspecified))))
    '(org-mode-line-clock ((t (:background unspecified :foreground "#268bd2"))))
    '(org-time-grid ((t (:background unspecified :foreground "#386375"))))
@@ -287,38 +365,55 @@
    '(org-brain-pinned ((t (:foreground "#ba42c4" :background "#174652" :weight normal))))
 
    ;; font lock
-   '(font-lock-builtin-face ((t (:foreground "#5ca0b3"))))
-   `(font-lock-comment-face ((t (:foreground ,base01))))
-   `(font-lock-comment-delimiter-face ((t (:foreground ,base1))))
+   '(font-lock-builtin-face ((((type tty)) (:foreground "#2aa198"))
+                             (t (:foreground "#5ca0b3"))))
+   `(font-lock-comment-face ((((type tty)) (:foreground ,base00))
+                             (t (:foreground ,base01))))
+   `(font-lock-comment-delimiter-face ((((type tty)) (:foreground ,base00))
+                                       (t (:foreground ,base1))))
    `(font-lock-delimiter-face ((t (:foreground "#c0b090"))))
-   '(font-lock-constant-face ((t (:foreground "#5299bc"))))
-   '(font-lock-doc-face ((t (:foreground "turquoise4"))))
-   '(font-lock-function-name-face ((t (:foreground "#f08484"))))
-   '(font-lock-function-call-face ((t (:foreground "#f08484"))))
-   '(font-lock-keyword-face ((t (:foreground "#aede5d"  :weight bold))))
-   '(font-lock-property-use-face ((t (:foreground "#90b464"))))
-   '(font-lock-property-name-face ((t (:foreground "#90b464"))))
-   '(font-lock-number-face ((t (:foreground "#7ebecd"))))
-   '(font-lock-operator-face ((t (:foreground "#ce8e7d" :weight bold))))
+   '(font-lock-constant-face ((((type tty)) (:foreground "#268bd2"))
+                              (t (:foreground "#5299bc"))))
+   `(font-lock-doc-face ((((type tty)) (:foreground ,cyan))
+                         (t (:foreground "turquoise4"))))
+   '(font-lock-function-name-face ((((type tty)) (:foreground "#f08484"))
+                                   (t (:foreground "#f08484"))))
+   '(font-lock-function-call-face ((((type tty)) (:foreground "#f08484"))
+                                   (t (:foreground "#f08484"))))
+   '(font-lock-keyword-face ((((type tty)) (:foreground "#aede5d"  :weight bold))
+                             (t (:foreground "#aede5d"  :weight bold))))
+   '(font-lock-property-use-face ((((type tty)) (:foreground "#90b464"))
+                                  (t (:foreground "#90b464"))))
+   '(font-lock-property-name-face ((((type tty)) (:foreground "#90b464"))
+                                   (t (:foreground "#90b464"))))
+   '(font-lock-number-face ((((type tty)) (:foreground "#7ebecd"))
+                            (t (:foreground "#7ebecd"))))
+   '(font-lock-operator-face ((((type tty)) (:foreground "#ce8e7d" :weight bold))
+                              (t (:foreground "#ce8e7d" :weight bold))))
    `(font-lock-negation-char-face ((t (:foreground "#de6e9d" :weight bold))))
    '(font-lock-preprocessor-face ((t (:foreground "#79C96D" :slant italic))))
    `(font-lock-regexp-grouping-construct ((t (:foreground ,yellow :weight bold))))
    `(font-lock-regexp-grouping-backslash ((t (:foreground ,green :weight bold))))
-   '(font-lock-string-face ((t (:foreground "#a800a8"))))
-   '(font-lock-type-face ((t (:foreground "#479ec0")))) ; #9077ce,  #259bb3
-   '(font-lock-variable-name-face ((t (:foreground "#839496"))))
+   `(font-lock-string-face ((((type tty)) (:foreground ,magenta))
+                            (t (:foreground "#a800a8"))))
+   '(font-lock-type-face ((((type tty)) (:foreground "#479ec0"))
+                          (t (:foreground "#479ec0")))) ; #9077ce,  #259bb3
+   `(font-lock-variable-name-face ((((type tty)) (:foreground ,base1))
+                                   (t (:foreground "#839496"))))
    '(font-lock-warning-face ((t (:foreground "Pink" :weight bold))))
 
    `(c-annotation-face ((t (:inherit font-lock-constant-face))))
 
    ;; icompletep
    '(icompletep-keys ((t (:foreground "LawnGreen"))))
-   '(icompletep-determined ((t (:foreground "DarkMagenta"))))
+   `(icompletep-determined ((((type tty)) (:foreground ,magenta))
+                            (t (:foreground "DarkMagenta"))))
    '(icompletep-choices ((t (:foreground "burlywood"))))
 
    ;; ido
    '(ido-subdir ((t (:foreground "#1e90ff" :weight bold))))
-   '(ido-first-match ((t (:foreground "DarkMagenta" :weight bold))))
+   `(ido-first-match ((((type tty)) (:foreground ,magenta :weight bold))
+                      (t (:foreground "DarkMagenta" :weight bold))))
    '(ido-virtual ((t (:foreground "#638383"))))
 
    ;; flx
@@ -328,7 +423,8 @@
    '(anything-ff-directory ((t (:background "#222222"))))
 
    ;; helm
-   `(helm-selection ((t (:background ,base01 :foreground unspecified))))
+   `(helm-selection ((((type tty)) (:background ,base01 :foreground ,base3))
+                     (t (:background ,base01 :foreground unspecified))))
    '(helm-visible-mark ((t (:background "turquoise4" :foreground unspecified))))
 
    ;; woman
@@ -488,13 +584,15 @@
    '(vhl/default-face ((t (:background "#332244"))))
 
    ;; hl-line
-   `(hl-line ((t (:background ,base02))))
+   `(hl-line ((((type tty)) (:background ,base02))
+              (t (:background ,base02))))
 
    ;; ivy
    '(ivy-action ((t (:foreground "PaleGoldenrod"))))
    '(ivy-virtual ((t (:foreground "#437789"))))
    '(ivy-grep-info ((t (:foreground "#337799"))))
-   `(ivy-current-match ((t (:foreground "#dddddd" :background ,magenta :weight bold))))
+   `(ivy-current-match ((((type tty)) (:foreground ,base3 :background ,base01 :weight bold))
+                        (t (:foreground "#dddddd" :background ,magenta :weight bold))))
    `(ivy-minibuffer-match-face-1 ((t (:foreground "#93e0e3" :background "#333343"))))
    `(ivy-minibuffer-match-face-2 ((t (:foreground "#f0dfaf"))))
    `(ivy-minibuffer-match-face-3 ((t (:foreground "#94bff3"))))
@@ -508,8 +606,10 @@
    `(col-highlight ((t (:background ,base02))))
 
    ;; highlight-indentation
-   '(highlight-indentation-face ((t (:background "#003b46"))))
-   `(highlight-indentation-current-column-face ((t (:background "#196873"))))
+   `(highlight-indentation-face ((((type tty)) (:background ,base02))
+                                 (t (:background "#003b46"))))
+   `(highlight-indentation-current-column-face ((((type tty)) (:background ,base01))
+                                                (t (:background "#196873"))))
 
    ;; comint
    '(comint-highlight-prompt ((t (:foreground "#eedd82" :weight bold))))
@@ -572,11 +672,14 @@
    '(shm-quarantine-face ((t (:background "#262230"))))
 
    ;; linum
-   '(linum ((t (:background "#102530" :foreground "#607b8b"))))
+   `(linum ((((type tty)) (:background unspecified :foreground ,base01))
+            (t (:background "#102530" :foreground "#607b8b"))))
 
    ;; native line numbers (emacs 26)
-   `(line-number ((t (:foreground "#607b8b" :background "#04303d"))))
-   `(line-number-current-line ((t (:foreground "#202050" :background "#657b83"))))
+   `(line-number ((((type tty)) (:foreground ,base01 :background unspecified))
+                  (t (:foreground "#607b8b" :background "#04303d"))))
+   `(line-number-current-line ((((type tty)) (:foreground ,base3 :background ,base01))
+                               (t (:foreground "#202050" :background "#657b83"))))
 
    ;; guide-key
    '(guide-key/key-face ((t (:foreground "violet"))))

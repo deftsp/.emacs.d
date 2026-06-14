@@ -129,8 +129,7 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 
 (defun tl//apply-theme ()
-  (when (display-graphic-p)
-    (load-theme 'tl t)))
+  (load-theme 'tl t))
 
 (defun tl/apply-theme-after-frame (frame)
   (with-selected-frame frame
