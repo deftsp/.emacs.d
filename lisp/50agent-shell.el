@@ -32,6 +32,8 @@
 
   (setq agent-shell-preferred-agent-config (agent-shell-opencode-make-agent-config))
 
+  ;; (setq agent-shell-openai-codex-acp-command "npx" "--yes" "@zed-industries/codex-acp")
+
   ;; (defun tl/agent-shell-start-gemini-agent ()
   ;;   "Start an interactive Gemini CLI agent shell."
   ;;   (interactive)
