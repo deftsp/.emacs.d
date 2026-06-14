@@ -8,19 +8,29 @@
 ;;; Code:
 
 (use-package ai-code
-  :commands (ai-code-menu)
+  :commands (ai-code-menu
+             ai-code-cli-start ai-code-cli-resume
+             ai-code-cli-switch-to-buffer ai-code-send-command
+             ai-code-code-change ai-code-ask-question)
+  :bind ("C-c ," . #'ai-code-menu)
   :init
-  (bind-key "C-c ," #'ai-code-menu)
+  (setq ai-code-backends-infra-terminal-backend 'ghostel)
   :config
-  ;; use codex as backend, other options are 'claude-code, 'gemini, 'github-copilot-cli, 'opencode, 'grok, 'cursor, 'kiro, 'codebuddy, 'aider, 'agent-shell, 'claude-code-ide, 'claude-code-el
   (ai-code-set-backend 'opencode)
 
   ;; Enable @ file completion in comments and AI sessions
-  (ai-code-prompt-filepath-completion-mode 1)
+  (ai-code-prompt-filepath-completion-mode +1)
+
+  (setq ai-code-menu-layout 'default)
+
+  (setq ai-code-notifications-enabled t)
+  (setq ai-code-backends-infra-use-side-window nil)
+  (setq ai-code-backends-infra-window-side 'right)
+  (setq ai-code-backends-infra-window-width 90)
+  ;; (setq ai-code-backends-infra-idle-delay 2.0)
 
   ;; Ask AI to run test after code changes, for a tighter build-test loop
   (setq ai-code-auto-test-type 'ask-me)
-  (setq ai-code-backends-infra-terminal-backend 'ghostel)
 
   ;; In AI session buffers, SPC in Evil normal state triggers the prompt-enter UI
   ;; (with-eval-after-load 'evil

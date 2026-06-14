@@ -66,6 +66,9 @@
         '("C-c" "C-x" "C-u" "C-h" "M-x" "M-o" "M-:" "C-\\"
           "M-o"))
   :config
+  ;; (add-hook 'shell-mode-hook #'ghostel-comint-mode)
+  (ghostel-comint-global-mode +1)
+
   (setq ghostel-module-auto-install 'ask)
   ;; (setq ghostel-glyph-scale-floor 0.0)
 
@@ -84,5 +87,9 @@
 (use-package evil-ghostel
   :after (ghostel evil)
   :hook (ghostel-mode . evil-ghostel-mode))
+
+(use-package ghostel-ime
+  :after ghostel
+  :hook (ghostel-mode . ghostel-ime-mode))
 
 (provide '50shell)
