@@ -147,3 +147,6 @@ sync-to-remote.sh
 agent-recall/
 
 forge-database.sqlite
+
+.ai.code.files/
+.opencode/
