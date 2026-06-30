@@ -123,6 +123,8 @@
 (require '50gptel)
 (require '50opencode)
 (require '50security)
+(require '50context)
+
 
 ;; (require '52emms)
 
