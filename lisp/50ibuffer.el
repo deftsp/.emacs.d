@@ -235,12 +235,21 @@
         ibuffer-use-header-line t
         ibuffer-elide-long-columns t
         ibuffer-eliding-string "...")
-  (setq ibuffer-formats '((mark modified read-only " "
-                                (name 18 18 :left :elide) " "
-                                (size 9 -1 :left) " "
-                                (mode 16 16 :left :elide)
-                                " " filename-and-process)
-                          (mark " " (name 16 -1) " " filename)))
+
+  ;; '`': ibuffer-switch-format,
+  (setq ibuffer-formats
+        '((mark modified read-only vc-status-mini " "
+                (name 18 18 :left :elide)
+                " "
+                (size 9 -1 :left)
+                " "
+                (mode 16 16 :left :elide)
+                " "
+                (vc-status 16 16 :left)
+                " "
+                vc-relative-file)
+          ;; filename or filename-and-process
+          (mark " " (name 20 20 :left :elide) " " filename-and-process)))
   (setq ibuffer-show-empty-filter-groups nil)
   ;; (setq ibuffer-saved-filter-groups tl//ibuffer-gnus-styled-groups)
   :config
