@@ -214,6 +214,13 @@ mouse-1: Display Line and Column Mode Menu")
 ;;     "##"))
 
 
+(defun tl/project-worktree-name ()
+  "Return current project/worktree directory name."
+  (when-let* ((project (project-current nil))
+              (root (project-root project)))
+    (file-name-nondirectory
+     (directory-file-name root))))
+
 (defpowerline tl/powerline-vc
   (let ((vc-mark (char-to-string #xe0a0)))
     (if (and buffer-file-name vc-mode)
@@ -234,7 +241,10 @@ mouse-1: Display Line and Column Mode Menu")
               (when (string= "Git" backend)
                 (setq backend (char-to-string #xf1d2))
                 (setq disp-rev (or (vc-git--symbolic-ref buffer-file-name)
-                                   (and rev (substring rev 0 7)))))
+                                   (and rev (substring rev 0 7))))
+                (when-let* ((worktree-name (tl/project-worktree-name))
+                            (rev-name disp-rev))
+                  (setq disp-rev (format "%s/%s" worktree-name rev-name))))
               (format " %s %s %s: %s" vc-mark backend disp-rev state))
           (format-mode-line '(vc-mode vc-mode))  )
       (format " %s untracked " vc-mark))))
