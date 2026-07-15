@@ -284,8 +284,8 @@
     (unless (eq ibuffer-sorting-mode 'alphabetic)
       (ibuffer-do-sort-by-alphabetic)))
 
-  (add-hook 'ibuffer-mode-hook 'tl//ibuffer-init-h))
-
+  ;;  ibuffer-mode-hook 和 ibuffer-hook 是不一样的
+  (add-hook 'ibuffer-hook 'tl//ibuffer-init-h))
 
 ;; (use-package ibuffer-projectile
 ;;   :after (projectile)
