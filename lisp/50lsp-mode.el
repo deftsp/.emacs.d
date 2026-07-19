@@ -148,6 +148,22 @@
   :after lsp-mode
   :commands lsp-ui-mode
   :init
+  (defvar tl/lsp-ui-sideline-max-rust-buffer-size (* 64 1024)
+    "Maximum Rust buffer size in characters for enabling `lsp-ui-sideline-mode'.")
+
+  (defun tl/lsp-ui-sideline-disable-in-large-rust-buffer ()
+    "Disable LSP sideline when the current Rust buffer is too large."
+    (let ((size (buffer-size)))
+      (when (and (derived-mode-p 'rust-mode 'rust-ts-mode)
+                 (> size tl/lsp-ui-sideline-max-rust-buffer-size))
+        (setq-local lsp-ui-sideline-enable nil)
+        (message "Skipping lsp-ui-sideline in large Rust buffer %s (%.1f KiB, limit %.0f KiB)"
+                 (buffer-name)
+                 (/ size 1024.0)
+                 (/ tl/lsp-ui-sideline-max-rust-buffer-size 1024.0)))))
+
+  (add-hook 'lsp-mode-hook #'tl/lsp-ui-sideline-disable-in-large-rust-buffer)
+
   (setq lsp-ui-peek-always-show t
         lsp-ui-peek-fontify 'always ; 'on-demand
         lsp-ui-sideline-delay 0.2
