@@ -145,10 +145,7 @@
   (global-git-commit-mode +1)
   (setq magit-log-margin '(t "%Y-%m-%d %H:%M " magit-log-margin-width t 15))
 
-  ;; magit 2e091997: add to #'dabbrev-capf completion-at-point-functions,  dabbrev-capf 是给 M-/ 用的而不是 company 这会报错
-  ;; 先用回 magit
-
-  ;; (setq magit-ediff-dwim-show-on-hunks t)
+  (setq magit-ediff-dwim-show-on-hunks t)
   (define-key magit-status-mode-map (kbd "W") 'magit-toggle-whitespace)
   (add-to-list 'magit-repository-directories '("~/.emacs.d" . 0)) ; C-u C-u M-x magit-status will ignore it
   (add-to-list 'magit-repository-directories '("~/opt/emacs" . 0)))
