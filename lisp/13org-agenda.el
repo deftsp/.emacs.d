@@ -202,6 +202,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
      "u" 'org-agenda-undo
 
      ;; actions
+     "d"  nil
      "dd" 'org-agenda-kill
      "dA" 'org-agenda-archive
      "da" 'org-agenda-archive-default-with-confirmation
@@ -247,6 +248,7 @@ If VANILLA is non-nil, run the standard `org-capture'."
 
      ;; filter
      ;; f default bind to 'org-agenda-later
+     "f"  nil
      "fc" 'org-agenda-filter-by-category
      "fr" 'org-agenda-filter-by-regexp
      "fx" 'org-agenda-filter-by-regexp
