@@ -1,4 +1,4 @@
-;;; 50perl.el ---
+;;; 50perl.el ---  -*- lexical-binding: nil; -*-
 
 ;; (add-to-list 'load-path "~/.emacs.d/packages/Emacs-PDE-0.2.16/lisp")
 ;; (load "pde-load")

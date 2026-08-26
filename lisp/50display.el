@@ -1,4 +1,4 @@
-;;; 50display.el ---
+;;; 50display.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2008  Shihpin Tseng
 

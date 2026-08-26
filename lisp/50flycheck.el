@@ -1,4 +1,4 @@
-;;; 50flycheck.el ---
+;;; 50flycheck.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2017  Shihpin Tseng
 

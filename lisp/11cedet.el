@@ -1,4 +1,4 @@
-;;; 11cedet.el ---
+;;; 11cedet.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2015  Shihpin Tseng
 

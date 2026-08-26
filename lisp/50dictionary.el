@@ -1,4 +1,4 @@
-;;; 50dictionary.el ---
+;;; 50dictionary.el ---  -*- lexical-binding: nil; -*-
 ;;
 ;; Description:
 ;; Author: Shihpin Tseng <detfsp@gmail.com>

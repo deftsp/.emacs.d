@@ -1,4 +1,4 @@
-;;; 50eldoc.el ---
+;;; 50eldoc.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2024  Shihpin Tseng
 

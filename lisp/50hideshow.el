@@ -1,4 +1,4 @@
-;;; 50hideshow.el ---
+;;; 50hideshow.el ---  -*- lexical-binding: nil; -*-
 ;;
 ;; Description:
 ;; Author: Shihpin Tseng <deftsp@gmail.com>

@@ -1,4 +1,4 @@
-;;; 50search.el ---
+;;; 50search.el ---  -*- lexical-binding: nil; -*-
 
 ;;; tips
 ;; C-s ...

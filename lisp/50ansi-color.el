@@ -1,4 +1,4 @@
-;;; 50ansi-color.el ---
+;;; 50ansi-color.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2024  Shihpin Tseng
 

@@ -1,4 +1,4 @@
-;;; 52tex.el ---
+;;; 52tex.el ---  -*- lexical-binding: nil; -*-
 
 ;;; auctex
 

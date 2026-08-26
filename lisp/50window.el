@@ -1,4 +1,4 @@
-;;; 50window.el ---
+;;; 50window.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2009  Shihpin Tseng
 

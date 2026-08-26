@@ -1,4 +1,4 @@
-;;; 05funcs.el --- 
+;;; 05funcs.el ---   -*- lexical-binding: nil; -*-
 ;;
 ;; Copyright (c) 2012-2017 Sylvain Benner & Contributors
 ;;

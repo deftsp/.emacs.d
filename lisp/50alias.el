@@ -1,3 +1,4 @@
+;;; 50alias.el ---  -*- lexical-binding: nil; -*-
 
 (defalias 'open 'find-file)
 (defalias 'openo 'find-file-other-window)

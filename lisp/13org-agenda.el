@@ -1,4 +1,4 @@
-;;; 13org-agenda.el ---
+;;; 13org-agenda.el ---  -*- lexical-binding: nil; -*-
 
 ;; https://www.reddit.com/r/orgmode/comments/6ybjjw/aligned_agenda_view_anyway_to_make_this_more/
 (use-package org-agenda

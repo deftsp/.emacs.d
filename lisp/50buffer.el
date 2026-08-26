@@ -1,4 +1,4 @@
-;;; 50buffer.el ---
+;;; 50buffer.el ---  -*- lexical-binding: nil; -*-
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;;; clean buffer list

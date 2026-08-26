@@ -1,4 +1,4 @@
-;;; 50vc.el ---
+;;; 50vc.el ---  -*- lexical-binding: nil; -*-
 
 (defvar temporary-file-directory "~/.backup/temp/")
 

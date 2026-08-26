@@ -1,4 +1,4 @@
-;;; 50eshell.el ---
+;;; 50eshell.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2008  Shihpin Tseng
 ;; Author: Shihpin Tseng <deftsp@gmail.com>

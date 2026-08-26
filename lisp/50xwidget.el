@@ -1,4 +1,4 @@
-;;; 50xwidget.el ---
+;;; 50xwidget.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2022  Shihpin Tseng
 

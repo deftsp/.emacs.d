@@ -1,4 +1,4 @@
-;; -*- mode: Emacs-Lisp -*-
+;; -*- mode: Emacs-Lisp; lexical-binding: nil; -*-
 
 ;;; gambit
 (autoload 'gambit-inferior-mode "gambit" "Hook Gambit mode into cmuscheme.")

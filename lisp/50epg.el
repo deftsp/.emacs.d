@@ -1,4 +1,4 @@
-;;; 50epg.el ---
+;;; 50epg.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2009  Shihpin Tseng
 

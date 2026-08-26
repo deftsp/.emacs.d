@@ -1,4 +1,4 @@
-;;; 13org-mode.el ---
+;;; 13org-mode.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2007  Shihpin Tseng
 

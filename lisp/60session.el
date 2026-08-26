@@ -1,4 +1,4 @@
-;;; 60session.el ---
+;;; 60session.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2008  Shihpin Tseng
 

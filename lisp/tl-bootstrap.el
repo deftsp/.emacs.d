@@ -1,4 +1,4 @@
-;;; tl-bootstrap.el ---
+;;; tl-bootstrap.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2010  Shihpin Tseng
 

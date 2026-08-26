@@ -1,4 +1,4 @@
-;;; 50vlf.el ---
+;;; 50vlf.el ---  -*- lexical-binding: nil; -*-
 
 ;; View Large Files
 ;; https://github.com/m00natic/vlfi

@@ -1,4 +1,4 @@
-;;; 50aidermacs.el ---
+;;; 50aidermacs.el ---  -*- lexical-binding: nil; -*-
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
 
 ;; https://github.com/MatthewZMD/aidermacs

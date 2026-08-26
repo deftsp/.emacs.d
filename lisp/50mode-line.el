@@ -1,3 +1,4 @@
+;;; 50mode-line.el ---  -*- lexical-binding: nil; -*-
 
 ;; Whether or not the buffer has been modified:
 ;; ** – modified since last save

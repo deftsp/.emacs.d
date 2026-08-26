@@ -1,4 +1,4 @@
-;;; 50persistent-scratch.el ---
+;;; 50persistent-scratch.el ---  -*- lexical-binding: nil; -*-
 ;;
 ;; Description:
 ;; Author: Shihpin Tseng <deftsp@gmail.com>

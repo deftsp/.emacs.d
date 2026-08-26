@@ -1,4 +1,4 @@
-;;; 50key-bindings.el ---
+;;; 50key-bindings.el ---  -*- lexical-binding: nil; -*-
 
 
 (defun tl/translate-C-i (_)

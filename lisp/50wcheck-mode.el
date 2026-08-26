@@ -1,4 +1,4 @@
-;;; 50wcheck-mode.el ---
+;;; 50wcheck-mode.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012  Shihpin Tseng
 

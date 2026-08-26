@@ -1,4 +1,4 @@
-;;; 50ediff.el ---
+;;; 50ediff.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2008  Shihpin Tseng
 

@@ -1,4 +1,4 @@
-;;; 50filecache.el ---
+;;; 50filecache.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2008  Shihpin Tseng
 

@@ -1,4 +1,4 @@
-;;; 01env.el ---
+;;; 01env.el ---  -*- lexical-binding: nil; -*-
 
 ;;; Commentary:
 ;; Emacs will load this file first than other init files.

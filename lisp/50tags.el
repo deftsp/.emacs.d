@@ -1,4 +1,4 @@
-;;; 50tags.el ---
+;;; 50tags.el ---  -*- lexical-binding: nil; -*-
 
 ;; Etags is a command to generate 'TAGS' file which is the tag file for Emacs.
 ;; You can use the file with etags.el which is part of emacs package.

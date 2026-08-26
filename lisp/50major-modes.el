@@ -1,4 +1,4 @@
-;;; 50major-modes.el ---
+;;; 50major-modes.el ---  -*- lexical-binding: nil; -*-
 
 (defun tl//progn-mode-init ()
   (display-line-numbers-mode +1)

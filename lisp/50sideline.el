@@ -1,4 +1,4 @@
-;;; 50sideline.el ---
+;;; 50sideline.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2024  Shihpin Tseng
 

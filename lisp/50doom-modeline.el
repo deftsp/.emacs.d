@@ -1,4 +1,4 @@
-;;; 50doom-modeline.el
+;;; 50doom-modeline.el  -*- lexical-binding: nil; -*-
 
 ;; TODO: When pressing "C-c a" <org-agenda> the popup window named " *Agenda Commands*"
 ;; will call `fit-window-to-buffer'. It will get the right window height.

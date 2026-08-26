@@ -1,4 +1,4 @@
-;;; 100align.el ---
+;;; 100align.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2012  Shihpin Tseng
 

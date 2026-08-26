@@ -1,9 +1,10 @@
-;; -*- mode: emacs-lisp; coding: utf-8 -*-
+;; -*- mode: emacs-lisp; coding: utf-8; lexical-binding: nil; -*-
 
 ;;; boot sequence
 ;; site-start.el --> .emacs --> default.el and terminal type file.
 
 (require 'cl)
+(require 'warnings)
 
 (setq read-process-output-max (* 4 1024 1024)) ;; 4mb
 
@@ -85,6 +86,32 @@
   (load custom-file 'noerror))
 
 (load "~/.emacs.d/secrets.el")
+
+;; Suppress boot warnings: Missing ‘ lexical-binding ’ cookie
+(defconst tl/missing-lexbind-warning-files
+  '("packages/tty-format.el"
+    "packages/sexp-transient-state.el"
+    "straight/build/org-protocol-capture-html/org-protocol-capture-html.el"
+    "straight/build/evil-plugins/evil-textobj-between.el"))
+
+(defun tl/suppress-vendored-missing-lexbind-warnings (&optional _theme)
+  "Suppress missing lexical-binding warnings for selected vendored files."
+  (dolist (relative-path tl/missing-lexbind-warning-files)
+    (let ((warning-type
+           `(files missing-lexbind-cookie
+                   ,(abbreviate-file-name
+                     (expand-file-name relative-path
+                                       user-emacs-directory)))))
+      ;; Do not display or log this warning for the exact file.
+      (add-to-list 'warning-suppress-types warning-type)
+      (add-to-list 'warning-suppress-log-types warning-type))))
+
+;; Enabling a theme reapplies the values stored by Custom, so restore these
+;; precise filters after every theme change as well as before initial loading.
+(add-hook 'enable-theme-functions
+          #'tl/suppress-vendored-missing-lexbind-warnings)
+
+(tl/suppress-vendored-missing-lexbind-warnings)
 
 (require 'tl-bootstrap)
 

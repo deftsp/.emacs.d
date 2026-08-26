@@ -1,4 +1,4 @@
-;;;; some useful packages
+;;;; some useful packages  -*- lexical-binding: nil; -*-
 
 ;;; thing-cmds
 ;; ‘ C-M-SPC ’ – `mark-thing ’ (overwrites the standard binding for ‘ mark-sexp ’; `sexp ’ is the default thing type)

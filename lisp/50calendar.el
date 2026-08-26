@@ -1,4 +1,4 @@
-;;; 50calendar.el ---
+;;; 50calendar.el ---  -*- lexical-binding: nil; -*-
 
 ;; How about work with Google Calendars http://bc.tech.coop/blog/070306.html
 

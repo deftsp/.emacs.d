@@ -1,4 +1,4 @@
-;;; 50auto-insert.el ---
+;;; 50auto-insert.el ---  -*- lexical-binding: nil; -*-
 
 (use-package autoinsert
   :custom

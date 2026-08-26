@@ -1,4 +1,4 @@
-;;; 50w3m.el ---
+;;; 50w3m.el ---  -*- lexical-binding: nil; -*-
 
 ;;; install
 ;; install emacs-w3m with el-get

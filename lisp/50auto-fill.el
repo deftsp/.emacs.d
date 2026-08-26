@@ -1,4 +1,4 @@
-;;; 50auto-fill.el ---
+;;; 50auto-fill.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2008  Shihpin Tseng
 

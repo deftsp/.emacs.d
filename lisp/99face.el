@@ -1,4 +1,4 @@
-;;; 50face.el ---
+;;; 50face.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2008  Shihpin Tseng
 

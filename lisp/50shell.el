@@ -1,4 +1,4 @@
-;;; file 50shell.el
+;;; file 50shell.el  -*- lexical-binding: nil; -*-
 
 ;; To use ansi-term with ZShell on a Mac, make sure you run
 ;; tic -o ~/.terminfo /Applications/Emacs.app/Contents/Resources/etc/e/eterm-color.ti

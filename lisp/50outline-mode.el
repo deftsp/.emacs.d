@@ -1,4 +1,4 @@
-;;; 50outline-mode.el ---
+;;; 50outline-mode.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2008  Shihpin Tseng
 

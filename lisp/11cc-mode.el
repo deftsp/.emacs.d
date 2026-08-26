@@ -1,4 +1,4 @@
-;;; 11cc-mode.el ---
+;;; 11cc-mode.el ---  -*- lexical-binding: nil; -*-
 ;; Author: Shihpin Tsing <deftsp@gmail.com>
 
 ;; FIXME: if not use build in cc-mode, `TAB' will be bound to `c-indent-command', not `c-indent-line-or-region'

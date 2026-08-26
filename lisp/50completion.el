@@ -1,4 +1,4 @@
-;;; Completion
+;;; Completion  -*- lexical-binding: nil; -*-
 
 ;;; dabbrev-expand
 ;; (global-set-key (kbd "M-/") 'dabbrev-expand)

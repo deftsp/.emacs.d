@@ -1,4 +1,4 @@
-;;; 50python-mode.el ---
+;;; 50python-mode.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2021  Shihpin Tseng
 

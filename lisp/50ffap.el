@@ -1,4 +1,4 @@
-;;; 50ffap.el ---
+;;; 50ffap.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2008  Shihpin Tseng
 

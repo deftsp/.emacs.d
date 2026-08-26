@@ -1,4 +1,4 @@
-;;; --50emacsclient.el
+;;; --50emacsclient.el  -*- lexical-binding: nil; -*-
 
 ;; This starts up a server automatically, or use emacs daemon instead
 (add-hook 'after-init-hook 'server-start)

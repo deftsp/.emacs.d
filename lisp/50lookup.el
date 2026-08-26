@@ -1,4 +1,4 @@
-;;; 50lookup.el ---
+;;; 50lookup.el ---  -*- lexical-binding: nil; -*-
 
 
 ;; https://www.powerthesaurus.org/

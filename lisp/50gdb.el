@@ -1,4 +1,4 @@
-;; -*- mode: Emacs-Lisp -*-
+;; -*- mode: Emacs-Lisp; lexical-binding: nil; -*-
 
 (setq gdb-show-main t)
 (autoload 'gdb-many-windows "gdb-mi" nil t)

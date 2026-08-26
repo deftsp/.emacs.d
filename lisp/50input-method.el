@@ -1,4 +1,4 @@
-;; 50input-method.el ---
+;; 50input-method.el ---  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2007  Shihpin Tseng
 

@@ -1,4 +1,4 @@
-;;; 02binding-funcs.el
+;;; 02binding-funcs.el  -*- lexical-binding: nil; -*-
 
 ;; https://github.com/noctuid/general.el
 (use-package general

@@ -1,4 +1,4 @@
-;;; 50tramp.el ---
+;;; 50tramp.el ---  -*- lexical-binding: nil; -*-
 ;;
 ;; Description:
 ;; Author: Shihpin Tseng <deftsp@gmail.com>
