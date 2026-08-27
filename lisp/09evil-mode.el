@@ -301,6 +301,10 @@ kill internal buffers too."
   (setq evil-disable-insert-state-bindings nil
         evil-move-cursor-back nil
         evil-move-beyond-eol t
+        ;; Keep ordinary minibuffers in Emacs state.  This avoids Evil's
+        ;; state/keymap machinery interfering with Ivy and with the new
+        ;; minibuffer-based prompts in Emacs 31.
+        evil-want-minibuffer nil
         evil-want-integration t
         evil-want-keybinding nil ;; evil-collection instead
         evil-want-visual-char-semi-exclusive t
@@ -421,7 +425,9 @@ kill internal buffers too."
   :after evil
   :init
   ;; (setq evil-collection-mode-list '(calendar info magit magit-todos vterm (pdf pdf-view)))
-  (setq evil-collection-setup-minibuffer t)
+  ;; `evil-want-minibuffer' is nil as well; do not re-enable Evil through
+  ;; evil-collection's minibuffer setup hook.
+  (setq evil-collection-setup-minibuffer nil)
   (setq evil-collection-key-whitelist '())
   (setq evil-collection-key-blacklist '("M-o" "gz" "gr"))
   :config
@@ -430,18 +436,6 @@ kill internal buffers too."
    :states '(normal)
    :keymaps 'magit-status-mode-map
    "gr" 'magit-refresh)
-
-  (defun tl//do-nothing-for-ivy-posframe-mode (fn &rest args)
-    (if (and (bound-and-true-p ivy-posframe-mode)
-             (boundp 'ivy--display-function)
-             (string-match-p "^ivy-posframe"
-                             (symbol-name ivy--display-function)))
-        ;; posframe 模式：跳过 evil
-        nil
-      (apply fn args)))
-
-  (advice-add 'evil-collection-minibuffer-insert :around #'tl//do-nothing-for-ivy-posframe-mode)
-
 
   (evil-collection-define-key 'normal 'Info-mode-map "o" 'ace-link-info)
   (evil-collection-define-key 'normal 'xref--xref-buffer-mode-map "o" 'ace-link-xref)
