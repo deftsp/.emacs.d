@@ -55,9 +55,21 @@
   :defer t
   :init
   (setq rust-rustfmt-switches '("--edition" "2024"))
-  ;; Emacs and yasnippet-snippets treat rust-ts-mode as a child/alternative of
-  ;; rust-mode.  Reversing that relationship creates a cyclic mode hierarchy.
-  (setq rust-mode-treesitter-derive nil)
+  (setq rust-mode-treesitter-derive t)
+
+  ;; Emacs 31 declares `rust-mode' as an additional parent of
+  ;; `rust-ts-mode'.  rust-mode's tree-sitter integration derives in the
+  ;; opposite direction, so keeping both relationships creates a cycle.
+  ;; Remove the additional relationship before rust-mode finishes loading;
+  ;; the actual hierarchy remains rustic-mode -> rust-mode -> rust-ts-mode.
+  (with-eval-after-load 'rust-ts-mode
+    (when (and (fboundp 'derived-mode-add-parents)
+               (memq 'rust-mode
+                     (get 'rust-ts-mode 'derived-mode-extra-parents)))
+      (derived-mode-add-parents
+       'rust-ts-mode
+       (remove 'rust-mode
+               (get 'rust-ts-mode 'derived-mode-extra-parents)))))
 
   ;; (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
   ;; (defface tl/rust-exclaim-face
