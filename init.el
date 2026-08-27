@@ -91,6 +91,8 @@
 (defconst tl/missing-lexbind-warning-files
   '("packages/tty-format.el"
     "packages/sexp-transient-state.el"
+    "packages/ctypes.el"
+    "packages/ifdef.el"
     "straight/build/org-protocol-capture-html/org-protocol-capture-html.el"
     "straight/build/evil-plugins/evil-textobj-between.el"))
 
