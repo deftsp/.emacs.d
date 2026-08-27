@@ -141,6 +141,11 @@ Flycheck according to the Cargo project layout."
 (use-package rustic-flycheck
   :defer t
   :config
+  ;; Rustic enables Flycheck from `rustic-mode-hook' before lsp-mode has
+  ;; registered its checker.  Let lsp-diagnostics enable it when LSP is ready.
+  (when (eq dottl-lsp-client 'lsp-mode)
+    (remove-hook 'rustic-mode-hook #'flycheck-mode))
+
   ;; After changing the dependencies in Cargo.toml,
   ;; lsp-diagnostics wil enable and disable `flycheck-mode', which cause
   ;; `rustic-flycheck-find-cargo-target' for every opened rust buffer.

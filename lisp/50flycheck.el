@@ -13,6 +13,11 @@
   :defer t
   :init
   (setq flycheck-emacs-lisp-load-path 'inherit)
+  ;; The LSP checker is registered only after lsp-mode has configured the
+  ;; buffer.  Let lsp-diagnostics enable Flycheck for Rustic buffers instead
+  ;; of having global-flycheck-mode run before that checker exists.
+  (when (eq dottl-lsp-client 'lsp-mode)
+    (setq flycheck-global-modes '(not rustic-mode)))
   (when (fboundp 'global-flycheck-mode)
     (add-hook 'after-init-hook #'global-flycheck-mode))
   ;; (setq flycheck-check-syntax-automatically '(save idle-change new-line mode-enabled))
