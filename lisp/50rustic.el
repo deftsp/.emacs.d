@@ -32,7 +32,7 @@
          "magenta3"
          "cyan3"
          "white"])
-  (setq rustic-indent-method-chain t
+  (setq rust-indent-method-chain t
         rustic-cargo-run-use-comint t
         rustic-format-trigger nil)
   :config

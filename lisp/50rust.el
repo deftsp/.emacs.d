@@ -55,7 +55,10 @@
   :defer t
   :init
   (setq rust-rustfmt-switches '("--edition" "2024"))
-  (setq rust-mode-treesitter-derive t)
+  ;; Emacs and yasnippet-snippets treat rust-ts-mode as a child/alternative of
+  ;; rust-mode.  Reversing that relationship creates a cyclic mode hierarchy.
+  (setq rust-mode-treesitter-derive nil)
+
   ;; (add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-mode))
   ;; (defface tl/rust-exclaim-face
   ;;   '((t :inherit font-lock-keyword-face))
