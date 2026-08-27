@@ -515,7 +515,6 @@
 (straight-use-package 'package)
 (straight-use-package 'vimrc-mode)
 (straight-use-package 'imenu-list)
-(straight-use-package 'pamparam)
 (straight-use-package 'visual-regexp)
 (straight-use-package 'pandoc-mode)
 (straight-use-package 'vkill)
