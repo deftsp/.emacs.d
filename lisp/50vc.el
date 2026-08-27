@@ -152,7 +152,12 @@
 
 (use-package forge
   :straight t
-  :after magit)
+  :after magit
+  :init
+  ;; Let evil-collection install Forge's Evil-friendly bindings.  This must
+  ;; be set before Magit/Forge loads; otherwise Forge first tries to modify
+  ;; Magit's transient menus using its non-Evil defaults.
+  (setq forge-add-default-bindings nil))
 
 ;; magit-delta will casue magit-status very slow
 (use-package magit-delta
