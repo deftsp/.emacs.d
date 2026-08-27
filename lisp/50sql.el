@@ -70,7 +70,7 @@
   (interactive (list (intern
                       (ivy-read "sql product: "
                                 '("postgres" "sqlite")))))
-  (if-let ((connection-name (cdr (project-current)))
+  (if-let* ((connection-name (cdr (project-current)))
            (sql-user (tl/get-value-from-dotenv "SUPER_USER"))
            (sql-password (tl/get-value-from-dotenv "SUPER_USER_PASSWORD"))
            (sql-port (tl/get-value-from-dotenv "DB_PORT"))

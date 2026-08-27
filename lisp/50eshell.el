@@ -46,8 +46,8 @@ This is only applied to `term' and `ansi-term' modes.")
   "Open the default shell in a popup."
   (interactive)
   (let ((shell (cl-case shell-default-shell
-                 ('multi-term 'multiterm)
-                 ('shell 'inferior-shell)
+                 (multi-term 'multiterm)
+                 (shell 'inferior-shell)
                  (t shell-default-shell))))
     (call-interactively (intern (format "tl/shell-pop-%S" shell)))))
 

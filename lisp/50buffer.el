@@ -123,10 +123,10 @@ buffer in a split window."
   (interactive)
   (let ((newbuf (generate-new-buffer "untitled")))
     (cl-case split
-      ('left  (split-window-horizontally))
-      ('below (tl/split-window-vertically-and-switch))
-      ('above (split-window-vertically))
-      ('right (tl/split-window-horizontally-and-switch)))
+      (left  (split-window-horizontally))
+      (below (tl/split-window-vertically-and-switch))
+      (above (split-window-vertically))
+      (right (tl/split-window-horizontally-and-switch)))
     ;; Prompt to save on `save-some-buffers' with positive PRED
     (with-current-buffer newbuf
       (setq-local buffer-offer-save t))

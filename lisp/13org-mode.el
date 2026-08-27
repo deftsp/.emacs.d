@@ -1423,7 +1423,7 @@ When ANYWHERE is non-nil, search beyond the preamble."
   "Return the position of time file PROPERTY if it is defined.
 As a special case, return -1 if the time file PROPERTY exists but
 is not defined."
-  (when-let ((pos (tl/org-find-time-file-property property anywhere)))
+  (when-let* ((pos (tl/org-find-time-file-property property anywhere)))
     (save-excursion
       (goto-char pos)
       (if (and (looking-at-p " ")
@@ -1437,7 +1437,7 @@ is not defined."
 When ANYWHERE is non-nil, search beyond the preamble.
 If the position of the file PROPERTY has already been computed,
 it can be passed in POS."
-  (when-let ((pos (or pos (tl/org-find-time-file-property property))))
+  (when-let* ((pos (or pos (tl/org-find-time-file-property property))))
     (save-excursion
       (goto-char pos)
       (if (looking-at-p " ")
