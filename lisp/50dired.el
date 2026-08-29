@@ -20,8 +20,15 @@
           dired-listing-switches "-AlhXG --group-directories-first"
           dired-kept-versions 1))
   :config
-  (add-hook 'dired-mode-hook 'tl/dired-mode-hook-init)
-  (defun tl/dired-mode-hook-init ())
+  (defun tl/dired-fontify-immediately ()
+    ;; `jit-lock-defer-time' is intentionally non-nil globally, so force Dired
+    ;; colours to be ready when a directory is first displayed.
+    (font-lock-mode +1)
+    (font-lock-ensure (point-min) (point-max)))
+
+  ;; Run after omit/filter hooks have finished changing the listing.  This
+  ;; covers both the initial read and subsequent reverts/rereads.
+  (add-hook 'dired-after-readin-hook 'tl/dired-fontify-immediately t)
 
   (progn
     (tl/set-leader-keys-for-mode 'dired-mode
