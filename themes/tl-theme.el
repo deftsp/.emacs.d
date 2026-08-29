@@ -748,10 +748,6 @@
    `(rime-candidate-num-face ((t (:foreground ,base1))))
    `(rime-comment-face ((t (:foreground ,base1))))
 
-   ;; tree-sitter-hl
-   '(tree-sitter-hl-face:property ((t (:inherit font-lock-constant-face))))
-   '(tree-sitter-hl-face:function.call ((t (:inherit font-lock-function-name-face))))
-
    '(git-commit-comment-button ((t (:inherit git-commit-comment-heading :underline nil))))
 
    ;; magit
